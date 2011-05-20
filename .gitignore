@@ -4,7 +4,11 @@ conf/conf.db.php
 
 # Ignore contents of direcories
 js/cache/*
-tmp/**/*
+tmp/*.png
+tmp/*.jpg
+tmp/*.gif
+tmp/*.tif
+tmp/*.svg
 maps/**/*
 
 # Logs and databases #
