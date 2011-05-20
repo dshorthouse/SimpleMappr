@@ -1,0 +1,19 @@
+# Ignore configuration files
+conf/conf.php
+conf/conf.db.php
+
+# Ignore contents of tmp direcory
+tmp/*
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
