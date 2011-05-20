@@ -22,31 +22,6 @@ Copyright: Marine Biological Laboratory 2010
 4. Adjust /conf/conf.db.php.sample and /conf/conf.php.sample and remove .sample extensions.
    These set db (MySQL) connections and constants, respectively.
 
-conf.php example:
-
-<?php
-define("MAPPR_DIRECTORY", "ROOT DIRECTORY");
-define("NUMTEXTAREA", 3); //number of default textarea boxes
-define("GOOGLE_ANALYTICS", "GOOGLE ANALYTICS KEY");
-?>
-
-conf.db.php example:
-
-<?php
-//database server
-DEFINE('DB_SERVER', "127.0.0.1");
-
-//database login name
-DEFINE('DB_USER', "root");
-//database login password
-DEFINE('DB_PASS', "root");
-
-//database name
-DEFINE('DB_DATABASE', "simplemappr");
-
-DEFINE('RPX_KEY', "f6b88eebc964d52809027b3a9###############");
-?>
-
 /***********************************************************************
 * MACPORTS INSTALLATION FROM SOURCE: DO NOT USE THE AGED mapserver PORT
 ***********************************************************************/
@@ -57,7 +32,10 @@ sudo port install proj
 sudo port install geos
 sudo port install gdal
 
-1. Download latest MapServer tarball, http://mapserver.org/download.html (e.g. http://download.osgeo.org/mapserver/mapserver-5.6.5.tar.gz)
+NOTE: Although MapServer 6 has been released, the use of PHP-MapScript in this
+application still uses MapServer 5 -based php_mapscript.so PHP extension.
+
+1. Download latest MapServer 5 tarball, http://mapserver.org/download.html (e.g. http://download.osgeo.org/mapserver/mapserver-5.6.5.tar.gz)
 2. Extract and cd into folder
 3. Execute from command line:
 
