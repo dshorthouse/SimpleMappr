@@ -457,6 +457,7 @@ class MAPPR {
             'sort' => 1,
         );
         
+        // Geotiff created by David P. Shorthouse using above file.
         $this->_shapes['reliefgrey'] = array(
             'shape' => $this->_shape_path . "/HYP_HR_SR_W_DR2/HYP_HR_SR_W_DR2.tif",
             'type' => MS_LAYER_RASTER,

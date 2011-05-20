@@ -355,6 +355,9 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                     <li><input type="checkbox" id="lakes"  class="layeropt" name="layers[lakes]" /> lakes</li>
                     <li><input type="checkbox" id="rivers"  class="layeropt" name="layers[rivers]" /> rivers</li>
                     <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
+<!-- 
+// The following selection is based on a GeoTiff created by David P. Shorthouse and is not available at NaturalEarth
+-->
                     <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
                 </ul>
                 <h2>Options</h2>

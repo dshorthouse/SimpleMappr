@@ -14,28 +14,34 @@ $uid = $_SESSION['simplemappr']['uid'];
 global $db;
 $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 
-$db->connect();
-
 switch($_GET['action']) {
 	case 'logout':
 		session_unset();
 		session_destroy();
-		$db->close();
+		setcookie("simplemappr", "", time() - 3600, "/");
 		header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
 		exit;
 	break;
 	
 	case 'list':
+		$where = '';
 		$output = '';
+		
+		if($uid != 1) $where =  " WHERE m.uid = ".$db->escape($uid);
 		
 		$sql = "
 		SELECT
 		  m.mid,
-		  m.title 
+		  m.title,
+		  m.created,
+		  u.email,
+		  u.uid,
+		  u.username 
 		FROM 
 		  maps m 
-		WHERE  
-		  m.uid = ".$db->escape($uid)."
+		INNER JOIN
+		  users u ON (m.uid = u.uid)
+		".$where."
 		ORDER BY m.created DESC";
 
 		$rows = $db->query($sql);
@@ -52,11 +58,17 @@ switch($_GET['action']) {
 			$i=0;
 			while ($record = $db->fetch_array($rows)) {
 			  $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-			  $output .= "<tr ".$class."><td class=\"title\">" . stripslashes($record['title']) . "</td>";
+			  $output .= "<tr ".$class.">";
+			  $output .= "<td class=\"title\">";
+			  $output .= ($uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
+			  $output .= stripslashes($record['title']);
+			  $output .= ($uid == 1) ? "</em>" : "";
+			  $output .= "</td>";
 			  $output .= "<td class=\"actions\">";
-			  $output .= "<a class=\"map-load\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Load</a>";
-//			  $output .= "<a class=\"map-url\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">URL</a>";
-			  $output .= "<a class=\"map-delete\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Delete</a>";
+			  $output .= "<a class=\"sprites map-load\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Load</a>";
+			  if($uid == $record['uid']) {
+				$output .= "<a class=\"sprites map-delete\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Delete</a>";
+			  }
 			  $output .= "</td>";
 			  $output .= "</tr>" . "\n";
 			  $i++;
@@ -98,6 +110,8 @@ switch($_GET['action']) {
 	break;
 	
 	case 'load':
+		$where = "";
+		if(!$uid == 1) $where = " AND uid = ".$db->escape($uid);
 		if($_GET['map']) {
 			$sql = "
 			SELECT
@@ -105,7 +119,7 @@ switch($_GET['action']) {
 			FROM 
 				maps
 			WHERE
-				uid=".$db->escape($uid)." AND mid=".$db->escape($_GET['map']);
+				 mid=".$db->escape($_GET['map']) . $where;
 			$record = $db->query_first($sql);
 			
 			$data['status'] = "ok";
@@ -127,8 +141,55 @@ switch($_GET['action']) {
 			echo "{\"status\":\"ok\"}";
 		}
 	break;
-}
+	
+	case 'users':
+		if($uid == 1) {
+			$sql = "
+			SELECT
+				u.username, u.email, u.access, count(m.mid) as num
+			FROM
+				users u
+			LEFT JOIN
+				maps m ON (u.uid = m.uid)
+			GROUP BY
+				u.username
+			ORDER BY u.access DESC";
+			
+			$rows = $db->query($sql);
+            
+			$output = "";
 
-$db->close();
+			if($db->affected_rows > 0) {
+				$output .= "<table>" . "\n";
+				$output .= "<thead>" . "\n";
+				$output .= "<tr>" . "\n";
+				$output .= "<th>Username</th>";
+				$output .= "<th>Email</th>";
+				$output .= "<th>Maps</th>";
+				$output .= "<th>Last Access</th>";
+				$output .= "</tr>" . "\n";
+				$output .= "</thead>" . "\n";
+				$output .= "<tbody>" . "\n";
+				$i=0;
+				while ($record = $db->fetch_array($rows)) {
+				  $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+				  $output .= "<tr ".$class.">";
+				  $output .= "<td>" . stripslashes($record['username']) . "</td>";
+				  $output .= "<td>" . stripslashes($record['email']) . "</td>";
+				  $output .= "<td class=\"usermaps-center\">" . $record['num'] . "</td>";
+				  $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : "-";
+				  $output .= "<td class=\"usermaps-center\">" . $access . "</td>";
+				  $output .= "</tr>" . "\n";
+				  $i++;
+				}
+				$output .= "</tbody>" . "\n";
+				$output .= "</table>" . "\n";
+			}
+			
+			echo $output;
+			
+		}
+	break;
+}
 
 ?>
