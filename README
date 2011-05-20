@@ -1,0 +1,90 @@
+/**************************************************************************
+
+File: README
+
+Description: Installation and configuration instructions for SimpleMappr. 
+
+Developer: David P. Shorthouse
+Email: davidpshorthouse@gmail.com
+
+License: GPL
+Copyright: Marine Biological Laboratory 2010
+
+**************************************************************************/
+
+1. Make /tmp readable/writable by/to web server
+2. Download map data from: Natural Earth Data: http://www.naturalearthdata.com/:
+	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-cultural.zip
+	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-physical.zip
+	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/raster/HYP_HR_SR_W_DR.zip
+	Extract to /maps/10m-cultural, /maps/10m-physical, /maps/HYP_HR_SR_W_DR, respectively
+3. Make contents of /config readable/executable by web server
+4. Adjust /conf/conf.db.php.sample and /conf/conf.php.sample and remove .sample extensions.
+   These set db (MySQL) connections and constants, respectively.
+
+conf.php example:
+
+<?php
+define("MAPPR_DIRECTORY", "ROOT DIRECTORY");
+define("NUMTEXTAREA", 3); //number of default textarea boxes
+define("GOOGLE_ANALYTICS", "GOOGLE ANALYTICS KEY");
+?>
+
+conf.db.php example:
+
+<?php
+//database server
+DEFINE('DB_SERVER', "127.0.0.1");
+
+//database login name
+DEFINE('DB_USER', "root");
+//database login password
+DEFINE('DB_PASS', "root");
+
+//database name
+DEFINE('DB_DATABASE', "simplemappr");
+
+DEFINE('RPX_KEY', "f6b88eebc964d52809027b3a9###############");
+?>
+
+/***********************************************************************
+* MACPORTS INSTALLATION FROM SOURCE: DO NOT USE THE AGED mapserver PORT
+***********************************************************************/
+
+sudo port install php5-gd
+sudo port install xpm
+sudo port install proj
+sudo port install geos
+sudo port install gdal
+
+1. Download latest MapServer tarball, http://mapserver.org/download.html (e.g. http://download.osgeo.org/mapserver/mapserver-5.6.5.tar.gz)
+2. Extract and cd into folder
+3. Execute from command line:
+
+$ ./configure \
+--prefix=/usr \
+--with-agg \
+--with-proj=/opt/local \
+--with-geos=/opt/local/bin/geos-config \
+--with-gdal=/opt/local/bin/gdal-config \
+--with-threads \
+--with-ogr \
+--without-tiff \
+--with-freetype=/opt/local \
+--with-xpm=/opt/local \
+--with-png=/opt/local \
+--with-jpeg=/opt/local \
+--with-gd=/opt/local \
+--with-wfs \
+--with-wcs \
+--with-wmsclient \
+--with-wfsclient \
+--with-sos \
+--with-fribidi-config \
+--with-experimental-png \
+--with-php=/opt/local
+
+4. Execute from command line: $ make
+5. Verify that mapserv is working by executing ./mapserv -v
+6. Find php_mapscript.so in mapscripts/php3 and move to extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+7. Move mapserv into cgi-bin folder for web server and give permission to execute if desire using it directly (optional)
