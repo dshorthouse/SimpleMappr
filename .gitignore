@@ -2,8 +2,9 @@
 conf/conf.php
 conf/conf.db.php
 
-# Ignore contents of tmp direcory
+# Ignore contents of direcories
 tmp/**/*
+maps/**/*
 
 # Logs and databases #
 ######################
