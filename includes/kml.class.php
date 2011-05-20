@@ -1,5 +1,32 @@
 <?php
 
+/**************************************************************************
+
+File: kml.class.php
+
+Description: Produce a kml file from SimpleMappr. 
+
+Developer: David P. Shorthouse
+Email: davidpshorthouse@gmail.com
+
+Copyright (C) 2010  Marine Biological Laboratory
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+**************************************************************************/
+
 class Kml {
 	
 	private $_kml = '';
@@ -17,7 +44,12 @@ class Kml {
 			'http://maps.google.com/mapfiles/kml/paddle/wht-blank.png',
 		);
 	}
-
+    
+	/**
+	*  Generate the kml file
+	* @param string $url
+	* @return xml
+	*/
 	public function generateKml($url = '') {
 
 		$this->setMetaData("name", "SimpleMappr Data");
@@ -98,7 +130,8 @@ class Kml {
 	
 	/**
 	* Set a placemark in kml
-	* @param int $key
+	* @param int $key 
+	* @param int $mark
 	* @param string $name
 	* @param string $value
 	*/
@@ -106,14 +139,27 @@ class Kml {
 		$this->_PlaceMark[$key][$mark][$name] = $value;
 	}
 	
+	/**
+	* Get a placemark
+	* @param int $key
+	* @param int $mark
+	* @param string $name
+	* @return string $value
+	*/
 	private function getPlaceMark($key=0, $mark=0, $name) {
 		return $this->_PlaceMark[$key][$mark][$name];
 	}
 	
+	/**
+	* Helper function to get all placemarks
+	*/
 	private function getAllPlaceMarks() {
 		return $this->_PlaceMark;
 	}
 	
+	/**
+	* Helper function to get the request parameter coords
+	*/
 	private function getRequest() {
         $this->coords = $this->loadParam('coords', array());
     }
@@ -131,6 +177,9 @@ class Kml {
     	return $value;
 	}
 	
+	/**
+	* Helper function to add coordinates to placemarks
+	*/
 	public function addCoordinates() {
 
 	  for($j=0; $j<=count($this->coords)-1; $j++) {

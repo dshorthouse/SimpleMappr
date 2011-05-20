@@ -56,14 +56,19 @@ var $query_id = 0;
 
 #-#############################################
 # desc: constructor
-function Database($server, $user, $pass, $database, $pre=''){
+function __construct($server, $user, $pass, $database, $pre=''){
     $this->server=$server;
     $this->user=$user;
     $this->pass=$pass;
     $this->database=$database;
     $this->pre=$pre;
+
+    $this->connect();
 }#-#constructor()
 
+function __destruct() {
+	$this->close();
+}
 
 #-#############################################
 # desc: connect and select database using vars above
