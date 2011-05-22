@@ -100,7 +100,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. http://www.simplemappr.net.</p>
 
             <h2>Code</h2>
-            <p>The code behind SimpleMappr may be obtained at <a href="https://code.google.com/p/simplemappr/">https://code.google.com/p/simplemappr/</a>.</p>
+            <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
 
             <p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
             </p>
