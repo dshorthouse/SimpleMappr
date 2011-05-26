@@ -35,6 +35,7 @@ if(isset($_POST['token'])) {
     /* STEP 3 Continued: Extract the 'identifier' from the response */
     $profile = $auth_info['profile'];
     $identifier = $profile['identifier'];
+
     $username = (isset($profile['preferredUsername'])) ? $profile['preferredUsername'] : '';
     $email = (isset($profile['email'])) ? $profile['email'] : '';
 
@@ -49,8 +50,6 @@ if(isset($_POST['token'])) {
       'surname' => $surname,
       'email' => $email,
     );
-    
-    $db->connect();
     
     $sql = "
     SELECT
@@ -68,8 +67,6 @@ if(isset($_POST['token'])) {
     $record = $db->query_first($sql);
     
     $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
-    
-    $db->close();
     
     //set the session
     session_start();
