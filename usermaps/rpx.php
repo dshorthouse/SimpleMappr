@@ -1,4 +1,5 @@
 <?php
+require_once('../conf/conf.php');
 require_once('../conf/conf.db.php');
 require_once('../includes/db.class.php');
 
@@ -42,41 +43,41 @@ if(isset($_POST['token'])) {
     $surname = (isset($profile['familyName'])) ? $profile['familyName'] : '';
 
     $user = array(
-	  'identifier' => $identifier,
-	  'username' => $username,
-	  'givenname' => $givenname,
-	  'surname' => $surname,
-	  'email' => $email,
-	);
-	
-	$db->connect();
-	
-	$sql = "
-	SELECT
-	  u.uid,
-	  u.identifier,
-	  u.email,
-	  u.username,
-	  u.givenname,
-	  u.surname 
-	FROM 
-	  users u 
-	WHERE  
-	  u.identifier = '".$identifier."'";
-	
-	$record = $db->query_first($sql);
-	
-	$user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
-	
-	$db->close();
-	
-	//set the session
-	session_start();
-	$_SESSION['simplemappr'] = $user;
-	
-	//redirect to My Maps tab
-	header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
-	
+      'identifier' => $identifier,
+      'username' => $username,
+      'givenname' => $givenname,
+      'surname' => $surname,
+      'email' => $email,
+    );
+    
+    $db->connect();
+    
+    $sql = "
+    SELECT
+      u.uid,
+      u.identifier,
+      u.email,
+      u.username,
+      u.givenname,
+      u.surname 
+    FROM 
+      users u 
+    WHERE  
+      u.identifier = '".$identifier."'";
+    
+    $record = $db->query_first($sql);
+    
+    $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
+    
+    $db->close();
+    
+    //set the session
+    session_start();
+    $_SESSION['simplemappr'] = $user;
+    
+    //redirect to My Maps tab
+    header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
+    
 
 /* an error occurred */
 } else {

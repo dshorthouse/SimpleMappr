@@ -48,7 +48,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout">Welcome back <?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/usermaps/?action=logout">Log Out</a></span></div>
 <?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:tabSelector(4);return false;">Log In</a></span></div>
+<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:tabSelector(3);return false;">Log In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
 

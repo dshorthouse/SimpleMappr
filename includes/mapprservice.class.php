@@ -927,8 +927,8 @@ class MAPPR {
                             $qry[] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
                         }
                         else {
-                            $region = addslashes(ucwords(strtolower(trim($region))));
-                            $qry[] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/";
+                            $region = addslashes(trim($region));
+                            $qry[] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
                         }
                     }
                 }

@@ -172,10 +172,10 @@ button.negative:hover{background-color:#eca8a8 !important;color:#d12f19;}
 button.negative:active{background-color:#782c21 !important;}
 
 /* Specific Buttons */
-.submitForm { background-position: 0 6px; }
-.clear { background-position: 0 -720px; }
-.saveForm { background-position: 0 -786px; }
-.addmore { background-position: 0 -60px;}
+.submitForm { background-position: 3px 6px; }
+.clear { background-position: 3px -720px; }
+.saveForm { background-position: 3px -786px; }
+.addmore { background-position: 3px -60px;}
 
 #okClose { background-position: 0 -720px; }
 #okDelete { background-position: 0 6px; }

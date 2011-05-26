@@ -518,24 +518,24 @@ $(function(){
             data    : { freehand : self.wkt },
             async: false,
             success : function(results) {
-	          if(!results) return; 
-	          switch(self.selectedTool) {
-		        case 'pencil':
-		          wkt = "LINESTRING(" + results + ")";
-		        break;
+              if(!results) return; 
+              switch(self.selectedTool) {
+                case 'pencil':
+                  wkt = "LINESTRING(" + results + ")";
+                break;
 
-		        case 'rectangle':
-		          wkt = "POLYGON((" + results + "))";
-		        break;
+                case 'rectangle':
+                  wkt = "POLYGON((" + results + "))";
+                break;
 
-		        case 'circle':
-		        break;
+                case 'circle':
+                break;
 
-		        case 'line':
-		          wkt = "LINESTRING(" + results + ")";  
-		        break;
-	          }
-	          $('textarea[name="freehand[0][data]"]').val(wkt);
+                case 'line':
+                  wkt = "LINESTRING(" + results + ")";  
+                break;
+              }
+              $('textarea[name="freehand[0][data]"]').val(wkt);
             },
             error : function() {
               return false;

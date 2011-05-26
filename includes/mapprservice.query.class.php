@@ -126,7 +126,7 @@ class MAPPRQUERY extends MAPPR {
                         if(isset($shape->values['ISO']) && isset($hasc[1])) $items[$shape->values['ISO']][$hasc[1]] = array();
                     }
                     else {
-                        $this->_data[] = $shape->values['COUNTRY'];
+                        $this->_data[] = $shape->values['ADMIN'];
                     }
                     
                 }
