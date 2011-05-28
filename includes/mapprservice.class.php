@@ -454,77 +454,84 @@ class MAPPR {
         $this->_shapes['relief'] = array(
             'shape' => $this->_shape_path . "/HYP_HR_SR_W_DR/HYP_HR_SR_W_DR.tif",
             'type' => MS_LAYER_RASTER,
-            'sort' => 1,
+            'sort' => 1
         );
         
         // Geotiff created by David P. Shorthouse using above file.
         $this->_shapes['reliefgrey'] = array(
             'shape' => $this->_shape_path . "/HYP_HR_SR_W_DR2/HYP_HR_SR_W_DR2.tif",
             'type' => MS_LAYER_RASTER,
-            'sort' => 1,
+            'sort' => 1
         );
         
         //base map
         $this->_shapes['base'] = array(
             'shape' => $this->_shape_path . "/10m_cultural/10m_admin_0_countries.shp",
             'type' => MS_LAYER_LINE,
-            'sort' => 2,
+            'sort' => 2
         );
         
         //stateprovinces_polygon
         $this->_shapes['stateprovinces_polygon'] = array(
             'shape' => $this->_shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp.shp",
             'type' => MS_LAYER_POLYGON,
-            'sort' => 3,
+            'sort' => 3
         );
         
         //stateprovinces
         $this->_shapes['stateprovinces'] = array(
             'shape' => $this->_shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp.shp",
             'type' => MS_LAYER_LINE,
-            'sort' => 4,
+            'sort' => 4
         );
         
+        //lakes outline
+        $this->_shapes['lakesOutline'] = array(
+            'shape' => $this->_shape_path . "/10m_physical/10m_lakes.shp",
+            'type' => MS_LAYER_LINE,
+            'sort' => 5
+        );
+
         //lakes
         $this->_shapes['lakes'] = array(
             'shape' => $this->_shape_path . "/10m_physical/10m_lakes.shp",
             'type' => MS_LAYER_POLYGON,
-            'sort' => 5,
+            'sort' => 6
         );
         
         //rivers
         $this->_shapes['rivers'] = array(
             'shape' => $this->_shape_path . "/10m_physical/10m_rivers_lake_centerlines.shp",
             'type' => MS_LAYER_LINE,
-            'sort' => 6,
+            'sort' => 7
         );
         
         //placename
         $this->_shapes['placenames'] = array(
             'shape' => $this->_shape_path . "/10m_cultural/10m_populated_places_simple.shp",
             'type' => MS_LAYER_POINT,
-            'sort' => 7,
+            'sort' => 8
         );
         
         //physicalLabels
         $this->_shapes['physicalLabels'] = array(
             'shape' => $this->_shape_path . "/10m_physical/10m_geography_regions_polys.shp",
             'type' => MS_LAYER_POLYGON,
-            'sort' => 8,
+            'sort' => 9
         );
         
         //marineLabels
         $this->_shapes['marineLabels'] = array(
             'shape' => $this->_shape_path . "/10m_physical/10m_geography_marine_polys.shp",
             'type' => MS_LAYER_POLYGON,
-            'sort' => 9,
+            'sort' => 10
         );
         
         //northarrow
         $this->_shapes['northarrow'] = array(
             'shape' => '',
             'type' => MS_LAYER_POINT,
-            'sort' => 9,
+            'sort' => 11
         );
 
         //graticules
@@ -532,7 +539,7 @@ class MAPPR {
             'shape' => $this->_shape_path . "/10m_physical/10m_graticules_all/10m_graticules_10.shp",
             'data' => 'cultural',
             'type' => MS_LAYER_LINE,
-            'sort' => 10,
+            'sort' => 12
         );
         
     }
@@ -972,6 +979,11 @@ class MAPPR {
                 $layer->setProjection('init=' . $this->_default_projection);
 
                 switch($name) {
+                    case 'lakesOutline':
+                        $class = ms_newClassObj($layer);
+                        $style = ms_newStyleObj($class);
+                        $style->color->setRGB(30,30,30);
+                    break;
                     case 'rivers':
                     case 'lakes':
                         $class = ms_newClassObj($layer);

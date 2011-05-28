@@ -352,8 +352,9 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                     <li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> place names</li>
                     <li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> physical labels</li>
                     <li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> marine labels</li>
-                    <li><input type="checkbox" id="lakes"  class="layeropt" name="layers[lakes]" /> lakes</li>
-                    <li><input type="checkbox" id="rivers"  class="layeropt" name="layers[rivers]" /> rivers</li>
+                    <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> lakes (outline)</li>
+                    <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
+                    <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
                     <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
 <!-- 
 // The following selection is based on a GeoTiff created by David P. Shorthouse and is not available at NaturalEarth
