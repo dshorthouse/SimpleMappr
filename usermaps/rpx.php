@@ -71,6 +71,9 @@ if(isset($_POST['token'])) {
     //set the session
     session_start();
     $_SESSION['simplemappr'] = $user;
+
+    //set time last logged in
+    $db->query_update('users', array('access' => time()), 'uid='.$user['uid']);
     
     //redirect to My Maps tab
     header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
