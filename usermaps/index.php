@@ -78,7 +78,7 @@ switch($_GET['action']) {
             $output .= "</table>" . "\n";
         }
         else {
-            $output .= '<div id="mymaps" class="panel"><p>Start by adding data on the "Data Layers" or "Shaded Regions" tabs, press the Preview buttons there, then save your map on the "Map Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
+            $output .= '<div id="mymaps" class="panel"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
         }
         
         echo $output;
