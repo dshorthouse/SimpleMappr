@@ -310,6 +310,11 @@ div.panel a.help {
     font-size:0.75em;
 }
 
+#map-about p.citation {
+  text-indent:-2em;
+  padding-left:2em;
+}
+
 #map-about img {
   border:0px
 }
