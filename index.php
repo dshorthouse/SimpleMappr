@@ -335,7 +335,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                     </div>
                     <div id="badRecordsWarning"><a href="#" onclick="javascript:return false;" class="sprites toolsBadRecords" rel="badRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
-                        <img id="mapOutputImage" src="images/basemap.png">
+                        <img id="mapOutputImage" src="images/basemap.png" alt="" />
                     </div>
                 </div>
                 <div id="mapScale"></div>
