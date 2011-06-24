@@ -1612,6 +1612,7 @@ $('#badRecordsViewer').dialog({
 
         var pattern = /[?*:;{}\\ "'\/@#!%^()<>.]+/g;
         var map_title = $('#file-name').val();
+
         map_title = map_title.replace(pattern, "_");
         $('#file-name').val(map_title);
 
