@@ -861,10 +861,16 @@ function loadMyMaps() {
                 $('input[name="download_factor"]').val("");
                 $('#download-factor')[0].selectedIndex = 0;
               }
-              $('input[name="save[title]"]').val(data.map.save.title);
-              $('.m-mapSaveTitle').val(data.map.save.title);
-            
-              $('#mapTitle').text(data.map.save.title);
+
+              var map_title = data.map.save.title;
+
+              $('input[name="save[title]"]').val(map_title);
+              $('.m-mapSaveTitle').val(map_title);
+              $('#mapTitle').text(map_title);
+
+              var pattern = /[?*:;{}\\ "']+/g;
+              map_title = map_title.replace(pattern, "_");
+              $('#file-name').val(map_title);
               
               //load up all the coordinates
               var coords = (data.map.coords !== undefined) ? data.map.coords : [] ;
@@ -1603,6 +1609,13 @@ $('#badRecordsViewer').dialog({
             $('input[name="options[legend]"]').val("");
         }
         $('input[name="download_factor"]').val($('#download-factor').val());
+
+        var pattern = /[?*:;{}\\ "'\/@#!%^()<>.]+/g;
+        var map_title = $('#file-name').val();
+        map_title = map_title.replace(pattern, "_");
+        $('#file-name').val(map_title);
+
+        $('input[name="file_name"]').val(map_title);
         
         var token = new Date().getTime();
         $('#download_token').val(token);

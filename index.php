@@ -444,6 +444,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- put modal form elements back into flow of DOM -->
     <input type="hidden" name="save[title]" />
     <input type="hidden" name="download_factor" />
+    <input type="hidden" name="file_name" />
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
     
@@ -453,7 +454,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     
     <div id="mapSave" title="Save Map">
         <div class="fieldset-taxon">
-        <span class="fieldset-title">Title<span class="required">*</span>:</span> <input type="text" class="m-mapSaveTitle" size="20" maxlength="30" />
+        <span class="fieldset-title">Title<span class="required">*</span>:</span> <input type="text" class="m-mapSaveTitle" size="30" maxlength="30" />
         </div>
     </div>
 
@@ -473,14 +474,20 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
           <li><input type="checkbox" id="legend" /> include legend</li>
         </ul>
 
-        Choose:
+        <p>
+          <label for="file-name">File name:</label>
+          <input type="text" id="file-name" maxlength="30" size="30">
+        </p>
+
+        File type:
         <ul>
+          <li class="export-svg"><a href="#" onclick="javascript:return false;" class="sprites toolsSvg" rel="saveSvg"> svg*</a> (recommended)</li>
           <li class="export-png"><a href="#" onclick="javascript:return false;" class="sprites toolsPng" rel="savePng"> png</a></li>
           <li class="export-tiff"><a href="#" onclick="javascript:return false;" class="sprites toolsTiff" rel="saveTiff"> tif</a></li>
-          <li class="export-svg"><a href="#" onclick="javascript:return false;" class="sprites toolsSvg" rel="saveSvg"> svg*</a> (recommended)</li>
           <li class="export-eps"><a href="#" onclick="javascript:return false;" class="sprites toolsEps" rel="saveEps"> eps</a></li>
           <li class="export-kml"><a href="#" onclick="javascript:return false;" class="sprites toolsKml" rel="saveKml"> kml (Google Earth)</a></li>
         </ul>
+
         <p>*Download does not include scale/legend/relief</p>
         </div>
         

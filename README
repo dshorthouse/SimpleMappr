@@ -34,10 +34,7 @@ sudo port install proj
 sudo port install geos
 sudo port install gdal
 
-NOTE: Although MapServer 6 has been released, the use of PHP-MapScript in this
-application still uses MapServer 5 -based php_mapscript.so PHP extension.
-
-1. Download latest MapServer 5 tarball, http://mapserver.org/download.html (e.g. http://download.osgeo.org/mapserver/mapserver-5.6.5.tar.gz)
+1. Download MapServer 5 tarball, http://mapserver.org/download.html (e.g. http://download.osgeo.org/mapserver/mapserver-5.6.6.tar.gz)
 2. Extract and cd into folder
 3. Execute from command line:
 
@@ -49,11 +46,8 @@ $ ./configure \
 --with-gdal=/opt/local/bin/gdal-config \
 --with-threads \
 --with-ogr \
---without-tiff \
 --with-freetype=/opt/local \
 --with-xpm=/opt/local \
---with-png=/opt/local \
---with-jpeg=/opt/local \
 --with-gd=/opt/local \
 --with-wfs \
 --with-wcs \

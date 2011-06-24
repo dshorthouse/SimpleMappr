@@ -248,6 +248,8 @@ class MAPPR {
         $this->_download_factor = $this->loadParam('download_factor', 1);
 
         $this->download_legend  = $this->loadParam('download_legend', false);
+
+        $this->file_name        = $this->loadParam('file_name', time());
         
         $this->download_token   = $this->loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
@@ -1287,6 +1289,10 @@ class MAPPR {
     private function getBadPoints() {
         return implode('<br />', $this->_bad_points);
     }
+
+    private function getFileName() {
+      return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name) . "." . $this->output;
+    }
     
     /**
     * Produce the  final output
@@ -1317,7 +1323,7 @@ class MAPPR {
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("Cache-Control: private",false); 
                 header("Content-Type: image/tiff");
-                header("Content-Disposition: attachment; filename=\"map-" . $image_filename ."\";" );
+                header("Content-Disposition: attachment; filename=\"" . $this->getFileName() . "\";" );
                 header("Content-Transfer-Encoding: binary");
                 header("Content-Length: ".filesize($this->_tmp_path.$image_filename));
                 ob_clean();
@@ -1335,7 +1341,7 @@ class MAPPR {
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("Cache-Control: private",false); 
                 header("Content-Type: image/png");
-                header("Content-Disposition: attachment; filename=\"map-" . $image_filename ."\";" );
+                header("Content-Disposition: attachment; filename=\"" . $this->getFileName() . "\";" );
                 header("Content-Transfer-Encoding: binary");
                 header("Content-Length: ".filesize($this->_tmp_path.$image_filename));
                 ob_clean();
@@ -1350,7 +1356,7 @@ class MAPPR {
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("Cache-Control: private",false); 
                 header("Content-Type: image/svg+xml");
-                header("Content-Disposition: attachment; filename=\"map-" . time() . ".svg\";" );
+                header("Content-Disposition: attachment; filename=\"" . $this->getFileName() . "\";" );
                 $this->image->saveImage("");
                 exit();
             break;
@@ -1368,7 +1374,7 @@ class MAPPR {
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("Cache-Control: private",false);
                 header("Content-Type: application/postscript");
-                header("Content-Disposition: attachment; filename=\"map-" . time() . ".eps\";" );
+                header("Content-Disposition: attachment; filename=\"" . $this->getFileName() . "\";" );
                 header("Content-Length: ".filesize($this->_tmp_path.$eps_filename));
                 header("Content-Transfer-Encoding: binary");
 
