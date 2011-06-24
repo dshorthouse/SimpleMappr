@@ -949,6 +949,7 @@ class MAPPR {
                 $style = ms_newStyleObj($class);
                 $style->color->setRGB($color[0],$color[1],$color[2]);
                 $style->outlinecolor->setRGB(30,30,30);
+                $style->set("opacity", 75);
 
                 $layer->set("status",MS_ON);
             }
@@ -964,6 +965,8 @@ class MAPPR {
         $sort = array();
 
         if(isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) $this->layers['base'] = 'on';
+
+        if($this->output == 'svg') unset($this->layers['relief'], $this->layers['reliefgrey']);
 
         foreach($this->layers as $key => $row) {
             $sort[$key] = (isset($this->_shapes[$key])) ? $this->_shapes[$key]['sort'] : $row;
@@ -1173,7 +1176,7 @@ class MAPPR {
         $this->_map_obj->legend->label->color->setRGB(0,0,0);
         
         //svg format cannot do legends in MapServer
-        if($this->download && $this->options['legend'] && ($this->output != 'svg' || $this->output != 'eps')) {
+        if($this->download && $this->options['legend'] && $this->output != 'svg' && $this->output != 'eps') {
             $this->_map_obj->legend->set("status", MS_EMBED);
             $this->_map_obj->legend->set("position", MS_UR);
             $this->_map_obj->legend->set("transparent", 0);
