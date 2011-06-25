@@ -162,6 +162,11 @@ class MAPPR {
     public $image_size = array(800,400);
     
     function __construct() {
+      if (!extension_loaded("MapScript")) {
+        $this->setError("php_mapscript.so extension is not loaded"); 
+        exit;
+      }
+      $this->_map_obj = ms_newMapObjFromString($this->mapfile_string);
     }
     
     function __destruct() {
@@ -253,6 +258,7 @@ class MAPPR {
         
         $this->download_token   = $this->loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
+
     }
 
     /**
@@ -551,8 +557,6 @@ class MAPPR {
     */
     public function execute() {
 
-        $this->_map_obj = ms_newMapObjFromString($this->mapfile_string);
-
         $this->loadShapes();
         $this->loadSymbols();
     
@@ -561,80 +565,41 @@ class MAPPR {
         $this->_map_obj->web->set("template","template.html");
         $this->_map_obj->web->set("imagepath",$this->_tmp_path);
         $this->_map_obj->web->set("imageurl",$this->_tmp_url);
-
-        // Set the output format and size
-        if($this->download_legend) $this->output = 'svg';
-
-        $output = ($this->output == 'eps') ? 'svg' : $this->output;
-        $this->_map_obj->selectOutputFormat($output);
-        
-        // Set the extent
-        $ext = explode(',',$this->bbox_map);
-        if($this->projection != $this->projection_map) {
-            $origProjObj = ms_newProjectionObj('init=' . $this->projection_map);
-            $newProjObj = ms_newProjectionObj('init=' . $this->_default_projection);
-
-            $poPoint1 = ms_newPointObj();
-            $poPoint1->setXY($ext[0], $ext[1]);
-
-            $poPoint2 = ms_newPointObj();
-            $poPoint2->setXY($ext[2], $ext[3]);
-            
-            @$poPoint1->project($origProjObj,$newProjObj);
-            @$poPoint2->project($origProjObj,$newProjObj);
-            
-            $ext[0] = $poPoint1->x;
-            $ext[1] = $poPoint1->y;
-            $ext[2] = $poPoint2->x;
-            $ext[3] = $poPoint2->y;
-            
-            if($poPoint1->x < $this->_max_extent[0] || $poPoint1->y < $this->_max_extent[1] || $poPoint2->x > $this->_max_extent[2] || $poPoint2->y > $this->_max_extent[3] || $poPoint1->x > $poPoint2->x || $poPoint1->y > $poPoint2->y) {
-                $ext[0] = $this->_max_extent[0];
-                $ext[1] = $this->_max_extent[1];
-                $ext[2] = $this->_max_extent[2];
-                $ext[3] = $this->_max_extent[3];
-            }
-        }
-
-        $this->_map_obj->setExtent($ext[0], $ext[1], $ext[2], $ext[3]);
         $this->_map_obj->set("units",MS_DD);
         $this->_map_obj->imagecolor->setRGB(255,255,255);
-        
-        //adjust size depending on user input
-        $this->setMapSize();
-        
-        // Add new base layer to map
-        if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey'])) {
-            $layer = ms_newLayerObj($this->_map_obj);
-            $layer->set("name","baselayer");
-            $layer->set("status",MS_ON);
-            $layer->set("data",$this->_shapes['base']['shape']);
-            $layer->set("type",$this->_shapes['base']['type']);
-            $layer->setProjection('init=' . $this->_default_projection);
 
-            // Add new class to new layer
-            $class = ms_newClassObj($layer);
+        // Set the output format and size
+        if(isset($this->download_legend) && $this->download_legend) $this->output = 'svg';
 
-            // Add new style to new class
-            $style = ms_newStyleObj($class);
-            $style->color->setRGB(30,30,30);
+        if(isset($this->output) && $this->output) {
+          $output = ($this->output == 'eps') ? 'svg' : $this->output;
+          $this->_map_obj->selectOutputFormat($output);
         }
 
+        // Set the map extent
+        $this->setMapExtent();
+        
+        // Adjust map size
+        $this->setMapSize();
+
+        // Add the base layer
+        $this->addBaseLayer();
+
         //zoom in
-        if($this->bbox_rubberband && !$this->download) $this->zoomIn();
+        if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->download) $this->zoomIn();
 
         //zoom out
-        if($this->zoom_out) $this->zoomOut();
+        if(isset($this->zoom_out) && $this->zoom_out) $this->zoomOut();
         
         //pan
-        if($this->pan) $this->setPan();
+        if(isset($this->pan) && $this->pan) $this->setPan();
         
         //rotation
-        if($this->rotation != 0) $this->_map_obj->setRotation($this->rotation);
-        if($this->rotation != 0 && $this->projection == $this->_default_projection) $this->reprojectMap($this->_default_projection, $this->projection); 
+        if(isset($this->rotation) && $this->rotation != 0) $this->_map_obj->setRotation($this->rotation);
+        if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->_default_projection) $this->reprojectMap($this->_default_projection, $this->projection); 
         
         //crop
-        if($this->crop && $this->bbox_rubberband && $this->download) $this->setCrop();
+        if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->download) $this->setCrop();
         
         //add shaded political regions
         $this->addRegions();
@@ -645,7 +610,7 @@ class MAPPR {
         //add WKT polygons/lines
         $this->addFreehand();
         
-        if($this->graticules) $this->addGraticules();
+        $this->addGraticules();
 
         //add the coordinates
         $this->addCoordinates();
@@ -653,36 +618,8 @@ class MAPPR {
         // Add border if requested
         if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) $this->addBorder();
 
-        if($this->projection != $this->_default_projection) {
-            $this->reprojectMap($this->_default_projection, $this->projection);
-            
-            //add north arrow after map is reprojected
-            if(array_key_exists('arrow', $this->options)) $this->addNorthArrow();
-            
-            //swap the order of legend and scalebar addition depending on if download or not
-            if($this->download) {
-                $this->addLegendScalebar();
-                $this->image = $this->_map_obj->drawQuery();
-            }
-            else {
-                $this->image = $this->_map_obj->drawQuery();
-                $this->addLegendScalebar();
-            }
-        } 
-        else {
-            //add north arrow
-            if(array_key_exists('arrow', $this->options)) $this->addNorthArrow();
-            
-            //swap the order of legend and scalebar addition depending on if download or not
-            if($this->download) {
-                $this->addLegendScalebar();
-                $this->image = $this->_map_obj->draw();
-            }
-            else {
-                $this->image = $this->_map_obj->draw();
-                $this->addLegendScalebar();
-            }
-        }
+        // Prepare the output
+        $this->prepareOutput();
     }
 
     private function addLegendScalebar() {
@@ -695,6 +632,40 @@ class MAPPR {
     }
 
     /**
+    * Set the map extent
+    */
+    private function setMapExtent() {
+      $ext = explode(',',$this->bbox_map);
+      if(isset($this->projection) && $this->projection != $this->projection_map) {
+        $origProjObj = ms_newProjectionObj('init=' . $this->projection_map);
+        $newProjObj = ms_newProjectionObj('init=' . $this->_default_projection);
+
+        $poPoint1 = ms_newPointObj();
+        $poPoint1->setXY($ext[0], $ext[1]);
+
+        $poPoint2 = ms_newPointObj();
+        $poPoint2->setXY($ext[2], $ext[3]);
+            
+        @$poPoint1->project($origProjObj,$newProjObj);
+        @$poPoint2->project($origProjObj,$newProjObj);
+            
+        $ext[0] = $poPoint1->x;
+        $ext[1] = $poPoint1->y;
+        $ext[2] = $poPoint2->x;
+        $ext[3] = $poPoint2->y;
+            
+        if($poPoint1->x < $this->_max_extent[0] || $poPoint1->y < $this->_max_extent[1] || $poPoint2->x > $this->_max_extent[2] || $poPoint2->y > $this->_max_extent[3] || $poPoint1->x > $poPoint2->x || $poPoint1->y > $poPoint2->y) {
+          $ext[0] = $this->_max_extent[0];
+          $ext[1] = $this->_max_extent[1];
+          $ext[2] = $this->_max_extent[2];
+          $ext[3] = $this->_max_extent[3];
+        }
+      }
+
+      $this->_map_obj->setExtent($ext[0], $ext[1], $ext[2], $ext[3]);
+    }
+
+    /**
     * Set the map size
     */ 
     private function setMapSize() {
@@ -702,6 +673,27 @@ class MAPPR {
         if($this->download) {
             $this->_map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
         }
+    }
+
+    /**
+    * Add the base layer
+    */
+    private function addBaseLayer() {
+      if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey'])) {
+        $layer = ms_newLayerObj($this->_map_obj);
+        $layer->set("name","baselayer");
+        $layer->set("status",MS_ON);
+        $layer->set("data",$this->_shapes['base']['shape']);
+        $layer->set("type",$this->_shapes['base']['type']);
+        $layer->setProjection('init=' . $this->_default_projection);
+
+        // Add new class to new layer
+        $class = ms_newClassObj($layer);
+
+        // Add new style to new class
+        $style = ms_newStyleObj($class);
+        $style->color->setRGB(30,30,30);
+      }
     }
 
     /**
@@ -814,30 +806,30 @@ class MAPPR {
     * Add all coordinates to the map
     */
     public function addCoordinates() {
+      if(isset($this->coords) && $this->coords) {
+        //do this in reverse order because the legend will otherwise be presented in reverse order
+        for($j=count($this->coords)-1; $j>=0; $j--) {
 
-      //do this in reverse order because the legend will otherwise be presented in reverse order
-      for($j=count($this->coords)-1; $j>=0; $j--) {
+          //clear out previous loop's selection
+          $size = '';
+          $shape = '';
+          $color = '';
 
-        //clear out previous loop's selection
-        $size = '';
-        $shape = '';
-        $color = '';
-
-        $title = ($this->coords[$j]['title']) ? $this->coords[$j]['title'] : '';
-        $size = 8;
-        if($this->coords[$j]['size']) {
+          $title = ($this->coords[$j]['title']) ? $this->coords[$j]['title'] : '';
+          $size = 8;
+          if($this->coords[$j]['size']) {
             $size = $this->coords[$j]['size'];
-        }
-        if($this->download) {
+          }
+          if($this->download) {
             $size = ($this->coords[$j]['size']) ? $this->_download_factor*$this->coords[$j]['size'] : $this->_download_factor*8;
-        }
-        $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
-        $color = ($this->coords[$j]['color']) ? explode(" ",$this->coords[$j]['color']) : explode(" ","0 0 0");
-        if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
+          }
+          $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
+          $color = ($this->coords[$j]['color']) ? explode(" ",$this->coords[$j]['color']) : explode(" ","0 0 0");
+          if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
             $color = array(0,0,0);
-        }
+          }
 
-        if(trim($this->coords[$j]['data'])) {
+          if(trim($this->coords[$j]['data'])) {
         
             $layer = ms_newLayerObj($this->_map_obj);
             $layer->set("name","layer_".$j);
@@ -889,6 +881,7 @@ class MAPPR {
             }
             $new_shape->add($new_line);
             $layer->addFeature($new_shape);
+          }
         }
       }
     }
@@ -897,7 +890,7 @@ class MAPPR {
     * Add shaded regions to the map
     */
     public function addRegions() {
-        
+      if(isset($this->regions) && $this->regions) {  
         for($j=count($this->regions)-1; $j>=0; $j--) {
             
             //clear out previous loop's selection
@@ -955,23 +948,28 @@ class MAPPR {
             }
 
         }
+      }
     }
 
     /**
     * Add all selected layers to the map
     */
     private function addLayers() {
+      if(isset($this->layers) && $this->layers) {
+
         unset($this->layers['grid']);
         $sort = array();
 
         if(isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) $this->layers['base'] = 'on';
 
-        if($this->output == 'svg') unset($this->layers['relief'], $this->layers['reliefgrey']);
+        if(isset($this->output) && $this->output == 'svg') unset($this->layers['relief'], $this->layers['reliefgrey']);
 
         foreach($this->layers as $key => $row) {
             $sort[$key] = (isset($this->_shapes[$key])) ? $this->_shapes[$key]['sort'] : $row;
         }
         array_multisort($sort, SORT_ASC, $this->layers);
+
+        $srs_projections = implode(array_keys(self::$_accepted_projections), " ");
                             
         foreach($this->layers as $name => $status) {
             //make the layer
@@ -982,6 +980,10 @@ class MAPPR {
                 $layer->set("type", $this->_shapes[$name]['type']);
                 $layer->set("status",MS_ON);
                 $layer->setProjection('init=' . $this->_default_projection);
+                $layer->setMetaData("wfs_title", $name);
+                $layer->setMetaData("wfs_srs", $srs_projections);
+                $layer->setMetaData("wfs_extent", "-180 -90 180 90");
+                $layer->setMetaData("wfs_encoding", "UTF-8");
 
                 switch($name) {
                     case 'lakesOutline':
@@ -1059,10 +1061,14 @@ class MAPPR {
                 }
             }
         }
+      }
     }
 
+    /**
+    * Add freehand draw regions using well-known text, wkt
+    */
     public function addFreehand() {
-
+      if(isset($this->wkt) && $this->wkt) {
         for($j=count($this->wkt)-1; $j>=0; $j--) {
             
             //clear out previous loop's selection
@@ -1101,10 +1107,11 @@ class MAPPR {
             }
 
         }
-
+      }
     }
     
     public function addGraticules() {
+      if(isset($this->graticules) && $this->graticules) {
         $layer = ms_newLayerObj($this->_map_obj);
         $layer->set("name", 'grid');
         $layer->set("data", $this->_shapes['grid']['shape']);
@@ -1153,6 +1160,7 @@ class MAPPR {
         $layer->grid->set("maxarcs", $ticks);
         $layer->grid->set("maxinterval", $ticks);
         $layer->grid->set("maxsubdivide", 2);
+      }
     }
     
     /**
@@ -1219,41 +1227,6 @@ class MAPPR {
             $this->_scalebar_url = $scale->saveWebImage();
         }
     }
-    
-    /**
-    * Add a northing arrow
-    */
-    private function addNorthArrow() {
-        $layer = ms_newLayerObj($this->_map_obj);
-        $layer->set("name", "northarrow");
-        $layer->set("data", $this->_shapes['northarrow']['shape']);
-        $layer->set("type", $this->_shapes['northarrow']['type']);
-
-        $layer->set("status",MS_ON);
-        $layer->setProjection('init=' . $this->projection);  //not $this->_default_projection like other layers
-        
-        $class = ms_newClassObj($layer);
-        $class->set("name","northarrow");
-
-        $style = ms_newStyleObj($class);
-        $style->set("symbolname","northarrow");
-        $style->set("angle","[".$this->rotation."]");
-        
-        $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
-        $new_line = ms_newLineObj();
-
-        $new_point = ms_newPointObj();
-        $loc = new stdClass();
-        $loc->x = $this->image_size[0]-95;
-        $loc->y = 75;
-        
-        $point = $this->pix2Geo($loc);
-        $new_point->setXY($point->x, $point->y);
-        $new_line->add($new_point);
-
-        $new_shape->add($new_line);
-        $layer->addFeature($new_shape);
-    }
 
     /**
     * Add a border to a downloaded map image
@@ -1283,6 +1256,38 @@ class MAPPR {
           $polygon->add($polyLine);
 
           $outline_layer->addFeature($polygon); 
+    }
+
+    /**
+    * Prepare the output
+    */
+    private function prepareOutput() {
+      if(isset($this->projection)) {
+          if($this->projection != $this->_default_projection) {
+            $this->reprojectMap($this->_default_projection, $this->projection);
+            
+            //swap the order of legend and scalebar addition depending on if download or not
+            if($this->download) {
+                $this->addLegendScalebar();
+                $this->image = $this->_map_obj->drawQuery();
+            }
+            else {
+                $this->image = $this->_map_obj->drawQuery();
+                $this->addLegendScalebar();
+            }
+          } 
+          else {
+            //swap the order of legend and scalebar addition depending on if download or not
+            if($this->download) {
+                $this->addLegendScalebar();
+                $this->image = $this->_map_obj->draw();
+            }
+            else {
+                $this->image = $this->_map_obj->draw();
+                $this->addLegendScalebar();
+            }
+          }
+        }
     }
     
     /**

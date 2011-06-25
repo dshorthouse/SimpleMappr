@@ -35,12 +35,6 @@ class MAPPRAPI extends MAPPR {
     private $_file;
     private $_data;
     
-    function __construct() {
-    }
-    
-    function __destruct() {
-    }
-    
     /**
     * Override the getRequest() method in the MAPPR class
     */
@@ -104,15 +98,7 @@ class MAPPRAPI extends MAPPR {
         $this->width            = $this->loadParam('width', 800);
         $this->height           = $this->loadParam('height', 400);
         $this->image_size       = array($this->width, $this->height);
-        
-        //blank out some variables
-        $this->download_legend      = false;
-        $this->zoom_out             = false;
-        $this->pan                  = false;
-        $this->crop                 = false;
-        $this->bbox_rubberband      = array();
-        $this->rotation             = 0;
-        $this->coords               = array();
+
     }
     
     /**
