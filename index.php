@@ -75,7 +75,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
                 <li><a href="#map-users" class="sprites map-users">Users</a></li>
             <?php endif; ?>
-            <li class="map-extras"><a href="tabs/help.html" class="sprites map-myhelp">Help</a></li>
+            <li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
             <li class="map-extras"><a href="#map-about">About</a></li>
             <li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
             <li class="map-extras"><a href="tabs/api.php">API</a></li>

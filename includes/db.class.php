@@ -84,6 +84,8 @@ function connect($new_link=false) {
         $this->oops("Could not open database: <b>$this->database</b>.");
         }
 
+    $this->query("SET NAMES 'utf8'");
+
     // unset the data so it can't be dumped
     $this->server='';
     $this->user='';

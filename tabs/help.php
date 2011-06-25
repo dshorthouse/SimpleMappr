@@ -1,3 +1,29 @@
+<?php
+require_once('../conf/conf.php');
+require_once('../conf/conf.db.php');
+require_once('../includes/db.class.php');
+
+$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+$sql = "SELECT * FROM stateprovinces ORDER BY country";
+$rows = $db->query($sql);
+
+$output = "";
+
+if($db->affected_rows > 0) {
+  $i=0;
+  while ($record = $db->fetch_array($rows)) {
+    $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+    $output .= "<tr ".$class.">";
+    $output .= "<td>" . $record['country'] . "</td>";
+    $output .= "<td>" . $record['country_iso'] . "</td>";
+    $output .= "<td>" . $record['stateprovince'] . "</td>";
+    $output .= "<td>" . $record['stateprovince_code'] . "</td>";
+    $output .= "</tr>" . "\n";
+    $i++;
+  }
+}
+
+?>
 <!-- help tab -->
 <div id="map-help">
     
@@ -58,6 +84,19 @@
     
     <h2>Regions</h2>
     <p>Use the <em>Regions</em> tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="title">Country</th><th class="code">Country ISO</th><th class="title">State/Province</th><th class="code">Code</th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php
+        echo $output;
+      ?>
+      </tbody>
+    </table>
 
 <!--
     <h2>Freehand</h2>

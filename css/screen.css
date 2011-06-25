@@ -834,3 +834,33 @@ img.screenshot {
     border:2px solid #CCCCCC;
     padding:3px;
 }
+
+#map-help table {
+    background:none repeat scroll 0 0 #E6E6E6;
+    border:1px solid gray;
+    border-collapse:collapse;
+    width:70%;
+    color:#555555;
+}
+
+#map-help table thead th {
+    background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
+    font-weight:normal;
+    text-align:left;
+}
+
+#map-help table thead th.title {
+  width:35%;
+}
+
+#map-help table thead th.code {
+  width:45px;
+}
+
+#map-help table tr {
+    border:1px solid #AAAAAA;
+}
+
+#map-help table tr.odd {
+    background:none repeat scroll 0 0 #FFFFFF;
+}
