@@ -1,4 +1,32 @@
 <?php
+
+/**************************************************************************
+
+File: mapprservice.wfs.class.php
+
+Description: Extends the base map class for SimpleMappr to support WFS. 
+
+Developer: David P. Shorthouse
+Email: davidpshorthouse@gmail.com
+
+Copyright (C) 2010  Marine Biological Laboratory
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+**************************************************************************/
+
 require_once ('../includes/mapprservice.class.php');
 
 class MAPPRWFS extends MAPPR {
@@ -47,9 +75,9 @@ class MAPPRWFS extends MAPPR {
       }
     }
 
-    $this->layers           = array('stateprovinces' => 'on', 'placenames' => 'on');
-    $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
-    $this->download         = false;
+    $this->layers   = array('stateprovinces_polygon' => 'on');
+    $this->bbox_map = $this->loadParam('bbox', '-180,-90,180,90');
+    $this->download = false;
 
   }
 
@@ -94,8 +122,8 @@ class MAPPRWFS extends MAPPR {
     $this->_req->setParameter("SERVICE", "wfs");
     $this->_req->setParameter("VERSION", $this->params['VERSION']);
     $this->_req->setParameter("REQUEST", $this->params['REQUEST']);
-        
-    $this->_req->setParameter('TYPENAME', $this->params['TYPENAME']);
+
+    $this->_req->setParameter('TYPENAME', 'stateprovinces_polygon');
     $this->_req->setParameter('MAXFEATURES', $this->params['MAXFEATURES']);
     if($this->params['REQUEST'] != 'DescribeFeatureType') $this->_req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']);
     if($this->params['FILTER']) $this->_req->setParameter('FILTER', $this->params['FILTER']);

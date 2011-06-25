@@ -9,7 +9,7 @@ Description: Base map class for SimpleMappr.
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com
 
-Copyright (C) 2010  Marine Biological Laboratory
+Copyright (C) 2010  David P. Shorthouse
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -976,14 +976,20 @@ class MAPPR {
             if(array_key_exists($name, $this->_shapes)) {
                 $layer = ms_newLayerObj($this->_map_obj);
                 $layer->set("name", $name);
-                $layer->set("data", $this->_shapes[$name]['shape']);
-                $layer->set("type", $this->_shapes[$name]['type']);
-                $layer->set("status",MS_ON);
-                $layer->setProjection('init=' . $this->_default_projection);
                 $layer->setMetaData("wfs_title", $name);
+                $layer->setMetaData("wfs_typename", $name);
                 $layer->setMetaData("wfs_srs", $srs_projections);
                 $layer->setMetaData("wfs_extent", "-180 -90 180 90");
                 $layer->setMetaData("wfs_encoding", "UTF-8");
+                $layer->setMetaData("gml_include_items", "all");
+                $layer->setMetaData("gml_featureid", "OBJECTID");
+                $layer->set("type", $this->_shapes[$name]['type']);
+                $layer->set("status",MS_ON);
+                $layer->setConnectionType(MS_SHAPEFILE);
+                $layer->set("data", $this->_shapes[$name]['shape']);
+                $layer->setProjection('init=' . $this->_default_projection);
+                $layer->set("template", "template.html");
+                $layer->set("dump", true);
 
                 switch($name) {
                     case 'lakesOutline':
