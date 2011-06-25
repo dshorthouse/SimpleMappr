@@ -188,7 +188,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- shaded regions tab -->
     <div id="map-regions">
         <div id="regions-introduction" class="panel">
-            <p>Type political regions <em>e.g.</em> North Carolina, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[NC], CAN[AB ON]</p> 
+            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:tabSelector(5);return false;" class="sprites help">codes</a></p> 
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">
