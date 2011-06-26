@@ -1185,16 +1185,31 @@ function loadMyMaps() {
         });
         
         $('.map-url').click(function() {
-            var message = 'Coming soon...';
-            showMessage(message);
+            var message = 'Use the following URL to embed a png elsewhere:';
+            message += "<p><input type='text' size='65' value='&lt;img src=\"" + Mapper.settings.baseUrl + "/?map=" + $(this).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
+            message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(this).attr("rel") + "&amp;width=200&amp;height=150)</span>";
+            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="URL">' + message + '</div>');
+            $('#mapper-message').dialog({
+                height : 250,
+                width : 525,
+                modal : true,
+                buttons: {
+                    Cancel: function() {
+                        hideMessage();
+                    }
+                },
+                draggable : false,
+                resizable : false
+            });
+            return false;
         });
         
         $('.map-delete').click(function() {
-            var message = 'Are you sure you want to delete <em>"'+$(this).parent().parent().find(".title").html()+'"</em>?';
+            var message = 'Are you sure you want to delete<p><em>'+$(this).parent().parent().find(".title").html()+'</em>?</p>';
             $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Confirmation">' + message + '</div>');
             var id = $(this).attr("rel");
             $('#mapper-message').dialog({
-                height : 200,
+                height : 250,
                 width : 500,
                 modal : true,
                 buttons: {
@@ -1211,6 +1226,7 @@ function loadMyMaps() {
                 draggable : false,
                 resizable : false
             });
+            return false;
         });
     }, "html");
 }

@@ -36,12 +36,12 @@ class MAPPRAPI extends MAPPR {
     private $_data;
     
     /**
-    * Override the getRequest() method in the MAPPR class
+    * Override the method in the MAPPR class
     */
-    public function getRequest() {
+    public function get_request() {
     
         //ping API to return JSON
-        $this->ping             = $this->loadParam('ping', false);
+        $this->ping             = $this->load_param('ping', false);
         if($this->ping) {
           header("Content-Type: application/json");
           $output = array("status" => "ok");
@@ -53,58 +53,60 @@ class MAPPRAPI extends MAPPR {
         $this->options          = array();
 
         //load the file
-        $this->file             = urldecode($this->loadParam('file', '')); 
-        $this->georss           = urldecode($this->loadParam('georss', ''));
-        $this->shape            = (is_array($this->loadParam('shape', array()))) ? $this->loadParam('shape', array()) : array($this->loadParam('shape', array()));
-        $this->size             = (is_array($this->loadParam('size', array()))) ? $this->loadParam('size', array()) : array($this->loadParam('size', array()));
-        $this->color            = (is_array($this->loadParam('color', array()))) ? $this->loadParam('color', array()) : array($this->loadParam('color', array()));
+        $this->file             = urldecode($this->load_param('file', '')); 
+        $this->georss           = urldecode($this->load_param('georss', ''));
+        $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
+        $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
+        $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
         
-        $this->outlinecolor     = $this->loadParam('outlinecolor', '255,255,255');
+        $this->outlinecolor     = $this->load_param('outlinecolor', '255,255,255');
         
-        $shaded = $this->loadParam('shade', array());
+        $shaded = $this->load_param('shade', array());
         $this->regions = array(
             'data' => (array_key_exists('places', $shaded)) ? $shaded['places'] : "",
             'title' => (array_key_exists('title', $shaded)) ? $shaded['title'] : "",
             'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ",$shaded['color']) : "120 120 120"
         );
 
-        $wkt = $this->loadParam('wkt', array());
+        $wkt = $this->load_param('wkt', array());
         $this->wkt = array(
           'data' => (array_key_exists('data', $wkt)) ? $wkt['data'] : "",
           'title' => (array_key_exists('title', $wkt)) ? $wkt['title'] : "",
           'color' => (array_key_exists('color', $wkt)) ? $wkt['color'] : ""
         );
         
-        $this->output           = $this->loadParam('output','pnga');
-        $this->projection       = $this->loadParam('projection', 'epsg:4326');
+        $this->output           = $this->load_param('output','pnga');
+        $this->projection       = $this->load_param('projection', 'epsg:4326');
         $this->projection_map   = $this->projection;
         
-        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
+        $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
 
         //convert layers as comma-separated values to an array
-        $_layers                = explode(',', $this->loadParam('layers', ''));
+        $_layers                = explode(',', $this->load_param('layers', ''));
         $layers = array();
         foreach($_layers as $_layer) {
             if($_layer) $layers[trim($_layer)] = trim($_layer);
         }
         $this->layers           = $layers;
-        $this->graticules       = $this->loadParam('graticules', false);
+        $this->graticules       = $this->load_param('graticules', false);
 
-        if($this->loadParam('border', false)) $this->options['border'] = true;
-        if($this->loadParam('legend', false)) $this->options['legend'] = true;
-        if($this->loadParam('scalebar', false)) $this->options['scalebar'] = true;
+        if($this->load_param('border', false)) $this->options['border'] = true;
+        if($this->load_param('legend', false)) $this->options['legend'] = true;
+        if($this->load_param('scalebar', false)) $this->options['scalebar'] = true;
 
         //set the image size from width & height to array(width, height)
-        $this->width            = $this->loadParam('width', 800);
-        $this->height           = $this->loadParam('height', 400);
+        $this->width            = $this->load_param('width', 800);
+        $this->height           = $this->load_param('height', 400);
         $this->image_size       = array($this->width, $this->height);
+
+        return $this;
 
     }
     
     /**
-    * Override the addCoordinates() method in the MAPPR class
+    * Override the method in the MAPPR class
     */ 
-    public function addCoordinates() {  
+    public function add_coordinates() {  
 	
         $coord_cols = array();
         $legend = array();
@@ -148,19 +150,19 @@ class MAPPRAPI extends MAPPR {
             }
 
             foreach($coord_cols as $col => $coords) {
-                $mlayer = ms_newLayerObj($this->_map_obj);
+                $mlayer = ms_newLayerObj($this->map_obj);
                 $mlayer->set("name",$legend[$col]);
                 $mlayer->set("status",MS_ON);
                 $mlayer->set("type",MS_LAYER_POINT);
                 $mlayer->set("tolerance",5);
                 $mlayer->set("toleranceunits",6);
-                $mlayer->setProjection($this->_default_projection);
+                $mlayer->setProjection($this->default_projection);
 
                 $class = ms_newClassObj($mlayer);
                 $class->set("name",$legend[$col]);
 
                 $style = ms_newStyleObj($class);
-                $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], $this->accepted_shapes)) ? $this->shape[$col] : 'circle');
+                $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
                 $style->set("size",(array_key_exists($col, $this->size)) ? $this->size[$col] : 8);
                 
                 if(array_key_exists($col, $this->color)) {
@@ -193,7 +195,7 @@ class MAPPRAPI extends MAPPR {
                         $_coord = new stdClass;
                         $_coord->y = trim($coord[0]);
                         $_coord->x = trim($coord[1]);
-                        if($this->checkCoord($_coord)) {
+                        if($this->check_coord($_coord)) {
                             $mcoord_point = ms_newPointObj();
                             $mcoord_point->setXY($_coord->x, $_coord->y);
                             $mcoord_line->add($mcoord_point);
@@ -210,20 +212,20 @@ class MAPPRAPI extends MAPPR {
     }
     
     /**
-    * Override the addRegions() method in the MAPPR class
+    * Override the method in the MAPPR class
     */
-    public function addRegions() {
+    public function add_regions() {
         if($this->regions['data']) {            
-            $layer = ms_newLayerObj($this->_map_obj);
+            $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name","stateprovinces_polygon");
-            $layer->set("data",$this->_shapes['stateprovinces_polygon']['shape']);
-            $layer->set("type",$this->_shapes['stateprovinces_polygon']['type']);
+            $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
+            $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
             $layer->set("template", "template.html");
-            $layer->setProjection('init=' . $this->_default_projection);
+            $layer->setProjection('init=' . $this->default_projection);
             
             //grab the data for regions & split
             $whole = trim($this->regions['data']);
-            $rows = explode("\n",$this->removeEmptyLines($whole));
+            $rows = explode("\n",$this->remove_empty_lines($whole));
             $qry = array();
             foreach($rows as $row) {
                 $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -259,11 +261,11 @@ class MAPPRAPI extends MAPPR {
     }
 
     /**
-     * Override the addFreehand method in the MAPPR class
+     * Override the method in the MAPPR class
      */
-     public function addFreehand() {
+     public function add_freehand() {
        if($this->wkt['data']) {
-           $layer = ms_newLayerObj($this->_map_obj);
+           $layer = ms_newLayerObj($this->map_obj);
            $layer->set("name", $this->wkt['title']);
 
            $feature = ms_shapeObjFromWkt($this->wkt['data']);
@@ -273,7 +275,7 @@ class MAPPRAPI extends MAPPR {
 
            $layer->set("type",$type);
            $layer->set("template", "template.html");
-           $layer->setProjection('init=' . $this->_default_projection);
+           $layer->setProjection('init=' . $this->default_projection);
 
            $class = ms_newClassObj($layer);
            $class->set("name", $this->wkt['title']);
@@ -289,15 +291,15 @@ class MAPPRAPI extends MAPPR {
     }
     
     /**
-    * Override the addGraticules() method in the MAPPR class
+    * Override the method in the MAPPR class
     */
-    public function addGraticules() {
-        $layer = ms_newLayerObj($this->_map_obj);
+    public function add_graticules() {
+        $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name", 'grid');
-        $layer->set("data", $this->_shapes['grid']['shape']);
-        $layer->set("type", $this->_shapes['grid']['type']);
+        $layer->set("data", $this->shapes['grid']['shape']);
+        $layer->set("type", $this->shapes['grid']['type']);
         $layer->set("status",MS_ON);
-        $layer->setProjection('init=' . $this->_default_projection);
+        $layer->setProjection('init=' . $this->default_projection);
         
         $class = ms_newClassObj($layer);
         $class->label->set("font", "arial");
@@ -309,8 +311,8 @@ class MAPPRAPI extends MAPPR {
         $style->color->setRGB(200,200,200);
 
         ms_newGridObj($layer);
-        $minx = $this->_map_obj->extent->minx;
-        $maxx = $this->_map_obj->extent->maxx;
+        $minx = $this->map_obj->extent->minx;
+        $maxx = $this->map_obj->extent->maxx;
 
         $ticks = abs($maxx-$minx)/24;
 
@@ -325,33 +327,33 @@ class MAPPRAPI extends MAPPR {
     }
     
     /**
-    * Override the addScalebar() method in the MAPPR class
+    * Override the method in the MAPPR class
     */
-    public function addScalebar() {
-        $this->_map_obj->scalebar->set("style", 0);
-        $this->_map_obj->scalebar->set("intervals", 3);
-        $this->_map_obj->scalebar->set("height", 8);
-        $this->_map_obj->scalebar->set("width", 200);
-        $this->_map_obj->scalebar->color->setRGB(30,30,30);
-        $this->_map_obj->scalebar->backgroundcolor->setRGB(255,255,255);
-        $this->_map_obj->scalebar->outlinecolor->setRGB(0,0,0);
-        $this->_map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-        $this->_map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
-        $this->_map_obj->scalebar->label->set("font", "arial");
-        $this->_map_obj->scalebar->label->set("type", MS_TRUETYPE);
-        $this->_map_obj->scalebar->label->set("size", 10);
-        $this->_map_obj->scalebar->label->set("antialias", 50);
-        $this->_map_obj->scalebar->label->color->setRGB(0,0,0);
+    public function add_scalebar() {
+        $this->map_obj->scalebar->set("style", 0);
+        $this->map_obj->scalebar->set("intervals", 3);
+        $this->map_obj->scalebar->set("height", 8);
+        $this->map_obj->scalebar->set("width", 200);
+        $this->map_obj->scalebar->color->setRGB(30,30,30);
+        $this->map_obj->scalebar->backgroundcolor->setRGB(255,255,255);
+        $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
+        $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
+        $this->map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
+        $this->map_obj->scalebar->label->set("font", "arial");
+        $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
+        $this->map_obj->scalebar->label->set("size", 10);
+        $this->map_obj->scalebar->label->set("antialias", 50);
+        $this->map_obj->scalebar->label->color->setRGB(0,0,0);
         
         //svg format cannot do scalebar in MapServer
         if($this->output != 'svg') {
-            $this->_map_obj->scalebar->set("status", MS_EMBED);
-            $this->_map_obj->scalebar->set("position", MS_LR);
-            $this->_map_obj->drawScalebar();
+            $this->map_obj->scalebar->set("status", MS_EMBED);
+            $this->map_obj->scalebar->set("position", MS_LR);
+            $this->map_obj->drawScalebar();
         }
     }
     
-    public function produceOutput() {
+    public function get_output() {
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

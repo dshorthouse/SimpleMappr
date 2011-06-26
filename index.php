@@ -1,6 +1,25 @@
 <?php
 
 require_once('conf/conf.php');
+
+if(isset($_GET['map']) && $_GET['map']) {
+  require_once('includes/mapprservice.embed.class.php');
+  $mappr_embed = new MAPPREMBED();
+  $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/maps")
+              ->set_symbols_path(MAPPR_DIRECTORY . "/config/symbols")
+              ->set_font_file(MAPPR_DIRECTORY . "/config/fonts.list")
+              ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
+              ->set_tmp_url("/tmp")
+              ->set_default_projection("epsg:4326")
+              ->set_max_extent("-180,-90,180,90")
+              ->set_image_size("800,400");
+
+  $mappr_embed->get_request()
+              ->execute()
+              ->get_output();
+  exit;
+}
+
 require_once('includes/mapprservice.header.class.php');
 require_once('includes/mapprservice.class.php');
 require_once('includes/jsmin.php');
@@ -378,7 +397,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                   <li>
                         <select id="projection" name="projection">
                     <?php
-                      foreach(MAPPR::$_accepted_projections as $value => $name) {
+                      foreach(MAPPR::$accepted_projections as $value => $name) {
                         $selected = ($name == 'Geographic') ? ' selected="selected"': '';
                         echo '<option value="'.$value.'"'.$selected.'>'.$name.'</option>' . "\n";
                       }

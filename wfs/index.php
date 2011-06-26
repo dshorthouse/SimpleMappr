@@ -3,17 +3,17 @@ require_once('../conf/conf.php');
 require_once('../includes/mapprservice.wfs.class.php');
 
 $mappr_wfs = new MAPPRWFS();
-$mappr_wfs->setShapePath(MAPPR_DIRECTORY . "/maps");
-$mappr_wfs->setSymbolsPath(MAPPR_DIRECTORY . "/config/symbols");
-$mappr_wfs->setFontFile(MAPPR_DIRECTORY . "/config/fonts.list");
-$mappr_wfs->setTmpPath(MAPPR_DIRECTORY . "/tmp/");
-$mappr_wfs->setTmpUrl("/tmp");
-$mappr_wfs->setDefaultProjection("epsg:4326");
-$mappr_wfs->setMaxExtent("-180,-90,180,90");
-$mappr_wfs->setImageSize("800,400");
+$mappr_wfs->set_shape_path(MAPPR_DIRECTORY . "/maps")
+          ->set_symbols_path(MAPPR_DIRECTORY . "/config/symbols")
+          ->set_font_file(MAPPR_DIRECTORY . "/config/fonts.list")
+          ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
+          ->set_tmp_url("/tmp")
+          ->set_default_projection("epsg:4326")
+          ->set_max_extent("-180,-90,180,90")
+          ->set_image_size("800,400");
 
-$mappr_wfs->getRequest();
-$mappr_wfs->makeService();
-$mappr_wfs->execute();
-$mappr_wfs->produceOutput();
+$mappr_wfs->get_request()
+          ->make_service()
+          ->execute()
+          ->get_output();
 ?>

@@ -34,21 +34,22 @@ class MAPPRWFS extends MAPPR {
   /* the request object for WFS and WMS */ 
   private $_req = "";
 
-  /* the filter simplification */
+  /* filter simplification */
   private $_filter_simplify;
 
+  /* columns to filter on */ 
   private $_filter_columns = array();
 
   /**
-  * Override the getRequest() method in the MAPPR class
+  * Override the method in the MAPPR class
   */
-  public function getRequest() {
-    $this->params['VERSION']      = $this->loadParam('VERSION', '1.0.0');
-    $this->params['REQUEST']      = $this->loadParam('REQUEST', 'GetCapabilities');
-    $this->params['TYPENAME']     = $this->loadParam('TYPENAME', '');
-    $this->params['MAXFEATURES']  = $this->loadParam('MAXFEATURES', $this->getMaxFeatures());
-    $this->params['OUTPUTFORMAT'] = $this->loadParam('OUTPUTFORMAT', 'gml2');
-    $this->params['FILTER']       = $this->loadParam('FILTER', null);
+  public function get_request() {
+    $this->params['VERSION']      = $this->load_param('VERSION', '1.0.0');
+    $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
+    $this->params['TYPENAME']     = $this->load_param('TYPENAME', '');
+    $this->params['MAXFEATURES']  = $this->load_param('MAXFEATURES', $this->get_max_features());
+    $this->params['OUTPUTFORMAT'] = $this->load_param('OUTPUTFORMAT', 'gml2');
+    $this->params['FILTER']       = $this->load_param('FILTER', null);
 
     $input = file_get_contents("php://input");
     if($input) {
@@ -76,8 +77,10 @@ class MAPPRWFS extends MAPPR {
     }
 
     $this->layers   = array('stateprovinces_polygon' => 'on');
-    $this->bbox_map = $this->loadParam('bbox', '-180,-90,180,90');
+    $this->bbox_map = $this->load_param('bbox', '-180,-90,180,90');
     $this->download = false;
+
+    return $this;
 
   }
 
@@ -85,39 +88,35 @@ class MAPPRWFS extends MAPPR {
   * Set the simplification filter for a WFS request
   * @param integer
   */
-  public function setMaxFeatures($int) {
+  public function set_max_features($int) {
     $this->_filter_simplify = $int;
   }
 
-  private function getMaxFeatures() {
+  private function get_max_features() {
     return $this->_filter_simplify;
-  }
-
-  private function getFilterColumns() {
-    unset($this->_filter_columns['wkb_geometry']);
-    $filters = array_filter($this->_filter_columns);
-    return ($filters) ? ", t." . implode(", t.", $filters) : "";
   }
 
   /**
   * Construct metadata for WFS
   */
-  public function makeService() {
-    $this->_map_obj->setMetaData("name", "SimpleMappr Web Feature Service");
-    $this->_map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
-    $this->_map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
+  public function make_service() {
+    $this->map_obj->setMetaData("name", "SimpleMappr Web Feature Service");
+    $this->map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
+    $this->map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
 
-    $srs_projections = implode(array_keys(MAPPR::$_accepted_projections), " ");
+    $srs_projections = implode(array_keys(MAPPR::$accepted_projections), " ");
 
-    $this->_map_obj->setMetaData("wfs_srs", $srs_projections);
-    $this->_map_obj->setMetaData("wfs_abstract", "SimpleMappr Web Feature Service");
+    $this->map_obj->setMetaData("wfs_srs", $srs_projections);
+    $this->map_obj->setMetaData("wfs_abstract", "SimpleMappr Web Feature Service");
         
-    $this->_map_obj->setMetaData("wfs_connectiontimeout", "60");
+    $this->map_obj->setMetaData("wfs_connectiontimeout", "60");
 
-    $this->makeRequest();
+    $this->make_request();
+
+    return $this;
   }
 
-  private function makeRequest() {
+  private function make_request() {
     $this->_req = ms_newOwsRequestObj();
     $this->_req->setParameter("SERVICE", "wfs");
     $this->_req->setParameter("VERSION", $this->params['VERSION']);
@@ -127,14 +126,16 @@ class MAPPRWFS extends MAPPR {
     $this->_req->setParameter('MAXFEATURES', $this->params['MAXFEATURES']);
     if($this->params['REQUEST'] != 'DescribeFeatureType') $this->_req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']);
     if($this->params['FILTER']) $this->_req->setParameter('FILTER', $this->params['FILTER']);
+
+    return $this;
   }
 
   /**
   * Produce the  final output
   */
-  public function produceOutput() {
+  public function get_output() {
     ms_ioinstallstdouttobuffer();
-    $this->_map_obj->owsDispatch($this->_req);
+    $this->map_obj->owsDispatch($this->_req);
     $contenttype = ms_iostripstdoutbuffercontenttype();
     $buffer = ms_iogetstdoutbufferstring();
     header('Content-type: application/xml');

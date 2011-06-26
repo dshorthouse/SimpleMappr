@@ -33,80 +33,55 @@ class MAPPRQUERY extends MAPPR {
     
     private $_data = "";
     
-    function __construct() {
-    }
-    
-    function __destruct() {
-    }
-    
     /**
-    * Override the getRequest() method in the MAPPR class
+    * Override the method in the MAPPR class
     */
-    public function getRequest() {
+    public function get_request() {
         $this->download         = false;
         $this->options          = array();
-        $this->output           = $this->loadParam('output','pnga');
-        $this->projection       = $this->loadParam('projection', 'epsg:4326');
-        $this->projection_map   = $this->loadParam('projection_map', 'epsg:4326');
-        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
-        $this->layers           = $this->loadParam('layers',array());
-        $this->graticules       = $this->loadParam('graticules', false);
+        $this->output           = $this->load_param('output','pnga');
+        $this->projection       = $this->load_param('projection', 'epsg:4326');
+        $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
+        $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
+        $this->layers           = $this->load_param('layers',array());
+        $this->graticules       = $this->load_param('graticules', false);
 
-        $this->bbox_query       = $this->loadParam('bbox_query', '0,0,0,0');
-        $this->queryLayer       = $this->loadParam('qlayer', 'base');
+        $this->bbox_query       = $this->load_param('bbox_query', '0,0,0,0');
+        $this->queryLayer       = $this->load_param('qlayer', 'base');
 
-        $this->freehandCoords   = $this->loadParam('freehand', array());
-        
-        //blank out some variables
-        $this->download_legend      = false;
-        $this->zoom_out             = false;
-        $this->pan                  = false;
-        $this->crop                 = false;
-        $this->bbox_rubberband      = array();
-        $this->rotation             = 0;
-        $this->coords               = array();
-        $this->wkt                  = array();
+        $this->freehandCoords   = $this->load_param('freehand', array());
+
+        return $this;
     }
-    
-    /**
-    * Override the addCoordinates() method in the MAPPR class (i.e. blank it out)
-    */
-    public function addCoordinates() {
-    }
-    
-    /**
-    * Override the addRegions() method in the MAPPR class (i.e. blank it out)
-    */
-    public function addRegions() {
-    }
+
     
     /**
     * Query a layer
     */
-    public function queryLayer() {
+    public function query_layer() {
         
         $bbox_query = explode(',',$this->bbox_query);
 
-        if(!array_key_exists($this->queryLayer, $this->_shapes)) return;
+        if(!array_key_exists($this->queryLayer, $this->shapes)) return;
 
         //lower-left coordinate
         $ll_point = new stdClass();
         $ll_point->x = $bbox_query[0];
         $ll_point->y = $bbox_query[3];
-        $ll_coord = $this->pix2Geo($ll_point);
+        $ll_coord = $this->pix2geo($ll_point);
         
         //upper-right coordinate
         $ur_point = new stdClass();
         $ur_point->x = $bbox_query[2];
         $ur_point->y = $bbox_query[1];
-        $ur_coord = $this->pix2Geo($ur_point);
+        $ur_coord = $this->pix2geo($ur_point);
         
         $layer = ms_newLayerObj($this->_map_obj);
         $layer->set("name","stateprovinces_polygon_query");
-        $layer->set("data",$this->_shapes[$this->queryLayer]['shape']);
-        $layer->set("type",$this->_shapes[$this->queryLayer]['type']);
+        $layer->set("data",$this->shapes[$this->queryLayer]['shape']);
+        $layer->set("type",$this->shapes[$this->queryLayer]['type']);
         $layer->set("template", "template.html");
-        $layer->setProjection('init=' . $this->_default_projection);
+        $layer->setProjection('init=' . $this->default_projection);
 
         $rect = ms_newRectObj();
         $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
@@ -139,25 +114,29 @@ class MAPPRQUERY extends MAPPR {
                 $layer->close();
             }
         }
+
+        return $this;
         
     }
 
-    public function queryFreehand() {
-	  if(!$this->freehandCoords) return;
-	
-	  foreach($this->freehandCoords as $pixelcoord) {
-	    $coord = explode(" ", $pixelcoord[0]);
-	
-	    $point = new stdClass();
+    public function query_freehand() {
+      if(!$this->freehandCoords) return;
+    
+      foreach($this->freehandCoords as $pixelcoord) {
+        $coord = explode(" ", $pixelcoord[0]);
+    
+        $point = new stdClass();
         $point->x = $coord[0];
         $point->y = $coord[1];
-        $proj_point = $this->pix2Geo($point);
+        $proj_point = $this->pix2geo($point);
 
         $this->_data[] = $proj_point->x . " " . $proj_point->y;
-	  }
+      }
+    
+      return $this;
     }
     
-    public function produceOutput() {
+    public function get_output() {
         header("Content-Type: application/json");
         echo json_encode($this->_data);
     }
