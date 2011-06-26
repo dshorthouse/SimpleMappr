@@ -34,8 +34,8 @@ class HEADER {
     
     public static $local_js_files = array(
         'js/raphael-min.js',
-        'js/jquery-1.5.1.min.js',
-        'js/jquery-ui-1.8.10.custom.min.js',
+        'js/jquery-1.6.1.min.js',
+        'js/jquery-ui-1.8.13.min.js',
         'js/jquery.colorpicker.min.js',
         'js/jquery.scrollTo.min.js',
         'js/jquery.Jcrop.min.js',
@@ -63,9 +63,9 @@ class HEADER {
     }
     
     private function js_cached($dir, $x='js') {
-      $files = array_diff(@scandir($dir), array(".", ".."));
+      $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
       foreach($files as $file) {
-        if(($x) ? ereg($x.'$',$file) : 1) return $file;
+        if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) return $file;
       }
       return false;
     }
@@ -73,10 +73,10 @@ class HEADER {
     private function remote_js_files() {
       if(ENVIRONMENT == "production") {
         foreach(self::$local_js_files as $key => $value) {
-          if ($value == 'js/jquery-1.5.1.min.js' || $value == 'js/jquery-ui-1.8.10.custom.min.js ') unset(self::$local_js_files[$key]);
+          if ($value == 'js/jquery-1.6.1.min.js' || $value == 'js/jquery-ui-1.8.13.custom.min.js ') unset(self::$local_js_files[$key]);
         }
-        $this->addJS('<script type="text/javascript" src="https://www.google.com/jsapi?key=' . GOOGLE_API . '"></script>');
-        $this->addJS('<script type="text/javascript">'."\n".'google.load("jquery", "1.5.1");'."\n".'google.load("jqueryui", "1.8.10");'."\n".'</script>');  
+        $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>');
+        $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>');
       }
     }
     
