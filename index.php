@@ -2,7 +2,7 @@
 
 require_once('conf/conf.php');
 
-if(isset($_GET['map']) && $_GET['map']) {
+if(isset($_GET['map'])) {
   require_once('includes/mapprservice.embed.class.php');
   $mappr_embed = new MAPPREMBED();
   $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/maps")
@@ -17,7 +17,7 @@ if(isset($_GET['map']) && $_GET['map']) {
   $mappr_embed->get_request()
               ->execute()
               ->get_output();
-  exit;
+  exit();
 }
 
 require_once('includes/mapprservice.header.class.php');

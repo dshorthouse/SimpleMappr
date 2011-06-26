@@ -37,7 +37,7 @@ class MAPPREMBED extends MAPPR {
     * Override the method in the MAPPR class
     */
     public function get_request() {
-      $this->map              = $this->load_param('map', 0);
+      $this->map              = (int)$this->load_param('map', 0);
       $this->width            = $this->load_param('width', 800);
       $this->height           = $this->load_param('height', 400);
       $this->image_size       = array($this->width, $this->height);
@@ -50,7 +50,11 @@ class MAPPREMBED extends MAPPR {
       $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
       $sql = "SELECT map FROM maps WHERE mid=" . $db->escape($this->map);
       $record = $db->query_first($sql);
-      if(!$record) exit();
+
+      if(!$record) {
+        $this->set_not_found();
+      }
+
       $result = unserialize($record['map']);
       
       foreach($result as $key => $data) {
@@ -60,7 +64,14 @@ class MAPPREMBED extends MAPPR {
       return $this;
     }
 
-    
+    private function set_not_found() {
+      header("HTTP/1.0 404 Not Found");
+      header("Content-Type: image/png");
+      $im = imagecreatefrompng(MAPPR_DIRECTORY . "/images/not-found.png");
+      imagepng($im);
+      imagedestroy($im);
+      exit();
+    }
 
     public function get_output() {
         header("Pragma: public");
