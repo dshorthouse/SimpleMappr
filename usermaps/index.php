@@ -66,9 +66,9 @@ switch($_GET['action']) {
               $output .= ($uid == 1) ? "</em>" : "";
               $output .= "</td>";
               $output .= "<td class=\"actions\">";
-              $output .= "<a class=\"sprites map-load\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Load</a>";
+              $output .= "<a class=\"sprites map-load\" rel=\"".$record['mid']."\" href=\"#\">Load</a>";
               if($uid == $record['uid']) {
-                $output .= "<a class=\"sprites map-delete\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Delete</a>";
+                $output .= "<a class=\"sprites map-delete\" rel=\"".$record['mid']."\" href=\"#\">Delete</a>";
               }
               $output .= "</td>";
               $output .= "</tr>" . "\n";

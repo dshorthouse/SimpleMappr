@@ -4,15 +4,9 @@ $(function(){
 
     Mapper.vars = {
       displaySubmit      : false,
-      addMorebtn         : $('#addMore'),
-      newPointsCount     : 0,
-      maxPoints          : 10,
-      addMoreRegionsbtn  : $('#addMoreRegions'),
-      newRegionsCount    : 0,
-      maxRegions         : 10,
-      addMoreFreehandbtn : $('#addMoreFreehand'),
-      newFreehandCount   : 0,
-      maxFreehand        : 10,
+      addMorebtn         : $('.addmore'),
+      newTextareaCount   : 0,
+      maxTextareaCount   : 10,
       hiddenControls     : $("#controls .hiddenControls"),
       submitForm         : $(".submitForm"),
       hiddenClass        : "hidden",
@@ -306,35 +300,15 @@ $(function(){
   };
 
   Mapper.bindClearButtons = function() {
-    $('.clearLayers').click(function() {
-      var fieldsets = $('#fieldSetsPoints div.fieldset-points').length;
-      for(i=0;i<fieldsets;i++) {
-          $('input[name="coords['+i+'][title]"]').val('');
-          $('textarea[name="coords['+i+'][data]"]').val('');
-          $('select[name="coords['+i+'][shape]"]')[0].selectedIndex = 3;
-          $('select[name="coords['+i+'][size]"]')[0].selectedIndex = 3;
-          $('input[name="coords['+i+'][color]"]').val('0 0 0');
-      }
-      return false;
-    });
+    $('.clearLayers, .clearRegions, .clearFreehand').click(function() {
+      var fieldsets = $(this).parent().prev().prev().children();
 
-    $('.clearRegions').click(function() {
-      var fieldsets = $('#fieldSetsRegions div.fieldset-regions').length;
-      for(i=0;i<fieldsets;i++) {
-        $('input[name="regions['+i+'][title]"]').val('');
-        $('textarea[name="regions['+i+'][data]"]').val('');
-        $('input[name="regions['+i+'][color]"]').val('150 150 150');
-      }
-      return false;
-    });
+      $(fieldsets).find('.m-mapTitle').val('');
+      $(fieldsets).find('textarea').val('');
+      $(fieldsets).find('.m-mapShape')[0].selectedIndex = 3;
+      $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3;
+      $(fieldsets).find('.colorPicker').val('0 0 0');
 
-    $('.clearFreehand').click(function() {
-      var fieldsets = $('#fieldSetsFreehand div.fieldset-freehand').length;
-      for(i=0;i<fieldsets;i++) {
-        $('input[name="freehand['+i+'][title]"]').val('');
-        $('textarea[name="freehand['+i+'][data]"]').val('');
-        $('input[name="freehand['+i+'][color]"]').val('150 150 150');
-      }
       return false;
     });
 
@@ -493,9 +467,16 @@ $(function(){
 
   }; /** end Mapper.aQuery **/
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//click the add more button
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Mapper.bindAddButtons = function() {
+    var self = this;
+
+    self.vars.addMorebtn.click(function() {
+      if(self.vars.newTextareaCount < self.vars.maxTextareaCount) {
+      }
+    });
+  };
+
+/*
     Mapper.vars.addMorebtn.click(function(){
       if(newPointsCount < maxPoints) {
         newPointsCount++;
@@ -567,9 +548,6 @@ $(function(){
       return false;  //kill the browser default action
     });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//click the add more regions button
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Mapper.vars.addMoreRegionsbtn.click(function(){
           if(newRegionsCount < maxRegions) {
             newRegionsCount++;
@@ -640,9 +618,6 @@ $(function(){
           return false;  //kill the browser default action
         });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//click the add more freehand button
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 Mapper.vars.addMoreFreehandbtn.click(function(){
                   if(newFreehandCount < maxFreehand) {
                     newFreehandCount++;
@@ -712,66 +687,120 @@ $(function(){
 
                   return false;  //kill the browser default action
                 });
+*/
 
-
-  Mapper.loadMyMaps = function() {
-    var message = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
+  Mapper.loadMapList = function() {
+    var self      = this,
+        message   = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
 
     $('#usermaps').html(message);
     
-    $.get(Mapper.settings.baseUrl + "/usermaps/?action=list", {}, function(data) {
-        $('#usermaps').html(data);
-        $('.map-load').click(function() {
-            var id = $(this).attr("rel");
+    $.get(self.settings.baseUrl + "/usermaps/?action=list", {}, function(data) {
+      $('#usermaps').html(data);
 
-            //clear the form elements
-            $('#form-mapper').clearForm();
-            
-            //remove extraneous sections & reset the counters
-            var numPoints = $('.fieldset-points').size();
-            if(numPoints > 3) {
-                for(i=numPoints-1; i>=3;i--) {
-                    $('#fieldSetsPoints div.fieldset-points:eq('+i+')').remove();
-                }
-                newPointsCount = 0;
-            }
-            var numRegions = $('.fieldset-regions').size();
-            if(numRegions > 3) {
-                for(i=numRegions-1; i>=3;i--) {
-                    $('#fieldSetsRegions div.fieldset-regions:eq('+i+')').remove();
-                }
-                newRegionsCount = 0;
-            }
-            $.get(Mapper.settings.baseUrl + "/usermaps/?action=load&map="+id, {}, function(data) {
-              //load up all the data
-            
-              //get single items like projection, rotation, title, etc.
-              $('select[name="projection"]').val(data.map.projection);
-              $('input[name="bbox_map"]').val(data.map.bbox_map);
-              $('input[name="projection_map"]').val(data.map.projection_map);
-              $('input[name="rotation"]').val(data.map.rotation);
-              if(data.map.download_factor) {
-                $('input[name="download_factor"]').val(data.map.download_factor);
-                $('#download-factor').val(data.map.download_factor);
-              }
-              else {
-                $('input[name="download_factor"]').val("");
-                $('#download-factor')[0].selectedIndex = 0;
-              }
+      $('.map-load').click(function() {
+        self.loadMap(this);
+        return false;
+      }); 
 
-              var map_title = data.map.save.title;
+      $('.map-delete').click(function() {
+        self.deleteConfirmation(this);
+        return false;
+      });
 
-              $('input[name="save[title]"]').val(map_title);
-              $('.m-mapSaveTitle').val(map_title);
+    }, "html");
+  };
 
-              $('#mapTitle').text(map_title);
-              $('.map-embed').attr("rel", data.mid).show();
+  Mapper.removeExtraElements = function() {
+    var numPoints  = $('.fieldset-points').size(),
+        numRegions = $('.fieldset-regions').size();
 
-              var pattern = /[?*:;{}\\ "']+/g;
-              map_title = map_title.replace(pattern, "_");
-              $('#file-name').val(map_title);
-              
-              //load up all the coordinates
+    if(numPoints > 3) {
+      for(i=numPoints-1; i>=3;i--) {
+        $('#fieldSetsPoints div.fieldset-points:eq('+i+')').remove();
+      }
+      self.vars.newPointsCount = 0;
+    }
+
+    if(numRegions > 3) {
+      for(i=numRegions-1; i>=3;i--) {
+        $('#fieldSetsRegions div.fieldset-regions:eq('+i+')').remove();
+      }
+      self.vars.newRegionsCount = 0;
+    }
+  };
+
+  Mapper.loadMap = function(obj) {
+    var self       = this,
+        id         = $(obj).attr("rel");
+
+    $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function(data) {
+
+      self.removeExtraElements();
+      $('#form-mapper').clearForm();
+
+      self.loadSettings(data);
+      self.loadCoordinates(data);
+      self.loadRegions(data);
+      self.loadFreehand(data);
+      self.loadLayers(data);
+      self.showMap();
+
+      $("#tabs").tabs('select',0);
+
+    }, "json");
+
+  };
+
+  Mapper.loadSettings = function(data) {
+    var pattern   = /[?*:;{}\\ "']+/g,
+        map_title = "",
+        keyMap    = [];
+
+    $("#projection").val(data.map.projection);
+    $('input[name="bbox_map"]').val(data.map.bbox_map);
+    $('input[name="projection_map"]').val(data.map.projection_map);
+    $('input[name="rotation"]').val(data.map.rotation);
+    if(data.map.download_factor) {
+      $('input[name="download_factor"]').val(data.map.download_factor);
+      $('#download-factor').val(data.map.download_factor);
+    } else {
+      $('input[name="download_factor"]').val("");
+      $('#download-factor')[0].selectedIndex = 0;
+    }
+
+    map_title = data.map.save.title;
+
+    $('input[name="save[title]"]').val(map_title);
+    $('.m-mapSaveTitle').val(map_title);
+
+    $('#mapTitle').text(map_title);
+    $('.map-embed').attr("rel", data.mid).show();
+
+    map_title = map_title.replace(pattern, "_");
+    $('#file-name').val(map_title);
+
+    if(data.map.options !== undefined) {
+      for(key in data.map.options){
+        keyMap[keyMap.length] = key;
+      }
+      for(i=0;i<keyMap.length;i++) {
+        if(keyMap[i] == 'border') {
+          $('#border').attr('checked', true);
+          $('input[name="options[border]"]').val(1);
+        } else if(keyMap[i] == 'legend') {
+          $('#legend').attr('checked', true);
+          $('input[name="options[legend]"]').val(1);
+        } else {
+          $('input[name="options['+keyMap[i]+']"]').attr('checked', true);
+        }
+      }
+    }
+
+  }; //** end Mapper.loadSettings **/
+
+  Mapper.loadCoordinates = function(data) {
+                  //load up all the coordinates
               var coords = (data.map.coords !== undefined) ? data.map.coords : [] ;
               for(i=0;i<coords.length;i++) {
                 //add the fieldsets in case more than the default three are required
@@ -870,8 +899,10 @@ $(function(){
                     $('input[name="coords['+i+'][color]"]').val(coords[i].color);
                 }
               }
-              
-              //load up all the shaded regions 
+  };
+
+  Mapper.loadRegions = function(data) {
+                  //load up all the shaded regions 
               var regions = (data.map.regions !== undefined) ? data.map.regions : [] ;
               for(i=0;i<regions.length;i++) {
                 //add the fieldsets in case more than the default three are required
@@ -954,8 +985,10 @@ $(function(){
                 }
                 
               }
+  };
 
-              //load up all the well-known text, freehand data
+  Mapper.loadFreehand = function(data) {
+                  //load up all the well-known text, freehand data
               var freehands = (data.map.freehand !== undefined) ? data.map.freehand : [];
               for(i=0;i<freehands.length;i++) {
                 //add the fieldsets in case more than the default three are required
@@ -1038,63 +1071,24 @@ $(function(){
                 }
                 
               }
-              
-              
-              //load up all the selected layers
-              $('#border').attr('checked', false);
-              $('#legend').attr('checked', false);
-              $('input[name="options[border]"]').val("");
-              $('input[name="options[legend]"]').val("");
-              if(data.map.layers) {
-                var keyMap = [];
-                for(key in data.map.layers){
-                    keyMap[keyMap.length] = key;
-                }
-                for(i=0;i<keyMap.length;i++) {
-                    $('input[name="layers['+keyMap[i]+']"]').attr('checked', true);
-                }
-              }
-              
-              //load up all the options
-              if(data.map.options !== undefined) {
-                var keyMap = [];
-                for(key in data.map.options){
-                    keyMap[keyMap.length] = key;
-                }
-                for(i=0;i<keyMap.length;i++) {
-                    if(keyMap[i] == 'border') {
-                        $('#border').attr('checked', true);
-                        $('input[name="options[border]"]').val(1);
-                    }
-                    else if(keyMap[i] == 'legend') {
-                        $('#legend').attr('checked', true);
-                        $('input[name="options[legend]"]').val(1);
-                    }
-                    else {
-                        $('input[name="options['+keyMap[i]+']"]').attr('checked', true);
-                    }
-                    
-                }
-              }
-            
-              showMap();
+  };
 
-              $("#tabs").tabs('select',0);
-            }, "json");
-        });
+  Mapper.loadLayers = function(data) {
+    var keyMap = [];
 
-        $('.map-embed').click(function() {
-          self.embedDialog(this);
-          return false;
-        });
-        
-        $('.map-delete').click(function() {
-          self.deleteConfirmation(this);
-          return false;
-        });
-
-    }, "html");
-};
+    $('#border').attr('checked', false);
+    $('#legend').attr('checked', false);
+    $('input[name="options[border]"]').val("");
+    $('input[name="options[legend]"]').val("");
+    if(data.map.layers) {
+      for(key in data.map.layers){
+        keyMap[keyMap.length] = key;
+      }
+      for(i=0;i<keyMap.length;i++) {
+        $('input[name="layers['+keyMap[i]+']"]').attr('checked', true);
+      }
+    }
+  };
 
   Mapper.embedDialog = function(obj) {
     var self    = this,
@@ -1111,7 +1105,7 @@ $(function(){
       modal : true,
       buttons: {
         Cancel: function() {
-          self.hideMessage();
+          $(this).dialog("destroy");
         }
       },
       draggable : false,
@@ -1121,7 +1115,7 @@ $(function(){
 
   Mapper.deleteConfirmation = function(obj) {
     var self    = this,
-        id      = obj.attr("rel")
+        id      = $(obj).attr("rel")
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
 
     $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
@@ -1133,12 +1127,12 @@ $(function(){
       buttons: {
         "Delete" : function() {
           $.get(self.settings.baseUrl + "/usermaps/?action=delete&map="+id, {}, function(data) {
-            self.loadMyMaps();
+            self.loadMapList();
           }, "json");
-          self.hideMessage();
+          $(this).dialog("destroy").remove();
         },
         Cancel: function() {
-          self.hideMessage();
+          $(this).dialog("destroy").remove();
         }
       },
       draggable : false,
@@ -1182,104 +1176,98 @@ $(function(){
       return false;  //kill the browser default action
     });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Save a map
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $('#mapSave').dialog({
-        autoOpen : false,
+  Mapper.bindSave = function() {
+    $(".map-save").click(function() {
+
+      var self         = this,
+          formData     = $("form").serialize(),
+          missingTitle = false
+
+      $('#mapSave').dialog({
+        autoOpen : true,
         height : 200,
         width : 500,
         modal : true,
         buttons: {
-            "Save" : function() {
+          "Save" : function() {
+
+            if($.trim($('.m-mapSaveTitle').val()) == '') { missingTitleSave = true; }
+
+            if(missingTitle) {
+              $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function() {
+                $(this).css({'background-color':'transparent'});
+              });
+            } else {
+              $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
+              $('input[name="download_factor"]').val($('#download-factor').val());
+              if($('#border').is(':checked')) {
+                $('input[name="options[border]"]').val(1);
+              } else {
+                $('input[name="options[border]"]').val("");
+              }
+              if($('#legend').is(':checked')) {
+                $('input[name="options[legend]"]').val(1); 
+              } else {
+                $('input[name="options[legend]"]').val(""); 
+              }
             
-              //some simple error checking
-              var missingTitleSave = false;
-
-              if(jQuery.trim($('.m-mapSaveTitle').val()) == '') {
-                missingTitleSave = true;
-              }
-
-              if(missingTitleSave) {
-                $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function() {
-                    $(this).css({'background-color':'transparent'});
-                });
-              }
-              else {
-                $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-                $('input[name="download_factor"]').val($('#download-factor').val());
-                if($('#border').is(':checked')) {
-                    $('input[name="options[border]"]').val(1);
-                }
-                else {
-                    $('input[name="options[border]"]').val("");
-                }
-                if($('#legend').is(':checked')) {
-                   $('input[name="options[legend]"]').val(1); 
-                }
-                else {
-                   $('input[name="options[legend]"]').val(""); 
-                }
-                
-                var formData = $("form").serialize();
-                $.post(Mapper.settings.baseUrl + "/usermaps/?action=save", formData, function(data) {
-                    $('#mapTitle').text($('.m-mapSaveTitle').val());
-                    $('.map-embed').attr("rel", data.mid).show();
-                    loadMyMaps();
-                }, 'json');
-                $(this).dialog("close");
-              }
-            },
-            Cancel: function() {
-                $(this).dialog("close");
+              $.post(self.settings.baseUrl + "/usermaps/?action=save", formData, function(data) {
+                $('#mapTitle').text($('.m-mapSaveTitle').val());
+                $('.map-embed').attr("rel", data.mid).show();
+                self.loadMapList();
+              }, 'json');
+              $(this).dialog("destroy");
             }
+          },
+          Cancel: function() {
+            $(this).dialog("destroy");
+          }
         },
         draggable : false,
         resizable : false
-    });
-    
-    $(".map-save").click(function() {
-       $('#mapSave').dialog("open");
+      });
+
+      return false;
     });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Export a map
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $('#mapExport').dialog({
-        autoOpen : false,
-        width : 500,
-        modal : true,
-        buttons : {
-            Cancel: function() {
-                $(this).dialog("close");
-            } 
+  }; /** end Mapper.bindSave **/
+
+  Mapper.bindDownload = function() {
+    $(".map-download").click(function() {
+      $('#mapExport').dialog({
+        autoOpen : true,
+        width    : 500,
+        modal    : true,
+        buttons  : {
+          Cancel : function() {
+            $(this).dialog("destroy").remove();
+          } 
         },
         draggable : false,
         resizable : false
+      });
+
+      return false;
     });
-    
-    $(".map-download").click(function() {
-       $('#mapExport').dialog("open"); 
-    });
+  };
 
   Mapper.showMessage = function(message) {
-    $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning">' + message + '</div>');
-    $('#mapper-message').dialog({
-      height : 200,
-      modal : true,
-      buttons: {
-        Ok: function() {
-          $(this).dialog("close").dialog("destroy").remove();
+
+    if($('#mapper-message').length === 0) {
+      $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning"></div>');
+    }
+    $('#mapper-message').html(message).dialog({
+      autoOpen : true,
+      height   : 200,
+      modal    : true,
+      buttons  : {
+        Ok : function() {
+          $(this).dialog("destroy");
         }
       },
       draggable : false,
       resizable : false
     });
-  };
-    
-  Mapper.hideMessage = function() {
-    $('#mapper-message').dialog("destroy");
-    $('#mapper-message').remove();
   };
 
   Mapper.drawLegend = function() {
@@ -1383,23 +1371,21 @@ $(function(){
 
   }; /** end Mapper.showMap **/
 
-$('#badRecordsViewer').dialog({
-  autoOpen : false,
-  height : 200,
-  width : 500,
-  position : [200, 200],
-  modal : true,
-  buttons: {
-    Ok: function() {
-      $(this).dialog("close");
-    }
-  },
-  draggable : false,
-  resizable : false
-});
-
   Mapper.showBadRecords = function() {
-    $('#badRecordsViewer').dialog("open");
+    $('#badRecordsViewer').dialog({
+      autoOpen : true,
+      height : 200,
+      width : 500,
+      position : [200, 200],
+      modal : true,
+      buttons: {
+        Ok: function() {
+          $(this).dialog("destroy");
+        }
+      },
+      draggable : false,
+      resizable : false
+    });
   };
 
   Mapper.generateDownload = function(filetype) {
@@ -1554,10 +1540,12 @@ $('#badRecordsViewer').dialog({
     this.bindSettings();
     this.bindColorPickers();
     this.bindClearButtons();
+    this.bindSave();
+    this.bindDownload();
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
       $("#tabs").tabs('select',4);
-      this.loadMyMaps();
+      this.loadMapList();
     }
     if($('#userdata').length > 0) {
       this.loadUsers();

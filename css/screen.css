@@ -113,6 +113,14 @@ li.map-extras {
     float:right !important;
 }
 
+#mapSave {
+  display:none;
+}
+
+#mapExport {
+  display:none;
+}
+
 #mapper-message {
   font-size:0.8em;
 }

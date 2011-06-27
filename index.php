@@ -67,7 +67,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout">Welcome back <?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/usermaps/?action=logout">Log Out</a></span></div>
 <?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:tabSelector(3);return false;">Log In</a></span></div>
+<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mapper.tabSelector(3);return false;">Log In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
 
@@ -133,7 +133,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- multipoint tab -->
     <div id="map-points">
         <div id="general-points" class="panel">
-        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:tabSelector(5);return false;" class="sprites help">examples</a></p>
+        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mapper.tabSelector(5);return false;" class="sprites help">examples</a></p>
         </div>
 
         <div id="fieldSetsPoints" class="fieldSets">
@@ -207,7 +207,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- shaded regions tab -->
     <div id="map-regions">
         <div id="regions-introduction" class="panel">
-            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:tabSelector(5);return false;" class="sprites help">codes</a></p> 
+            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mapper.tabSelector(5);return false;" class="sprites help">codes</a></p> 
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">
@@ -305,40 +305,40 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
         <div id="mapWrapper">
             <div id="actionsBar" class="ui-widget-header ui-corner-all">
                       <ul class="dropdown">
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsZoomIn tooltip" rel="zoomIn" title="zoom in"></a></li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsZoomOut tooltip" rel="zoomOut" title="zoom out"></a></li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
+                      <li><a href="#" class="sprites toolsZoomIn tooltip" rel="zoomIn" title="zoom in"></a></li>
+                      <li><a href="#" class="sprites toolsZoomOut tooltip" rel="zoomOut" title="zoom out"></a></li>
+                      <li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
                         <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateAC5" rel="rotateac5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateAC10" rel="rotateac10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateAC15" rel="rotateac15">15<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC5" rel="rotateac5">5<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC10" rel="rotateac10">10<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC15" rel="rotateac15">15<sup>o</sup></a></li>
                         </ul>
                       </li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
+                      <li><a href="#" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
                         <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateC5" rel="rotatec5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateC10" rel="rotatec10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" onclick="javascript:return false;" class="sprites toolsRotateC15" rel="rotatec15">15<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC5" rel="rotatec5">5<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC10" rel="rotatec10">10<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC15" rel="rotatec15">15<sup>o</sup></a></li>
                         </ul>
                       </li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsCrop tooltip" rel="crop" title="crop"></a></li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsQuery tooltip" rel="shade" title="fill regions"></a></li>
+                      <li><a href="#" class="sprites toolsCrop tooltip" rel="crop" title="crop"></a></li>
+                      <li><a href="#" class="sprites toolsQuery tooltip" rel="shade" title="fill regions"></a></li>
 <!--
 // Commented out for now until projection issues fully resolve with freehand
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsDraw tooltip" rel="shade" title="draw shape"></a></li>
+                      <li><a href="#" class="sprites toolsDraw tooltip" rel="shade" title="draw shape"></a></li>
 -->
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsRefresh tooltip" rel="refresh" title="refresh"></a></li>
-                      <li><a href="#" onclick="javascript:return false;" class="sprites toolsRebuild tooltip" rel="rebuild" title="rebuild"></a></li>
+                      <li><a href="#" class="sprites toolsRefresh tooltip" rel="refresh" title="refresh"></a></li>
+                      <li><a href="#" class="sprites toolsRebuild tooltip" rel="rebuild" title="rebuild"></a></li>
                     </ul>
                     
                     <h3 id="mapTitle"></h3>
                     
                     <div id="map-saveDialog">
                         <?php if(isset($_SESSION['simplemappr'])): ?>
-                        <span><a class="sprites map-saveItem map-save tooltip" href="#" onclick="javascript:return false;" title="save">Save</a></span>
-                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" onclick="javascript:return false;" title="embed" rel="">Embed</a></span>
+                        <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save">Save</a></span>
+                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" rel="">Embed</a></span>
                         <?php endif; ?>
-                        <span><a class="sprites map-saveItem map-download tooltip" href="#" onclick="javascript:return false;" title="download">Download</a></span>
+                        <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download">Download</a></span>
                     </div>
                     
             </div>
@@ -348,12 +348,12 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                 <div id="mapImage">
                     <div id="mapControlsTransparency"></div>
                     <div id="mapControls">
-                          <a href="#" class="sprites controls" id="arrow-up" onclick="javascript:return false;"></a>
-                          <a href="#" class="sprites controls" id="arrow-right" onclick="javascript:return false;"></a>
-                          <a href="#" class="sprites controls" id="arrow-down" onclick="javascript:return false;"></a>
-                          <a href="#" class="sprites controls" id="arrow-left" onclick="javascript:return false;"></a>
+                          <a href="#" class="sprites controls" id="arrow-up"></a>
+                          <a href="#" class="sprites controls" id="arrow-right"></a>
+                          <a href="#" class="sprites controls" id="arrow-down"></a>
+                          <a href="#" class="sprites controls" id="arrow-left"></a>
                     </div>
-                    <div id="badRecordsWarning"><a href="#" onclick="javascript:return false;" class="sprites toolsBadRecords" rel="badRecords">Records Out of Range</a></div>
+                    <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords" rel="badRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
                         <img id="mapOutputImage" src="images/basemap.png" alt="" />
                     </div>
@@ -501,11 +501,11 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
         File type:
         <ul>
-          <li class="export-svg"><a href="#" onclick="javascript:return false;" class="sprites toolsSvg" rel="saveSvg"> svg*</a> (recommended)</li>
-          <li class="export-png"><a href="#" onclick="javascript:return false;" class="sprites toolsPng" rel="savePng"> png</a></li>
-          <li class="export-tiff"><a href="#" onclick="javascript:return false;" class="sprites toolsTiff" rel="saveTiff"> tif</a></li>
-          <li class="export-eps"><a href="#" onclick="javascript:return false;" class="sprites toolsEps" rel="saveEps"> eps</a></li>
-          <li class="export-kml"><a href="#" onclick="javascript:return false;" class="sprites toolsKml" rel="saveKml"> kml (Google Earth)</a></li>
+          <li class="export-svg"><a href="#" class="sprites toolsSvg" rel="saveSvg"> svg*</a> (recommended)</li>
+          <li class="export-png"><a href="#" class="sprites toolsPng" rel="savePng"> png</a></li>
+          <li class="export-tiff"><a href="#" class="sprites toolsTiff" rel="saveTiff"> tif</a></li>
+          <li class="export-eps"><a href="#" class="sprites toolsEps" rel="saveEps"> eps</a></li>
+          <li class="export-kml"><a href="#" class="sprites toolsKml" rel="saveKml"> kml (Google Earth)</a></li>
         </ul>
 
         <p>*Download does not include scale/legend/relief</p>
