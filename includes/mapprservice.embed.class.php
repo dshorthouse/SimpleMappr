@@ -53,6 +53,8 @@ class MAPPREMBED extends MAPPR {
         $this->{$key} = $data;
       }
 
+      (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
+
       $this->download         = true;
       $this->width            = $this->load_param('width', 800);
       $this->height           = $this->load_param('height', 400);
@@ -99,6 +101,7 @@ class MAPPREMBED extends MAPPR {
     * Override the method in the MAPPR class
     */
     public function add_graticules() {
+      if($this->graticules) {
         $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name", 'grid');
         $layer->set("data", $this->shapes['grid']['shape']);
@@ -128,6 +131,7 @@ class MAPPREMBED extends MAPPR {
         $layer->grid->set("maxarcs", $ticks);
         $layer->grid->set("maxinterval", $ticks);
         $layer->grid->set("maxsubdivide", 2);
+      }
     }
 
     /**

@@ -294,6 +294,7 @@ class MAPPRAPI extends MAPPR {
     * Override the method in the MAPPR class
     */
     public function add_graticules() {
+      if($this->graticules) {
         $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name", 'grid');
         $layer->set("data", $this->shapes['grid']['shape']);
@@ -324,6 +325,7 @@ class MAPPRAPI extends MAPPR {
         $layer->grid->set("maxarcs", $ticks);
         $layer->grid->set("maxinterval", $ticks);
         $layer->grid->set("maxsubdivide", 2);
+      }
     }
     
     /**
