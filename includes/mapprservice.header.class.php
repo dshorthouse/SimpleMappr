@@ -41,6 +41,7 @@ class HEADER {
         'js/jquery.Jcrop.min.js',
         'js/jquery.textarearesizer.compressed.js',
         'js/jquery.cookie.js',
+        'js/jquery.download.js',
         'js/tipsy/javascripts/jquery.tipsy.js'
     );
     

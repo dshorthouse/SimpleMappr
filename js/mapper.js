@@ -1,114 +1,43 @@
 var Mapper = Mapper || { 'settings': {} };
 
-$.fn.clearForm = function() {
-  return this.each(function() {
- var type = this.type, tag = this.tagName.toLowerCase();
- if (tag == 'form')
-   return $(':input',this).clearForm();
- if (type == 'text' || type == 'password' || tag == 'textarea')
-   this.value = '';
- else if (type == 'checkbox' || type == 'radio')
-   this.checked = false;
- else if (tag == 'select')
-   this.selectedIndex = 0;
+$(function(){
+
+    Mapper.vars = {
+      displaySubmit      : false,
+      addMorebtn         : $('#addMore'),
+      newPointsCount     : 0,
+      maxPoints          : 10,
+      addMoreRegionsbtn  : $('#addMoreRegions'),
+      newRegionsCount    : 0,
+      maxRegions         : 10,
+      addMoreFreehandbtn : $('#addMoreFreehand'),
+      newFreehandCount   : 0,
+      maxFreehand        : 10,
+      hiddenControls     : $("#controls .hiddenControls"),
+      submitForm         : $(".submitForm"),
+      hiddenClass        : "hidden",
+      jcropAPI           : {},
+      jzoomAPI           : {},
+      jqueryAPI          : {},
+      zoom               : true,
+      fileDownloadTimer  : {},
+      downloadDialog     : $('.download-dialog').html(),
+      preview            : $('#map-preview')
+    };
+
+  $.ajaxSetup({
+    xhr:function() { return new XMLHttpRequest(); }
   });
-};
 
-function ___getPageSize() {
-    var xScroll, yScroll;
-    if (window.innerHeight && window.scrollMaxY) {  
-        xScroll = window.innerWidth + window.scrollMaxX;
-        yScroll = window.innerHeight + window.scrollMaxY;
-    } else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
-        xScroll = document.body.scrollWidth;
-        yScroll = document.body.scrollHeight;
-    } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
-        xScroll = document.body.offsetWidth;
-        yScroll = document.body.offsetHeight;
-    }
-    var windowWidth, windowHeight;
-    if (self.innerHeight) { // all except Explorer
-        if(document.documentElement.clientWidth){
-            windowWidth = document.documentElement.clientWidth; 
-        } else {
-            windowWidth = self.innerWidth;
-        }
-        windowHeight = self.innerHeight;
-    } else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
-        windowWidth = document.documentElement.clientWidth;
-        windowHeight = document.documentElement.clientHeight;
-    } else if (document.body) { // other Explorers
-        windowWidth = document.body.clientWidth;
-        windowHeight = document.body.clientHeight;
-    }
-    // for small pages with total height less then height of the viewport
-    if(yScroll < windowHeight){
-        pageHeight = windowHeight;
-    } else { 
-        pageHeight = yScroll;
-    }
-    // for small pages with total width less then width of the viewport
-    if(xScroll < windowWidth){  
-        pageWidth = xScroll;        
-    } else {
-        pageWidth = windowWidth;
-    }
-    arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight);
-    return arrayPageSize;
-}
+  $(window).resize(function() {
+    var arrPageSizes = Mapper.getPageSize(),
+        arrPageScroll = Mapper.getPageScroll();
 
-function ___getPageScroll() {
-    var xScroll, yScroll;
-    if (self.pageYOffset) {
-        yScroll = self.pageYOffset;
-        xScroll = self.pageXOffset;
-    } else if (document.documentElement && document.documentElement.scrollTop) {     // Explorer 6 Strict
-        yScroll = document.documentElement.scrollTop;
-        xScroll = document.documentElement.scrollLeft;
-    } else if (document.body) {// all other Explorers
-        yScroll = document.body.scrollTop;
-        xScroll = document.body.scrollLeft; 
-    }
-    arrayPageScroll = new Array(xScroll,yScroll);
-    return arrayPageScroll;
-}
-
-function __showCoords(c) {
-    
-    var x = parseInt(c.x);
-    var y = parseInt(c.y);
-    var x2 = parseInt(c.x2);
-    var y2 = parseInt(c.y2);
-    
-    $('.jcrop-holder div:first').css('backgroundColor', 'white');
-    
-    $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
-}
-
-function __showCoordsQuery(c) {
-    
-    var x = parseInt(c.x);
-    var y = parseInt(c.y);
-    var x2 = parseInt(c.x2);
-    var y2 = parseInt(c.y2);
-    
-    $('#bbox_query').val(x+','+y+','+x2+','+y2);
-}
-
-function tabSelector(tab) {
-  $("#tabs").tabs('select',tab);
-}
-
-$(window).resize(function() {
-    // Get page sizes
-    var arrPageSizes = ___getPageSize();
-    // Style overlay and show it
     $('#mapper-overlay').css({
         width:      arrPageSizes[0],
         height:     arrPageSizes[1]
     });
-    // Get page scroll
-    var arrPageScroll = ___getPageScroll();
+
     $('#mapper-message').css({
         top:    arrPageScroll[1] + (arrPageSizes[3] / 10),
         left:   arrPageScroll[0],
@@ -117,36 +46,100 @@ $(window).resize(function() {
         margin: '0px auto',
         width: '100%'
     });
-});
-
-$(function(){
-
-  //set the tabs & make them sortable
-  $("#tabs").tabs();
-  $('#mapTools').tabs();
-
-  $('.fieldSets').accordion({
-    header : 'h3',
-    collapsible : true,
-    autoHeight : false 
-  });
-                    
-  $('#initial-message').hide();
-  $('#tabs').show();
-
-  //set the tooltips
-  $(".tooltip").tipsy({gravity: 's'});
-
-  //override the ActiveX jQuery 1.4.4 settings for IE
-  $.ajaxSetup({
-    xhr:function() { return new XMLHttpRequest(); }
   });
 
-  function RGBtoHex(R,G,B) {
-    return toHex(R)+toHex(G)+toHex(B);
-  }
+  Mapper.getPageSize = function() {
+    var xScroll, yScroll, windowWidth, windowHeight;
 
-  function toHex(N) {
+    if (window.innerHeight && window.scrollMaxY) {  
+      xScroll = window.innerWidth + window.scrollMaxX;
+      yScroll = window.innerHeight + window.scrollMaxY;
+    } else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
+      xScroll = document.body.scrollWidth;
+      yScroll = document.body.scrollHeight;
+    } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
+      xScroll = document.body.offsetWidth;
+      yScroll = document.body.offsetHeight;
+    }
+
+    if (self.innerHeight) { // all except Explorer
+      if(document.documentElement.clientWidth){
+        windowWidth = document.documentElement.clientWidth; 
+      } else {
+        windowWidth = self.innerWidth;
+      }
+      windowHeight = self.innerHeight;
+    } else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+      windowWidth = document.documentElement.clientWidth;
+      windowHeight = document.documentElement.clientHeight;
+    } else if (document.body) { // other Explorers
+      windowWidth = document.body.clientWidth;
+      windowHeight = document.body.clientHeight;
+    }
+    // for small pages with total height less then height of the viewport
+    if(yScroll < windowHeight){
+      pageHeight = windowHeight;
+    } else { 
+      pageHeight = yScroll;
+    }
+    // for small pages with total width less then width of the viewport
+    if(xScroll < windowWidth){  
+      pageWidth = xScroll;        
+    } else {
+      pageWidth = windowWidth;
+    }
+
+    return new Array(pageWidth,pageHeight,windowWidth,windowHeight);
+
+  }; /** end Mapper.getPageSize **/
+
+
+  Mapper.getPageScroll = function() {
+    var xScroll, yScroll;
+
+    if (self.pageYOffset) {
+      yScroll = self.pageYOffset;
+      xScroll = self.pageXOffset;
+    } else if (document.documentElement && document.documentElement.scrollTop) {     // Explorer 6 Strict
+      yScroll = document.documentElement.scrollTop;
+      xScroll = document.documentElement.scrollLeft;
+    } else if (document.body) {// all other Explorers
+      yScroll = document.body.scrollTop;
+      xScroll = document.body.scrollLeft; 
+    }
+
+    return new Array(xScroll,yScroll);
+
+  }; /** end Mapper.getPageScroll **/
+
+  Mapper.showCoords = function(c) {
+    var x = parseInt(c.x),
+        y = parseInt(c.y),
+       x2 = parseInt(c.x2),
+       y2 = parseInt(c.y2);
+  
+    $('.jcrop-holder div:first').css('backgroundColor', 'white');
+    $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
+  };
+
+  Mapper.showCoordsQuery = function(c) {
+    var x = parseInt(c.x),
+        y = parseInt(c.y),
+       x2 = parseInt(c.x2),
+       y2 = parseInt(c.y2);
+
+    $('#bbox_query').val(x+','+y+','+x2+','+y2);
+  };
+
+  Mapper.tabSelector = function(tab) {
+    $("#tabs").tabs('select',tab);
+  };
+
+  Mapper.RGBtoHex = function(R,G,B) {
+    return this.toHex(R)+this.toHex(G)+this.toHex(B);
+  };
+
+  Mapper.toHex = function(N) {
     if (N == null) return "00";
     N = parseInt(N);
     if (N == 0 || isNaN(N)) return "00";
@@ -154,445 +147,356 @@ $(function(){
     N = Math.min(N,255);
     N = Math.round(N);
     return "0123456789ABCDEF".charAt((N-N%16)/16) + "0123456789ABCDEF".charAt(N%16);
-  }
+  };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Define some variables - edit to suit your needs
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
-    var displaySubmit=false;
+  Mapper.bindToolbar = function() {
+    var self = this;
 
-    var $addMorebtn = $('#addMore');
-    var newPointsCount=0;
-    var maxPoints=10;
-    
-    var $addMoreRegionsbtn = $('#addMoreRegions');
-    var newRegionsCount=0;
-    var maxRegions=10;
-
-    var $addMoreFreehandbtn = $('#addMoreFreehand');
-    var newFreehandCount=0;
-    var maxFreehand=10;
-    
-    var $hiddenControls = $("#controls .hiddenControls");
-    var $submitForm = $(".submitForm");
-    var hiddenClass = "hidden";
-
-    var jcrop_api;
-    var jzoom_api;
-    var jquery_api;
-    var zoom = true;
-    
-    var fileDownloadCheckTimer;
-
-    var download_dialog = $('.download-dialog').html();
-
-/******************** toolbar actions ************************/
     $("ul.dropdown li").hover(function(){
-        $(this).addClass("ui-state-hover");
-        $('ul:first',this).css('visibility', 'visible');
+      $(this).addClass("ui-state-hover");
+      $('ul:first',this).css('visibility', 'visible');
     }, function(){ 
-        $(this).removeClass("ui-state-hover");
-        $('ul:first',this).css('visibility', 'hidden');
+      $(this).removeClass("ui-state-hover");
+      $('ul:first',this).css('visibility', 'hidden');
     });
 
     $("ul.dropdown li ul li:has(ul)").find("a:first").append(" &raquo; ");
 
-    var $preview = $('#map-preview');
-
-    $preview.find('.toolsZoomIn').click(function(){
-        $('#mapCropMessage').hide();
-        if($('#mapCropMessage').is(':hidden')) {
-            initJzoom();
-            zoom = true;    
-        }
-        return false;   
+    $('.toolsZoomIn').click(function(){
+      $('#mapCropMessage').hide();
+      if($('#mapCropMessage').is(':hidden')) {
+        self.initJzoom();
+        self.vars.zoom = true;    
+      }
+      return false;   
     });
 
-    $preview.find('.toolsZoomOut').click(function(){
-        $('#mapCropMessage').hide();
-        $('#zoom_out').val(1);
-        showMap();
-        $('#zoom_out').val('');
-        return false;   
+    $('.toolsZoomOut').click(function(){
+      $('#mapCropMessage').hide();
+      $('#zoom_out').val(1);
+      self.showMap();
+      $('#zoom_out').val('');
+      return false;   
     });
 
-    $preview.find('.toolsRotateAC5').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())-5);
-        showMap();
-        return false;   
+    $('.toolsRotateAC5').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())-5);
+      self.showMap();
+      return false;   
     });
 
-    $preview.find('.toolsRotateAC10').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())-10);
-        showMap();
-        return false;   
+    $('.toolsRotateAC10').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())-10);
+      self.showMap();
+      return false;   
     });
 
-    $preview.find('.toolsRotateAC15').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())-15);
-        showMap();
-        return false;   
+    $('.toolsRotateAC15').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())-15);
+      self.showMap();
+      return false;   
     });
 
-    $preview.find('.toolsRotateC5').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())+5);
-        showMap();
-        return false;   
+    $('.toolsRotateC5').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())+5);
+      self.showMap();
+      return false;   
     });
 
-    $preview.find('.toolsRotateC10').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())+10);
-        showMap();
-        return false;   
+    $('.toolsRotateC10').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())+10);
+      self.showMap();
+      return false;   
     });
 
-    $preview.find('.toolsRotateC15').click(function(){
-        $('#rotation').val(parseInt($('#rendered_rotation').val())+15);
-        showMap();
-        return false;   
+    $('.toolsRotateC15').click(function(){
+      $('#rotation').val(parseInt($('#rendered_rotation').val())+15);
+      self.showMap();
+      return false;   
     });
-                        
-    $preview.find('.toolsCrop').click(function(){
-        if($('#mapCropMessage').is(':hidden')){
-            initJcrop();
-            zoom = false;
-            $('#mapCropMessage').show();    
-        }
-        return false;   
-    });
-    
-    $preview.find('.toolsQuery').click(function() {
-        $('#mapCropMessage').hide();
-        initJquery();
-        zoom = false;
-        return false;
+                    
+    $('.toolsCrop').click(function(){
+      if($('#mapCropMessage').is(':hidden')){
+        self.initJcrop();
+        self.vars.zoom = false;
+        $('#mapCropMessage').show();    
+      }
+      return false;   
     });
 
-    $preview.find('.toolsDraw').click(function() {
-       $('mapCropMessage').hide();
-       initDraw();
-       zoom = false;
-       return false;
+    $('.toolsQuery').click(function() {
+      $('#mapCropMessage').hide();
+      self.initJquery();
+      self.vars.zoom = false;
+      return false;
     });
 
-    $preview.find('.toolsRefresh').click(function(){
-        showMap();  
+    $('.toolsDraw').click(function() {
+      $('mapCropMessage').hide();
+      self.initDraw();
+      self.vars.zoom = false;
+      return false;
     });
 
-    $preview.find('.toolsRebuild').click(function(){
-        $('#bbox_map').val('');
-        $('#projection_map').val('');
-        $('#bbox_rubberband').val('');
-        $('#rotation').val('');
-        $('#projection').val('');
-        $('#pan').val('');
-        showMap();  
+    $('.toolsRefresh').click(function(){
+      self.showMap();  
     });
 
-    //controls for arrow scrollers
+    $('.toolsRebuild').click(function(){
+      $('#bbox_map').val('');
+      $('#projection_map').val('');
+      $('#bbox_rubberband').val('');
+      $('#rotation').val('');
+      $('#projection').val('');
+      $('#pan').val('');
+      self.showMap();  
+    });
 
+  }; /** end Mapper.bindToolbar **/
+
+  Mapper.bindArrows = function() {
     $('#arrow-up').click(function() {
-        $('#pan').val('up');
-        showMap();
-        return false;   
+      $('#pan').val('up');
+      this.showMap();
+      return false;   
     });
 
     $('#arrow-right').click(function() {
-        $('#pan').val('right');
-        showMap();
-        return false;
+      $('#pan').val('right');
+      this.showMap();
+      return false;
     });
 
     $('#arrow-down').click(function() {
-        $('#pan').val('down');
-        showMap();
-        return false;
+      $('#pan').val('down');
+      this.showMap();
+      return false;
     });
 
     $('#arrow-left').click(function() {
-        $('#pan').val('left');
-        showMap();
-        return false;   
+      $('#pan').val('left');
+      this.showMap();
+      return false;   
     });
-    
+
+  }; /** end Mapper.bindArrows **/
+
+  Mapper.bindSettings = function() {
     $('.layeropt').click(function() {
-      showMap();    
+      this.showMap();    
     });
-    
+ 
     $('#projection').change(function() {
-        if($(this).val() != "") {
-          showMap();
-        }
+      if($(this).val() !== "") { this.showMap(); }
+    });
+  };
+
+  Mapper.bindColorPickers = function() {
+    $('.colorPicker').ColorPicker({
+      onSubmit: function(hsb, hex, rgb, el) {
+        $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
+        $(el).ColorPickerHide();
+      },
+      onBeforeShow: function () {
+        $(this).ColorPickerSetColor(this.value);
+      }
+    }).bind('keyup', function(){
+      $(this).ColorPickerSetColor(this.value);
+    });
+  };
+
+  Mapper.bindClearButtons = function() {
+    $('.clearLayers').click(function() {
+      var fieldsets = $('#fieldSetsPoints div.fieldset-points').length;
+      for(i=0;i<fieldsets;i++) {
+          $('input[name="coords['+i+'][title]"]').val('');
+          $('textarea[name="coords['+i+'][data]"]').val('');
+          $('select[name="coords['+i+'][shape]"]')[0].selectedIndex = 3;
+          $('select[name="coords['+i+'][size]"]')[0].selectedIndex = 3;
+          $('input[name="coords['+i+'][color]"]').val('0 0 0');
+      }
+      return false;
     });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    $('.clearRegions').click(function() {
+      var fieldsets = $('#fieldSetsRegions div.fieldset-regions').length;
+      for(i=0;i<fieldsets;i++) {
+        $('input[name="regions['+i+'][title]"]').val('');
+        $('textarea[name="regions['+i+'][data]"]').val('');
+        $('input[name="regions['+i+'][color]"]').val('150 150 150');
+      }
+      return false;
+    });
 
+    $('.clearFreehand').click(function() {
+      var fieldsets = $('#fieldSetsFreehand div.fieldset-freehand').length;
+      for(i=0;i<fieldsets;i++) {
+        $('input[name="freehand['+i+'][title]"]').val('');
+        $('textarea[name="freehand['+i+'][data]"]').val('');
+        $('input[name="freehand['+i+'][color]"]').val('150 150 150');
+      }
+      return false;
+    });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Initialize the cropper
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function initJcrop(){
-        //destroy existing apis first
-        if(typeof jzoom_api != "undefined") {
-          jzoom_api.destroy();
-        }
-        if(typeof jcrop_api != "undefined") {
-          jcrop_api.destroy();
-        }
-        if(typeof jquery_api != "undefined") {
-          jquery_api.destroy();
-        }
-        
-        jcrop_api = $.Jcrop('#mapOutput img', {
-            bgColor:'grey',
-            bgOpacity:1,
-            onChange: __showCoords,
-            onSelect: __showCoords
-        });
-        
-        $('.jcrop-tracker').unbind('mouseup', aZoom );
+  }; /** end Mapper.bindClearButtons **/
+
+  Mapper.destroyJcrop = function() {
+    var vars = this.vars;
+
+    if(typeof vars.jzoom_api != "undefined") { vars.jzoom_api.destroy(); }
+    if(typeof vars.jcrop_api != "undefined") { vars.jcrop_api.destroy(); }
+    if(typeof vars.jquery_api != "undefined") { vars.jquery_api.destroy(); }
+  };
+
+  Mapper.initJcrop = function(){
+    var self = this, vars = this.vars;
+
+    self.destroyJcrop();
+    
+    vars.jcrop_api = $.Jcrop('#mapOutput img', {
+      bgColor:'grey',
+      bgOpacity:1,
+      onChange: self.showCoords,
+      onSelect: self.showCoords
+    });
+    
+    $('.jcrop-tracker').unbind('mouseup', self.azoom );
+  };
+
+  Mapper.initJzoom = function(){
+    var self = this, vars = this.vars;
+
+    self.destroyJcrop();
+    
+    vars.jzoom_api = $.Jcrop('#mapOutput img', {
+      addClass: 'customJzoom',
+      sideHandles: false,
+      cornerHandles: false,
+      dragEdges: false,
+      bgOpacity: 1,
+      bgColor:'white',
+      onChange: self.showCoords,
+      onSelect: self.showCoords
+    });
+
+    $('.jcrop-tracker').bind('mouseup', self.azoom );
+  };
+
+  Mapper.initJquery = function(){
+    var self = this, vars = this.vars;
+
+    self.destroyJcrop();
+
+    vars.jquery_api = $.Jcrop('#mapOutput img', {
+      addClass: 'customJzoom',
+      sideHandles: false,
+      cornerHandles: false,
+      dragEdges: false,
+      bgOpacity: 1,
+      bgColor:'white',
+      onChange: self.showCoordsQuery,
+      onSelect: self.showCoordsQuery
+    });
+
+    $('.jcrop-tracker').bind('mouseup', aQuery );
+  };
+
+  Mapper.initDraw = function() {
+    var self = this, raphael = this.raphaelConfig;
+
+    self.destroyJcrop();
+
+    $('#mapOutput').mousedown(function(e) {
+      var pos     = raphael.position(e),
+          color = $('input[name="freehand[0][color]"]').val();
+
+      color = color.split(" ");
+      raphael.path = [['M', pos.x, pos.y]];
+      raphael.wkt = [[pos.x + " " + pos.y]];
+      raphael.color = "#" + self.RGBtoHex(color[0], color[1], color[2]);
+      raphael.size = raphael.selectedSize;
+      raphael.line = raphael.draw(self.path, self.color, self.size);
+      $('#mapOutput').bind('mousemove', raphael.mouseMove);
+    });
+
+    $('#mapOutput').mouseup(function() {
+      var wkt = "";
+
+      $('#mapOutput').unbind('mousemove', raphael.mouseMove);
+      $('input[name="freehand[0][title]"]').val("Freehand Drawing");
+
+      $.ajax({
+        url     : self.settings.baseUrl + '/query/',
+        type    : 'POST',
+        data    : { freehand : raphael.wkt },
+        async   : false,
+        success : function(results) {
+          if(!results) return; 
+          switch(raphael.selectedTool) {
+            case 'pencil':
+              wkt = "LINESTRING(" + results + ")";
+            break;
+
+            case 'rectangle':
+              wkt = "POLYGON((" + results + "))";
+            break;
+
+            case 'circle':
+            break;
+
+            case 'line':
+              wkt = "LINESTRING(" + results + ")";  
+            break;
+          }
+          $('textarea[name="freehand[0][data]"]').val(wkt);
+        },
+        error : function() { return false; }
+      });
+
+    });
+
+  };  /** end Mapper.initDraw **/
+    
+  Mapper.aZoom = function() {
+    showMap();
+  };
+
+  Mapper.aQuery = function() {
+    var self = this;
+
+    self.destroyJcrop();
+  
+    var formData = {
+      bbox           : $('#rendered_bbox').val(), 
+      bbox_query     : $('#bbox_query').val(), 
+      projection     : $('#projection').val(), 
+      projection_map : $('#projection_map').val(),
+      qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base' 
     };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function initJzoom(){
-        //destroy existing apis first
-        if(typeof jzoom_api != "undefined") {
-          jzoom_api.destroy();
+    $.post(Mapper.settings.baseUrl + "/query/", formData, function(data) {
+      if(data.length > 0) {
+        var regions = "",
+            region_title = $('input[name="regions[0][title]"]'),
+            region_data = $('textarea[name="regions[0][data]"]');
+
+        region_data.val("");
+        if(region_title.val() === "") { region_title.val("Selected Regions"); }
+        for(var i = 0; i < data.length; i++) {
+            regions += data[i];
+            if(i < data.length-1) { regions += ", "; }
         }
-        if(typeof jcrop_api != "undefined") {
-          jcrop_api.destroy();
-        }
-        if(typeof jquery_api != "undefined") {
-          jquery_api.destroy();
-        }
-        
-        jzoom_api = $.Jcrop('#mapOutput img', {
-            addClass: 'customJzoom',
-            sideHandles: false,
-            cornerHandles: false,
-            dragEdges: false,
-            bgOpacity: 1,
-            bgColor:'white',
-            onChange: __showCoords,
-            onSelect: __showCoords
-        });
+        region_data.val(regions);
+        self.showMap();
+      }
+    });
 
-        $('.jcrop-tracker').bind('mouseup', aZoom );
-    };
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        function initJquery(){
-            //destroy existing apis first
-            if(typeof jzoom_api != "undefined") {
-              jzoom_api.destroy();
-            }
-            if(typeof jcrop_api != "undefined") {
-              jcrop_api.destroy();
-            }
-            if(typeof jquery_api != "undefined") {
-              jquery_api.destroy();
-            }
-
-            jquery_api = $.Jcrop('#mapOutput img', {
-                addClass: 'customJzoom',
-                sideHandles: false,
-                cornerHandles: false,
-                dragEdges: false,
-                bgOpacity: 1,
-                bgColor:'white',
-                onChange: __showCoordsQuery,
-                onSelect: __showCoordsQuery
-            });
-
-            $('.jcrop-tracker').bind('mouseup', aQuery );
-        };
-
-    function initDraw() {
-        if(typeof jzoom_api != "undefined") {
-          jzoom_api.destroy();
-        }
-        if(typeof jcrop_api != "undefined") {
-          jcrop_api.destroy();
-        }
-        if(typeof jquery_api != "undefined") {
-          jquery_api.destroy();
-        }
-
-        //set Raphael, freehand drawing tools
-      var raphaelConfig = {
-        board : Raphael('mapOutput', 800, 400),
-        line : null,
-        path : null,
-        wkt : null,
-        color : null,
-        size : null,
-        selectedColor : 'mosaic',
-        selectedSize : 4,
-        selectedTool : 'pencil',
-        offset : $('#mapOutput').offset(),
-      };  
-
-      raphaelConfig.position = function(e) {
-        return {
-          x: e.pageX - this.offset.left,
-          y: e.pageY - this.offset.top
-        };
-      };
-
-      raphaelConfig.mouseMove = function(e) {
-        var self = raphaelConfig;
-        var pos = self.position(e);
-        var x = self.path[0][1];
-        var y = self.path[0][2];
-        var dx = (pos.x - x);
-        var dy = (pos.y - y);
-        switch(self.selectedTool){
-          case 'pencil':
-            self.path.push(['L', pos.x, pos.y]);
-            self.wkt.push([pos.x + " " + pos.y]);
-            break;
-          case 'rectangle':
-            self.path[1] = ['L', x + dx, y     ];
-            self.path[2] = ['L', x + dx, y + dy];
-            self.path[3] = ['L', x     , y + dy];
-            self.path[4] = ['L', x     , y     ];
-            self.path[5] = ['L', x,      y     ];
-    
-//          self.wkt[1] = [(x + dx) + " " + y];
-//          self.wkt[2] = [(x + dx) + " " + (y + dy)];
-//          self.wkt[3] = [x + " " + (y + dy)];
-//          self.wkt[4] = [x + " " + y];
-//          self.wkt[5] = [x + " " + y];
-            break;
-          case 'line':
-            self.path[1] = ['L', pos.x, pos.y];
-            self.wkt[1] = [pos.x + " " + pos.y];
-            break;                        
-          case 'circle':
-            self.path[1] = ['A', (dx / 2), (dy / 2), 0, 1, 0, pos.x, pos.y];
-            self.path[2] = ['A', (dx / 2), (dy / 2), 0, 0, 0, x, y];
-            break;
-        }
-        self.line.attr({ path: self.path });
-      };
-
-      // stupid chrome has a repaint bug
-      raphaelConfig.forcePaint = function(){
-        var self = this;
-        window.setTimeout(function(){
-          var rect = self.board.rect(-99, -99, self.board.width + 99, self.board.height + 99).attr({stroke: "none"});
-          setTimeout(function() {rect.remove();});
-        },1);
-      };
-
-      raphaelConfig.draw = function(path, color, size) {
-        var result = this.board.path(path);
-        result.attr({ stroke: color, 'stroke-width': size, 'stroke-linecap': 'round' });
-        this.forcePaint();
-        return result;
-      };
-
-        $('#mapOutput').mousedown(function(e) {
-          var self = raphaelConfig;
-          var pos = self.position(e);
-          var color = $('input[name="freehand[0][color]"]').val();
-          color = color.split(" ");
-          self.path = [['M', pos.x, pos.y]];
-          self.wkt = [[pos.x + " " + pos.y]];
-          self.color = "#" + RGBtoHex(color[0], color[1], color[2]);
-          self.size = self.selectedSize;
-          self.line = self.draw(self.path, self.color, self.size);
-          $('#mapOutput').bind('mousemove', self.mouseMove);
-        });
-
-        $('#mapOutput').mouseup(function() {
-          var self = raphaelConfig;
-          var wkt = "";
-
-          $('#mapOutput').unbind('mousemove', self.mouseMove);
-          $('input[name="freehand[0][title]"]').val("Freehand Drawing");
-
-          $.ajax({
-            url     : Mapper.settings.baseUrl + '/query/',
-            type    : 'POST',
-            data    : { freehand : self.wkt },
-            async: false,
-            success : function(results) {
-              if(!results) return; 
-              switch(self.selectedTool) {
-                case 'pencil':
-                  wkt = "LINESTRING(" + results + ")";
-                break;
-
-                case 'rectangle':
-                  wkt = "POLYGON((" + results + "))";
-                break;
-
-                case 'circle':
-                break;
-
-                case 'line':
-                  wkt = "LINESTRING(" + results + ")";  
-                break;
-              }
-              $('textarea[name="freehand[0][data]"]').val(wkt);
-            },
-            error : function() {
-              return false;
-            },
-            complete : function() {
-            }
-          });
-
-        });
-    }
-    
-    function aZoom() {
-      showMap();
-    }
-
-    function aQuery() {
-        //destroy existing apis first
-          if(typeof jzoom_api != "undefined") {
-              jzoom_api.destroy();
-          }
-          if(typeof jcrop_api != "undefined") {
-              jcrop_api.destroy();
-          }
-          if(typeof jquery_api != "undefined") {
-              jquery_api.destroy();
-          }
-        
-          var formData = {
-            bbox : $('#rendered_bbox').val(), 
-            bbox_query : $('#bbox_query').val(), 
-            projection : $('#projection').val(), 
-            projection_map : $('#projection_map').val(),
-            qlayer : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base' 
-          };
-
-          $.post(Mapper.settings.baseUrl + "/query/", formData, function(data) {
-            if(data.length > 0) {
-                $region_title = $('input[name="regions[0][title]"]');
-                $region_data = $('textarea[name="regions[0][data]"]');
-                $region_data.val("");
-                if($region_title.val() == "") $region_title.val("Selected Regions");
-                var regions = "";
-                for(var i = 0; i < data.length; i++) {
-                    regions += data[i];
-                    if(i < data.length-1) regions += ", ";
-                }
-                $region_data.val(regions);
-                showMap();
-            }
-          });
-          
-    }
+  }; /** end Mapper.aQuery **/
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //click the add more button
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $addMorebtn.click(function(){
+    Mapper.vars.addMorebtn.click(function(){
       if(newPointsCount < maxPoints) {
         newPointsCount++;
         var totalPoints = newPointsCount + 3;
@@ -656,7 +560,7 @@ $(function(){
     
       //disable button so you know you've reached the max
       if(newPointsCount >= maxPoints-6){
-        $addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
+        addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
         return false; //kill the browser default action
       }
  
@@ -666,7 +570,7 @@ $(function(){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //click the add more regions button
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        $addMoreRegionsbtn.click(function(){
+        Mapper.vars.addMoreRegionsbtn.click(function(){
           if(newRegionsCount < maxRegions) {
             newRegionsCount++;
             var totalRegions = newRegionsCount + 3;
@@ -729,7 +633,7 @@ $(function(){
 
           //disable button so you know you've reached the max
           if(newRegionsCount >= maxRegions-6){
-            $addMoreRegionsbtn.attr("disabled","disabled"); //set the "disabled" property on the button
+            addMoreRegionsbtn.attr("disabled","disabled"); //set the "disabled" property on the button
             return false; //kill the browser default action
           }
 
@@ -739,7 +643,7 @@ $(function(){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //click the add more freehand button
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                $addMoreFreehandbtn.click(function(){
+                Mapper.vars.addMoreFreehandbtn.click(function(){
                   if(newFreehandCount < maxFreehand) {
                     newFreehandCount++;
                     var totalFreehand = newFreehandCount + 3;
@@ -802,24 +706,17 @@ $(function(){
 
                   //disable button so you know you've reached the max
                   if(newFreehandCount >= maxFreehand-6){
-                    $addMoreFreehandbtn.attr("disabled","disabled"); //set the "disabled" property on the button
+                    addMoreFreehandbtn.attr("disabled","disabled"); //set the "disabled" property on the button
                     return false; //kill the browser default action
                   }
 
                   return false;  //kill the browser default action
                 });
-            
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Load user map data if usermaps div present
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if($('#usermaps').length > 0) {
-    $("#tabs").tabs('select',4);
-    loadMyMaps();
-}
 
-function loadMyMaps() {
-    
+
+  Mapper.loadMyMaps = function() {
     var message = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
+
     $('#usermaps').html(message);
     
     $.get(Mapper.settings.baseUrl + "/usermaps/?action=list", {}, function(data) {
@@ -943,7 +840,7 @@ function loadMyMaps() {
 
                   //disable button so you know you've reached the max
                   if(newPointsCount >= maxPoints){
-                    $addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
+                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
                   }
                 }
                 
@@ -1042,7 +939,7 @@ function loadMyMaps() {
 
                   //disable button so you know you've reached the max
                   if(newRegionsCount >= maxRegions){
-                    $addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
+                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
                   }
                 }
                 
@@ -1126,7 +1023,7 @@ function loadMyMaps() {
 
                   //disable button so you know you've reached the max
                   if(newFreehandCount >= maxFreehand){
-                    $addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
+                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
                   }
                 }
                 
@@ -1185,74 +1082,84 @@ function loadMyMaps() {
               $("#tabs").tabs('select',0);
             }, "json");
         });
-        
+
         $('.map-embed').click(function() {
-            var message = 'Use the following HTML snippet to embed a png:';
-            message += "<p><input type='text' size='65' value='&lt;img src=\"" + Mapper.settings.baseUrl + "/?map=" + $(this).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
-            message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(this).attr("rel") + "&amp;width=200&amp;height=150)</span>";
-            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
-            $('#mapper-message').dialog({
-                height : 250,
-                width : 525,
-                modal : true,
-                buttons: {
-                    Cancel: function() {
-                        hideMessage();
-                    }
-                },
-                draggable : false,
-                resizable : false
-            });
-            return false;
+          self.embedDialog(this);
+          return false;
         });
         
         $('.map-delete').click(function() {
-            var message = 'Are you sure you want to delete<p><em>'+$(this).parent().parent().find(".title").html()+'</em>?</p>';
-            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
-            var id = $(this).attr("rel");
-            $('#mapper-message').dialog({
-                height : 250,
-                width : 500,
-                modal : true,
-                buttons: {
-                    "Delete" : function() {
-                        $.get(Mapper.settings.baseUrl + "/usermaps/?action=delete&map="+id, {}, function(data) {
-                            hideMessage();
-                            loadMyMaps();
-                        }, "json");
-                    },
-                    Cancel: function() {
-                        hideMessage();
-                    }
-                },
-                draggable : false,
-                resizable : false
-            });
-            return false;
+          self.deleteConfirmation(this);
+          return false;
         });
+
     }, "html");
-}
+};
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Load user data if usermaps div present
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if($('#userdata').length > 0) {
-    loadUsers();
-}
+  Mapper.embedDialog = function(obj) {
+    var self    = this,
+        message = 'Use the following HTML snippet to embed a png:';
 
-function loadUsers() {
-    var message = '<div id="users-loading"><span id="mapper-building-users">Loading users list...</span></div>';
-    $('#userdata').html(message);
+    message += "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + $(obj).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
+    message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(obj).attr("rel") + "&amp;width=200&amp;height=150)</span>";
     
+    $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
+    
+    $('#mapper-message').dialog({
+      height : 250,
+      width : 525,
+      modal : true,
+      buttons: {
+        Cancel: function() {
+          self.hideMessage();
+        }
+      },
+      draggable : false,
+      resizable : false
+    });
+  };
+
+  Mapper.deleteConfirmation = function(obj) {
+    var self    = this,
+        id      = obj.attr("rel")
+        message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
+
+    $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
+    
+    $('#mapper-message').dialog({
+      height : 250,
+      width : 500,
+      modal : true,
+      buttons: {
+        "Delete" : function() {
+          $.get(self.settings.baseUrl + "/usermaps/?action=delete&map="+id, {}, function(data) {
+            self.loadMyMaps();
+          }, "json");
+          self.hideMessage();
+        },
+        Cancel: function() {
+          self.hideMessage();
+        }
+      },
+      draggable : false,
+      resizable : false
+    });
+
+  };
+
+  Mapper.loadUsers = function() {
+    var message = '<div id="users-loading"><span id="mapper-building-users">Loading users list...</span></div>';
+
+    $('#userdata').html(message);
     $.get(Mapper.settings.baseUrl + "/usermaps/?action=users", {}, function(data) {
-        $('#userdata').html(data);
+      $('#userdata').html(data);
     }, "html");
-}
+  };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Submit the form
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $submitForm.click(function() {
+    Mapper.vars.submitForm.click(function() {
     
       //some simple error checking
       var missingTitle = false;
@@ -1355,343 +1262,324 @@ function loadUsers() {
        $('#mapExport').dialog("open"); 
     });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Clear the layers data
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$('.clearLayers').click(function() {
-    var fieldsets = $('#fieldSetsPoints div.fieldset-points').length;
-    for(i=0;i<fieldsets;i++) {
-        $('input[name="coords['+i+'][title]"]').val('');
-        $('textarea[name="coords['+i+'][data]"]').val('');
-        $('select[name="coords['+i+'][shape]"]')[0].selectedIndex = 3;
-        $('select[name="coords['+i+'][size]"]')[0].selectedIndex = 3;
-        $('input[name="coords['+i+'][color]"]').val('0 0 0');
+  Mapper.showMessage = function(message) {
+    $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning">' + message + '</div>');
+    $('#mapper-message').dialog({
+      height : 200,
+      modal : true,
+      buttons: {
+        Ok: function() {
+          $(this).dialog("close").dialog("destroy").remove();
+        }
+      },
+      draggable : false,
+      resizable : false
+    });
+  };
+    
+  Mapper.hideMessage = function() {
+    $('#mapper-message').dialog("destroy");
+    $('#mapper-message').remove();
+  };
+
+  Mapper.drawLegend = function() {
+    var legend_url = $('#legend_url').val();
+
+    if(legend_url) {
+      $('#mapLegend').html("<img src=\"" + legend_url + "\" />");
+    } else {
+      $('#mapLegend').html('<p><em>legend will appear here</em></p>');
     }
-    return false;  //prevent form submission
-});
+  };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Clear the regions data
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$('.clearRegions').click(function() {
-  var fieldsets = $('#fieldSetsRegions div.fieldset-regions').length;
-  for(i=0;i<fieldsets;i++) {
-    $('input[name="regions['+i+'][title]"]').val('');
-    $('textarea[name="regions['+i+'][data]"]').val('');
-    $('input[name="regions['+i+'][color]"]').val('150 150 150');
-  }
-  return false; //prevent form submission
-});
+  Mapper.drawScalebar = function() {
+    var scalebar_url = $('#scalebar_url').val();
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Clear the regions data
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$('.clearFreehand').click(function() {
-  var fieldsets = $('#fieldSetsFreehand div.fieldset-freehand').length;
-  for(i=0;i<fieldsets;i++) {
-    $('input[name="freehand['+i+'][title]"]').val('');
-    $('textarea[name="freehand['+i+'][data]"]').val('');
-    $('input[name="freehand['+i+'][color]"]').val('150 150 150');
-  }
-  return false; //prevent form submission
-});
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Function to hide messages
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function showMessage(message) {
-        $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning">' + message + '</div>');
-        $('#mapper-message').dialog({
-            height : 200,
-            modal : true,
-            buttons: {
-                Ok: function() {
-                    $(this).dialog("close").dialog("destroy").remove();
-                }
-            },
-            draggable : false,
-            resizable : false
-        });
-    }
-    
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Function to hide messages
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function hideMessage() {
-      $('#mapper-message').hide().remove();
-      $('#mapper-message').dialog("destroy");
-    }
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Function to show the preview map
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function showMap() {
-    
-      //destroy existing apis first
-      if(typeof jzoom_api != "undefined") {
-          jzoom_api.destroy();
-      }
-      if(typeof jcrop_api != "undefined") {
-          jcrop_api.destroy();
-      }
-      if(typeof jquery_api != "undefined") {
-          jquery_api.destroy();
-      }
-
-      //set the preview and output values
-      $('#output').val('pnga');
-
-      //hide the bad records warning
-      $('#badRecordsWarning').hide();
-
-      var x = $('#x').val();
-
-      var token = new Date().getTime();
-      $('#download_token').val(token);
-    
-      var formData = $("form").serialize();
-    
-      var message = '<span id="mapper-building-map">Building preview...</span>';
-      $('#mapOutput').html(message);
+    if(scalebar_url) {
+      $('#mapScale').html('<img src="' + scalebar_url + '" />');    
+    } else {
       $('#mapScale').html('');
-
-      $.post(Mapper.settings.baseUrl + "/application/", formData, function(data) {
-        $('#mapOutput').html(data);
-        
-        //draw the legend if present
-        var legend_url = $('#legend_url').val();
-        var legend_dl = '';
-        if(legend_url) {
-            legend_dl += "<img src=\"" + legend_url + "\" />";
-            $('#mapLegend').html(legend_dl);
-        }
-        else {
-          $('#mapLegend').html('<p><em>legend will appear here</em></p>');
-        }
-        
-        //draw the scalebar if requested
-        var scalebar_url = $('#scalebar_url').val();
-        if(scalebar_url) {
-          $('#mapScale').html('<img src="' + scalebar_url + '" />');    
-        }
-        else {
-          $('#mapScale').html('');
-        }
-        
-        //show the bad records if there are any
-        var bad_points = $('#bad_points').val();
-        if(bad_points) {
-            $('#badRecords').html(bad_points);
-            $('#badRecordsWarning').show();
-        }
-        
-        var $toolsTabs = $('#mapTools').tabs();
-        var tabIndex = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val()) : 0;
-        $toolsTabs.tabs('select', tabIndex);
-        
-        $('#mapTools').bind('tabsselect', function(event,ui) {
-          $('#selectedtab').val(ui.index);
-        });
-
-        //reset the bounding box values, but get them first for the crop function
-        $('#bbox_rubberband').val('');
-
-        //set the extent from previous rendering
-        $('#bbox_map').val($('#rendered_bbox').val());
-
-        //set the projection from the previous rendering
-        $('#projection_map').val($('#rendered_projection').val());
-
-        //reset the rotation value
-        $('#rotation').val($('#rendered_rotation').val());
-
-        //reset the pan value
-        $('#pan').val('');
-            
-        //map download
-        $('#mapExport a.toolsPng').click(function(){
-          generateDownload('png');
-          return false; 
-        });
-        
-        $('#mapExport a.toolsTiff').click(function(){
-          generateDownload('tif');
-          return false; 
-        });
-
-        $('#mapExport a.toolsSvg').click(function(){
-          generateDownload('svg');
-          return false; 
-        });
-
-        $('#mapExport a.toolsEps').click(function(){
-          generateDownload('eps');
-          return false; 
-        });
-        
-        $('#mapExport a.toolsKml').click(function(){
-          generateDownload('kml');
-          return false; 
-        });
-                            
-        $preview.find('.toolsBadRecords').click(function() {
-          showBadRecords();
-          return false; 
-        });
-        
-      }, "html");
-
     }
+  };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Function to show or hide the submit/cancel buttons
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function showHideSubmit(){
-        if(newRowCount > 0 && !displaySubmit){
-                //at least one new row is visible, show the hidden controls
-                $hiddenControls.fadeIn(rowSpeed);
-                displaySubmit= true;
-        }else if(newRowCount <= 0){
-            //no new rows are shown, hide the controls
-            $hiddenControls.fadeOut(rowSpeed);
-            //fade old rows back in and re-enable links
-            $tableBody.find("tr:not(#"+blankRowID+", ."+newRowClass+")").fadeTo(rowSpeed,1,function(){
-                $(this).find("a").unbind("click");//removes the click event we site above
-            });
-            newRowCount=0;//Make sure the count is reset to 0...just in case
-            displaySubmit= false;
-        }
+  Mapper.showBadPoints = function() {
+    var bad_points = $('#bad_points').val();
+
+    if(bad_points) {
+      $('#badRecords').html(bad_points);
+      $('#badRecordsWarning').show();
     }
+  };
+
+  Mapper.showMap = function() {
+    var self         = this,
+        token        = new Date().getTime(),
+        formData     = {},
+        message      = '<span id="mapper-building-map">Building preview...</span>',
+        toolsTabs    = $('#mapTools').tabs(),
+        tabIndex     = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val()) : 0
+
+    self.destroyJcrop();
+
+    $('#output').val('pnga');        // set the preview and output values
+    $('#badRecordsWarning').hide();  // hide the bad records warning
+    $('#download_token').val(token); // set a token to be used for cookie
+  
+    formData = $("form").serialize();
+
+    $('#mapOutput').html(message);
+    $('#mapScale').html('');
+
+    $.post(Mapper.settings.baseUrl + "/application/", formData, function(data) {
+      $('#mapOutput').html(data);
+
+      self.drawLegend();
+      self.drawScalebar();
+      self.showBadPoints();
+
+      toolsTabs.tabs('select', tabIndex);
+      
+      $('#mapTools').bind('tabsselect', function(event,ui) {
+        $('#selectedtab').val(ui.index);
+      });
+
+      $('#bbox_rubberband').val('');                             // reset bounding box values, but get first for the crop function
+      $('#bbox_map').val($('#rendered_bbox').val());             // set extent from previous rendering
+      $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
+      $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
+      $('#pan').val('');                                         // reset pan value
+
+      $('#mapExport a.toolsPng').click(function() {
+        self.generateDownload('png');
+        return false; 
+      });
+      
+      $('#mapExport a.toolsTiff').click(function() {
+        self.generateDownload('tif');
+        return false; 
+      });
+
+      $('#mapExport a.toolsSvg').click(function() {
+        self.generateDownload('svg');
+        return false; 
+      });
+
+      $('#mapExport a.toolsEps').click(function() {
+        self.generateDownload('eps');
+        return false; 
+      });
+      
+      $('#mapExport a.toolsKml').click(function() {
+        self.generateDownload('kml');
+        return false; 
+      });
+                          
+      $('.toolsBadRecords').click(function() {
+        self.showBadRecords();
+        return false; 
+      });
+      
+    }, "html");
+
+  }; /** end Mapper.showMap **/
 
 $('#badRecordsViewer').dialog({
-    autoOpen : false,
-    height : 200,
-    width : 500,
-    position : [200, 200],
-    modal : true,
-    buttons: {
-        Ok: function() {
-            $( this ).dialog( "close" );
-        }
-    },
-    draggable : false,
-    resizable : false
+  autoOpen : false,
+  height : 200,
+  width : 500,
+  position : [200, 200],
+  modal : true,
+  buttons: {
+    Ok: function() {
+      $(this).dialog("close");
+    }
+  },
+  draggable : false,
+  resizable : false
 });
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Function to make bad records visible in the viewport
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function showBadRecords() {
-      $('#badRecordsViewer').dialog("open");
+  Mapper.showBadRecords = function() {
+    $('#badRecordsViewer').dialog("open");
+  };
+
+  Mapper.generateDownload = function(filetype) {
+    var self        = this,
+        pattern     = /[?*:;{}\\ "'\/@#!%^()<>.]+/g,
+        map_title   = $('#file-name').val(),
+        token       = new Date().getTime(),
+        cookieValue = "";
+      
+    if($('#border').is(':checked')) { 
+      $('input[name="options[border]"]').val(1); 
+    }
+    else {
+      $('input[name="options[border]"]').val("");
     }
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Color picker
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $('.colorPicker').ColorPicker({
-      onSubmit: function(hsb, hex, rgb, el) {
-        $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-        $(el).ColorPickerHide();
-      },
-      onBeforeShow: function () {
-        $(this).ColorPickerSetColor(this.value);
-      }
-    }).bind('keyup', function(){
-      $(this).ColorPickerSetColor(this.value);
-    });
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Functions to handle the form
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
-    $('.toolsCrop a').click(function(e) {
-      initJcrop();
-      return nothing(e);
-    });
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Function to generate download
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    function generateDownload(filetype) {
-        
-        if($('#border').is(':checked')) {
-            $('input[name="options[border]"]').val(1);
-        }
-        else {
-            $('input[name="options[border]"]').val("");
-        }
-        if($('#legend').is(':checked')) {
-            $('input[name="options[legend]"]').val(1);
-        }
-        else {
-            $('input[name="options[legend]"]').val("");
-        }
-        $('input[name="download_factor"]').val($('#download-factor').val());
-
-        var pattern = /[?*:;{}\\ "'\/@#!%^()<>.]+/g;
-        var map_title = $('#file-name').val();
-
-        map_title = map_title.replace(pattern, "_");
-        $('#file-name').val(map_title);
-
-        $('input[name="file_name"]').val(map_title);
-        
-        var token = new Date().getTime();
-        $('#download_token').val(token);
-        
-          switch(filetype) {
-            case 'kml':
-              formData = $("form").serialize();
-              $.download(Mapper.settings.baseUrl + "/application/kml/", formData, 'post');
-            break;
-        
-            default:
-              $('#download').val(1);
-              $('#output').val(filetype);
-              if(jcrop_api) $('#crop').val(1);
-              formData = $("form").serialize();
-              $('.download-dialog').hide();
-              $('.download-message').show();
-              $.download(Mapper.settings.baseUrl + "/application/", formData, 'post');
-              $('#download').val('');
-              $('#output').val('pnga'); 
-          }
-        
-        fileDownloadCheckTimer = window.setInterval(function() {
-          var cookieValue = $.cookie('fileDownloadToken');
-          if (cookieValue == token) {
-            finishDownload();
-          }
-        }, 1000);
+    if($('#legend').is(':checked')) { 
+      $('input[name="options[legend]"]').val(1); 
+    }
+    else { 
+      $('input[name="options[legend]"]').val("");
     }
 
-function finishDownload() {
-   $('.download-message').hide();
-   $('.download-dialog').show();
-   window.clearInterval(fileDownloadCheckTimer);
-   $.cookie('fileDownloadToken', null); //clears this cookie value
-}
+    $('input[name="download_factor"]').val($('#download-factor').val());
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Function to offer download
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    jQuery.download = function(url, data, method) {
-      //url and data options required
-      if( url && data ){ 
-        //data can be string of parameters or array/object
-        data = typeof data == 'string' ? data : jQuery.param(data);
-        //split params into form inputs
-        var inputs = '';
-        jQuery.each(data.split('&'), function(){ 
-            var pair = this.split('=');
-            var value = pair[1].replace(/\+/g,' ');
-            inputs+='<input type="hidden" name="'+ unescape(pair[0]) +'" value="'+ unescape(value) +'" />';
-        });
-        //send request
-        jQuery('<form action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>')
-        .appendTo('body').submit().remove();
+    map_title = map_title.replace(pattern, "_");
+    $('#file-name').val(map_title);
+
+    $('input[name="file_name"]').val(map_title);
+
+    $('#download_token').val(token);
+    
+    switch(filetype) {
+      case 'kml':
+        formData = $("form").serialize();
+        $.download(self.settings.baseUrl + "/application/kml/", formData, 'post');
+      break;
+  
+      default:
+        $('#download').val(1);
+        $('#output').val(filetype);
+        if(jcrop_api) $('#crop').val(1);
+        formData = $("form").serialize();
+        $('.download-dialog').hide();
+        $('.download-message').show();
+        $.download(self.settings.baseUrl + "/application/", formData, 'post');
+        $('#download').val('');
+        $('#output').val('pnga'); 
+    }
+    
+    self.vars.fileDownloadTimer = window.setInterval(function() {
+      cookieValue = $.cookie('fileDownloadToken');
+      if (cookieValue == token) {
+        self.finishDownload();
       }
+    }, 1000);
+
+  }; /** end Mapper.generateDownload **/
+
+  Mapper.finishDownload = function() {
+    $('.download-message').hide();
+    $('.download-dialog').show();
+    window.clearInterval(this.vars.fileDownloadTimer);
+    $.cookie('fileDownloadToken', null); //clears this cookie value
+  };
+
+  /************************************ 
+  ** RAPHAEL: FREEHAND DRAWING TOOLS **
+  ************************************/
+  Mapper.raphaelConfig = {
+    board         : Raphael('mapOutput', 800, 400),
+    line          : null,
+    path          : null,
+    wkt           : null,
+    color         : null,
+    size          : null,
+    selectedColor : 'mosaic',
+    selectedSize  : 4,
+    selectedTool  : 'pencil',
+    offset        : $('#mapOutput').offset()
+  };  
+
+  Mapper.raphaelConfig.position = function(e) {
+    return {
+      x: e.pageX - this.offset.left,
+      y: e.pageY - this.offset.top
     };
+  };
+
+  Mapper.raphaelConfig.mouseMove = function(e) {
+    var self = Mapper.raphaelConfig,
+        pos  = self.position(e),
+        x    = self.path[0][1],
+        y    = self.path[0][2],
+        dx   = (pos.x - x),
+        dy   = (pos.y - y);
+
+    switch(self.selectedTool){
+      case 'pencil':
+        self.path.push(['L', pos.x, pos.y]);
+        self.wkt.push([pos.x + " " + pos.y]);
+        break;
+      case 'rectangle':
+        self.path[1] = ['L', x + dx, y     ];
+        self.path[2] = ['L', x + dx, y + dy];
+        self.path[3] = ['L', x     , y + dy];
+        self.path[4] = ['L', x     , y     ];
+        self.path[5] = ['L', x,      y     ];
+        break;
+      case 'line':
+        self.path[1] = ['L', pos.x, pos.y];
+        self.wkt[1] = [pos.x + " " + pos.y];
+        break;                        
+      case 'circle':
+        self.path[1] = ['A', (dx / 2), (dy / 2), 0, 1, 0, pos.x, pos.y];
+        self.path[2] = ['A', (dx / 2), (dy / 2), 0, 0, 0, x, y];
+        break;
+    }
+    self.line.attr({ path: self.path });
+
+  }; /** end Mapper.raphaelConfig.mouseMove **/
+
+  Mapper.raphaelConfig.forcePaint = function(){
+    var self = Mapper.raphaelConfig;
+    window.setTimeout(function(){
+      var rect = self.board.rect(-99, -99, self.board.width + 99, self.board.height + 99).attr({stroke: "none"});
+      setTimeout(function() {rect.remove();});
+    },1);
+  };
+
+  Mapper.raphaelConfig.draw = function(path, color, size) {
+    var self   = Mapper.raphaelConfig,
+        result = self.board.path(path);
+
+    result.attr({ stroke: color, 'stroke-width': size, 'stroke-linecap': 'round' });
+    self.forcePaint();
+    return result;
+  };
+
+  Mapper.init = function() {
+    $('#initial-message').hide();
+    $("#tabs").tabs().show();
+    $('#mapTools').tabs();
+    $('.fieldSets').accordion({
+      header : 'h3',
+      collapsible : true,
+      autoHeight : false 
+    });                
+    $(".tooltip").tipsy({gravity: 's'});
+    this.bindToolbar();
+    this.bindArrows();
+    this.bindSettings();
+    this.bindColorPickers();
+    this.bindClearButtons();
+    $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
+    if($('#usermaps').length > 0) {
+      $("#tabs").tabs('select',4);
+      this.loadMyMaps();
+    }
+    if($('#userdata').length > 0) {
+      this.loadUsers();
+    }
+  };
+
+  Mapper.init();  
 
 });
+
+/******* jQUERY EXTENSIONS *******/
+
+$.fn.clearForm = function() {
+  return this.each(function() {
+ var type = this.type, tag = this.tagName.toLowerCase();
+ if (tag == 'form')
+   return $(':input',this).clearForm();
+ if (type == 'text' || type == 'password' || tag == 'textarea')
+   this.value = '';
+ else if (type == 'checkbox' || type == 'radio')
+   this.checked = false;
+ else if (tag == 'select')
+   this.selectedIndex = 0;
+  });
+};

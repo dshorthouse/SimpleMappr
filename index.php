@@ -364,7 +364,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             <div id="mapTools">
 
               <ul>
-                <li><a href="#mapOptions">Options</a></li>
+                <li><a href="#mapOptions">Settings</a></li>
                 <li><a href="#mapLegend">Legend</a></li>
               </ul>
 
