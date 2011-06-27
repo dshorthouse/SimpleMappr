@@ -579,7 +579,7 @@ class MAPPR {
         if(isset($this->pan) && $this->pan) $this->set_pan();
         
         //rotation
-        if(isset($this->rotation) && $this->rotation != 0) $this->map_obj->set_rotation($this->rotation);
+        if(isset($this->rotation) && $this->rotation != 0) $this->map_obj->setRotation($this->rotation);
         if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) $this->reproject_map($this->default_projection, $this->projection); 
         
         //crop
