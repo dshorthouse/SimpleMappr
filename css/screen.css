@@ -86,7 +86,7 @@ input, select, textarea {
 }
 
 #tabs {
-    min-width:1025px;
+    min-width:1045px;
     min-height:500px;
     display:none;
 }
@@ -360,7 +360,7 @@ div.panel a.help {
     position:absolute;
     top:0;
     left:0;
-    width:800px;
+    width:810px;
     height:27px;
     line-height:20px;
     outline-color:-moz-use-text-color;
@@ -468,6 +468,7 @@ div.panel a.help {
 
 #actionsBar #map-saveDialog a.map-download { background-position: 0 -1452px; width: 16px; height: 16px; } 
 #actionsBar #map-saveDialog a.map-save { background-position: 0 -792px; width: 16px; height: 16px; }
+#actionsBar #map-saveDialog a.map-embed { display:none; background-position: 0 -990px; width: 16px; height: 16px; }
 
 #map {
     position:absolute;
@@ -588,7 +589,7 @@ div.panel a.help {
 #mapTools {
   position:absolute;
   top:5px;
-  left:810px;
+  left:820px;
   width:auto;
 }
 
@@ -700,7 +701,7 @@ div.panel a.help {
     background:none repeat scroll 0 0 #E6E6E6;
     border:1px solid gray;
     border-collapse:collapse;
-    width:85%;
+    width:90%;
     color:#555555;
 }
 

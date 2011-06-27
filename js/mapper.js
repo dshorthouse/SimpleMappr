@@ -866,7 +866,9 @@ function loadMyMaps() {
 
               $('input[name="save[title]"]').val(map_title);
               $('.m-mapSaveTitle').val(map_title);
+
               $('#mapTitle').text(map_title);
+              $('.map-embed').attr("rel", data.mid).show();
 
               var pattern = /[?*:;{}\\ "']+/g;
               map_title = map_title.replace(pattern, "_");
@@ -1184,11 +1186,11 @@ function loadMyMaps() {
             }, "json");
         });
         
-        $('.map-url').click(function() {
+        $('.map-embed').click(function() {
             var message = 'Use the following HTML snippet to embed a png:';
             message += "<p><input type='text' size='65' value='&lt;img src=\"" + Mapper.settings.baseUrl + "/?map=" + $(this).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
             message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(this).attr("rel") + "&amp;width=200&amp;height=150)</span>";
-            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="URL">' + message + '</div>');
+            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
             $('#mapper-message').dialog({
                 height : 250,
                 width : 525,
@@ -1206,7 +1208,7 @@ function loadMyMaps() {
         
         $('.map-delete').click(function() {
             var message = 'Are you sure you want to delete<p><em>'+$(this).parent().parent().find(".title").html()+'</em>?</p>';
-            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Confirmation">' + message + '</div>');
+            $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
             var id = $(this).attr("rel");
             $('#mapper-message').dialog({
                 height : 250,
@@ -1315,8 +1317,9 @@ function loadUsers() {
                 var formData = $("form").serialize();
                 $.post(Mapper.settings.baseUrl + "/usermaps/?action=save", formData, function(data) {
                     $('#mapTitle').text($('.m-mapSaveTitle').val());
+                    $('.map-embed').attr("rel", data.mid).show();
                     loadMyMaps();
-                });
+                }, 'json');
                 $(this).dialog("close");
               }
             },
@@ -1416,8 +1419,8 @@ $('.clearFreehand').click(function() {
 //Function to hide messages
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     function hideMessage() {
-      $('#mapper-message').dialog("destroy");
       $('#mapper-message').hide().remove();
+      $('#mapper-message').dialog("destroy");
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

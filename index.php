@@ -336,6 +336,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                     <div id="map-saveDialog">
                         <?php if(isset($_SESSION['simplemappr'])): ?>
                         <span><a class="sprites map-saveItem map-save tooltip" href="#" onclick="javascript:return false;" title="save">Save</a></span>
+                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" onclick="javascript:return false;" title="embed" rel="">Embed</a></span>
                         <?php endif; ?>
                         <span><a class="sprites map-saveItem map-download tooltip" href="#" onclick="javascript:return false;" title="download">Download</a></span>
                     </div>

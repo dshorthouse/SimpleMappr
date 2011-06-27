@@ -67,7 +67,6 @@ switch($_GET['action']) {
               $output .= "</td>";
               $output .= "<td class=\"actions\">";
               $output .= "<a class=\"sprites map-load\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Load</a>";
-              $output .= "<a class=\"sprites map-url\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Embed</a>";
               if($uid == $record['uid']) {
                 $output .= "<a class=\"sprites map-delete\" rel=\"".$record['mid']."\" href=\"#\" onclick=\"return false;\">Delete</a>";
               }
@@ -104,11 +103,12 @@ switch($_GET['action']) {
         
         if($record['mid']) {
             $db->query_update('maps', $data, 'mid='.$record['mid']);
+            $mid = $record['mid'];
         }
         else {
-            $db->query_insert('maps', $data);
+            $mid = $db->query_insert('maps', $data);
         }
-        echo "{\"status\":\"ok\"}";
+        echo "{\"status\":\"ok\", \"mid\":\"" . $mid . "\"}";
     break;
     
     case 'load':
@@ -117,7 +117,7 @@ switch($_GET['action']) {
         if($_GET['map']) {
             $sql = "
             SELECT
-                map
+                mid, map
             FROM 
                 maps
             WHERE
@@ -125,6 +125,7 @@ switch($_GET['action']) {
             $record = $db->query_first($sql);
             
             $data['status'] = "ok";
+            $data['mid'] = $record['mid'];
             $data['map'] = unserialize($record['map']);
             
             echo json_encode($data);
