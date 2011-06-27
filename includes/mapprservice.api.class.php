@@ -385,6 +385,5 @@ class MAPPRAPI extends MAPPR {
 
         $this->image->saveImage("");
     }
-
 }
 ?>

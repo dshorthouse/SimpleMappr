@@ -1185,7 +1185,7 @@ function loadMyMaps() {
         });
         
         $('.map-url').click(function() {
-            var message = 'Use the following URL to embed a png elsewhere:';
+            var message = 'Use the following HTML snippet to embed a png:';
             message += "<p><input type='text' size='65' value='&lt;img src=\"" + Mapper.settings.baseUrl + "/?map=" + $(this).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
             message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(this).attr("rel") + "&amp;width=200&amp;height=150)</span>";
             $('body').append('<div id="mapper-message" class="ui-state-highlight" title="URL">' + message + '</div>');
