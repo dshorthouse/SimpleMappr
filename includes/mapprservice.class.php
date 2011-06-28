@@ -833,11 +833,11 @@ class MAPPR {
             $style->set("size",$size);
 
             if(substr($shape, 0, 4) == 'open') {
-                $style->color->setRGB($color[0],$color[1],$color[2]);
+              $style->color->setRGB($color[0],$color[1],$color[2]);
             }
             else {
-                $style->color->setRGB($color[0],$color[1],$color[2]);
-                $style->outlinecolor->setRGB(30,30,30);
+              $style->color->setRGB($color[0],$color[1],$color[2]);
+              $style->outlinecolor->setRGB(85,85,85);
             }
 
             $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
