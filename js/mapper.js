@@ -1242,10 +1242,11 @@ $(function(){
     this.bindSubmit();
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
-      $("#tabs").tabs('select',4);
+      $("#tabs").tabs('select',3);
       this.loadMapList();
     }
     if($('#userdata').length > 0) {
+      $("#tabs").tabs('select',4);
       this.loadUsers();
     }
   };
