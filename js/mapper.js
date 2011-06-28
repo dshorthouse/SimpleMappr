@@ -740,9 +740,9 @@ $(function(){
       freehand_data  = freehands[i].data  || "";
       freehand_color = freehands[i].color || "150 150 150";
 
-       $('input[name="freehand['+i.toString()+'][title]"]').val(freehand_title);
-       $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
-       $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);         
+      $('input[name="freehand['+i.toString()+'][title]"]').val(freehand_title);
+      $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
+      $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);         
     }
   };
 
@@ -839,7 +839,6 @@ $(function(){
     var self = this;
 
     $(".map-save").click(function() {
-
       var missingTitle = false;
 
       $('#mapSave').dialog({
@@ -1068,15 +1067,13 @@ $(function(){
       
     if($('#border').is(':checked')) { 
       $('input[name="options[border]"]').val(1); 
-    }
-    else {
+    } else {
       $('input[name="options[border]"]').val("");
     }
 
     if($('#legend').is(':checked')) { 
       $('input[name="options[legend]"]').val(1); 
-    }
-    else { 
+    } else { 
       $('input[name="options[legend]"]').val("");
     }
 
