@@ -519,36 +519,33 @@ div.panel a.help {
   position:absolute;
 }
 
-#mapControls #arrow-up {
+#mapControls .sprites {
+  width: 16px; 
+  height: 16px;
+}
+
+#mapControls .up {
     top:0px;
     left:12px;
     background-position: 0 -594px; 
-    width: 16px; 
-    height: 16px;
 }
 
-#mapControls #arrow-down {
+#mapControls .down {
     bottom:0px;
     left:12px;
     background-position: 0 -132px; 
-    width: 16px; 
-    height: 16px;
 }
 
-#mapControls #arrow-right {
+#mapControls .right {
     top:12px;
     right:0px;
-    background-position: 0 -396px; 
-    width: 16px; 
-    height: 16px;
+    background-position: 0 -396px;
 }
 
-#mapControls #arrow-left {
+#mapControls .left {
     top:12px;
     left:0px;
-    background-position: 0 -198px; 
-    width: 16px; 
-    height: 16px;
+    background-position: 0 -198px;
 }
 
 #badRecordsWarning {
@@ -675,11 +672,11 @@ div.panel a.help {
     padding:0px 5px 0px 20px;
 }
 
-#mapExport ul li.export-png a { background-position: 0 -1648px; }
-#mapExport ul li.export-tiff a { background-position: 0 -1648px; }
-#mapExport ul li.export-svg a { background-position: 0 -1648px; }
-#mapExport ul li.export-eps a { background-position: 0 -1648px; }
-#mapExport ul li.export-kml a { background-position: 0 -1452px; }
+#mapExport ul li.export a { background-position: 0 -1648px; }
+#mapExport ul li.export a { background-position: 0 -1648px; }
+#mapExport ul li.export a { background-position: 0 -1648px; }
+#mapExport ul li.export a { background-position: 0 -1648px; }
+#mapExport ul li.kml a { background-position: 0 -1452px; }
 
 #mapExport p {
 }
@@ -877,4 +874,8 @@ img.screenshot {
 
 #map-help table tr.odd {
     background:none repeat scroll 0 0 #FFFFFF;
+}
+
+.ui-dialog-titlebar-close {
+  display:none !important;
 }

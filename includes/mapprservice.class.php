@@ -579,7 +579,7 @@ class MAPPR {
         if(isset($this->pan) && $this->pan) $this->set_pan();
         
         //rotation
-        if(isset($this->rotation) && $this->rotation != 0) $this->map_obj->set_rotation($this->rotation);
+        if(isset($this->rotation) && $this->rotation != 0) $this->map_obj->setRotation($this->rotation);
         if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) $this->reproject_map($this->default_projection, $this->projection); 
         
         //crop
@@ -849,15 +849,16 @@ class MAPPR {
             $points = array(); //create an array to hold unique locations
         
             foreach ($row as $loc) {
+              $loc = htmlentities($loc);
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
               $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "";
               $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "";
-              if($this->checkCoord($coord) && $title != "") {  //only add point when data are good & a title
+              if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
                   $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
               }
               else {
-                $this->_bad_points[] = $this->coords[$j]['title'].': '.$coord->y.','.$coord->x;
+                $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $coord->y . ',' . $coord->x;
               }
             }
             foreach($points as $point) {

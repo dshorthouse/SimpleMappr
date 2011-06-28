@@ -1,22 +1,18 @@
+/*global $, window, document, self, XMLHttpRequest, setTimeout, Raphael */
+
 var Mapper = Mapper || { 'settings': {} };
 
 $(function(){
 
+    "use strict";
+
     Mapper.vars = {
-      displaySubmit      : false,
-      addMorebtn         : $('.addmore'),
-      newTextareaCount   : 0,
+      newPointCount      : 0,
+      newRegionCount     : 0,
+      newFreehandCount   : 0,
       maxTextareaCount   : 10,
-      hiddenControls     : $("#controls .hiddenControls"),
-      submitForm         : $(".submitForm"),
-      hiddenClass        : "hidden",
-      jcropAPI           : {},
-      jzoomAPI           : {},
-      jqueryAPI          : {},
       zoom               : true,
-      fileDownloadTimer  : {},
-      downloadDialog     : $('.download-dialog').html(),
-      preview            : $('#map-preview')
+      fileDownloadTimer  : {}
     };
 
   $.ajaxSetup({
@@ -28,22 +24,22 @@ $(function(){
         arrPageScroll = Mapper.getPageScroll();
 
     $('#mapper-overlay').css({
-        width:      arrPageSizes[0],
-        height:     arrPageSizes[1]
+        width :  arrPageSizes[0],
+        height:  arrPageSizes[1]
     });
 
     $('#mapper-message').css({
-        top:    arrPageScroll[1] + (arrPageSizes[3] / 10),
-        left:   arrPageScroll[0],
+        top     : arrPageScroll[1] + (arrPageSizes[3] / 10),
+        left    : arrPageScroll[0],
         position: 'fixed',
-        zIndex: 1001,
-        margin: '0px auto',
-        width: '100%'
+        zIndex  : 1001,
+        margin  : '0px auto',
+        width   : '100%'
     });
   });
 
   Mapper.getPageSize = function() {
-    var xScroll, yScroll, windowWidth, windowHeight;
+    var xScroll, yScroll, windowWidth, windowHeight, pageHeight, pageWidth;
 
     if (window.innerHeight && window.scrollMaxY) {  
       xScroll = window.innerWidth + window.scrollMaxX;
@@ -83,7 +79,7 @@ $(function(){
       pageWidth = windowWidth;
     }
 
-    return new Array(pageWidth,pageHeight,windowWidth,windowHeight);
+    return [pageWidth,pageHeight,windowWidth,windowHeight];
 
   }; /** end Mapper.getPageSize **/
 
@@ -102,25 +98,25 @@ $(function(){
       xScroll = document.body.scrollLeft; 
     }
 
-    return new Array(xScroll,yScroll);
+    return [xScroll,yScroll];
 
   }; /** end Mapper.getPageScroll **/
 
   Mapper.showCoords = function(c) {
-    var x = parseInt(c.x),
-        y = parseInt(c.y),
-       x2 = parseInt(c.x2),
-       y2 = parseInt(c.y2);
+    var x = parseInt(c.x, 10),
+        y = parseInt(c.y, 10),
+       x2 = parseInt(c.x2, 10),
+       y2 = parseInt(c.y2, 10);
   
     $('.jcrop-holder div:first').css('backgroundColor', 'white');
     $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
   };
 
   Mapper.showCoordsQuery = function(c) {
-    var x = parseInt(c.x),
-        y = parseInt(c.y),
-       x2 = parseInt(c.x2),
-       y2 = parseInt(c.y2);
+    var x = parseInt(c.x, 10),
+        y = parseInt(c.y, 10),
+       x2 = parseInt(c.x2, 10),
+       y2 = parseInt(c.y2, 10);
 
     $('#bbox_query').val(x+','+y+','+x2+','+y2);
   };
@@ -134,9 +130,9 @@ $(function(){
   };
 
   Mapper.toHex = function(N) {
-    if (N == null) return "00";
-    N = parseInt(N);
-    if (N == 0 || isNaN(N)) return "00";
+    if (N === null) { return "00"; }
+    N = parseInt(N, 10);
+    if (N === 0 || isNaN(N)) { return "00"; }
     N = Math.max(0,N);
     N = Math.min(N,255);
     N = Math.round(N);
@@ -173,40 +169,10 @@ $(function(){
       return false;   
     });
 
-    $('.toolsRotateAC5').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())-5);
+    $('.toolsRotate').click(function() {
+      $('#rotation').val(parseInt($('#rendered_rotation').val(), 10)+parseInt($(this).attr("data-rotate"), 10));
       self.showMap();
-      return false;   
-    });
-
-    $('.toolsRotateAC10').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())-10);
-      self.showMap();
-      return false;   
-    });
-
-    $('.toolsRotateAC15').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())-15);
-      self.showMap();
-      return false;   
-    });
-
-    $('.toolsRotateC5').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())+5);
-      self.showMap();
-      return false;   
-    });
-
-    $('.toolsRotateC10').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())+10);
-      self.showMap();
-      return false;   
-    });
-
-    $('.toolsRotateC15').click(function(){
-      $('#rotation').val(parseInt($('#rendered_rotation').val())+15);
-      self.showMap();
-      return false;   
+      return false;
     });
                     
     $('.toolsCrop').click(function(){
@@ -233,7 +199,8 @@ $(function(){
     });
 
     $('.toolsRefresh').click(function(){
-      self.showMap();  
+      self.showMap();
+      return false; 
     });
 
     $('.toolsRebuild').click(function(){
@@ -243,51 +210,39 @@ $(function(){
       $('#rotation').val('');
       $('#projection').val('');
       $('#pan').val('');
-      self.showMap();  
+      self.showMap();
+      return false;  
     });
 
   }; /** end Mapper.bindToolbar **/
 
   Mapper.bindArrows = function() {
-    $('#arrow-up').click(function() {
-      $('#pan').val('up');
-      this.showMap();
+    var self = this;
+
+    $('.arrows').click(function() {
+      $('#pan').val($(this).attr("data-pan"));
+      self.showMap();
       return false;   
     });
-
-    $('#arrow-right').click(function() {
-      $('#pan').val('right');
-      this.showMap();
-      return false;
-    });
-
-    $('#arrow-down').click(function() {
-      $('#pan').val('down');
-      this.showMap();
-      return false;
-    });
-
-    $('#arrow-left').click(function() {
-      $('#pan').val('left');
-      this.showMap();
-      return false;   
-    });
-
-  }; /** end Mapper.bindArrows **/
+  };
 
   Mapper.bindSettings = function() {
+    var self = this;
+
     $('.layeropt').click(function() {
-      this.showMap();    
+      self.showMap();    
     });
  
     $('#projection').change(function() {
-      if($(this).val() !== "") { this.showMap(); }
+      if($(this).val() !== "") { self.showMap(); }
     });
   };
 
   Mapper.bindColorPickers = function() {
     $('.colorPicker').ColorPicker({
       onSubmit: function(hsb, hex, rgb, el) {
+        hsb = null;
+        hex = null;
         $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
         $(el).ColorPickerHide();
       },
@@ -317,9 +272,9 @@ $(function(){
   Mapper.destroyJcrop = function() {
     var vars = this.vars;
 
-    if(typeof vars.jzoom_api != "undefined") { vars.jzoom_api.destroy(); }
-    if(typeof vars.jcrop_api != "undefined") { vars.jcrop_api.destroy(); }
-    if(typeof vars.jquery_api != "undefined") { vars.jquery_api.destroy(); }
+    if(typeof vars.jzoomAPI !== "undefined") { vars.jzoomAPI.destroy(); }
+    if(typeof vars.jcropAPI !== "undefined") { vars.jcropAPI.destroy(); }
+    if(typeof vars.jqueryAPI !== "undefined") { vars.jqueryAPI.destroy(); }
   };
 
   Mapper.initJcrop = function(){
@@ -327,14 +282,14 @@ $(function(){
 
     self.destroyJcrop();
     
-    vars.jcrop_api = $.Jcrop('#mapOutput img', {
+    vars.jcropAPI = $.Jcrop('#mapOutput img', {
       bgColor:'grey',
       bgOpacity:1,
       onChange: self.showCoords,
       onSelect: self.showCoords
     });
     
-    $('.jcrop-tracker').unbind('mouseup', self.azoom );
+    $('.jcrop-tracker').unbind('mouseup', self.aZoom );
   };
 
   Mapper.initJzoom = function(){
@@ -342,18 +297,18 @@ $(function(){
 
     self.destroyJcrop();
     
-    vars.jzoom_api = $.Jcrop('#mapOutput img', {
-      addClass: 'customJzoom',
-      sideHandles: false,
-      cornerHandles: false,
-      dragEdges: false,
-      bgOpacity: 1,
-      bgColor:'white',
-      onChange: self.showCoords,
-      onSelect: self.showCoords
+    vars.jzoomAPI = $.Jcrop('#mapOutput img', {
+      addClass      : "customJzoom",
+      sideHandles   : false,
+      cornerHandles : false,
+      dragEdges     : false,
+      bgOpacity     : 1,
+      bgColor       : "white",
+      onChange      : self.showCoords,
+      onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').bind('mouseup', self.azoom );
+    $('.jcrop-tracker').bind('mouseup', self.aZoom );
   };
 
   Mapper.initJquery = function(){
@@ -361,18 +316,18 @@ $(function(){
 
     self.destroyJcrop();
 
-    vars.jquery_api = $.Jcrop('#mapOutput img', {
-      addClass: 'customJzoom',
-      sideHandles: false,
-      cornerHandles: false,
-      dragEdges: false,
-      bgOpacity: 1,
-      bgColor:'white',
-      onChange: self.showCoordsQuery,
-      onSelect: self.showCoordsQuery
+    vars.jqueryAPI = $.Jcrop('#mapOutput img', {
+      addClass      : "customJzoom",
+      sideHandles   : false,
+      cornerHandles : false,
+      dragEdges     : false,
+      bgOpacity     : 1,
+      bgColor       :'white',
+      onChange      : self.showCoordsQuery,
+      onSelect      : self.showCoordsQuery
     });
 
-    $('.jcrop-tracker').bind('mouseup', aQuery );
+    $('.jcrop-tracker').bind('mouseup', self.aQuery );
   };
 
   Mapper.initDraw = function() {
@@ -405,19 +360,16 @@ $(function(){
         data    : { freehand : raphael.wkt },
         async   : false,
         success : function(results) {
-          if(!results) return; 
+          if(!results) { return; } 
           switch(raphael.selectedTool) {
             case 'pencil':
               wkt = "LINESTRING(" + results + ")";
             break;
-
             case 'rectangle':
               wkt = "POLYGON((" + results + "))";
             break;
-
             case 'circle':
             break;
-
             case 'line':
               wkt = "LINESTRING(" + results + ")";  
             break;
@@ -432,21 +384,20 @@ $(function(){
   };  /** end Mapper.initDraw **/
     
   Mapper.aZoom = function() {
-    showMap();
+    Mapper.showMap();
   };
 
   Mapper.aQuery = function() {
-    var self = this;
-
-    self.destroyJcrop();
   
-    var formData = {
+    var i = 0, formData = {
       bbox           : $('#rendered_bbox').val(), 
       bbox_query     : $('#bbox_query').val(), 
       projection     : $('#projection').val(), 
       projection_map : $('#projection_map').val(),
       qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base' 
     };
+
+    Mapper.destroyJcrop();
 
     $.post(Mapper.settings.baseUrl + "/query/", formData, function(data) {
       if(data.length > 0) {
@@ -456,238 +407,132 @@ $(function(){
 
         region_data.val("");
         if(region_title.val() === "") { region_title.val("Selected Regions"); }
-        for(var i = 0; i < data.length; i++) {
+        for(i = 0; i < data.length; i += 1) {
             regions += data[i];
             if(i < data.length-1) { regions += ", "; }
         }
         region_data.val(regions);
-        self.showMap();
+        Mapper.showMap();
       }
     });
 
   }; /** end Mapper.aQuery **/
 
+  Mapper.getTextareaCounter = function(type) {
+    var self = this;
+
+    switch(type) {
+      case 'coords':
+        return self.vars.newPointCount;
+      case 'regions':
+        return self.vars.newRegionCount;
+      case 'freehand':
+        return self.vars.newFreehandCount;
+    }
+  };
+
+  Mapper.incrementTextareaCounter = function(type) {
+    var self = this;
+
+    switch(type) {
+      case 'coords':
+        return (self.vars.newPointCount += 1);
+      case 'regions':
+        return (self.vars.newRegionCount += 1);
+      case 'freehands':
+        return (self.vars.newFreehandCount += 1);
+    }
+  };
+
+  Mapper.addAccordionPanel = function(data_type) {
+    var self    = this,
+        counter = self.getTextareaCounter(data_type),
+        i       = 0,
+        button  = $(".addmore[data-type='" + data_type + "']"),
+        clone   = {},
+        color   = (data_type === 'coords') ? "0 0 0" : "150 150 150";
+
+    if(button.attr("data-type") === data_type) {
+      clone = button.parent().prev().children("div:last").clone();
+
+      if(counter < self.vars.maxTextareaCount) {
+        counter = self.incrementTextareaCounter(data_type);
+        i = counter + 2;
+        
+        $(clone).find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (i+1).toString());
+        $(clone).find("input.m-mapTitle").attr("name", data_type + "["+i.toString()+"][title]").val("");
+        $(clone).find("textarea")
+                .attr("name", data_type + "["+i.toString()+"][data]")
+                .removeClass("textarea-processed")
+                .val("")
+                .each(function() {
+                  var textarea = $(this).addClass("textarea-processed"),
+                      staticOffset = null,
+                      grippie = $("div.grippie", $(this).parent())[0];
+
+                  function performDrag(e) {
+                    textarea.height(Math.max(32, staticOffset + e.pageY) + "px");
+                    return false;
+                  }
+
+                  function endDrag() {
+                    $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
+                    textarea.css("opacity", 1);
+                  }
+
+                  function startDrag(e) {
+                    staticOffset = textarea.height() - e.pageY;
+                    textarea.css("opacity", 0.25);
+                    $(document).bind('mousemove', performDrag).bind('mouseup', endDrag);
+                    return false;
+                  }
+
+                  $(this).parent().find(".grippie").bind('mousedown', startDrag);
+                  grippie.style.marginRight = (parseInt(grippie.offsetWidth,10)-parseInt($(this)[0].offsetWidth,10)).toString() + "px";
+                });
+        $(clone).find("select.m-mapShape").attr("name", data_type + "["+i.toString()+"][shape]").val("circle");
+        $(clone).find("select.m-mapSize").attr("name", data_type + "["+i.toString()+"][size]").val("10");
+        $(clone).find("input.colorPicker").attr("name", data_type + "["+i.toString()+"][color]").ColorPicker({
+          onSubmit: function(hsb, hex, rgb, el) {
+            hsb = null;
+            hex = null;
+            $(el).val(rgb.r + " " + rgb.g + " " + rgb.b);
+            $(el).ColorPickerHide();
+          },
+          onBeforeShow: function () {
+            $(this).ColorPickerSetColor(this.value);
+          }
+        }).bind('keyup', function(){
+            $(this).ColorPickerSetColor(this.value);
+        }).val(color);
+
+        $(button).parent().prev().append(clone).children("div:last").accordion({
+          header      : 'h3',
+          collapsible : true,
+          autoHeight  : false,
+          active      : true 
+        }); 
+
+      }
+
+      if(counter >= self.vars.maxTextareaCount-4){
+        $(button).attr("disabled","disabled");
+      }
+    }
+
+  };
+
   Mapper.bindAddButtons = function() {
     var self = this;
 
-    self.vars.addMorebtn.click(function() {
-      if(self.vars.newTextareaCount < self.vars.maxTextareaCount) {
-      }
-    });
-  };
+    $('.addmore').click(function() {
+      var data_type = $(this).attr("data-type");
 
-/*
-    Mapper.vars.addMorebtn.click(function(){
-      if(newPointsCount < maxPoints) {
-        newPointsCount++;
-        var totalPoints = newPointsCount + 3;
-        var inputCounter = totalPoints - 1;
-        var lastFieldSet = $('#fieldSetsPoints div.fieldset-points:last').clone();
-
-        $(lastFieldSet).find('h3 a').text("Layer "+totalPoints);
-        $(lastFieldSet).find('input.m-mapTitle').attr('name','coords['+inputCounter+'][title]').val('');
-        $(lastFieldSet).find('textarea').attr('name','coords['+inputCounter+'][data]').removeClass('textarea-processed').val('');
-    
-        $(lastFieldSet).find('textarea').each(function() {
-          var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-          $(this).parent().find('.grippie').mousedown(startDrag);
-
-          var grippie = $('div.grippie', $(this).parent())[0];
-          grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-          function startDrag(e) {
-            staticOffset = textarea.height() - e.pageY;
-            textarea.css('opacity', 0.25);
-            $(document).mousemove(performDrag).mouseup(endDrag);
-            return false;
-          }
-
-          function performDrag(e) {
-            textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-            return false;
-          }
-
-          function endDrag(e) {
-            $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-            textarea.css('opacity', 1);
-          }
-        });
-    
-        $(lastFieldSet).find('select.m-mapShape').attr('name','coords['+inputCounter+'][shape]').val('circle');
-        $(lastFieldSet).find('select.m-mapSize').attr('name','coords['+inputCounter+'][size]').val('10');
-        $(lastFieldSet).find('input.colorPicker').attr('name','coords['+inputCounter+'][color]').ColorPicker({
-            onSubmit: function(hsb, hex, rgb, el) {
-                $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                $(el).ColorPickerHide();
-            },
-            onBeforeShow: function () {
-                $(this).ColorPickerSetColor(this.value);
-            }
-        }).bind('keyup', function(){
-            $(this).ColorPickerSetColor(this.value);
-        }).val('0 0 0');
-        
-        $('#fieldSetsPoints').append(lastFieldSet); 
-        $('#fieldSetsPoints div.fieldset-points:last').accordion({
-          header : 'h3',
-          collapsible : true,
-          autoHeight : false,
-          active : false, 
-        }); 
-        $('#fieldSetsPoints div.fieldset-points:last').accordion("enable");
-
-        return false; //kill the browser default action
-      }
-    
-      //disable button so you know you've reached the max
-      if(newPointsCount >= maxPoints-6){
-        addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
-        return false; //kill the browser default action
-      }
- 
-      return false;  //kill the browser default action
+      self.addAccordionPanel(data_type);
+      return false;
     });
 
-        Mapper.vars.addMoreRegionsbtn.click(function(){
-          if(newRegionsCount < maxRegions) {
-            newRegionsCount++;
-            var totalRegions = newRegionsCount + 3;
-            var inputCounter = totalRegions - 1;
-            var lastFieldSet = $('#fieldSetsRegions div.fieldset-regions:last').clone();
-        
-            $(lastFieldSet).find('h3 a').text("Region "+totalRegions);
-            $(lastFieldSet).find('input.m-mapTitle').attr('name','regions['+inputCounter+'][title]').val('');
-            $(lastFieldSet).find('textarea').attr('name','regions['+inputCounter+'][data]').removeClass('textarea-processed').val('');
-
-            $(lastFieldSet).find('textarea').each(function() {
-              var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-              $(this).parent().find('.grippie').mousedown(startDrag);
-
-              var grippie = $('div.grippie', $(this).parent())[0];
-              grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-              function startDrag(e) {
-                staticOffset = textarea.height() - e.pageY;
-                textarea.css('opacity', 0.25);
-                $(document).mousemove(performDrag).mouseup(endDrag);
-                return false;
-              }
-
-              function performDrag(e) {
-                textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-                return false;
-              }
-
-              function endDrag(e) {
-                $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                textarea.css('opacity', 1);
-              }
-            });
-
-            $(lastFieldSet).find('input.colorPicker').attr('name','regions['+inputCounter+'][color]').ColorPicker({
-                onSubmit: function(hsb, hex, rgb, el) {
-                    $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                    $(el).ColorPickerHide();
-                },
-                onBeforeShow: function () {
-                    $(this).ColorPickerSetColor(this.value);
-                }
-            }).bind('keyup', function(){
-                $(this).ColorPickerSetColor(this.value);
-            }).val('150 150 150');
-
-            $('#fieldSetsRegions').append(lastFieldSet);
-        
-            $('#fieldSetsRegions div.fieldset-regions:last').accordion({
-              header : 'h3',
-              collapsible : true,
-              autoHeight : false,
-              active : false, 
-            }); 
-            $('#fieldSetsRegions div.fieldset-regions:last').accordion("enable");
-
-            return false; //kill the browser default action
-          }
-
-          //disable button so you know you've reached the max
-          if(newRegionsCount >= maxRegions-6){
-            addMoreRegionsbtn.attr("disabled","disabled"); //set the "disabled" property on the button
-            return false; //kill the browser default action
-          }
-
-          return false;  //kill the browser default action
-        });
-
-                Mapper.vars.addMoreFreehandbtn.click(function(){
-                  if(newFreehandCount < maxFreehand) {
-                    newFreehandCount++;
-                    var totalFreehand = newFreehandCount + 3;
-                    var inputCounter = totalFreehand - 1;
-                    var lastFieldSet = $('#fieldSetsFreehand div.fieldset-freehand:last').clone();
-
-                    $(lastFieldSet).find('h3 a').text("Region "+totalFreehand);
-                    $(lastFieldSet).find('input.m-mapTitle').attr('name','freehand['+inputCounter+'][title]').val('');
-                    $(lastFieldSet).find('textarea').attr('name','freehand['+inputCounter+'][data]').removeClass('textarea-processed').val('');
-
-                    $(lastFieldSet).find('textarea').each(function() {
-                      var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-                      $(this).parent().find('.grippie').mousedown(startDrag);
-
-                      var grippie = $('div.grippie', $(this).parent())[0];
-                      grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-                      function startDrag(e) {
-                        staticOffset = textarea.height() - e.pageY;
-                        textarea.css('opacity', 0.25);
-                        $(document).mousemove(performDrag).mouseup(endDrag);
-                        return false;
-                      }
-
-                      function performDrag(e) {
-                        textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-                        return false;
-                      }
-
-                      function endDrag(e) {
-                        $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                        textarea.css('opacity', 1);
-                      }
-                    });
-
-                    $(lastFieldSet).find('input.colorPicker').attr('name','freehand['+inputCounter+'][color]').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb, el) {
-                            $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                            $(el).ColorPickerHide();
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    }).bind('keyup', function(){
-                        $(this).ColorPickerSetColor(this.value);
-                    }).val('150 150 150');
-
-                    $('#fieldSetsFreehand').append(lastFieldSet);
-
-                    $('#fieldSetsFreehand div.fieldset-freehand:last').accordion({
-                      header : 'h3',
-                      collapsible : true,
-                      autoHeight : false,
-                      active : false, 
-                    }); 
-                    $('#fieldSetsFreehand div.fieldset-freehand:last').accordion("enable");
-
-                    return false; //kill the browser default action
-                  }
-
-                  //disable button so you know you've reached the max
-                  if(newFreehandCount >= maxFreehand-6){
-                    addMoreFreehandbtn.attr("disabled","disabled"); //set the "disabled" property on the button
-                    return false; //kill the browser default action
-                  }
-
-                  return false;  //kill the browser default action
-                });
-*/
+  }; /** end Mapper.bindAddButtons **/
 
   Mapper.loadMapList = function() {
     var self      = this,
@@ -712,27 +557,37 @@ $(function(){
   };
 
   Mapper.removeExtraElements = function() {
-    var numPoints  = $('.fieldset-points').size(),
-        numRegions = $('.fieldset-regions').size();
+    var self = this,
+        i            = 0,
+        numPoints    = $('.fieldset-points').size(),
+        numRegions   = $('.fieldset-regions').size(),
+        numFreehands = $('.fieldset-freehands').size(); 
 
     if(numPoints > 3) {
-      for(i=numPoints-1; i>=3;i--) {
-        $('#fieldSetsPoints div.fieldset-points:eq('+i+')').remove();
+      for(i = numPoints-1; i >= 3; i -= 1) {
+        $('#fieldSetsPoints div.fieldset-points:eq('+i.toString()+')').remove();
       }
-      self.vars.newPointsCount = 0;
+      self.vars.newPointCount = 0;
     }
 
     if(numRegions > 3) {
-      for(i=numRegions-1; i>=3;i--) {
-        $('#fieldSetsRegions div.fieldset-regions:eq('+i+')').remove();
+      for(i = numRegions-1; i >= 3; i -= 1) {
+        $('#fieldSetsRegions div.fieldset-regions:eq('+i.toString()+')').remove();
       }
-      self.vars.newRegionsCount = 0;
+      self.vars.newRegionCount = 0;
+    }
+
+    if(numFreehands > 3) {
+      for(i = numFreehands-1; i >= 3; i -= 1) {
+        $('#fieldSetsFreehands div.fieldset-freehands:eq('+i.toString()+')').remove();
+      }
+      self.vars.newFreehandCount = 0;
     }
   };
 
   Mapper.loadMap = function(obj) {
-    var self       = this,
-        id         = $(obj).attr("rel");
+    var self = this,
+        id   = $(obj).attr("data-mid");
 
     $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function(data) {
 
@@ -740,9 +595,10 @@ $(function(){
       $('#form-mapper').clearForm();
 
       self.loadSettings(data);
+      self.activateEmbed(id);
       self.loadCoordinates(data);
       self.loadRegions(data);
-      self.loadFreehand(data);
+      self.loadFreehands(data);
       self.loadLayers(data);
       self.showMap();
 
@@ -755,7 +611,9 @@ $(function(){
   Mapper.loadSettings = function(data) {
     var pattern   = /[?*:;{}\\ "']+/g,
         map_title = "",
-        keyMap    = [];
+        i         = 0,
+        keyMap    = [],
+        key       = 0;
 
     $("#projection").val(data.map.projection);
     $('input[name="bbox_map"]').val(data.map.bbox_map);
@@ -775,358 +633,172 @@ $(function(){
     $('.m-mapSaveTitle').val(map_title);
 
     $('#mapTitle').text(map_title);
-    $('.map-embed').attr("rel", data.mid).show();
 
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
 
     if(data.map.options !== undefined) {
       for(key in data.map.options){
-        keyMap[keyMap.length] = key;
+        if(data.map.options.hasOwnProperty(key)) { keyMap[keyMap.length] = key; }
       }
-      for(i=0;i<keyMap.length;i++) {
-        if(keyMap[i] == 'border') {
+      for(i = 0 ; i < keyMap.length; i += 1) {
+        if(keyMap[i] === 'border') {
           $('#border').attr('checked', true);
           $('input[name="options[border]"]').val(1);
-        } else if(keyMap[i] == 'legend') {
+        } else if (keyMap[i] === 'legend') {
           $('#legend').attr('checked', true);
           $('input[name="options[legend]"]').val(1);
         } else {
           $('input[name="options['+keyMap[i]+']"]').attr('checked', true);
-        }
+        }                
       }
     }
 
   }; //** end Mapper.loadSettings **/
 
   Mapper.loadCoordinates = function(data) {
-                  //load up all the coordinates
-              var coords = (data.map.coords !== undefined) ? data.map.coords : [] ;
-              for(i=0;i<coords.length;i++) {
-                //add the fieldsets in case more than the default three are required
-                if(i > 2) {
-                    if(newPointsCount < maxPoints) {
-                    newPointsCount++;
-                    var totalPoints = newPointsCount + 3;
-                    var inputCounter = totalPoints - 1;
-                    var lastFieldSet = $('#fieldSetsPoints div.fieldset-points:last').clone();
+    var self        = this,
+        i           = 0,
+        coords      = data.map.coords || [],
+        coord_title = "",
+        coord_data  = "",
+        coord_color = "";
 
-                    $(lastFieldSet).find('h3 a').text("Layer "+totalPoints);
-                    $(lastFieldSet).find('input.m-mapTitle').attr('name','coords['+inputCounter+'][title]').val('');
-                    $(lastFieldSet).find('textarea').attr('name','coords['+inputCounter+'][data]').removeClass('textarea-processed').val('');
-
-                    $(lastFieldSet).find('textarea').each(function() {
-
-                      var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-
-                      $(this).parent().find('.grippie').mousedown(startDrag);
-
-                      var grippie = $('div.grippie', $(this).parent())[0];
-                      grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-                      function startDrag(e) {
-                        staticOffset = textarea.height() - e.pageY;
-                        textarea.css('opacity', 0.25);
-                        $(document).mousemove(performDrag).mouseup(endDrag);
-                        return false;
-                      }
-
-                      function performDrag(e) {
-                        textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-                        return false;
-                      }
-
-                      function endDrag(e) {
-                        $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                        textarea.css('opacity', 1);
-                      }
-                    });
-
-                    $(lastFieldSet).find('select.m-mapShape').attr('name','coords['+inputCounter+'][shape]');
-                    $(lastFieldSet).find('select.m-mapSize').attr('name','coords['+inputCounter+'][size]');
-                    $(lastFieldSet).find('input.colorPicker').attr('name','coords['+inputCounter+'][color]').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb, el) {
-                            $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                            $(el).ColorPickerHide();
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    }).bind('keyup', function(){
-                        $(this).ColorPickerSetColor(this.value);
-                    });
-
-                    $('#fieldSetsPoints').append(lastFieldSet);
-                    $('#fieldSetsPoints div.fieldset-points:last').accordion({
-                      header : 'h3',
-                      collapsible : true,
-                      autoHeight : false,
-                      active : false, 
-                    }); 
-                    $('#fieldSetsPoints div.fieldset-points:last').accordion("enable");
-
-                  }
-
-                  //disable button so you know you've reached the max
-                  if(newPointsCount >= maxPoints){
-                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
-                  }
-                }
-                
-                var coord_title = (coords[i].title) ? coords[i].title : "";
-                var coord_data = (coords[i].data) ? coords[i].data : "";
-                $('input[name="coords['+i+'][title]"]').val(coord_title);
-                $('textarea[name="coords['+i+'][data]"]').val(coord_data);
-                
-                if(coords[i].shape == "") {
-                    $('select[name="coords['+i+'][shape]"]')[0].selectedIndex = 3;
-                }
-                else {
-                    $('select[name="coords['+i+'][shape]"]').val(coords[i].shape);
-                }
-                
-                if(coords[i].size == "") {
-                    $('select[name="coords['+i+'][size]"]')[0].selectedIndex = 3;
-                }
-                else {
-                    $('select[name="coords['+i+'][size]"]').val(coords[i].size);
-                }
-                
-                if(coords[i].color == "") {
-                    $('input[name="coords['+i+'][color]"]').val('0 0 0');
-                }
-                else {
-                    $('input[name="coords['+i+'][color]"]').val(coords[i].color);
-                }
-              }
+    for(i = 0; i < coords.length; i += 1) {
+      if(i > 2) {
+        self.addAccordionPanel('coords');
+      }
+      
+      coord_title = coords[i].title || "";
+      coord_data  = coords[i].data  || "";
+      coord_color = coords[i].color || "0 0 0";
+             
+      $('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
+      $('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
+        
+      if(coords[i].shape === "") {
+        $('select[name="coords['+i.toString()+'][shape]"]')[0].selectedIndex = 3;
+      } else {
+        $('select[name="coords['+i.toString()+'][shape]"]').val(coords[i].shape);
+      }
+        
+      if(coords[i].size === "") {
+        $('select[name="coords['+i.toString()+'][size]"]')[0].selectedIndex = 3;
+      } else {
+        $('select[name="coords['+i.toString()+'][size]"]').val(coords[i].size);
+      }
+        
+      $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
+    }
   };
 
-  Mapper.loadRegions = function(data) {
-                  //load up all the shaded regions 
-              var regions = (data.map.regions !== undefined) ? data.map.regions : [] ;
-              for(i=0;i<regions.length;i++) {
-                //add the fieldsets in case more than the default three are required
-                if(i > 2) {
-                    if(newRegionsCount < maxRegions) {
-                    newRegionsCount++;
-                    var totalRegions = newRegionsCount + 3;
-                    var inputCounter = totalRegions - 1;
-                    var lastFieldSet = $('#fieldSetsRegions div.fieldset-regions:last').clone();
+  Mapper.loadRegions = function(data) { 
+    var self         = this,
+        i            = 0,
+        regions      = data.map.regions || [],
+        region_title = "",
+        region_data  = "",
+        region_color = ""; 
 
-                    $(lastFieldSet).find('h3 a').text("Region "+totalRegions);
-                    $(lastFieldSet).find('input.m-mapTitle').attr('name','regions['+inputCounter+'][title]').val('');
-                    $(lastFieldSet).find('textarea').attr('name','regions['+inputCounter+'][data]').removeClass('textarea-processed').val('');
+    for(i = 0; i < regions.length; i += 1) {
+      if(i > 2) {
+        self.addAccordionPanel('regions');
+      }
 
-                    $(lastFieldSet).find('textarea').each(function() {
-
-                      var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-
-                      $(this).parent().find('.grippie').mousedown(startDrag);
-
-                      var grippie = $('div.grippie', $(this).parent())[0];
-                      grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-                      function startDrag(e) {
-                        staticOffset = textarea.height() - e.pageY;
-                        textarea.css('opacity', 0.25);
-                        $(document).mousemove(performDrag).mouseup(endDrag);
-                        return false;
-                      }
-
-                      function performDrag(e) {
-                        textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-                        return false;
-                      }
-
-                      function endDrag(e) {
-                        $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                        textarea.css('opacity', 1);
-                      }
-                    });
-
-                    $(lastFieldSet).find('input.colorPicker').attr('name','regions['+inputCounter+'][color]').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb, el) {
-                            $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                            $(el).ColorPickerHide();
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    }).bind('keyup', function(){
-                        $(this).ColorPickerSetColor(this.value);
-                    });
-
-                    $('#fieldSetsRegions').append(lastFieldSet);
+      region_title = regions[i].title || "";
+      region_data  = regions[i].data  || "";
+      region_color = regions[i].color || "150 150 150";
                 
-                    $('#fieldSetsRegions div.fieldset-regions:last').accordion({
-                      header : 'h3',
-                      collapsible : true,
-                      autoHeight : false,
-                      active : false, 
-                    }); 
-                    $('#fieldSetsRegions div.fieldset-regions:last').accordion("enable");
-
-                  }
-
-                  //disable button so you know you've reached the max
-                  if(newRegionsCount >= maxRegions){
-                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
-                  }
-                }
-                
-                $('input[name="regions['+i+'][title]"]').val(regions[i].title);
-                $('textarea[name="regions['+i+'][data]"]').val(regions[i].data);
-                
-                if(regions[i].color == "") {
-                    $('input[name="regions['+i+'][color]"]').val("150 150 150");
-                }
-                else {
-                    $('input[name="regions['+i+'][color]"]').val(regions[i].color);
-                }
-                
-              }
+      $('input[name="regions['+i.toString()+'][title]"]').val(region_title);
+      $('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
+      $('input[name="regions['+i.toString()+'][color]"]').val(region_color);        
+    }
   };
 
-  Mapper.loadFreehand = function(data) {
-                  //load up all the well-known text, freehand data
-              var freehands = (data.map.freehand !== undefined) ? data.map.freehand : [];
-              for(i=0;i<freehands.length;i++) {
-                //add the fieldsets in case more than the default three are required
-                if(i > 2) {
-                    if(newFreehandCount < maxFreehand) {
-                    newFreehandCount++;
-                    var totalFreehand = newFreehandCount + 3;
-                    var inputCounter = totalFreehand - 1;
-                    var lastFieldSet = $('#fieldSetsFreehand div.fieldset-freehand:last').clone();
+  Mapper.loadFreehands = function(data) {
+    var self           = this,
+        i              = 0,
+        freehands      = data.map.freehand || [],
+        freehand_title = "",
+        freehand_data  = "",
+        freehand_color = "";
 
-                    $(lastFieldSet).find('h3 a').text("Region "+totalFreehand);
-                    $(lastFieldSet).find('input.m-mapTitle').attr('name','freehand['+inputCounter+'][title]').val('');
-                    $(lastFieldSet).find('textarea').attr('name','freehand['+inputCounter+'][data]').removeClass('textarea-processed').val('');
+    for(i = 0; i < freehands.length; i += 1) {
+      if(i > 2) {
+        self.addAccordionPanel('freehands');
+      }
 
-                    $(lastFieldSet).find('textarea').each(function() {
+      freehand_title = freehands[i].title || "";
+      freehand_data  = freehands[i].data  || "";
+      freehand_color = freehands[i].color || "150 150 150";
 
-                      var textarea = $(this).addClass('textarea-processed'), staticOffset = null;
-
-                      $(this).parent().find('.grippie').mousedown(startDrag);
-
-                      var grippie = $('div.grippie', $(this).parent())[0];
-                      grippie.style.marginRight = (grippie.offsetWidth - $(this)[0].offsetWidth) +'px';
-
-                      function startDrag(e) {
-                        staticOffset = textarea.height() - e.pageY;
-                        textarea.css('opacity', 0.25);
-                        $(document).mousemove(performDrag).mouseup(endDrag);
-                        return false;
-                      }
-
-                      function performDrag(e) {
-                        textarea.height(Math.max(32, staticOffset + e.pageY) + 'px');
-                        return false;
-                      }
-
-                      function endDrag(e) {
-                        $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                        textarea.css('opacity', 1);
-                      }
-                    });
-
-                    $(lastFieldSet).find('input.colorPicker').attr('name','freehand['+inputCounter+'][color]').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb, el) {
-                            $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
-                            $(el).ColorPickerHide();
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    }).bind('keyup', function(){
-                        $(this).ColorPickerSetColor(this.value);
-                    });
-
-                    $('#fieldSetsFreehand').append(lastFieldSet);
-                
-                    $('#fieldSetsFreehand div.fieldset-freehand:last').accordion({
-                      header : 'h3',
-                      collapsible : true,
-                      autoHeight : false,
-                      active : false, 
-                    }); 
-                    $('#fieldSetsFreehand div.fieldset-freehand:last').accordion("enable");
-
-                  }
-
-                  //disable button so you know you've reached the max
-                  if(newFreehandCount >= maxFreehand){
-                    addMorebtn.attr("disabled","disabled"); //set the "disabled" property on the button
-                  }
-                }
-                
-                $('input[name="freehand['+i+'][title]"]').val(freehands[i].title);
-                $('textarea[name="freehand['+i+'][data]"]').val(freehands[i].data);
-                
-                if(freehands[i].color == "") {
-                    $('input[name="freehand['+i+'][color]"]').val("150 150 150");
-                }
-                else {
-                    $('input[name="freehand['+i+'][color]"]').val(freehands[i].color);
-                }
-                
-              }
+       $('input[name="freehand['+i.toString()+'][title]"]').val(freehand_title);
+       $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
+       $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);         
+    }
   };
 
   Mapper.loadLayers = function(data) {
-    var keyMap = [];
+    var i = 0, keyMap = [], key = 0;
 
     $('#border').attr('checked', false);
     $('#legend').attr('checked', false);
     $('input[name="options[border]"]').val("");
     $('input[name="options[legend]"]').val("");
     if(data.map.layers) {
-      for(key in data.map.layers){
-        keyMap[keyMap.length] = key;
+      for(key in data.map.layers) {
+        if(data.map.layers.hasOwnProperty(key)) { keyMap[keyMap.length] = key; }
       }
-      for(i=0;i<keyMap.length;i++) {
+      for(i = 0; i < keyMap.length; i += 1) {
         $('input[name="layers['+keyMap[i]+']"]').attr('checked', true);
       }
     }
   };
 
-  Mapper.embedDialog = function(obj) {
+  Mapper.activateEmbed = function(mid) {
     var self    = this,
         message = 'Use the following HTML snippet to embed a png:';
 
-    message += "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + $(obj).attr("rel") + "\" alt=\"\" /&gt;'></input></p>";
-    message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + $(obj).attr("rel") + "&amp;width=200&amp;height=150)</span>";
+    $('.map-embed').attr("data-mid", mid).click(function() {
+      message += "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
+      message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span>";
     
-    $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
+      $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
     
-    $('#mapper-message').dialog({
-      height : 250,
-      width : 525,
-      modal : true,
-      buttons: {
-        Cancel: function() {
-          $(this).dialog("destroy");
+      $('#mapper-message').dialog({
+        height        : 250,
+        width         : 525,
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : false,
+        resizable     : false,
+        buttons       : {
+          Cancel: function() {
+            $(this).dialog("destroy").remove();
+          }
         }
-      },
-      draggable : false,
-      resizable : false
-    });
+      });
+    }).show();
+
   };
 
   Mapper.deleteConfirmation = function(obj) {
     var self    = this,
-        id      = $(obj).attr("rel")
+        id      = $(obj).attr("data-mid"),
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
 
     $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
     
     $('#mapper-message').dialog({
-      height : 250,
-      width : 500,
-      modal : true,
-      buttons: {
+      height        : 250,
+      width         : 500,
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : {
         "Delete" : function() {
-          $.get(self.settings.baseUrl + "/usermaps/?action=delete&map="+id, {}, function(data) {
+          $.get(self.settings.baseUrl + "/usermaps/?action=delete&map="+id, {}, function() {
             self.loadMapList();
           }, "json");
           $(this).dialog("destroy").remove();
@@ -1134,9 +806,7 @@ $(function(){
         Cancel: function() {
           $(this).dialog("destroy").remove();
         }
-      },
-      draggable : false,
-      resizable : false
+      }
     });
 
   };
@@ -1150,48 +820,25 @@ $(function(){
     }, "html");
   };
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//Submit the form
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Mapper.vars.submitForm.click(function() {
-    
-      //some simple error checking
-      var missingTitle = false;
-    
-      $('.m-mapCoord').each(function() {
-        if($(this).val() && $(this).parents().find('.m-mapTitle').val() == '') {
-          missingTitle = true;
-        }
-      });
-    
-      if(missingTitle) {
-        var message = 'You are missing a legend for at least one of your Point Data, Regions, or Freehand layers';
-        showMessage(message);   
-      }
-      else {
-        showMap();
-        $("#tabs").tabs('select',0);
-      }
-    
-      return false;  //kill the browser default action
-    });
-
   Mapper.bindSave = function() {
+    var self = this;
+
     $(".map-save").click(function() {
 
-      var self         = this,
-          formData     = $("form").serialize(),
-          missingTitle = false
+      var missingTitle = false;
 
       $('#mapSave').dialog({
-        autoOpen : true,
-        height : 200,
-        width : 500,
-        modal : true,
-        buttons: {
+        autoOpen      : true,
+        height        : 200,
+        width         : 500,
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : false,
+        resizable     : false,
+        buttons       : {
           "Save" : function() {
 
-            if($.trim($('.m-mapSaveTitle').val()) == '') { missingTitleSave = true; }
+            if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
 
             if(missingTitle) {
               $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function() {
@@ -1210,10 +857,10 @@ $(function(){
               } else {
                 $('input[name="options[legend]"]').val(""); 
               }
-            
-              $.post(self.settings.baseUrl + "/usermaps/?action=save", formData, function(data) {
+
+              $.post(self.settings.baseUrl + "/usermaps/?action=save", $("form").serialize(), function(data) {
                 $('#mapTitle').text($('.m-mapSaveTitle').val());
-                $('.map-embed').attr("rel", data.mid).show();
+                self.activateEmbed(data.mid);
                 self.loadMapList();
               }, 'json');
               $(this).dialog("destroy");
@@ -1222,9 +869,7 @@ $(function(){
           Cancel: function() {
             $(this).dialog("destroy");
           }
-        },
-        draggable : false,
-        resizable : false
+        }
       });
 
       return false;
@@ -1233,20 +878,52 @@ $(function(){
   }; /** end Mapper.bindSave **/
 
   Mapper.bindDownload = function() {
+    var self = this;
+
+    $('#mapExport a.export').click(function() {
+      self.generateDownload($(this).attr("data-export"));
+      return false; 
+    });
+
     $(".map-download").click(function() {
       $('#mapExport').dialog({
-        autoOpen : true,
-        width    : 500,
-        modal    : true,
-        buttons  : {
+        autoOpen      : true,
+        width         : 500,
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : false,
+        resizable     : false,
+        buttons       : {
           Cancel : function() {
-            $(this).dialog("destroy").remove();
+            $(this).dialog("destroy");
           } 
-        },
-        draggable : false,
-        resizable : false
+        }
       });
 
+      return false;
+    });
+  };
+
+  Mapper.bindSubmit = function() {
+    var self = this, missingTitle = false;
+
+    $(".submitForm").click(function() {
+
+      $('.m-mapCoord').each(function() {
+        if($(this).val() && $(this).parents().find('.m-mapTitle').val() === '') {
+          missingTitle = true;
+        }
+      });
+    
+      if(missingTitle) {
+        var message = 'You are missing a legend for at least one of your Point Data, Regions, or Freehand layers';
+        self.showMessage(message);   
+      }
+      else {
+        self.showMap();
+        $("#tabs").tabs('select',0);
+      }
+    
       return false;
     });
   };
@@ -1257,16 +934,17 @@ $(function(){
       $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning"></div>');
     }
     $('#mapper-message').html(message).dialog({
-      autoOpen : true,
-      height   : 200,
-      modal    : true,
-      buttons  : {
+      autoOpen      : true,
+      height        : 200,
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : {
         Ok : function() {
           $(this).dialog("destroy");
         }
-      },
-      draggable : false,
-      resizable : false
+      }
     });
   };
 
@@ -1305,7 +983,7 @@ $(function(){
         formData     = {},
         message      = '<span id="mapper-building-map">Building preview...</span>',
         toolsTabs    = $('#mapTools').tabs(),
-        tabIndex     = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val()) : 0
+        tabIndex     = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val(), 10) : 0;
 
     self.destroyJcrop();
 
@@ -1328,6 +1006,7 @@ $(function(){
       toolsTabs.tabs('select', tabIndex);
       
       $('#mapTools').bind('tabsselect', function(event,ui) {
+        event = null;
         $('#selectedtab').val(ui.index);
       });
 
@@ -1336,31 +1015,6 @@ $(function(){
       $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
       $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
       $('#pan').val('');                                         // reset pan value
-
-      $('#mapExport a.toolsPng').click(function() {
-        self.generateDownload('png');
-        return false; 
-      });
-      
-      $('#mapExport a.toolsTiff').click(function() {
-        self.generateDownload('tif');
-        return false; 
-      });
-
-      $('#mapExport a.toolsSvg').click(function() {
-        self.generateDownload('svg');
-        return false; 
-      });
-
-      $('#mapExport a.toolsEps').click(function() {
-        self.generateDownload('eps');
-        return false; 
-      });
-      
-      $('#mapExport a.toolsKml').click(function() {
-        self.generateDownload('kml');
-        return false; 
-      });
                           
       $('.toolsBadRecords').click(function() {
         self.showBadRecords();
@@ -1373,27 +1027,29 @@ $(function(){
 
   Mapper.showBadRecords = function() {
     $('#badRecordsViewer').dialog({
-      autoOpen : true,
-      height : 200,
-      width : 500,
-      position : [200, 200],
-      modal : true,
+      autoOpen      : true,
+      height        : 200,
+      width         : 500,
+      position      : [200, 200],
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
       buttons: {
         Ok: function() {
           $(this).dialog("destroy");
         }
-      },
-      draggable : false,
-      resizable : false
+      }
     });
   };
 
   Mapper.generateDownload = function(filetype) {
     var self        = this,
-        pattern     = /[?*:;{}\\ "'\/@#!%^()<>.]+/g,
+        pattern     = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
         map_title   = $('#file-name').val(),
-        token       = new Date().getTime(),
-        cookieValue = "";
+        token       = new Date().getTime().toString(),
+        cookieValue = "",
+        formData    = "";
       
     if($('#border').is(':checked')) { 
       $('input[name="options[border]"]').val(1); 
@@ -1427,7 +1083,7 @@ $(function(){
       default:
         $('#download').val(1);
         $('#output').val(filetype);
-        if(jcrop_api) $('#crop').val(1);
+        if(self.vars.jcropAPI) { $('#crop').val(1); }
         formData = $("form").serialize();
         $('.download-dialog').hide();
         $('.download-message').show();
@@ -1438,7 +1094,7 @@ $(function(){
     
     self.vars.fileDownloadTimer = window.setInterval(function() {
       cookieValue = $.cookie('fileDownloadToken');
-      if (cookieValue == token) {
+      if (cookieValue === token) {
         self.finishDownload();
       }
     }, 1000);
@@ -1456,7 +1112,7 @@ $(function(){
   ** RAPHAEL: FREEHAND DRAWING TOOLS **
   ************************************/
   Mapper.raphaelConfig = {
-    board         : Raphael('mapOutput', 800, 400),
+    board         : new Raphael('mapOutput', 800, 400),
     line          : null,
     path          : null,
     wkt           : null,
@@ -1470,8 +1126,8 @@ $(function(){
 
   Mapper.raphaelConfig.position = function(e) {
     return {
-      x: e.pageX - this.offset.left,
-      y: e.pageY - this.offset.top
+      x: (parseInt(e.pageX,10)-parseInt(this.offset.left,10)).toString(),
+      y: (parseInt(e.pageY,10)-parseInt(this.offset.top,10)).toString()
     };
   };
 
@@ -1511,8 +1167,8 @@ $(function(){
   Mapper.raphaelConfig.forcePaint = function(){
     var self = Mapper.raphaelConfig;
     window.setTimeout(function(){
-      var rect = self.board.rect(-99, -99, self.board.width + 99, self.board.height + 99).attr({stroke: "none"});
-      setTimeout(function() {rect.remove();});
+      var rect = self.board.rect(-99, -99, parseInt(self.board.width,10) + 99, parseInt(self.board.height,10) + 99).attr({stroke: "none"});
+      setTimeout(function() { rect.remove(); });
     },1);
   };
 
@@ -1539,9 +1195,11 @@ $(function(){
     this.bindArrows();
     this.bindSettings();
     this.bindColorPickers();
+    this.bindAddButtons();
     this.bindClearButtons();
     this.bindSave();
     this.bindDownload();
+    this.bindSubmit();
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
       $("#tabs").tabs('select',4);
@@ -1559,15 +1217,18 @@ $(function(){
 /******* jQUERY EXTENSIONS *******/
 
 $.fn.clearForm = function() {
+  "use strict";
   return this.each(function() {
- var type = this.type, tag = this.tagName.toLowerCase();
- if (tag == 'form')
-   return $(':input',this).clearForm();
- if (type == 'text' || type == 'password' || tag == 'textarea')
-   this.value = '';
- else if (type == 'checkbox' || type == 'radio')
-   this.checked = false;
- else if (tag == 'select')
-   this.selectedIndex = 0;
+    var type = this.type, tag = this.tagName.toLowerCase();
+    if (tag === 'form') {
+      return $(':input',this).clearForm();
+    }
+    if (type === 'text' || type === 'password' || tag === 'textarea') {
+      this.value = '';
+    } else if (type === 'checkbox' || type === 'radio') {
+     this.checked = false;
+    } else if (tag === 'select') {
+     this.selectedIndex = 0;
+    }
   });
 };

@@ -76,7 +76,7 @@ class MAPPRQUERY extends MAPPR {
         $ur_point->y = $bbox_query[1];
         $ur_coord = $this->pix2geo($ur_point);
         
-        $layer = ms_newLayerObj($this->_map_obj);
+        $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name","stateprovinces_polygon_query");
         $layer->set("data",$this->shapes[$this->queryLayer]['shape']);
         $layer->set("type",$this->shapes[$this->queryLayer]['type']);
@@ -120,7 +120,7 @@ class MAPPRQUERY extends MAPPR {
     }
 
     public function query_freehand() {
-      if(!$this->freehandCoords) return;
+      if(!$this->freehandCoords) return $this;
     
       foreach($this->freehandCoords as $pixelcoord) {
         $coord = explode(" ", $pixelcoord[0]);

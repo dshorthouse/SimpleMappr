@@ -193,7 +193,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
         </div>
 
         <div class="addFieldset">
-            <button id="addMore" class="sprites addmore positive">Add a layer</button>
+            <button class="sprites addmore positive" data-type="coords">Add a layer</button>
         </div>
 
         <div class="submit">
@@ -239,7 +239,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
         </div>
         
         <div class="addFieldset">
-            <button id="addMoreRegions" class="sprites addmore positive">Add a region</button>
+            <button class="sprites addmore positive" data-type="regions">Add a region</button>
         </div>
 
         <div class="submit">
@@ -259,11 +259,11 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                 <p>Type well-known text (<em>e.g.</em>  POLYGON((-103 54,-111 51,-100 49,-103 54)))</p> 
             </div>
 
-            <div id="fieldSetsFreehand" class="fieldSets">
+            <div id="fieldSetsFreehands" class="fieldSets">
     <?php
             for($j=0;$j<=NUMTEXTAREA-1;$j++) {
 
-              echo '<div class="form-item fieldset-freehand">';
+              echo '<div class="form-item fieldset-freehands">';
 
               echo '<h3><a href="#">Freehand '.($j+1).'</a></h3>' . "\n";
               echo '<div>' . "\n";
@@ -288,7 +288,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             </div>
 
             <div class="addFieldset">
-                <button id="addMoreFreehand" class="sprites addmore positive">Add a region</button>
+                <button class="sprites addmore positive" data-type="freehands">Add a region</button>
             </div>
 
             <div class="submit">
@@ -305,30 +305,30 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
         <div id="mapWrapper">
             <div id="actionsBar" class="ui-widget-header ui-corner-all">
                       <ul class="dropdown">
-                      <li><a href="#" class="sprites toolsZoomIn tooltip" rel="zoomIn" title="zoom in"></a></li>
-                      <li><a href="#" class="sprites toolsZoomOut tooltip" rel="zoomOut" title="zoom out"></a></li>
+                      <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in"></a></li>
+                      <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out"></a></li>
                       <li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
                         <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC5" rel="rotateac5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC10" rel="rotateac10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateAC15" rel="rotateac15">15<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-5">5<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-10">10<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-15">15<sup>o</sup></a></li>
                         </ul>
                       </li>
                       <li><a href="#" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
                         <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC5" rel="rotatec5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC10" rel="rotatec10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotateC15" rel="rotatec15">15<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="5">5<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="10">10<sup>o</sup></a></li>
+                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="15">15<sup>o</sup></a></li>
                         </ul>
                       </li>
-                      <li><a href="#" class="sprites toolsCrop tooltip" rel="crop" title="crop"></a></li>
-                      <li><a href="#" class="sprites toolsQuery tooltip" rel="shade" title="fill regions"></a></li>
+                      <li><a href="#" class="sprites toolsCrop tooltip" title="crop"></a></li>
+                      <li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
 <!--
 // Commented out for now until projection issues fully resolve with freehand
-                      <li><a href="#" class="sprites toolsDraw tooltip" rel="shade" title="draw shape"></a></li>
+                      <li><a href="#" class="sprites toolsDraw tooltip" title="draw shape"></a></li>
 -->
-                      <li><a href="#" class="sprites toolsRefresh tooltip" rel="refresh" title="refresh"></a></li>
-                      <li><a href="#" class="sprites toolsRebuild tooltip" rel="rebuild" title="rebuild"></a></li>
+                      <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh"></a></li>
+                      <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild"></a></li>
                     </ul>
                     
                     <h3 id="mapTitle"></h3>
@@ -336,7 +336,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                     <div id="map-saveDialog">
                         <?php if(isset($_SESSION['simplemappr'])): ?>
                         <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save">Save</a></span>
-                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" rel="">Embed</a></span>
+                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" data-mid="">Embed</a></span>
                         <?php endif; ?>
                         <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download">Download</a></span>
                     </div>
@@ -348,12 +348,12 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                 <div id="mapImage">
                     <div id="mapControlsTransparency"></div>
                     <div id="mapControls">
-                          <a href="#" class="sprites controls" id="arrow-up"></a>
-                          <a href="#" class="sprites controls" id="arrow-right"></a>
-                          <a href="#" class="sprites controls" id="arrow-down"></a>
-                          <a href="#" class="sprites controls" id="arrow-left"></a>
+                          <a href="#" class="sprites controls arrows up" data-pan="up"></a>
+                          <a href="#" class="sprites controls arrows right" data-pan="right"></a>
+                          <a href="#" class="sprites controls arrows down" data-pan="down"></a>
+                          <a href="#" class="sprites controls arrows left" data-pan="left"></a>
                     </div>
-                    <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords" rel="badRecords">Records Out of Range</a></div>
+                    <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
                         <img id="mapOutputImage" src="images/basemap.png" alt="" />
                     </div>
@@ -501,11 +501,11 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
         File type:
         <ul>
-          <li class="export-svg"><a href="#" class="sprites toolsSvg" rel="saveSvg"> svg*</a> (recommended)</li>
-          <li class="export-png"><a href="#" class="sprites toolsPng" rel="savePng"> png</a></li>
-          <li class="export-tiff"><a href="#" class="sprites toolsTiff" rel="saveTiff"> tif</a></li>
-          <li class="export-eps"><a href="#" class="sprites toolsEps" rel="saveEps"> eps</a></li>
-          <li class="export-kml"><a href="#" class="sprites toolsKml" rel="saveKml"> kml (Google Earth)</a></li>
+          <li class="export"><a href="#" class="sprites export" data-export="svg"> svg*</a> (recommended)</li>
+          <li class="export"><a href="#" class="sprites export" data-export="png"> png</a></li>
+          <li class="export"><a href="#" class="sprites export" data-export="tiff"> tif</a></li>
+          <li class="export"><a href="#" class="sprites export" data-export="eps"> eps</a></li>
+          <li class="kml"><a href="#" class="sprites export" data-export="kml"> kml</a> (Google Earth)</li>
         </ul>
 
         <p>*Download does not include scale/legend/relief</p>
