@@ -1055,9 +1055,11 @@ $(function(){
       $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
       $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
       $('#pan').val('');                                         // reset pan value
+
+      self.addBadRecordsViewer();
                           
       $('.toolsBadRecords').click(function() {
-        self.showBadRecords();
+        $('#badRecordsViewer').dialog("open");
         return false; 
       });
       
@@ -1065,9 +1067,9 @@ $(function(){
 
   }; /** end Mapper.showMap **/
 
-  Mapper.showBadRecords = function() {
+  Mapper.addBadRecordsViewer = function() {
     $('#badRecordsViewer').dialog({
-      autoOpen      : true,
+      autoOpen      : false,
       height        : 200,
       width         : 500,
       position      : [200, 200],
