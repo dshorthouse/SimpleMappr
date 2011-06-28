@@ -24,17 +24,17 @@ $(function(){
         arrPageScroll = Mapper.getPageScroll();
 
     $('#mapper-overlay').css({
-        width :  arrPageSizes[0],
-        height:  arrPageSizes[1]
+      width :  arrPageSizes[0],
+      height:  arrPageSizes[1]
     });
 
     $('#mapper-message').css({
-        top     : arrPageScroll[1] + (arrPageSizes[3] / 10),
-        left    : arrPageScroll[0],
-        position: 'fixed',
-        zIndex  : 1001,
-        margin  : '0px auto',
-        width   : '100%'
+      top     : arrPageScroll[1] + (arrPageSizes[3] / 10),
+      left    : arrPageScroll[0],
+      position: 'fixed',
+      zIndex  : 1001,
+      margin  : '0px auto',
+      width   : '100%'
     });
   });
 
