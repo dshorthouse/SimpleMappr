@@ -757,27 +757,34 @@ $(function(){
 
   Mapper.activateEmbed = function(mid) {
     var self    = this,
-        message = 'Use the following HTML snippet to embed a png:';
+        message = '';
 
     $('.map-embed').attr("data-mid", mid).click(function() {
+      message = 'Use the following HTML snippet to embed a png:';
       message += "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
       message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span>";
+
+      if($('body').find('#mapper-message').length > 0) {
+        $('#mapper-message').html(message).dialog("open");
+      } else {
+        $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
     
-      $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
-    
-      $('#mapper-message').dialog({
-        height        : 250,
-        width         : 525,
-        modal         : true,
-        closeOnEscape : false,
-        draggable     : false,
-        resizable     : false,
-        buttons       : {
-          Cancel: function() {
-            $(this).dialog("destroy").remove();
+        $('#mapper-message').dialog({
+          height        : 250,
+          width         : 525,
+          autoOpen      : true,
+          modal         : true,
+          closeOnEscape : false,
+          draggable     : false,
+          resizable     : false,
+          buttons       : {
+            Cancel: function() {
+              $(this).dialog("destroy").remove();
+            }
           }
-        }
-      });
+        });
+      }
+
     }).show();
 
   };
@@ -916,7 +923,7 @@ $(function(){
       });
     
       if(missingTitle) {
-        var message = 'You are missing a legend for at least one of your Point Data, Regions, or Freehand layers';
+        var message = 'You are missing a legend for at least one of your Point Data or Regions layers';
         self.showMessage(message);   
       }
       else {
@@ -942,7 +949,7 @@ $(function(){
       resizable     : false,
       buttons       : {
         Ok : function() {
-          $(this).dialog("destroy");
+          $(this).dialog("destroy").remove();
         }
       }
     });
@@ -1037,7 +1044,7 @@ $(function(){
       resizable     : false,
       buttons: {
         Ok: function() {
-          $(this).dialog("destroy");
+          $(this).dialog("close");
         }
       }
     });
