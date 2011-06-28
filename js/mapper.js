@@ -260,9 +260,17 @@ $(function(){
 
       $(fieldsets).find('.m-mapTitle').val('');
       $(fieldsets).find('textarea').val('');
-      $(fieldsets).find('.m-mapShape')[0].selectedIndex = 3;
-      $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3;
-      $(fieldsets).find('.colorPicker').val('0 0 0');
+      if($(fieldsets).find('.m-mapShape').length > 0) {
+        $(fieldsets).find('.m-mapShape').[0].selectedIndex = 3;
+      }
+      if($(fieldsets).find('.m-mapSize').length > 0) {
+        $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3;
+      }
+      if($(this).hasClass("clearLayers")) {
+        $(fieldsets).find('.colorPicker').val('0 0 0');
+      } else {
+        $(fieldsets).find('.colorPicker').val('150 150 150');
+      }
 
       return false;
     });
