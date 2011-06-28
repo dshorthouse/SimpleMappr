@@ -188,7 +188,8 @@ button.negative:active{background-color:#782c21 !important;}
 .submitForm { background-position: 3px 6px; }
 .clear { background-position: 3px -720px; }
 .saveForm { background-position: 3px -786px; }
-.addmore { background-position: 3px -60px;}
+.addmore { background-position: 3px -60px; }
+.removemore { display:none; background-position: 3px -720px; position: absolute; right:6px; top:6px; z-index:100; background-color:#FFF }
 
 #okClose { background-position: 0 -720px; }
 #okDelete { background-position: 0 6px; }
@@ -233,6 +234,10 @@ button[disabled], button[disabled]:hover, button[disabled]:active{
 .addFieldset {
     margin-left:20px;
     margin-top:20px;
+}
+
+.fieldset-points, .fieldset-regions, .fieldset-freehands {
+  position:relative;
 }
 
 .fieldset-taxon {

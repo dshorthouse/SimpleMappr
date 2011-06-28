@@ -426,81 +426,74 @@ $(function(){
 
   }; /** end Mapper.aQuery **/
 
-  Mapper.getTextareaCounter = function(type) {
+  Mapper.textareaCounter = function(type, action) {
     var self = this;
 
-    switch(type) {
-      case 'coords':
-        return self.vars.newPointCount;
-      case 'regions':
-        return self.vars.newRegionCount;
-      case 'freehand':
-        return self.vars.newFreehandCount;
-    }
-  };
+    switch(action) {
+      case 'get':
+        switch(type) {
+          case 'coords':
+            return self.vars.newPointCount;
+          case 'regions':
+            return self.vars.newRegionCount;
+          case 'freehand':
+            return self.vars.newFreehandCount;
+        }
+        break;
 
-  Mapper.incrementTextareaCounter = function(type) {
-    var self = this;
+      case 'increase':
+        switch(type) {
+          case 'coords':
+            return (self.vars.newPointCount += 1);
+          case 'regions':
+            return (self.vars.newRegionCount += 1);
+          case 'freehands':
+            return (self.vars.newFreehandCount += 1);
+        }
+        break;
 
-    switch(type) {
-      case 'coords':
-        return (self.vars.newPointCount += 1);
-      case 'regions':
-        return (self.vars.newRegionCount += 1);
-      case 'freehands':
-        return (self.vars.newFreehandCount += 1);
+      case 'decrease':
+        switch(type) {
+          case 'coords':
+            return (self.vars.newPointCount -= 1);
+          case 'regions':
+            return (self.vars.newRegionCount -= 1);
+          case 'freehands':
+            return (self.vars.newFreehandCount -= 1);
+        }
+        break;
     }
-  };
+
+  }; /** end Mapper.textareaCounter **/
 
   Mapper.addAccordionPanel = function(data_type) {
     var self    = this,
-        counter = self.getTextareaCounter(data_type),
-        i       = 0,
+        counter = self.textareaCounter(data_type, 'get'),
         button  = $(".addmore[data-type='" + data_type + "']"),
         clone   = {},
-        color   = (data_type === 'coords') ? "0 0 0" : "150 150 150";
+        color   = (data_type === 'coords') ? "0 0 0" : "150 150 150",
+        num     = 0;
 
     if(button.attr("data-type") === data_type) {
       clone = button.parent().prev().children("div:last").clone();
 
+      num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
+
       if(counter < self.vars.maxTextareaCount) {
-        counter = self.incrementTextareaCounter(data_type);
-        i = counter + 2;
-        
-        $(clone).find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (i+1).toString());
-        $(clone).find("input.m-mapTitle").attr("name", data_type + "["+i.toString()+"][title]").val("");
+        counter = self.textareaCounter(data_type, 'increase');
+
+        $(clone).find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
+        $(clone).find("input.m-mapTitle").attr("name", data_type + "["+num.toString()+"][title]").val("");
         $(clone).find("textarea")
-                .attr("name", data_type + "["+i.toString()+"][data]")
+                .attr("name", data_type + "["+num.toString()+"][data]")
                 .removeClass("textarea-processed")
                 .val("")
                 .each(function() {
-                  var textarea = $(this).addClass("textarea-processed"),
-                      staticOffset = null,
-                      grippie = $("div.grippie", $(this).parent())[0];
-
-                  function performDrag(e) {
-                    textarea.height(Math.max(32, staticOffset + e.pageY) + "px");
-                    return false;
-                  }
-
-                  function endDrag() {
-                    $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-                    textarea.css("opacity", 1);
-                  }
-
-                  function startDrag(e) {
-                    staticOffset = textarea.height() - e.pageY;
-                    textarea.css("opacity", 0.25);
-                    $(document).bind('mousemove', performDrag).bind('mouseup', endDrag);
-                    return false;
-                  }
-
-                  $(this).parent().find(".grippie").bind('mousedown', startDrag);
-                  grippie.style.marginRight = (parseInt(grippie.offsetWidth,10)-parseInt($(this)[0].offsetWidth,10)).toString() + "px";
+                  self.addGrippies(this);
                 });
-        $(clone).find("select.m-mapShape").attr("name", data_type + "["+i.toString()+"][shape]").val("circle");
-        $(clone).find("select.m-mapSize").attr("name", data_type + "["+i.toString()+"][size]").val("10");
-        $(clone).find("input.colorPicker").attr("name", data_type + "["+i.toString()+"][color]").ColorPicker({
+        $(clone).find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
+        $(clone).find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
+        $(clone).find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").ColorPicker({
           onSubmit: function(hsb, hex, rgb, el) {
             hsb = null;
             hex = null;
@@ -513,6 +506,13 @@ $(function(){
         }).bind('keyup', function(){
             $(this).ColorPickerSetColor(this.value);
         }).val(color);
+
+        $(clone).find("button.removemore").show().click(function() {
+          $(clone).remove();
+          counter = self.textareaCounter(data_type, 'decrease');
+          $(button).removeAttr("disabled");
+          return false;
+        });
 
         $(button).parent().prev().append(clone).children("div:last").accordion({
           header      : 'h3',
@@ -528,6 +528,32 @@ $(function(){
       }
     }
 
+  }; /** end Mapper.addAccordionPanel **/
+
+  Mapper.addGrippies = function(obj) {
+    var textarea     = $(obj).addClass("textarea-processed"),
+        staticOffset = null,
+        grippie      = $("div.grippie", $(obj).parent())[0];
+
+    function performDrag(e) {
+      textarea.height(Math.max(32, staticOffset + e.pageY) + "px");
+      return false;
+    }
+
+    function endDrag() {
+      $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
+      textarea.css("opacity", 1);
+    }
+
+    function startDrag(e) {
+      staticOffset = textarea.height() - e.pageY;
+      textarea.css("opacity", 0.25);
+      $(document).bind('mousemove', performDrag).bind('mouseup', endDrag);
+      return false;
+    }
+
+    $(obj).parent().find(".grippie").bind('mousedown', startDrag);
+    grippie.style.marginRight = (parseInt(grippie.offsetWidth,10)-parseInt($(this)[0].offsetWidth,10)).toString() + "px";
   };
 
   Mapper.bindAddButtons = function() {

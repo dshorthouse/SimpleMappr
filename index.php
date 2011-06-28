@@ -167,6 +167,8 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     for($j=0;$j<=NUMTEXTAREA-1;$j++) {
       
       echo '<div class="form-item fieldset-points">';
+
+      echo '<button class="sprites removemore negative" data-type="coords">Remove</button>';
     
       echo '<h3><a href="#">Layer '.($j+1).'</a></h3>' . "\n";
       echo '<div>' . "\n";
@@ -216,6 +218,8 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
           
           echo '<div class="form-item fieldset-regions">';
 
+          echo '<button class="sprites removemore negative" data-type="regions">Remove</button>';
+
           echo '<h3><a href="#">Region '.($j+1).'</a></h3>' . "\n";
           echo '<div>' . "\n";
           echo '<div class="fieldset-taxon">' . "\n";
@@ -264,6 +268,8 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             for($j=0;$j<=NUMTEXTAREA-1;$j++) {
 
               echo '<div class="form-item fieldset-freehands">';
+
+              echo '<button class="sprites removemore negative" data-type="freehands">Remove</button>';
 
               echo '<h3><a href="#">Freehand '.($j+1).'</a></h3>' . "\n";
               echo '<div>' . "\n";
