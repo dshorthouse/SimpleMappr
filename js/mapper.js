@@ -261,7 +261,7 @@ $(function(){
       $(fieldsets).find('.m-mapTitle').val('');
       $(fieldsets).find('textarea').val('');
       if($(fieldsets).find('.m-mapShape').length > 0) {
-        $(fieldsets).find('.m-mapShape').[0].selectedIndex = 3;
+        $(fieldsets).find('.m-mapShape')[0].selectedIndex = 3;
       }
       if($(fieldsets).find('.m-mapSize').length > 0) {
         $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3;
