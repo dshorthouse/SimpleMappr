@@ -1,16 +1,16 @@
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Function to offer download
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*global jQuery, unescape */
+
 jQuery.download = function(url, data, method) {
-  //url and data options required
+
+  "use strict";
+
+  var inputs = '', pair = [], value = "";
+
   if( url && data ) { 
-    //data can be string of parameters or array/object
-    data = typeof data == 'string' ? data : jQuery.param(data);
-    //split params into form inputs
-    var inputs = '';
+    data = (typeof data === 'string') ? data : jQuery.param(data);
     jQuery.each(data.split('&'), function() { 
-      var pair = this.split('=');
-      var value = pair[1].replace(/\+/g,' ');
+      pair = this.split('=');
+      value = pair[1].replace(/\+/g,' ');
       inputs+='<input type="hidden" name="'+ unescape(pair[0]) +'" value="'+ unescape(value) +'" />';
     });
     //send request
