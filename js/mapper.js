@@ -817,6 +817,7 @@ $(function () {
         });
       }
 
+      return false;
     }).show();
 
   };

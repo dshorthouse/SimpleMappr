@@ -9,10 +9,7 @@ if(isset($_GET['map'])) {
               ->set_symbols_path(MAPPR_DIRECTORY . "/config/symbols")
               ->set_font_file(MAPPR_DIRECTORY . "/config/fonts.list")
               ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
-              ->set_tmp_url("/tmp")
-              ->set_default_projection("epsg:4326")
-              ->set_max_extent("-180,-90,180,90")
-              ->set_image_size("800,400");
+              ->set_tmp_url("/tmp");
 
   $mappr_embed->get_request()
               ->execute()
@@ -38,16 +35,13 @@ if(isset($_COOKIE["simplemappr"])) {
     $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="dc.title" content="SimpleMappr" />
-<meta name="dc.subject" content="A publication-quality, point map application." />
-<meta name="dc.creator" content="David P. Shorthouse" />
-<meta name="dc.description" content="A publication-quality, point map application." />
-<meta name="dc.format" scheme="IMT" content="text/html" />
-<meta name="dc.type.documentType" content="Web Page" />
+<meta charset="utf-8">
+<meta name="description" content="A publication-quality, point map application." />
+<meta name="keywords" content="publication,map" />
+<meta name="author" content="David P. Shorthouse" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php
@@ -126,8 +120,6 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             <h2>Code</h2>
             <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
 
-            <p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
-            </p>
         </div>
 
     <!-- multipoint tab -->
@@ -502,7 +494,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
         <p>
           <label for="file-name">File name:</label>
-          <input type="text" id="file-name" maxlength="30" size="30">
+          <input type="text" id="file-name" maxlength="30" size="30" />
         </p>
 
         File type:

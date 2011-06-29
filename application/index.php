@@ -7,7 +7,6 @@ session_start();
 $mappr = new MAPPR();
 $mappr->set_imagemagic_path(IMAGEMAGICK_CONVERT)
       ->set_shape_path(MAPPR_DIRECTORY . "/maps")
-      ->set_symbols_path(MAPPR_DIRECTORY . "/config/symbols")
       ->set_font_file(MAPPR_DIRECTORY . "/config/fonts.list")
       ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
       ->set_tmp_url("/tmp")

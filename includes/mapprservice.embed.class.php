@@ -68,8 +68,8 @@ class MAPPREMBED extends MAPPR {
 
     private function set_map_extent() {
       $ext = explode(',',$this->bbox_map);
-      $origProjObj = ms_newProjectionObj('init=' . $this->projection_map);
-      $newProjObj = ms_newProjectionObj('init=' . $this->default_projection);
+      $origProjObj = ms_newProjectionObj(parent::$accepted_projections_proj[$this->projection_map]);
+      $newProjObj = ms_newProjectionObj(parent::$accepted_projections_proj[$this->default_projection]);
 
       $poPoint1 = ms_newPointObj();
       $poPoint1->setXY($ext[0], $ext[1]);
@@ -107,7 +107,7 @@ class MAPPREMBED extends MAPPR {
         $layer->set("data", $this->shapes['grid']['shape']);
         $layer->set("type", $this->shapes['grid']['type']);
         $layer->set("status",MS_ON);
-        $layer->setProjection('init=' . $this->default_projection);
+        $layer->setProjection(parent::$accepted_projections_proj[$this->default_projection]);
         
         $class = ms_newClassObj($layer);
         $class->label->set("font", "arial");

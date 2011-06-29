@@ -43,9 +43,6 @@ class MAPPR {
     /* path to shapefiles */
     public $shape_path;
     
-    /* path to the symbols directory */
-    public $symbols_path;
-    
     /* path to the font file */
     public $font_file;
     
@@ -803,6 +800,7 @@ class MAPPR {
     */
     public function add_coordinates() {
       if(isset($this->coords) && $this->coords) {
+
         //do this in reverse order because the legend will otherwise be presented in reverse order
         for($j=count($this->coords)-1; $j>=0; $j--) {
 

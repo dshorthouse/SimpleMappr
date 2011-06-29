@@ -1,8 +1,0 @@
-default:
-  formatter:
-    name:         'pretty'
-    decorated:    true
-    verbose:      false
-  environment:
-    parameters:
-      start_url:  http://simplemappr.local/
