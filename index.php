@@ -501,7 +501,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
         <ul>
           <li class="export"><a href="#" class="sprites export" data-export="svg"> svg*</a> (recommended)</li>
           <li class="export"><a href="#" class="sprites export" data-export="png"> png</a></li>
-          <li class="export"><a href="#" class="sprites export" data-export="tiff"> tif</a></li>
+          <li class="export"><a href="#" class="sprites export" data-export="tif"> tif</a></li>
           <li class="export"><a href="#" class="sprites export" data-export="eps"> eps</a></li>
           <li class="kml"><a href="#" class="sprites export" data-export="kml"> kml</a> (Google Earth)</li>
         </ul>
