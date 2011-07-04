@@ -1,27 +1,28 @@
-/*global $, window, document, self, XMLHttpRequest, setTimeout, Raphael */
+/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, Raphael */
 
-var Mapper = Mapper || { 'settings': {} };
+var Mappr = Mappr || { 'settings': {} };
 
 $(function () {
 
-    "use strict";
+   "use strict";
 
-    Mapper.vars = {
-      newPointCount      : 0,
-      newRegionCount     : 0,
-      newFreehandCount   : 0,
-      maxTextareaCount   : 10,
-      zoom               : true,
-      fileDownloadTimer  : {}
-    };
+  Mappr.vars = {
+    newPointCount      : 0,
+    newRegionCount     : 0,
+    newFreehandCount   : 0,
+    maxTextareaCount   : 10,
+    zoom               : true,
+    fileDownloadTimer  : {},
+    fillColor          : {}
+  }; 
 
   $.ajaxSetup({
     xhr:function () { return new XMLHttpRequest(); }
   });
 
   $(window).resize(function () {
-    var arrPageSizes = Mapper.getPageSize(),
-        arrPageScroll = Mapper.getPageScroll();
+    var arrPageSizes = Mappr.getPageSize(),
+        arrPageScroll = Mappr.getPageScroll();
 
     $('#mapper-overlay').css({
       width :  arrPageSizes[0],
@@ -38,7 +39,7 @@ $(function () {
     });
   });
 
-  Mapper.getPageSize = function () {
+  Mappr.getPageSize = function () {
     var xScroll, yScroll, windowWidth, windowHeight, pageHeight, pageWidth;
 
     if (window.innerHeight && window.scrollMaxY) {  
@@ -81,10 +82,10 @@ $(function () {
 
     return [pageWidth,pageHeight,windowWidth,windowHeight];
 
-  }; /** end Mapper.getPageSize **/
+  }; /** end Mappr.getPageSize **/
 
 
-  Mapper.getPageScroll = function () {
+  Mappr.getPageScroll = function () {
     var xScroll, yScroll;
 
     if (self.pageYOffset) {
@@ -100,9 +101,9 @@ $(function () {
 
     return [xScroll,yScroll];
 
-  }; /** end Mapper.getPageScroll **/
+  }; /** end Mappr.getPageScroll **/
 
-  Mapper.showCoords = function (c) {
+  Mappr.showCoords = function (c) {
     var x = parseInt(c.x, 10),
         y = parseInt(c.y, 10),
        x2 = parseInt(c.x2, 10),
@@ -112,7 +113,7 @@ $(function () {
     $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
   };
 
-  Mapper.showCoordsQuery = function (c) {
+  Mappr.showCoordsQuery = function (c) {
     var x = parseInt(c.x, 10),
         y = parseInt(c.y, 10),
        x2 = parseInt(c.x2, 10),
@@ -121,15 +122,15 @@ $(function () {
     $('#bbox_query').val(x+','+y+','+x2+','+y2);
   };
 
-  Mapper.tabSelector = function (tab) {
+  Mappr.tabSelector = function (tab) {
     $("#tabs").tabs('select',tab);
   };
 
-  Mapper.RGBtoHex = function (R,G,B) {
+  Mappr.RGBtoHex = function (R,G,B) {
     return this.toHex(R)+this.toHex(G)+this.toHex(B);
   };
 
-  Mapper.toHex = function (N) {
+  Mappr.toHex = function (N) {
     if (N === null) { return "00"; }
     N = parseInt(N, 10);
     if (N === 0 || isNaN(N)) { return "00"; }
@@ -139,7 +140,7 @@ $(function () {
     return "0123456789ABCDEF".charAt((N-N%16)/16) + "0123456789ABCDEF".charAt(N%16);
   };
 
-  Mapper.bindToolbar = function () {
+  Mappr.bindToolbar = function () {
     var self = this;
 
     $("ul.dropdown li").hover(function () {
@@ -184,10 +185,29 @@ $(function () {
       return false;   
     });
 
-    $('.toolsQuery').click(function () {
-      $('#mapCropMessage').hide();
-      self.initJquery();
-      self.vars.zoom = false;
+    $('.toolsQuery').ColorPicker({
+      onBeforeShow: function () {
+        $(this).ColorPickerSetColor(Mappr.RGBtoHex(150, 150, 150));
+      },
+      onShow: function (colpkr) {
+        $(colpkr).show();
+        Mappr.destroyJcrop();
+        return false;
+      },
+      onHide: function (colpkr) {
+        $(colpkr).hide();
+        return false;
+      },
+      onSubmit: function (hsb, hex, rgb, el) {
+        hsb = null;
+        hex = null;
+        $(el).ColorPickerHide();
+        $('#mapCropMessage').hide();
+        Mappr.vars.fillColor = rgb;
+        Mappr.initJquery();
+        Mappr.vars.zoom = false;
+      }
+    }).click(function () {
       return false;
     });
 
@@ -214,9 +234,9 @@ $(function () {
       return false;  
     });
 
-  }; /** end Mapper.bindToolbar **/
+  }; /** end Mappr.bindToolbar **/
 
-  Mapper.bindArrows = function () {
+  Mappr.bindArrows = function () {
     var self = this;
 
     $('.arrows').click(function () {
@@ -226,7 +246,7 @@ $(function () {
     });
   };
 
-  Mapper.bindSettings = function () {
+  Mappr.bindSettings = function () {
     var self = this;
 
     $('.layeropt').click(function () {
@@ -238,23 +258,30 @@ $(function () {
     });
   };
 
-  Mapper.bindColorPickers = function () {
+  Mappr.bindColorPickers = function () {
     $('.colorPicker').ColorPicker({
+      element : $(this),
+      onBeforeShow: function () {
+        var color = $(this).val().split(" ");
+        $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+      },
+      onHide: function (colpkr) {
+        $(colpkr).hide();
+        return false;
+      },
       onSubmit: function (hsb, hex, rgb, el) {
         hsb = null;
         hex = null;
         $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
         $(el).ColorPickerHide();
-      },
-      onBeforeShow: function () {
-        $(this).ColorPickerSetColor(this.value);
       }
     }).bind('keyup', function () {
-      $(this).ColorPickerSetColor(this.value);
+      var color = $(this).val().split(" ");
+      $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
     });
   };
 
-  Mapper.bindClearButtons = function () {
+  Mappr.bindClearButtons = function () {
     $('.clearLayers, .clearRegions, .clearFreehand').click(function () {
       var fieldsets = $(this).parent().prev().prev().children();
 
@@ -275,9 +302,32 @@ $(function () {
       return false;
     });
 
-  }; /** end Mapper.bindClearButtons **/
+    $('.clearself').click(function () {
+      Mappr.clearSelf($(this));
+      return false;
+    });
 
-  Mapper.destroyJcrop = function () {
+  }; /** end Mappr.bindClearButtons **/
+
+  Mappr.clearSelf = function(el) {
+    var box = $(el).parent();
+
+    $(box).find('.m-mapTitle').val('');
+    $(box).find('textarea').val('');
+    if($(box).find('.m-mapShape').length > 0) {
+      $(box).find('.m-mapShape')[0].selectedIndex = 3;
+    }
+    if($(box).find('.m-mapSize').length > 0) {
+      $(box).find('.m-mapSize')[0].selectedIndex = 3;
+    }
+    if($(box).parent().hasClass("fieldset-points")) {
+      $(box).find('.colorPicker').val('0 0 0');
+    } else {
+      $(box).find('.colorPicker').val('150 150 150');
+    }
+  };
+
+  Mappr.destroyJcrop = function () {
     var vars = this.vars;
 
     if(typeof vars.jzoomAPI !== "undefined") { vars.jzoomAPI.destroy(); }
@@ -285,7 +335,7 @@ $(function () {
     if(typeof vars.jqueryAPI !== "undefined") { vars.jqueryAPI.destroy(); }
   };
 
-  Mapper.initJcrop = function () {
+  Mappr.initJcrop = function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -300,7 +350,7 @@ $(function () {
     $('.jcrop-tracker').unbind('mouseup', self.aZoom );
   };
 
-  Mapper.initJzoom = function () {
+  Mappr.initJzoom = function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -319,7 +369,7 @@ $(function () {
     $('.jcrop-tracker').bind('mouseup', self.aZoom );
   };
 
-  Mapper.initJquery = function () {
+  Mappr.initJquery = function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -338,7 +388,7 @@ $(function () {
     $('.jcrop-tracker').bind('mouseup', self.aQuery );
   };
 
-  Mapper.initDraw = function () {
+  Mappr.initDraw = function () {
     var self = this, raphael = this.raphaelConfig;
 
     self.destroyJcrop();
@@ -389,44 +439,59 @@ $(function () {
 
     });
 
-  };  /** end Mapper.initDraw **/
+  };  /** end Mappr.initDraw **/
     
-  Mapper.aZoom = function () {
-    Mapper.showMap();
+  Mappr.aZoom = function () {
+    Mappr.showMap();
   };
 
-  Mapper.aQuery = function () {
+  Mappr.aQuery = function () {
   
-    var i = 0, formData = {
-      bbox           : $('#rendered_bbox').val(), 
-      bbox_query     : $('#bbox_query').val(), 
-      projection     : $('#projection').val(), 
-      projection_map : $('#projection_map').val(),
-      qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base' 
-    };
+    var i = 0,
+        fillColor = Mappr.vars.fillColor.r + " " + Mappr.vars.fillColor.g + " " + Mappr.vars.fillColor.b,
+        formData = {
+          bbox           : $('#rendered_bbox').val(), 
+          bbox_query     : $('#bbox_query').val(), 
+          projection     : $('#projection').val(), 
+          projection_map : $('#projection_map').val(),
+          qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base'
+        };
 
-    Mapper.destroyJcrop();
+    Mappr.destroyJcrop();
 
-    $.post(Mapper.settings.baseUrl + "/query/", formData, function (data) {
+    $.post(Mappr.settings.baseUrl + "/query/", formData, function (data) {
+
       if(data.length > 0) {
-        var regions = "",
-            region_title = $('input[name="regions[0][title]"]'),
-            region_data = $('textarea[name="regions[0][data]"]');
+        var regions  = "",
+            num_fieldsets = $('.fieldset-regions').length;
 
-        region_data.val("");
-        if(region_title.val() === "") { region_title.val("Selected Regions"); }
         for(i = 0; i < data.length; i += 1) {
             regions += data[i];
             if(i < data.length-1) { regions += ", "; }
         }
-        region_data.val(regions);
-        Mapper.showMap();
+
+        for(i = 0; i < num_fieldsets; i += 1) {
+          if($('input[name="regions['+i+'][title]"]').val() === "" || $('textarea[name="regions['+i+'][data]"]').val() === "") {
+            $('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
+            $('input[name="regions['+i+'][color]"]').val(fillColor);
+            $('textarea[name="regions['+i+'][data]"]').val(regions);
+            if(i === (num_fieldsets-1) && !$('button[data-type="regions"]').is(':disabled')) {
+              Mappr.addAccordionPanel('regions');
+            }
+            break;
+          } else {
+            if(i === (num_fieldsets-1)) { Mappr.addAccordionPanel('regions'); num_fieldsets += 1; }
+            continue;
+          }
+        }
+
+        Mappr.showMap();
       }
     });
 
-  }; /** end Mapper.aQuery **/
+  }; /** end Mappr.aQuery **/
 
-  Mapper.textareaCounter = function (type, action) {
+  Mappr.textareaCounter = function (type, action) {
     var self = this;
 
     switch(action) {
@@ -464,9 +529,9 @@ $(function () {
         break;
     }
 
-  }; /** end Mapper.textareaCounter **/
+  }; /** end Mappr.textareaCounter **/
 
-  Mapper.addAccordionPanel = function (data_type) {
+  Mappr.addAccordionPanel = function (data_type) {
     var self    = this,
         counter = self.textareaCounter(data_type, 'get'),
         button  = $(".addmore[data-type='" + data_type + "']"),
@@ -493,21 +558,27 @@ $(function () {
                 });
         $(clone).find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
         $(clone).find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
-        $(clone).find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").ColorPicker({
+        $(clone).find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
+          onBeforeShow: function () {
+            var color = $(this).val().split(" ");
+            $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+          },
+          onHide: function (colpkr) {
+            $(colpkr).hide();
+            return false;
+          },
           onSubmit: function (hsb, hex, rgb, el) {
             hsb = null;
             hex = null;
             $(el).val(rgb.r + " " + rgb.g + " " + rgb.b);
             $(el).ColorPickerHide();
-          },
-          onBeforeShow: function () {
-            $(this).ColorPickerSetColor(this.value);
           }
         }).bind('keyup', function () {
-            $(this).ColorPickerSetColor(this.value);
-        }).val(color);
+          var color = $(this).val().split(" ");
+          $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+        });
 
-        $(button).parent().prev().append(clone).children("div:last").accordion({
+        $(button).parent().prev().accordion("activate", false).append(clone).children("div:last").accordion({
           header      : 'h3',
           collapsible : true,
           autoHeight  : false,
@@ -517,18 +588,21 @@ $(function () {
           counter = self.textareaCounter(data_type, 'decrease');
           $(button).removeAttr("disabled");
           return false;
+        }).parent().find("button.clearself").click(function () {
+          Mappr.clearSelf($(this));
+          return false;
         }); 
 
       }
 
-      if(counter >= self.vars.maxTextareaCount-4) {
+      if(counter >= self.vars.maxTextareaCount-3) {
         $(button).attr("disabled","disabled");
       }
     }
 
-  }; /** end Mapper.addAccordionPanel **/
+  }; /** end Mappr.addAccordionPanel **/
 
-  Mapper.addGrippies = function (obj) {
+  Mappr.addGrippies = function (obj) {
     var textarea     = $(obj).addClass("textarea-processed"),
         staticOffset = null,
         grippie      = $("div.grippie", $(obj).parent())[0];
@@ -554,7 +628,7 @@ $(function () {
     grippie.style.marginRight = (parseInt(grippie.offsetWidth,10)-parseInt($(this)[0].offsetWidth,10)).toString() + "px";
   };
 
-  Mapper.bindAddButtons = function () {
+  Mappr.bindAddButtons = function () {
     var self = this;
 
     $('.addmore').click(function () {
@@ -564,9 +638,9 @@ $(function () {
       return false;
     });
 
-  }; /** end Mapper.bindAddButtons **/
+  }; /** end Mappr.bindAddButtons **/
 
-  Mapper.loadMapList = function () {
+  Mappr.loadMapList = function () {
     var self      = this,
         message   = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
 
@@ -588,7 +662,7 @@ $(function () {
     }, "html");
   };
 
-  Mapper.removeExtraElements = function () {
+  Mappr.removeExtraElements = function () {
     var self = this,
         i            = 0,
         numPoints    = $('.fieldset-points').size(),
@@ -617,7 +691,7 @@ $(function () {
     }
   };
 
-  Mapper.loadMap = function (obj) {
+  Mappr.loadMap = function (obj) {
     var self = this,
         id   = $(obj).attr("data-mid");
 
@@ -640,7 +714,7 @@ $(function () {
 
   };
 
-  Mapper.loadSettings = function (data) {
+  Mappr.loadSettings = function (data) {
     var pattern   = /[?*:;{}\\ "']+/g,
         map_title = "",
         i         = 0,
@@ -686,9 +760,9 @@ $(function () {
       }
     }
 
-  }; //** end Mapper.loadSettings **/
+  }; //** end Mappr.loadSettings **/
 
-  Mapper.loadCoordinates = function (data) {
+  Mappr.loadCoordinates = function (data) {
     var self        = this,
         i           = 0,
         coords      = data.map.coords || [],
@@ -724,7 +798,7 @@ $(function () {
     }
   };
 
-  Mapper.loadRegions = function (data) { 
+  Mappr.loadRegions = function (data) { 
     var self         = this,
         i            = 0,
         regions      = data.map.regions || [],
@@ -747,7 +821,7 @@ $(function () {
     }
   };
 
-  Mapper.loadFreehands = function (data) {
+  Mappr.loadFreehands = function (data) {
     var self           = this,
         i              = 0,
         freehands      = data.map.freehand || [],
@@ -770,7 +844,7 @@ $(function () {
     }
   };
 
-  Mapper.loadLayers = function (data) {
+  Mappr.loadLayers = function (data) {
     var i = 0, keyMap = [], key = 0;
 
     $('#border').attr('checked', false);
@@ -787,7 +861,7 @@ $(function () {
     }
   };
 
-  Mapper.activateEmbed = function (mid) {
+  Mappr.activateEmbed = function (mid) {
     var self    = this,
         message = '';
 
@@ -822,7 +896,7 @@ $(function () {
 
   };
 
-  Mapper.deleteConfirmation = function (obj) {
+  Mappr.deleteConfirmation = function (obj) {
     var self    = this,
         id      = $(obj).attr("data-mid"),
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
@@ -851,16 +925,16 @@ $(function () {
 
   };
 
-  Mapper.loadUsers = function () {
+  Mappr.loadUsers = function () {
     var message = '<div id="users-loading"><span id="mapper-building-users">Loading users list...</span></div>';
 
     $('#userdata').html(message);
-    $.get(Mapper.settings.baseUrl + "/usermaps/?action=users", {}, function (data) {
+    $.get(Mappr.settings.baseUrl + "/usermaps/?action=users", {}, function (data) {
       $('#userdata').html(data);
     }, "html");
   };
 
-  Mapper.bindSave = function () {
+  Mappr.bindSave = function () {
     var self = this;
 
     $(".map-save").click(function () {
@@ -914,9 +988,9 @@ $(function () {
       return false;
     });
 
-  }; /** end Mapper.bindSave **/
+  }; /** end Mappr.bindSave **/
 
-  Mapper.bindDownload = function () {
+  Mappr.bindDownload = function () {
     var self = this;
 
     $('#mapExport a.export').click(function () {
@@ -943,7 +1017,7 @@ $(function () {
     });
   };
 
-  Mapper.bindSubmit = function () {
+  Mappr.bindSubmit = function () {
     var self = this, missingTitle = false;
 
     $(".submitForm").click(function () {
@@ -967,7 +1041,7 @@ $(function () {
     });
   };
 
-  Mapper.showMessage = function (message) {
+  Mappr.showMessage = function (message) {
 
     if($('#mapper-message').length === 0) {
       $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning"></div>');
@@ -987,7 +1061,7 @@ $(function () {
     });
   };
 
-  Mapper.drawLegend = function () {
+  Mappr.drawLegend = function () {
     var legend_url = $('#legend_url').val();
 
     if(legend_url) {
@@ -997,7 +1071,7 @@ $(function () {
     }
   };
 
-  Mapper.drawScalebar = function () {
+  Mappr.drawScalebar = function () {
     var scalebar_url = $('#scalebar_url').val();
 
     if(scalebar_url) {
@@ -1007,7 +1081,7 @@ $(function () {
     }
   };
 
-  Mapper.showBadPoints = function () {
+  Mappr.showBadPoints = function () {
     var bad_points = $('#bad_points').val();
 
     if(bad_points) {
@@ -1016,7 +1090,7 @@ $(function () {
     }
   };
 
-  Mapper.showMap = function () {
+  Mappr.showMap = function () {
     var self         = this,
         token        = new Date().getTime(),
         formData     = {},
@@ -1035,7 +1109,7 @@ $(function () {
     $('#mapOutput').html(message);
     $('#mapScale').html('');
 
-    $.post(Mapper.settings.baseUrl + "/application/", formData, function (data) {
+    $.post(Mappr.settings.baseUrl + "/application/", formData, function (data) {
       $('#mapOutput').html(data);
 
       self.drawLegend();
@@ -1064,9 +1138,9 @@ $(function () {
       
     }, "html");
 
-  }; /** end Mapper.showMap **/
+  }; /** end Mappr.showMap **/
 
-  Mapper.addBadRecordsViewer = function () {
+  Mappr.addBadRecordsViewer = function () {
     $('#badRecordsViewer').dialog({
       autoOpen      : false,
       height        : (200).toString(),
@@ -1084,7 +1158,7 @@ $(function () {
     });
   };
 
-  Mapper.generateDownload = function (filetype) {
+  Mappr.generateDownload = function (filetype) {
     var self        = this,
         pattern     = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
         map_title   = $('#file-name').val(),
@@ -1138,9 +1212,9 @@ $(function () {
       }
     }, 1000);
 
-  }; /** end Mapper.generateDownload **/
+  }; /** end Mappr.generateDownload **/
 
-  Mapper.finishDownload = function () {
+  Mappr.finishDownload = function () {
     $('.download-message').hide();
     $('.download-dialog').show();
     window.clearInterval(this.vars.fileDownloadTimer);
@@ -1150,7 +1224,7 @@ $(function () {
   /************************************ 
   ** RAPHAEL: FREEHAND DRAWING TOOLS **
   ************************************/
-  Mapper.raphaelConfig = {
+  Mappr.raphaelConfig = {
     board         : new Raphael('mapOutput', 800, 400),
     line          : null,
     path          : null,
@@ -1163,15 +1237,15 @@ $(function () {
     offset        : $('#mapOutput').offset()
   };  
 
-  Mapper.raphaelConfig.position = function (e) {
+  Mappr.raphaelConfig.position = function (e) {
     return {
       x: (parseInt(e.pageX,10)-parseInt(this.offset.left,10)).toString(),
       y: (parseInt(e.pageY,10)-parseInt(this.offset.top,10)).toString()
     };
   };
 
-  Mapper.raphaelConfig.mouseMove = function (e) {
-    var self = Mapper.raphaelConfig,
+  Mappr.raphaelConfig.mouseMove = function (e) {
+    var self = Mappr.raphaelConfig,
         pos  = self.position(e),
         x    = self.path[0][1],
         y    = self.path[0][2],
@@ -1201,18 +1275,18 @@ $(function () {
     }
     self.line.attr({ path: self.path });
 
-  }; /** end Mapper.raphaelConfig.mouseMove **/
+  }; /** end Mappr.raphaelConfig.mouseMove **/
 
-  Mapper.raphaelConfig.forcePaint = function () {
-    var self = Mapper.raphaelConfig;
+  Mappr.raphaelConfig.forcePaint = function () {
+    var self = Mappr.raphaelConfig;
     window.setTimeout(function () {
       var rect = self.board.rect(-99, -99, parseInt(self.board.width,10) + 99, parseInt(self.board.height,10) + 99).attr({stroke: "none"});
       setTimeout(function () { rect.remove(); });
     },1);
   };
 
-  Mapper.raphaelConfig.draw = function (path, color, size) {
-    var self   = Mapper.raphaelConfig,
+  Mappr.raphaelConfig.draw = function (path, color, size) {
+    var self   = Mappr.raphaelConfig,
         result = self.board.path(path);
 
     result.attr({ stroke: color, 'stroke-width': size, 'stroke-linecap': 'round' });
@@ -1220,7 +1294,7 @@ $(function () {
     return result;
   };
 
-  Mapper.init = function () {
+  Mappr.init = function () {
     $('#initial-message').hide();
     $("#tabs").tabs().show();
     $('#mapTools').tabs();
@@ -1250,7 +1324,7 @@ $(function () {
     }
   };
 
-  Mapper.init();  
+  Mappr.init();  
 
 });
 

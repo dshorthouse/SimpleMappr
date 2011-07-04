@@ -120,25 +120,27 @@ class MAPPR {
         END
     ";
 
-    /* acceptable projections */
-    public static $accepted_projections = array(
-        'epsg:4326'   => 'Geographic',
-        'esri:102009' => 'NA Lambert',
-        'esri:102014' => 'Europe Lambert',
-        'esri:102015' => 'South America Lambert',
-        'esri:102024' => 'Africa Lambert',
-        'epsg:3112'   => 'Australia Lambert'
-    );
-
     /* acceptable projections in PROJ format */
     /* NOTE: included here for performance reasons AND each have 'over' switch to prevent stateprovince line wraps */
-    public static $accepted_projections_proj = array(
-        'epsg:4326'   => "proj=longlat,ellps=WGS84,datum=WGS84,no_defs",
-        'esri:102009' => "proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs",
-        'esri:102014' => "proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs",
-        'esri:102015' => "proj=lcc,lat_1=-5,lat_2=-42,lat_0=-32,lon_0=-60,x_0=0,y_0=0,ellps=aust_SA,units=m,over,no_defs",
-        'esri:102024' => "proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs",
-        'epsg:3112'   => "proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs"
+    public static $accepted_projections = array(
+      'epsg:4326'   => array(
+        'name' => 'Geographic',
+        'proj' => 'proj=longlat,ellps=WGS84,datum=WGS84,no_defs'),
+      'esri:102009' => array(
+        'name' => 'NA Lambert',
+        'proj' => 'proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs'),
+      'esri:102014' => array(
+        'name' => 'Europe Lambert',
+        'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
+      'esri:102015' => array(
+        'name' => 'South America Lambert',
+        'proj' => 'proj=lcc,lat_1=-5,lat_2=-42,lat_0=-32,lon_0=-60,x_0=0,y_0=0,ellps=aust_SA,units=m,over,no_defs'),
+      'esri:102024' => array(
+        'name' => 'Africa Lambert',
+        'proj' => 'proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
+      'epsg:3112'   => array(
+         'name' => 'Australia Lambert',
+         'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs')
     );
 
     /* acceptable shapes */ 
@@ -631,8 +633,8 @@ class MAPPR {
     private function set_map_extent() {
       $ext = explode(',',$this->bbox_map);
       if(isset($this->projection) && $this->projection != $this->projection_map) {
-        $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->projection_map]);
-        $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->default_projection]);
+        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection_map]['proj']);
+        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
 
         $poPoint1 = ms_newPointObj();
         $poPoint1->setXY($ext[0], $ext[1]);
@@ -679,7 +681,7 @@ class MAPPR {
         $layer->set("status",MS_ON);
         $layer->set("data",$this->shapes['base']['shape']);
         $layer->set("type",$this->shapes['base']['type']);
-        $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+        $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
 
         // Add new class to new layer
         $class = ms_newClassObj($layer);
@@ -702,8 +704,8 @@ class MAPPR {
             $max_extent = ms_newRectObj();
             $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
             if($this->projection != $this->default_projection) {
-              $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->default_projection]);
-              $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->projection]);
+              $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+              $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
               $max_extent->project($origProjObj,$newProjObj);   
             }
             $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
@@ -724,8 +726,8 @@ class MAPPR {
         $max_extent = ms_newRectObj();
         $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
         if($this->projection != $this->default_projection) {
-          $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->default_projection]);
-          $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->projection]);
+          $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+          $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
           $max_extent->project($origProjObj,$newProjObj);   
         }
         $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
@@ -761,8 +763,8 @@ class MAPPR {
           $max_extent = ms_newRectObj();
           $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
           if($this->projection != $this->default_projection) {
-            $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->default_projection]);
-            $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->projection]);
+            $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+            $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
             $max_extent->project($origProjObj,$newProjObj); 
           }
           $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
@@ -832,7 +834,7 @@ class MAPPR {
             $layer->set("type",MS_LAYER_POINT);
             $layer->set("tolerance",5);
             $layer->set("toleranceunits",6);
-            $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+            $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
 
             $class = ms_newClassObj($layer);
             if($title != "") $class->set("name",$title);
@@ -901,12 +903,7 @@ class MAPPR {
             
             if($data) {
 
-                $layer = ms_newLayerObj($this->map_obj);
-                $layer->set("name","stateprovinces_polygon");
-                $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
-                $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
-                $layer->set("template", "template.html");
-                $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+                $baselayer = true;
 
                 //grab the textarea for regions & split
                 $rows = explode("\n",$this->remove_empty_lines($data));
@@ -916,22 +913,43 @@ class MAPPR {
                     foreach($regions as $region) {
                         $pos = strpos($region, '[');
                         if($pos !== false) {
-                            $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
-                            $states = preg_split("/[\s|]+/", $split[1]);
-                            $statekey = array();
-                            foreach($states as $state) {
-                                $statekey[] = "'[HASC_1]' =~ /".$state."$/";
-                            }
-                            $qry[] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+                          $baselayer = false;
+                          $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
+                          $states = preg_split("/[\s|]+/", $split[1]);
+                          $statekey = array();
+                          foreach($states as $state) {
+                              $statekey[] = "'[HASC_1]' =~ /".$state."$/";
+                          }
+                          $qry['stateprovince'][] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+                          $qry['country'][] = "'[ISO_A3]' = '".trim($split[0])."'";
                         }
                         else {
-                            $region = addslashes(trim($region));
-                            $qry[] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
+                          $region = addslashes(trim($region));
+                          $qry['stateprovince'][] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
+                          $qry['country'][] = "'[NAME]' =~ /".$region."$/ OR '[NAME_FORMA]' =~ /".$region."$/";
                         }
                     }
                 }
 
-                $layer->setFilter("(".implode(" OR ", $qry).")");
+                $layer = ms_newLayerObj($this->map_obj);
+
+                if($baselayer) {
+                  $layer->set("name","query_layer");
+                  $layer->set("data",$this->shapes['base']['shape']);
+                  $layer->set("type",MS_LAYER_POLYGON);
+                }
+                else {
+                  $layer->set("name","stateprovinces_polygon");
+                  $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
+                  $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
+                }
+
+                $layer->set("template", "template.html");
+                $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+
+                $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
+
+                $layer->setFilter("(".implode(" OR ", $query).")");
                 $class = ms_newClassObj($layer);
                 $class->set("name", $title);
 
@@ -983,7 +1001,7 @@ class MAPPR {
                 $layer->set("status",MS_ON);
                 $layer->setConnectionType(MS_SHAPEFILE);
                 $layer->set("data", $this->shapes[$name]['shape']);
-                $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+                $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
                 $layer->set("template", "template.html");
                 $layer->set("dump", true);
 
@@ -1094,7 +1112,7 @@ class MAPPR {
 
                 $layer->set("type",$type);
                 $layer->set("template", "template.html");
-                $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+                $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
 
                 $class = ms_newClassObj($layer);
                 $class->set("name", $title);
@@ -1119,7 +1137,7 @@ class MAPPR {
         $layer->set("data", $this->shapes['grid']['shape']);
         $layer->set("type", $this->shapes['grid']['type']);
         $layer->set("status",MS_ON);
-        $layer->setProjection(self::$accepted_projections_proj[$this->default_projection]);
+        $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
         
         $class = ms_newClassObj($layer);
         $class->label->set("font", "arial");
@@ -1136,8 +1154,8 @@ class MAPPR {
 
         //project the extent back to default such that we can work with proper tick marks
         if($this->projection != $this->default_projection) {
-            $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->projection]);
-            $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$this->default_projection]);
+            $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
+            $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
 
             $poPoint1 = ms_newPointObj();
             $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
@@ -1421,13 +1439,13 @@ class MAPPR {
         
         if(!array_key_exists($output_projection, self::$accepted_projections)) $output_projection = 'epsg:4326';
         
-        $origProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$input_projection]);
-        $newProjObj = ms_newProjectionObj(self::$accepted_projections_proj[$output_projection]);
+        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$input_projection]['proj']);
+        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$output_projection]['proj']);
 
         $oRect = $this->map_obj->extent;
         @$oRect->project($origProjObj,$newProjObj);
         $this->map_obj->setExtent($oRect->minx,$oRect->miny,$oRect->maxx,$oRect->maxy);
-        $this->map_obj->setProjection(self::$accepted_projections_proj[$output_projection]);
+        $this->map_obj->setProjection(self::$accepted_projections[$output_projection]['proj']);
     }
 
     /**

@@ -156,7 +156,7 @@ class MAPPRAPI extends MAPPR {
                 $mlayer->set("type",MS_LAYER_POINT);
                 $mlayer->set("tolerance",5);
                 $mlayer->set("toleranceunits",6);
-                $mlayer->setProjection(parent::$accepted_projections_proj[$this->default_projection]);
+                $mlayer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
                 $class = ms_newClassObj($mlayer);
                 $class->set("name",$legend[$col]);
@@ -221,7 +221,7 @@ class MAPPRAPI extends MAPPR {
             $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
             $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
             $layer->set("template", "template.html");
-            $layer->setProjection(parent::$accepted_projections_proj[$this->default_projection]);
+            $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
             
             //grab the data for regions & split
             $whole = trim($this->regions['data']);
@@ -275,7 +275,7 @@ class MAPPRAPI extends MAPPR {
 
            $layer->set("type",$type);
            $layer->set("template", "template.html");
-           $layer->setProjection(parent::$accepted_projections_proj[$this->default_projection]);
+           $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
            $class = ms_newClassObj($layer);
            $class->set("name", $this->wkt['title']);
@@ -300,7 +300,7 @@ class MAPPRAPI extends MAPPR {
         $layer->set("data", $this->shapes['grid']['shape']);
         $layer->set("type", $this->shapes['grid']['type']);
         $layer->set("status",MS_ON);
-        $layer->setProjection(parent::$accepted_projections_proj[$this->default_projection]);
+        $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
         
         $class = ms_newClassObj($layer);
         $class->label->set("font", "arial");

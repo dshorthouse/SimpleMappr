@@ -50,7 +50,7 @@ $header->getJSHeader();
 ?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
+jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
 //--><!]]>
 </script>
 </head>
@@ -61,7 +61,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout">Welcome back <?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/usermaps/?action=logout">Log Out</a></span></div>
 <?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mapper.tabSelector(3);return false;">Log In</a></span></div>
+<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;">Log In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
 
@@ -94,7 +94,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
             <li class="map-extras"><a href="tabs/api.php">API</a></li>
         </ul>
 
-    <form id="form-mapper" action="application/" method="post">  
+    <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
 
 
         <!-- about tab -->
@@ -125,7 +125,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- multipoint tab -->
     <div id="map-points">
         <div id="general-points" class="panel">
-        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mapper.tabSelector(5);return false;" class="sprites help">examples</a></p>
+        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.tabSelector(5);return false;" class="sprites help">examples</a></p>
         </div>
 
         <div id="fieldSetsPoints" class="fieldSets">
@@ -177,6 +177,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
       echo '<span class="fieldset-title">Shape:</span> <select class="m-mapShape" name="coords['.$j.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">Size:</span> <select class="m-mapSize" name="coords['.$j.'][size]">'.$marker_size.'</select>' . "\n";
       echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$j.'][color]" value="0 0 0" />' . "\n";
       echo '</div>' . "\n";
+      echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
       echo '</div>' . "\n";
     
       echo '</div>' . "\n";
@@ -192,7 +193,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
         <div class="submit">
             <button class="sprites submitForm positive">Preview</button>
-            <button class="sprites clear clearLayers negative">Clear</button>
+            <button class="sprites clear clearLayers negative">Clear all</button>
         </div>
         
     <!-- close multipoints tab -->
@@ -201,7 +202,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
     <!-- shaded regions tab -->
     <div id="map-regions">
         <div id="regions-introduction" class="panel">
-            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mapper.tabSelector(5);return false;" class="sprites help">codes</a></p> 
+            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(5);return false;" class="sprites help">codes</a></p> 
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">
@@ -226,6 +227,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
           echo '<div class="fieldset-extras">' . "\n";
           echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
           echo '</div>' . "\n";
+          echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
           echo '</div>' . "\n";
         
           echo '</div>' . "\n";
@@ -240,7 +242,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
         <div class="submit">
             <button class="sprites submitForm positive">Preview</button>
-            <button class="sprites clear clearRegions negative">Clear</button>
+            <button class="sprites clear clearRegions negative">Clear all</button>
         </div>
 
     </div>
@@ -277,6 +279,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
               echo '<div class="fieldset-extras">' . "\n";
               echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
               echo '</div>' . "\n";
+              echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
               echo '</div>' . "\n";
 
               echo '</div>' . "\n";
@@ -291,7 +294,7 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
 
             <div class="submit">
                 <button class="sprites submitForm positive">Preview</button>
-                <button class="sprites clear clearFreehand negative">Clear</button>
+                <button class="sprites clear clearFreehand negative">Clear all</button>
             </div>
 
     </div>
@@ -396,9 +399,9 @@ jQuery.extend(Mapper.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HO
                   <li>
                         <select id="projection" name="projection">
                     <?php
-                      foreach(MAPPR::$accepted_projections as $value => $name) {
-                        $selected = ($name == 'Geographic') ? ' selected="selected"': '';
-                        echo '<option value="'.$value.'"'.$selected.'>'.$name.'</option>' . "\n";
+                      foreach(MAPPR::$accepted_projections as $key => $value) {
+                        $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
+                        echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
                       }
                     ?>
                         </select>

@@ -245,7 +245,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{
 }
 
 .fieldset-extras {
-    margin-top:10px;
+    margin:10px 0px;
 }
 
 .fieldset-title {
