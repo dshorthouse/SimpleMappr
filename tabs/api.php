@@ -52,7 +52,7 @@ require_once('../includes/mapprservice.class.php');
         <dd>comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, placenames <em>e.g. layers=lakes,stateprovinces</em></dd>
 
         <dt>projection</dt>
-        <dd>the output projection in either EPSG or ESRI references. See <a href="http://spatialreference.org/">http://spatialreference.org/</a> for spatial references. Accepted projections are: <?php foreach(MAPPR::$accepted_projections as $key => $value) { print $key . ' (=' . $value . '), '; } ?><em>e.g. projection=esri:102009</em></dd>
+        <dd>the output projection in either EPSG or ESRI references. See <a href="http://spatialreference.org/">http://spatialreference.org/</a> for spatial references. Accepted projections are: <?php foreach(MAPPR::$accepted_projections as $key => $value) { print $key . ' (=' . $value['name'] . '), '; } ?><em>e.g. projection=esri:102009</em></dd>
 
         <dt>graticules</dt>
         <dd>display the graticules <em>e.g. graticules=true</em></dd>
