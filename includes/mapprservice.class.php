@@ -131,6 +131,7 @@ class MAPPR {
     );
 
     /* acceptable projections in PROJ format */
+    /* NOTE: included here for performance reasons AND each have 'over' switch to prevent stateprovince line wraps */
     public static $accepted_projections_proj = array(
         'epsg:4326'   => "proj=longlat,ellps=WGS84,datum=WGS84,no_defs",
         'esri:102009' => "proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs",
