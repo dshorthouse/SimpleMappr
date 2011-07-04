@@ -103,22 +103,28 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <p>Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result.</p>
             </div>
 
+            <h2>Citing</h2>
+            <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. http://www.simplemappr.net.</p>
+
+            <h2>Recent Updates</h2>
+            <p class="citation"><strong>July 4, 2011</strong> The fill bucket in the map toolbar now produces a color-selector and regions may be immediately filled by either clicking or drawing a selector box on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</p>
+            <p class="citation"><strong>July 3, 2011</strong> State/Province line artifacts are not shown when the map is reprojected.</p>
+            <p class="citation"><strong>June 28, 2011</strong> Additional layers on the Point Data or Regions tabs may be removed.</p>
+            <p class="citation"><strong>June 27, 2011</strong> An ISO Country codes and regions code table was added to the Help tab.</p>
+            <p class="citation"><strong>June 26, 2011</strong> File names may be specified when downloading maps.</p>
+
+            <h2>In the Wild</h2>
+            <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
+            <p class="citation">Inclan Luna, Diego Javier. 2010. Revision of the genus <em>Erythromelana</em> Townsend, 1919 (Diptera: Tachinidae) with notes on their phylogeny and diversification. Master of Science (MS), Wright State University, Biological Sciences (<a href="http://rave.ohiolink.edu/etdc/view?acc_num=wright1292306222">permalink</a>)</p>
+
+            <h2>Code</h2>
+            <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
+
             <h2>History</h2>
             <p>The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History.</p>
 
             <h2>Acknowledgments</h2>
             <p>Underlying ArcView shapefiles were obtained from Natural Earth, <a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a> and the mapping software used is MapServer, <a href="http://mapserver.org" target="_blank">http://mapserver.org</a> via PHP MapScript.</p>
-
-            <h2>Citing</h2>
-            <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. http://www.simplemappr.net.</p>
-
-            <h2>In the Wild</h2>
-            <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
-
-            <p class="citation">Inclan Luna, Diego Javier. 2010. Revision of the genus <em>Erythromelana</em> Townsend, 1919 (Diptera: Tachinidae) with notes on their phylogeny and diversification. Master of Science (MS), Wright State University, Biological Sciences (<a href="http://rave.ohiolink.edu/etdc/view?acc_num=wright1292306222">permalink</a>)</p>
-
-            <h2>Code</h2>
-            <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
 
         </div>
 
