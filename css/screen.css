@@ -25,9 +25,6 @@ input, select, textarea {
     background-repeat    : no-repeat;
 }
 
-#wrapper {
-}
-
 #site-title {
   margin:0px;
   padding:0px;  
@@ -113,11 +110,7 @@ li.map-extras {
     float:right !important;
 }
 
-#mapSave {
-  display:none;
-}
-
-#mapExport {
+#mapSave, #mapExport {
   display:none;
 }
 
@@ -143,10 +136,12 @@ li.map-extras {
   left:100px;
 }
 
-#form-mapper { }
-
 label {
-    margin-right: 0.2em;
+  margin-right: 0.2em;
+}
+
+fieldset {
+  border:1px solid #E0E0E0;
 }
 
 .required {
@@ -186,6 +181,8 @@ button.negative:active{background-color:#782c21 !important;}
 
 /* Specific Buttons */
 .submitForm { background-position: 3px 6px; }
+.download { background-position: 3px -1446px; font-size:0.9em !important; }
+.bulkdownload { background-position: 3px -1446px; }
 .clear { background-position: 3px -720px; }
 .saveForm { background-position: 3px -786px; }
 .addmore { background-position: 3px -60px; }
@@ -719,9 +716,10 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-mymaps table thead th {
+#map-mymaps table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
+    text-align:center;
 }
 
 #map-mymaps table tr {
@@ -746,6 +744,21 @@ div.panel a.help {
 #map-mymaps table td.actions a.map-delete { background-position: 0 -656px; }
 #map-mymaps table td.actions a.map-load { background-position: 0 -1382px; }
 #map-mymaps table td.actions a.map-url { background-position: 0 -986px; }
+
+#map-mymaps table td.download {
+  width:25px;
+  text-align:center;
+}
+
+#map-mymaps table td input, #map-mymaps table td input {
+  margin:0px;
+  padding:0px;
+  vertical-align:middle;
+}
+
+#map-mymaps div {
+  margin-top: 20px;
+}
 
 /***********************************************
 *       USER DATA TAB 

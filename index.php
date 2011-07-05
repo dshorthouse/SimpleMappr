@@ -488,25 +488,37 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
       <div id="mapExport" title="Download Map">
         <div class="download-dialog">
         <div id="mapCropMessage" class="sprites">map will be cropped</div>
-        <ul>
-          <li><label for="download-factor">Download size</label>
-              <select id="download-factor">
-                <option value="">--select--</option>
-                <option value="3" selected="selected">3X</option>
-                <option value="4">4X</option>
-                <option value="5">5X</option>
-              </select>
-          </li>
-          <li><input type="checkbox" id="border" /> include border</li>
-          <li><input type="checkbox" id="legend" /> include legend</li>
-        </ul>
 
         <p>
           <label for="file-name">File name:</label>
           <input type="text" id="file-name" maxlength="30" size="30" />
         </p>
 
-        File type:
+        <fieldset>
+          <legend>Scale</legend>
+        <?php
+          $file_sizes = array(3,4,5);
+          foreach($file_sizes as $size) {
+            $checked = ($size == 3) ? " checked=\"checked\"" : "";
+            echo "<input type=\"radio\" id=\"download-size-".$size."\" name=\"download-size\" value=\"".$size."\"".$checked." />";
+            echo "<label for=\"download-size-".$size."\">".$size."X</label>";
+          }
+        ?>
+        </fieldset>
+
+        <fieldset>
+          <legend>File type</legend>
+        <?php
+          $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
+          foreach($file_types as $type) {
+            $checked = ($type == "svg") ? " checked=\"checked\"": "";
+            $asterisk = ($type == "svg") ? "*" : "";
+            echo "<input type=\"radio\" id=\"download-".$type."\" name=\"download-single\" value=\"".$type."\"".$checked." />";
+            echo "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
+          }
+        ?>
+        </fieldset>
+<!--
         <ul>
           <li class="export"><a href="#" class="sprites export" data-export="svg"> svg*</a> (recommended)</li>
           <li class="export"><a href="#" class="sprites export" data-export="png"> png</a></li>
@@ -514,8 +526,19 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
           <li class="export"><a href="#" class="sprites export" data-export="eps"> eps</a></li>
           <li class="kml"><a href="#" class="sprites export" data-export="kml"> kml</a> (Google Earth)</li>
         </ul>
+-->
 
-        <p>*Download does not include scale/legend/relief</p>
+        <fieldset>
+          <legend>Options</legend>
+            <input type="checkbox" id="border" />
+            <label for="border">include border</label>
+            <input type="checkbox" id="legend" />
+            <label for="legend">include legend</label>
+        </fieldset>
+
+        <p><button class="sprites download positive">Download</button></p>
+
+        <p>*svg download does not include scalebar, legend, or relief layers</p>
         </div>
         
         <div class="download-message">Building file for download...</div>

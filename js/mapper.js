@@ -1015,6 +1015,11 @@ $(function () {
 
       return false;
     });
+
+    $("button.download").click(function() {
+      return false;
+    });
+
   };
 
   Mappr.bindSubmit = function () {
@@ -1219,6 +1224,24 @@ $(function () {
     $('.download-dialog').show();
     window.clearInterval(this.vars.fileDownloadTimer);
     $.cookie('fileDownloadToken', null); //clears this cookie value
+  };
+
+  Mappr.bindBulkDownload = function() {
+    $("#download-all").click(function() {
+      if($(this).attr("checked")) { 
+        $(".download-checkbox").attr("checked", true);
+      } else { 
+        $(".download-checkbox").attr("checked", false);
+      }
+    });
+    $(".bulkdownload").click(function() {
+      Mappr.bulkDownload();
+      return false;
+    });
+  };
+
+  Mappr.bulkDownload = function() {
+    alert("Sorry, this is still in progress.");
   };
 
   /************************************ 

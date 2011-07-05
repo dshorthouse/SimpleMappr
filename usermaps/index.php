@@ -51,8 +51,9 @@ switch($_GET['action']) {
             $output .= "<table>" . "\n";
             $output .= "<thead>" . "\n";
             $output .= "<tr>" . "\n";
-            $output .= "<th>Title</th>";
-            $output .= "<th class=\"actions\">Actions</th>";
+            $output .= "<td><input type=\"checkbox\" id=\"download-all\" name=\"download[all]\" /></td>";
+            $output .= "<td>Title</td>";
+            $output .= "<td class=\"actions\">Actions</td>";
             $output .= "</tr>" . "\n";
             $output .= "</thead>" . "\n";
             $output .= "<tbody>" . "\n";
@@ -60,6 +61,7 @@ switch($_GET['action']) {
             while ($record = $db->fetch_array($rows)) {
               $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
               $output .= "<tr ".$class.">";
+              $output .= "<td class=\"download\"><input type=\"checkbox\" class=\"download-checkbox\" name=\"download[".$record['mid']."]\" /></td>";
               $output .= "<td class=\"title\">";
               $output .= ($uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
               $output .= stripslashes($record['title']);
@@ -76,6 +78,10 @@ switch($_GET['action']) {
             }
             $output .= "</tbody>" . "\n";
             $output .= "</table>" . "\n";
+
+            $output .= "<div><button class=\"sprites bulkdownload positive\">Download</button></div>";
+
+            $output .= "<script type=\"text/javascript\">Mappr.bindBulkDownload();</script>";
         }
         else {
             $output .= '<div id="mymaps" class="panel"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
