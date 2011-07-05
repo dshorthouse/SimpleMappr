@@ -209,7 +209,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     <!-- shaded regions tab -->
     <div id="map-regions">
         <div id="regions-introduction" class="panel">
-            <p>Type political regions <em>e.g.</em> Virginia, Alberta, Ontario AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em> USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(5);return false;" class="sprites help">codes</a></p> 
+            <p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(5);return false;" class="sprites help">codes</a></p> 
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">

@@ -932,14 +932,13 @@ class MAPPR {
                 }
 
                 $layer = ms_newLayerObj($this->map_obj);
+                $layer->set("name","query_layer_".$j);
 
                 if($baselayer) {
-                  $layer->set("name","query_layer");
                   $layer->set("data",$this->shapes['base']['shape']);
                   $layer->set("type",MS_LAYER_POLYGON);
                 }
                 else {
-                  $layer->set("name","stateprovinces_polygon");
                   $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
                   $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
                 }
