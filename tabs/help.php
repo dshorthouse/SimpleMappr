@@ -18,12 +18,17 @@ if($db->affected_rows > 0) {
     $output .= "<td>" . $record['country_iso'] . "</td>";
     $output .= "<td>" . $record['stateprovince'] . "</td>";
     $output .= "<td>" . $record['stateprovince_code'] . "</td>";
+    $example = ($record['stateprovince_code']) ? $record['country_iso'] . "[" . $record['stateprovince_code'] . "]" : "";
+    $output .= "<td>" . $example . "</td>";
     $output .= "</tr>" . "\n";
     $i++;
   }
 }
 
 ?>
+<script type="text/javascript">
+$("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); });
+</script>
 <!-- help tab -->
 <div id="map-help">
     
@@ -85,10 +90,16 @@ if($db->affected_rows > 0) {
     <h2>Regions</h2>
     <p>Use the <em>Regions</em> tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code.</p>
 
-    <table>
+    <table id="countrycodes">
       <thead>
         <tr>
-          <th class="title">Country</th><th class="code">Country ISO</th><th class="title">State/Province</th><th class="code">Code</th>
+          <th class="title">Country
+            <input id="filter" type="text" size="25" maxlength="35" value="" name="filter">
+          </th>
+          <th class="code">ISO</th>
+          <th class="title">State/Province</th>
+          <th class="code">Code</th>
+          <th class="example">Example</th>
         </tr>
       </thead>
       <tbody>

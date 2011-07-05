@@ -42,7 +42,8 @@ class HEADER {
         'js/jquery.textarearesizer.compressed.js',
         'js/jquery.cookie.js',
         'js/jquery.download.js',
-        'js/tipsy/javascripts/jquery.tipsy.js'
+        'js/tipsy/javascripts/jquery.tipsy.js',
+        'js/jquery.uitablefilter.min.js'
     );
     
     public static $css_files = array(
