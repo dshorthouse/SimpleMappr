@@ -27,7 +27,10 @@ if($db->affected_rows > 0) {
 
 ?>
 <script type="text/javascript">
-$("#filter-countries").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); });
+$("#filter-countries")
+  .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
+  .keypress(function(event) { if (event.which === 13) { return false; }
+});
 </script>
 <!-- help tab -->
 <div id="map-help">

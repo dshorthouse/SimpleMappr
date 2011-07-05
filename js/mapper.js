@@ -692,13 +692,16 @@ $(function () {
   };
 
   Mappr.loadMap = function (obj) {
-    var self = this,
-        id   = $(obj).attr("data-mid");
+    var self   = this,
+        id     = $(obj).attr("data-mid"),
+        filter = $('#filter-mymaps').val(); 
 
     $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function (data) {
 
       self.removeExtraElements();
       $('#form-mapper').clearForm();
+
+      $('#filter-mymaps').val(filter);
 
       self.loadSettings(data);
       self.activateEmbed(id);
@@ -1348,6 +1351,7 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUsers();
     }
+    $("input").keypress(function(event) { if (event.which === 13) { return false; } });
   };
 
   Mappr.init();  
