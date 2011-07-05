@@ -46,18 +46,21 @@ $("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value 
             <li class="sprites rotateAnticlockwise">Rotate counter-clockwise: select 5<sup>o</sup>, 10<sup>o</sup>, and 15<sup>o</sup> from the drop-down menu while hovering on this icon</li>
             <li class="sprites rotateClockwise">Rotate clockwise: as above</li>
             <li class="sprites toolsCrop">Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map</li> 
-            <li class="sprites toolsQuery">Fill regions: click this icon to draw an expandable, square-shaped rubber band that will shade all States and Provinces found within. Regions get automatically added to and replace the contents of Region 1 form under the Regions tab.</li>
+            <li class="sprites toolsQuery">Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab.</li>
+<!--
             <li class="sprites toolsDraw">Draw shape: click this icon to draw an free-hand line. A freehand drawing gets automatically added to and replaces the contents of Freehand 1 form under the Freehand tab.</li>
+-->
             <li class="sprites toolsRefresh">Refresh: refresh the map image</li>
             <li class="sprites toolsRebuild">Rebuild: re-render the default presentation at lowest zoom and geographic projection</li>
         </ul>
     <p><strong>Layers:</strong></p>
         <ul>
-            <li>State/Provinces: select this checkbox to draw all State and Province borders for all countries</li>
+            <li>State/Provinces borders: select this checkbox to draw all State and Province borders for all countries</li>
             <li>place names: select this checkbox to overlay place names</li>
             <li>physical labels: select this checkbox to overlay labels for physical features</li>
             <li>marine labels: select this checkbox to overlay labels for marine features</li>
-            <li>lakes: select this checkbox to overlay lakes as greyscale polygons</li>
+            <li>lakes (filled): select this checkbox to overlay lakes as greyscale polygons</li>
+            <li>lakes (outline): select this checkbox to overlay lakes as black outlines</li>
             <li>rivers: select this checkbox to overlay rivers as black outlines</li>
             <li>shaded relief: select this checkbox to render a color, shaded relief layer</li>
             <li>shaded relief (greyscale): select this checkbox to render a greyscale, shaded relief layer</li>
@@ -69,12 +72,12 @@ $("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value 
         </ul>
     <p><strong>Projection:</strong></p>
         <ul>
-            <li>Choose among several projections. [Hint: first use zoom while on the base geographic projection]</li>
+            <li>Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]</li>
         </ul>
     
     <ul class="toolbar">
         <li class="sprites toolsSave">While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
-        <li class="sprites toolsDownload">Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer.</li>
+        <li class="sprites toolsDownload">Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
     </ul>
     
     <h2>Point Data</h2>
@@ -82,8 +85,11 @@ $("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value 
     
     <div>
     <p><strong>Coordinate format:</strong> <em>e.g.</em> in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1</p>
-    <p><img src="/images/help_data.png" alt="Example Data Entry" /></p>
-    <p><img src="/images/38100.png" alt="38,-100 (North America)" /><img src="/images/25140.png" alt="-25,140 (Australia)" /></p>
+    <div id="example-data">
+      <img src="/images/help_data.png" alt="Example Data Entry" />
+      <img src="/images/38100.png" alt="38,-100 (North America)" />
+      <img src="/images/25140.png" alt="-25,140 (Australia)" />
+    </div>
     <p><strong>Pushpin color:</strong> The pushpin colors are configured using the RGB color scheme and a color selector is provided. By default, "0 0 0" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, "10 10 10" is dark gray whereas "100 100 100" is a lighter shade of gray.</p>
     </div>
     

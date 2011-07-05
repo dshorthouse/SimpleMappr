@@ -846,9 +846,13 @@ div.panel a.help {
 #map-help ul.toolbar li.toolsSave { background-position: 0 -792px; }
 #map-help ul.toolbar li.toolsDownload { background-position: 0 -1452px; }
 
-img.screenshot {
-    border:2px solid #CCCCCC;
-    padding:3px;
+#map-help #example-data {
+  height:220px;
+}
+
+#map-help #example-data img {
+  vertical-align:middle;
+  margin-right:20px;
 }
 
 #map-help table {
