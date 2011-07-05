@@ -719,9 +719,15 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-mymaps table thead th {
+#map-mymaps table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
+    text-align:center;
+}
+
+#map-mymaps table thead td.left-align {
+  text-align:left;
+  padding-left:20px;
 }
 
 #map-mymaps table tr {
@@ -762,9 +768,15 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-users table thead th {
+#map-users table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
+    text-align:center;
+}
+
+#map-users table thead td.left-align {
+  text-align:left;
+  padding-left:20px;
 }
 
 #map-users table tr {
@@ -867,21 +879,22 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-help table thead th {
+#map-help table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
     text-align:left;
 }
 
-#map-help table thead th.title {
+#map-help table thead td.title {
   width:35%;
+  padding-left:20px;
 }
 
-#map-help table thead th.code {
+#map-help table thead td.code {
   width:45px;
 }
 
-#map-help table thead th.example {
+#map-help table thead td.example {
   width:60px;
 }
 

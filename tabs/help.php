@@ -27,7 +27,7 @@ if($db->affected_rows > 0) {
 
 ?>
 <script type="text/javascript">
-$("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); });
+$("#filter-countries").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); });
 </script>
 <!-- help tab -->
 <div id="map-help">
@@ -99,13 +99,13 @@ $("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value 
     <table id="countrycodes">
       <thead>
         <tr>
-          <th class="title">Country
-            <input id="filter" type="text" size="25" maxlength="35" value="" name="filter">
-          </th>
-          <th class="code">ISO</th>
-          <th class="title">State/Province</th>
-          <th class="code">Code</th>
-          <th class="example">Example</th>
+          <td class="title">Country
+            <input id="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />
+          </td>
+          <td class="code">ISO</td>
+          <td class="title">State/Province</td>
+          <td class="code">Code</td>
+          <td class="example">Example</td>
         </tr>
       </thead>
       <tbody>

@@ -131,7 +131,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     <!-- multipoint tab -->
     <div id="map-points">
         <div id="general-points" class="panel">
-        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.showExamples();return false;" class="sprites help">examples</a></p>
+        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.showExamples();" class="sprites help">examples</a></p>
         </div>
 
         <div id="fieldSetsPoints" class="fieldSets">
