@@ -33,7 +33,7 @@ $("#filter").keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value 
 <div id="map-help">
     
     <div class="panel">
-        <p>This application makes heavy use of JavaScript. A modern browser like Internet Explorer 8, FireFox 3+, Google Chrome, or Safari 3+ is strongly recommended.</p>
+        <p>This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 5, Google Chrome, or Safari 5 is strongly recommended.</p>
     </div>
     
     <h2>Preview</h2>

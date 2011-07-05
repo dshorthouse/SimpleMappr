@@ -231,6 +231,9 @@ button[disabled], button[disabled]:hover, button[disabled]:active{
 .hidden, #blankRow, .hiddenControls, .newRow td div{display:none;}
 
 /* Fieldsets and Texarea */
+.fieldSets {
+}
+
 .addFieldset {
     margin-left:20px;
     margin-top:20px;
@@ -238,6 +241,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{
 
 .fieldset-points, .fieldset-regions, .fieldset-freehands {
   position:relative;
+  width:672px !important;
 }
 
 .fieldset-taxon {
