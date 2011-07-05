@@ -1221,6 +1221,32 @@ $(function () {
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
 
+  Mappr.showExamples = function() {
+    var message = '<img src="/images/help_data.png" alt="Example Data Entry" />';
+
+    if($('body').find('#mapper-message').length > 0) {
+      $('#mapper-message').html(message).dialog("open");
+    } else {
+      $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Example Coordinates">' + message + '</div>');
+
+      $('#mapper-message').dialog({
+        height        : (350).toString(),
+        width         : (525).toString(),
+        autoOpen      : true,
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : false,
+        resizable     : false,
+        buttons       : {
+          OK: function () {
+            $(this).dialog("destroy").remove();
+          }
+        }
+      });
+    }
+    return false;
+  };
+
   /************************************ 
   ** RAPHAEL: FREEHAND DRAWING TOOLS **
   ************************************/
