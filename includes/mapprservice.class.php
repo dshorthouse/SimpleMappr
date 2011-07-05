@@ -127,20 +127,26 @@ class MAPPR {
         'name' => 'Geographic',
         'proj' => 'proj=longlat,ellps=WGS84,datum=WGS84,no_defs'),
       'esri:102009' => array(
-        'name' => 'NA Lambert',
+        'name' => 'North America Lambert',
         'proj' => 'proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs'),
-      'esri:102014' => array(
-        'name' => 'Europe Lambert',
-        'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
       'esri:102015' => array(
         'name' => 'South America Lambert',
         'proj' => 'proj=lcc,lat_1=-5,lat_2=-42,lat_0=-32,lon_0=-60,x_0=0,y_0=0,ellps=aust_SA,units=m,over,no_defs'),
+      'esri:102014' => array(
+        'name' => 'Europe Lambert',
+        'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
       'esri:102024' => array(
         'name' => 'Africa Lambert',
         'proj' => 'proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
       'epsg:3112'   => array(
          'name' => 'Australia Lambert',
-         'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs')
+         'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs'),
+      'epsg:102017' => array(
+         'name' => 'North Pole Azimuthal',
+         'proj' => 'proj=laea,lat_0=90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
+      'epsg:102019' => array(
+         'name' => 'South Pole Azimuthal',
+         'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
     );
 
     /* acceptable shapes */ 
