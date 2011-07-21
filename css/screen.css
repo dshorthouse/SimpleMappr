@@ -181,7 +181,6 @@ button.negative:active{background-color:#782c21 !important;}
 
 /* Specific Buttons */
 .submitForm { background-position: 3px 6px; }
-.download { background-position: 3px -1446px; font-size:0.9em !important; }
 .bulkdownload { background-position: 3px -1446px; }
 .clear { background-position: 3px -720px; }
 .saveForm { background-position: 3px -786px; }

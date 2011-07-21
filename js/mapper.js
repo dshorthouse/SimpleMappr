@@ -1009,14 +1009,13 @@ $(function () {
         buttons       : {
           Cancel : function () {
             $(this).dialog("destroy");
-          } 
+          },
+          Download : function() {
+            $(this)
+          }
         }
       });
 
-      return false;
-    });
-
-    $("button.download").click(function() {
       return false;
     });
 

@@ -536,8 +536,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <label for="legend">include legend</label>
         </fieldset>
 
-        <p><button class="sprites download positive">Download</button></p>
-
         <p>*svg download does not include scalebar, legend, or relief layers</p>
         </div>
         
