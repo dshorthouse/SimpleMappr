@@ -832,7 +832,9 @@ class MAPPR {
             $color = array(0,0,0);
           }
 
-          if(trim($this->coords[$j]['data'])) {
+          $data = trim($this->coords[$j]['data']);
+
+          if($data) {
         
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name","layer_".$j);
@@ -860,13 +862,11 @@ class MAPPR {
             $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
             $new_line = ms_newLineObj();
 
-            $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-            $row = explode("\n",$this->remove_empty_lines($whole));  //split the lines that have data
-        
+            $row = explode("\n",$this->remove_empty_lines($data));  //split the lines that have data
             $points = array(); //create an array to hold unique locations
         
             foreach ($row as $loc) {
-              $loc = htmlentities($loc);
+              $loc = trim(htmlentities($loc));
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
               $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "";
