@@ -187,7 +187,7 @@ class MAPPR {
     }
     
     function __destruct() {
-        unset($this->map_obj);
+      unset($this->map_obj);
     }
 
     public function __call($name, $arguments) {
@@ -872,7 +872,7 @@ class MAPPR {
               $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
               $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
               if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
-                  $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
+                $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
               }
               else {
                 $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $coord->y . ',' . $coord->x;

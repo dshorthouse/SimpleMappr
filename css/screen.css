@@ -388,7 +388,6 @@ div.panel a.help {
 
 #actionsBar ul.dropdown {
     list-style:none;
-    position: relative;
     margin:0px;
     padding:0px;
 }
@@ -474,9 +473,10 @@ div.panel a.help {
 
 #actionsBar #map-saveDialog {
     font-size:0.75em;
-    float:right;
     display:inline;
     line-height:27px;
+    position:absolute;
+    right:0px;
 }
 
 #actionsBar #map-saveDialog a.map-saveItem {
