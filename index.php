@@ -107,6 +107,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. http://www.simplemappr.net.</p>
 
             <h2>Recent Updates</h2>
+            <p class="citation"><strong>August 2, 2011</strong> Refined error-handling with coordinate recognition.</p>
             <p class="citation"><strong>July 5, 2011</strong> Added the ability to filter your My Maps list by title.</p>
             <p class="citation"><strong>July 4, 2011</strong> The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</p>
             <p class="citation"><strong>July 3, 2011</strong> State/Province line artifacts are not shown when the map is reprojected.</p>

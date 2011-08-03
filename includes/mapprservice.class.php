@@ -866,7 +866,7 @@ class MAPPR {
             $points = array(); //create an array to hold unique locations
         
             foreach ($row as $loc) {
-              $loc = trim(htmlentities($loc));
+              $loc = trim(preg_replace('/[^\d\s,;.-]/', '', $loc));
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
               $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "";
