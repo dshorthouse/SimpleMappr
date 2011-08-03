@@ -869,8 +869,8 @@ class MAPPR {
               $loc = trim(preg_replace('/[^\d\s,;.-]/', '', $loc));
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
-              $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "";
-              $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "";
+              $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
+              $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
               if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
                   $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
               }
