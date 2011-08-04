@@ -1253,7 +1253,11 @@ $(function () {
   /************************************ 
   ** RAPHAEL: FREEHAND DRAWING TOOLS **
   ************************************/
+
+// Commented out for now because injection of svg breaks flow of document in IE
+
   Mappr.raphaelConfig = {
+/*
     board         : new Raphael('mapOutput', 800, 400),
     line          : null,
     path          : null,
@@ -1264,6 +1268,7 @@ $(function () {
     selectedSize  : 4,
     selectedTool  : 'pencil',
     offset        : $('#mapOutput').offset()
+*/
   };  
 
   Mappr.raphaelConfig.position = function (e) {
@@ -1361,8 +1366,10 @@ $(function () {
 /******* jQUERY EXTENSIONS *******/
 
 (function ($) {
+
+  "use strict";
+
   $.fn.clearForm = function () {
-    "use strict";
     return this.each(function () {
       var type = this.type, tag = this.tagName.toLowerCase();
       if (tag === 'form') {
