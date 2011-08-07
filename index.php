@@ -104,7 +104,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             </div>
 
             <h2>Citing</h2>
-            <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. http://www.simplemappr.net.</p>
+            <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 
             <h2>Recent Updates</h2>
             <p class="citation"><strong>August 2, 2011</strong> Refined error-handling with coordinate recognition.</p>
