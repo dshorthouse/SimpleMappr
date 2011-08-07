@@ -870,7 +870,7 @@ $(function () {
 
     $('.map-embed').attr("data-mid", mid).click(function () {
       message = 'Use the following HTML snippet to embed a png:';
-      message += "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
+      message += "<p><input type='text' size='75' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
       message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span>";
 
       if($('body').find('#mapper-message').length > 0) {
@@ -996,11 +996,6 @@ $(function () {
   Mappr.bindDownload = function () {
     var self = this;
 
-    $('#mapExport a.export').click(function () {
-      self.generateDownload($(this).attr("data-export"));
-      return false; 
-    });
-
     $(".map-download").click(function () {
       $('#mapExport').dialog({
         autoOpen      : true,
@@ -1014,7 +1009,7 @@ $(function () {
             $(this).dialog("destroy");
           },
           Download : function() {
-            $(this)
+            self.generateDownload();
           }
         }
       });
@@ -1165,13 +1160,16 @@ $(function () {
     });
   };
 
-  Mappr.generateDownload = function (filetype) {
+  Mappr.generateDownload = function () {
     var self        = this,
         pattern     = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
         map_title   = $('#file-name').val(),
         token       = new Date().getTime().toString(),
         cookieValue = "",
-        formData    = "";
+        formData    = "",
+        filetype    = "png";
+
+    filetype = $("input[name='download-filetype']:checked").val();
       
     if($('#border').is(':checked')) { 
       $('input[name="options[border]"]').val(1); 
@@ -1185,7 +1183,7 @@ $(function () {
       $('input[name="options[legend]"]').val("");
     }
 
-    $('input[name="download_factor"]').val($('#download-factor').val());
+    $('input[name="download_size"]').val($('input[name="download-size"]:checked').val());
 
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);

@@ -256,7 +256,7 @@ class MAPPR {
         $this->rotation         = $this->load_param('rotation', 0);
         $this->zoom_out         = $this->load_param('zoom_out', false);
 
-        $this->_download_factor = $this->load_param('download_factor', 1);
+        $this->_download_factor = $this->load_param('download_size', 1);
 
         $this->download_legend  = $this->load_param('download_legend', false);
 

@@ -474,7 +474,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     
     <!-- put modal form elements back into flow of DOM -->
     <input type="hidden" name="save[title]" />
-    <input type="hidden" name="download_factor" />
+    <input type="hidden" name="download_size" />
     <input type="hidden" name="file_name" />
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
@@ -517,7 +517,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
           foreach($file_types as $type) {
             $checked = ($type == "svg") ? " checked=\"checked\"": "";
             $asterisk = ($type == "svg") ? "*" : "";
-            echo "<input type=\"radio\" id=\"download-".$type."\" name=\"download-single\" value=\"".$type."\"".$checked." />";
+            echo "<input type=\"radio\" id=\"download-".$type."\" name=\"download-filetype\" value=\"".$type."\"".$checked." />";
             echo "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
           }
         ?>
