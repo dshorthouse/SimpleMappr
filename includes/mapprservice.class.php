@@ -127,20 +127,26 @@ class MAPPR {
         'name' => 'Geographic',
         'proj' => 'proj=longlat,ellps=WGS84,datum=WGS84,no_defs'),
       'esri:102009' => array(
-        'name' => 'NA Lambert',
+        'name' => 'North America Lambert',
         'proj' => 'proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs'),
-      'esri:102014' => array(
-        'name' => 'Europe Lambert',
-        'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
       'esri:102015' => array(
         'name' => 'South America Lambert',
         'proj' => 'proj=lcc,lat_1=-5,lat_2=-42,lat_0=-32,lon_0=-60,x_0=0,y_0=0,ellps=aust_SA,units=m,over,no_defs'),
+      'esri:102014' => array(
+        'name' => 'Europe Lambert',
+        'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
       'esri:102024' => array(
         'name' => 'Africa Lambert',
         'proj' => 'proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
       'epsg:3112'   => array(
          'name' => 'Australia Lambert',
-         'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs')
+         'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs'),
+      'epsg:102017' => array(
+         'name' => 'North Pole Azimuthal',
+         'proj' => 'proj=laea,lat_0=90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
+      'epsg:102019' => array(
+         'name' => 'South Pole Azimuthal',
+         'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
     );
 
     /* acceptable shapes */ 
@@ -181,7 +187,7 @@ class MAPPR {
     }
     
     function __destruct() {
-        unset($this->map_obj);
+      unset($this->map_obj);
     }
 
     public function __call($name, $arguments) {
@@ -826,7 +832,9 @@ class MAPPR {
             $color = array(0,0,0);
           }
 
-          if(trim($this->coords[$j]['data'])) {
+          $data = trim($this->coords[$j]['data']);
+
+          if($data) {
         
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name","layer_".$j);
@@ -854,19 +862,17 @@ class MAPPR {
             $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
             $new_line = ms_newLineObj();
 
-            $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-            $row = explode("\n",$this->remove_empty_lines($whole));  //split the lines that have data
-        
+            $row = explode("\n",$this->remove_empty_lines($data));  //split the lines that have data
             $points = array(); //create an array to hold unique locations
         
             foreach ($row as $loc) {
-              $loc = htmlentities($loc);
+              $loc = trim(preg_replace('/[^\d\s,;.-]/', '', $loc));
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
-              $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "";
-              $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "";
+              $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
+              $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
               if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
-                  $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
+                $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
               }
               else {
                 $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $coord->y . ',' . $coord->x;
@@ -932,14 +938,13 @@ class MAPPR {
                 }
 
                 $layer = ms_newLayerObj($this->map_obj);
+                $layer->set("name","query_layer_".$j);
 
                 if($baselayer) {
-                  $layer->set("name","query_layer");
                   $layer->set("data",$this->shapes['base']['shape']);
                   $layer->set("type",MS_LAYER_POLYGON);
                 }
                 else {
-                  $layer->set("name","stateprovinces_polygon");
                   $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
                   $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
                 }

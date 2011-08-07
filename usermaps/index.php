@@ -52,7 +52,7 @@ switch($_GET['action']) {
             $output .= "<thead>" . "\n";
             $output .= "<tr>" . "\n";
             $output .= "<td><input type=\"checkbox\" id=\"download-all\" name=\"download[all]\" /></td>";
-            $output .= "<td>Title</td>";
+            $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
             $output .= "<td class=\"actions\">Actions</td>";
             $output .= "</tr>" . "\n";
             $output .= "</thead>" . "\n";
@@ -81,10 +81,14 @@ switch($_GET['action']) {
 
             $output .= "<div><button class=\"sprites bulkdownload positive\">Download</button></div>";
 
-            $output .= "<script type=\"text/javascript\">Mappr.bindBulkDownload();</script>";
-        }
-        else {
-            $output .= '<div id="mymaps" class="panel"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
+            $output .= "<script type=\"text/javascript\">
+              Mappr.bindBulkDownload();
+              $(\"#filter-mymaps\")
+                .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
+                .keypress(function(event) { if (event.which === 13) { return false; }
+              });</script>";
+        } else {
+          $output .= '<div id="mymaps" class="panel"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
         }
         
         echo $output;
@@ -172,10 +176,10 @@ switch($_GET['action']) {
                 $output .= "<table>" . "\n";
                 $output .= "<thead>" . "\n";
                 $output .= "<tr>" . "\n";
-                $output .= "<th>Username</th>";
-                $output .= "<th>Email</th>";
-                $output .= "<th>Maps</th>";
-                $output .= "<th>Last Access</th>";
+                $output .= "<td class=\"left-align\">Username</td>";
+                $output .= "<td class=\"left-align\">Email</td>";
+                $output .= "<td>Maps</td>";
+                $output .= "<td>Last Access</td>";
                 $output .= "</tr>" . "\n";
                 $output .= "</thead>" . "\n";
                 $output .= "<tbody>" . "\n";

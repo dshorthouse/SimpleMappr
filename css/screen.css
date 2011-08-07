@@ -185,7 +185,7 @@ button.negative:active{background-color:#782c21 !important;}
 .clear { background-position: 3px -720px; }
 .saveForm { background-position: 3px -786px; }
 .addmore { background-position: 3px -60px; }
-.removemore { display:none; background-position: 3px -720px; position: absolute; right:6px; top:6px; z-index:100; background-color:#FFF }
+.removemore { display:none; background-position: 3px -720px; position: absolute; right:6px; top:6px; z-index:10; background-color:#FFF }
 
 #okClose { background-position: 0 -720px; }
 #okDelete { background-position: 0 6px; }
@@ -384,7 +384,6 @@ div.panel a.help {
 
 #actionsBar ul.dropdown {
     list-style:none;
-    position: relative;
     margin:0px;
     padding:0px;
 }
@@ -470,9 +469,10 @@ div.panel a.help {
 
 #actionsBar #map-saveDialog {
     font-size:0.75em;
-    float:right;
     display:inline;
     line-height:27px;
+    position:absolute;
+    right:0px;
 }
 
 #actionsBar #map-saveDialog a.map-saveItem {
@@ -721,6 +721,11 @@ div.panel a.help {
     text-align:center;
 }
 
+#map-mymaps table thead td.left-align {
+  text-align:left;
+  padding-left:20px;
+}
+
 #map-mymaps table tr {
     border:1px solid #AAAAAA;
 }
@@ -774,9 +779,15 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-users table thead th {
+#map-users table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
+    text-align:center;
+}
+
+#map-users table thead td.left-align {
+  text-align:left;
+  padding-left:20px;
 }
 
 #map-users table tr {
@@ -879,21 +890,22 @@ div.panel a.help {
     color:#555555;
 }
 
-#map-help table thead th {
+#map-help table thead td {
     background:url("../images/table_header_bg.png") repeat-x scroll 50% 50% #CCCCCC;
     font-weight:normal;
     text-align:left;
 }
 
-#map-help table thead th.title {
+#map-help table thead td.title {
   width:35%;
+  padding-left:20px;
 }
 
-#map-help table thead th.code {
+#map-help table thead td.code {
   width:45px;
 }
 
-#map-help table thead th.example {
+#map-help table thead td.example {
   width:60px;
 }
 

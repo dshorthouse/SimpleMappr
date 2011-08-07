@@ -692,13 +692,16 @@ $(function () {
   };
 
   Mappr.loadMap = function (obj) {
-    var self = this,
-        id   = $(obj).attr("data-mid");
+    var self   = this,
+        id     = $(obj).attr("data-mid"),
+        filter = $('#filter-mymaps').val(); 
 
     $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function (data) {
 
       self.removeExtraElements();
       $('#form-mapper').clearForm();
+
+      $('#filter-mymaps').val(filter);
 
       self.loadSettings(data);
       self.activateEmbed(id);
@@ -1241,12 +1244,43 @@ $(function () {
 
   Mappr.bulkDownload = function() {
     alert("Sorry, this is still in progress.");
+    //TODO: collect checked maps and make dialog to download specific file type
+  };
+
+  Mappr.showExamples = function() {
+    var message = '<img src="/images/help_data.png" alt="Example Data Entry" />';
+
+    if($('body').find('#mapper-message').length > 0) {
+      $('#mapper-message').html(message).dialog("open");
+    } else {
+      $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Example Coordinates">' + message + '</div>');
+
+      $('#mapper-message').dialog({
+        height        : (350).toString(),
+        width         : (525).toString(),
+        autoOpen      : true,
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : false,
+        resizable     : false,
+        buttons       : {
+          OK: function () {
+            $(this).dialog("destroy").remove();
+          }
+        }
+      });
+    }
+    return false;
   };
 
   /************************************ 
   ** RAPHAEL: FREEHAND DRAWING TOOLS **
   ************************************/
+
+// Commented out for now because injection of svg breaks flow of document in IE
+
   Mappr.raphaelConfig = {
+/*
     board         : new Raphael('mapOutput', 800, 400),
     line          : null,
     path          : null,
@@ -1257,6 +1291,7 @@ $(function () {
     selectedSize  : 4,
     selectedTool  : 'pencil',
     offset        : $('#mapOutput').offset()
+*/
   };  
 
   Mappr.raphaelConfig.position = function (e) {
@@ -1334,6 +1369,7 @@ $(function () {
     this.bindClearButtons();
     this.bindSave();
     this.bindDownload();
+    this.bindBulkDownload();
     this.bindSubmit();
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
@@ -1344,6 +1380,7 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUsers();
     }
+    $("input").keypress(function(event) { if (event.which === 13) { return false; } });
   };
 
   Mappr.init();  
@@ -1353,8 +1390,10 @@ $(function () {
 /******* jQUERY EXTENSIONS *******/
 
 (function ($) {
+
+  "use strict";
+
   $.fn.clearForm = function () {
-    "use strict";
     return this.each(function () {
       var type = this.type, tag = this.tagName.toLowerCase();
       if (tag === 'form') {

@@ -1,0 +1,14 @@
+User-agent: *
+Crawl-delay: 10
+# Directories
+Disallow: /api/
+Disallow: /application/
+Disallow: /conf/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /mapfiles/
+Disallow: /maps/
+Disallow: /query/
+Disallow: /tmp/
+Disallow: /usermaps/
+Disallow: /wfs/
