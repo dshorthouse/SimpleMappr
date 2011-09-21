@@ -1,4 +1,4 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, Raphael */
+/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, Raphael, alert */
 
 var Mappr = Mappr || { 'settings': {} };
 
@@ -14,7 +14,7 @@ $(function () {
     zoom               : true,
     fileDownloadTimer  : {},
     fillColor          : {}
-  }; 
+  };
 
   $.ajaxSetup({
     xhr:function () { return new XMLHttpRequest(); }
@@ -42,7 +42,7 @@ $(function () {
   Mappr.getPageSize = function () {
     var xScroll, yScroll, windowWidth, windowHeight, pageHeight, pageWidth;
 
-    if (window.innerHeight && window.scrollMaxY) {  
+    if (window.innerHeight && window.scrollMaxY) {
       xScroll = window.innerWidth + window.scrollMaxX;
       yScroll = window.innerHeight + window.scrollMaxY;
     } else if (document.body.scrollHeight > document.body.offsetHeight) { // all but Explorer Mac
@@ -55,7 +55,7 @@ $(function () {
 
     if (self.innerHeight) { // all except Explorer
       if(document.documentElement.clientWidth) {
-        windowWidth = document.documentElement.clientWidth; 
+        windowWidth = document.documentElement.clientWidth;
       } else {
         windowWidth = self.innerWidth;
       }
@@ -70,12 +70,12 @@ $(function () {
     // for small pages with total height less then height of the viewport
     if(yScroll < windowHeight) {
       pageHeight = windowHeight;
-    } else { 
+    } else {
       pageHeight = yScroll;
     }
     // for small pages with total width less then width of the viewport
-    if(xScroll < windowWidth) {  
-      pageWidth = xScroll;        
+    if(xScroll < windowWidth) {
+      pageWidth = xScroll;
     } else {
       pageWidth = windowWidth;
     }
@@ -91,12 +91,12 @@ $(function () {
     if (self.pageYOffset) {
       yScroll = self.pageYOffset;
       xScroll = self.pageXOffset;
-    } else if (document.documentElement && document.documentElement.scrollTop) {     // Explorer 6 Strict
+    } else if (document.documentElement && document.documentElement.scrollTop) {// Explorer 6 Strict
       yScroll = document.documentElement.scrollTop;
       xScroll = document.documentElement.scrollLeft;
     } else if (document.body) {// all other Explorers
       yScroll = document.body.scrollTop;
-      xScroll = document.body.scrollLeft; 
+      xScroll = document.body.scrollLeft;
     }
 
     return [xScroll,yScroll];
@@ -108,7 +108,7 @@ $(function () {
         y = parseInt(c.y, 10),
        x2 = parseInt(c.x2, 10),
        y2 = parseInt(c.y2, 10);
-  
+
     $('.jcrop-holder div:first').css('backgroundColor', 'white');
     $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
   };
@@ -146,7 +146,7 @@ $(function () {
     $("ul.dropdown li").hover(function () {
       $(this).addClass("ui-state-hover");
       $('ul:first',this).css('visibility', 'visible');
-    }, function () { 
+    }, function () {
       $(this).removeClass("ui-state-hover");
       $('ul:first',this).css('visibility', 'hidden');
     });
@@ -157,9 +157,9 @@ $(function () {
       $('#mapCropMessage').hide();
       if($('#mapCropMessage').is(':hidden')) {
         self.initJzoom();
-        self.vars.zoom = true;    
+        self.vars.zoom = true;
       }
-      return false;   
+      return false;
     });
 
     $('.toolsZoomOut').click(function () {
@@ -167,7 +167,7 @@ $(function () {
       $('#zoom_out').val(1);
       self.showMap();
       $('#zoom_out').val('');
-      return false;   
+      return false;
     });
 
     $('.toolsRotate').click(function () {
@@ -175,14 +175,14 @@ $(function () {
       self.showMap();
       return false;
     });
-                    
+
     $('.toolsCrop').click(function () {
       if($('#mapCropMessage').is(':hidden')) {
         self.initJcrop();
         self.vars.zoom = false;
-        $('#mapCropMessage').show();    
+        $('#mapCropMessage').show();
       }
-      return false;   
+      return false;
     });
 
     $('.toolsQuery').ColorPicker({
@@ -220,7 +220,7 @@ $(function () {
 
     $('.toolsRefresh').click(function () {
       self.showMap();
-      return false; 
+      return false;
     });
 
     $('.toolsRebuild').click(function () {
@@ -231,7 +231,7 @@ $(function () {
       $('#projection').val('');
       $('#pan').val('');
       self.showMap();
-      return false;  
+      return false;
     });
 
   }; /** end Mappr.bindToolbar **/
@@ -242,7 +242,7 @@ $(function () {
     $('.arrows').click(function () {
       $('#pan').val($(this).attr("data-pan"));
       self.showMap();
-      return false;   
+      return false;
     });
   };
 
@@ -250,14 +250,14 @@ $(function () {
     var self = this;
 
     $('.layeropt').click(function () {
-      self.showMap();    
+      self.showMap();
     });
 
     $('.gridopt').click(function () {
       if(!$('#graticules').is(':checked')) { $('#graticules').attr('checked', true); }
-      self.showMap();    
+      self.showMap();
     });
- 
+
     $('#projection').change(function () {
       if($(this).val() !== "") { self.showMap(); }
     });
@@ -344,14 +344,14 @@ $(function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
-    
+
     vars.jcropAPI = $.Jcrop('#mapOutput img', {
       bgColor:'grey',
       bgOpacity:1,
       onChange: self.showCoords,
       onSelect: self.showCoords
     });
-    
+
     $('.jcrop-tracker').unbind('mouseup', self.aZoom );
   };
 
@@ -359,7 +359,7 @@ $(function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
-    
+
     vars.jzoomAPI = $.Jcrop('#mapOutput img', {
       addClass      : "customJzoom",
       sideHandles   : false,
@@ -390,7 +390,7 @@ $(function () {
       onSelect      : self.showCoordsQuery
     });
 
-    $('.jcrop-tracker').bind('mouseup', self.aQuery );
+    $('.jcrop-tracker').bind('mouseup', self.aQuery);
   };
 
   Mappr.initDraw = function () {
@@ -400,7 +400,7 @@ $(function () {
 
     $('#mapOutput').mousedown(function (e) {
       var pos     = raphael.position(e),
-          color = $('input[name="freehand[0][color]"]').val();
+          color   = $('input[name="freehand[0][color]"]').val();
 
       color = color.split(" ");
       raphael.path = [['M', pos.x, pos.y]];
@@ -423,7 +423,7 @@ $(function () {
         data    : { freehand : raphael.wkt },
         async   : false,
         success : function (results) {
-          if(!results) { return; } 
+          if(!results) { return; }
           switch(raphael.selectedTool) {
             case 'pencil':
               wkt = "LINESTRING(" + results + ")";
@@ -434,7 +434,7 @@ $(function () {
             case 'circle':
             break;
             case 'line':
-              wkt = "LINESTRING(" + results + ")";  
+              wkt = "LINESTRING(" + results + ")";
             break;
           }
           $('textarea[name="freehand[0][data]"]').val(wkt);
@@ -445,19 +445,19 @@ $(function () {
     });
 
   };  /** end Mappr.initDraw **/
-    
+
   Mappr.aZoom = function () {
     Mappr.showMap();
   };
 
   Mappr.aQuery = function () {
-  
+
     var i = 0,
         fillColor = Mappr.vars.fillColor.r + " " + Mappr.vars.fillColor.g + " " + Mappr.vars.fillColor.b,
-        formData = {
-          bbox           : $('#rendered_bbox').val(), 
-          bbox_query     : $('#bbox_query').val(), 
-          projection     : $('#projection').val(), 
+        formData  = {
+          bbox           : $('#rendered_bbox').val(),
+          bbox_query     : $('#bbox_query').val(),
+          projection     : $('#projection').val(),
           projection_map : $('#projection_map').val(),
           qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base'
         };
@@ -587,7 +587,7 @@ $(function () {
           header      : 'h3',
           collapsible : true,
           autoHeight  : false,
-          active      : true 
+          active      : true
         }).find("button.removemore").show().click(function () {
           $(clone).remove();
           counter = self.textareaCounter(data_type, 'decrease');
@@ -596,7 +596,7 @@ $(function () {
         }).parent().find("button.clearself").click(function () {
           Mappr.clearSelf($(this));
           return false;
-        }); 
+        });
 
       }
 
@@ -646,18 +646,18 @@ $(function () {
   }; /** end Mappr.bindAddButtons **/
 
   Mappr.loadMapList = function () {
-    var self      = this,
-        message   = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
+    var self    = this,
+        message = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
 
     $('#usermaps').html(message);
-    
+
     $.get(self.settings.baseUrl + "/usermaps/?action=list", {}, function (data) {
       $('#usermaps').html(data);
 
       $('.map-load').click(function () {
         self.loadMap(this);
         return false;
-      }); 
+      });
 
       $('.map-delete').click(function () {
         self.deleteConfirmation(this);
@@ -668,11 +668,11 @@ $(function () {
   };
 
   Mappr.removeExtraElements = function () {
-    var self = this,
+    var self         = this,
         i            = 0,
         numPoints    = $('.fieldset-points').size(),
         numRegions   = $('.fieldset-regions').size(),
-        numFreehands = $('.fieldset-freehands').size(); 
+        numFreehands = $('.fieldset-freehands').size();
 
     if(numPoints > 3) {
       for(i = numPoints-1; i >= 3; i -= 1) {
@@ -699,7 +699,7 @@ $(function () {
   Mappr.loadMap = function (obj) {
     var self   = this,
         id     = $(obj).attr("data-mid"),
-        filter = $('#filter-mymaps').val(); 
+        filter = $('#filter-mymaps').val();
 
     $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function (data) {
 
@@ -778,7 +778,7 @@ $(function () {
           $('input[name="options[legend]"]').val(1);
         } else {
           $('input[name="options['+keyMap[i]+']"]').attr('checked', true);
-        }                
+        }
       }
     }
 
@@ -796,37 +796,37 @@ $(function () {
       if(i > 2) {
         self.addAccordionPanel('coords');
       }
-      
+
       coord_title = coords[i].title || "";
       coord_data  = coords[i].data  || "";
       coord_color = coords[i].color || "0 0 0";
-             
+
       $('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
       $('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
-        
+
       if(coords[i].shape === "") {
         $('select[name="coords['+i.toString()+'][shape]"]')[0].selectedIndex = 3;
       } else {
         $('select[name="coords['+i.toString()+'][shape]"]').val(coords[i].shape);
       }
-        
+
       if(coords[i].size.toString() === "") {
         $('select[name="coords['+i.toString()+'][size]"]')[0].selectedIndex = 3;
       } else {
         $('select[name="coords['+i.toString()+'][size]"]').val(coords[i].size);
       }
-        
+
       $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
     }
   };
 
-  Mappr.loadRegions = function (data) { 
+  Mappr.loadRegions = function (data) {
     var self         = this,
         i            = 0,
         regions      = data.map.regions || [],
         region_title = "",
         region_data  = "",
-        region_color = ""; 
+        region_color = "";
 
     for(i = 0; i < regions.length; i += 1) {
       if(i > 2) {
@@ -836,10 +836,10 @@ $(function () {
       region_title = regions[i].title || "";
       region_data  = regions[i].data  || "";
       region_color = regions[i].color || "150 150 150";
-                
+
       $('input[name="regions['+i.toString()+'][title]"]').val(region_title);
       $('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
-      $('input[name="regions['+i.toString()+'][color]"]').val(region_color);        
+      $('input[name="regions['+i.toString()+'][color]"]').val(region_color);
     }
   };
 
@@ -862,7 +862,7 @@ $(function () {
 
       $('input[name="freehand['+i.toString()+'][title]"]').val(freehand_title);
       $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
-      $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);         
+      $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);
     }
   };
 
@@ -894,7 +894,7 @@ $(function () {
         $('#mapper-message').html(message).dialog("open");
       } else {
         $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
-    
+
         $('#mapper-message').dialog({
           height        : (250).toString(),
           width         : (525).toString(),
@@ -922,7 +922,7 @@ $(function () {
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
 
     $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
-    
+
     $('#mapper-message').dialog({
       height        : (250).toString(),
       width         : (500).toString(),
@@ -988,9 +988,9 @@ $(function () {
                 $('input[name="options[border]"]').val("");
               }
               if($('#legend').is(':checked')) {
-                $('input[name="options[legend]"]').val(1); 
+                $('input[name="options[legend]"]').val(1);
               } else {
-                $('input[name="options[legend]"]').val(""); 
+                $('input[name="options[legend]"]').val("");
               }
 
               $.post(self.settings.baseUrl + "/usermaps/?action=save", $("form").serialize(), function (data) {
@@ -1048,16 +1048,16 @@ $(function () {
           missingTitle = true;
         }
       });
-    
+
       if(missingTitle) {
         var message = 'You are missing a legend for at least one of your Point Data or Regions layers';
-        self.showMessage(message);   
+        self.showMessage(message);
       }
       else {
         self.showMap();
         $("#tabs").tabs('select',0);
       }
-    
+
       return false;
     });
   };
@@ -1096,7 +1096,7 @@ $(function () {
     var scalebar_url = $('#scalebar_url').val();
 
     if(scalebar_url) {
-      $('#mapScale').html('<img src="' + scalebar_url + '" />');    
+      $('#mapScale').html('<img src="' + scalebar_url + '" />');
     } else {
       $('#mapScale').html('');
     }
@@ -1124,7 +1124,7 @@ $(function () {
     $('#output').val('pnga');        // set the preview and output values
     $('#badRecordsWarning').hide();  // hide the bad records warning
     $('#download_token').val(token); // set a token to be used for cookie
-  
+
     formData = $("form").serialize();
 
     $('#mapOutput').html(message);
@@ -1138,7 +1138,7 @@ $(function () {
       self.showBadPoints();
 
       toolsTabs.tabs('select', tabIndex);
-      
+
       $('#mapTools').bind('tabsselect', function (event,ui) {
         event = null;
         $('#selectedtab').val(ui.index);
@@ -1151,12 +1151,12 @@ $(function () {
       $('#pan').val('');                                         // reset pan value
 
       self.addBadRecordsViewer();
-                          
+
       $('.toolsBadRecords').click(function () {
         $('#badRecordsViewer').dialog("open");
-        return false; 
+        return false;
       });
-      
+
     }, "html");
 
   }; /** end Mappr.showMap **/
@@ -1189,16 +1189,16 @@ $(function () {
         filetype    = "png";
 
     filetype = $("input[name='download-filetype']:checked").val();
-      
-    if($('#border').is(':checked')) { 
-      $('input[name="options[border]"]').val(1); 
+
+    if($('#border').is(':checked')) {
+      $('input[name="options[border]"]').val(1);
     } else {
       $('input[name="options[border]"]').val("");
     }
 
-    if($('#legend').is(':checked')) { 
-      $('input[name="options[legend]"]').val(1); 
-    } else { 
+    if($('#legend').is(':checked')) {
+      $('input[name="options[legend]"]').val(1);
+    } else {
       $('input[name="options[legend]"]').val("");
     }
 
@@ -1208,13 +1208,13 @@ $(function () {
     $('input[name="file_name"]').val(map_title);
 
     $('#download_token').val(token);
-    
+
     switch(filetype) {
       case 'kml':
         formData = $("form").serialize();
         $.download(self.settings.baseUrl + "/application/kml/", formData, 'post');
       break;
-  
+
       default:
         $('#download').val(1);
         $('#output').val(filetype);
@@ -1224,9 +1224,9 @@ $(function () {
         $('.download-message').show();
         $.download(self.settings.baseUrl + "/application/", formData, 'post');
         $('#download').val('');
-        $('#output').val('pnga'); 
+        $('#output').val('pnga');
     }
-    
+
     self.vars.fileDownloadTimer = window.setInterval(function () {
       cookieValue = $.cookie('fileDownloadToken');
       if (cookieValue === token) {
@@ -1243,27 +1243,27 @@ $(function () {
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
 
-  Mappr.bindBulkDownload = function() {
-    $("#download-all").click(function() {
-      if($(this).is(':checked')) { 
-        $(".download-checkbox").each(function() {
+  Mappr.bindBulkDownload = function () {
+    $("#download-all").click(function () {
+      if($(this).is(':checked')) {
+        $(".download-checkbox").each(function () {
           if($(this).is(':visible')) {
             $(this).attr('checked', true);
           } else {
             $(this).attr('checked', false);
           }
         });
-      } else { 
+      } else {
         $(".download-checkbox").attr('checked', false);
       }
     });
-    $(".bulkdownload").click(function() {
+    $(".bulkdownload").click(function () {
       Mappr.bulkDownload();
       return false;
     });
   };
 
-  Mappr.bulkDownload = function() {
+  Mappr.bulkDownload = function () {
 
     var selections = [], match = /^download\[(.*)\]$/, filetype = $("input[name='bulk-download-filetype']:checked").val();
 
@@ -1324,7 +1324,7 @@ $(function () {
     selectedTool  : 'pencil',
     offset        : $('#mapOutput').offset()
 */
-  };  
+  };
 
   Mappr.raphaelConfig.position = function (e) {
     return {
@@ -1356,7 +1356,7 @@ $(function () {
       case 'line':
         self.path[1] = ['L', pos.x, pos.y];
         self.wkt[1] = [pos.x + " " + pos.y];
-        break;                        
+        break;
       case 'circle':
         self.path[1] = ['A', (dx / 2), (dy / 2), 0, 1, 0, pos.x, pos.y];
         self.path[2] = ['A', (dx / 2), (dy / 2), 0, 0, 0, x, y];
@@ -1390,8 +1390,8 @@ $(function () {
     $('.fieldSets').accordion({
       header : 'h3',
       collapsible : true,
-      autoHeight : false 
-    });                
+      autoHeight : false
+    });
     $(".tooltip").tipsy({gravity: 's'});
     this.bindToolbar();
     this.bindArrows();
@@ -1415,7 +1415,7 @@ $(function () {
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
   };
 
-  Mappr.init();  
+  Mappr.init();
 
 });
 
