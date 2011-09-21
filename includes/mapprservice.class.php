@@ -72,10 +72,8 @@ class MAPPR {
         
         OUTPUTFORMAT
           NAME png
-          DRIVER 'GD/PNG'
-          MIMETYPE 'image/png'
+          DRIVER AGG/PNG
           IMAGEMODE RGB
-          EXTENSION 'png'
           FORMATOPTION 'INTERLACE=OFF'
         END
 
@@ -93,7 +91,7 @@ class MAPPR {
           MIMETYPE 'image/tiff'
           IMAGEMODE RGBA
           EXTENSION 'tif'
-          TRANSPARENT ON
+          TRANSPARENT OFF
         END
 
         OUTPUTFORMAT
@@ -105,16 +103,16 @@ class MAPPR {
         END
 
         OUTPUTFORMAT
-            NAME pnga
-            DRIVER AGG/PNG
-            IMAGEMODE RGB
-            FORMATOPTION 'INTERLACE=OFF'
+          NAME pnga
+          DRIVER AGG/PNG
+          IMAGEMODE RGB
+          FORMATOPTION 'INTERLACE=OFF'
         END
         
         OUTPUTFORMAT
-            NAME jpga
-            DRIVER AGG/JPEG
-            IMAGEMODE RGB
+          NAME jpga
+          DRIVER AGG/JPEG
+          IMAGEMODE RGB
         END
         
         END
@@ -247,6 +245,8 @@ class MAPPR {
 
         $this->graticules       = (array_key_exists('grid', $this->layers)) ? true : false;
 
+        $this->gridspace        = $this->load_param('gridspace', false);
+
         $this->download         = $this->load_param('download', false);
 
         $this->crop             = $this->load_param('crop', false);
@@ -256,7 +256,7 @@ class MAPPR {
         $this->rotation         = $this->load_param('rotation', 0);
         $this->zoom_out         = $this->load_param('zoom_out', false);
 
-        $this->_download_factor = $this->load_param('download_size', 1);
+        $this->_download_factor = $this->load_param('download_factor', 1);
 
         $this->download_legend  = $this->load_param('download_legend', false);
 
@@ -533,13 +533,6 @@ class MAPPR {
             'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys.shp",
             'type' => MS_LAYER_POLYGON,
             'sort' => 10
-        );
-        
-        //northarrow
-        $this->shapes['northarrow'] = array(
-            'shape' => '',
-            'type' => MS_LAYER_POINT,
-            'sort' => 11
         );
 
         //graticules
@@ -1183,7 +1176,7 @@ class MAPPR {
 
         $layer->grid->set("labelformat", $labelformat);
         $layer->grid->set("maxarcs", $ticks);
-        $layer->grid->set("maxinterval", $ticks);
+        $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
         $layer->grid->set("maxsubdivide", 2);
       }
     }

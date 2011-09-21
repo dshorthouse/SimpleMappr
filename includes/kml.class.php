@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class Kml {
     
     private $_kml = '';
-    private $_MetaData = array();
-    private $_PlaceMark = array();
+    private $_metadata = array();
+    private $_placemark = array();
 
     public function __construct() {
         $this->pushpins = array(
@@ -50,11 +50,13 @@ class Kml {
     * @param string $url
     * @return xml
     */
-    public function generateKml($url = '') {
+    public function generate_kml($url = '') {
 
-        $this->setMetaData("name", "SimpleMappr Data");
-        $this->getRequest();
-        $this->addCoordinates();
+        $this->get_request();
+
+        $this->set_metadata("name", "SimpleMappr: " . $this->get_filename());
+
+        $this->add_coordinates();
         
         $this->_kml = new XMLWriter();
 
@@ -63,7 +65,7 @@ class Kml {
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false);
         header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
-        header("Content-disposition: attachment; filename=" . $this->getFileName() . ".kml");
+        header("Content-disposition: attachment; filename=" . $this->get_filename() . ".kml");
         $this->_kml->openURI('php://output');
         
         $this->_kml->startDocument('1.0', 'UTF-8');
@@ -73,10 +75,10 @@ class Kml {
             $this->_kml->writeAttribute('xmlns:gx', 'http://www.google.com/kml/ext/2.2');
             
             $this->_kml->startElement('Document');
-            $this->_kml->writeElement('name', $this->getMetaData('name'));
+            $this->_kml->writeElement('name', $this->get_metadata('name'));
             
             //Style elements
-            for($i=0; $i<=count($this->getAllPlaceMarks())-1; $i++) {
+            for($i=0; $i<=count($this->get_all_placemarks())-1; $i++) {
                 $this->_kml->startElement('Style');
                 $this->_kml->writeAttribute('id', 'pushpin'.$i);
                 $this->_kml->startElement('IconStyle');
@@ -89,14 +91,14 @@ class Kml {
                 $this->_kml->endElement(); //end Style
             }
             
-            foreach($this->getAllPlaceMarks() as $key => $placemarks) {
+            foreach($this->get_all_placemarks() as $key => $placemarks) {
                 foreach($placemarks as $id => $placemark) {
                     $this->_kml->startElement('Placemark');
                     $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
-                    $this->_kml->writeElement('name', $this->getPlaceMark($key, $id, 'name'));
+                    $this->_kml->writeElement('name', $this->get_placemark($key, $id, 'name'));
                     $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
                     $this->_kml->startElement('Point');
-                    $this->_kml->writeElement('coordinates', $this->getPlaceMark($key, $id, 'coordinate') . ',0');
+                    $this->_kml->writeElement('coordinates', $this->get_placemark($key, $id, 'coordinate') . ',0');
                     $this->_kml->endElement(); //end Point
                     $this->_kml->endElement(); //end Placemark
                 }   
@@ -115,8 +117,8 @@ class Kml {
     * @param string $name
     * @param string $value
     */
-    public function setMetaData($name, $value) {
-        $this->_MetaData[$name] = $value;
+    public function set_metadata($name, $value) {
+        $this->_metadata[$name] = $value;
     }
 
     /**
@@ -124,8 +126,8 @@ class Kml {
     * @param string $name
     * @return string value
     */
-    public function getMetaData($name) {
-        return $this->_MetaData[$name];
+    public function get_metadata($name) {
+        return $this->_metadata[$name];
     }
     
     /**
@@ -135,8 +137,8 @@ class Kml {
     * @param string $name
     * @param string $value
     */
-    public function setPlaceMark($key=0, $mark=0, $name, $value) {
-        $this->_PlaceMark[$key][$mark][$name] = $value;
+    public function set_placeMark($key=0, $mark=0, $name, $value) {
+        $this->_placemark[$key][$mark][$name] = $value;
     }
     
     /**
@@ -146,23 +148,23 @@ class Kml {
     * @param string $name
     * @return string $value
     */
-    private function getPlaceMark($key=0, $mark=0, $name) {
-        return $this->_PlaceMark[$key][$mark][$name];
+    private function get_placemark($key=0, $mark=0, $name) {
+        return $this->_placemark[$key][$mark][$name];
     }
     
     /**
     * Helper function to get all placemarks
     */
-    private function getAllPlaceMarks() {
-        return $this->_PlaceMark;
+    private function get_all_placemarks() {
+        return $this->_placemark;
     }
     
     /**
     * Helper function to get the request parameter coords
     */
-    private function getRequest() {
-        $this->coords = $this->loadParam('coords', array());
-        $this->file_name = $this->loadParam('file_name', time());
+    private function get_request() {
+        $this->coords = $this->load_param('coords', array());
+        $this->file_name = $this->load_param('file_name', time());
     }
 
     /**
@@ -171,17 +173,35 @@ class Kml {
     * @param string $default parameter optional
     * @return string the parameter value or empty string if null
     */
-    private function loadParam($name, $default = ''){
+    private function load_param($name, $default = ''){
         if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) return $default;
         $value = $_REQUEST[$name];
-        if(get_magic_quotes_gpc() != 1) $value = addslashes($value);
+        if(get_magic_quotes_gpc() != 1) $value = $this->add_slashes_extended($value);
         return $value;
+    }
+
+    /**
+    * Add slashes to either a string or an array
+    * @param string/array $arr_r
+    * @return string/array
+    */
+    private function add_slashes_extended(&$arr_r) {
+        if(is_array($arr_r)) {
+            foreach ($arr_r as &$val) {
+                is_array($val) ? $this->add_slashes_extended($val) : $val = addslashes($val);
+            }
+            unset($val);
+        }
+        else {
+            $arr_r = addslashes($arr_r);
+        }
+        return $arr_r;
     }
     
     /**
     * Helper function to add coordinates to placemarks
     */
-    public function addCoordinates() {
+    public function add_coordinates() {
 
       for($j=0; $j<=count($this->coords)-1; $j++) {
 
@@ -190,17 +210,17 @@ class Kml {
         if(trim($this->coords[$j]['data'])) {
 
             $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-            $row = explode("\n",$this->removeEmptyLines($whole));  //split the lines that have data
+            $row = explode("\n",$this->remove_empty_lines($whole));  //split the lines that have data
 
             $point_key = 0;
             foreach ($row as $loc) {
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
               $coord = new stdClass();
-              $coord->x = trim($coord_array[1]);
-              $coord->y = trim($coord_array[0]);
-              if($this->checkCoord($coord) && $title != "") {  //only add point when data are good & a title
-                  $this->setPlaceMark($j, $point_key, "name", $title);
-                  $this->setPlaceMark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
+              $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
+              $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
+              if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
+                  $this->set_placemark($j, $point_key, "name", $title);
+                  $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                   $point_key++;
               }
             }
@@ -213,7 +233,7 @@ class Kml {
     * @param $string
     * @return string cleansed string with empty lines removed
     */
-    private function removeEmptyLines($string) {
+    private function remove_empty_lines($string) {
       return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
     }
     
@@ -222,13 +242,13 @@ class Kml {
      * @param obj $coord (x,y) coordinates
      * @return true,false
      */
-    private function checkCoord($coord) {
+    private function check_coord($coord) {
         $output = false;
         if((float)$coord->x && (float)$coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) $output = true;
         return $output;
     }
 
-    private function getFileName() {
+    private function get_filename() {
       return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name);
     }
 

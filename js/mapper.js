@@ -252,6 +252,11 @@ $(function () {
     $('.layeropt').click(function () {
       self.showMap();    
     });
+
+    $('.gridopt').click(function () {
+      if(!$('#graticules').is(':checked')) { $('#graticules').attr('checked', true); }
+      self.showMap();    
+    });
  
     $('#projection').change(function () {
       if($(this).val() !== "") { self.showMap(); }
@@ -724,18 +729,6 @@ $(function () {
         keyMap    = [],
         key       = "";
 
-    $("#projection").val(data.map.projection);
-    $('input[name="bbox_map"]').val(data.map.bbox_map);
-    $('input[name="projection_map"]').val(data.map.projection_map);
-    $('input[name="rotation"]').val(data.map.rotation);
-    if(data.map.download_factor) {
-      $('input[name="download_factor"]').val(data.map.download_factor);
-      $('#download-factor').val(data.map.download_factor);
-    } else {
-      $('input[name="download_factor"]').val("");
-      $('#download-factor')[0].selectedIndex = 0;
-    }
-
     map_title = data.map.save.title;
 
     $('input[name="save[title]"]').val(map_title);
@@ -745,6 +738,32 @@ $(function () {
 
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
+
+    $("#projection").val(data.map.projection);
+    $('input[name="bbox_map"]').val(data.map.bbox_map);
+    $('input[name="projection_map"]').val(data.map.projection_map);
+    $('input[name="rotation"]').val(data.map.rotation);
+
+    if(data.map.download_factor !== undefined && data.map.download_factor) {
+      $('input[name="download_factor"]').val(data.map.download_factor);
+      $('#download-factor-' + data.map.download_factor).attr('checked', true);
+    } else {
+      $('#download-factor-3').attr('checked', true);
+    }
+
+    if(data.map.download_filetype !== undefined && data.map.download_filetype) {
+      $('input[name="download_filetype"]').val(data.map.download_filetype);
+      $('#download-' + data.map.download_filetype).attr('checked', true);
+    } else {
+      $('#download-svg').attr('checked', true);
+    }
+
+    if(data.map.grid_space !== undefined && data.map.grid_space) {
+      $('input[name="gridspace"]').attr('checked', false);
+      $('#gridspace-' + data.map.grid_space).attr('checked', true);
+    } else {
+      $('#gridspace').attr('checked', true);
+    }
 
     if(data.map.options !== undefined) {
       for(key in data.map.options) {
@@ -850,8 +869,6 @@ $(function () {
   Mappr.loadLayers = function (data) {
     var i = 0, keyMap = [], key = 0;
 
-    $('#border').attr('checked', false);
-    $('#legend').attr('checked', false);
     $('input[name="options[border]"]').val("");
     $('input[name="options[legend]"]').val("");
     if(data.map.layers) {
@@ -962,7 +979,9 @@ $(function () {
               });
             } else {
               $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-              $('input[name="download_factor"]').val($('#download-factor').val());
+              $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
+              $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
+              $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
               if($('#border').is(':checked')) {
                 $('input[name="options[border]"]').val(1);
               } else {
@@ -1183,8 +1202,6 @@ $(function () {
       $('input[name="options[legend]"]').val("");
     }
 
-    $('input[name="download_size"]').val($('input[name="download-size"]:checked').val());
-
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
 
@@ -1228,10 +1245,16 @@ $(function () {
 
   Mappr.bindBulkDownload = function() {
     $("#download-all").click(function() {
-      if($(this).attr("checked")) { 
-        $(".download-checkbox").attr("checked", true);
+      if($(this).is(':checked')) { 
+        $(".download-checkbox").each(function() {
+          if($(this).is(':visible')) {
+            $(this).attr('checked', true);
+          } else {
+            $(this).attr('checked', false);
+          }
+        });
       } else { 
-        $(".download-checkbox").attr("checked", false);
+        $(".download-checkbox").attr('checked', false);
       }
     });
     $(".bulkdownload").click(function() {
@@ -1241,8 +1264,19 @@ $(function () {
   };
 
   Mappr.bulkDownload = function() {
-    alert("Sorry, this is still in progress.");
-    //TODO: collect checked maps and make dialog to download specific file type
+
+    var selections = [], match = /^download\[(.*)\]$/, filetype = $("input[name='bulk-download-filetype']:checked").val();
+
+    alert("Sorry, this feature is still under development.");
+
+    $('.download-checkbox').each(function() {
+      if($(this).is(':checked')) {
+        selections.push($(this).attr("name").match(match)[1]);
+      }
+    });
+
+//    alert("Selections: " + selections + ", Filetype: " + filetype);
+
   };
 
   Mappr.showExamples = function() {

@@ -107,6 +107,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 
             <h2>Recent Updates</h2>
+            <p class="citation"><strong>September 21, 2011</strong> Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</p>
             <p class="citation"><strong>August 2, 2011</strong> Refined error-handling with coordinate recognition.</p>
             <p class="citation"><strong>July 5, 2011</strong> Added the ability to filter your My Maps list by title.</p>
             <p class="citation"><strong>July 4, 2011</strong> The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</p>
@@ -235,7 +236,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
           echo '</div>' . "\n";
         
           echo '<div class="fieldset-extras">' . "\n";
-          echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
+          echo '<span class="fieldset-title">Color:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
           echo '</div>' . "\n";
           echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
           echo '</div>' . "\n";
@@ -287,7 +288,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
               echo '</div>' . "\n";
 
               echo '<div class="fieldset-extras">' . "\n";
-              echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
+              echo '<span class="fieldset-title">Color:</span> <input type="text"  class="colorPicker" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
               echo '</div>' . "\n";
               echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
               echo '</div>' . "\n";
@@ -402,7 +403,13 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                     <li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
 <!--                    <li><input type="checkbox" id="arrow"  class="layeropt" name="options[arrow]" /> north arrow</li>
 -->
-                    <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules</li>
+                    <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules
+                      <div id="graticules-selection">
+                        <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
+                        <input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
+                        <input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> 10<sup>o</sup>
+                      </div>
+                    </li>
                 </ul>
                 <h2>Projection*</h2>
                 <ul>
@@ -474,8 +481,10 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     
     <!-- put modal form elements back into flow of DOM -->
     <input type="hidden" name="save[title]" />
-    <input type="hidden" name="download_size" />
     <input type="hidden" name="file_name" />
+    <input type="hidden" name="download_factor" />
+    <input type="hidden" name="download_filetype" />
+    <input type="hidden" name="grid_space" />
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
     
@@ -504,8 +513,8 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
           $file_sizes = array(3,4,5);
           foreach($file_sizes as $size) {
             $checked = ($size == 3) ? " checked=\"checked\"" : "";
-            echo "<input type=\"radio\" id=\"download-size-".$size."\" name=\"download-size\" value=\"".$size."\"".$checked." />";
-            echo "<label for=\"download-size-".$size."\">".$size."X</label>";
+            echo "<input type=\"radio\" id=\"download-factor-".$size."\" name=\"download-factor\" value=\"".$size."\"".$checked." />";
+            echo "<label for=\"download-factor-".$size."\">".$size."X</label>";
           }
         ?>
         </fieldset>
@@ -522,15 +531,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
           }
         ?>
         </fieldset>
-<!--
-        <ul>
-          <li class="export"><a href="#" class="sprites export" data-export="svg"> svg*</a> (recommended)</li>
-          <li class="export"><a href="#" class="sprites export" data-export="png"> png</a></li>
-          <li class="export"><a href="#" class="sprites export" data-export="tif"> tif</a></li>
-          <li class="export"><a href="#" class="sprites export" data-export="eps"> eps</a></li>
-          <li class="kml"><a href="#" class="sprites export" data-export="kml"> kml</a> (Google Earth)</li>
-        </ul>
--->
 
         <fieldset>
           <legend>Options</legend>

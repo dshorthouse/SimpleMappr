@@ -129,7 +129,7 @@ class MAPPREMBED extends MAPPR {
 
         $layer->grid->set("labelformat", $labelformat);
         $layer->grid->set("maxarcs", $ticks);
-        $layer->grid->set("maxinterval", $ticks);
+        $layer->grid->set("maxinterval", isset($this->gridspace) ? $this->gridspace : $ticks);
         $layer->grid->set("maxsubdivide", 2);
       }
     }
