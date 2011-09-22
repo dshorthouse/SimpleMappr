@@ -716,6 +716,10 @@ $(function () {
         id     = $(obj).attr("data-mid"),
         filter = $('#filter-mymaps').val();
 
+    $("#tabs").tabs('select',0);
+
+    self.showLoadingMessage();
+
     $.get(self.settings.baseUrl + "/usermaps/?action=load&map=" + id, {}, function (data) {
 
       self.removeExtraElements();
@@ -730,8 +734,6 @@ $(function () {
       self.loadFreehands(data);
       self.loadLayers(data);
       self.showMap();
-
-      $("#tabs").tabs('select',0);
 
     }, "json");
 
@@ -1126,11 +1128,16 @@ $(function () {
     }
   };
 
+  Mappr.showLoadingMessage = function () {
+    var message = '<span id="mapper-building-map">Building preview...</span>';
+
+    $('#mapOutput').html(message);
+  };
+
   Mappr.showMap = function () {
     var self         = this,
         token        = new Date().getTime(),
         formData     = {},
-        message      = '<span id="mapper-building-map">Building preview...</span>',
         toolsTabs    = $('#mapTools').tabs(),
         tabIndex     = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val(), 10) : 0;
 
@@ -1142,7 +1149,8 @@ $(function () {
 
     formData = $("form").serialize();
 
-    $('#mapOutput').html(message);
+    self.showLoadingMessage();
+
     $('#mapScale').html('');
 
     $.post(Mappr.settings.baseUrl + "/application/", formData, function (data) {
