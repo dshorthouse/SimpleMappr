@@ -34,8 +34,8 @@ class HEADER {
     
     public static $local_js_files = array(
         'public/javascript/raphael-min.js',
-        'public/javascript/jquery-1.6.1.min.js',
-        'public/javascript/jquery-ui-1.8.13.min.js',
+        'public/javascript/jquery-1.6.4.min.js',
+        'public/javascript/jquery-ui-1.8.16.min.js',
         'public/javascript/jquery.colorpicker.min.js',
         'public/javascript/jquery.scrollTo.min.js',
         'public/javascript/jquery.Jcrop.min.js',
@@ -51,7 +51,7 @@ class HEADER {
         'public/stylesheets/screen.css',
         'public/stylesheets/colorpicker.css',
         'public/stylesheets/jquery.Jcrop.css',
-        'public/stylesheets/smoothness/jquery-ui-1.8.10.custom.css',
+        'public/stylesheets/smoothness/jquery-ui-1.8.16.css',
         'public/javascript/tipsy/stylesheets/tipsy.css'
     );
     
@@ -76,10 +76,10 @@ class HEADER {
     private function remote_js_files() {
       if(ENVIRONMENT == "production") {
         foreach(self::$local_js_files as $key => $value) {
-          if ($value == 'public/javascript/jquery-1.6.1.min.js' || $value == 'public/javascript/jquery-ui-1.8.13.custom.min.js ') unset(self::$local_js_files[$key]);
+          if ($value == 'public/javascript/jquery-1.6.3.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') unset(self::$local_js_files[$key]);
         }
-        $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>');
-        $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>');
+        $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>');
+        $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>');
       }
     }
     

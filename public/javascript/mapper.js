@@ -13,7 +13,7 @@ $(function () {
     maxTextareaCount   : 10,
     zoom               : true,
     fileDownloadTimer  : {},
-    fillColor          : {}
+    fillColor          : ""
   };
 
   $.ajaxSetup({
@@ -187,11 +187,11 @@ $(function () {
 
     $('.toolsQuery').ColorPicker({
       onBeforeShow: function () {
-        $(this).ColorPickerSetColor(Mappr.RGBtoHex(150, 150, 150));
+        $(this).ColorPickerSetColor(self.RGBtoHex(150, 150, 150));
       },
       onShow: function (colpkr) {
         $(colpkr).show();
-        Mappr.destroyJcrop();
+        self.destroyJcrop();
         return false;
       },
       onHide: function (colpkr) {
@@ -203,9 +203,9 @@ $(function () {
         hex = null;
         $(el).ColorPickerHide();
         $('#mapCropMessage').hide();
-        Mappr.vars.fillColor = rgb;
-        Mappr.initJquery();
-        Mappr.vars.zoom = false;
+        self.vars.fillColor = rgb;
+        self.initJquery();
+        self.vars.zoom = false;
       }
     }).click(function () {
       return false;
@@ -265,11 +265,13 @@ $(function () {
   };
 
   Mappr.bindColorPickers = function () {
+    var self = this;
+
     $('.colorPicker').ColorPicker({
       element : $(this),
       onBeforeShow: function () {
         var color = $(this).val().split(" ");
-        $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+        $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
       },
       onHide: function (colpkr) {
         $(colpkr).hide();
@@ -283,11 +285,13 @@ $(function () {
       }
     }).bind('keyup', function () {
       var color = $(this).val().split(" ");
-      $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+      $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
     });
   };
 
   Mappr.bindClearButtons = function () {
+    var self = this;
+
     $('.clearLayers, .clearRegions, .clearFreehand').click(function () {
       var fieldsets = $(this).parent().prev().prev().children();
 
@@ -309,7 +313,7 @@ $(function () {
     });
 
     $('.clearself').click(function () {
-      Mappr.clearSelf($(this));
+      self.clearSelf($(this));
       return false;
     });
 
@@ -365,7 +369,7 @@ $(function () {
       onSelect  : self.showCoords
     });
 
-    $('.jcrop-tracker').unbind('mouseup', self.aZoom );
+    $('.jcrop-tracker').unbind('mouseup', self, self.aZoom);
   };
 
   Mappr.initJzoom = function () {
@@ -385,7 +389,7 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').bind('mouseup', self.aZoom );
+    $('.jcrop-tracker').bind('mouseup', self, self.aZoom);
   };
 
   Mappr.initJquery = function () {
@@ -405,7 +409,7 @@ $(function () {
       onSelect      : self.showCoordsQuery
     });
 
-    $('.jcrop-tracker').bind('mouseup', self.aQuery);
+    $('.jcrop-tracker').bind('mouseup', self, self.aQuery);
   };
 
   Mappr.initDraw = function () {
@@ -461,14 +465,15 @@ $(function () {
 
   };  /** end Mappr.initDraw **/
 
-  Mappr.aZoom = function () {
-    Mappr.showMap();
+  Mappr.aZoom = function (event) {
+    event.data.showMap();
   };
 
-  Mappr.aQuery = function () {
+  Mappr.aQuery = function (event) {
 
-    var i = 0,
-        fillColor = Mappr.vars.fillColor.r + " " + Mappr.vars.fillColor.g + " " + Mappr.vars.fillColor.b,
+    var self      = event.data,
+        i         = 0,
+        fillColor = fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
         formData  = {
           bbox           : $('#rendered_bbox').val(),
           bbox_query     : $('#bbox_query').val(),
@@ -477,9 +482,11 @@ $(function () {
           qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base'
         };
 
-    Mappr.destroyJcrop();
+    self.destroyJcrop();
 
-    $.post(Mappr.settings.baseUrl + "/query/", formData, function (data) {
+    self.showLoadingMessage();
+
+    $.post(self.settings.baseUrl + "/query/", formData, function (data) {
 
       if(data.length > 0) {
         var regions  = "",
@@ -496,16 +503,16 @@ $(function () {
             $('input[name="regions['+i+'][color]"]').val(fillColor);
             $('textarea[name="regions['+i+'][data]"]').val(regions);
             if(i === (num_fieldsets-1) && !$('button[data-type="regions"]').is(':disabled')) {
-              Mappr.addAccordionPanel('regions');
+              self.addAccordionPanel('regions');
             }
             break;
           } else {
-            if(i === (num_fieldsets-1)) { Mappr.addAccordionPanel('regions'); num_fieldsets += 1; }
+            if(i === (num_fieldsets-1)) { self.addAccordionPanel('regions'); num_fieldsets += 1; }
             continue;
           }
         }
 
-        Mappr.showMap();
+        self.showMap();
       }
     });
 
@@ -559,12 +566,13 @@ $(function () {
         color   = (data_type === 'coords') ? "0 0 0" : "150 150 150",
         num     = 0;
 
-    if(button.attr("data-type") === data_type) {
+    if($(button).attr("data-type") === data_type) {
+      $(button).parent().prev().accordion("activate", false);
       clone = button.parent().prev().children("div:last").clone();
-
       num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
 
       if(counter < self.vars.maxTextareaCount) {
+
         counter = self.textareaCounter(data_type, 'increase');
 
         $(clone).find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
@@ -581,7 +589,7 @@ $(function () {
         $(clone).find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
           onBeforeShow: function () {
             var color = $(this).val().split(" ");
-            $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+            $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
           },
           onHide: function (colpkr) {
             $(colpkr).hide();
@@ -595,21 +603,16 @@ $(function () {
           }
         }).bind('keyup', function () {
           var color = $(this).val().split(" ");
-          $(this).ColorPickerSetColor(Mappr.RGBtoHex(color[0], color[1], color[2]));
+          $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
         });
 
-        $(button).parent().prev().accordion("activate", false).append(clone).children("div:last").accordion({
-          header      : 'h3',
-          collapsible : true,
-          autoHeight  : false,
-          active      : true
-        }).find("button.removemore").show().click(function () {
+        $(button).parent().prev().append(clone).children("div:last").find("button.removemore").show().click(function () {
           $(clone).remove();
           counter = self.textareaCounter(data_type, 'decrease');
           $(button).removeAttr("disabled");
           return false;
         }).parent().find("button.clearself").click(function () {
-          Mappr.clearSelf($(this));
+          self.clearSelf($(this));
           return false;
         });
 
@@ -618,6 +621,7 @@ $(function () {
       if(counter >= self.vars.maxTextareaCount-3) {
         $(button).attr("disabled","disabled");
       }
+
     }
 
   }; /** end Mappr.addAccordionPanel **/
@@ -966,7 +970,7 @@ $(function () {
     var message = '<div id="users-loading"><span id="mapper-building-users">Loading users list...</span></div>';
 
     $('#userdata').html(message);
-    $.get(Mappr.settings.baseUrl + "/usermaps/?action=users", {}, function (data) {
+    $.get(this.settings.baseUrl + "/usermaps/?action=users", {}, function (data) {
       $('#userdata').html(data);
     }, "html");
   };
@@ -1153,7 +1157,7 @@ $(function () {
 
     $('#mapScale').html('');
 
-    $.post(Mappr.settings.baseUrl + "/application/", formData, function (data) {
+    $.post(self.settings.baseUrl + "/application/", formData, function (data) {
       $('#mapOutput').html(data);
 
       self.drawLegend();
@@ -1268,6 +1272,8 @@ $(function () {
   };
 
   Mappr.bindBulkDownload = function () {
+    var self = this;
+
     $("#download-all").click(function () {
       if($(this).is(':checked')) {
         $(".download-checkbox").each(function () {
@@ -1282,13 +1288,12 @@ $(function () {
       }
     });
     $(".bulkdownload").click(function () {
-      Mappr.bulkDownload();
+      self.bulkDownload();
       return false;
     });
   };
 
   Mappr.bulkDownload = function () {
-
     var selections = [], match = /^download\[(.*)\]$/, filetype = $("input[name='bulk-download-filetype']:checked").val();
 
     $('.download-checkbox').each(function() {
