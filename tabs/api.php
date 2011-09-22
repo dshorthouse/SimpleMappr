@@ -25,19 +25,19 @@ require_once('../lib/mapprservice.class.php');
         <dd>a URL-encoded, remote GeoRSS feed. <strong>NOTE:</strong> If both <em>file</em> and <em>georss</em> are included, points in the GeoRSS feed are treated as a single, additional "column" for <em>shape[x]</em>, <em>size[x]</em>, <em>color[x]</em> below. <em>e.g. georss=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></em></dd>
 
         <dt>shape[x]</dt>
-        <dd>shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar, <em>e.g. shape[0]=circle</em></dd>
+        <dd>shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar <em>e.g. shape[0]=circle</em></dd>
 
         <dt>size[x]</dt>
-        <dd>integer-based point size of marker in column x, <em>e.g. size[1]=10</em></dd>
+        <dd>integer-based point size of marker in column x <em>e.g. size[1]=10</em></dd>
 
         <dt>color[x]</dt>
-        <dd>comma-separated RGB colors for marker in column x, <em>e.g. color[2]=255,0,0</em></dd>
+        <dd>comma-separated RGB colors for marker in column x <em>e.g. color[2]=255,0,0</em></dd>
 
         <dt>outlinecolor</dt>
-        <dd>comma-separated RGB colors for halo around all solid markers, <em>e.g. outlinecolor=40,40,40</em></dd>
+        <dd>comma-separated RGB colors for halo around all solid markers <em>e.g. outlinecolor=40,40,40</em></dd>
 
         <dt>bbox</dt>
-        <dd>comma-separated bounding box in decimal degrees (minx, miny, maxx, maxy), <em>e.g. bbox=-130,40,-60,50</em></dd>
+        <dd>comma-separated bounding box in decimal degrees (minx, miny, maxx, maxy) <em>e.g. bbox=-130,40,-60,50</em></dd>
 
         <dt>shade[places]</dt>
         <dd>comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets <em>e.g. shade[places]=Alberta,USA[MT|WA]</em></dd>
@@ -58,13 +58,13 @@ require_once('../lib/mapprservice.class.php');
         <dd>display the graticules <em>e.g. graticules=true</em></dd>
 
         <dt>width</dt>
-        <dd>integer-based output width in pixels, <em>e.g. width=400</em></dd>
+        <dd>integer-based output width in pixels <em>e.g. width=400</em></dd>
 
         <dt>height</dt>
-        <dd>integer-based output height in pixels, <em>e.g. height=400</em></dd>
+        <dd>integer-based output height in pixels <em>e.g. height=400</em></dd>
 
         <dt>output</dt>
-        <dd>file format of the image or vector produced; options are png, pnga*, jpg, jpga*, tif, svg <em>e.g. output=pnga</em><br />*Uses AGG driver for png or jpg rendering, which tends to be higher quality</dd>
+        <dd>file format of the image or vector produced; options are png, jpg, tif, svg <em>e.g. output=png</em></dd>
 
         <dt>scalebar</dt>
         <dd>embed a scalebar in the lower right of the image <em>e.g. scalebar=true</em></dd>

@@ -79,10 +79,8 @@ class MAPPR {
 
         OUTPUTFORMAT
           NAME jpg
-          DRIVER 'GD/JPEG'
-          MIMETYPE 'image/jpeg'
+          DRIVER AGG/JPEG
           IMAGEMODE RGB
-          EXTENSION 'jpg'
         END
 
         OUTPUTFORMAT
