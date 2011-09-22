@@ -3,12 +3,11 @@ Crawl-delay: 10
 # Directories
 Disallow: /api/
 Disallow: /application/
-Disallow: /conf/
 Disallow: /config/
-Disallow: /includes/
-Disallow: /mapfiles/
-Disallow: /maps/
+Disallow: /error/
+Disallow: /lib/
 Disallow: /query/
+Disallow: /tabs/
 Disallow: /tmp/
 Disallow: /usermaps/
 Disallow: /wfs/

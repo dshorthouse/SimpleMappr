@@ -1,7 +1,7 @@
 <?php
-require_once('../conf/conf.php');
-require_once('../conf/conf.db.php');
-require_once('../includes/db.class.php');
+require_once('../config/conf.php');
+require_once('../config/conf.db.php');
+require_once('../lib/db.class.php');
 
 $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 $sql = "SELECT * FROM stateprovinces ORDER BY country";
@@ -89,9 +89,9 @@ $("#filter-countries")
     <div>
     <p><strong>Coordinate format:</strong> <em>e.g.</em> in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1</p>
     <div id="example-data">
-      <img src="/images/help_data.png" alt="Example Data Entry" />
-      <img src="/images/38100.png" alt="38,-100 (North America)" />
-      <img src="/images/25140.png" alt="-25,140 (Australia)" />
+      <img src="../public/images/help_data.png" alt="Example Data Entry" />
+      <img src="../public/images/38100.png" alt="38,-100 (North America)" />
+      <img src="../public/images/25140.png" alt="-25,140 (Australia)" />
     </div>
     <p><strong>Pushpin color:</strong> The pushpin colors are configured using the RGB color scheme and a color selector is provided. By default, "0 0 0" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, "10 10 10" is dark gray whereas "100 100 100" is a lighter shade of gray.</p>
     </div>

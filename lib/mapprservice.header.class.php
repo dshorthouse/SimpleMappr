@@ -33,25 +33,25 @@ class HEADER {
     private $css_header = array();
     
     public static $local_js_files = array(
-        'js/raphael-min.js',
-        'js/jquery-1.6.1.min.js',
-        'js/jquery-ui-1.8.13.min.js',
-        'js/jquery.colorpicker.min.js',
-        'js/jquery.scrollTo.min.js',
-        'js/jquery.Jcrop.min.js',
-        'js/jquery.textarearesizer.compressed.js',
-        'js/jquery.cookie.js',
-        'js/jquery.download.js',
-        'js/tipsy/javascripts/jquery.tipsy.js',
-        'js/jquery.uitablefilter.min.js'
+        'public/javascript/raphael-min.js',
+        'public/javascript/jquery-1.6.1.min.js',
+        'public/javascript/jquery-ui-1.8.13.min.js',
+        'public/javascript/jquery.colorpicker.min.js',
+        'public/javascript/jquery.scrollTo.min.js',
+        'public/javascript/jquery.Jcrop.min.js',
+        'public/javascript/jquery.textarearesizer.compressed.js',
+        'public/javascript/jquery.cookie.js',
+        'public/javascript/jquery.download.js',
+        'public/javascript/tipsy/javascripts/jquery.tipsy.js',
+        'public/javascript/jquery.uitablefilter.min.js'
     );
     
     public static $css_files = array(
-        'css/screen.css',
-        'css/colorpicker.css',
-        'css/jquery.Jcrop.css',
-        'css/smoothness/jquery-ui-1.8.10.custom.css',
-        'js/tipsy/stylesheets/tipsy.css'
+        'public/stylesheets/screen.css',
+        'public/stylesheets/colorpicker.css',
+        'public/stylesheets/jquery.Jcrop.css',
+        'public/stylesheets/smoothness/jquery-ui-1.8.10.custom.css',
+        'public/javascript/tipsy/stylesheets/tipsy.css'
     );
     
     function __construct() {
@@ -75,7 +75,7 @@ class HEADER {
     private function remote_js_files() {
       if(ENVIRONMENT == "production") {
         foreach(self::$local_js_files as $key => $value) {
-          if ($value == 'js/jquery-1.6.1.min.js' || $value == 'js/jquery-ui-1.8.13.custom.min.js ') unset(self::$local_js_files[$key]);
+          if ($value == 'public/javascript/jquery-1.6.1.min.js' || $value == 'public/javascript/jquery-ui-1.8.13.custom.min.js ') unset(self::$local_js_files[$key]);
         }
         $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>');
         $this->addJS('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>');
@@ -84,11 +84,11 @@ class HEADER {
     
     private function local_js_files() {
 
-      self::$local_js_files[] = (ENVIRONMENT == "production") ? 'js/mapper.min.js' : 'js/mapper.js';
+      self::$local_js_files[] = (ENVIRONMENT == "production") ? 'public/javascript/mapper.min.js' : 'public/javascript/mapper.js';
 
       if(ENVIRONMENT == "production") {
         
-        $cached_js =  $this->js_cached(MAPPR_DIRECTORY . "/js/cache/");
+        $cached_js =  $this->js_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
         if (!$cached_js) {
             
@@ -99,14 +99,14 @@ class HEADER {
         
           $js_min = JSMin::minify($js_contents);
           $js_min_file = md5(time()) . ".js";
-          $handle = fopen(MAPPR_DIRECTORY . "/js/cache/" . $js_min_file, 'x+');
+          $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
           fwrite($handle, $js_min);
           fclose($handle);
 
-          $this->addJS('<script type="text/javascript" src="js/cache/' . $js_min_file . '?' . self::rand_string() . '"></script>');
+          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '?' . self::rand_string() . '"></script>');
         }
         else {
-          $this->addJS('<script type="text/javascript" src="js/cache/' . $cached_js . '?' . self::rand_string() . '"></script>');
+          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '?' . self::rand_string() . '"></script>');
         }
       }
       else {

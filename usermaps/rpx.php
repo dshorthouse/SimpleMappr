@@ -1,7 +1,7 @@
 <?php
-require_once('../conf/conf.php');
-require_once('../conf/conf.db.php');
-require_once('../includes/db.class.php');
+require_once('../config/conf.php');
+require_once('../config/conf.db.php');
+require_once('../lib/db.class.php');
 
 global $db;
 $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);

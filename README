@@ -12,16 +12,16 @@ Copyright: David P. Shorthouse
 
 **************************************************************************/
 
-1. Make /tmp and /js/cache readable/writable by/to web server
+1. Make /tmp and /public/javascript/cache readable/writable by/to web server
 2. Download map data from: Natural Earth Data: http://www.naturalearthdata.com/:
 	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/10m-cultural.zip
 	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/10m-physical.zip
 	http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/raster/HYP_HR_SR_W_DR.zip
-	Extract to /maps/10m-cultural, /maps/10m-physical, /maps/HYP_HR_SR_W_DR, respectively
+	Extract to /lib/mapserver/maps/10m-cultural, /lib/mapserver/maps/10m-physical, /lib/mapserver/maps/HYP_HR_SR_W_DR, respectively
 	I created a greyscale shaded relief geotiff using ogr2ogr on the full color NaturalEarth HYP_HR_SR_W_DR.zip.
 	If you wish to obtain a copy of this geotiff, please contact me directly at davidpshorthouse@gmail.com.
-3. Make contents of /config readable/executable by web server
-4. Adjust /conf/conf.db.php.sample and /conf/conf.php.sample and remove .sample extensions.
+3. Make contents of /lib/mapserver/fonts readable/executable by web server
+4. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions.
    These set db (MySQL) connections and constants, respectively.
 
 /***********************************************************************

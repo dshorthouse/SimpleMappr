@@ -91,7 +91,7 @@ class MAPPREMBED extends MAPPR {
     private function set_not_found() {
       header("HTTP/1.0 404 Not Found");
       header("Content-Type: image/png");
-      $im = imagecreatefrompng(MAPPR_DIRECTORY . "/images/not-found.png");
+      $im = imagecreatefrompng(MAPPR_DIRECTORY . "/public/images/not-found.png");
       imagepng($im);
       imagedestroy($im);
       exit();

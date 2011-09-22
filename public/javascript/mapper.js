@@ -1267,13 +1267,13 @@ $(function () {
 
     var selections = [], match = /^download\[(.*)\]$/, filetype = $("input[name='bulk-download-filetype']:checked").val();
 
-    alert("Sorry, this feature is still under development.");
-
     $('.download-checkbox').each(function() {
       if($(this).is(':checked')) {
         selections.push($(this).attr("name").match(match)[1]);
       }
     });
+
+    //TODO: need Redis and worker process to produce zipped document containing all selected files
 
 //    alert("Selections: " + selections + ", Filetype: " + filetype);
 

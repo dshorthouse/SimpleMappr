@@ -1,5 +1,5 @@
 <?php
-require_once('../includes/mapprservice.class.php');
+require_once('../lib/mapprservice.class.php');
 ?>
 <!-- api tab -->
 <div id="map-api">

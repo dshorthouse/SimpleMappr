@@ -1,13 +1,12 @@
 <?php
 
-require_once('conf/conf.php');
+require_once('config/conf.php');
 
 if(isset($_GET['map'])) {
-  require_once('includes/mapprservice.embed.class.php');
+  require_once('lib/mapprservice.embed.class.php');
   $mappr_embed = new MAPPREMBED();
-  $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/maps")
-              ->set_symbols_path(MAPPR_DIRECTORY . "/config/symbols")
-              ->set_font_file(MAPPR_DIRECTORY . "/config/fonts.list")
+  $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
+              ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts.list")
               ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
               ->set_tmp_url("/tmp");
 
@@ -17,9 +16,9 @@ if(isset($_GET['map'])) {
   exit();
 }
 
-require_once('includes/mapprservice.header.class.php');
-require_once('includes/mapprservice.class.php');
-require_once('includes/jsmin.php');
+require_once('lib/mapprservice.header.class.php');
+require_once('lib/mapprservice.class.php');
+require_once('lib/jsmin.php');
 
 session_start();
 
@@ -56,7 +55,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 </head>
 
 <body>
-<h1 id="site-title"><img src="images/logo.png" alt="SimpleMappr" /><span>SimpleMappr</span></h1>
+<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" /><span>SimpleMappr</span></h1>
 <div id="site-tagline">point maps for publication</div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout">Welcome back <?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/usermaps/?action=logout">Log Out</a></span></div>
@@ -367,7 +366,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                     </div>
                     <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
-                        <img id="mapOutputImage" src="images/basemap.png" alt="" />
+                        <img id="mapOutputImage" src="public/images/basemap.png" alt="" />
                     </div>
                 </div>
                 <div id="mapScale"></div>

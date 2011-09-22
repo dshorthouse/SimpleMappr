@@ -1,5 +1,5 @@
 <?php
-require_once('../../includes/kml.class.php');
+require_once('../../lib/kml.class.php');
 
 $kml = new Kml();
 $kml->generate_kml();

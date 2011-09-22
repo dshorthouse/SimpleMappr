@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
-require_once ('../includes/mapprservice.class.php');
-require_once ('../includes/georss/rss_fetch.inc');
+require_once ('mapprservice.class.php');
+require_once ('georss/rss_fetch.inc');
 
 class MAPPRAPI extends MAPPR {
     

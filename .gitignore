@@ -1,15 +1,15 @@
 # Ignore configuration files
-conf/conf.php
-conf/conf.db.php
+config/conf.php
+config/conf.db.php
 
 # Ignore contents of direcories
-js/cache/*
+public/javascript/cache/*
 tmp/*.png
 tmp/*.jpg
 tmp/*.gif
 tmp/*.tif
 tmp/*.svg
-maps/**/*
+lib/mapserver/maps/**/*
 
 # Logs and databases #
 ######################
