@@ -338,18 +338,30 @@ $(function () {
     if(typeof vars.jzoomAPI !== "undefined") { vars.jzoomAPI.destroy(); }
     if(typeof vars.jcropAPI !== "undefined") { vars.jcropAPI.destroy(); }
     if(typeof vars.jqueryAPI !== "undefined") { vars.jqueryAPI.destroy(); }
+
+    $('.jcrop-holder').css('background-color', 'none');
+  };
+
+  Mappr.resetJbbox = function () {
+    $('#bbox_rubberband').val('');
+    $('#bbox_query').val('');
   };
 
   Mappr.initJcrop = function () {
-    var self = this, vars = this.vars;
+    var self = this, vars = this.vars, color = 'black';
 
     self.destroyJcrop();
+    self.resetJbbox();
+
+    if($('#mapOutput img').attr("src") === "public/images/basemap.png") {
+      color = 'grey';
+    }
 
     vars.jcropAPI = $.Jcrop('#mapOutput img', {
-      bgColor:'grey',
-      bgOpacity:1,
-      onChange: self.showCoords,
-      onSelect: self.showCoords
+      bgColor   : color,
+      bgOpacity :0.5,
+      onChange  : self.showCoords,
+      onSelect  : self.showCoords
     });
 
     $('.jcrop-tracker').unbind('mouseup', self.aZoom );
@@ -359,6 +371,7 @@ $(function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
+    self.resetJbbox();
 
     vars.jzoomAPI = $.Jcrop('#mapOutput img', {
       addClass      : "customJzoom",
@@ -378,6 +391,7 @@ $(function () {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
+    self.resetJbbox();
 
     vars.jqueryAPI = $.Jcrop('#mapOutput img', {
       addClass      : "customJzoom",
@@ -1144,7 +1158,7 @@ $(function () {
         $('#selectedtab').val(ui.index);
       });
 
-      $('#bbox_rubberband').val('');                             // reset bounding box values, but get first for the crop function
+      self.resetJbbox();
       $('#bbox_map').val($('#rendered_bbox').val());             // set extent from previous rendering
       $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
       $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
