@@ -1202,6 +1202,12 @@ $(function () {
         formData    = "",
         filetype    = "png";
 
+    map_title = map_title.replace(pattern, "_");
+    $('#file-name').val(map_title);
+    $('input[name="file_name"]').val(map_title);
+
+    $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
+
     filetype = $("input[name='download-filetype']:checked").val();
 
     if($('#border').is(':checked')) {
@@ -1215,11 +1221,6 @@ $(function () {
     } else {
       $('input[name="options[legend]"]').val("");
     }
-
-    map_title = map_title.replace(pattern, "_");
-    $('#file-name').val(map_title);
-
-    $('input[name="file_name"]').val(map_title);
 
     $('#download_token').val(token);
 

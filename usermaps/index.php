@@ -51,7 +51,7 @@ switch($_GET['action']) {
             $output .= "<table>" . "\n";
             $output .= "<thead>" . "\n";
             $output .= "<tr>" . "\n";
-            $output .= "<td><input type=\"checkbox\" id=\"download-all\" name=\"download[all]\" /></td>";
+//            $output .= "<td><input type=\"checkbox\" id=\"download-all\" name=\"download[all]\" /></td>";
             $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
             $output .= "<td class=\"actions\">Actions</td>";
             $output .= "</tr>" . "\n";
@@ -61,7 +61,7 @@ switch($_GET['action']) {
             while ($record = $db->fetch_array($rows)) {
               $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
               $output .= "<tr ".$class.">";
-              $output .= "<td class=\"download\"><input type=\"checkbox\" class=\"download-checkbox\" name=\"download[".$record['mid']."]\" /></td>";
+//              $output .= "<td class=\"download\"><input type=\"checkbox\" class=\"download-checkbox\" name=\"download[".$record['mid']."]\" /></td>";
               $output .= "<td class=\"title\">";
               $output .= ($uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
               $output .= stripslashes($record['title']);
@@ -79,6 +79,7 @@ switch($_GET['action']) {
             $output .= "</tbody>" . "\n";
             $output .= "</table>" . "\n";
 
+/*
             $output .= "<fieldset>" . "\n";
             $output .= "<legend>File type</legend>" . "\n";
 
@@ -93,7 +94,7 @@ switch($_GET['action']) {
             $output .= "</fieldset>" . "\n";
 
             $output .= "<div><button class=\"sprites bulkdownload positive\">Download</button></div>";
-
+*/
             $output .= "<script type=\"text/javascript\">
               Mappr.bindBulkDownload();
               $(\"#filter-mymaps\")
