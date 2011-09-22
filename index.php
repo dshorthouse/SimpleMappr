@@ -437,7 +437,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <div class="panel">
                 <p>Save and reload your map data or create a generic template.</p> 
             </div>
-           <iframe src="http://simplemappr.rpxnow.com/openid/embed?token_url=http%3A%2F%2F<?php echo $_SERVER['HTTP_HOST']; ?>%2Fusermaps%2Frpx.php"  scrolling="no" style="width:400px;height:240px;border:none"></iframe> 
+           <div id="janrainEngageEmbed"></div>
         <?php else: ?>
             <div id="usermaps"></div>
         <?php endif; ?>

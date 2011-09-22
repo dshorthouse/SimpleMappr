@@ -43,7 +43,8 @@ class HEADER {
         'public/javascript/jquery.cookie.js',
         'public/javascript/jquery.download.js',
         'public/javascript/tipsy/javascripts/jquery.tipsy.js',
-        'public/javascript/jquery.uitablefilter.min.js'
+        'public/javascript/jquery.uitablefilter.min.js',
+        'public/javascript/janrain.js'
     );
     
     public static $css_files = array(
