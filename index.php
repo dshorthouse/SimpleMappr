@@ -6,7 +6,7 @@ if(isset($_GET['map'])) {
   require_once('lib/mapprservice.embed.class.php');
   $mappr_embed = new MAPPREMBED();
   $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
-              ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts.list")
+              ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts/fonts.list")
               ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
               ->set_tmp_url("/tmp");
 
