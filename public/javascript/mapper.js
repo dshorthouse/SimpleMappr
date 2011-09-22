@@ -219,6 +219,7 @@ $(function () {
     });
 
     $('.toolsRefresh').click(function () {
+      self.resetJbbox();
       self.showMap();
       return false;
     });
