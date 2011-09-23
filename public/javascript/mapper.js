@@ -559,19 +559,20 @@ $(function () {
   }; /** end Mappr.textareaCounter **/
 
   Mappr.addAccordionPanel = function (data_type) {
-    var self    = this,
-        counter = self.textareaCounter(data_type, 'get'),
-        button  = $(".addmore[data-type='" + data_type + "']"),
-        clone   = {},
-        color   = (data_type === 'coords') ? "0 0 0" : "150 150 150",
-        num     = 0;
+    var self     = this,
+        counter  = self.textareaCounter(data_type, 'get'),
+        button   = $(".addmore[data-type='" + data_type + "']"),
+        clone    = {},
+        color    = (data_type === 'coords') ? "0 0 0" : "150 150 150",
+        num      = 0,
+        children = [];
 
     if($(button).attr("data-type") === data_type) {
-      $(button).parent().prev().accordion("activate", false);
-      clone = button.parent().prev().children("div:last").clone();
-      num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
 
       if(counter < self.vars.maxTextareaCount) {
+
+        clone = button.parent().prev().children("div:last").clone();
+        num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
 
         counter = self.textareaCounter(data_type, 'increase');
 
@@ -606,14 +607,24 @@ $(function () {
           $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
         });
 
-        $(button).parent().prev().append(clone).children("div:last").find("button.removemore").show().click(function () {
-          $(clone).remove();
-          counter = self.textareaCounter(data_type, 'decrease');
-          $(button).removeAttr("disabled");
-          return false;
-        }).parent().find("button.clearself").click(function () {
-          self.clearSelf($(this));
-          return false;
+        children = $(button).parent().prev().accordion("activate", false).append(clone).children("div");
+        children.each(function(i, val) {
+          $(this).accordion("activate", false);
+          if (i === children.length-1) {
+            $(this).accordion({ header : 'h3', collapsible : true, autoHeight : false})
+            .find(".ui-accordion-content").slideDown().parent()
+            .find("button.removemore").show().click(function () {
+              $(clone).remove();
+              counter = self.textareaCounter(data_type, 'decrease');
+              $(button).removeAttr("disabled");
+              return false;
+            }).parent()
+            .find("button.clearself").click(function () {
+              self.clearSelf($(this));
+              return false;
+            }).parent().parent()
+            .find(".ui-icon:last").remove();
+          }
         });
 
       }
