@@ -163,6 +163,7 @@ $(function () {
     });
 
     $('.toolsZoomOut').click(function () {
+      self.resetJbbox();
       $('#mapCropMessage').hide();
       $('#zoom_out').val(1);
       self.showMap();
@@ -171,6 +172,7 @@ $(function () {
     });
 
     $('.toolsRotate').click(function () {
+      self.resetJbbox();
       $('#rotation').val(parseInt($('#rendered_rotation').val(), 10)+parseInt($(this).attr("data-rotate"), 10));
       self.showMap();
       return false;
@@ -242,6 +244,7 @@ $(function () {
 
     $('.arrows').click(function () {
       $('#pan').val($(this).attr("data-pan"));
+      self.resetJbbox();
       self.showMap();
       return false;
     });
@@ -251,16 +254,18 @@ $(function () {
     var self = this;
 
     $('.layeropt').click(function () {
+      self.resetJbbox();
       self.showMap();
     });
 
     $('.gridopt').click(function () {
       if(!$('#graticules').is(':checked')) { $('#graticules').attr('checked', true); }
+      self.resetJbbox();
       self.showMap();
     });
 
     $('#projection').change(function () {
-      if($(this).val() !== "") { self.showMap(); }
+      if($(this).val() !== "") { self.resetJbbox(); self.showMap(); }
     });
   };
 
