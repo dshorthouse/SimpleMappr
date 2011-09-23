@@ -131,6 +131,9 @@ class MAPPR {
       'esri:102014' => array(
         'name' => 'Europe Lambert',
         'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
+      'esri:102012' => array(
+        'name' => 'Asia Lambert',
+        'proj' => 'proj=lcc,lat_1=30,lat_2=62,lat_0=0,lon_0=105,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
       'esri:102024' => array(
         'name' => 'Africa Lambert',
         'proj' => 'proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),

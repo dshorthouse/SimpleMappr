@@ -83,7 +83,7 @@ input, select, textarea {
 }
 
 #tabs {
-    min-width:1045px;
+    min-width:1120px;
     min-height:500px;
     display:none;
 }
@@ -628,7 +628,8 @@ div.header h2 {
   position:absolute;
   top:5px;
   left:820px;
-  width:auto;
+  right:0px;
+  min-height:430px;
 }
 
 #mapTools #graticules-selection {
