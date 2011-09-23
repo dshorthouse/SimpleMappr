@@ -454,12 +454,10 @@ div.panel a.help {
   background:#CCC
 }
 
-/*
 #actionsBar ul.sub_menu li.ui-state-hover {
   background:none;
-  background:#D2D2D2
+  background:#E2E2E2;
 }
-*/
 
 #actionsBar ul.sub_menu li a {
     margin:0px !important;
