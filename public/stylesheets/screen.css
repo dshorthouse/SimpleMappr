@@ -731,10 +731,6 @@ div.panel a.help {
     position:relative;
 }
 
-#map-mymaps #janrainEngageEmbed div {
-  margin:0px;
-}
-
 #map-mymaps table {
     background:none repeat scroll 0 0 #E6E6E6;
     border:1px solid gray;
@@ -794,6 +790,13 @@ div.panel a.help {
   margin-top:10px;
   font-size:0.8em;
   width:20%;
+}
+
+/***********************************************
+*       JANRAIN LOGIN
+***********************************************/
+#map-mymaps #janrainEngageEmbed div {
+  margin:0px;
 }
 
 /***********************************************
