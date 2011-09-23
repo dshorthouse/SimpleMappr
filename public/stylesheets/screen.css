@@ -316,14 +316,23 @@ div.panel a.help {
 
 .submit {text-align:left;margin-top:15px;margin-left:20px;}
 
+div.header {
+  border-bottom:1px solid #AAA;
+  width:50%;
+  margin-top:20px;
+}
+
+div.header h2 {
+  border-bottom:2px solid #BBB;
+  margin:0px;
+  padding:3px 0px;
+  width:40%;
+  font-size:20px;
+}
+
 /***********************************************
 *       ABOUT TAB 
 ***********************************************/
-#map-about h2 {
-    margin-bottom:2px;
-    font-size:20px;
-}
-
 #map-about p {
     font-size:0.75em;
 }
@@ -672,12 +681,8 @@ div.panel a.help {
 /***********************************************
 *       MAP EXPORT DIALOG BOX 
 ***********************************************/
-
 #mapExport {
     font-size:0.8em 
-}
-
-#mapExport #download-factor {
 }
 
 #mapExport #mapCropMessage {
@@ -840,9 +845,8 @@ div.panel a.help {
 /***********************************************
 *       API TAB
 ***********************************************/
-#map-api h2 {
-    margin-bottom:2px;
-    font-size:20px;
+#map-api #general-base {
+  margin-top:20px;
 }
 
 #map-api p {
@@ -871,11 +875,6 @@ div.panel a.help {
 /***********************************************
 *       HELP TAB
 ***********************************************/
-#map-help h2 {
-    margin-bottom:2px;
-    font-size:20px;
-}
-
 #map-help p {
     font-size:0.75em;
 }

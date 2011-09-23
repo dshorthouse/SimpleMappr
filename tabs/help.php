@@ -38,8 +38,10 @@ $("#filter-countries")
     <div class="panel">
         <p>This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 5, Google Chrome, or Safari 5 is strongly recommended.</p>
     </div>
-    
-    <h2>Preview</h2>
+
+    <div class="header">
+      <h2>Preview</h2>
+    </div>
     <p>Use the <em>Preview</em> tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)</p>
 
     <p><strong>Toolbar buttons:</strong></p>
@@ -82,8 +84,10 @@ $("#filter-countries")
         <li class="sprites toolsSave">While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
         <li class="sprites toolsDownload">Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
     </ul>
-    
-    <h2>Point Data</h2>
+
+    <div class="header">
+      <h2>Point Data</h2>
+    </div>
     <p>Use the <em>Point Data</em> tab to paste coordinates as <em>latitude, longitude</em> on separate lines and select the marker shape, size, and color.</p>
     
     <div>
@@ -95,8 +99,10 @@ $("#filter-countries")
     </div>
     <p><strong>Pushpin color:</strong> The pushpin colors are configured using the RGB color scheme and a color selector is provided. By default, "0 0 0" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, "10 10 10" is dark gray whereas "100 100 100" is a lighter shade of gray.</p>
     </div>
-    
-    <h2>Regions</h2>
+
+    <div class="header">
+      <h2>Regions</h2>
+    </div>
     <p>Use the <em>Regions</em> tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code.</p>
 
     <table id="countrycodes">
