@@ -89,6 +89,7 @@ class MAPPRAPI extends MAPPR {
         }
         $this->layers           = $layers;
         $this->graticules       = $this->load_param('graticules', false);
+        $this->gridspace        = $this->load_param('spacing', false);
 
         if($this->load_param('border', false)) $this->options['border'] = true;
         if($this->load_param('legend', false)) $this->options['legend'] = true;
@@ -323,7 +324,7 @@ class MAPPRAPI extends MAPPR {
 
         $layer->grid->set("labelformat", $labelformat);
         $layer->grid->set("maxarcs", $ticks);
-        $layer->grid->set("maxinterval", $ticks);
+        $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
         $layer->grid->set("maxsubdivide", 2);
       }
     }

@@ -440,8 +440,26 @@ div.panel a.help {
     background:none;
 }
 
-#actionsBar ul.dropdown li ul li a:hover {
+#actionsBar ul.sub_menu {
+  border-top:none;
+  border-right:1px solid #AAA;
+  border-bottom:1px solid #AAA;
+  border-left:1px solid #AAA;
+  border-radius:0 0 4px 4px;
+  -moz-border-radius:0 0 4px 4px;
+  -webkit-border-radius:0 0 4px 4px;
 }
+
+#actionsBar ul.sub_menu li.ui-state-default {
+  background:#CCC
+}
+
+/*
+#actionsBar ul.sub_menu li.ui-state-hover {
+  background:none;
+  background:#D2D2D2
+}
+*/
 
 #actionsBar ul.sub_menu li a {
     margin:0px !important;

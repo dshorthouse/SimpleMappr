@@ -57,6 +57,9 @@ require_once('../lib/mapprservice.class.php');
         <dt>graticules</dt>
         <dd>display the graticules <em>e.g. graticules=true</em></dd>
 
+        <dt>spacing</dt>
+        <dd>display the graticules with defined spacing in degrees <em>e.g. spacing=5</em></dd>
+
         <dt>width</dt>
         <dd>integer-based output width in pixels <em>e.g. width=400</em></dd>
 
