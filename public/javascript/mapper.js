@@ -473,7 +473,7 @@ $(function () {
 
     var self      = event.data,
         i         = 0,
-        fillColor = fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
+        fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
         formData  = {
           bbox           : $('#rendered_bbox').val(),
           bbox_query     : $('#bbox_query').val(),
@@ -609,6 +609,7 @@ $(function () {
 
         children = $(button).parent().prev().accordion("activate", false).append(clone).children("div");
         children.each(function(i, val) {
+          val = null;
           $(this).accordion("activate", false);
           if (i === children.length-1) {
             $(this).accordion({ header : 'h3', collapsible : true, autoHeight : false})
