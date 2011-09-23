@@ -1326,7 +1326,7 @@ $(function () {
   };
 
   Mappr.showExamples = function() {
-    var message = '<img src="/images/help_data.png" alt="Example Data Entry" />';
+    var message = '<img src="public/images/help_data.png" alt="Example Data Entry" />';
 
     if($('body').find('#mapper-message').length > 0) {
       $('#mapper-message').html(message).dialog("open");
