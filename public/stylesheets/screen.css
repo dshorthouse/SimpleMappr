@@ -346,6 +346,11 @@ div.header h2 {
   padding-left:2em;
 }
 
+#map-about p.update span {
+  display:block;
+  padding-left:2em;
+}
+
 #map-about img {
   border:0px
 }

@@ -110,14 +110,15 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <div class="header">
               <h2>Recent Updates</h2>
             </div>
-            <p class="citation"><strong>September 21, 2011</strong> Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</p>
-            <p class="citation"><strong>August 2, 2011</strong> Refined error-handling with coordinate recognition.</p>
-            <p class="citation"><strong>July 5, 2011</strong> Added the ability to filter your My Maps list by title.</p>
-            <p class="citation"><strong>July 4, 2011</strong> The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</p>
-            <p class="citation"><strong>July 3, 2011</strong> State/Province line artifacts are not shown when the map is reprojected.</p>
-            <p class="citation"><strong>June 28, 2011</strong> Additional layers on the Point Data or Regions tabs may be removed.</p>
-            <p class="citation"><strong>June 27, 2011</strong> An ISO Country codes and regions code table was added to the Help tab.</p>
-            <p class="citation"><strong>June 26, 2011</strong> File names may be specified when downloading maps.</p>
+            <p class="update"><strong>September 26, 2011</strong><span>Responsiveness was improved by replacing map imagery when options are adjusted rather than replacing whole segments of HTML.</span></p>
+            <p class="update"><strong>September 21, 2011</strong><span>Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</span></p>
+            <p class="update"><strong>August 2, 2011</strong><span>Refined error-handling with coordinate recognition.</span></p>
+            <p class="update"><strong>July 5, 2011</strong><span>Added the ability to filter your My Maps list by title.</span></p>
+            <p class="update"><strong>July 4, 2011</strong><span>The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</span></p>
+            <p class="update"><strong>July 3, 2011</strong><span>State/Province line artifacts are not shown when the map is reprojected.</span></p>
+            <p class="update"><strong>June 28, 2011</strong><span>Additional layers on the Point Data or Regions tabs may be removed.</span></p>
+            <p class="update"><strong>June 27, 2011</strong><span>An ISO Country codes and regions code table was added to the Help tab.</span></p>
+            <p class="update"><strong>June 26, 2011</strong><span>File names may be specified when downloading maps.</span></p>
 
             <div class="header">
               <h2>In the Wild</h2>
