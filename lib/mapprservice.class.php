@@ -1416,15 +1416,21 @@ class MAPPR {
                 header("Expires: 0");
                 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
                 header("Cache-Control: private",false);
-                header("Content-Type: text/html");
+                header("Content-Type: application/json");
+
                 $this->image_url = $this->image->saveWebImage();
-                echo '<img id="mapOutputImage" src="'.$this->image_url.'" />' . "\n";
-                echo '<input type="hidden" id="rendered_bbox" value="'.$this->map_obj->extent->minx.', '.$this->map_obj->extent->miny.', '.$this->map_obj->extent->maxx.', '.$this->map_obj->extent->maxy.'"></input>';
-                echo '<input type="hidden" id="rendered_rotation" value="'.$this->rotation.'"></input>';
-                echo '<input type="hidden" id="rendered_projection" value="'.$this->projection.'"></input>';
-                echo '<input type="hidden" id="legend_url" value="' . $this->_legend_url . '"></input>';
-                echo '<input type="hidden" id="scalebar_url" value="' . $this->_scalebar_url . '"></input>';
-                echo '<input type="hidden" id="bad_points" value="' . $this->get_bad_points() . '"></input>';
+
+                $output = array(
+                  'mapOutputImage'      => $this->image_url,
+                  'rendered_bbox'       => $this->map_obj->extent->minx.', '.$this->map_obj->extent->miny.', '.$this->map_obj->extent->maxx.', '.$this->map_obj->extent->maxy,
+                  'rendered_rotation'   => $this->rotation,
+                  'rendered_projection' => $this->projection,
+                  'legend_url'          => $this->_legend_url,
+                  'scalebar_url'        => $this->_scalebar_url,
+                  'bad_points'          => $this->get_bad_points()
+                );
+
+                echo json_encode($output);
         }
     }
     

@@ -126,14 +126,18 @@ li.map-extras {
 #mapper-building-map {
   background-repeat: no-repeat !important;
   background-position: 10px 10px !important;
+  background-color:#FFF;
+  background-image: url('../images/throbber.gif') !important;
+  -moz-box-shadow: 0px 5px 5px #AAAAAA;
+  -webkit-box-shadow:#AAAAAA 0px 5px 5px;
+  box-shadow:#AAAAAA 0px 5px 5px;
   padding-left: 35px !important;
   padding: .5em 1em .5em 35px;
   _text-indent: 25px; /* IE6 fix */
-  background-image: url('../images/throbber.gif') !important;
-  height:300px;
   position:absolute;
-  top:50px;
-  left:100px;
+  top:10px;
+  right:0px;
+  z-index:1000;
 }
 
 label {

@@ -380,6 +380,12 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                     <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
                         <img id="mapOutputImage" src="public/images/basemap.png" alt="" />
+                        <input type="hidden" id="rendered_bbox" value=""></input>
+                        <input type="hidden" id="rendered_rotation" value=""></input>
+                        <input type="hidden" id="rendered_projection" value=""></input>
+                        <input type="hidden" id="legend_url" value=""></input>
+                        <input type="hidden" id="scalebar_url" value=""></input>
+                        <input type="hidden" id="bad_points" value=""></input>
                     </div>
                 </div>
                 <div id="mapScale"></div>

@@ -9,6 +9,12 @@
 }
 .jcrop-vline { height: 100%; width: 1px !important; }
 .jcrop-hline { width: 100%; height: 1px !important; }
+
+/*new*/
+.jcrop-vline.right { right: 0px; }
+.jcrop-hline.bottom { bottom: 0px; }
+/**/
+
 .jcrop-handle {
 	font-size: 1px;
 	width: 10px !important;
