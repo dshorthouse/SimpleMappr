@@ -2,7 +2,7 @@ $(function () {
     if (typeof window.janrain !== 'object') window.janrain = {};
     window.janrain.settings = {};
     
-    janrain.settings.tokenUrl = Mappr.settings.baseUrl + '/usermaps/rpx.php';
+    janrain.settings.tokenUrl = Mappr.settings.baseUrl + '/session/';
 
     function isReady() { janrain.ready = true; };
     if (document.addEventListener) {

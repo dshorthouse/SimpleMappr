@@ -23,6 +23,22 @@ Copyright: David P. Shorthouse
 3. Make contents of /lib/mapserver/fonts readable/executable by web server
 4. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions.
    These set db (MySQL) connections and constants, respectively.
+5. The jQuery-based front-end assumes clean URLs. If served from Apache, use mod_rewrite as follows:
+   <VirtualHost *:80>
+     ServerName simplemappr.net
+     ServerAlias simplemappr.net
+     ServerAdmin dshorthouse@mbl.edu
+     DocumentRoot /path/to/your/root
+     RewriteEngine on
+     RewriteRule ^/usermaps/(.*)$ /usermaps/index.php/$1
+     <Directory "/path/to/your/root">
+      Options -Indexes +FollowSymlinks
+      AllowOverride None
+      Order allow,deny
+      Allow from all
+      DirectoryIndex index.php index.html
+     </Directory>
+   </VirtualHost>
 
 /***********************************************************************
 * MACPORTS INSTALLATION FROM SOURCE: DO NOT USE THE AGED mapserver PORT
