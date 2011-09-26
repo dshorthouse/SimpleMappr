@@ -353,6 +353,10 @@ $(function () {
     vars.jCropType = "zoom";
     $('#mapOutputImage').show();
     $('.jcrop-holder').remove();
+
+    $('#mapOutput input').each(function () {
+      $(this).val('');
+    });
   };
 
   Mappr.resetJbbox = function () {
@@ -361,30 +365,20 @@ $(function () {
   };
 
   Mappr.initJcrop = function (select) {
-    var self = this, vars = this.vars, color = 'black';
+    var self = this, vars = this.vars;
 
     self.destroyJcrop();
     self.resetJbbox();
 
     self.vars.jCropType = "crop";
 
-    if($('#mapOutputImage').attr("src") === "public/images/basemap.png") {
-      color = 'grey';
-    }
-
-    setTimeout(function checkLoaded () {
-      if($('#mapOutputImage').length === 0) {
-        setTimeout(checkLoaded, 100);
-      } else {
-        vars.jcropAPI = $.Jcrop('#mapOutputImage', {
-          bgColor   : color,
-          bgOpacity : 0.5,
-          onChange  : self.showCoords,
-          onSelect  : self.showCoords,
-          setSelect : select
-        });
-      }
-    }, 100);
+    vars.jcropAPI = $.Jcrop('#mapOutputImage', {
+      bgColor   : ($('#mapOutputImage').attr("src") === "public/images/basemap.png") ? 'grey' : 'black',
+      bgOpacity : 0.5,
+      onChange  : self.showCoords,
+      onSelect  : self.showCoords,
+      setSelect : select
+    });
 
     $('.jcrop-tracker').unbind('mouseup', self, self.aZoom);
 
@@ -771,8 +765,7 @@ $(function () {
       self.loadRegions(data);
       self.loadFreehands(data);
       self.loadLayers(data);
-      self.showMap();
-      self.loadCropSettings(data);
+      self.showMap(data);
 
     }, "json");
 
@@ -843,12 +836,14 @@ $(function () {
 
   }; //** end Mappr.loadSettings **/
 
-  Mappr.loadCropSettings = function(data) {
+  Mappr.loadCropSettings = function (data) {
     var self = this, rubberband = [];
 
     if(data.map.bbox_rubberband) {
       rubberband = data.map.bbox_rubberband.split(",");
       self.initJcrop([rubberband[2], rubberband[3], rubberband[0], rubberband[1]]);
+    } else {
+      self.destroyJcrop();
     }
   };
 
@@ -1189,7 +1184,7 @@ $(function () {
     $('#mapOutput #mapper-building-map').remove();
   };
 
-  Mappr.showMap = function () {
+  Mappr.showMap = function (load_data) {
     var self         = this,
         token        = new Date().getTime(),
         formData     = {},
@@ -1210,8 +1205,8 @@ $(function () {
 
     $.post(self.settings.baseUrl + "/application/", formData, function (data) {
 
-      self.parseMapResponse(data);
-
+      self.parseMapResponse(data, load_data);
+      
       self.drawLegend();
       self.drawScalebar();
       self.showBadPoints();
@@ -1242,8 +1237,16 @@ $(function () {
 
   }; /** end Mappr.showMap **/
 
-  Mappr.parseMapResponse = function (data) {
-    $('#mapOutputImage').attr("src", data.mapOutputImage);
+  Mappr.parseMapResponse = function (data, load_data) {
+    var self = this;
+
+    $('#mapOutput input').each(function () {
+      $(this).val('');
+    });
+    $('#mapOutputImage').attr("src", data.mapOutputImage).load(function () {
+      if(!load_data) { load_data = { 'map' : { 'bbox_rubberband' : "" }}; } 
+      self.loadCropSettings(load_data);
+    });
     $('#rendered_bbox').val(data.rendered_bbox);
     $('#rendered_rotation').val(data.rendered_rotation);
     $('#rendered_projection').val(data.rendered_projection);
