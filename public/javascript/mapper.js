@@ -350,13 +350,8 @@ $(function () {
     if(typeof vars.jcropAPI !== "undefined") { vars.jcropAPI.destroy(); }
     if(typeof vars.jqueryAPI !== "undefined") { vars.jqueryAPI.destroy(); }
 
-    vars.jCropType = "zoom";
     $('#mapOutputImage').show();
     $('.jcrop-holder').remove();
-
-    $('#mapOutput input').each(function () {
-      $(this).val('');
-    });
   };
 
   Mappr.resetJbbox = function () {
@@ -529,6 +524,8 @@ $(function () {
         }
 
         self.showMap();
+      } else {
+        self.hideLoadingMessage();
       }
     });
 
@@ -1177,7 +1174,7 @@ $(function () {
   Mappr.showLoadingMessage = function () {
     var message = '<span id="mapper-building-map" class="ui-corner-all ui-widget-content">Building preview...</span>';
 
-    $('#mapOutput').append(message);
+    if($('#mapper-building-map').length === 0) { $('#mapOutput').append(message); }
   };
 
   Mappr.hideLoadingMessage = function () {
