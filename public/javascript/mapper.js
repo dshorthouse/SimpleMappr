@@ -357,8 +357,6 @@ $(function () {
   Mappr.resetJbbox = function () {
     $('#bbox_rubberband').val('');
     $('#bbox_query').val('');
-    $('#m-cropSaveTitle').attr("disabled", true);
-    $('#l-cropSaveTitle').addClass("disabled");
   };
 
   Mappr.initJcrop = function (select) {
@@ -378,9 +376,6 @@ $(function () {
     });
 
     $('.jcrop-tracker').unbind('mouseup', self, self.aZoom);
-
-    $('#m-cropSaveTitle').attr("disabled", false);
-    $('#l-cropSaveTitle').removeClass("disabled");
   };
 
   Mappr.initJzoom = function () {
@@ -1049,7 +1044,7 @@ $(function () {
 
       $('#mapSave').dialog({
         autoOpen      : true,
-        height        : (300).toString(),
+        height        : (175).toString(),
         width         : (500).toString(),
         modal         : true,
         closeOnEscape : false,

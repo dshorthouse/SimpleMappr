@@ -515,9 +515,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
       <div class="fieldset-taxon">
         <label for="m-mapSaveTitle">Map title<span class="required">*</span></label>
         <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
-
-        <label id="l-cropSaveTitle" for="m-cropSaveTitle" class="disabled">Crop title</label>
-        <input type="text" id="m-cropSaveTitle" class="m-cropSaveTitle" size="30" maxlength="30" disabled="disabled" />
       </div>
     </div>
 
