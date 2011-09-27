@@ -768,12 +768,12 @@ $(function () {
 
         $('#filter-mymaps').val(filter);
 
-        self.loadSettings(data);
-        self.activateEmbed(id);
         self.loadCoordinates(data);
         self.loadRegions(data);
         self.loadFreehands(data);
         self.loadLayers(data);
+        self.loadSettings(data);
+        self.activateEmbed(id);
         self.showMap(data);
       }
     });
