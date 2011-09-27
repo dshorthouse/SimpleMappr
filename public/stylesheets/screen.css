@@ -149,8 +149,12 @@ fieldset {
 }
 
 .required {
-    color:#FF0000;
-    font-weight:bold;
+  color:#FF0000;
+  font-weight:bold;
+}
+
+.disabled {
+  color:#E0E0E0;
 }
 
 #controls{width:780px;margin-left:20px;}
