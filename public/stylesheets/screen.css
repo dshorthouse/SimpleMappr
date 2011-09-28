@@ -492,6 +492,32 @@ div.header h2 {
     background-color: #FF0000;
 }
 
+.jcrop-coord {
+  position:absolute;
+  border:1px solid #AAA;
+  background-color:#E0E0E0;
+  opacity:0.6;
+  filter:alpha(opacity=60);
+  padding:3px;
+  z-index:500;
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  width:175px;
+}
+
+#jcrop-coord-ul {
+  left:9px;
+  top:9px;
+  text-align:left;
+}
+
+#jcrop-coord-lr {
+  right:9px;
+  bottom:9px;
+  text-align:right;
+}
+
 #actionsBar #mapTitle {
     margin:0 0 0 30px;
     padding:0px;

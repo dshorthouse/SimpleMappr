@@ -1463,8 +1463,8 @@ class MAPPR {
        $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
        $deltaY = abs($this->map_obj->extent->maxy - $this->map_obj->extent->miny);
     
-       $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(int)$this->image_size[0];
-       $newPoint->y = $this->map_obj->extent->miny + (((int)$this->image_size[1] - $point->y)*$deltaY)/(int)$this->image_size[1];
+       $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
+       $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
        return $newPoint;
      }
 

@@ -14,7 +14,8 @@ $(function () {
     zoom               : true,
     fileDownloadTimer  : {},
     fillColor          : "",
-    jCropType          : "zoom"
+    jCropType          : "zoom",
+    cropUpdated        : false
   };
 
   $.ajaxSetup({
@@ -105,13 +106,42 @@ $(function () {
   }; /** end Mappr.getPageScroll **/
 
   Mappr.showCoords = function (c) {
-    var x = parseInt(c.x, 10),
-        y = parseInt(c.y, 10),
-       x2 = parseInt(c.x2, 10),
-       y2 = parseInt(c.y2, 10);
+    var x        = parseFloat(c.x),
+        y        = parseFloat(c.y),
+       x2        = parseFloat(c.x2),
+       y2        = parseFloat(c.y2),
+       ul_holder = '<input type="text" id="jcrop-coord-ul" class="jcrop-coord"></input>',
+       lr_holder = '<input type="text" id="jcrop-coord-lr" class="jcrop-coord"></input>',
+       ul_point  = { 'x' : x, 'y' : y },
+       lr_point  = { 'x' : x2, 'y' : y2 },
+       ul_coord  = {},
+       lr_coord  = {};
 
     switch(Mappr.vars.jCropType) {
       case 'crop':
+        $('.jcrop-holder div:first').css('backgroundColor', 'white');
+        $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
+
+        if($('#jcrop-coord-ul').length === 0 && $('#jcrop-coord-lr').length === 0) {
+          $('.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder);
+        }
+
+        ul_coord = Mappr.pix2geo(ul_point);
+        lr_coord = Mappr.pix2geo(lr_point);
+        $('#jcrop-coord-ul').val(ul_coord.x + ', ' + ul_coord.y);
+        $('#jcrop-coord-lr').val(lr_coord.x + ', ' + lr_coord.y);
+
+        $('.jcrop-coord').live("blur", function() {
+          if(!Mappr.vars.cropUpdated) {
+            Mappr.vars.cropUpdated = Mappr.updateCrop($(this).val());
+          }
+        })
+        .live("keypress", function(e) {
+          var key = e.keyCode || e.which;
+          if(key === 13 || key === 9) { e.preventDefault(); Mappr.vars.cropUpdated = false; this.blur(); }
+        });
+      break;
+
       case 'zoom':
         $('.jcrop-holder div:first').css('backgroundColor', 'white');
         $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
@@ -121,6 +151,67 @@ $(function () {
         $('#bbox_query').val(x+','+y+','+x2+','+y2);
       break;
     }
+  };
+
+  Mappr.updateCrop = function(value) {
+    var ul_arr   = [],
+        ul_point = {},
+        lr_arr   = [],
+        lr_point = {};
+
+    ul_arr = $('#jcrop-coord-ul').val().split(",");
+    ul_point = this.geo2pix({ 'x' : ul_arr[0], 'y' : ul_arr[1] });
+
+    lr_arr = $('#jcrop-coord-lr').val().split(",");
+    lr_point = this.geo2pix({ 'x' : lr_arr[0], 'y' : lr_arr[1] });
+
+    this.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
+
+    return true;
+  };
+
+  Mappr.pix2geo = function(point) {
+    var deltaX = 0,
+        deltaY = 0,
+        bbox   = $('#bbox_map').val(),
+        geo    = {};
+
+    if(bbox === "") {
+      bbox = "-180.22556390977,-90,180.22556390977,90";
+    }
+    bbox = bbox.split(",");
+
+    deltaX = Math.abs(parseFloat($.trim(bbox[2])) - parseFloat($.trim(bbox[0])));
+    deltaY = Math.abs(parseFloat($.trim(bbox[3])) - parseFloat($.trim(bbox[1])));
+
+    geo.x = this.roundNumber(parseFloat(bbox[0]) + (parseFloat(point.x)*deltaX)/parseFloat($('#mapOutputImage').width()),2);
+    geo.y = this.roundNumber(parseFloat(bbox[1]) + (parseFloat($('#mapOutputImage').height() - parseFloat(point.y))*deltaY)/parseFloat($('#mapOutputImage').height()),2);
+
+    return geo;
+  };
+
+  Mappr.geo2pix = function(coord) {
+    var deltaX = 0,
+        deltaY = 0,
+        bbox   = $('#bbox_map').val(),
+        point  = {};
+
+    if(bbox === "") {
+      bbox = "-180.22556390977,-90,180.22556390977,90";
+    }
+    bbox = bbox.split(",");
+
+    deltaX = Math.abs(parseFloat($.trim(bbox[2])) - parseFloat($.trim(bbox[0])));
+    deltaY = Math.abs(parseFloat($.trim(bbox[3])) - parseFloat($.trim(bbox[1])));
+
+    point.x = this.roundNumber(parseFloat($('#mapOutputImage').width())*(Math.abs(parseFloat(coord.x) - parseFloat(bbox[0]))/deltaX),2);
+    point.y = this.roundNumber(parseFloat($('#mapOutputImage').height())*(deltaY - Math.abs(parseFloat(coord.y) - parseFloat(bbox[1])))/deltaY,2);
+
+    return point;
+  };
+
+  Mappr.roundNumber = function(num, dec) {
+    return Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
   };
 
   Mappr.tabSelector = function (tab) {
@@ -1454,8 +1545,8 @@ $(function () {
 
   Mappr.raphaelConfig.position = function (e) {
     return {
-      x: (parseInt(e.pageX,10)-parseInt(this.offset.left,10)).toString(),
-      y: (parseInt(e.pageY,10)-parseInt(this.offset.top,10)).toString()
+      x: (parseFloat(e.pageX)-parseFloat(this.offset.left)).toString(),
+      y: (parseFloat(e.pageY)-parseFloat(this.offset.top)).toString()
     };
   };
 
@@ -1495,7 +1586,7 @@ $(function () {
   Mappr.raphaelConfig.forcePaint = function () {
     var self = Mappr.raphaelConfig;
     window.setTimeout(function () {
-      var rect = self.board.rect(-99, -99, parseInt(self.board.width,10) + 99, parseInt(self.board.height,10) + 99).attr({stroke: "none"});
+      var rect = self.board.rect(-99, -99, parseFloat(self.board.width) + 99, parseFloat(self.board.height) + 99).attr({stroke: "none"});
       setTimeout(function () { rect.remove(); });
     },1);
   };
