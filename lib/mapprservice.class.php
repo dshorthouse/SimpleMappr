@@ -177,10 +177,10 @@ class MAPPR {
     /* holding bin for any geographic coordinates that fall outside extent of Earth */
     private $_bad_points = array();
 
-    /* post-draw longitude extent padding used as a correction factor on front-end */
+    /* post-draw padding for longitude extent to be used as a correction factor on front-end */
     private $_ox_pad = 0;
 
-    /* post-draw latitude extent padding used as a correction factor on front-end */
+    /* post-draw padding for latitude extent to be used as a correction factor on front-end */
     private $_oy_pad = 0;
     
     function __construct() {
@@ -637,6 +637,9 @@ class MAPPR {
         return $this;
     }
 
+    /**
+    * Add legend and scalebar
+    */
     private function add_legend_scalebar() {
         if(array_key_exists('legend', $this->options) && $this->options['legend']) 
             $this->add_legend(); 
@@ -677,6 +680,7 @@ class MAPPR {
         }
       }
 
+      // Set the padding correction factors because final extent produced after draw() is off from setExtent
       $cellsize = max(($ext[2] - $ext[0])/($this->image_size[0]-1), ($ext[3] - $ext[1])/($this->image_size[1]-1));
 
       if($cellsize > 0) {
@@ -1156,7 +1160,10 @@ class MAPPR {
         }
       }
     }
-    
+
+    /**
+    * Add graticules (or grid lines) to map
+    */
     public function add_graticules() {
       if(isset($this->graticules) && $this->graticules) {
         $layer = ms_newLayerObj($this->map_obj);
@@ -1170,7 +1177,7 @@ class MAPPR {
         $class->label->set("font", "arial");
         $class->label->set("type", MS_TRUETYPE);
         $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 10);
-        $class->label->set("position", MS_UC);
+        $class->label->set("position", MS_CC);
         $class->label->color->setRGB(30, 30, 30);
         $style = ms_newStyleObj($class);
         $style->color->setRGB(200,200,200);
@@ -1345,6 +1352,10 @@ class MAPPR {
       return implode('<br />', $this->_bad_points);
     }
 
+    /**
+    * Get a user-defined file name, cleaned of illegal characters
+    * @return string
+    */
     private function get_file_name() {
       return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name) . "." . $this->output;
     }
