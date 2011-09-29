@@ -122,6 +122,12 @@ $(function () {
         $('.jcrop-holder div:first').css('backgroundColor', 'white');
         $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
 
+        if($('#projection option:selected').text() === 'Geographic') {
+          $('.jcrop-coord').css("width", "100px");
+        } else {
+          $('.jcrop-coord').css("width", "175px");
+        }
+
         if($('#jcrop-coord-ul').length === 0 && $('#jcrop-coord-lr').length === 0) {
           $('.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder);
         }
@@ -138,7 +144,11 @@ $(function () {
         })
         .live("keypress", function(e) {
           var key = e.keyCode || e.which;
-          if(key === 13 || key === 9) { e.preventDefault(); Mappr.vars.cropUpdated = false; this.blur(); }
+          if(key === 13 || key === 9) {
+            e.preventDefault();
+            Mappr.vars.cropUpdated = false;
+            this.blur();
+          }
         });
       break;
 
@@ -153,31 +163,30 @@ $(function () {
     }
   };
 
-  Mappr.updateCrop = function(value) {
+  Mappr.updateCrop = function (value) {
     var ul_arr   = [],
         ul_point = {},
         lr_arr   = [],
         lr_point = {};
 
     ul_arr = $('#jcrop-coord-ul').val().split(",");
-    ul_point = this.geo2pix({ 'x' : ul_arr[0], 'y' : ul_arr[1] });
+    ul_point = this.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
 
     lr_arr = $('#jcrop-coord-lr').val().split(",");
-    lr_point = this.geo2pix({ 'x' : lr_arr[0], 'y' : lr_arr[1] });
+    lr_point = this.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
 
     this.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
-
     return true;
   };
 
-  Mappr.pix2geo = function(point) {
+  Mappr.pix2geo = function (point) {
     var deltaX = 0,
         deltaY = 0,
         bbox   = $('#bbox_map').val(),
         geo    = {};
 
     if(bbox === "") {
-      bbox = "-180.22556390977,-90,180.22556390977,90";
+      bbox = "-180,-90,180,90";
     }
     bbox = bbox.split(",");
 
@@ -190,27 +199,27 @@ $(function () {
     return geo;
   };
 
-  Mappr.geo2pix = function(coord) {
+  Mappr.geo2pix = function (coord) {
     var deltaX = 0,
         deltaY = 0,
         bbox   = $('#bbox_map').val(),
         point  = {};
 
     if(bbox === "") {
-      bbox = "-180.22556390977,-90,180.22556390977,90";
+      bbox = "-180,-90,180,90";
     }
     bbox = bbox.split(",");
 
     deltaX = Math.abs(parseFloat($.trim(bbox[2])) - parseFloat($.trim(bbox[0])));
     deltaY = Math.abs(parseFloat($.trim(bbox[3])) - parseFloat($.trim(bbox[1])));
 
-    point.x = this.roundNumber(parseFloat($('#mapOutputImage').width())*(Math.abs(parseFloat(coord.x) - parseFloat(bbox[0]))/deltaX),2);
-    point.y = this.roundNumber(parseFloat($('#mapOutputImage').height())*(deltaY - Math.abs(parseFloat(coord.y) - parseFloat(bbox[1])))/deltaY,2);
+    point.x = $('#mapOutputImage').width()*(Math.abs(parseFloat(coord.x) - parseFloat($.trim(bbox[0]))))/deltaX;
+    point.y = $('#mapOutputImage').height()*(deltaY - Math.abs(parseFloat(coord.y) - parseFloat($.trim(bbox[1]))))/deltaY;
 
     return point;
   };
 
-  Mappr.roundNumber = function(num, dec) {
+  Mappr.roundNumber = function (num, dec) {
     return Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
   };
 

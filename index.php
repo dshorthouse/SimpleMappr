@@ -479,7 +479,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     <input type="hidden" id="download_token" name="download_token" />
     
     <!-- bounding box of map image in whatever projection map is in -->
-    <input type="hidden" id="bbox_map" name="bbox_map" />
+    <input type="text" id="bbox_map" name="bbox_map" size="100" />
     
     <!-- projection of map image -->
     <input type="hidden" id="projection_map" name="projection_map" />

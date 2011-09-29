@@ -176,6 +176,12 @@ class MAPPR {
     
     /* holding bin for any geographic coordinates that fall outside extent of Earth */
     private $_bad_points = array();
+
+    /* post-draw longitude extent padding used as a correction factor on front-end */
+    private $_ox_pad = 0;
+
+    /* post-draw latitude extent padding used as a correction factor on front-end */
+    private $_oy_pad = 0;
     
     function __construct() {
       if (!extension_loaded("MapScript")) {
@@ -186,6 +192,7 @@ class MAPPR {
     }
     
     function __destruct() {
+      unset($this->image);
       unset($this->map_obj);
     }
 
@@ -314,6 +321,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_TRUE);
+            $symbol->set("inmapfile", MS_TRUE);
             $symbol->set("transparent", 100);
             $spoints = array(
                 0, 0.375,
@@ -335,6 +343,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 0, 0.375,
                 0.35, 0.365,
@@ -355,6 +364,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_TRUE);
+            $symbol->set("inmapfile", MS_TRUE);
             $symbol->set("transparent", 100);
             $spoints = array(
                 0, 1,
@@ -369,6 +379,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 0, 1,
                 0.5, 0,
@@ -382,6 +393,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_TRUE);
+            $symbol->set("inmapfile", MS_TRUE);
             $symbol->set("transparent", 100);
             $spoints = array(
                 0, 1,
@@ -397,6 +409,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
             $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 0, 1,
                 0, 0,
@@ -410,6 +423,8 @@ class MAPPR {
             $nId = ms_newSymbolObj($this->map_obj, "plus");
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
+            $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 0.5, 0,
                 0.5, 1,
@@ -423,6 +438,8 @@ class MAPPR {
             $nId = ms_newSymbolObj($this->map_obj, "cross");
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_VECTOR);
+            $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 0, 0,
                 1, 1,
@@ -438,6 +455,7 @@ class MAPPR {
             $symbol->set("type", MS_SYMBOL_ELLIPSE);
             $symbol->set("transparent", 100);
             $symbol->set("filled", MS_TRUE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 1, 1
             );
@@ -448,6 +466,7 @@ class MAPPR {
             $symbol = $this->map_obj->getSymbolObjectById($nId);
             $symbol->set("type", MS_SYMBOL_ELLIPSE);
             $symbol->set("filled", MS_FALSE);
+            $symbol->set("inmapfile", MS_TRUE);
             $spoints = array(
                 1, 1
             );
@@ -572,7 +591,7 @@ class MAPPR {
 
         // Set the map extent
         $this->set_map_extent();
-        
+
         // Adjust map size
         $this->set_map_size();
 
@@ -658,6 +677,15 @@ class MAPPR {
         }
       }
 
+      $cellsize = max(($ext[2] - $ext[0])/($this->image_size[0]-1), ($ext[3] - $ext[1])/($this->image_size[1]-1));
+
+      if($cellsize > 0) {
+        $ox = max((($this->image_size[0]-1) - ($ext[2] - $ext[0])/$cellsize)/2,0);
+        $oy = max((($this->image_size[1]-1) - ($ext[3] - $ext[1])/$cellsize)/2,0);
+        $this->_ox_pad = $ox*$cellsize;
+        $this->_oy_pad = $oy*$cellsize;
+      }
+
       $this->map_obj->setExtent($ext[0], $ext[1], $ext[2], $ext[3]);
     }
 
@@ -665,10 +693,10 @@ class MAPPR {
     * Set the map size
     */ 
     private function set_map_size() {
-        $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
-        if($this->download) {
-            $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
-        }
+      $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
+      if($this->download) {
+          $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
+      }
     }
 
     /**
@@ -1298,12 +1326,12 @@ class MAPPR {
           else {
             //swap the order of legend and scalebar addition depending on if download or not
             if($this->download) {
-                $this->add_legend_scalebar();
-                $this->image = $this->map_obj->draw();
+              $this->add_legend_scalebar();
+              $this->image = $this->map_obj->draw();
             }
             else {
-                $this->image = $this->map_obj->draw();
-                $this->add_legend_scalebar();
+              $this->image = $this->map_obj->draw();
+              $this->add_legend_scalebar();
             }
           }
         }
@@ -1314,7 +1342,7 @@ class MAPPR {
     * @return string
     */
     private function get_bad_points() {
-        return implode('<br />', $this->_bad_points);
+      return implode('<br />', $this->_bad_points);
     }
 
     private function get_file_name() {
@@ -1328,109 +1356,109 @@ class MAPPR {
         
         //produce nothing but the legend if requested
         if($this->download_legend) {
-            header("Pragma: public");
-            header("Expires: 0");
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Cache-Control: private",false); 
-            header("Content-Type: image/svg+xml");
-            header("Content-Disposition: attachment; filename=\"legend-" . time() . ".svg\";" );
-            $this->map_obj->legend->set("status", MS_DEFAULT);
-            $legend = $this->map_obj->drawLegend();
-            $legend->saveImage("");
-            exit();
+          header("Pragma: public");
+          header("Expires: 0");
+          header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+          header("Cache-Control: private",false); 
+          header("Content-Type: image/svg+xml");
+          header("Content-Disposition: attachment; filename=\"legend-" . time() . ".svg\";" );
+          $this->map_obj->legend->set("status", MS_DEFAULT);
+          $legend = $this->map_obj->drawLegend();
+          $legend->saveImage("");
+          exit();
         }
         
         switch($this->output) {
             case 'tif':
-                error_reporting(0);
-                $this->image_url = $this->image->saveWebImage();
-                $image_filename = basename($this->image_url);
-                header("Pragma: public");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("Cache-Control: private",false); 
-                header("Content-Type: image/tiff");
-                header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-                header("Content-Transfer-Encoding: binary");
-                header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-                ob_clean();
-                flush();
-                readfile($this->tmp_path.$image_filename);
-                exit();
+              error_reporting(0);
+              $this->image_url = $this->image->saveWebImage();
+              $image_filename = basename($this->image_url);
+              header("Pragma: public");
+              header("Expires: 0");
+              header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+              header("Cache-Control: private",false); 
+              header("Content-Type: image/tiff");
+              header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+              header("Content-Transfer-Encoding: binary");
+              header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+              ob_clean();
+              flush();
+              readfile($this->tmp_path.$image_filename);
+              exit();
             break;
 
             case 'png':
-                error_reporting(0);
-                $this->image_url = $this->image->saveWebImage();
-                $image_filename = basename($this->image_url);
-                header("Pragma: public");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("Cache-Control: private",false); 
-                header("Content-Type: image/png");
-                header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-                header("Content-Transfer-Encoding: binary");
-                header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-                ob_clean();
-                flush();
-                readfile($this->tmp_path.$image_filename);
-                exit();
+              error_reporting(0);
+              $this->image_url = $this->image->saveWebImage();
+              $image_filename = basename($this->image_url);
+              header("Pragma: public");
+              header("Expires: 0");
+              header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+              header("Cache-Control: private",false); 
+              header("Content-Type: image/png");
+              header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+              header("Content-Transfer-Encoding: binary");
+              header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+              ob_clean();
+              flush();
+              readfile($this->tmp_path.$image_filename);
+              exit();
             break;
 
             case 'svg':
-                header("Pragma: public");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("Cache-Control: private",false); 
-                header("Content-Type: image/svg+xml");
-                header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-                $this->image->saveImage("");
-                exit();
+              header("Pragma: public");
+              header("Expires: 0");
+              header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+              header("Cache-Control: private",false); 
+              header("Content-Type: image/svg+xml");
+              header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+              $this->image->saveImage("");
+              exit();
             break;
 
             case 'eps':
-                //convert svg on disk to eps
-                $this->image_url = $this->image->saveWebImage();
-                $svg_filename = basename($this->image_url);
-                $eps_filename = str_replace(".svg", ".eps", $svg_filename);
-                $command_string = $this->imagemagick_path . " " . $this->tmp_path.$svg_filename ." " . $this->tmp_path.$eps_filename;
-                $command = system("$command_string");
-                
-                header("Pragma: public");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("Cache-Control: private",false);
-                header("Content-Type: application/postscript");
-                header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-                header("Content-Length: ".filesize($this->tmp_path.$eps_filename));
-                header("Content-Transfer-Encoding: binary");
+              //convert svg on disk to eps
+              $this->image_url = $this->image->saveWebImage();
+              $svg_filename = basename($this->image_url);
+              $eps_filename = str_replace(".svg", ".eps", $svg_filename);
+              $command_string = $this->imagemagick_path . " " . $this->tmp_path.$svg_filename ." " . $this->tmp_path.$eps_filename;
+              $command = system("$command_string");
+              
+              header("Pragma: public");
+              header("Expires: 0");
+              header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+              header("Cache-Control: private",false);
+              header("Content-Type: application/postscript");
+              header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+              header("Content-Length: ".filesize($this->tmp_path.$eps_filename));
+              header("Content-Transfer-Encoding: binary");
 
-                ob_clean();
-                flush();
-                readfile($this->tmp_path.$eps_filename);
-                exit();
+              ob_clean();
+              flush();
+              readfile($this->tmp_path.$eps_filename);
+              exit();
             break;
 
             default:
-                header("Pragma: public");
-                header("Expires: 0");
-                header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-                header("Cache-Control: private",false);
-                header("Content-Type: application/json");
+              header("Pragma: public");
+              header("Expires: 0");
+              header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+              header("Cache-Control: private",false);
+              header("Content-Type: application/json");
 
-                $this->image_url = $this->image->saveWebImage();
+              $this->image_url = $this->image->saveWebImage();
 
-                $output = array(
-                  'mapOutputImage'      => $this->image_url,
-                  'rendered_bbox'       => $this->map_obj->extent->minx.', '.$this->map_obj->extent->miny.', '.$this->map_obj->extent->maxx.', '.$this->map_obj->extent->maxy,
-                  'rendered_rotation'   => $this->rotation,
-                  'rendered_projection' => $this->projection,
-                  'legend_url'          => $this->_legend_url,
-                  'scalebar_url'        => $this->_scalebar_url,
-                  'bad_points'          => $this->get_bad_points()
-                );
+              $output = array(
+                'mapOutputImage'      => $this->image_url,
+                'rendered_bbox'       => ($this->map_obj->extent->minx + $this->_ox_pad) . ',' . ($this->map_obj->extent->miny + $this->_oy_pad) . ',' . ($this->map_obj->extent->maxx - $this->_ox_pad) . ',' . ($this->map_obj->extent->maxy - $this->_oy_pad),
+                'rendered_rotation'   => $this->rotation,
+                'rendered_projection' => $this->projection,
+                'legend_url'          => $this->_legend_url,
+                'scalebar_url'        => $this->_scalebar_url,
+                'bad_points'          => $this->get_bad_points()
+              );
 
-                echo json_encode($output);
+              echo json_encode($output);
         }
     }
     
