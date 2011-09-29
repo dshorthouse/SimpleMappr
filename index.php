@@ -110,6 +110,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <div class="header">
               <h2>Recent Updates</h2>
             </div>
+            <p class="update"><strong>September 28, 2011</strong><span>Added editable corner coordinates for crop and improved its accuracy.</span></p>
             <p class="update"><strong>September 26, 2011</strong><span>Responsiveness was improved by replacing map imagery when options are adjusted rather than replacing whole segments of HTML.</span></p>
             <p class="update"><strong>September 21, 2011</strong><span>Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</span></p>
             <p class="update"><strong>August 2, 2011</strong><span>Refined error-handling with coordinate recognition.</span></p>
