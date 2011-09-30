@@ -375,10 +375,10 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                 <div id="mapImage">
                     <div id="mapControlsTransparency"></div>
                     <div id="mapControls">
-                          <a href="#" class="sprites controls arrows up" data-pan="up"></a>
-                          <a href="#" class="sprites controls arrows right" data-pan="right"></a>
-                          <a href="#" class="sprites controls arrows down" data-pan="down"></a>
-                          <a href="#" class="sprites controls arrows left" data-pan="left"></a>
+                          <a href="#" class="sprites controls tooltip arrows up" data-pan="up" title="pan up"></a>
+                          <a href="#" class="sprites controls tooltip arrows right" data-pan="right" title="pan right"></a>
+                          <a href="#" class="sprites controls tooltip arrows down" data-pan="down" title="pan down"></a>
+                          <a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
                     </div>
                     <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
