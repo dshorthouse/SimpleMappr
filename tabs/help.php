@@ -44,13 +44,13 @@ $("#filter-countries")
     </div>
     <p>Use the <em>Preview</em> tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)</p>
 
-    <p><strong>Toolbar buttons:</strong></p>
+    <h3>Toolbar buttons:</h3>
         <ul class="toolbar">
             <li class="sprites toolsZoomIn">Zoom in: click this icon to draw a zoom region on the preview</li>
             <li class="sprites toolsZoomOut">Zoom out: click this icon to zoom out one step</li>
             <li class="sprites rotateAnticlockwise">Rotate counter-clockwise: select 5<sup>o</sup>, 10<sup>o</sup>, and 15<sup>o</sup> from the drop-down menu while hovering on this icon</li>
             <li class="sprites rotateClockwise">Rotate clockwise: as above</li>
-            <li class="sprites toolsCrop">Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map</li> 
+            <li class="sprites toolsCrop">Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels.</li> 
             <li class="sprites toolsQuery">Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab.</li>
 <!--
             <li class="sprites toolsDraw">Draw shape: click this icon to draw an free-hand line. A freehand drawing gets automatically added to and replaces the contents of Freehand 1 form under the Freehand tab.</li>
@@ -58,7 +58,8 @@ $("#filter-countries")
             <li class="sprites toolsRefresh">Refresh: refresh the map image</li>
             <li class="sprites toolsRebuild">Rebuild: re-render the default presentation at lowest zoom and geographic projection</li>
         </ul>
-    <p><strong>Layers:</strong></p>
+
+    <h3>Layers:</h3>
         <ul>
             <li>State/Provinces borders: select this checkbox to draw all State and Province borders for all countries</li>
             <li>place names: select this checkbox to overlay place names</li>
@@ -70,12 +71,14 @@ $("#filter-countries")
             <li>shaded relief: select this checkbox to render a color, shaded relief layer</li>
             <li>shaded relief (greyscale): select this checkbox to render a greyscale, shaded relief layer</li>
         </ul>
-    <p><strong>Options:</strong></p>
+
+    <h3>Options:</h3>
         <ul>
             <li>scalebar: select this checkbox to draw a scalebar at the bottom on the map</li>
             <li>graticules: select this checkbox to draw a graticule (grid) layer on the map</li>
         </ul>
-    <p><strong>Projection:</strong></p>
+
+    <h3>Projection:</h3>
         <ul>
             <li>Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]</li>
         </ul>
