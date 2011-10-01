@@ -286,34 +286,7 @@ $(function () {
     });
 
     $('.toolsCrop').click(function () {
-      var coords   = {},
-          ul_arr   = [],
-          ul_point = {},
-          lr_arr   = [],
-          lr_point = {};
-
-      if($('#mapCropMessage').is(':hidden')) {
-
-        if($('#mapOutput').data("jcrop_coords") !== "" || $.cookie("jcrop_coords")) {
-          if($('#mapOutput').data("jcrop_coords") !== "") {
-            coords = $('#mapOutput').data("jcrop_coords");
-            ul_arr = coords.jcrop_coord_ul.split(",");
-            lr_arr = coords.jcrop_coord_lr.split(",");
-          } else {
-            coords = $.parseJSON($.cookie("jcrop_coords"));
-            ul_arr = coords.jcrop_coord_ul.split(",");
-            lr_arr = coords.jcrop_coord_lr.split(",");
-          }
-          ul_point = self.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
-          lr_point = self.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
-          self.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
-        } else {
-          self.initJcrop();
-        }
-
-        self.vars.zoom = false;
-        $('#mapCropMessage').show();
-      }
+      self.mapCrop();
       return false;
     });
 
@@ -351,23 +324,65 @@ $(function () {
     });
 
     $('.toolsRefresh').click(function () {
-      self.resetJbbox();
-      self.showMap();
+      self.mapRefresh();
       return false;
     });
 
     $('.toolsRebuild').click(function () {
-      $('#bbox_map').val('');
-      $('#projection_map').val('');
-      $('#bbox_rubberband').val('');
-      $('#rotation').val('');
-      $('#projection').val('');
-      $('#pan').val('');
-      self.showMap();
+      self.mapRebuild();
       return false;
     });
 
   }; /** end Mappr.bindToolbar **/
+
+  Mappr.mapCrop = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    var coords   = {},
+        ul_arr   = [],
+        ul_point = {},
+        lr_arr   = [],
+        lr_point = {};
+
+    if($('#mapCropMessage').is(':hidden')) {
+
+      if($('#mapOutput').data("jcrop_coords") !== "" || $.cookie("jcrop_coords")) {
+        if($('#mapOutput').data("jcrop_coords") !== "") {
+          coords = $('#mapOutput').data("jcrop_coords");
+          ul_arr = coords.jcrop_coord_ul.split(",");
+          lr_arr = coords.jcrop_coord_lr.split(",");
+        } else {
+          coords = $.parseJSON($.cookie("jcrop_coords"));
+          ul_arr = coords.jcrop_coord_ul.split(",");
+          lr_arr = coords.jcrop_coord_lr.split(",");
+        }
+        ul_point = Mappr.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
+        lr_point = Mappr.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
+        Mappr.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
+      } else {
+        Mappr.initJcrop();
+      }
+
+      Mappr.vars.zoom = false;
+      $('#mapCropMessage').show();
+    }
+  };
+
+  Mappr.mapRefresh = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    Mappr.resetJbbox();
+    Mappr.showMap();
+  };
+
+  Mappr.mapRebuild = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#bbox_map').val('');
+    $('#projection_map').val('');
+    $('#bbox_rubberband').val('');
+    $('#rotation').val('');
+    $('#projection').val('');
+    $('#pan').val('');
+    Mappr.showMap();
+  };
 
   Mappr.bindArrows = function () {
     var self = this;
@@ -378,6 +393,76 @@ $(function () {
       self.showMap();
       return false;
     });
+  };
+
+  Mappr.mapPanUp = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#pan').val('up');
+    Mappr.resetJbbox();
+    Mappr.showMap();
+  };
+
+  Mappr.mapPanDown = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#pan').val('down');
+    Mappr.resetJbbox();
+    Mappr.showMap();
+  };
+
+  Mappr.mapPanLeft = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#pan').val('left');
+    Mappr.resetJbbox();
+    Mappr.showMap();
+  };
+
+  Mappr.mapPanRight = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#pan').val('right');
+    Mappr.resetJbbox();
+    Mappr.showMap();
+  };
+
+  Mappr.mapList = function () {
+    $("#tabs").tabs('select',3);
+  };
+
+  Mappr.bindHotkeys = function () {
+    var self = this, keys = {}, arrows = {};
+
+    keys = {
+      'ctrl+s' : self.mapSave,
+      'ctrl+d' : self.mapDownload,
+      'ctrl+l' : self.mapList,
+      'ctrl+r' : self.mapRefresh,
+      'ctrl+n' : self.mapRebuild,
+      'ctrl+x' : self.mapCrop
+    };
+
+    arrows = {
+      'up'    : self.mapPanUp,
+      'down'  : self.mapPanDown,
+      'left'  : self.mapPanLeft,
+      'right' : self.mapPanRight
+    }
+
+    $.each(keys, function(key, value) {
+      $(document).bind('keydown', key, value);
+    });
+
+    $('#mapOutput').hover(
+      function () {
+        $.each(arrows, function(key, value) {
+          $(document).bind('keydown', key, value);
+        });
+      },
+      function () {
+        $.each(arrows, function(key, value) {
+          $(document).unbind('keydown', value);
+        });
+      }
+    );
+
   };
 
   Mappr.bindSettings = function () {
@@ -1174,91 +1259,99 @@ $(function () {
     var self = this;
 
     $(".map-save").click(function () {
-      var missingTitle = false;
-
-      $('#mapSave').dialog({
-        autoOpen      : true,
-        height        : (175).toString(),
-        width         : (500).toString(),
-        modal         : true,
-        closeOnEscape : false,
-        draggable     : false,
-        resizable     : false,
-        buttons       : {
-          "Save" : function () {
-
-            if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
-
-            if(missingTitle) {
-              $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function () {
-                $(this).css({'background-color':'transparent'});
-              });
-            } else {
-              $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-              $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
-              $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
-              $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
-              if($('#border').is(':checked')) {
-                $('input[name="options[border]"]').val(1);
-              } else {
-                $('input[name="options[border]"]').val("");
-              }
-              if($('#legend').is(':checked')) {
-                $('input[name="options[legend]"]').val(1);
-              } else {
-                $('input[name="options[legend]"]').val("");
-              }
-
-              $.ajax({
-                type        : 'POST',
-                url         :  self.settings.baseUrl + "/usermaps/",
-                data        :  $("form").serialize(),
-                dataType    : 'json',
-                success     : function(data) {
-                  $('#mapTitle').text($('.m-mapSaveTitle').val());
-                  self.activateEmbed(data.mid);
-                  self.loadMapList();
-                }
-              });
-
-              $(this).dialog("destroy");
-            }
-          },
-          Cancel: function () {
-            $(this).dialog("destroy");
-          }
-        }
-      });
-
+      self.mapSave();
       return false;
     });
 
-  }; /** end Mappr.bindSave **/
+  };
+
+  Mappr.mapSave = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    var missingTitle = false;
+
+    $('#mapSave').dialog({
+      autoOpen      : true,
+      height        : (175).toString(),
+      width         : (500).toString(),
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : {
+        "Save" : function () {
+
+          if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
+
+          if(missingTitle) {
+            $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function () {
+              $(this).css({'background-color':'transparent'});
+            });
+          } else {
+            $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
+            $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
+            $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
+            $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
+            if($('#border').is(':checked')) {
+              $('input[name="options[border]"]').val(1);
+            } else {
+              $('input[name="options[border]"]').val("");
+            }
+            if($('#legend').is(':checked')) {
+              $('input[name="options[legend]"]').val(1);
+            } else {
+              $('input[name="options[legend]"]').val("");
+            }
+
+            $.ajax({
+              type        : 'POST',
+              url         :  Mappr.settings.baseUrl + "/usermaps/",
+              data        :  $("form").serialize(),
+              dataType    : 'json',
+              success     : function(data) {
+                $('#mapTitle').text($('.m-mapSaveTitle').val());
+                Mappr.activateEmbed(data.mid);
+                Mappr.loadMapList();
+              }
+            });
+
+            $(this).dialog("destroy");
+          }
+        },
+        Cancel: function () {
+          $(this).dialog("destroy");
+        }
+      }
+    });
+  };
 
   Mappr.bindDownload = function () {
     var self = this;
 
     $(".map-download").click(function () {
-      $('#mapExport').dialog({
-        autoOpen      : true,
-        width         : (500).toString(),
-        modal         : true,
-        closeOnEscape : false,
-        draggable     : false,
-        resizable     : false,
-        buttons       : {
-          Cancel : function () {
-            $(this).dialog("destroy");
-          },
-          Download : function() {
-            self.generateDownload();
-          }
-        }
-      });
-
+      self.mapDownload();
       return false;
     });
+  };
 
+  Mappr.mapDownload = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+
+    $('#mapExport').dialog({
+      autoOpen      : true,
+      width         : (500).toString(),
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : {
+        Cancel : function () {
+          $(this).dialog("destroy");
+        },
+        Download : function() {
+          Mappr.generateDownload();
+        }
+      }
+    });
   };
 
   Mappr.bindSubmit = function () {
@@ -1654,6 +1747,7 @@ $(function () {
     });
     $('#mapOutput').data("jcrop_coords", "");
     $(".tooltip").tipsy({gravity: 's'});
+    this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();
     this.bindSettings();

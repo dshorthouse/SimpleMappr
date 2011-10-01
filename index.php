@@ -77,7 +77,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 // Once resolved, commenting on tab below must also be removed
             <li><a href="#map-freehand">Freehand</a></li>
 -->
-            <li><a href="#map-mymaps" class="sprites map-mymaps">
+            <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l">
                 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
                     All Maps
                 <?php else: ?>
@@ -110,6 +110,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <div class="header">
               <h2>Recent Updates</h2>
             </div>
+            <p class="update"><strong>October 1, 2011</strong><span>Added keyboard shortcuts for common actions. These are shown in the tooltips. Arrow keys also pan the map when your cursor is hovered over the map.</span></p>
             <p class="update"><strong>September 29, 2011</strong><span>Crop corner coordinates are now stored in a cookie such that a crop selection can be restored by clicking the crop icon once again after refreshing, zooming, panning, or selecting different layers or options. However, changing the projection clears these stored crop coordinates so the crop area will need to be redrawn.</span></p>
             <p class="update"><strong>September 28, 2011</strong><span>Added editable corner coordinates for crop and improved its accuracy.</span></p>
             <p class="update"><strong>September 26, 2011</strong><span>Responsiveness was improved by replacing map imagery when options are adjusted rather than replacing whole segments of HTML.</span></p>
@@ -239,24 +240,24 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                           <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="15">15<sup>o</sup></a></li>
                         </ul>
                       </li>
-                      <li><a href="#" class="sprites toolsCrop tooltip" title="crop"></a></li>
+                      <li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
                       <li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
 <!--
 // Commented out for now until projection issues fully resolve with freehand
                       <li><a href="#" class="sprites toolsDraw tooltip" title="draw shape"></a></li>
 -->
-                      <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh"></a></li>
-                      <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild"></a></li>
+                      <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
+                      <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
                     </ul>
                     
                     <h3 id="mapTitle"></h3>
                     
                     <div id="map-saveDialog">
                         <?php if(isset($_SESSION['simplemappr'])): ?>
-                        <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save">Save</a></span>
+                        <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save ctrl+s">Save</a></span>
                         <span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" data-mid="">Embed</a></span>
                         <?php endif; ?>
-                        <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download">Download</a></span>
+                        <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
                     </div>
                     
             </div>
