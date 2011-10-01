@@ -444,7 +444,7 @@ $(function () {
       'down'  : self.mapPanDown,
       'left'  : self.mapPanLeft,
       'right' : self.mapPanRight
-    }
+    };
 
     $.each(keys, function(key, value) {
       $(document).bind('keydown', key, value);
