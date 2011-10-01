@@ -371,6 +371,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetJbbox();
     Mappr.showMap();
+    $("#tabs").tabs('select',0);
   };
 
   Mappr.mapRebuild = function () {
