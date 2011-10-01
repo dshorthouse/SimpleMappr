@@ -494,70 +494,70 @@ class MAPPR {
         
         //base map
         $this->shapes['base'] = array(
-            'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries.shp",
+            'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
             'type' => MS_LAYER_LINE,
             'sort' => 2
         );
         
         //stateprovinces_polygon
         $this->shapes['stateprovinces_polygon'] = array(
-            'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp.shp",
+            'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
             'type' => MS_LAYER_POLYGON,
             'sort' => 3
         );
         
         //stateprovinces
         $this->shapes['stateprovinces'] = array(
-            'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp.shp",
+            'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp",
             'type' => MS_LAYER_LINE,
             'sort' => 4
         );
         
         //lakes outline
         $this->shapes['lakesOutline'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_lakes.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_lakes",
             'type' => MS_LAYER_LINE,
             'sort' => 5
         );
 
         //lakes
         $this->shapes['lakes'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_lakes.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_lakes",
             'type' => MS_LAYER_POLYGON,
             'sort' => 6
         );
         
         //rivers
         $this->shapes['rivers'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_rivers_lake_centerlines.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_rivers_lake_centerlines",
             'type' => MS_LAYER_LINE,
             'sort' => 7
         );
         
         //placename
         $this->shapes['placenames'] = array(
-            'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple.shp",
+            'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
             'type' => MS_LAYER_POINT,
             'sort' => 8
         );
         
         //physicalLabels
         $this->shapes['physicalLabels'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
             'type' => MS_LAYER_POLYGON,
             'sort' => 9
         );
         
         //marineLabels
         $this->shapes['marineLabels'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
             'type' => MS_LAYER_POLYGON,
             'sort' => 10
         );
 
         //graticules
         $this->shapes['grid'] = array(
-            'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_10.shp",
+            'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_10",
             'data' => 'cultural',
             'type' => MS_LAYER_LINE,
             'sort' => 12
@@ -835,7 +835,6 @@ class MAPPR {
     */
     public function add_coordinates() {
       if(isset($this->coords) && $this->coords) {
-
         //do this in reverse order because the legend will otherwise be presented in reverse order
         for($j=count($this->coords)-1; $j>=0; $j--) {
 
