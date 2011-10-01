@@ -154,62 +154,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
         </div>
 
         <div id="fieldSetsPoints" class="fieldSets">
-
-<?php
-    //marker sizes and shapes
-    $marker_size  = '<option value="">--select--</option>';
-    $marker_size .= '<option value="6">6pt</option>';
-    $marker_size .= '<option value="8">8pt</option>';
-    $marker_size .= '<option value="10" selected="selected">10pt</option>';
-    $marker_size .= '<option value="12">12pt</option>';
-    $marker_size .= '<option value="14">14pt</option>';
-    $marker_size .= '<option value="16">16pt</option>';
-
-    $marker_shape  = '<option value="">--select--</option>';
-    $marker_shape .= '<option value="plus">plus</option>';
-    $marker_shape .= '<option value="cross">cross</option>';
-    $marker_shape .= '<optgroup label="solid">';
-    $marker_shape .= '<option value="circle" selected="selected">circle (s)</option>';
-    $marker_shape .= '<option value="star">star (s)</option>';
-    $marker_shape .= '<option value="square">square (s)</option>';
-    $marker_shape .= '<option value="triangle">triangle (s)</option>';
-    $marker_shape .= '</optgroup>';
-    $marker_shape .= '<optgroup label="open">';
-    $marker_shape .= '<option value="opencircle">circle (o)</option>';
-    $marker_shape .= '<option value="openstar">star (o)</option>';
-    $marker_shape .= '<option value="opensquare">square (o)</option>';
-    $marker_shape .= '<option value="opentriangle">triangle (o)</option>';
-    $marker_shape .= '</optgroup>';
-
-    for($j=0;$j<=NUMTEXTAREA-1;$j++) {
-      
-      echo '<div class="form-item fieldset-points">';
-
-      echo '<button class="sprites removemore negative" data-type="coords">Remove</button>';
-    
-      echo '<h3><a href="#">Layer '.($j+1).'</a></h3>' . "\n";
-      echo '<div>' . "\n";
-      echo '<div class="fieldset-taxon">' . "\n";
-      echo '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$j.'][title]" />' . "\n";
-      echo '</div>' . "\n";
-      echo '<div class="resizable-textarea">' . "\n";
-      echo '<span>' . "\n";
-      echo '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$j.'][data]"></textarea>' . "\n";
-      echo '</span>' . "\n";
-      echo '</div>' . "\n";
-
-      echo '<div class="fieldset-extras">' . "\n";
-      echo '<span class="fieldset-title">Shape:</span> <select class="m-mapShape" name="coords['.$j.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">Size:</span> <select class="m-mapSize" name="coords['.$j.'][size]">'.$marker_size.'</select>' . "\n";
-      echo '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$j.'][color]" value="0 0 0" />' . "\n";
-      echo '</div>' . "\n";
-      echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
-      echo '</div>' . "\n";
-    
-      echo '</div>' . "\n";
-    }
-
-?>
-
+          <?php echo partial_layers(); ?>
         </div>
 
         <div class="addFieldset">
@@ -232,34 +177,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">
-<?php
-        for($j=0;$j<=NUMTEXTAREA-1;$j++) {
-          
-          echo '<div class="form-item fieldset-regions">';
-
-          echo '<button class="sprites removemore negative" data-type="regions">Remove</button>';
-
-          echo '<h3><a href="#">Region '.($j+1).'</a></h3>' . "\n";
-          echo '<div>' . "\n";
-          echo '<div class="fieldset-taxon">' . "\n";
-          echo '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$j.'][title]" />' . "\n";
-          echo '</div>' . "\n";
-          echo '<div class="resizable-textarea">' . "\n";
-          echo '<span>' . "\n";
-          echo '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$j.'][data]"></textarea>' . "\n";
-          echo '</span>' . "\n";
-          echo '</div>' . "\n";
-        
-          echo '<div class="fieldset-extras">' . "\n";
-          echo '<span class="fieldset-title">Color:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
-          echo '</div>' . "\n";
-          echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
-          echo '</div>' . "\n";
-        
-          echo '</div>' . "\n";
-
-        }
-?>
+          <?php echo partial_regions(); ?>
         </div>
         
         <div class="addFieldset">
@@ -284,34 +202,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             </div>
 
             <div id="fieldSetsFreehands" class="fieldSets">
-    <?php
-            for($j=0;$j<=NUMTEXTAREA-1;$j++) {
-
-              echo '<div class="form-item fieldset-freehands">';
-
-              echo '<button class="sprites removemore negative" data-type="freehands">Remove</button>';
-
-              echo '<h3><a href="#">Freehand '.($j+1).'</a></h3>' . "\n";
-              echo '<div>' . "\n";
-              echo '<div class="fieldset-taxon">' . "\n";
-              echo '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="freehand['.$j.'][title]" />' . "\n";
-              echo '</div>' . "\n";
-              echo '<div class="resizable-textarea">' . "\n";
-              echo '<span>' . "\n";
-              echo '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="freehand['.$j.'][data]"></textarea>' . "\n";
-              echo '</span>' . "\n";
-              echo '</div>' . "\n";
-
-              echo '<div class="fieldset-extras">' . "\n";
-              echo '<span class="fieldset-title">Color:</span> <input type="text"  class="colorPicker" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
-              echo '</div>' . "\n";
-              echo '<button class="sprites clear clearself negative">Clear</button>' . "\n";
-              echo '</div>' . "\n";
-
-              echo '</div>' . "\n";
-
-            }
-    ?>
+              <?php echo partial_freehands(); ?>
             </div>
 
             <div class="addFieldset">
@@ -531,27 +422,12 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 
         <fieldset>
           <legend>Scale</legend>
-        <?php
-          $file_sizes = array(3,4,5);
-          foreach($file_sizes as $size) {
-            $checked = ($size == 3) ? " checked=\"checked\"" : "";
-            echo "<input type=\"radio\" id=\"download-factor-".$size."\" name=\"download-factor\" value=\"".$size."\"".$checked." />";
-            echo "<label for=\"download-factor-".$size."\">".$size."X</label>";
-          }
-        ?>
+          <?php echo partial_scales(); ?>
         </fieldset>
 
         <fieldset>
           <legend>File type</legend>
-        <?php
-          $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
-          foreach($file_types as $type) {
-            $checked = ($type == "svg") ? " checked=\"checked\"": "";
-            $asterisk = ($type == "svg") ? "*" : "";
-            echo "<input type=\"radio\" id=\"download-".$type."\" name=\"download-filetype\" value=\"".$type."\"".$checked." />";
-            echo "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
-          }
-        ?>
+        <?php echo partial_filetypes(); ?>
         </fieldset>
 
         <fieldset>
@@ -579,3 +455,153 @@ $header->getAnalytics();
 ?>
 </body>
 </html>
+
+<?php
+
+function partial_layers() {
+  //marker sizes and shapes
+  $marker_size  = '<option value="">--select--</option>';
+  $marker_size .= '<option value="6">6pt</option>';
+  $marker_size .= '<option value="8">8pt</option>';
+  $marker_size .= '<option value="10" selected="selected">10pt</option>';
+  $marker_size .= '<option value="12">12pt</option>';
+  $marker_size .= '<option value="14">14pt</option>';
+  $marker_size .= '<option value="16">16pt</option>';
+
+  $marker_shape  = '<option value="">--select--</option>';
+  $marker_shape .= '<option value="plus">plus</option>';
+  $marker_shape .= '<option value="cross">cross</option>';
+  $marker_shape .= '<optgroup label="solid">';
+  $marker_shape .= '<option value="circle" selected="selected">circle (s)</option>';
+  $marker_shape .= '<option value="star">star (s)</option>';
+  $marker_shape .= '<option value="square">square (s)</option>';
+  $marker_shape .= '<option value="triangle">triangle (s)</option>';
+  $marker_shape .= '</optgroup>';
+  $marker_shape .= '<optgroup label="open">';
+  $marker_shape .= '<option value="opencircle">circle (o)</option>';
+  $marker_shape .= '<option value="openstar">star (o)</option>';
+  $marker_shape .= '<option value="opensquare">square (o)</option>';
+  $marker_shape .= '<option value="opentriangle">triangle (o)</option>';
+  $marker_shape .= '</optgroup>';
+
+  $output = '';
+
+  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
+    
+    $output .= '<div class="form-item fieldset-points">';
+
+    $output .= '<button class="sprites removemore negative" data-type="coords">Remove</button>';
+  
+    $output .= '<h3><a href="#">Layer '.($j+1).'</a></h3>' . "\n";
+    $output .= '<div>' . "\n";
+    $output .= '<div class="fieldset-taxon">' . "\n";
+    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$j.'][title]" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<div class="resizable-textarea">' . "\n";
+    $output .= '<span>' . "\n";
+    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$j.'][data]"></textarea>' . "\n";
+    $output .= '</span>' . "\n";
+    $output .= '</div>' . "\n";
+
+    $output .= '<div class="fieldset-extras">' . "\n";
+    $output .= '<span class="fieldset-title">Shape:</span> <select class="m-mapShape" name="coords['.$j.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">Size:</span> <select class="m-mapSize" name="coords['.$j.'][size]">'.$marker_size.'</select>' . "\n";
+    $output .= '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$j.'][color]" value="0 0 0" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
+    $output .= '</div>' . "\n";
+  
+    $output .= '</div>' . "\n";
+  }
+
+  return $output;
+}
+
+function partial_regions() {
+  $output = '';
+
+  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
+    $output .= '<div class="form-item fieldset-regions">';
+
+    $output .= '<button class="sprites removemore negative" data-type="regions">Remove</button>';
+
+    $output .= '<h3><a href="#">Region '.($j+1).'</a></h3>' . "\n";
+    $output .= '<div>' . "\n";
+    $output .= '<div class="fieldset-taxon">' . "\n";
+    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$j.'][title]" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<div class="resizable-textarea">' . "\n";
+    $output .= '<span>' . "\n";
+    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$j.'][data]"></textarea>' . "\n";
+    $output .= '</span>' . "\n";
+    $output .= '</div>' . "\n";
+  
+    $output .= '<div class="fieldset-extras">' . "\n";
+    $output .= '<span class="fieldset-title">Color:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
+    $output .= '</div>' . "\n";
+  
+    $output .= '</div>' . "\n";
+  }
+
+  return $output;
+}
+
+function partial_freehands() {
+  $output = '';
+
+  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
+    $output .= '<div class="form-item fieldset-freehands">';
+
+    $output .= '<button class="sprites removemore negative" data-type="freehands">Remove</button>';
+
+    $output .= '<h3><a href="#">Freehand '.($j+1).'</a></h3>' . "\n";
+    $output .= '<div>' . "\n";
+    $output .= '<div class="fieldset-taxon">' . "\n";
+    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="freehand['.$j.'][title]" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<div class="resizable-textarea">' . "\n";
+    $output .= '<span>' . "\n";
+    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="freehand['.$j.'][data]"></textarea>' . "\n";
+    $output .= '</span>' . "\n";
+    $output .= '</div>' . "\n";
+
+    $output .= '<div class="fieldset-extras">' . "\n";
+    $output .= '<span class="fieldset-title">Color:</span> <input type="text"  class="colorPicker" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
+    $output .= '</div>' . "\n";
+
+    $output .= '</div>' . "\n";
+  }
+
+  return $output;
+}
+
+function partial_scales() {
+  $output = '';
+
+  $file_sizes = array(3,4,5);
+  foreach($file_sizes as $size) {
+    $checked = ($size == 3) ? " checked=\"checked\"" : "";
+    $output .= "<input type=\"radio\" id=\"download-factor-".$size."\" name=\"download-factor\" value=\"".$size."\"".$checked." />";
+    $output .= "<label for=\"download-factor-".$size."\">".$size."X</label>";
+  }
+
+  return $output;
+}
+
+function partial_filetypes() {
+  $output = '';
+
+  $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
+  foreach($file_types as $type) {
+    $checked = ($type == "svg") ? " checked=\"checked\"": "";
+    $asterisk = ($type == "svg") ? "*" : "";
+    $output .= "<input type=\"radio\" id=\"download-".$type."\" name=\"download-filetype\" value=\"".$type."\"".$checked." />";
+    $output .= "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
+  }
+
+  return $output;
+}
+?>
