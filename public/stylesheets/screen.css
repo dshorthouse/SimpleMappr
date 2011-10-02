@@ -87,6 +87,15 @@ input, select, textarea {
     min-width:1120px;
     min-height:500px;
     display:none;
+    border:0px;
+}
+
+ul.navigation {
+  background:none;
+  border-top:0px;
+  border-left:0px;
+  border-right:0px;
+  border-radius:0px;
 }
 
 ul.navigation li a.map-mymaps {
