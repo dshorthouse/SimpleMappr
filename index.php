@@ -58,9 +58,9 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 <h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" /><span>SimpleMappr</span></h1>
 <div id="site-tagline">point maps for publication</div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<div id="site-logout">Welcome back <?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/">Log Out</a></span></div>
+<div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/">Sign Out</a></span></div>
 <?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;">Log In</a></span></div>
+<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;">Sign In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
 

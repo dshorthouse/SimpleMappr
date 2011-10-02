@@ -6,6 +6,7 @@ html, body {
 
 body {
     font-family:Verdana,Arial,Helvetica,sans-serif;
+    margin-top:5px;
 }
 
 a {
@@ -36,7 +37,7 @@ input, select, textarea {
 
 #site-tagline {
   position:absolute;
-  top:35px;
+  top:20px;
   left:375px;
   font-size:12px;
   font-style:italic;
@@ -44,7 +45,7 @@ input, select, textarea {
 
 #site-logout {
   position:absolute;
-  top:30px;
+  top:15px;
   right:15px;
   font-size:16px;
 }
