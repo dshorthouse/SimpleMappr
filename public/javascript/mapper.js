@@ -745,6 +745,7 @@ $(function () {
             }
           }
 
+          $('#fieldSetsRegions').accordion("activate", i-1);
           self.showMap();
         } else {
           self.hideLoadingMessage();
@@ -803,27 +804,29 @@ $(function () {
         num      = 0,
         children = [];
 
-    if($(button).attr("data-type") === data_type) {
+    if(button.attr("data-type") === data_type) {
 
       if(counter < self.vars.maxTextareaCount) {
+
+        button.parent().prev().accordion("activate", false);
 
         clone = button.parent().prev().children("div:last").clone();
         num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
 
         counter = self.textareaCounter(data_type, 'increase');
 
-        $(clone).find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
-        $(clone).find("input.m-mapTitle").attr("name", data_type + "["+num.toString()+"][title]").val("");
-        $(clone).find("textarea")
+        clone.find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
+        clone.find("input.m-mapTitle").attr("name", data_type + "["+num.toString()+"][title]").val("");
+        clone.find("textarea")
                 .attr("name", data_type + "["+num.toString()+"][data]")
                 .removeClass("textarea-processed")
                 .val("")
                 .each(function () {
                   self.addGrippies(this);
                 });
-        $(clone).find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
-        $(clone).find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
-        $(clone).find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
+        clone.find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
+        clone.find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
+        clone.find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
           onBeforeShow: function () {
             var color = $(this).val().split(" ");
             $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
@@ -843,14 +846,12 @@ $(function () {
           $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
         });
 
-        children = $(button).parent().prev().accordion("activate", false).append(clone).children("div");
+        children = button.parent().prev().append(clone).children("div");
+
         children.each(function(i, val) {
           val = null;
-          $(this).accordion("activate", false);
           if (i === children.length-1) {
-            $(this).accordion({ header : 'h3', collapsible : true, autoHeight : false})
-            .find(".ui-accordion-content").slideDown().parent()
-            .find("button.removemore").show().click(function () {
+            $(this).find("button.removemore").show().click(function () {
               $(clone).remove();
               counter = self.textareaCounter(data_type, 'decrease');
               $(button).removeAttr("disabled");
@@ -864,10 +865,17 @@ $(function () {
           }
         });
 
+        button.parent().prev().accordion("destroy").accordion({
+          header      : 'h3',
+          collapsible : true,
+          autoHeight  : false,
+          active      : false
+        });
+
       }
 
       if(counter >= self.vars.maxTextareaCount-3) {
-        $(button).attr("disabled","disabled");
+        button.attr("disabled","disabled");
       }
 
     }
@@ -904,9 +912,11 @@ $(function () {
     var self = this;
 
     $('.addmore').click(function () {
-      var data_type = $(this).attr("data-type");
+      var data_type = $(this).attr("data-type"), fieldsets = 0;
 
       self.addAccordionPanel(data_type);
+      fieldsets = $(this).parent().prev().children().length;
+      $(this).parent().prev().accordion("activate", fieldsets-1);
       return false;
     });
 
@@ -1109,6 +1119,9 @@ $(function () {
 
       $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
     }
+
+    $('#fieldSetsPoints').accordion("activate", i-1);
+
   };
 
   Mappr.loadRegions = function (data) {
@@ -1132,6 +1145,9 @@ $(function () {
       $('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
       $('input[name="regions['+i.toString()+'][color]"]').val(region_color);
     }
+
+    $('#fieldSetsRegions').accordion("activate", i-1);
+
   };
 
   Mappr.loadFreehands = function (data) {
@@ -1155,6 +1171,9 @@ $(function () {
       $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
       $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);
     }
+
+    $('#fieldSetsRegions').accordion("activate", i-1);
+
   };
 
   Mappr.loadLayers = function (data) {
