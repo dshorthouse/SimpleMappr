@@ -225,8 +225,8 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
         <div id="mapWrapper">
             <div id="actionsBar" class="ui-widget-header ui-corner-all">
                       <ul class="dropdown">
-                      <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in"></a></li>
-                      <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out"></a></li>
+                      <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
+                      <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
                       <li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
                         <ul class="sub_menu">
                           <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-5">5<sup>o</sup></a></li>

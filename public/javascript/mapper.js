@@ -261,20 +261,12 @@ $(function () {
     $("ul.dropdown li ul li:has(ul)").find("a:first").append(" &raquo; ");
 
     $('.toolsZoomIn').click(function () {
-      $('#mapCropMessage').hide();
-      if($('#mapCropMessage').is(':hidden')) {
-        self.initJzoom();
-        self.vars.zoom = true;
-      }
+      self.mapZoomIn();
       return false;
     });
 
     $('.toolsZoomOut').click(function () {
-      self.resetJbbox();
-      $('#mapCropMessage').hide();
-      $('#zoom_out').val(1);
-      self.showMap();
-      $('#zoom_out').val('');
+      self.mapZoomOut();
       return false;
     });
 
@@ -428,6 +420,24 @@ $(function () {
     $("#tabs").tabs('select',3);
   };
 
+  Mappr.mapZoomIn = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#mapCropMessage').hide();
+    if($('#mapCropMessage').is(':hidden')) {
+      Mappr.initJzoom();
+      Mappr.vars.zoom = true;
+    }
+  };
+
+  Mappr.mapZoomOut = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    Mappr.resetJbbox();
+    $('#mapCropMessage').hide();
+    $('#zoom_out').val(1);
+    Mappr.showMap();
+    $('#zoom_out').val('');
+  };
+
   Mappr.bindHotkeys = function () {
     var self = this, keys = {}, arrows = {};
 
@@ -437,7 +447,9 @@ $(function () {
       'ctrl+l' : self.mapList,
       'ctrl+r' : self.mapRefresh,
       'ctrl+n' : self.mapRebuild,
-      'ctrl+x' : self.mapCrop
+      'ctrl+x' : self.mapCrop,
+      'ctrl++': self.mapZoomIn,
+      'ctrl+-': self.mapZoomOut
     };
 
     arrows = {
