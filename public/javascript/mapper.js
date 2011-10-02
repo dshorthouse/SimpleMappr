@@ -1120,8 +1120,6 @@ $(function () {
       $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
     }
 
-    $('#fieldSetsPoints').accordion("activate", i-1);
-
   };
 
   Mappr.loadRegions = function (data) {
@@ -1146,8 +1144,6 @@ $(function () {
       $('input[name="regions['+i.toString()+'][color]"]').val(region_color);
     }
 
-    $('#fieldSetsRegions').accordion("activate", i-1);
-
   };
 
   Mappr.loadFreehands = function (data) {
@@ -1171,8 +1167,6 @@ $(function () {
       $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
       $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);
     }
-
-    $('#fieldSetsRegions').accordion("activate", i-1);
 
   };
 
