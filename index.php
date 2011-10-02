@@ -98,7 +98,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 
         <!-- about tab -->
         <div id="map-about">
-            <div id="general-about" class="panel">
+            <div id="general-about" class="panel ui-corner-all">
             <p>Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result.</p>
             </div>
 
@@ -150,7 +150,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 
     <!-- multipoint tab -->
     <div id="map-points">
-        <div id="general-points" class="panel">
+        <div id="general-points" class="panel ui-corner-all">
         <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.showExamples(); return false;" class="sprites help">examples</a></p>
         </div>
 
@@ -172,7 +172,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 
     <!-- shaded regions tab -->
     <div id="map-regions">
-        <div id="regions-introduction" class="panel">
+        <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
             <p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p> 
         </div>
@@ -198,7 +198,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 // Commented out for now until projection issues fully resolved with freehand drawing
 
     <div id="map-freehand">
-            <div id="freehand-introduction" class="panel">
+            <div id="freehand-introduction" class="panel ui-corner-all">
                 <p>Type well-known text (<em>e.g.</em>  POLYGON((-103 54,-111 51,-100 49,-103 54)))</p> 
             </div>
 
@@ -348,7 +348,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     <!-- my maps tab -->
     <div id="map-mymaps">
         <?php if(!isset($_SESSION['simplemappr'])): ?>
-            <div class="panel">
+            <div class="panel ui-corner-all">
                 <p>Save and reload your map data or create a generic template.</p> 
             </div>
            <div id="janrainEngageEmbed"></div>

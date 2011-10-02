@@ -35,8 +35,8 @@ $("#filter-countries")
 <!-- help tab -->
 <div id="map-help">
     
-    <div class="panel">
-        <p>This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 5, Google Chrome, or Safari 5 is strongly recommended.</p>
+    <div class="panel ui-corner-all">
+        <p>This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended.</p>
     </div>
 
     <div class="header">

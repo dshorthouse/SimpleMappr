@@ -1,7 +1,7 @@
 <?php session_start(); ?>
     <!-- feedback tab -->
     <div id="map-feedback">
-        <div id="general-feedback" class="panel">
+        <div id="general-feedback" class="panel ui-corner-all">
             <p>Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports.</p>
         </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
