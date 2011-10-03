@@ -49,11 +49,7 @@ class HEADER {
     );
     
     public static $css_files = array(
-        'public/stylesheets/screen.min.css',
-        'public/stylesheets/colorpicker.min.css',
-        'public/stylesheets/jquery.Jcrop.css',
-        'public/stylesheets/smoothness/jquery-ui-1.8.16.min.css',
-        'public/javascript/tipsy/stylesheets/tipsy.css'
+        'public/stylesheets/screen.min.css'
     );
     
     function __construct() {

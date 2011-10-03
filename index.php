@@ -44,8 +44,8 @@ if(isset($_COOKIE["simplemappr"])) {
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php
-$header->getCSSHeader();
 $header->getJSHeader();
+$header->getCSSHeader();
 ?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -53,7 +53,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 //--><!]]>
 </script>
 </head>
-
+<?php flush(); ?>
 <body>
 <h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="327" height="40" /><span>SimpleMappr</span></h1>
 <div id="site-tagline">point maps for publication</div>
