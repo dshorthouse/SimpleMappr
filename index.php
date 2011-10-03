@@ -64,7 +64,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 <?php endif; ?>
 <div id="wrapper">
 
-    <div id="initial-message">Building page...</div>
+    <div id="initial-message" class="ui-corner-all ui-widget-content">Building page...</div>
 
     <div id="tabs">
 

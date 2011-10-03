@@ -11,7 +11,7 @@ input, select, textarea{font-size:0.7em !important;}
 #site-logout a.site-logout{height:20px;line-height:20px;padding:0px 5px 0px 20px;background-position:0 -1054px;color:#FF0000;}
 #site-logout span.site-login{font-style:normal;}
 #site-logout a.site-login{height:20px;line-height:20px;padding:0px 5px 0px 20px;background-position:0 -1120px;color:#4C8318;}
-#initial-message{background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url('../images/throbber.gif') !important;}
+#initial-message{width:130px;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;margin:20px;_text-indent:25px;background-image:url('../images/throbber.gif') !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;}
 #tabs{min-width:1120px;min-height:500px;display:none;border:0px;}
 ul.navigation{background:none;border-top:0px;border-left:0px;border-right:0px;border-radius:0px;}
 ul.navigation li a.map-mymaps{padding-left:20px;margin-left:5px;background-position:0 -1374px;}
