@@ -101,22 +101,22 @@ class HEADER {
           fwrite($handle, $js_min);
           fclose($handle);
 
-          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '?' . self::rand_string() . '"></script>');
+          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '"></script>');
         }
         else {
-          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '?' . self::rand_string() . '"></script>');
+          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '"></script>');
         }
       }
       else {
         foreach(self::$local_js_files as $js_file) {
-          $this->addJS('<script type="text/javascript" src="' . $js_file . '?' . self::rand_string() . '"></script>');
+          $this->addJS('<script type="text/javascript" src="' . $js_file . '"></script>');
         }
       }
     }
     
     private function css_files() {
       foreach(self::$css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '?' . self::rand_string() . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
       }
     }
     
