@@ -44,8 +44,8 @@ if(isset($_COOKIE["simplemappr"])) {
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php
-$header->getJSHeader();
 $header->getCSSHeader();
+$header->getJSHeader();
 ?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
