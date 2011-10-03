@@ -54,6 +54,8 @@ class MAPPREMBED extends MAPPR {
       }
 
       (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
+      if(!isset($this->projection_map) || $this->projection_map == "") { $this->projection_map = 'epsg:4326'; }
+      if(!isset($this->bbox_map) || $this->bbox_map == "" || $this->bbox_map == "0,0,0,0") { $this->bbox_map = '-180,-90,180,90'; }
 
       $this->download         = true;
       $this->width            = $this->load_param('width', 800);
@@ -61,31 +63,7 @@ class MAPPREMBED extends MAPPR {
       $this->image_size       = array($this->width, $this->height);
       $this->output           = 'pnga';
 
-      $this->set_map_extent();
-
       return $this;
-    }
-
-    private function set_map_extent() {
-      $ext = explode(',',$this->bbox_map);
-      $origProjObj = ms_newProjectionObj(parent::$accepted_projections[$this->projection_map]['proj']);
-      $newProjObj = ms_newProjectionObj(parent::$accepted_projections[$this->default_projection]['proj']);
-
-      $poPoint1 = ms_newPointObj();
-      $poPoint1->setXY($ext[0], $ext[1]);
-
-      $poPoint2 = ms_newPointObj();
-      $poPoint2->setXY($ext[2], $ext[3]);
-            
-      @$poPoint1->project($origProjObj,$newProjObj);
-      @$poPoint2->project($origProjObj,$newProjObj);
-
-      $ext[0] = $poPoint1->x;
-      $ext[1] = $poPoint1->y;
-      $ext[2] = $poPoint2->x;
-      $ext[3] = $poPoint2->y;
-
-      $this->bbox_map = implode(",", $ext);
     }
 
     private function set_not_found() {
