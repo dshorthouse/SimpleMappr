@@ -1293,7 +1293,7 @@ $(function () {
 
   Mappr.mapSave = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var missingTitle = false;
+    var missingTitle = false, pattern = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g, map_title = "";
 
     $('#mapSave').dialog({
       autoOpen      : true,
@@ -1335,6 +1335,8 @@ $(function () {
               dataType    : 'json',
               success     : function(data) {
                 $('#mapTitle').text($('.m-mapSaveTitle').val());
+                map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
+                $('#file-name').val(map_title);
                 Mappr.activateEmbed(data.mid);
                 Mappr.loadMapList();
               }
