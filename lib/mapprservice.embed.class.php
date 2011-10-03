@@ -58,6 +58,7 @@ class MAPPREMBED extends MAPPR {
       if(!isset($this->bbox_map) || $this->bbox_map == "" || $this->bbox_map == "0,0,0,0") { $this->bbox_map = '-180,-90,180,90'; }
 
       $this->download         = true;
+      unset($this->options['border']);
       $this->width            = $this->load_param('width', 800);
       $this->height           = $this->load_param('height', 400);
       $this->image_size       = array($this->width, $this->height);
