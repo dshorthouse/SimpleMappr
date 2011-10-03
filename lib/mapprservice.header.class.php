@@ -42,7 +42,7 @@ class HEADER {
         'public/javascript/jquery.textarearesizer.compressed.js',
         'public/javascript/jquery.cookie.js',
         'public/javascript/jquery.download.js',
-        'public/javascript/tipsy/javascripts/jquery.tipsy.js',
+        'public/javascript/jquery.tipsy.js',
         'public/javascript/jquery.uitablefilter.min.js',
         'public/javascript/janrain.js',
         'public/javascript/jquery.hotkeys.min.js'
