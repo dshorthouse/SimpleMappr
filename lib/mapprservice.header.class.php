@@ -49,17 +49,13 @@ class HEADER {
     );
     
     public static $css_files = array(
-        'public/stylesheets/screen.min.css'
+        'public/stylesheets/screen.css'
     );
     
     function __construct() {
         $this->remote_js_files();
         $this->local_js_files();
         $this->css_files();
-    }
-    
-    public static function rand_string() {
-        return chr(rand(65,90));
     }
     
     private function js_cached($dir, $x='js') {
