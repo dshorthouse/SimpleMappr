@@ -55,7 +55,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 </head>
 
 <body>
-<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" /><span>SimpleMappr</span></h1>
+<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="327" height="40" /><span>SimpleMappr</span></h1>
 <div id="site-tagline">point maps for publication</div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/">Sign Out</a></span></div>
@@ -275,7 +275,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                     </div>
                     <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
-                        <img id="mapOutputImage" src="public/images/basemap.png" alt="" />
+                        <img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />
                         <input type="hidden" id="rendered_bbox" value=""></input>
                         <input type="hidden" id="rendered_rotation" value=""></input>
                         <input type="hidden" id="rendered_projection" value=""></input>
