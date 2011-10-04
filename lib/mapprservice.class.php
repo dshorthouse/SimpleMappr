@@ -701,7 +701,7 @@ class MAPPR {
   * Add the base layer
   */
   private function add_base_layer() {
-    if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey'])) {
+    if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey']) && !isset($this->layers['reliefgreyAlt'])) {
       $layer = ms_newLayerObj($this->map_obj);
       $layer->set("name","baselayer");
       $layer->set("status",MS_ON);
@@ -1476,9 +1476,14 @@ class MAPPR {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        header("X-Sendfile: $this->tmp_path.$image_filename");
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false); 
         header("Content-Type: image/tiff");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Transfer-Encoding: binary");
+        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
@@ -1489,9 +1494,14 @@ class MAPPR {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        header("X-Sendfile: $this->tmp_path.$image_filename");
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false); 
         header("Content-Type: image/png");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Transfer-Encoding: binary");
+        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
@@ -1499,7 +1509,10 @@ class MAPPR {
       break;
 
       case 'svg':
-        header("X-Sendfile: $this->tmp_path.$image_filename"); 
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false); 
         header("Content-Type: image/svg+xml");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
         $this->image->saveImage("");
@@ -1514,9 +1527,14 @@ class MAPPR {
         $command_string = $this->imagemagick_path . " " . $this->tmp_path.$svg_filename ." " . $this->tmp_path.$eps_filename;
         $command = system("$command_string");
         
-        header("X-Sendfile: $this->tmp_path.$image_filename");
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
         header("Content-Type: application/postscript");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Length: ".filesize($this->tmp_path.$eps_filename));
+        header("Content-Transfer-Encoding: binary");
 
         ob_clean();
         flush();
