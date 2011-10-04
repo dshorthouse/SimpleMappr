@@ -299,7 +299,6 @@ $(function () {
         hsb = null;
         hex = null;
         $(el).ColorPickerHide();
-        $('#mapCropMessage').hide();
         self.vars.fillColor = rgb;
         self.initJquery();
         self.vars.zoom = false;
@@ -309,7 +308,6 @@ $(function () {
     });
 
     $('.toolsDraw').click(function () {
-      $('mapCropMessage').hide();
       self.initDraw();
       self.vars.zoom = false;
       return false;
@@ -335,28 +333,24 @@ $(function () {
         lr_arr   = [],
         lr_point = {};
 
-    if($('#mapCropMessage').is(':hidden')) {
-
-      if($('#mapOutput').data("jcrop_coords") !== "" || $.cookie("jcrop_coords")) {
-        if($('#mapOutput').data("jcrop_coords") !== "") {
-          coords = $('#mapOutput').data("jcrop_coords");
-          ul_arr = coords.jcrop_coord_ul.split(",");
-          lr_arr = coords.jcrop_coord_lr.split(",");
-        } else {
-          coords = $.parseJSON($.cookie("jcrop_coords"));
-          ul_arr = coords.jcrop_coord_ul.split(",");
-          lr_arr = coords.jcrop_coord_lr.split(",");
-        }
-        ul_point = Mappr.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
-        lr_point = Mappr.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
-        Mappr.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
+    if($('#mapOutput').data("jcrop_coords") !== "" || $.cookie("jcrop_coords")) {
+      if($('#mapOutput').data("jcrop_coords") !== "") {
+        coords = $('#mapOutput').data("jcrop_coords");
+        ul_arr = coords.jcrop_coord_ul.split(",");
+        lr_arr = coords.jcrop_coord_lr.split(",");
       } else {
-        Mappr.initJcrop();
+        coords = $.parseJSON($.cookie("jcrop_coords"));
+        ul_arr = coords.jcrop_coord_ul.split(",");
+        lr_arr = coords.jcrop_coord_lr.split(",");
       }
-
-      Mappr.vars.zoom = false;
-      $('#mapCropMessage').show();
+      ul_point = Mappr.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
+      lr_point = Mappr.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
+      Mappr.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
+    } else {
+      Mappr.initJcrop();
     }
+
+    Mappr.vars.zoom = false;
   };
 
   Mappr.mapRefresh = function () {
@@ -422,17 +416,13 @@ $(function () {
 
   Mappr.mapZoomIn = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    $('#mapCropMessage').hide();
-    if($('#mapCropMessage').is(':hidden')) {
-      Mappr.initJzoom();
-      Mappr.vars.zoom = true;
-    }
+    Mappr.initJzoom();
+    Mappr.vars.zoom = true;
   };
 
   Mappr.mapZoomOut = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetJbbox();
-    $('#mapCropMessage').hide();
     $('#zoom_out').val(1);
     Mappr.showMap();
     $('#zoom_out').val('');
@@ -584,6 +574,7 @@ $(function () {
 
     $('#mapOutputImage').show();
     $('.jcrop-holder').remove();
+    $('#mapCropMessage').hide();
   };
 
   Mappr.resetJbbox = function () {
@@ -608,6 +599,7 @@ $(function () {
     });
 
     $('.jcrop-tracker').unbind('mouseup', self, self.aZoom);
+    $('#mapCropMessage').show();
   };
 
   Mappr.initJzoom = function () {
