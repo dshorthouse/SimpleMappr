@@ -28,125 +28,121 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **************************************************************************/
 
 class HEADER {
-    
-    private $js_header = array();
-    private $css_header = array();
-    
-    public static $local_js_files = array(
-        'public/javascript/raphael-min.js',
-        'public/javascript/jquery-1.6.4.min.js',
-        'public/javascript/jquery-ui-1.8.16.min.js',
-        'public/javascript/jquery.colorpicker.min.js',
-        'public/javascript/jquery.scrollTo.min.js',
-        'public/javascript/jquery.Jcrop.min.js',
-        'public/javascript/jquery.textarearesizer.compressed.js',
-        'public/javascript/jquery.cookie.js',
-        'public/javascript/jquery.download.js',
-        'public/javascript/jquery.tipsy.js',
-        'public/javascript/jquery.uitablefilter.min.js',
-        'public/javascript/janrain.js',
-        'public/javascript/jquery.hotkeys.min.js'
-    );
-    
-    public static $css_files = array(
-        'public/stylesheets/screen.css'
-    );
-    
-    function __construct() {
-        $this->remote_js_files();
-        $this->local_js_files();
-        $this->css_files();
+
+  private $js_header = array();
+  private $css_header = array();
+
+  public static $local_js_files = array(
+    'public/javascript/raphael-min.js',
+    'public/javascript/jquery-1.6.4.min.js',
+    'public/javascript/jquery-ui-1.8.16.min.js',
+    'public/javascript/jquery.colorpicker.min.js',
+    'public/javascript/jquery.scrollTo.min.js',
+    'public/javascript/jquery.Jcrop.min.js',
+    'public/javascript/jquery.textarearesizer.compressed.js',
+    'public/javascript/jquery.cookie.js',
+    'public/javascript/jquery.download.js',
+    'public/javascript/jquery.tipsy.js',
+    'public/javascript/jquery.uitablefilter.min.js',
+    'public/javascript/janrain.js',
+    'public/javascript/jquery.hotkeys.min.js'
+  );
+
+  public static $css_files = array(
+    'public/stylesheets/screen.css'
+  );
+
+  function __construct() {
+    $this->remote_js_files();
+    $this->local_js_files();
+    $this->css_files();
+  }
+
+  private function js_cached($dir, $x='js') {
+    $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
+    foreach($files as $file) {
+      if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) { return $file; }
     }
-    
-    private function js_cached($dir, $x='js') {
-      $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
-      foreach($files as $file) {
-        if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) return $file;
+    return false;
+  }
+
+  private function remote_js_files() {
+    if(ENVIRONMENT == "production") {
+      foreach(self::$local_js_files as $key => $value) {
+        if ($value == 'public/javascript/jquery-1.6.3.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') unset(self::$local_js_files[$key]);
       }
-      return false;
+      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>');
+      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>');
     }
+  }
 
-    private function remote_js_files() {
-      if(ENVIRONMENT == "production") {
-        foreach(self::$local_js_files as $key => $value) {
-          if ($value == 'public/javascript/jquery-1.6.3.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') unset(self::$local_js_files[$key]);
-        }
-        $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>');
-        $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>');
-      }
-    }
-    
-    private function local_js_files() {
+  private function local_js_files() {
+    self::$local_js_files[] = (ENVIRONMENT == "production") ? 'public/javascript/mapper.min.js' : 'public/javascript/mapper.js';
 
-      self::$local_js_files[] = (ENVIRONMENT == "production") ? 'public/javascript/mapper.min.js' : 'public/javascript/mapper.js';
+    if(ENVIRONMENT == "production") {
+      $cached_js =  $this->js_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
-      if(ENVIRONMENT == "production") {
-        
-        $cached_js =  $this->js_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
-
-        if (!$cached_js) {
-            
-          $js_contents = '';
-          foreach(self::$local_js_files as $js_file) {
-            $js_contents .= file_get_contents($js_file) . ";\n";
-          }
-        
-          $js_min = JSMin::minify($js_contents);
-          $js_min_file = md5(time()) . ".js";
-          $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
-          fwrite($handle, $js_min);
-          fclose($handle);
-
-          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '"></script>');
-        }
-        else {
-          $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '"></script>');
-        }
-      }
-      else {
+      if (!$cached_js) {
+        $js_contents = '';
         foreach(self::$local_js_files as $js_file) {
-          $this->addJS('<script type="text/javascript" src="' . $js_file . '"></script>');
+          $js_contents .= file_get_contents($js_file) . ";\n";
         }
-      }
-    }
-    
-    private function css_files() {
-      foreach(self::$css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
-      }
-    }
-    
-    private function addJS($js) {
-      $this->js_header[] = $js;
-    }
-    
-    private function addCSS($css) {
-      $this->css_header[] = $css;
-    }
-    
-    public function getJSHeader() {
-      echo implode("\n", $this->js_header) . "\n";
-    }
-    
-    public function getCSSHeader() {
-      echo implode("\n", $this->css_header) . "\n";
-    }
 
-    public function getAnalytics() {
-      $analytics = "";
-      if(ENVIRONMENT == "production") {
-        $analytics = '<script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
-        </script>
-        <script type="text/javascript">
-        try {
-        var pageTracker = _gat._getTracker("'.GOOGLE_ANALYTICS.'");
-        pageTracker._setDomainName(".simplemappr.net");
-        pageTracker._trackPageview();
-        } catch(err) {}</script>' . "\n"; 
+        $js_min = JSMin::minify($js_contents);
+        $js_min_file = md5(time()) . ".js";
+        $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
+        fwrite($handle, $js_min);
+        fclose($handle);
+
+        $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '"></script>');
+      } else {
+        $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '"></script>');
       }
-      echo $analytics;
+    } else {
+      foreach(self::$local_js_files as $js_file) {
+        $this->addJS('<script type="text/javascript" src="' . $js_file . '"></script>');
+      }
     }
+  }
+    
+  private function css_files() {
+    foreach(self::$css_files as $css_file) {
+      $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
+    }
+  }
+    
+  private function addJS($js) {
+    $this->js_header[] = $js;
+  }
+  
+  private function addCSS($css) {
+    $this->css_header[] = $css;
+  }
+  
+  public function getJSHeader() {
+    echo implode("\n", $this->js_header) . "\n";
+  }
+  
+  public function getCSSHeader() {
+    echo implode("\n", $this->css_header) . "\n";
+  }
+
+  public function getAnalytics() {
+    $analytics = "";
+    if(ENVIRONMENT == "production") {
+      $analytics = '<script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("'.GOOGLE_ANALYTICS.'");
+      pageTracker._setDomainName(".simplemappr.net");
+      pageTracker._trackPageview();
+      } catch(err) {}</script>' . "\n"; 
+    }
+    echo $analytics;
+  }
+
 }
 ?>

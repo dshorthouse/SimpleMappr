@@ -62,14 +62,14 @@ class MAPPRWFS extends MAPPR {
           $this->params['TYPENAME'] = str_replace("feature:", "",    $xml->getAttribute('typeName'));
         }
         if($xml->name == 'ogc:Filter') {
-	      $filter = $xml->readOuterXML();
+          $filter = $xml->readOuterXML();
           $this->params['REQUEST'] = 'GetFeature';
           $this->params['FILTER'] = $filter;
           $xml2->XML($filter);
           while($xml2->read()) {
-	        if($xml2->name == 'ogc:PropertyName') {
-		      $this->_filter_columns[$xml2->readString()] = $xml2->readString();
-	        }
+            if($xml2->name == 'ogc:PropertyName') {
+              $this->_filter_columns[$xml2->readString()] = $xml2->readString();
+            }
           }
           break;
         }
@@ -124,8 +124,8 @@ class MAPPRWFS extends MAPPR {
 
     $this->_req->setParameter('TYPENAME', 'stateprovinces_polygon');
     $this->_req->setParameter('MAXFEATURES', $this->params['MAXFEATURES']);
-    if($this->params['REQUEST'] != 'DescribeFeatureType') $this->_req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']);
-    if($this->params['FILTER']) $this->_req->setParameter('FILTER', $this->params['FILTER']);
+    if($this->params['REQUEST'] != 'DescribeFeatureType') { $this->_req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']); }
+    if($this->params['FILTER']) { $this->_req->setParameter('FILTER', $this->params['FILTER']); }
 
     return $this;
   }
@@ -144,6 +144,4 @@ class MAPPRWFS extends MAPPR {
   }
 
 }
-  
-
 ?>

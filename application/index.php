@@ -17,5 +17,4 @@ $mappr->set_imagemagic_path(IMAGEMAGICK_CONVERT)
 $mappr->get_request()
       ->execute()
       ->get_output();
-
 ?>

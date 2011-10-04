@@ -73,9 +73,9 @@ class USERS {
       GROUP BY
         u.username
       ORDER BY u.access DESC";
-  
+
      $rows = $this->_db->query($sql);
-  
+
      $output = "";
 
      if($this->_db->affected_rows > 0) {

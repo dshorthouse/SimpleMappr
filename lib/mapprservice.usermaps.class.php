@@ -83,7 +83,7 @@ class USERMAPS {
           'map' => serialize($_POST),
           'created' => time(),
         );
-      
+
         //first look to see if map by same title already exists
         $sql = "
         SELECT
@@ -92,12 +92,11 @@ class USERMAPS {
         WHERE
           uid=".$this->_db->escape($this->_uid)." AND title='".$this->_db->escape($data['title'])."'";
         $record = $this->_db->query_first($sql);
-      
+
         if($record['mid']) {
           $this->_db->query_update('maps', $data, 'mid='.$record['mid']);
           $mid = $record['mid'];
-        }
-        else {
+        } else {
           $mid = $this->_db->query_insert('maps', $data);
         }
 
@@ -123,88 +122,88 @@ class USERMAPS {
   }
 
   private function get_list() {
-      $where = '';
-      $output = '';
-      
-      if($this->_uid != 1) $where =  " WHERE m.uid = ".$this->_db->escape($this->_uid);
-      
-      $sql = "
-      SELECT
-        m.mid,
-        m.title,
-        m.created,
-        u.email,
-        u.uid,
-        u.username 
-      FROM 
-        maps m 
-      INNER JOIN
-        users u ON (m.uid = u.uid)
-      ".$where."
-      ORDER BY m.created DESC";
+    $where = '';
+    $output = '';
 
-      $rows = $this->_db->query($sql);
-      
-      if($this->_db->affected_rows > 0) {
-          $output .= "<table>" . "\n";
-          $output .= "<thead>" . "\n";
-          $output .= "<tr>" . "\n";
+    if($this->_uid != 1) { $where =  " WHERE m.uid = ".$this->_db->escape($this->_uid); }
+
+    $sql = "
+    SELECT
+      m.mid,
+      m.title,
+      m.created,
+      u.email,
+      u.uid,
+      u.username 
+    FROM 
+      maps m 
+    INNER JOIN
+      users u ON (m.uid = u.uid)
+    ".$where."
+    ORDER BY m.created DESC";
+
+    $rows = $this->_db->query($sql);
+
+    if($this->_db->affected_rows > 0) {
+      $output .= "<table>" . "\n";
+      $output .= "<thead>" . "\n";
+      $output .= "<tr>" . "\n";
 //            $output .= "<td><input type=\"checkbox\" id=\"download-all\" name=\"download[all]\" /></td>";
-          $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
-          $output .= "<td class=\"actions\">Actions</td>";
-          $output .= "</tr>" . "\n";
-          $output .= "</thead>" . "\n";
-          $output .= "<tbody>" . "\n";
-          $i=0;
-          while ($record = $this->_db->fetch_array($rows)) {
-            $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-            $output .= "<tr ".$class.">";
+      $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
+      $output .= "<td class=\"actions\">Actions</td>";
+      $output .= "</tr>" . "\n";
+      $output .= "</thead>" . "\n";
+      $output .= "<tbody>" . "\n";
+      $i=0;
+      while ($record = $this->_db->fetch_array($rows)) {
+        $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+        $output .= "<tr ".$class.">";
 //              $output .= "<td class=\"download\"><input type=\"checkbox\" class=\"download-checkbox\" name=\"download[".$record['mid']."]\" /></td>";
-            $output .= "<td class=\"title\">";
-            $output .= ($this->_uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
-            $output .= stripslashes($record['title']);
-            $output .= ($this->_uid == 1) ? "</em>" : "";
-            $output .= "</td>";
-            $output .= "<td class=\"actions\">";
-            $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">Load</a>";
-            if($this->_uid == $record['uid']) {
-              $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">Delete</a>";
-            }
-            $output .= "</td>";
-            $output .= "</tr>" . "\n";
-            $i++;
-          }
-          $output .= "</tbody>" . "\n";
-          $output .= "</table>" . "\n";
+        $output .= "<td class=\"title\">";
+        $output .= ($this->_uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
+        $output .= stripslashes($record['title']);
+        $output .= ($this->_uid == 1) ? "</em>" : "";
+        $output .= "</td>";
+        $output .= "<td class=\"actions\">";
+        $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">Load</a>";
+        if($this->_uid == $record['uid']) {
+          $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">Delete</a>";
+        }
+        $output .= "</td>";
+        $output .= "</tr>" . "\n";
+        $i++;
+      }
+      $output .= "</tbody>" . "\n";
+      $output .= "</table>" . "\n";
 
 /*
-          $output .= "<fieldset>" . "\n";
-          $output .= "<legend>File type</legend>" . "\n";
+      $output .= "<fieldset>" . "\n";
+      $output .= "<legend>File type</legend>" . "\n";
 
-          $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
-          foreach($file_types as $type) {
-            $checked = ($type == "svg") ? " checked=\"checked\"": "";
-            $asterisk = ($type == "svg") ? "*" : "";
-            $output .= "<input type=\"radio\" id=\"bulk-download-".$type."\" name=\"bulk-download-filetype\" value=\"".$type."\"".$checked." />";
-            $output .=  "<label for=\"bulk-download-".$type."\">".$type.$asterisk."</label>";
-          }
-
-          $output .= "</fieldset>" . "\n";
-
-          $output .= "<div><button class=\"sprites bulkdownload positive\">Download</button></div>";
-*/
-          $output .= "<script type=\"text/javascript\">
-            Mappr.bindBulkDownload();
-            $(\"#filter-mymaps\")
-              .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
-              .keypress(function(event) { if (event.which === 13) { return false; }
-            });</script>";
-      } else {
-        $output .= '<div id="mymaps" class="panel ui-corner-all"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
+      $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
+      foreach($file_types as $type) {
+        $checked = ($type == "svg") ? " checked=\"checked\"": "";
+        $asterisk = ($type == "svg") ? "*" : "";
+        $output .= "<input type=\"radio\" id=\"bulk-download-".$type."\" name=\"bulk-download-filetype\" value=\"".$type."\"".$checked." />";
+        $output .=  "<label for=\"bulk-download-".$type."\">".$type.$asterisk."</label>";
       }
 
-      header("Content-Type: text/html");
-      echo $output;
+      $output .= "</fieldset>" . "\n";
+
+      $output .= "<div><button class=\"sprites bulkdownload positive\">Download</button></div>";
+*/
+      $output .= "<script type=\"text/javascript\">
+        Mappr.bindBulkDownload();
+        $(\"#filter-mymaps\")
+          .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
+          .keypress(function(event) { if (event.which === 13) { return false; }
+        });</script>";
+    } else {
+      $output .= '<div id="mymaps" class="panel ui-corner-all"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
+    }
+
+    header("Content-Type: text/html");
+    echo $output;
   }
 
   private function get_map() {
@@ -218,7 +217,7 @@ class USERMAPS {
    WHERE
         mid=".$this->_db->escape($this->_request[0]) . $where;
    $record = $this->_db->query_first($sql);
-   
+
    $data['status'] = "ok";
    $data['mid'] = $record['mid'];
    $data['map'] = unserialize($record['map']);
