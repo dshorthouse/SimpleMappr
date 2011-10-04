@@ -701,7 +701,7 @@ class MAPPR {
   * Add the base layer
   */
   private function add_base_layer() {
-    if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey']) && !isset($this->layers['reliefgreyAlt'])) {
+    if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey'])) {
       $layer = ms_newLayerObj($this->map_obj);
       $layer->set("name","baselayer");
       $layer->set("status",MS_ON);
