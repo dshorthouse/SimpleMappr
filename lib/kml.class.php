@@ -160,8 +160,10 @@ class Kml {
   * Helper function to get the request parameter coords
   */
   private function get_request() {
-    $this->coords = $this->load_param('coords', array());
-    $this->file_name = $this->load_param('file_name', time());
+    $this->coords         = $this->load_param('coords', array());
+    $this->file_name      = $this->load_param('file_name', time());
+    $this->download_token = $this->load_param('download_token', md5(time()));
+    setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
   }
 
   /**

@@ -1589,6 +1589,10 @@ $(function () {
 
     $('#download_token').val(token);
 
+    $('.ui-dialog-buttonpane').hide();
+    $('.download-dialog').hide();
+    $('.download-message').show();
+
     switch(filetype) {
       case 'kml':
         formData = $("form").serialize();
@@ -1600,8 +1604,6 @@ $(function () {
         $('#output').val(filetype);
         if(self.vars.jcropAPI) { $('#crop').val(1); }
         formData = $("form").serialize();
-        $('.download-dialog').hide();
-        $('.download-message').show();
         $.download(self.settings.baseUrl + "/application/", formData, 'post');
         $('#download').val('');
         $('#output').val('pnga');
@@ -1619,6 +1621,7 @@ $(function () {
   Mappr.finishDownload = function () {
     $('.download-message').hide();
     $('.download-dialog').show();
+    $('.ui-dialog-buttonpane').show();
     window.clearInterval(this.vars.fileDownloadTimer);
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
