@@ -476,86 +476,86 @@ class MAPPR {
     //shaded relief
     $this->shapes['relief'] = array(
       'shape' => $this->shape_path . "/HYP_HR_SR_W_DR/HYP_HR_SR_W_DR.tif",
-      'type' => MS_LAYER_RASTER,
-      'sort' => 1
+      'type'  => MS_LAYER_RASTER,
+      'sort'  => 1
     );
 
     // Geotiff created by David P. Shorthouse using above file.
     $this->shapes['reliefgrey'] = array(
       'shape' => $this->shape_path . "/HYP_HR_SR_W_DR2/HYP_HR_SR_W_DR2.tif",
-      'type' => MS_LAYER_RASTER,
-      'sort' => 1
+      'type'  => MS_LAYER_RASTER,
+      'sort'  => 1
     );
 
     //base map
     $this->shapes['base'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
-      'type' => MS_LAYER_LINE,
-      'sort' => 2
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 2
     );
 
     //stateprovinces_polygon
     $this->shapes['stateprovinces_polygon'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
-      'type' => MS_LAYER_POLYGON,
-      'sort' => 3
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 3
     );
 
     //stateprovinces
     $this->shapes['stateprovinces'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp",
-      'type' => MS_LAYER_LINE,
-      'sort' => 4
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 4
     );
 
     //lakes outline
     $this->shapes['lakesOutline'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_lakes",
-      'type' => MS_LAYER_LINE,
-      'sort' => 5
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 5
     );
 
     //lakes
     $this->shapes['lakes'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_lakes",
-      'type' => MS_LAYER_POLYGON,
-      'sort' => 6
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 6
     );
 
     //rivers
     $this->shapes['rivers'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_rivers_lake_centerlines",
-      'type' => MS_LAYER_LINE,
-      'sort' => 7
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 7
     );
 
     //placename
     $this->shapes['placenames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
-      'type' => MS_LAYER_POINT,
-      'sort' => 8
+      'type'  => MS_LAYER_POINT,
+      'sort'  => 9
     );
 
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
-      'type' => MS_LAYER_POLYGON,
-      'sort' => 9
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 10
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
-      'type' => MS_LAYER_POLYGON,
-      'sort' => 10
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 11
     );
 
     //graticules
     $this->shapes['grid'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_10",
-      'data' => 'cultural',
-      'type' => MS_LAYER_LINE,
-      'sort' => 12
+      'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_5",
+      'data'  => 'cultural',
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 13
     );
 
   }
@@ -1476,14 +1476,9 @@ class MAPPR {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
+        header("X-Sendfile: $this->tmp_path.$image_filename");
         header("Content-Type: image/tiff");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
@@ -1494,14 +1489,9 @@ class MAPPR {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
+        header("X-Sendfile: $this->tmp_path.$image_filename");
         header("Content-Type: image/png");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
@@ -1509,10 +1499,7 @@ class MAPPR {
       break;
 
       case 'svg':
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
+        header("X-Sendfile: $this->tmp_path.$image_filename"); 
         header("Content-Type: image/svg+xml");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
         $this->image->saveImage("");
@@ -1527,14 +1514,9 @@ class MAPPR {
         $command_string = $this->imagemagick_path . " " . $this->tmp_path.$svg_filename ." " . $this->tmp_path.$eps_filename;
         $command = system("$command_string");
         
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
+        header("X-Sendfile: $this->tmp_path.$image_filename");
         header("Content-Type: application/postscript");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-        header("Content-Length: ".filesize($this->tmp_path.$eps_filename));
-        header("Content-Transfer-Encoding: binary");
 
         ob_clean();
         flush();
