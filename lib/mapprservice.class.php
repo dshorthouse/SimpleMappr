@@ -185,7 +185,7 @@ class MAPPR {
 
   function __construct() {
     if (!extension_loaded("MapScript")) {
-      $this->setError("php_mapscript.so extension is not loaded"); 
+      $this->set_error("php_mapscript.so extension is not loaded");
       exit;
     }
     $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
@@ -807,18 +807,18 @@ class MAPPR {
     $ll_point->x = $bbox_rubberband[0];
     $ll_point->y = $bbox_rubberband[3];
     $ll_coord = $this->pix2geo($ll_point);
-    
+
     //upper-right coordinate
     $ur_point = new stdClass();
     $ur_point->x = $bbox_rubberband[2];
     $ur_point->y = $bbox_rubberband[1];
     $ur_coord = $this->pix2geo($ur_point);
-    
+
     //set the size as selected
     $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
     $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
     $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
-    
+
     //set the extent to match that of the crop
     $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
   }
@@ -1158,11 +1158,13 @@ class MAPPR {
       $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
       
       $class = ms_newClassObj($layer);
+
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
       $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 10);
       $class->label->set("position", MS_CC);
       $class->label->color->setRGB(30, 30, 30);
+
       $style = ms_newStyleObj($class);
       $style->color->setRGB(200,200,200);
 
@@ -1202,24 +1204,25 @@ class MAPPR {
   }
 
   /**
-  * Create a margin around the map
+  * WIP: Create a margin around the map
   */
   private function add_margin() {
     if(isset($this->graticules) && $this->graticules) {
       $ll_point = new stdClass();
-      $ll_point->x = 20;
-      $ll_point->y = $this->map_obj->height-20;
+      $ll_point->x = $this->map_obj->width*0.05;
+      $ll_point->y = $this->map_obj->height-($this->map_obj->height*0.05);
       $ll_coord = $this->pix2geo($ll_point);
 
       $ur_point = new stdClass();
-      $ur_point->x = $this->map_obj->width-20;
-      $ur_point->y = 20;
+      $ur_point->x = $this->map_obj->width-($this->map_obj->width*0.05);
+      $ur_point->y = $this->map_obj->height*0.05;
       $ur_coord = $this->pix2geo($ur_point);
 
       $margin_layer = ms_newLayerObj($this->map_obj);
       $margin_layer->set("name","margin");
       $margin_layer->set("type", MS_LAYER_POLYGON);
       $margin_layer->set("status",MS_ON);
+      $margin_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
 
       $margin_class = ms_newClassObj($margin_layer);
       $margin_style = ms_newStyleObj($margin_class);
@@ -1270,10 +1273,11 @@ class MAPPR {
       $inner_margin_layer->set("name","inner-margin");
       $inner_margin_layer->set("type",MS_LAYER_POLYGON);
       $inner_margin_layer->set("status",MS_ON);
+      $inner_margin_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
 
       $inner_border_class = ms_newClassObj($inner_margin_layer);
       $inner_border_style = ms_newStyleObj($inner_border_class);
-      $inner_border_style->outlinecolor->setRGB(200,200,200);
+      $inner_border_style->outlinecolor->setRGB(130,130,130);
 
       $polygon_border = ms_newShapeObj(MS_SHAPE_POLYGON);
 
@@ -1289,9 +1293,10 @@ class MAPPR {
 
       //outer border
       $outer_border_layer = ms_newLayerObj($this->map_obj);
-      $outer_border_layer->set("name","inner-margin");
+      $outer_border_layer->set("name","outer-border");
       $outer_border_layer->set("type",MS_LAYER_POLYGON);
       $outer_border_layer->set("status",MS_ON);
+      $outer_border_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
 
       $outer_border_class = ms_newClassObj($outer_border_layer);
 
@@ -1387,6 +1392,7 @@ class MAPPR {
     $outline_layer->set("name","outline");
     $outline_layer->set("type",MS_LAYER_POLYGON);
     $outline_layer->set("status",MS_ON);
+    $outline_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
 
     // Add new class to new layer
     $outline_class = ms_newClassObj($outline_layer);

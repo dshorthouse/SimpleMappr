@@ -1258,7 +1258,7 @@ $(function () {
   };
 
   Mappr.loadUsers = function () {
-    var message = '<div id="users-loading"><span id="mapper-building-users">Loading users list...</span></div>';
+    var message = '<div id="userdata-loading"><span id="mapper-building-users" class="ui-corner-all ui-widget-content">Loading users list...</span></div>';
 
     $('#userdata').html(message);
 
