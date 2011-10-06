@@ -1201,9 +1201,9 @@ $(function () {
       if($('body').find('#mapper-message').length > 0) {
         $('#mapper-message').html(message).dialog("open");
       } else {
-        $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Embed Map">' + message + '</div>');
+        $('body').append('<div id="mapper-message-embed" class="ui-state-highlight" title="Embed">' + message + '</div>');
 
-        $('#mapper-message').dialog({
+        $('#mapper-message-embed').dialog({
           height        : (250).toString(),
           width         : (525).toString(),
           autoOpen      : true,
