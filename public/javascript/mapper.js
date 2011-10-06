@@ -1212,7 +1212,7 @@ $(function () {
           draggable     : false,
           resizable     : false,
           buttons       : {
-            Cancel: function () {
+            OK: function () {
               $(this).dialog("destroy").remove();
             }
           }
@@ -1229,30 +1229,36 @@ $(function () {
         id      = $(obj).attr("data-mid"),
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
 
-    $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Delete Map">' + message + '</div>');
+    $('body').append('<div id="mapper-message-delete" class="ui-state-highlight" title="Delete">' + message + '</div>');
 
-    $('#mapper-message').dialog({
+    $('#mapper-message-delete').dialog({
       height        : (250).toString(),
       width         : (500).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
       resizable     : false,
-      buttons       : {
-        "Delete" : function () {
-          $.ajax({
-            type    : 'DELETE',
-            url     :  self.settings.baseUrl + "/usermaps/" + id,
-            success : function() {
-              self.loadMapList();
-            }
-          });
-          $(this).dialog("destroy").remove();
+      buttons       : [
+        {
+          "text"  : "Delete",
+          "click" : function () {
+            $.ajax({
+              type    : 'DELETE',
+              url     :  self.settings.baseUrl + "/usermaps/" + id,
+              success : function() {
+                self.loadMapList();
+              }
+            });
+            $(this).dialog("destroy").remove();
+          }
         },
-        Cancel: function () {
-          $(this).dialog("destroy").remove();
-        }
-      }
+        {
+          "text"  : "Cancel",
+          "class" : "ui-button-cancel",
+          "click" : function () {
+            $(this).dialog("destroy").remove();
+          }
+        }]
     });
 
   };
@@ -1295,52 +1301,56 @@ $(function () {
       closeOnEscape : false,
       draggable     : false,
       resizable     : false,
-      buttons       : {
-        "Save" : function () {
-
-          if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
-
-          if(missingTitle) {
-            $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function () {
-              $(this).css({'background-color':'transparent'});
-            });
-          } else {
-            $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-            $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
-            $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
-            $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
-            if($('#border').is(':checked')) {
-              $('input[name="options[border]"]').val(1);
+      buttons       : [
+        {
+          "text"  : "Save",
+          "click" : function () {
+            if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
+            if(missingTitle) {
+              $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function () {
+                $(this).css({'background-color':'transparent'});
+              });
             } else {
-              $('input[name="options[border]"]').val("");
-            }
-            if($('#legend').is(':checked')) {
-              $('input[name="options[legend]"]').val(1);
-            } else {
-              $('input[name="options[legend]"]').val("");
-            }
-
-            $.ajax({
-              type        : 'POST',
-              url         :  Mappr.settings.baseUrl + "/usermaps/",
-              data        :  $("form").serialize(),
-              dataType    : 'json',
-              success     : function(data) {
-                $('#mapTitle').text($('.m-mapSaveTitle').val());
-                map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
-                $('#file-name').val(map_title);
-                Mappr.activateEmbed(data.mid);
-                Mappr.loadMapList();
+              $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
+              $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
+              $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
+              $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
+              if($('#border').is(':checked')) {
+                $('input[name="options[border]"]').val(1);
+              } else {
+                $('input[name="options[border]"]').val("");
               }
-            });
+              if($('#legend').is(':checked')) {
+                $('input[name="options[legend]"]').val(1);
+              } else {
+                $('input[name="options[legend]"]').val("");
+              }
 
-            $(this).dialog("destroy");
+              $.ajax({
+                type        : 'POST',
+                url         :  Mappr.settings.baseUrl + "/usermaps/",
+                data        :  $("form").serialize(),
+                dataType    : 'json',
+                success     : function(data) {
+                  $('#mapTitle').text($('.m-mapSaveTitle').val());
+                  map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
+                  $('#file-name').val(map_title);
+                  Mappr.activateEmbed(data.mid);
+                  Mappr.loadMapList();
+                }
+              });
+
+              $(this).dialog("destroy");
+            }
           }
-        },
-        Cancel: function () {
+      },
+      {
+        "text"  : "Cancel",
+        "class" : "ui-button-cancel",
+        "click" : function () {
           $(this).dialog("destroy");
         }
-      }
+      }]
     });
   };
 
@@ -1363,14 +1373,20 @@ $(function () {
       closeOnEscape : false,
       draggable     : false,
       resizable     : false,
-      buttons       : {
-        Cancel : function () {
-          $(this).dialog("destroy");
+      buttons       : [
+        {
+          "text"  : "Download",
+          "click" : function() {
+            Mappr.generateDownload();
+          }
         },
-        Download : function() {
-          Mappr.generateDownload();
-        }
-      }
+        {
+          "text"  : "Cancel",
+          "class" : "ui-button-cancel",
+          "click" : function () {
+            $(this).dialog("destroy");
+          }
+        }]
     });
   };
 

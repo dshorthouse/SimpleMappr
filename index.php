@@ -405,14 +405,14 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
         <div id="badRecords"></div>
     </div>
     
-    <div id="mapSave" title="Save Map">
+    <div id="mapSave" title="Save">
       <div class="fieldset-taxon">
-        <label for="m-mapSaveTitle">Map title<span class="required">*</span></label>
+        <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
         <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
       </div>
     </div>
 
-      <div id="mapExport" title="Download Map">
+      <div id="mapExport" title="Download">
         <div class="download-dialog">
         <div id="mapCropMessage" class="sprites">map will be cropped</div>
 
