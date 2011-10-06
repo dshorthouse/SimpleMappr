@@ -1422,6 +1422,7 @@ $(function () {
     $('#mapper-message').html(message).dialog({
       autoOpen      : true,
       height        : (200).toString(),
+      width         : (400).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
