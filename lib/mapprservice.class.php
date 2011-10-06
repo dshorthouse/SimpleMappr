@@ -616,7 +616,7 @@ class MAPPR {
 
     //add WKT polygons/lines
     $this->add_freehand();
-    
+
     $this->add_graticules();
 
     //add the coordinates
@@ -1156,9 +1156,8 @@ class MAPPR {
       $layer->set("type", $this->shapes['grid']['type']);
       $layer->set("status",MS_ON);
       $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
-      
-      $class = ms_newClassObj($layer);
 
+      $class = ms_newClassObj($layer);
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
       $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 10);
@@ -1200,6 +1199,7 @@ class MAPPR {
       $layer->grid->set("maxarcs", $ticks);
       $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
       $layer->grid->set("maxsubdivide", 2);
+
     }
   }
 

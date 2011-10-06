@@ -18,7 +18,6 @@ if(isset($_GET['map'])) {
 
 require_once('lib/mapprservice.header.class.php');
 require_once('lib/mapprservice.class.php');
-require_once('lib/jsmin.php');
 
 session_start();
 

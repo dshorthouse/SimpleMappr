@@ -27,6 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
+require_once('jsmin.php');
+require_once('cssmin.php');
+
 class HEADER {
 
   private $js_header = array();
@@ -48,17 +51,17 @@ class HEADER {
     'public/javascript/jquery.hotkeys.min.js'
   );
 
-  public static $css_files = array(
-    'public/stylesheets/screen.css'
+  public static $local_css_files = array(
+    'public/stylesheets/raw/screen.css'
   );
 
   function __construct() {
     $this->remote_js_files();
     $this->local_js_files();
-    $this->css_files();
+    $this->local_css_files();
   }
 
-  private function js_cached($dir, $x='js') {
+  private function file_cached($dir, $x='js') {
     $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
     foreach($files as $file) {
       if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) { return $file; }
@@ -80,7 +83,7 @@ class HEADER {
     self::$local_js_files[] = (ENVIRONMENT == "production") ? 'public/javascript/mapper.min.js' : 'public/javascript/mapper.js';
 
     if(ENVIRONMENT == "production") {
-      $cached_js =  $this->js_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
+      $cached_js = $this->file_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
       if (!$cached_js) {
         $js_contents = '';
@@ -105,9 +108,29 @@ class HEADER {
     }
   }
     
-  private function css_files() {
-    foreach(self::$css_files as $css_file) {
-      $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
+  private function local_css_files() {
+    if(ENVIRONMENT == "production") {
+      $cached_css = $this->file_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
+
+      if(!$cached_css) {
+        $css_min = '';
+        foreach(self::$local_css_files as $css_file) {
+          $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
+        }
+        $css_min_file = md5(time()) . ".css";
+        $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
+        fwrite($handle, $css_min);
+        fclose($handle);
+
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
+      } else {
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
+      }
+
+    } else {
+      foreach(self::$local_css_files as $css_file) {
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
+      }
     }
   }
     
