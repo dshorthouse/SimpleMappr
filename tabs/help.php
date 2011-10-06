@@ -46,17 +46,17 @@ $("#filter-countries")
 
     <h3>Toolbar buttons:</h3>
         <ul class="toolbar">
-            <li class="sprites toolsZoomIn">Zoom in: click this icon to draw a zoom region on the preview</li>
-            <li class="sprites toolsZoomOut">Zoom out: click this icon to zoom out one step</li>
-            <li class="sprites rotateAnticlockwise">Rotate counter-clockwise: select 5<sup>o</sup>, 10<sup>o</sup>, and 15<sup>o</sup> from the drop-down menu while hovering on this icon</li>
-            <li class="sprites rotateClockwise">Rotate clockwise: as above</li>
-            <li class="sprites toolsCrop">Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels.</li> 
-            <li class="sprites toolsQuery">Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab.</li>
+            <li><span class="sprites toolsZoomIn">&nbsp;</span>Zoom in: click this icon to draw a zoom region on the preview</li>
+            <li><span class="sprites toolsZoomOut">&nbsp;</span>Zoom out: click this icon to zoom out one step</li>
+            <li><span class="sprites rotateAnticlockwise">&nbsp;</span>Rotate counter-clockwise: select 5<sup>o</sup>, 10<sup>o</sup>, and 15<sup>o</sup> from the drop-down menu while hovering on this icon</li>
+            <li><span class="sprites rotateClockwise">&nbsp;</span>Rotate clockwise: as above</li>
+            <li><span class="sprites toolsCrop">&nbsp;</span>Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels.</li> 
+            <li><span class="sprites toolsQuery">&nbsp;</span>Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab.</li>
 <!--
-            <li class="sprites toolsDraw">Draw shape: click this icon to draw an free-hand line. A freehand drawing gets automatically added to and replaces the contents of Freehand 1 form under the Freehand tab.</li>
+            <li><span class="sprites toolsDraw">&nbsp;</span>Draw shape: click this icon to draw an free-hand line. A freehand drawing gets automatically added to and replaces the contents of Freehand 1 form under the Freehand tab.</li>
 -->
-            <li class="sprites toolsRefresh">Refresh: refresh the map image</li>
-            <li class="sprites toolsRebuild">Rebuild: re-render the default presentation at lowest zoom and geographic projection</li>
+            <li><span class="sprites toolsRefresh">&nbsp;</span>Refresh: refresh the map image</li>
+            <li><span class="sprites toolsRebuild">&nbsp;</span>Rebuild: re-render the default presentation at lowest zoom and geographic projection</li>
         </ul>
 
     <h3>Layers:</h3>
@@ -84,8 +84,8 @@ $("#filter-countries")
         </ul>
     
     <ul class="toolbar">
-        <li class="sprites toolsSave">While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
-        <li class="sprites toolsDownload">Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
+        <li><span class="sprites toolsSave">&nbsp;</span>While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
+        <li><span class="sprites toolsDownload">&nbsp;</span>Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
     </ul>
 
     <div class="header">
