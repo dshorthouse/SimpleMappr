@@ -37,9 +37,6 @@ class MAPPR {
   /* the base map object */
   public $map_obj;
 
-  /* path to Imagemagick */
-  public $imagemagick_path;
-
   /* path to shapefiles */
   public $shape_path;
 

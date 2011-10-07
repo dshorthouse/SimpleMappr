@@ -21,7 +21,4 @@ setlocale(LC_ALL, 'en_US.utf8');
 //set the default timezone
 date_default_timezone_set('America/New_York');
 
-//set the ImageMagick convert path
-define("IMAGEMAGICK_CONVERT", "/opt/local/bin/convert");
-
 ?>
