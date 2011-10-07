@@ -129,7 +129,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
             <button class="sprites submitForm positive">Preview</button>
             <button class="sprites clear clearLayers negative">Clear all</button>
         </div>
-        
+
     <!-- close multipoints tab -->
     </div>
 
@@ -137,13 +137,13 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     <div id="map-regions">
         <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-            <p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p> 
+            <p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p>
         </div>
 
         <div id="fieldSetsRegions" class="fieldSets">
           <?php echo partial_regions(); ?>
         </div>
-        
+
         <div class="addFieldset">
             <button class="sprites addmore positive" data-type="regions">Add a region</button>
         </div>
@@ -182,9 +182,9 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
                       <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
                       <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
                     </ul>
-                    
+
                     <h3 id="mapTitle"></h3>
-                    
+
                     <div id="map-saveDialog">
                         <?php if(isset($_SESSION['simplemappr'])): ?>
                         <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save ctrl+s">Save</a></span>
@@ -192,10 +192,10 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
                         <?php endif; ?>
                         <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
                     </div>
-                    
+
             </div>
             <div class="clear"></div>
-            
+
             <div id="map">
                 <div id="mapImage">
                     <div id="mapControlsTransparency"></div>
@@ -218,7 +218,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
                 </div>
                 <div id="mapScale"></div>
             </div>
-            
+
             <div id="mapTools">
 
               <ul>
@@ -267,12 +267,12 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
                 </ul>
                         <p>*zoom prior to setting projection</p>
               </div> <!-- /mapOptions -->
-                
+
             </div> <!-- /mapTools -->
-            
+
         </div>
     </div>
-    
+
     <!-- my maps tab -->
     <div id="map-mymaps">
         <?php if(!isset($_SESSION['simplemappr'])): ?>
@@ -287,39 +287,23 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     
     <!-- users tab -->
     <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-        <div id="map-users">
-            <div id="userdata"></div>
-        </div>
+    <div id="map-users">
+      <div id="userdata"></div>
+    </div>
     <?php endif; ?>
 
-    <!-- hidden form elements for map preview -->
-    <input type="hidden" id="download" name="download" />
-    <input type="hidden" id="output" name="output" />
-    
-    <!-- download token -->
-    <input type="hidden" id="download_token" name="download_token" />
-    
-    <!-- bounding box of map image in whatever projection map is in -->
-    <input type="hidden" id="bbox_map" name="bbox_map" />
-    
-    <!-- projection of map image -->
-    <input type="hidden" id="projection_map" name="projection_map" />
-
-    <!-- coordinates of bounding box in pixels where top left is (x,y) and bottom right is (x2,y2)-->
-    <input type="hidden" id="bbox_rubberband" name="bbox_rubberband" />
-    
-    <!-- coordinates of bounding box for shading selected regions -->
-    <input type="hidden" id="bbox_query" name="bbox_query" />
-    
-    <input type="hidden" id="pan" name="pan" />
-    <input type="hidden" id="zoom_out" name="zoom_out" />
-    <input type="hidden" id="crop" name="crop" />
-    <input type="hidden" id="rotation" name="rotation" />
-    
-    <!-- selected tab -->
-    <input type="hidden" id="selectedtab" name="selectedtab" />
-    
-    <!-- put modal form elements back into flow of DOM -->
+    <input type="hidden" name="download" id="download"/>
+    <input type="hidden" name="output" id="output" />
+    <input type="hidden" name="download_token" id="download_token"/>
+    <input type="hidden" name="bbox_map" id="bbox_map" />
+    <input type="hidden" name="projection_map" id="projection_map" />
+    <input type="hidden" name="bbox_rubberband" id="bbox_rubberband" />
+    <input type="hidden" name="bbox_query" id="bbox_query" />
+    <input type="hidden" name="pan" id="pan" />
+    <input type="hidden" name="zoom_out" id="zoom_out" />
+    <input type="hidden" name="crop" id="crop" />
+    <input type="hidden" name="rotation" id="rotation" />
+    <input type="hidden" name="selectedtab" id="selectedtab" />
     <input type="hidden" name="save[title]" />
     <input type="hidden" name="file_name" />
     <input type="hidden" name="download_factor" />
@@ -327,11 +311,11 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     <input type="hidden" name="grid_space" />
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
-    
+
     <div id="badRecordsViewer" title="Records out of range">
         <div id="badRecords"></div>
     </div>
-    
+
     <div id="mapSave" title="Save">
       <div class="fieldset-taxon">
         <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
@@ -368,7 +352,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 
         <p>*svg download does not include scalebar, legend, or relief layers</p>
         </div>
-        
+
         <div class="download-message">Building file for download...</div>
       </div>
 
@@ -387,7 +371,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 <?php $header->getAnalytics(); ?>
 </body>
 </html>
-
 <?php
 function partial_layers() {
   //marker sizes and shapes
