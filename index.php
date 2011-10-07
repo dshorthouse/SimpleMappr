@@ -22,16 +22,9 @@ require_once('lib/mapprservice.class.php');
 session_start();
 
 $header = new HEADER;
-
 $host = explode(".", $_SERVER['HTTP_HOST']);
-
-if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-  header('Location: http://www.simplemappr.net/');
-}
-
-if(isset($_COOKIE["simplemappr"])) {
-    $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
-}
+if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) { header('Location: http://www.simplemappr.net/'); }
+if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"])); }
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,16 +56,10 @@ if(isset($_COOKIE["simplemappr"])) {
             <li><a href="#map-preview">Preview</a></li>
             <li><a href="#map-points">Point Data</a></li>
             <li><a href="#map-regions">Regions</a></li>
-            <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l">
-                <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-                    All Maps
-                <?php else: ?>
-                    My Maps
-                <?php endif; ?>
-                </a></li>
-            <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-                <li><a href="#map-users" class="sprites map-users">Users</a></li>
-            <?php endif; ?>
+            <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
+<?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
+            <li><a href="#map-users" class="sprites map-users">Users</a></li>
+<?php endif; ?>
             <li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
             <li class="map-extras"><a href="#map-about">About</a></li>
             <li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
@@ -88,14 +75,10 @@ if(isset($_COOKIE["simplemappr"])) {
             <p>Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result.</p>
             </div>
 
-            <div class="header">
-              <h2>Citing</h2>
-            </div>
+            <div class="header"><h2>Citing</h2></div>
             <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 
-            <div class="header">
-              <h2>Recent Updates</h2>
-            </div>
+            <div class="header"><h2>Recent Updates</h2></div>
             <p class="update"><strong>October 6, 2011</strong><span>Removed eps as an output format because it was raster-based whereas tiff is equally good. Increased performance by allowing for browser caching; revisits should re-render the application in near sub-second times. Previewing shaded relief layers should be faster because it now produces images with less depth of colour; downloads continue to have quality outputs.</span></p>
             <p class="update"><strong>October 2, 2011</strong><span>Fixed a bug that prevented multiple layers or regions from properly expanding after a saved map is loaded.</span></p>
             <p class="update"><strong>October 1, 2011</strong><span>Added keyboard shortcuts for common actions. These are shown in the tooltips. Arrow keys also pan the map when your cursor is hovered over the map. Performance was optimized.</span></p>
@@ -111,27 +94,19 @@ if(isset($_COOKIE["simplemappr"])) {
             <p class="update"><strong>June 27, 2011</strong><span>An ISO Country codes and regions code table was added to the Help tab.</span></p>
             <p class="update"><strong>June 26, 2011</strong><span>File names may be specified when downloading maps.</span></p>
 
-            <div class="header">
-              <h2>In the Wild</h2>
-            </div>
+            <div class="header"><h2>In the Wild</h2></div>
             <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
             <p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
             <p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a></p>
             <p class="citation">Inclan Luna, Diego Javier. 2010. Revision of the genus <em>Erythromelana</em> Townsend, 1919 (Diptera: Tachinidae) with notes on their phylogeny and diversification. Master of Science (MS), Wright State University, Biological Sciences (<a href="http://rave.ohiolink.edu/etdc/view?acc_num=wright1292306222">permalink</a>)</p>
 
-            <div class="header">
-              <h2>Code</h2>
-            </div>
+            <div class="header"><h2>Code</h2></div>
             <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
 
-            <div class="header">
-              <h2>History</h2>
-            </div>
+            <div class="header"><h2>History</h2></div>
             <p>The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History.</p>
 
-            <div class="header">
-              <h2>Acknowledgments</h2>
-            </div>
+            <div class="header"><h2>Acknowledgments</h2></div>
             <p>Underlying ArcView shapefiles were obtained from Natural Earth, <a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a> and the mapping software used is MapServer, <a href="http://mapserver.org" target="_blank">http://mapserver.org</a> via PHP MapScript.</p>
 
         </div>
@@ -264,16 +239,11 @@ if(isset($_COOKIE["simplemappr"])) {
                     <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
                     <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
                     <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
-<!-- 
-// The following selection is based on a GeoTiff created by David P. Shorthouse and is not available at NaturalEarth
--->
                     <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
                 </ul>
                 <h2>Options</h2>
                 <ul>
                     <li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
-<!--                    <li><input type="checkbox" id="arrow"  class="layeropt" name="options[arrow]" /> north arrow</li>
--->
                     <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules
                       <div id="graticules-selection">
                         <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
@@ -385,7 +355,7 @@ if(isset($_COOKIE["simplemappr"])) {
 
         <fieldset>
           <legend>File type</legend>
-        <?php echo partial_filetypes(); ?>
+          <?php echo partial_filetypes(); ?>
         </fieldset>
 
         <fieldset>
@@ -419,7 +389,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 </html>
 
 <?php
-
 function partial_layers() {
   //marker sizes and shapes
   $marker_size  = '<option value="">--select--</option>';
