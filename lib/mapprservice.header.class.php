@@ -72,7 +72,7 @@ class HEADER {
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
-        if ($value == 'public/javascript/jquery-1.6.4.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') {
+        if ($value == 'public/javascript/jquery-1.6.4.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js') {
           unset(self::$local_js_files[$key]);
         }
       }
