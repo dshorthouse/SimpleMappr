@@ -408,15 +408,13 @@ if(isset($_COOKIE["simplemappr"])) {
     </div>
 
 </div>
-<?php
-$header->getJSHeader();
-$header->getAnalytics();
-?>
+<?php $header->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
 //--><!]]>
 </script>
+<?php $header->getAnalytics(); ?>
 </body>
 </html>
 
