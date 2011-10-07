@@ -42,15 +42,7 @@ if(isset($_COOKIE["simplemappr"])) {
 <meta name="author" content="David P. Shorthouse" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
-<?php
-$header->getCSSHeader();
-$header->getJSHeader();
-?>
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
-//--><!]]>
-</script>
+<?php $header->getCSSHeader(); ?>
 </head>
 <?php flush(); ?>
 <body>
@@ -417,8 +409,14 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 
 </div>
 <?php
+$header->getJSHeader();
 $header->getAnalytics();
 ?>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
+//--><!]]>
+</script>
 </body>
 </html>
 
@@ -464,9 +462,7 @@ function partial_layers() {
     $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$j.'][title]" />' . "\n";
     $output .= '</div>' . "\n";
     $output .= '<div class="resizable-textarea">' . "\n";
-    $output .= '<span>' . "\n";
-    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$j.'][data]"></textarea>' . "\n";
-    $output .= '</span>' . "\n";
+    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$j.'][data]"></textarea></span>' . "\n";
     $output .= '</div>' . "\n";
 
     $output .= '<div class="fieldset-extras">' . "\n";
@@ -496,9 +492,7 @@ function partial_regions() {
     $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$j.'][title]" />' . "\n";
     $output .= '</div>' . "\n";
     $output .= '<div class="resizable-textarea">' . "\n";
-    $output .= '<span>' . "\n";
-    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$j.'][data]"></textarea>' . "\n";
-    $output .= '</span>' . "\n";
+    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$j.'][data]"></textarea></span>' . "\n";
     $output .= '</div>' . "\n";
   
     $output .= '<div class="fieldset-extras">' . "\n";
