@@ -367,7 +367,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     <!-- hidden form elements for map preview -->
     <input type="hidden" id="download" name="download" />
     <input type="hidden" id="output" name="output" />
-    <input type="hidden" id="download_legend" name="download_legend" />
     
     <!-- download token -->
     <input type="hidden" id="download_token" name="download_token" />

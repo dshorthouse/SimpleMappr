@@ -75,6 +75,15 @@ class MAPPR {
         DRIVER AGG/PNG
         IMAGEMODE RGB
         FORMATOPTION 'INTERLACE=OFF'
+        FORMATOPTION 'QUANTIZE_FORCE=ON'
+        FORMATOPTION 'QUANTIZE_DITHER=OFF'
+        FORMATOPTION 'QUANTIZE_COLORS=256'
+      END
+
+      OUTPUTFORMAT
+        NAME png_download
+        DRIVER AGG/PNG
+        IMAGEMODE RGB
       END
 
       OUTPUTFORMAT
@@ -105,6 +114,15 @@ class MAPPR {
         DRIVER AGG/PNG
         IMAGEMODE RGB
         FORMATOPTION 'INTERLACE=OFF'
+        FORMATOPTION 'QUANTIZE_FORCE=ON'
+        FORMATOPTION 'QUANTIZE_DITHER=OFF'
+        FORMATOPTION 'QUANTIZE_COLORS=256'
+      END
+
+      OUTPUTFORMAT
+        NAME pnga_download
+        DRIVER AGG/PNG
+        IMAGEMODE RGB
       END
 
       OUTPUTFORMAT
@@ -263,8 +281,6 @@ class MAPPR {
     $this->zoom_out         = $this->load_param('zoom_out', false);
 
     $this->_download_factor = $this->load_param('download_factor', 1);
-
-    $this->download_legend  = $this->load_param('download_legend', false);
 
     $this->file_name        = $this->load_param('file_name', time());
 
@@ -576,10 +592,9 @@ class MAPPR {
     $this->map_obj->imagecolor->setRGB(255,255,255);
 
     // Set the output format and size
-    if(isset($this->download_legend) && $this->download_legend) { $this->output = 'svg'; }
-
     if(isset($this->output) && $this->output) {
       $output = ($this->output == 'eps') ? 'svg' : $this->output;
+      $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $output . "_download" : $output;
       $this->map_obj->selectOutputFormat($output);
     }
 
@@ -1462,21 +1477,7 @@ class MAPPR {
   /**
   * Produce the  final output
   */
-  public function get_output() {        
-    //produce nothing but the legend if requested
-    if($this->download_legend) {
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false); 
-      header("Content-Type: image/svg+xml");
-      header("Content-Disposition: attachment; filename=\"legend-" . time() . ".svg\";" );
-      $this->map_obj->legend->set("status", MS_DEFAULT);
-      $legend = $this->map_obj->drawLegend();
-      $legend->saveImage("");
-      exit();
-    }
-    
+  public function get_output() {
     switch($this->output) {
       case 'tif':
         error_reporting(0);
