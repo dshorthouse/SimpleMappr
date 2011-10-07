@@ -36,7 +36,7 @@ class HEADER {
   private $css_header = array();
 
   public static $local_js_files = array(
-    'public/javascript/raphael-min.js',
+//    'public/javascript/raphael-min.js',
     'public/javascript/jquery-1.6.4.min.js',
     'public/javascript/jquery-ui-1.8.16.min.js',
     'public/javascript/jquery.colorpicker.min.js',
@@ -72,7 +72,9 @@ class HEADER {
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
-        if ($value == 'public/javascript/jquery-1.6.3.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') unset(self::$local_js_files[$key]);
+        if ($value == 'public/javascript/jquery-1.6.4.min.js' || $value == 'public/javascript/jquery-ui-1.8.16.min.js ') {
+          unset(self::$local_js_files[$key]);
+        }
       }
       $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>');
       $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>');

@@ -593,7 +593,7 @@ class MAPPR {
 
     // Set the output format and size
     if(isset($this->output) && $this->output) {
-      $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $output . "_download" : $output;
+      $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
       $this->map_obj->selectOutputFormat($output);
     }
 

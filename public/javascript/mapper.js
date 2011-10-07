@@ -1703,9 +1703,8 @@ $(function () {
   ************************************/
 
 // Commented out for now because injection of svg breaks flow of document in IE
-
-  Mappr.raphaelConfig = {
 /*
+  Mappr.raphaelConfig = {
     board         : new Raphael('mapOutput', 800, 400),
     line          : null,
     path          : null,
@@ -1716,7 +1715,6 @@ $(function () {
     selectedSize  : 4,
     selectedTool  : 'pencil',
     offset        : $('#mapOutput').offset()
-*/
   };
 
   Mappr.raphaelConfig.position = function (e) {
@@ -1757,7 +1755,7 @@ $(function () {
     }
     self.line.attr({ path: self.path });
 
-  }; /** end Mappr.raphaelConfig.mouseMove **/
+  };
 
   Mappr.raphaelConfig.forcePaint = function () {
     var self = Mappr.raphaelConfig;
@@ -1775,6 +1773,7 @@ $(function () {
     self.forcePaint();
     return result;
   };
+*/
 
   Mappr.init = function () {
     $('#initial-message').hide();
