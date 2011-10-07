@@ -14,6 +14,5 @@ $mappr_query->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
 $mappr_query->get_request()
             ->execute()
             ->query_layer()
-            ->query_freehand()
             ->get_output();
 ?>

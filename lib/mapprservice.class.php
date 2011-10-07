@@ -250,7 +250,6 @@ class MAPPR {
   public function get_request() {
     $this->coords           = $this->load_param('coords', array());
     $this->regions          = $this->load_param('regions', array());
-    $this->wkt              = $this->load_param('freehand', array());
 
     $this->output           = $this->load_param('output','pnga');
     $this->projection       = $this->load_param('projection', 'epsg:4326');
@@ -624,9 +623,6 @@ class MAPPR {
 
     //add other layers as requested
     $this->add_layers();
-
-    //add WKT polygons/lines
-    $this->add_freehand();
 
     $this->add_graticules();
 
@@ -1106,52 +1102,6 @@ class MAPPR {
             default:
           }
         }
-      }
-    }
-  }
-
-  /**
-  * Add freehand draw regions using well-known text, wkt
-  */
-  public function add_freehand() {
-    if(isset($this->wkt) && $this->wkt) {
-      for($j=count($this->wkt)-1; $j>=0; $j--) {
-          
-        //clear out previous loop's selection
-        $color = '';
-
-        $title = ($this->wkt[$j]['title']) ? $this->wkt[$j]['title'] : '';
-        $color = ($this->wkt[$j]['color']) ? explode(" ",$this->wkt[$j]['color']) : explode(" ","0 0 0");
-        if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
-          $color = array(0,0,0);
-        }
-        $data = trim($this->wkt[$j]['data']);
-        
-        if($data) {
-          $layer = ms_newLayerObj($this->map_obj);
-          $layer->set("name","wkt" . $j);
-
-          $feature = ms_shapeObjFromWkt($data);
-          $layer->addFeature($feature);
-
-          $type = (strstr($data, "LINE")) ? MS_LAYER_LINE : MS_LAYER_POLYGON;
-
-          $layer->set("type",$type);
-          $layer->set("template", "template.html");
-          $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
-
-          $class = ms_newClassObj($layer);
-          $class->set("name", $title);
-
-          $style = ms_newStyleObj($class);
-          $style->set("opacity",100);
-          $style->set("width", 5);
-          $style->color->setRGB($color[0],$color[1],$color[2]);
-          $style->outlinecolor->setRGB(30,30,30);
-
-          $layer->set("status",MS_ON);
-        }
-
       }
     }
   }

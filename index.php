@@ -513,37 +513,6 @@ function partial_regions() {
   return $output;
 }
 
-function partial_freehands() {
-  $output = '';
-
-  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
-    $output .= '<div class="form-item fieldset-freehands">';
-
-    $output .= '<button class="sprites removemore negative" data-type="freehands">Remove</button>';
-
-    $output .= '<h3><a href="#">Freehand '.($j+1).'</a></h3>' . "\n";
-    $output .= '<div>' . "\n";
-    $output .= '<div class="fieldset-taxon">' . "\n";
-    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="freehand['.$j.'][title]" />' . "\n";
-    $output .= '</div>' . "\n";
-    $output .= '<div class="resizable-textarea">' . "\n";
-    $output .= '<span>' . "\n";
-    $output .= '<textarea class="resizable m-mapCoord" rows="5" cols="60" name="freehand['.$j.'][data]"></textarea>' . "\n";
-    $output .= '</span>' . "\n";
-    $output .= '</div>' . "\n";
-
-    $output .= '<div class="fieldset-extras">' . "\n";
-    $output .= '<span class="fieldset-title">Color:</span> <input type="text"  class="colorPicker" size="12" maxlength="11" name="freehand['.$j.'][color]" value="150 150 150" />' . "\n";
-    $output .= '</div>' . "\n";
-    $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
-    $output .= '</div>' . "\n";
-
-    $output .= '</div>' . "\n";
-  }
-
-  return $output;
-}
-
 function partial_scales() {
   $output = '';
 

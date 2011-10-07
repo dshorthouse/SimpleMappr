@@ -115,21 +115,6 @@ class MAPPRQUERY extends MAPPR {
 
     return $this;
   }
-
-  public function query_freehand() {
-    if(!$this->freehandCoords) return $this;
-
-    foreach($this->freehandCoords as $pixelcoord) {
-      $coord = explode(" ", $pixelcoord[0]);
-      $point = new stdClass();
-      $point->x = $coord[0];
-      $point->y = $coord[1];
-      $proj_point = $this->pix2geo($point);
-      $this->_data[] = $proj_point->x . " " . $proj_point->y;
-    }
-
-    return $this;
-  }
     
   public function get_output() {
     header("Content-Type: application/json");
