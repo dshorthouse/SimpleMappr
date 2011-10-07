@@ -1198,8 +1198,8 @@ $(function () {
       message += "<p><input type='text' size='75' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
       message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span>";
 
-      if($('body').find('#mapper-message').length > 0) {
-        $('#mapper-message').html(message).dialog("open");
+      if($('body').find('#mapper-message-embed').length > 0) {
+        $('#mapper-message-embed').html(message).dialog("open");
       } else {
         $('body').append('<div id="mapper-message-embed" class="ui-state-highlight" title="Embed">' + message + '</div>');
 
