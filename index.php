@@ -594,7 +594,7 @@ function partial_scales() {
 function partial_filetypes() {
   $output = '';
 
-  $file_types = array('svg', 'png', 'tif', 'eps', 'kml');
+  $file_types = array('svg', 'png', 'tif', 'kml');
   foreach($file_types as $type) {
     $checked = ($type == "svg") ? " checked=\"checked\"": "";
     $asterisk = ($type == "svg") ? "*" : "";

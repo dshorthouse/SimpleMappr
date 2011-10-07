@@ -85,7 +85,7 @@ $("#filter-countries")
     
     <ul class="toolbar">
         <li><span class="sprites toolsSave">&nbsp;</span>While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
-        <li><span class="sprites toolsDownload">&nbsp;</span>Download the map as web-friendly png, high resolution tif, eps, or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
+        <li><span class="sprites toolsDownload">&nbsp;</span>Download the map as web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
     </ul>
 
     <div class="header">

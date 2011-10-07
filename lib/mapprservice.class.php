@@ -593,7 +593,6 @@ class MAPPR {
 
     // Set the output format and size
     if(isset($this->output) && $this->output) {
-      $output = ($this->output == 'eps') ? 'svg' : $this->output;
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $output . "_download" : $output;
       $this->map_obj->selectOutputFormat($output);
     }
@@ -1355,7 +1354,7 @@ class MAPPR {
     $this->map_obj->legend->label->color->setRGB(0,0,0);
     
     //svg format cannot do legends in MapServer
-    if($this->download && $this->options['legend'] && $this->output != 'svg' && $this->output != 'eps') {
+    if($this->download && $this->options['legend'] && $this->output != 'svg') {
       $this->map_obj->legend->set("status", MS_EMBED);
       $this->map_obj->legend->set("position", MS_UR);
       $this->map_obj->legend->set("transparent", 0);
@@ -1387,7 +1386,7 @@ class MAPPR {
     $this->map_obj->scalebar->label->color->setRGB(0,0,0);
     
     //svg format cannot do scalebar in MapServer
-    if($this->download && $this->options['scalebar'] && ($this->output != 'svg' || $this->output != 'eps')) {
+    if($this->download && $this->options['scalebar'] && $this->output != 'svg') {
       $this->map_obj->scalebar->set("status", MS_EMBED);
       $this->map_obj->scalebar->set("position", MS_LR);
       $this->map_obj->drawScalebar();
@@ -1523,29 +1522,6 @@ class MAPPR {
         header("Content-Type: image/svg+xml");
         header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
         $this->image->saveImage("");
-        exit();
-      break;
-
-      case 'eps':
-        //convert svg on disk to eps
-        $this->image_url = $this->image->saveWebImage();
-        $svg_filename = basename($this->image_url);
-        $eps_filename = str_replace(".svg", ".eps", $svg_filename);
-        $command_string = $this->imagemagick_path . " " . $this->tmp_path.$svg_filename ." " . $this->tmp_path.$eps_filename;
-        $command = system("$command_string");
-        
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
-        header("Content-Type: application/postscript");
-        header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
-        header("Content-Length: ".filesize($this->tmp_path.$eps_filename));
-        header("Content-Transfer-Encoding: binary");
-
-        ob_clean();
-        flush();
-        readfile($this->tmp_path.$eps_filename);
         exit();
       break;
 
