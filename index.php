@@ -109,6 +109,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <div class="header">
               <h2>Recent Updates</h2>
             </div>
+            <p class="update"><strong>October 6, 2011</strong><span>Removed eps as an output format because it was raster-based whereas tiff is equally good. Increased performance by allowing for browser caching; revisits should re-render the application in near sub-second times. Previewing shaded relief layers should be faster because it now produces images with less depth of colour; downloads continue to have quality outputs.</span></p>
             <p class="update"><strong>October 2, 2011</strong><span>Fixed a bug that prevented multiple layers or regions from properly expanding after a saved map is loaded.</span></p>
             <p class="update"><strong>October 1, 2011</strong><span>Added keyboard shortcuts for common actions. These are shown in the tooltips. Arrow keys also pan the map when your cursor is hovered over the map. Performance was optimized.</span></p>
             <p class="update"><strong>September 29, 2011</strong><span>Crop corner coordinates are now stored in a cookie such that a crop selection can be restored by clicking the crop icon once again after refreshing, zooming, panning, or selecting different layers or options. However, changing the projection clears these stored crop coordinates so the crop area will need to be redrawn.</span></p>

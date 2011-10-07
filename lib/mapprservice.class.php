@@ -549,21 +549,21 @@ class MAPPR {
     $this->shapes['placenames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
       'type'  => MS_LAYER_POINT,
-      'sort'  => 9
+      'sort'  => 8
     );
 
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 10
+      'sort'  => 9
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 11
+      'sort'  => 10
     );
 
     //graticules
@@ -571,7 +571,7 @@ class MAPPR {
       'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_5",
       'data'  => 'cultural',
       'type'  => MS_LAYER_LINE,
-      'sort'  => 13
+      'sort'  => 11
     );
 
   }
