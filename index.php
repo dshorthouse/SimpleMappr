@@ -71,11 +71,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
             <li><a href="#map-preview">Preview</a></li>
             <li><a href="#map-points">Point Data</a></li>
             <li><a href="#map-regions">Regions</a></li>
-<!--  
-// Freehand Drawing commented out until projection issues fully resolved
-// Once resolved, commenting on tab below must also be removed
-            <li><a href="#map-freehand">Freehand</a></li>
--->
             <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l">
                 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
                     All Maps
@@ -194,32 +189,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
     </div>
     <!-- close shaded regions tab --> 
 
-    <!-- shaded freehand tab -->
-<!--
-// Commented out for now until projection issues fully resolved with freehand drawing
-
-    <div id="map-freehand">
-            <div id="freehand-introduction" class="panel ui-corner-all">
-                <p>Type well-known text (<em>e.g.</em>  POLYGON((-103 54,-111 51,-100 49,-103 54)))</p> 
-            </div>
-
-            <div id="fieldSetsFreehands" class="fieldSets">
-              <?php echo partial_freehands(); ?>
-            </div>
-
-            <div class="addFieldset">
-                <button class="sprites addmore positive" data-type="freehands">Add a region</button>
-            </div>
-
-            <div class="submit">
-                <button class="sprites submitForm positive">Preview</button>
-                <button class="sprites clear clearFreehand negative">Clear all</button>
-            </div>
-
-    </div>
--->
-    <!-- close freehand tab -->
-
     <!-- map preview tab -->
     <div id="map-preview">
         <div id="mapWrapper">
@@ -243,10 +212,6 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
                       </li>
                       <li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
                       <li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
-<!--
-// Commented out for now until projection issues fully resolve with freehand
-                      <li><a href="#" class="sprites toolsDraw tooltip" title="draw shape"></a></li>
--->
                       <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
                       <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
                     </ul>
