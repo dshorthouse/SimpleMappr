@@ -858,7 +858,7 @@ $(function () {
             $(this).find("button.removemore").show().click(function () {
               $(clone).remove();
               counter = self.textareaCounter(data_type, 'decrease');
-              $(button).removeAttr("disabled");
+              button.removeAttr("disabled");
               return false;
             }).parent()
             .find("button.clearself").click(function () {
