@@ -1693,7 +1693,7 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUsers();
     }
-    $('#mapOutputImage').attr("src", "public/images/basemap.png").css({ 'width' : 800, 'height' : 400 });
+    $('#mapOutputImage').attr("src", "public/images/basemap.png").attr("width",800).attr("height", 400);
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
   };
 
