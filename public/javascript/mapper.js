@@ -1637,28 +1637,6 @@ $(function () {
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
 
-  Mappr.bindBulkDownload = function () {
-    var self = this;
-
-    $("#download-all").click(function () {
-      if($(this).is(':checked')) {
-        $(".download-checkbox").each(function () {
-          if($(this).is(':visible')) {
-            $(this).attr('checked', true);
-          } else {
-            $(this).attr('checked', false);
-          }
-        });
-      } else {
-        $(".download-checkbox").attr('checked', false);
-      }
-    });
-    $(".bulkdownload").click(function () {
-      self.bulkDownload();
-      return false;
-    });
-  };
-
   Mappr.showExamples = function() {
     var message = '<img src="public/images/help_data.png" alt="Example Data Entry" />';
 
@@ -1705,7 +1683,6 @@ $(function () {
     this.bindClearButtons();
     this.bindSave();
     this.bindDownload();
-    this.bindBulkDownload();
     this.bindSubmit();
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
