@@ -3,10 +3,10 @@ body{font-family:Verdana,Arial,Helvetica,sans-serif;margin-top:5px;}
 a{color:#418A39;}
 input, select, textarea{font-size:0.7em !important;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
-#site-title{margin:0px;padding:0px 0px 5px 0px;}
+#site-title{margin:0px;padding:5px 0px;}
 #site-title span{display:none;}
-#site-tagline{position:absolute;top:20px;left:375px;font-size:12px;font-style:italic;}
-#site-logout{position:absolute;top:15px;right:15px;font-size:16px;}
+#site-tagline{position:absolute;top:25px;left:375px;font-size:12px;font-style:italic;}
+#site-logout{position:absolute;top:20px;right:10px;font-size:16px;}
 #site-logout span.site-logout{font-style:normal;}
 #site-logout a.site-logout{height:20px;line-height:20px;padding:0px 5px 0px 20px;background-position:0 -594px;color:#FF0000;}
 #site-logout span.site-login{font-style:normal;}
@@ -49,24 +49,10 @@ button.negative:active{background-color:#782c21 !important;}
 .removemore{display:none;background-position:3px -410px;position:absolute;right:6px;top:6px;z-index:10;background-color:#FFF}
 div#okButton{margin:0px auto;width:100px;text-align:middle;margin-top:10px;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#CCC !important;border:1px solid #EEE;cursor:wait;}
-#builder{width:780px;margin-top:1em;margin-bottom:1em;font-size:medium}
-#builder #column1{width:70px;}
-#builder #column2{width:200px;}
-#builder #column3{width:125px;}
-#builder #column4{width:125px;}
-#builder #column5{width:100px;}
-#builder #column6{width:100px;}
-#builder #column7{width:60px;}
-#builder thead tr th{background:#404040;color:#F0F0F0;border-bottom:1px solid #9F9F9F;font-size:0.75em;}
-#builder tbody tr.rowEven{background:#C7C7C7;}
-#builder tbody tr.rowOdd{background:#E0E0E0;}
-#builder tbody tr:hover{background-color:#BFE3C1;}
-#builder tbody tr td{border-bottom:1px solid #9F9F9F;padding:2px;text-align:center;}
-#builder tbody tr td a{display:block;}
 .hidden, #blankRow, .hiddenControls, .newRow td div{display:none;}
 .fieldSets{margin-top:10px !important}
 .addFieldset{margin-left:20px;margin-top:20px;}
-.fieldset-points, .fieldset-regions, .fieldset-freehands{position:relative;width:672px !important;}
+.fieldset-points, .fieldset-regions{position:relative;width:672px !important;}
 .fieldset-taxon{margin-bottom:10px;}
 .fieldset-extras{margin:10px 0px;}
 .fieldset-title{font-size:0.85em;}
@@ -289,8 +275,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error{border:1px solid #cd0a0a;background-color:#fef1ec;color:#cd0a0a;}
 .ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a{color:#cd0a0a;}
 .ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text{color:#cd0a0a;}
-.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary{font-weight:bold;}
-.ui-priority-secondary, .ui-widget-content .ui-priority-secondary, .ui-widget-header .ui-priority-secondary{opacity:.7;filter:Alpha(Opacity=70);font-weight:normal;}
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{opacity:.35;filter:Alpha(Opacity=35);background-image:none;}
 .ui-icon-triangle-1-e{background-position:0 -384px;}
 .ui-icon-triangle-1-s{background-position:0 -352px;}
@@ -301,17 +285,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br{-moz-border-radius-bottomright:4px;-webkit-border-bottom-right-radius:4px;-khtml-border-bottom-right-radius:4px;border-bottom-right-radius:4px;}
 .ui-widget-overlay{background-color:#aaaaaa;opacity:.30;filter:Alpha(Opacity=30);}
 .ui-widget-shadow{margin:-8px 0 0 -8px;padding:8px;background-color:#aaaaaa;opacity:.30;filter:Alpha(Opacity=30);-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px;}
-.ui-resizable{position:relative;}
-.ui-resizable-handle{position:absolute;font-size:0.1px;z-index:99999;display:block;}
-.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle{display:none;}
-.ui-resizable-n{cursor:n-resize;height:7px;width:100%;top:-5px;left:0;}
-.ui-resizable-s{cursor:s-resize;height:7px;width:100%;bottom:-5px;left:0;}
-.ui-resizable-e{cursor:e-resize;width:7px;right:-5px;top:0;height:100%;}
-.ui-resizable-w{cursor:w-resize;width:7px;left:-5px;top:0;height:100%;}
-.ui-resizable-se{cursor:se-resize;width:12px;height:12px;right:1px;bottom:1px;}
-.ui-resizable-sw{cursor:sw-resize;width:9px;height:9px;left:-5px;bottom:-5px;}
-.ui-resizable-nw{cursor:nw-resize;width:9px;height:9px;left:-5px;top:-5px;}
-.ui-resizable-ne{cursor:ne-resize;width:9px;height:9px;right:-5px;top:-5px;}
 .ui-selectable-helper{position:absolute;z-index:100;border:1px dotted black;}
 .ui-accordion{width:100%;}
 .ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;zoom:1;}
@@ -322,14 +295,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-accordion .ui-accordion-header .ui-icon{position:absolute;left:.5em;top:50%;margin-top:-8px;}
 .ui-accordion .ui-accordion-content{padding:1em 2.2em;border-top:0;margin-top:-2px;position:relative;top:1px;margin-bottom:2px;overflow:auto;display:none;zoom:1;}
 .ui-accordion .ui-accordion-content-active{display:block;}
-.ui-autocomplete{position:absolute;cursor:default;}
-* html .ui-autocomplete{width:1px;}
-.ui-menu{list-style:none;padding:2px;margin:0;display:block;float:left;}
-.ui-menu .ui-menu{margin-top:-3px;}
-.ui-menu .ui-menu-item{margin:0;padding:0;zoom:1;float:left;clear:left;width:100%;}
-.ui-menu .ui-menu-item a{text-decoration:none;display:block;padding:.2em .4em;line-height:1.5;zoom:1;}
-.ui-menu .ui-menu-item a.ui-state-hover,
-.ui-menu .ui-menu-item a.ui-state-active{font-weight:normal;margin:-1px;}
 .ui-button{display:inline-block;position:relative;padding:0;margin-right:.1em;text-decoration:none !important;cursor:pointer;text-align:center;zoom:1;overflow:visible;}
 .ui-button-cancel{border:none !important;background:none !important;}
 .ui-button-icon-only{width:2.2em;}
@@ -363,19 +328,6 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
-.ui-slider{position:relative;text-align:left;}
-.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:1.2em;height:1.2em;cursor:default;}
-.ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:.7em;display:block;border:0;background-position:0 0;}
-.ui-slider-horizontal{height:.8em;}
-.ui-slider-horizontal .ui-slider-handle{top:-.3em;margin-left:-.6em;}
-.ui-slider-horizontal .ui-slider-range{top:0;height:100%;}
-.ui-slider-horizontal .ui-slider-range-min{left:0;}
-.ui-slider-horizontal .ui-slider-range-max{right:0;}
-.ui-slider-vertical{width:.8em;height:100px;}
-.ui-slider-vertical .ui-slider-handle{left:-.3em;margin-left:0;margin-bottom:-.6em;}
-.ui-slider-vertical .ui-slider-range{left:0;width:100%;}
-.ui-slider-vertical .ui-slider-range-min{bottom:0;}
-.ui-slider-vertical .ui-slider-range-max{top:0;}
 .ui-tabs{position:relative;padding:.2em;zoom:1;}
 .ui-tabs .ui-tabs-nav{margin:0;padding:.2em .2em 0;}
 .ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
@@ -385,51 +337,6 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a{cursor:pointer;}
 .ui-tabs .ui-tabs-panel{display:block;border-width:0;padding:1em 1.4em;background:none;}
 .ui-tabs .ui-tabs-hide{display:none !important;}
-.ui-datepicker{width:17em;padding:.2em .2em 0;display:none;}
-.ui-datepicker .ui-datepicker-header{position:relative;padding:.2em 0;}
-.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next{position:absolute;top:2px;width:1.8em;height:1.8em;}
-.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover{top:1px;}
-.ui-datepicker .ui-datepicker-prev{left:2px;}
-.ui-datepicker .ui-datepicker-next{right:2px;}
-.ui-datepicker .ui-datepicker-prev-hover{left:1px;}
-.ui-datepicker .ui-datepicker-next-hover{right:1px;}
-.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{display:block;position:absolute;left:50%;margin-left:-8px;top:50%;margin-top:-8px;}
-.ui-datepicker .ui-datepicker-title{margin:0 2.3em;line-height:1.8em;text-align:center;}
-.ui-datepicker .ui-datepicker-title select{font-size:1em;margin:1px 0;}
-.ui-datepicker select.ui-datepicker-month-year{width:100%;}
-.ui-datepicker select.ui-datepicker-month,
-.ui-datepicker select.ui-datepicker-year{width:49%;}
-.ui-datepicker table{width:100%;font-size:.9em;border-collapse:collapse;margin:0 0 .4em;}
-.ui-datepicker th{padding:.7em .3em;text-align:center;font-weight:bold;border:0;}
-.ui-datepicker td{border:0;padding:1px;}
-.ui-datepicker td span, .ui-datepicker td a{display:block;padding:.2em;text-align:right;text-decoration:none;}
-.ui-datepicker .ui-datepicker-buttonpane{background-image:none;margin:.7em 0 0 0;padding:0 .2em;border-left:0;border-right:0;border-bottom:0;}
-.ui-datepicker .ui-datepicker-buttonpane button{float:right;margin:.5em .2em .4em;cursor:pointer;padding:.2em .6em .3em .6em;width:auto;overflow:visible;}
-.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current{float:left;}
-.ui-datepicker.ui-datepicker-multi{width:auto;}
-.ui-datepicker-multi .ui-datepicker-group{float:left;}
-.ui-datepicker-multi .ui-datepicker-group table{width:95%;margin:0 auto .4em;}
-.ui-datepicker-multi-2 .ui-datepicker-group{width:50%;}
-.ui-datepicker-multi-3 .ui-datepicker-group{width:33.3%;}
-.ui-datepicker-multi-4 .ui-datepicker-group{width:25%;}
-.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header{border-left-width:0;}
-.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header{border-left-width:0;}
-.ui-datepicker-multi .ui-datepicker-buttonpane{clear:left;}
-.ui-datepicker-row-break{clear:both;width:100%;font-size:0em;}
-.ui-datepicker-rtl{direction:rtl;}
-.ui-datepicker-rtl .ui-datepicker-prev{right:2px;left:auto;}
-.ui-datepicker-rtl .ui-datepicker-next{left:2px;right:auto;}
-.ui-datepicker-rtl .ui-datepicker-prev:hover{right:1px;left:auto;}
-.ui-datepicker-rtl .ui-datepicker-next:hover{left:1px;right:auto;}
-.ui-datepicker-rtl .ui-datepicker-buttonpane{clear:right;}
-.ui-datepicker-rtl .ui-datepicker-buttonpane button{float:left;}
-.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current{float:right;}
-.ui-datepicker-rtl .ui-datepicker-group{float:right;}
-.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header{border-right-width:0;border-left-width:1px;}
-.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header{border-right-width:0;border-left-width:1px;}
-.ui-datepicker-cover{display:none;display/**/:block;position:absolute;z-index:-1;filter:mask();top:-4px;left:-4px;width:200px;height:200px;}
-.ui-progressbar{height:2em;text-align:left;}
-.ui-progressbar .ui-progressbar-value{margin:-1px;height:100%;}
 
 .tipsy { padding: 5px; font-size: 10px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat;  background-image: url("../../images/tipsy.gif"); }
 .tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
