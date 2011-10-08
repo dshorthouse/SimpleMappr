@@ -52,22 +52,21 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 
     <div id="tabs">
 
-        <ul class="navigation">
-            <li><a href="#map-preview">Preview</a></li>
-            <li><a href="#map-points">Point Data</a></li>
-            <li><a href="#map-regions">Regions</a></li>
-            <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
+      <ul class="navigation">
+        <li><a href="#map-preview">Preview</a></li>
+        <li><a href="#map-points">Point Data</a></li>
+        <li><a href="#map-regions">Regions</a></li>
+        <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-            <li><a href="#map-users" class="sprites map-users">Users</a></li>
+        <li><a href="#map-users" class="sprites map-users">Users</a></li>
 <?php endif; ?>
-            <li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
-            <li class="map-extras"><a href="#map-about">About</a></li>
-            <li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
-            <li class="map-extras"><a href="tabs/api.php">API</a></li>
-        </ul>
+        <li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
+        <li class="map-extras"><a href="#map-about">About</a></li>
+        <li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
+        <li class="map-extras"><a href="tabs/api.php">API</a></li>
+      </ul>
 
-    <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
-
+      <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
 
         <!-- about tab -->
         <div id="map-about">
@@ -292,6 +291,48 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     </div>
     <?php endif; ?>
 
+    <div id="badRecordsViewer" title="Records out of range"><div id="badRecords"></div></div>
+
+    <div id="mapSave" title="Save">
+      <div class="fieldset-taxon">
+        <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
+        <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
+      </div>
+    </div>
+
+    <div id="mapExport" title="Download">
+      <div class="download-dialog">
+        <div id="mapCropMessage" class="sprites">map will be cropped</div>
+
+        <p>
+          <label for="file-name">File name:</label>
+          <input type="text" id="file-name" maxlength="30" size="30" />
+        </p>
+
+        <fieldset>
+          <legend>Scale</legend>
+          <?php echo partial_scales(); ?>
+        </fieldset>
+
+        <fieldset>
+          <legend>File type</legend>
+          <?php echo partial_filetypes(); ?>
+        </fieldset>
+
+        <fieldset>
+          <legend>Options</legend>
+          <input type="checkbox" id="border" />
+          <label for="border">include border</label>
+          <input type="checkbox" id="legend" />
+          <label for="legend">include legend</label>
+        </fieldset>
+
+        <p>*svg download does not include scalebar, legend, or relief layers</p>
+      </div>
+
+      <div class="download-message">Building file for download...</div>
+    </div>
+
     <input type="hidden" name="download" id="download"/>
     <input type="hidden" name="output" id="output" />
     <input type="hidden" name="download_token" id="download_token"/>
@@ -312,54 +353,10 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
 
-    <div id="badRecordsViewer" title="Records out of range">
-        <div id="badRecords"></div>
-    </div>
-
-    <div id="mapSave" title="Save">
-      <div class="fieldset-taxon">
-        <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
-        <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
-      </div>
-    </div>
-
-      <div id="mapExport" title="Download">
-        <div class="download-dialog">
-        <div id="mapCropMessage" class="sprites">map will be cropped</div>
-
-        <p>
-          <label for="file-name">File name:</label>
-          <input type="text" id="file-name" maxlength="30" size="30" />
-        </p>
-
-        <fieldset>
-          <legend>Scale</legend>
-          <?php echo partial_scales(); ?>
-        </fieldset>
-
-        <fieldset>
-          <legend>File type</legend>
-          <?php echo partial_filetypes(); ?>
-        </fieldset>
-
-        <fieldset>
-          <legend>Options</legend>
-            <input type="checkbox" id="border" />
-            <label for="border">include border</label>
-            <input type="checkbox" id="legend" />
-            <label for="legend">include legend</label>
-        </fieldset>
-
-        <p>*svg download does not include scalebar, legend, or relief layers</p>
-        </div>
-
-        <div class="download-message">Building file for download...</div>
-      </div>
-
     </form>
 
-    <!-- close tabs wrapper -->
-    </div>
+  <!-- close tabs wrapper -->
+  </div>
 
 </div>
 <?php $header->getJSHeader();?>

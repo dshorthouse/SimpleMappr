@@ -271,8 +271,10 @@ $(function () {
     });
 
     $('.toolsRotate').click(function () {
+      var rotation = (!$('#rendered_rotation').val()) ? 0 : parseInt($('#rendered_rotation').val(), 10);
+
       self.resetJbbox();
-      $('#rotation').val(parseInt($('#rendered_rotation').val(), 10)+parseInt($(this).attr("data-rotate"), 10));
+      $('#rotation').val(rotation+parseInt($(this).attr("data-rotate"), 10));
       self.showMap();
       return false;
     });
