@@ -207,12 +207,6 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
                     <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
                     <div id="mapOutput">
                         <img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />
-                        <input type="hidden" id="rendered_bbox" value=""></input>
-                        <input type="hidden" id="rendered_rotation" value=""></input>
-                        <input type="hidden" id="rendered_projection" value=""></input>
-                        <input type="hidden" id="legend_url" value=""></input>
-                        <input type="hidden" id="scalebar_url" value=""></input>
-                        <input type="hidden" id="bad_points" value=""></input>
                     </div>
                 </div>
                 <div id="mapScale"></div>
@@ -352,6 +346,12 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
     <input type="hidden" name="grid_space" />
     <input type="hidden" name="options[border]" />
     <input type="hidden" name="options[legend]" />
+    <input type="hidden" id="rendered_bbox" value="" />
+    <input type="hidden" id="rendered_rotation" value="" />
+    <input type="hidden" id="rendered_projection" value="" />
+    <input type="hidden" id="legend_url" value="" />
+    <input type="hidden" id="scalebar_url" value="" />
+    <input type="hidden" id="bad_points" value="" />
 
     </form>
 
