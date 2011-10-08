@@ -174,7 +174,6 @@ class USERMAPS {
       $output .= "</tbody>" . "\n";
       $output .= "</table>" . "\n";
       $output .= "<script type=\"text/javascript\">
-        Mappr.bindBulkDownload();
         $(\"#filter-mymaps\")
           .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
           .keypress(function(event) { if (event.which === 13) { return false; }
