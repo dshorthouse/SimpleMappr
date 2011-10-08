@@ -1613,7 +1613,7 @@ $(function () {
       default:
         $('#download').val(1);
         $('#output').val(filetype);
-        if(self.vars.jcropAPI) { $('#crop').val(1); }
+        if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
         $.download(self.settings.baseUrl + "/application/", formData, 'post');
         $('#download').val('');
@@ -1657,21 +1657,6 @@ $(function () {
       self.bulkDownload();
       return false;
     });
-  };
-
-  Mappr.bulkDownload = function () {
-    var selections = [], match = /^download\[(.*)\]$/, filetype = $("input[name='bulk-download-filetype']:checked").val();
-
-    $('.download-checkbox').each(function() {
-      if($(this).is(':checked')) {
-        selections.push($(this).attr("name").match(match)[1]);
-      }
-    });
-
-    //TODO: need Redis and worker process to produce zipped document containing all selected files
-
-//    alert("Selections: " + selections + ", Filetype: " + filetype);
-
   };
 
   Mappr.showExamples = function() {
