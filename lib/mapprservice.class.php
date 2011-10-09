@@ -562,14 +562,6 @@ class MAPPR {
       'sort'  => 10
     );
 
-    //graticules
-    $this->shapes['grid'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_graticules_all/10m_graticules_5",
-      'data'  => 'cultural',
-      'type'  => MS_LAYER_LINE,
-      'sort'  => 11
-    );
-
   }
 
   /**
@@ -1113,8 +1105,7 @@ class MAPPR {
     if(isset($this->graticules) && $this->graticules) {
       $layer = ms_newLayerObj($this->map_obj);
       $layer->set("name", 'grid');
-      $layer->set("data", $this->shapes['grid']['shape']);
-      $layer->set("type", $this->shapes['grid']['type']);
+      $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
       $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
 
@@ -1156,11 +1147,10 @@ class MAPPR {
       if($ticks < 5) { $labelformat = "DDMM"; }
       if($ticks <= 1) { $labelformat = "DDMMSS"; }
 
-      $layer->grid->set("labelformat", $labelformat);
+      $layer->grid->set("labelformat", ($this->gridspace) ? "DD" : $labelformat);
       $layer->grid->set("maxarcs", $ticks);
       $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
       $layer->grid->set("maxsubdivide", 2);
-
     }
   }
 
