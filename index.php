@@ -47,317 +47,257 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;">Sign In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
-
-    <div id="initial-message" class="ui-corner-all ui-widget-content">Building page...</div>
-
-    <div id="tabs">
-
-      <ul class="navigation">
-        <li><a href="#map-preview">Preview</a></li>
-        <li><a href="#map-points">Point Data</a></li>
-        <li><a href="#map-regions">Regions</a></li>
-        <li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
+<div id="initial-message" class="ui-corner-all ui-widget-content">Building page...</div>
+<div id="tabs">
+<ul class="navigation">
+<li><a href="#map-preview">Preview</a></li>
+<li><a href="#map-points">Point Data</a></li>
+<li><a href="#map-regions">Regions</a></li>
+<li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-        <li><a href="#map-users" class="sprites map-users">Users</a></li>
+<li><a href="#map-users" class="sprites map-users">Users</a></li>
 <?php endif; ?>
-        <li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
-        <li class="map-extras"><a href="#map-about">About</a></li>
-        <li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
-        <li class="map-extras"><a href="tabs/api.php">API</a></li>
-      </ul>
-
-      <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
-
-        <!-- about tab -->
-        <div id="map-about">
-            <div id="general-about" class="panel ui-corner-all">
-            <p>Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result.</p>
-            </div>
-
-            <div class="header"><h2>Citing</h2></div>
-            <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
-
-            <div class="header"><h2>Recent Updates</h2></div>
-            <p class="update"><strong>October 6, 2011</strong><span>Removed eps as an output format because it was raster-based whereas tiff is equally good. Increased performance by allowing for browser caching; revisits should re-render the application in near sub-second times. Previewing shaded relief layers should be faster because it now produces images with less depth of colour; downloads continue to have quality outputs.</span></p>
-            <p class="update"><strong>October 2, 2011</strong><span>Fixed a bug that prevented multiple layers or regions from properly expanding after a saved map is loaded.</span></p>
-            <p class="update"><strong>October 1, 2011</strong><span>Added keyboard shortcuts for common actions. These are shown in the tooltips. Arrow keys also pan the map when your cursor is hovered over the map. Performance was optimized.</span></p>
-            <p class="update"><strong>September 29, 2011</strong><span>Crop corner coordinates are now stored in a cookie such that a crop selection can be restored by clicking the crop icon once again after refreshing, zooming, panning, or selecting different layers or options. However, changing the projection clears these stored crop coordinates so the crop area will need to be redrawn.</span></p>
-            <p class="update"><strong>September 28, 2011</strong><span>Added editable corner coordinates for crop and improved its accuracy.</span></p>
-            <p class="update"><strong>September 26, 2011</strong><span>Responsiveness was improved by replacing map imagery when options are adjusted rather than replacing whole segments of HTML.</span></p>
-            <p class="update"><strong>September 21, 2011</strong><span>Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</span></p>
-            <p class="update"><strong>August 2, 2011</strong><span>Refined error-handling with coordinate recognition.</span></p>
-            <p class="update"><strong>July 5, 2011</strong><span>Added the ability to filter your My Maps list by title.</span></p>
-            <p class="update"><strong>July 4, 2011</strong><span>The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</span></p>
-            <p class="update"><strong>July 3, 2011</strong><span>State/Province line artifacts are not shown when the map is reprojected.</span></p>
-            <p class="update"><strong>June 28, 2011</strong><span>Additional layers on the Point Data or Regions tabs may be removed.</span></p>
-            <p class="update"><strong>June 27, 2011</strong><span>An ISO Country codes and regions code table was added to the Help tab.</span></p>
-            <p class="update"><strong>June 26, 2011</strong><span>File names may be specified when downloading maps.</span></p>
-
-            <div class="header"><h2>In the Wild</h2></div>
-            <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
-            <p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
-            <p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a></p>
-            <p class="citation">Inclan Luna, Diego Javier. 2010. Revision of the genus <em>Erythromelana</em> Townsend, 1919 (Diptera: Tachinidae) with notes on their phylogeny and diversification. Master of Science (MS), Wright State University, Biological Sciences (<a href="http://rave.ohiolink.edu/etdc/view?acc_num=wright1292306222">permalink</a>)</p>
-
-            <div class="header"><h2>Code</h2></div>
-            <p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
-
-            <div class="header"><h2>History</h2></div>
-            <p>The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History.</p>
-
-            <div class="header"><h2>Acknowledgments</h2></div>
-            <p>Underlying ArcView shapefiles were obtained from Natural Earth, <a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a> and the mapping software used is MapServer, <a href="http://mapserver.org" target="_blank">http://mapserver.org</a> via PHP MapScript.</p>
-
-        </div>
-
-    <!-- multipoint tab -->
-    <div id="map-points">
-        <div id="general-points" class="panel ui-corner-all">
-        <p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.showExamples(); return false;" class="sprites help">examples</a></p>
-        </div>
-
-        <div id="fieldSetsPoints" class="fieldSets">
-          <?php echo partial_layers(); ?>
-        </div>
-
-        <div class="addFieldset">
-            <button class="sprites addmore positive" data-type="coords">Add a layer</button>
-        </div>
-
-        <div class="submit">
-            <button class="sprites submitForm positive">Preview</button>
-            <button class="sprites clear clearLayers negative">Clear all</button>
-        </div>
-
-    <!-- close multipoints tab -->
-    </div>
-
-    <!-- shaded regions tab -->
-    <div id="map-regions">
-        <div id="regions-introduction" class="panel ui-corner-all">
+<li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
+<li class="map-extras"><a href="#map-about">About</a></li>
+<li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
+<li class="map-extras"><a href="tabs/api.php">API</a></li>
+</ul>
+<form id="form-mapper" action="application/" method="post" autocomplete = "off">  
+<!-- about tab -->
+<div id="map-about">
+<div id="general-about" class="panel ui-corner-all">
+<p>Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result.</p>
+</div>
+<div class="header"><h2>Citing</h2></div>
+<p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
+<div class="header"><h2>Recent Updates</h2></div>
+<p class="update"><strong>October 6, 2011</strong><span>Removed eps as an output format because it was raster-based whereas tiff is equally good. Increased performance by allowing for browser caching; revisits should re-render the application in near sub-second times. Previewing shaded relief layers should be faster because it now produces images with less depth of colour; downloads continue to have quality outputs.</span></p>
+<p class="update"><strong>October 2, 2011</strong><span>Fixed a bug that prevented multiple layers or regions from properly expanding after a saved map is loaded.</span></p>
+<p class="update"><strong>October 1, 2011</strong><span>Added keyboard shortcuts for common actions. These are shown in the tooltips. Arrow keys also pan the map when your cursor is hovered over the map. Performance was optimized.</span></p>
+<p class="update"><strong>September 29, 2011</strong><span>Crop corner coordinates are now stored in a cookie such that a crop selection can be restored by clicking the crop icon once again after refreshing, zooming, panning, or selecting different layers or options. However, changing the projection clears these stored crop coordinates so the crop area will need to be redrawn.</span></p>
+<p class="update"><strong>September 28, 2011</strong><span>Added editable corner coordinates for crop and improved its accuracy.</span></p>
+<p class="update"><strong>September 26, 2011</strong><span>Responsiveness was improved by replacing map imagery when options are adjusted rather than replacing whole segments of HTML.</span></p>
+<p class="update"><strong>September 21, 2011</strong><span>Added graticule options. Fixed production of KML files. Cleaned presentation of download options.</span></p>
+<p class="update"><strong>August 2, 2011</strong><span>Refined error-handling with coordinate recognition.</span></p>
+<p class="update"><strong>July 5, 2011</strong><span>Added the ability to filter your My Maps list by title.</span></p>
+<p class="update"><strong>July 4, 2011</strong><span>The fill bucket in the map toolbar now produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map. Repeating this process adds another layer to the Regions tab. Clear buttons were added to each layer in the Point Data and Regions tabs.</span></p>
+<p class="update"><strong>July 3, 2011</strong><span>State/Province line artifacts are not shown when the map is reprojected.</span></p>
+<p class="update"><strong>June 28, 2011</strong><span>Additional layers on the Point Data or Regions tabs may be removed.</span></p>
+<p class="update"><strong>June 27, 2011</strong><span>An ISO Country codes and regions code table was added to the Help tab.</span></p>
+<p class="update"><strong>June 26, 2011</strong><span>File names may be specified when downloading maps.</span></p>
+<div class="header"><h2>In the Wild</h2></div>
+<p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
+<p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
+<p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a></p>
+<p class="citation">Inclan Luna, Diego Javier. 2010. Revision of the genus <em>Erythromelana</em> Townsend, 1919 (Diptera: Tachinidae) with notes on their phylogeny and diversification. Master of Science (MS), Wright State University, Biological Sciences (<a href="http://rave.ohiolink.edu/etdc/view?acc_num=wright1292306222">permalink</a>)</p>
+<div class="header"><h2>Code</h2></div>
+<p>The code behind SimpleMappr may be obtained at <a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>.</p>
+<div class="header"><h2>History</h2></div>
+<p>The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History.</p>
+<div class="header"><h2>Acknowledgments</h2></div>
+<p>Underlying ArcView shapefiles were obtained from Natural Earth, <a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a> and the mapping software used is MapServer, <a href="http://mapserver.org" target="_blank">http://mapserver.org</a> via PHP MapScript.</p>
+</div>
+<!-- multipoint tab -->
+<div id="map-points">
+<div id="general-points" class="panel ui-corner-all">
+<p>Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon) <a href="#" onclick="javascript:Mappr.showExamples(); return false;" class="sprites help">examples</a></p>
+</div>
+<div id="fieldSetsPoints" class="fieldSets">
+<?php echo partial_layers(); ?>
+</div>
+<div class="addFieldset"><button class="sprites addmore positive" data-type="coords">Add a layer</button></div>
+<div class="submit"><button class="sprites submitForm positive">Preview</button><button class="sprites clear clearLayers negative">Clear all</button></div>
+<!-- close multipoints tab -->
+</div>
+<!-- shaded regions tab -->
+<div id="map-regions">
+<div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-            <p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p>
-        </div>
-
-        <div id="fieldSetsRegions" class="fieldSets">
-          <?php echo partial_regions(); ?>
-        </div>
-
-        <div class="addFieldset">
-            <button class="sprites addmore positive" data-type="regions">Add a region</button>
-        </div>
-
-        <div class="submit">
-            <button class="sprites submitForm positive">Preview</button>
-            <button class="sprites clear clearRegions negative">Clear all</button>
-        </div>
-
-    </div>
-    <!-- close shaded regions tab --> 
-
-    <!-- map preview tab -->
-    <div id="map-preview">
-        <div id="mapWrapper">
-            <div id="actionsBar" class="ui-widget-header ui-corner-all">
-                      <ul class="dropdown">
-                      <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
-                      <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
-                      <li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
-                        <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-15">15<sup>o</sup></a></li>
-                        </ul>
-                      </li>
-                      <li><a href="#" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
-                        <ul class="sub_menu">
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="5">5<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="10">10<sup>o</sup></a></li>
-                          <li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="15">15<sup>o</sup></a></li>
-                        </ul>
-                      </li>
-                      <li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
-                      <li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
-                      <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
-                      <li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
-                    </ul>
-
-                    <h3 id="mapTitle"></h3>
-
-                    <div id="map-saveDialog">
-                        <?php if(isset($_SESSION['simplemappr'])): ?>
-                        <span><a class="sprites map-saveItem map-save tooltip" href="#" title="save ctrl+s">Save</a></span>
-                        <span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" data-mid="">Embed</a></span>
-                        <?php endif; ?>
-                        <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
-                    </div>
-
-            </div>
-            <div class="clear"></div>
-
-            <div id="map">
-                <div id="mapImage">
-                    <div id="mapControlsTransparency"></div>
-                    <div id="mapControls">
-                          <a href="#" class="sprites controls tooltip arrows up" data-pan="up" title="pan up"></a>
-                          <a href="#" class="sprites controls tooltip arrows right" data-pan="right" title="pan right"></a>
-                          <a href="#" class="sprites controls tooltip arrows down" data-pan="down" title="pan down"></a>
-                          <a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
-                    </div>
-                    <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
-                    <div id="mapOutput">
-                        <img id="mapOutputImage" src="public/images/blank.gif" alt="" width="1" height="1" />
-                    </div>
-                </div>
-                <div id="mapScale"></div>
-            </div>
-
-            <div id="mapTools">
-
-              <ul>
-                <li><a href="#mapOptions">Settings</a></li>
-                <li><a href="#mapLegend">Legend</a></li>
-              </ul>
-
-              <div id="mapLegend"><p><em>legend will appear here</em></p></div>
-
-              <div id="mapOptions">
-                <h2>Layers</h2>
-                <ul>
-                    <li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> State/Province borders</li>
-                    <li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> place names</li>
-                    <li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> physical labels</li>
-                    <li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> marine labels</li>
-                    <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> lakes (outline)</li>
-                    <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
-                    <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
-                    <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
-                    <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
-                </ul>
-                <h2>Options</h2>
-                <ul>
-                    <li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
-                    <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules
-                      <div id="graticules-selection">
-                        <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
-                        <input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
-                        <input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> 10<sup>o</sup>
-                      </div>
-                    </li>
-                </ul>
-                <h2>Projection*</h2>
-                <ul>
-                  <li>
-                        <select id="projection" name="projection">
-                    <?php
-                      foreach(MAPPR::$accepted_projections as $key => $value) {
-                        $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
-                        echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
-                      }
-                    ?>
-                        </select>
-                  </li>
-                </ul>
-                        <p>*zoom prior to setting projection</p>
-              </div> <!-- /mapOptions -->
-
-            </div> <!-- /mapTools -->
-
-        </div>
-    </div>
-
-    <!-- my maps tab -->
-    <div id="map-mymaps">
-        <?php if(!isset($_SESSION['simplemappr'])): ?>
-            <div class="panel ui-corner-all">
-                <p>Save and reload your map data or create a generic template.</p> 
-            </div>
-           <div id="janrainEngageEmbed"></div>
-        <?php else: ?>
-            <div id="usermaps"></div>
-        <?php endif; ?>
-    </div>
-    
-    <!-- users tab -->
-    <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-    <div id="map-users">
-      <div id="userdata"></div>
-    </div>
-    <?php endif; ?>
-
-    <div id="badRecordsViewer" title="Records out of range"><div id="badRecords"></div></div>
-
-    <div id="mapSave" title="Save">
-      <div class="fieldset-taxon">
-        <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
-        <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
-      </div>
-    </div>
-
-    <div id="mapExport" title="Download">
-      <div class="download-dialog">
-        <div id="mapCropMessage" class="sprites">map will be cropped</div>
-
-        <p>
-          <label for="file-name">File name:</label>
-          <input type="text" id="file-name" maxlength="30" size="30" />
-        </p>
-
-        <fieldset>
-          <legend>Scale</legend>
-          <?php echo partial_scales(); ?>
-        </fieldset>
-
-        <fieldset>
-          <legend>File type</legend>
-          <?php echo partial_filetypes(); ?>
-        </fieldset>
-
-        <fieldset>
-          <legend>Options</legend>
-          <input type="checkbox" id="border" />
-          <label for="border">include border</label>
-          <input type="checkbox" id="legend" />
-          <label for="legend">include legend</label>
-        </fieldset>
-
-        <p>*svg download does not include scalebar, legend, or relief layers</p>
-      </div>
-
-      <div class="download-message">Building file for download...</div>
-    </div>
-
-    <input type="hidden" name="download" id="download"/>
-    <input type="hidden" name="output" id="output" />
-    <input type="hidden" name="download_token" id="download_token"/>
-    <input type="hidden" name="bbox_map" id="bbox_map" />
-    <input type="hidden" name="projection_map" id="projection_map" />
-    <input type="hidden" name="bbox_rubberband" id="bbox_rubberband" />
-    <input type="hidden" name="bbox_query" id="bbox_query" />
-    <input type="hidden" name="pan" id="pan" />
-    <input type="hidden" name="zoom_out" id="zoom_out" />
-    <input type="hidden" name="crop" id="crop" />
-    <input type="hidden" name="rotation" id="rotation" />
-    <input type="hidden" name="selectedtab" id="selectedtab" />
-    <input type="hidden" name="save[title]" />
-    <input type="hidden" name="file_name" />
-    <input type="hidden" name="download_factor" />
-    <input type="hidden" name="download_filetype" />
-    <input type="hidden" name="grid_space" />
-    <input type="hidden" name="options[border]" />
-    <input type="hidden" name="options[legend]" />
-    <input type="hidden" id="rendered_bbox" value="" />
-    <input type="hidden" id="rendered_rotation" value="" />
-    <input type="hidden" id="rendered_projection" value="" />
-    <input type="hidden" id="legend_url" value="" />
-    <input type="hidden" id="scalebar_url" value="" />
-    <input type="hidden" id="bad_points" value="" />
-
-    </form>
-
-  <!-- close tabs wrapper -->
-  </div>
-
+<p>Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]. <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p>
+</div>
+<div id="fieldSetsRegions" class="fieldSets">
+<?php echo partial_regions(); ?>
+</div>
+<div class="addFieldset"><button class="sprites addmore positive" data-type="regions">Add a region</button></div>
+<div class="submit"><button class="sprites submitForm positive">Preview</button><button class="sprites clear clearRegions negative">Clear all</button></div>
+</div>
+<!-- close shaded regions tab --> 
+<!-- map preview tab -->
+<div id="map-preview">
+<div id="mapWrapper">
+<div id="actionsBar" class="ui-widget-header ui-corner-all">
+<ul class="dropdown">
+<li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
+<li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
+<li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
+<ul class="sub_menu">
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-5">5<sup>o</sup></a></li>
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-10">10<sup>o</sup></a></li>
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-15">15<sup>o</sup></a></li>
+</ul>
+</li>
+<li><a href="#" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
+<ul class="sub_menu">
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="5">5<sup>o</sup></a></li>
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="10">10<sup>o</sup></a></li>
+<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="15">15<sup>o</sup></a></li>
+</ul>
+</li>
+<li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
+<li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
+<li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
+<li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
+</ul>
+<h3 id="mapTitle"></h3>
+<div id="map-saveDialog">
+<?php if(isset($_SESSION['simplemappr'])): ?>
+<span><a class="sprites map-saveItem map-save tooltip" href="#" title="save ctrl+s">Save</a></span>
+<span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" data-mid="">Embed</a></span>
+<?php endif; ?>
+<span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
+</div>
+</div>
+<div class="clear"></div>
+<div id="map">
+<div id="mapImage">
+<div id="mapControlsTransparency"></div>
+<div id="mapControls">
+<a href="#" class="sprites controls tooltip arrows up" data-pan="up" title="pan up"></a>
+<a href="#" class="sprites controls tooltip arrows right" data-pan="right" title="pan right"></a>
+<a href="#" class="sprites controls tooltip arrows down" data-pan="down" title="pan down"></a>
+<a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
+</div>
+<div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
+<div id="mapOutput"><img id="mapOutputImage" src="public/images/blank.gif" alt="" width="1" height="1" /></div>
+</div>
+<div id="mapScale"></div>
+</div>
+<div id="mapTools">
+<ul>
+<li><a href="#mapOptions">Settings</a></li>
+<li><a href="#mapLegend">Legend</a></li>
+</ul>
+<div id="mapLegend"><p><em>legend will appear here</em></p></div>
+<div id="mapOptions">
+<h2>Layers</h2>
+<ul>
+<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> State/Province borders</li>
+<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> place names</li>
+<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> physical labels</li>
+<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> marine labels</li>
+<li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> lakes (outline)</li>
+<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
+<li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
+<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
+<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
+</ul>
+<h2>Options</h2>
+<ul>
+<li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
+<li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules
+<div id="graticules-selection">
+<input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
+<input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
+<input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> 10<sup>o</sup>
+</div>
+</li>
+</ul>
+<h2>Projection*</h2>
+<ul>
+<li>
+<select id="projection" name="projection">
+<?php
+foreach(MAPPR::$accepted_projections as $key => $value) {
+$selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
+echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
+}
+?>
+</select>
+</li>
+</ul>
+<p>*zoom prior to setting projection</p>
+</div> <!-- /mapOptions -->
+</div> <!-- /mapTools -->
+</div>
+</div>
+<!-- my maps tab -->
+<div id="map-mymaps">
+<?php if(!isset($_SESSION['simplemappr'])): ?>
+<div class="panel ui-corner-all">
+<p>Save and reload your map data or create a generic template.</p> 
+</div>
+<div id="janrainEngageEmbed"></div>
+<?php else: ?>
+<div id="usermaps"></div>
+<?php endif; ?>
+</div>
+<!-- users tab -->
+<?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
+<div id="map-users">
+<div id="userdata"></div>
+</div>
+<?php endif; ?>
+<div id="badRecordsViewer" title="Records out of range"><div id="badRecords"></div></div>
+<div id="mapSave" title="Save">
+<div class="fieldset-taxon">
+<label for="m-mapSaveTitle">Title<span class="required">*</span></label>
+<input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
+</div>
+</div>
+<div id="mapExport" title="Download">
+<div class="download-dialog">
+<div id="mapCropMessage" class="sprites">map will be cropped</div>
+<p>
+<label for="file-name">File name:</label>
+<input type="text" id="file-name" maxlength="30" size="30" />
+</p>
+<fieldset>
+<legend>Scale</legend>
+<?php echo partial_scales(); ?>
+</fieldset>
+<fieldset>
+<legend>File type</legend>
+<?php echo partial_filetypes(); ?>
+</fieldset>
+<fieldset>
+<legend>Options</legend>
+<input type="checkbox" id="border" />
+<label for="border">include border</label>
+<input type="checkbox" id="legend" />
+<label for="legend">include legend</label>
+</fieldset>
+<p>*svg download does not include scalebar, legend, or relief layers</p>
+</div>
+<div class="download-message">Building file for download...</div>
+</div>
+<input type="hidden" name="download" id="download"/>
+<input type="hidden" name="output" id="output" />
+<input type="hidden" name="download_token" id="download_token"/>
+<input type="hidden" name="bbox_map" id="bbox_map" />
+<input type="hidden" name="projection_map" id="projection_map" />
+<input type="hidden" name="bbox_rubberband" id="bbox_rubberband" />
+<input type="hidden" name="bbox_query" id="bbox_query" />
+<input type="hidden" name="pan" id="pan" />
+<input type="hidden" name="zoom_out" id="zoom_out" />
+<input type="hidden" name="crop" id="crop" />
+<input type="hidden" name="rotation" id="rotation" />
+<input type="hidden" name="selectedtab" id="selectedtab" />
+<input type="hidden" name="save[title]" />
+<input type="hidden" name="file_name" />
+<input type="hidden" name="download_factor" />
+<input type="hidden" name="download_filetype" />
+<input type="hidden" name="grid_space" />
+<input type="hidden" name="options[border]" />
+<input type="hidden" name="options[legend]" />
+<input type="hidden" id="rendered_bbox" value="" />
+<input type="hidden" id="rendered_rotation" value="" />
+<input type="hidden" id="rendered_projection" value="" />
+<input type="hidden" id="legend_url" value="" />
+<input type="hidden" id="scalebar_url" value="" />
+<input type="hidden" id="bad_points" value="" />
+</form>
+<!-- close tabs wrapper -->
+</div>
 </div>
 <?php $header->getJSHeader();?>
 <script type="text/javascript">
@@ -369,6 +309,7 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 </body>
 </html>
 <?php
+
 function partial_layers() {
   //marker sizes and shapes
   $marker_size  = '<option value="">--select--</option>';
