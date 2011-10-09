@@ -5,6 +5,7 @@ config/conf.db.php
 # Ignore contents of direcories
 public/javascript/cache/*
 public/stylesheets/cache/*
+tmp/*.eps
 tmp/*.png
 tmp/*.jpg
 tmp/*.gif
