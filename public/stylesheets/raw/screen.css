@@ -26,6 +26,7 @@ li.map-extras{float:right !important;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message{background-position:0 -478px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-delete{background-position:0 -316px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-embed{background-position:0 -563px;}
+.ui-dialog-titlebar #ui-dialog-title-mapper-message-help{background-position:0 -530px;}
 #mapper-message,#mapper-message-embed{font-size:0.8em;}
 #mapper-message span.indent{display:block;margin-left:40px;}
 #mapper-building-map,#mapper-building-users{background-repeat:no-repeat !important;background-position:10px 10px !important;background-color:#FFF;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;position:absolute;top:10px;right:10px;z-index:1000;}

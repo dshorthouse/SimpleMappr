@@ -1640,12 +1640,12 @@ $(function () {
   Mappr.showExamples = function() {
     var message = '<img src="public/images/help_data.png" alt="Example Data Entry" />';
 
-    if($('body').find('#mapper-message').length > 0) {
-      $('#mapper-message').html(message).dialog("open");
+    if($('body').find('#mapper-message-help').length > 0) {
+      $('#mapper-message-help').html(message).dialog("open");
     } else {
-      $('body').append('<div id="mapper-message" class="ui-state-highlight" title="Example Coordinates">' + message + '</div>');
+      $('body').append('<div id="mapper-message-help" class="ui-state-highlight" title="Example Coordinates">' + message + '</div>');
 
-      $('#mapper-message').dialog({
+      $('#mapper-message-help').dialog({
         height        : (350).toString(),
         width         : (525).toString(),
         autoOpen      : true,
