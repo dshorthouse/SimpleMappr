@@ -154,7 +154,8 @@ class HEADER {
   public function getAnalytics() {
     $analytics = "";
     if(ENVIRONMENT == "production") {
-      $analytics  = "var _gaq = _gaq || [];" . "\n";
+      $analytics  = "<script type=\"text/javascript\">" . "\n";
+      $analytics .= "var _gaq = _gaq || [];" . "\n";
       $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."']);" . "\n";
       $analytics .= "_gaq.push(['_trackPageview']);
 (function() {
@@ -162,6 +163,7 @@ class HEADER {
   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();";
+      $analytics .= "</script>" . "\n";
     }
     echo $analytics;
   }
