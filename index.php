@@ -29,7 +29,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="description" content="A publication-quality, point map application." />
 <meta name="keywords" content="publication,map" />
 <meta name="author" content="David P. Shorthouse" />

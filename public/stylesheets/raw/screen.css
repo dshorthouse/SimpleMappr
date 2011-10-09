@@ -338,7 +338,7 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-tabs .ui-tabs-panel{display:block;border-width:0;padding:1em 1.4em;background:none;}
 .ui-tabs .ui-tabs-hide{display:none !important;}
 
-.tipsy { padding: 5px; font-size: 10px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat;  background-image: url("../../images/tipsy.gif"); }
+.tipsy { padding: 5px; font-size: 10px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat;  background-image: url("../../images/tipsy.png"); }
 .tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
 .tipsy-inner { -moz-border-radius:3px; -webkit-border-radius:3px; }
 .tipsy-north { background-position: top center; }
