@@ -42,11 +42,11 @@ class HEADER {
     'public/javascript/jquery.scrollTo.min.js',
     'public/javascript/jquery.Jcrop.min.js',
     'public/javascript/jquery.textarearesizer.compressed.js',
-    'public/javascript/jquery.cookie.js',
-    'public/javascript/jquery.download.js',
-    'public/javascript/jquery.tipsy.js',
+    'public/javascript/jquery.cookie.min.js',
+    'public/javascript/jquery.download.min.js',
+    'public/javascript/jquery.tipsy.min.js',
     'public/javascript/jquery.uitablefilter.min.js',
-    'public/javascript/janrain.js',
+    'public/javascript/janrain.min.js',
     'public/javascript/jquery.hotkeys.min.js'
   );
 
