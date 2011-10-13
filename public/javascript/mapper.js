@@ -1527,7 +1527,6 @@ $(function () {
           return false;
         });
 
-        self.hideLoadingMessage();
       }
     });
 
@@ -1539,16 +1538,18 @@ $(function () {
     $('#mapOutput input').each(function () {
       $(this).val('');
     });
-    $('#mapOutputImage').attr("src", data.mapOutputImage).load(function () {
-      if(!load_data) { load_data = { 'map' : { 'bbox_rubberband' : "" }}; }
-      self.loadCropSettings(load_data);
-    });
     $('#rendered_bbox').val(data.rendered_bbox);
     $('#rendered_rotation').val(data.rendered_rotation);
     $('#rendered_projection').val(data.rendered_projection);
     $('#legend_url').val(data.legend_url);
     $('#scalebar_url').val(data.scalebar_url);
     $('#bad_points').val(data.bad_points);
+    $('#mapOutputImage').attr("src", data.mapOutputImage).load(function () {
+      if(!load_data) { load_data = { 'map' : { 'bbox_rubberband' : "" }}; }
+      self.loadCropSettings(load_data);
+      self.hideLoadingMessage();
+    });
+
   };
 
   Mappr.addBadRecordsViewer = function () {
