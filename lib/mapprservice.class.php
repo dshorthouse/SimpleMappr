@@ -639,7 +639,6 @@ class MAPPR {
   private function add_legend_scalebar() {
     if(array_key_exists('legend', $this->options) && $this->options['legend']) { $this->add_legend(); }
     if(array_key_exists('scalebar', $this->options) && $this->options['scalebar']) { $this->add_scalebar(); }
-    if(!$this->download) { $this->add_legend(); }
   }
 
   /**
