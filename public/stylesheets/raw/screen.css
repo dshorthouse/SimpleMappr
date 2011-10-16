@@ -44,7 +44,7 @@ button.negative{color:#d12f19;}
 button.negative:hover{background-color:#eca8a8 !important;color:#d12f19;}
 button.negative:active{background-color:#782c21 !important;}
 .submitForm{background-position:3px 6px;}
-.bulkdownload{background-position:3px -445px;} /* TODO: fix */
+.bulkdownload{background-position:3px -445px;}
 .clear{background-position:3px -410px;}
 .addmore{background-position:3px -26px;}
 .removemore{display:none;background-position:3px -410px;position:absolute;right:6px;top:6px;z-index:10;background-color:#FFF}
@@ -88,7 +88,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #actionsBar ul.dropdown li a.rotateClockwise{background-position:0 -256px;}
 #actionsBar ul.dropdown li a.toolsCrop{background-position:0 -885px;}
 #actionsBar ul.dropdown li a.toolsQuery{background-position:0 -821px;}
-#actionsBar ul.dropdown li a.toolsDraw{background-position:0 -853px;} /* TODO :fix */
+#actionsBar ul.dropdown li a.toolsDraw{background-position:0 -853px;}
 #actionsBar ul.dropdown li a.toolsRefresh{background-position:0 -160px;}
 #actionsBar ul.dropdown li a.toolsRebuild{background-position:0 -128px;}
 #actionsBar ul.dropdown li ul{visibility:hidden;position:absolute;top:100%;left:0;width:50px;margin:0;padding:0;}
@@ -130,7 +130,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapTools #graticules-selection{padding:0px;margin-left:20px;}
 #mapTools div{padding:5px;}
 #mapTools .ui-tabs-nav{background:none repeat scroll 0 0 transparent;border-left:0 none;border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;border-right:0px none;border-top:0px none;}
-#mapTools ul{text-align:left;margin:0 0 10px;padding:0px;}
+#mapTools div ul{text-align:left;margin:0 0 10px;padding:0px;}
 #mapTools ul li{list-style-image:none;list-style-position:outside;list-style-type:none;font-size:0.75em;}
 #mapTools label{font-size:1.0em !important;}
 #mapTools #projection{font-size:0.8em !important;}
@@ -328,8 +328,8 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
-.ui-tabs{position:relative;padding:.2em;zoom:1;}
-.ui-tabs .ui-tabs-nav{margin:0;padding:.2em .2em 0;}
+.ui-tabs{position:relative;padding:0.2em;zoom:1;}
+.ui-tabs .ui-tabs-nav{margin:0;padding:0 .2em 0;}
 .ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
 .ui-tabs .ui-tabs-nav li a{float:left;padding:.25em 1em;text-decoration:none;}
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected{margin-bottom:0;padding-bottom:1px;}
