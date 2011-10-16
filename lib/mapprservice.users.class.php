@@ -79,13 +79,17 @@ class USERS {
      $output = "";
 
      if($this->_db->affected_rows > 0) {
-       $output .= "<table>" . "\n";
+       $output .= "<table class=\"grid-users\">" . "\n";
        $output .= "<thead>" . "\n";
        $output .= "<tr>" . "\n";
        $output .= "<td class=\"left-align\">Username</td>";
        $output .= "<td class=\"left-align\">Email</td>";
        $output .= "<td>Maps</td>";
-       $output .= "<td>Last Access</td>";
+       $output .= "<td>Last Access";
+       if($this->_uid == 1) {
+         $output .= "<a href=\"#\" class=\"sprites toolsRefresh\"></a>";
+       }
+       $output .= "</td>";
        $output .= "</tr>" . "\n";
        $output .= "</thead>" . "\n";
        $output .= "<tbody>" . "\n";
@@ -103,6 +107,12 @@ class USERS {
        }
        $output .= "</tbody>" . "\n";
        $output .= "</table>" . "\n";
+       $output .= "<script type=\"text/javascript\">
+         $(\".grid-users\").click(function(){
+           Mappr.loadUsers();
+           return false;
+         });
+         </script>";
      }
 
      header("Content-Type: text/html");

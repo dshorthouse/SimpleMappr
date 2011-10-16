@@ -145,6 +145,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-mymaps table thead tr{height:1.75em;}
 #map-mymaps table thead td{background-color:#E9E9E9;font-weight:normal;text-align:center;}
 #map-mymaps table thead td.left-align{text-align:left;padding-left:20px;}
+#map-mymaps table thead td a.toolsRefresh{display:inline-block;height:16px;width:16px;margin-left:5px;background-position: 0 -160px;}
 #map-mymaps table tr{border:1px solid #AAAAAA;}
 #map-mymaps table tr.odd{background:none repeat scroll 0 0 #FFFFFF;}
 #map-mymaps table td.actions{width:120px;}
@@ -161,6 +162,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-users table thead tr{height:1.75em;}
 #map-users table thead td{background-color:#E9E9E9;font-weight:normal;text-align:center;}
 #map-users table thead td.left-align{text-align:left;padding-left:20px;}
+#map-users table thead td a.toolsRefresh{display:inline-block;height:16px;width:16px;margin-left:5px;background-position: 0 -160px;}
 #map-users table tr{border:1px solid #AAAAAA;}
 #map-users table tr.odd{background:none repeat scroll 0 0 #FFFFFF;}
 #map-users table tr td.usermaps-center{text-align:center;}

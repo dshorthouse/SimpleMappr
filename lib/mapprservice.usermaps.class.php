@@ -145,11 +145,15 @@ class USERMAPS {
     $rows = $this->_db->query($sql);
 
     if($this->_db->affected_rows > 0) {
-      $output .= "<table>" . "\n";
+      $output .= "<table class=\"grid-usermaps\">" . "\n";
       $output .= "<thead>" . "\n";
       $output .= "<tr>" . "\n";
       $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
-      $output .= "<td class=\"actions\">Actions</td>";
+      $output .= "<td class=\"actions\">Actions";
+      if($this->_uid == 1) {
+        $output .= "<a href=\"#\" class=\"sprites toolsRefresh\"></a>";
+      }
+      $output .= "</td>";
       $output .= "</tr>" . "\n";
       $output .= "</thead>" . "\n";
       $output .= "<tbody>" . "\n";
@@ -174,6 +178,10 @@ class USERMAPS {
       $output .= "</tbody>" . "\n";
       $output .= "</table>" . "\n";
       $output .= "<script type=\"text/javascript\">
+        $(\".grid-usermaps\").click(function(){
+          Mappr.loadMapList();
+          return false;
+        });
         $(\"#filter-mymaps\")
           .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
           .keypress(function(event) { if (event.which === 13) { return false; }
