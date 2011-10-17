@@ -47,7 +47,8 @@ class HEADER {
     'public/javascript/jquery.tipsy.min.js',
     'public/javascript/jquery.uitablefilter.min.js',
     'public/javascript/janrain.min.js',
-    'public/javascript/jquery.hotkeys.min.js'
+    'public/javascript/jquery.hotkeys.min.js',
+    'public/javascript/mapper.js'
   );
 
   public static $local_css_files = array(
@@ -81,8 +82,6 @@ class HEADER {
   }
 
   private function local_js_files() {
-    self::$local_js_files[] = (ENVIRONMENT == "production") ? 'public/javascript/mapper.min.js' : 'public/javascript/mapper.js';
-
     if(ENVIRONMENT == "production") {
       $cached_js = $this->file_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
