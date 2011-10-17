@@ -1,10 +1,10 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, Raphael, alert */
+/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, alert */
 
 var Mappr = Mappr || { 'settings': {} };
 
-$(function () {
+$(function (jQuery) {
 
-   "use strict";
+  "use strict";
 
   Mappr.vars = {
     newPointCount      : 0,
@@ -23,7 +23,7 @@ $(function () {
   });
 
   $(window).resize(function () {
-    var arrPageSizes = Mappr.getPageSize(),
+    var arrPageSizes  = Mappr.getPageSize(),
         arrPageScroll = Mappr.getPageScroll();
 
     $('#mapper-overlay').css({
@@ -930,7 +930,7 @@ $(function () {
 
   Mappr.loadMapList = function () {
     var self    = this,
-        message = '<div id="usermaps-loading"><span id="mapper-building-map" class="ui-corner-all ui-widget-content">Loading your maps...</span></div>';
+        message = '<div id="usermaps-loading"><span class="mapper-loading-message ui-corner-all ui-widget-content">Loading your maps...</span></div>';
 
     $('#usermaps').html(message);
 
@@ -1267,7 +1267,7 @@ $(function () {
 
   Mappr.loadUserList = function () {
     var self    = this,
-        message = '<div id="userdata-loading"><span id="mapper-building-users" class="ui-corner-all ui-widget-content">Loading user list...</span></div>';
+        message = '<div id="userdata-loading"><span class="mapper-loading-message ui-corner-all ui-widget-content">Loading user list...</span></div>';
 
     $('#userdata').html(message);
 
@@ -1517,13 +1517,13 @@ $(function () {
   };
 
   Mappr.showLoadingMessage = function (content) {
-    var message = '<span id="mapper-building-map" class="ui-corner-all ui-widget-content">' + content + '</span>';
+    var message = '<span class="mapper-loading-message ui-corner-all ui-widget-content">' + content + '</span>';
 
-    if($('#mapper-building-map').length === 0) { $('#mapOutput').append(message); }
+    if($('.mapper-loading-message').length === 0) { $('#mapOutput').append(message); }
   };
 
   Mappr.hideLoadingMessage = function () {
-    $('#mapOutput #mapper-building-map').remove();
+    $('#mapOutput .mapper-loading-message').remove();
   };
 
   Mappr.showMap = function (load_data) {
@@ -1754,7 +1754,7 @@ $(function () {
 
 /******* jQUERY EXTENSIONS *******/
 
-(function ($) {
+(function ( jQuery ) {
 
   "use strict";
 
@@ -1774,4 +1774,4 @@ $(function () {
     });
   };
 
-})(jQuery);
+}( jQuery ));
