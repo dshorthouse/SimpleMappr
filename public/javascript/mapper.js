@@ -1719,7 +1719,7 @@ $(function () {
       collapsible : true,
       autoHeight : false
     });
-    $('#mapOutput').data("jcrop_coords", "");
+    $('#mapOutput').data("jcrop_coords", "").append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $(".tooltip").tipsy({gravity: 's'});
     this.bindHotkeys();
     this.bindToolbar();
@@ -1740,7 +1740,6 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUserList();
     }
-    $('#mapOutputImage').attr("src", "public/images/basemap.png").attr("width",800).attr("height", 400);
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
   };
 

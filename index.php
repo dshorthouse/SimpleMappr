@@ -135,7 +135,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
 </div>
 <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
-<div id="mapOutput"><img id="mapOutputImage" src="public/images/blank.gif" alt="" width="1" height="1" /></div>
+<div id="mapOutput"><span class="mapper-loading-message ui-corner-all ui-widget-content">Building preview...</span></div>
 </div>
 <div id="mapScale"></div>
 </div>
