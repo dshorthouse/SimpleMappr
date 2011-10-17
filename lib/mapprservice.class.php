@@ -824,6 +824,8 @@ class MAPPR {
       //do this in reverse order because the legend will otherwise be presented in reverse order
       for($j=count($this->coords)-1; $j>=0; $j--) {
 
+        if(!isset($this->coords[$j])) { continue; }
+
         //clear out previous loop's selection
         $size = '';
         $shape = '';
@@ -906,6 +908,9 @@ class MAPPR {
   public function add_regions() {
     if(isset($this->regions) && $this->regions) {  
       for($j=count($this->regions)-1; $j>=0; $j--) {
+
+        if(!isset($this->regions[$j])) { continue; }
+
         //clear out previous loop's selection
         $color = '';
         $title = ($this->regions[$j]['title']) ? $this->regions[$j]['title'] : '';
@@ -913,6 +918,7 @@ class MAPPR {
         if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
             $color = array(0,0,0);
         }
+
         $data = trim($this->regions[$j]['data']);
 
         if($data) {

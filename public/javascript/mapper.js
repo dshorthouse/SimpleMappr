@@ -2,7 +2,7 @@
 
 var Mappr = Mappr || { 'settings': {} };
 
-$(function (jQuery) {
+$(function () {
 
   "use strict";
 
@@ -142,7 +142,7 @@ $(function (jQuery) {
 
         $('.jcrop-coord').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
-            Mappr.vars.cropUpdated = Mappr.updateCrop($(this).val());
+            Mappr.vars.cropUpdated = Mappr.updateCrop();
           }
         })
         .live("keypress", function(e) {
@@ -166,7 +166,7 @@ $(function (jQuery) {
     }
   };
 
-  Mappr.updateCrop = function (value) {
+  Mappr.updateCrop = function () {
     var ul_arr   = [],
         ul_point = {},
         lr_arr   = [],
@@ -463,6 +463,7 @@ $(function (jQuery) {
       },
       function () {
         $.each(arrows, function(key, value) {
+          key = null;
           $(document).unbind('keydown', value);
         });
       }
@@ -888,8 +889,7 @@ $(function (jQuery) {
 
   Mappr.addGrippies = function (obj) {
     var textarea     = $(obj).addClass("textarea-processed"),
-        staticOffset = null,
-        grippie      = $("div.grippie", $(obj).parent())[0];
+        staticOffset = null;
 
     function performDrag(e) {
       textarea.height(Math.max(32, staticOffset + e.pageY) + "px");
@@ -1750,7 +1750,7 @@ $(function (jQuery) {
 
 /******* jQUERY EXTENSIONS *******/
 
-(function ( jQuery ) {
+(function () {
 
   "use strict";
 

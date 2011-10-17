@@ -255,36 +255,6 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Override the method in the MAPPR class
-   */
-   public function add_freehand() {
-     if($this->wkt['data']) {
-       $layer = ms_newLayerObj($this->map_obj);
-       $layer->set("name", $this->wkt['title']);
-
-       $feature = ms_shapeObjFromWkt($this->wkt['data']);
-       $layer->addFeature($feature);
-
-       $type = (strstr($this->wkt['data'], "LINE")) ? MS_LAYER_LINE : MS_LAYER_POLYGON;
-
-       $layer->set("type",$type);
-       $layer->set("template", "template.html");
-       $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
-
-       $class = ms_newClassObj($layer);
-       $class->set("name", $this->wkt['title']);
-
-       $style = ms_newStyleObj($class);
-       $style->set("opacity",80);
-       $color = ($this->wkt['color']) ? explode(' ', $this->wkt['color']) : explode(" ", "0 0 0");
-       $style->color->setRGB($color[0],$color[1],$color[2]);
-       $style->outlinecolor->setRGB(30,30,30);
-
-       $layer->set("status",MS_ON);
-    }
-  }
-
-  /**
   * Override the method in the MAPPR class
   */
   public function add_graticules() {
