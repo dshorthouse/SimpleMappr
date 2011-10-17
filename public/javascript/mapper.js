@@ -815,13 +815,10 @@ $(function (jQuery) {
       if(counter < self.vars.maxTextareaCount) {
 
         button.parent().prev().accordion("activate", false);
-
         clone = button.parent().prev().children("div:last").clone();
-        num = parseInt($(clone).find("h3 a").text().split(" ")[1],10);
-
+        num = parseInt(clone.find("h3 a").text().split(" ")[1],10);
         counter = self.textareaCounter(data_type, 'increase');
-
-        clone.find("h3 a").text($(clone).find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
+        clone.find("h3 a").text(clone.find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
         clone.find("input.m-mapTitle").attr("name", data_type + "["+num.toString()+"][title]").val("");
         clone.find("textarea")
                 .attr("name", data_type + "["+num.toString()+"][data]")
@@ -830,6 +827,7 @@ $(function (jQuery) {
                 .each(function () {
                   self.addGrippies(this);
                 });
+
         clone.find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
         clone.find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
         clone.find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
@@ -911,7 +909,6 @@ $(function (jQuery) {
     }
 
     $(obj).parent().find(".grippie").bind('mousedown', startDrag);
-    grippie.style.marginRight = (parseInt(grippie.offsetWidth,10)-parseInt($(this)[0].offsetWidth,10)).toString() + "px";
   };
 
   Mappr.bindAddButtons = function () {
@@ -919,7 +916,6 @@ $(function (jQuery) {
 
     $('.addmore').click(function () {
       var data_type = $(this).attr("data-type"), fieldsets = 0;
-
       self.addAccordionPanel(data_type);
       fieldsets = $(this).parent().prev().children().length;
       $(this).parent().prev().accordion("activate", fieldsets-1);
