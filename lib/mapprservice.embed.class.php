@@ -79,8 +79,7 @@ class MAPPREMBED extends MAPPR {
     if($this->graticules) {
       $layer = ms_newLayerObj($this->map_obj);
       $layer->set("name", 'grid');
-      $layer->set("data", $this->shapes['grid']['shape']);
-      $layer->set("type", $this->shapes['grid']['type']);
+      $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
       $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
