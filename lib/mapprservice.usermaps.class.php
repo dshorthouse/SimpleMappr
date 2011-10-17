@@ -171,7 +171,7 @@ class USERMAPS {
       $output .= "</tbody>" . "\n";
       $output .= "</table>" . "\n";
       $output .= "<script type=\"text/javascript\">
-        $(\".grid-usermaps\").click(function(){
+        $(\".grid-usermaps td.actions a\").click(function(){
           Mappr.loadMapList();
           return false;
         });
