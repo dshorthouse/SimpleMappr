@@ -70,9 +70,9 @@ class USERMAPS {
     switch($method) {
       case 'GET':
         if(is_numeric($this->_request[0])) {
-          $this->get_map();
+          $this->show_map();
         } else {
-          $this->get_list();
+          $this->index_maps();
         }
       break;
 
@@ -86,11 +86,12 @@ class USERMAPS {
 
         //first look to see if map by same title already exists
         $sql = "
-        SELECT
-          mid
-        FROM maps
-        WHERE
-          uid=".$this->_db->escape($this->_uid)." AND title='".$this->_db->escape($data['title'])."'";
+          SELECT
+            mid
+          FROM
+            maps
+          WHERE
+            uid=".$this->_db->escape($this->_uid)." AND title='".$this->_db->escape($data['title'])."'";
         $record = $this->_db->query_first($sql);
 
         if($record['mid']) {
@@ -105,15 +106,7 @@ class USERMAPS {
       break;
 
       case 'DELETE':
-        $sql = "
-        DELETE 
-        FROM maps
-        WHERE 
-          uid=".$this->_db->escape($this->_uid)." AND mid=".$this->_db->escape($this->_request[0]);
-        $this->_db->query($sql);
-
-        header("Content-Type: application/json");
-        echo "{\"status\":\"ok\"}";
+        $this->destroy_map();
       break;
 
       default:
@@ -121,26 +114,26 @@ class USERMAPS {
     }
   }
 
-  private function get_list() {
+  private function index_maps() {
     $where = '';
     $output = '';
 
     if($this->_uid != 1) { $where =  " WHERE m.uid = ".$this->_db->escape($this->_uid); }
 
     $sql = "
-    SELECT
-      m.mid,
-      m.title,
-      m.created,
-      u.email,
-      u.uid,
-      u.username 
-    FROM 
-      maps m 
-    INNER JOIN
-      users u ON (m.uid = u.uid)
-    ".$where."
-    ORDER BY m.created DESC";
+      SELECT
+        m.mid,
+        m.title,
+        m.created,
+        u.email,
+        u.uid,
+        u.username 
+      FROM 
+        maps m 
+      INNER JOIN
+        users u ON (m.uid = u.uid)
+      ".$where."
+      ORDER BY m.created DESC";
 
     $rows = $this->_db->query($sql);
 
@@ -194,24 +187,37 @@ class USERMAPS {
     echo $output;
   }
 
-  private function get_map() {
-   $where = "";
-   if(!$this->_uid == 1) { $where = " AND uid = ".$this->_db->escape($this->_uid); }
-   $sql = "
-   SELECT
-       mid, map
-   FROM 
-       maps
-   WHERE
+  private function show_map() {
+    $where = "";
+    if(!$this->_uid == 1) { $where = " AND uid = ".$this->_db->escape($this->_uid); }
+    $sql = "
+      SELECT
+        mid, map
+      FROM 
+        maps
+      WHERE
         mid=".$this->_db->escape($this->_request[0]) . $where;
-   $record = $this->_db->query_first($sql);
+    $record = $this->_db->query_first($sql);
 
-   $data['status'] = "ok";
-   $data['mid'] = $record['mid'];
-   $data['map'] = unserialize($record['map']);
+    $data['status'] = "ok";
+    $data['mid'] = $record['mid'];
+    $data['map'] = unserialize($record['map']);
 
-   header("Content-Type: application/json");            
-   echo json_encode($data);
+    header("Content-Type: application/json");            
+    echo json_encode($data);
+  }
+
+  private function destroy_map() {
+    $sql = "
+      DELETE 
+      FROM
+        maps
+      WHERE 
+        uid=".$this->_db->escape($this->_uid)." AND mid=".$this->_db->escape($this->_request[0]);
+    $this->_db->query($sql);
+
+    header("Content-Type: application/json");
+    echo "{\"status\":\"ok\"}";
   }
 
 }

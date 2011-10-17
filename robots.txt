@@ -10,4 +10,5 @@ Disallow: /query/
 Disallow: /tabs/
 Disallow: /tmp/
 Disallow: /usermaps/
+Disallow: /users/
 Disallow: /wfs/

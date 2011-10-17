@@ -166,6 +166,9 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-users table tr{border:1px solid #AAAAAA;}
 #map-users table tr.odd{background:none repeat scroll 0 0 #FFFFFF;}
 #map-users table tr td.usermaps-center{text-align:center;}
+#map-users table td.actions{width:120px;}
+#map-users table td.actions a{height:20px;line-height:20px;padding-left:20px;margin-left:10px;}
+#map-users table td.actions a.user-delete{background-position:0 -317px;}
 #map-api #general-base{margin-top:20px;}
 #map-api p{font-size:0.75em;}
 #map-api dl{font-size:0.75em;}

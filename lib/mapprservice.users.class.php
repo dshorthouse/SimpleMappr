@@ -35,6 +35,8 @@ class USERS {
 
   private $_uid;
 
+  private $_request;
+
   private $_db;
 
   function __construct() {
@@ -43,14 +45,15 @@ class USERS {
 
   private function execute() {
     $this->set_header();
-    if(!isset($_SESSION['simplemappr'])) {
+    if(!isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] !== 1) {
       header("Content-Type: application/json");
-      echo "{ \"error\" : \"session timeout\" }";
+      echo "{ \"error\" : \"access denied\" }";
       exit;
     } else {
       $this->_uid = $_SESSION['simplemappr']['uid'];
+      $this->_request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
       $this->_db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-      $this->get_user_list();
+      $this->restful_action();
     }
   }
 
@@ -61,11 +64,30 @@ class USERS {
     header("Cache-Control: private",false);
   }
 
-  private function get_user_list() {
-    if($this->_uid == 1) {
-      $sql = "
+  private function restful_action() {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    switch($method) {
+      case 'GET':
+        $this->index_users();
+      break;
+
+      case 'POST':
+      break;
+
+      case 'DELETE':
+        $this->destroy_user();
+      break;
+
+      default:
+      break;
+    }
+  }
+
+  private function index_users() {
+    $sql = "
       SELECT
-        u.username, u.email, u.access, count(m.mid) as num
+        u.uid, u.username, u.email, u.access, count(m.mid) as num
       FROM
         users u
       LEFT JOIN
@@ -74,53 +96,67 @@ class USERS {
         u.username
       ORDER BY u.access DESC";
 
-     $rows = $this->_db->query($sql);
+   $rows = $this->_db->query($sql);
 
-     $output = "";
+   $output = "";
 
-     if($this->_db->affected_rows > 0) {
-       $output .= "<table class=\"grid-users\">" . "\n";
-       $output .= "<thead>" . "\n";
-       $output .= "<tr>" . "\n";
-       $output .= "<td class=\"left-align\">Username</td>";
-       $output .= "<td class=\"left-align\">Email</td>";
-       $output .= "<td>Maps</td>";
-       $output .= "<td>Last Access";
-       if($this->_uid == 1) {
-         $output .= "<a href=\"#\" class=\"sprites toolsRefresh\"></a>";
+   if($this->_db->affected_rows > 0) {
+     $output .= "<table class=\"grid-users\">" . "\n";
+     $output .= "<thead>" . "\n";
+     $output .= "<tr>" . "\n";
+     $output .= "<td class=\"left-align\">Username</td>";
+     $output .= "<td class=\"left-align\">Email</td>";
+     $output .= "<td>Maps</td>";
+     $output .= "<td>Last Access</td>";
+     $output .= "<td class=\"actions\">Actions<a href=\"#\" class=\"sprites toolsRefresh\"></a></td>";
+     $output .= "</tr>" . "\n";
+     $output .= "</thead>" . "\n";
+     $output .= "<tbody>" . "\n";
+     $i=0;
+     while ($record = $this->_db->fetch_array($rows)) {
+       $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+       $output .= "<tr ".$class.">";
+       $output .= "<td>" . stripslashes($record['username']) . "</td>";
+       $output .= "<td>" . stripslashes($record['email']) . "</td>";
+       $output .= "<td class=\"usermaps-center\">" . $record['num'] . "</td>";
+       $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : "-";
+       $output .= "<td class=\"usermaps-center\">" . $access . "</td>";
+       $output .= "<td class=\"actions\">";
+       if($record['uid'] != 1) {
+         $output .= "<a class=\"sprites user-delete\" data-uid=\"".$record['uid']."\" href=\"#\">Delete</a>";
        }
        $output .= "</td>";
        $output .= "</tr>" . "\n";
-       $output .= "</thead>" . "\n";
-       $output .= "<tbody>" . "\n";
-       $i=0;
-       while ($record = $this->_db->fetch_array($rows)) {
-         $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-         $output .= "<tr ".$class.">";
-         $output .= "<td>" . stripslashes($record['username']) . "</td>";
-         $output .= "<td>" . stripslashes($record['email']) . "</td>";
-         $output .= "<td class=\"usermaps-center\">" . $record['num'] . "</td>";
-         $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : "-";
-         $output .= "<td class=\"usermaps-center\">" . $access . "</td>";
-         $output .= "</tr>" . "\n";
-         $i++;
-       }
-       $output .= "</tbody>" . "\n";
-       $output .= "</table>" . "\n";
-       $output .= "<script type=\"text/javascript\">
-         $(\".grid-users\").click(function(){
-           Mappr.loadUsers();
-           return false;
-         });
-         </script>";
+       $i++;
      }
+     $output .= "</tbody>" . "\n";
+     $output .= "</table>" . "\n";
+     $output .= "<script type=\"text/javascript\">
+       $(\".grid-users\").click(function(){
+         Mappr.loadUserList();
+         return false;
+       });
+       </script>";
+   }
 
-     header("Content-Type: text/html");
-     echo $output;
-    } else {
-      header("Content-Type: application/json");
-      echo "{ \"error\" : \"access denied\" }";
-    }
+   header("Content-Type: text/html");
+   echo $output;
+  }
+
+  private function destroy_user() {
+    $sql = "
+        DELETE
+          u, m
+        FROM
+          users u
+        LEFT JOIN
+          maps m ON u.uid = m.uid
+        WHERE 
+          u.uid=".$this->_db->escape($this->_request[0]);
+    $this->_db->query($sql);
+
+    header("Content-Type: application/json");
+    echo "{\"status\":\"ok\"}";
   }
 
 }

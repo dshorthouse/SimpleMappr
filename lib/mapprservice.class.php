@@ -27,11 +27,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
-if (!extension_loaded("MapScript")) {
-  echo "ERROR: php_mapscript.so extension is not loaded"; 
-  exit;
-}
-
 class MAPPR {
 
   /* the base map object */

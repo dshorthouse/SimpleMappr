@@ -720,7 +720,7 @@ $(function () {
 
     self.destroyJcrop();
 
-    self.showLoadingMessage();
+    self.showLoadingMessage('Building preview...');
 
     $.ajax({
       type : 'POST',
@@ -947,7 +947,7 @@ $(function () {
         });
 
         $('.map-delete').click(function () {
-          self.deleteConfirmation(this);
+          self.deleteMapConfirmation(this);
           return false;
         });
       }
@@ -991,7 +991,7 @@ $(function () {
 
     $("#tabs").tabs('select',0);
 
-    self.showLoadingMessage();
+    self.showLoadingMessage('Building preview...');
 
     $.ajax({
       type     : 'GET',
@@ -1226,7 +1226,7 @@ $(function () {
 
   };
 
-  Mappr.deleteConfirmation = function (obj) {
+  Mappr.deleteMapConfirmation = function (obj) {
     var self    = this,
         id      = $(obj).attr("data-mid"),
         message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
@@ -1265,8 +1265,9 @@ $(function () {
 
   };
 
-  Mappr.loadUsers = function () {
-    var message = '<div id="userdata-loading"><span id="mapper-building-users" class="ui-corner-all ui-widget-content">Loading users list...</span></div>';
+  Mappr.loadUserList = function () {
+    var self    = this,
+        message = '<div id="userdata-loading"><span id="mapper-building-users" class="ui-corner-all ui-widget-content">Loading user list...</span></div>';
 
     $('#userdata').html(message);
 
@@ -1276,9 +1277,53 @@ $(function () {
       dataType : 'html',
       success  : function (data) {
         $('#userdata').html(data);
+
+        $('.user-delete').click(function () {
+          self.deleteUserConfirmation(this);
+          return false;
+        });
+
       }
     });
 
+  };
+
+  Mappr.deleteUserConfirmation = function (obj) {
+    var self    = this,
+        id      = $(obj).attr("data-uid"),
+        message = 'Are you sure you want to delete <em>' + $(obj).parent().parent().children("td:first").html() + '</em>?<br>All their map data will also be deleted.';
+
+    $('body').append('<div id="mapper-message-delete" class="ui-state-highlight" title="Delete">' + message + '</div>');
+
+    $('#mapper-message-delete').dialog({
+      height        : (250).toString(),
+      width         : (500).toString(),
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : [
+        {
+          "text"  : "Delete",
+          "click" : function () {
+            $.ajax({
+              type    : 'DELETE',
+              url     :  self.settings.baseUrl + "/users/" + id,
+              success : function() {
+                self.loadUserList();
+              }
+            });
+            $(this).dialog("destroy").remove();
+          }
+        },
+        {
+          "text"  : "Cancel",
+          "class" : "ui-button-cancel",
+          "click" : function () {
+            $(this).dialog("destroy").remove();
+          }
+        }]
+    });
   };
 
   Mappr.bindSave = function () {
@@ -1293,7 +1338,9 @@ $(function () {
 
   Mappr.mapSave = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var missingTitle = false, pattern = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g, map_title = "";
+    var missingTitle = false,
+        pattern      = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
+        map_title    = "";
 
     $('#mapSave').dialog({
       autoOpen      : true,
@@ -1328,6 +1375,8 @@ $(function () {
                 $('input[name="options[legend]"]').val("");
               }
 
+              Mappr.showLoadingMessage('Saving...');
+
               $.ajax({
                 type        : 'POST',
                 url         :  Mappr.settings.baseUrl + "/usermaps/",
@@ -1339,6 +1388,7 @@ $(function () {
                   $('#file-name').val(map_title);
                   Mappr.activateEmbed(data.mid);
                   Mappr.loadMapList();
+                  Mappr.hideLoadingMessage();
                 }
               });
 
@@ -1466,8 +1516,8 @@ $(function () {
     }
   };
 
-  Mappr.showLoadingMessage = function () {
-    var message = '<span id="mapper-building-map" class="ui-corner-all ui-widget-content">Building preview...</span>';
+  Mappr.showLoadingMessage = function (content) {
+    var message = '<span id="mapper-building-map" class="ui-corner-all ui-widget-content">' + content + '</span>';
 
     if($('#mapper-building-map').length === 0) { $('#mapOutput').append(message); }
   };
@@ -1491,7 +1541,7 @@ $(function () {
 
     formData = $("form").serialize();
 
-    self.showLoadingMessage();
+    self.showLoadingMessage('Building preview...');
 
     $('#mapScale').html('');
 
@@ -1692,7 +1742,7 @@ $(function () {
     }
     if($('#userdata').length > 0) {
       $("#tabs").tabs('select',4);
-      this.loadUsers();
+      this.loadUserList();
     }
     $('#mapOutputImage').attr("src", "public/images/basemap.png").attr("width",800).attr("height", 400);
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
