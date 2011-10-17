@@ -930,7 +930,7 @@ $(function () {
 
   Mappr.loadMapList = function () {
     var self    = this,
-        message = '<div id="usermaps-loading"><span id="mapper-building-map">Loading your maps...</span></div>';
+        message = '<div id="usermaps-loading"><span id="mapper-building-map" class="ui-corner-all ui-widget-content">Loading your maps...</span></div>';
 
     $('#usermaps').html(message);
 
