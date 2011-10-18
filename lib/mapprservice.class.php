@@ -1044,7 +1044,7 @@ class MAPPR {
             case 'lakesOutline':
               $class = ms_newClassObj($layer);
               $style = ms_newStyleObj($class);
-              $style->color->setRGB(30,30,30);
+              $style->color->setRGB(80,80,80);
             break;
             case 'rivers':
             case 'lakes':
