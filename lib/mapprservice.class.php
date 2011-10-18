@@ -1054,20 +1054,6 @@ class MAPPR {
             break;
 
             case 'rivernames':
-              $layer->set("tolerance", 1);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "NAME");
-
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*7 : 8);
-              $class->label->set("position", MS_UR);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
             case 'lakenames':
               $layer->set("tolerance", 1);
               $layer->set("toleranceunits", "pixels");
