@@ -149,14 +149,20 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <h2>Layers</h2>
 <ul>
 <li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> State/Province borders</li>
-<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> place names</li>
-<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> physical labels</li>
-<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> marine labels</li>
 <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> lakes (outline)</li>
 <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
 <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
 <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
 <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
+</ul>
+<h2>Labels</h2>
+<ul>
+<li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> State/Province names</li>
+<li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> lake names</li>
+<li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> river names</li>
+<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> place names</li>
+<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> physical labels</li>
+<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> marine labels</li>
 </ul>
 <h2>Options</h2>
 <ul>
