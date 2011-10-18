@@ -61,21 +61,28 @@ $("#filter-countries")
 
     <h3>Layers:</h3>
         <ul>
-            <li>State/Provinces borders: select this checkbox to draw all State and Province borders for all countries</li>
-            <li>place names: select this checkbox to overlay place names</li>
-            <li>physical labels: select this checkbox to overlay labels for physical features</li>
-            <li>marine labels: select this checkbox to overlay labels for marine features</li>
+            <li>State/Provinces: select this checkbox to draw all State and Province borders for all countries</li>
             <li>lakes (filled): select this checkbox to overlay lakes as greyscale polygons</li>
             <li>lakes (outline): select this checkbox to overlay lakes as black outlines</li>
             <li>rivers: select this checkbox to overlay rivers as black outlines</li>
-            <li>shaded relief: select this checkbox to render a color, shaded relief layer</li>
-            <li>shaded relief (greyscale): select this checkbox to render a greyscale, shaded relief layer</li>
+            <li>relief: select this checkbox to render a color, shaded relief layer</li>
+            <li>relief (greyscale): select this checkbox to render a greyscale, shaded relief layer</li>
+        </ul>
+
+    <h3>Labels:</h3>
+        <ul>
+            <li>State/Provinces: select this checkbox to label States and Provinces</li>
+            <li>lakes: select this checkbox to label lakes</li>
+            <li>rivers: select this checkbox to label rivers</li>
+            <li>places: select this checkbox to label place names</li>
+            <li>physical: select this checkbox to label physical features</li>
+            <li>marine: select this checkbox to label marine features</li>
         </ul>
 
     <h3>Options:</h3>
         <ul>
             <li>scalebar: select this checkbox to draw a scalebar at the bottom on the map</li>
-            <li>graticules: select this checkbox to draw a graticule (grid) layer on the map</li>
+            <li>graticules: select this checkbox to draw a graticule (grid) layer on the map using either fixed, 5<sup>o</sup>, or 10<sup>o</sup> spacing</li>
         </ul>
 
     <h3>Projection:</h3>
@@ -84,8 +91,9 @@ $("#filter-countries")
         </ul>
     
     <ul class="toolbar">
-        <li><span class="sprites toolsSave">&nbsp;</span>While logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
-        <li><span class="sprites toolsDownload">&nbsp;</span>Download the map as web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
+        <li><span class="sprites toolsSave">&nbsp;</span>Save: while logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab.</li>
+        <li><span class="sprites toolsEmbed">&nbsp;</span>Embed: once a map is saved, click this icon to obtain a URL for embedding on other websites.</li>
+        <li><span class="sprites toolsDownload">&nbsp;</span>Download: choose from a web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based.</li>
     </ul>
 
     <div class="header">

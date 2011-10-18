@@ -92,7 +92,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <!-- map preview tab -->
 <div id="map-preview">
 <div id="mapWrapper">
-<div id="actionsBar" class="ui-widget-header ui-corner-all">
+<div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
 <ul class="dropdown">
 <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
 <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
@@ -124,7 +124,6 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
 </div>
 </div>
-<div class="clear"></div>
 <div id="map">
 <div id="mapImage">
 <div id="mapControlsTransparency"></div>
@@ -147,16 +146,16 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <div id="mapLegend"><p><em>legend will appear here</em></p></div>
 <div id="mapOptions">
 <h2>Layers</h2>
-<ul>
-<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> State/Province borders</li>
+<ul class="columns ui-helper-clearfix">
+<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> State/Provinces</li>
 <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> lakes (outline)</li>
-<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (filled)</li>
+<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> lakes (greyscale)</li>
 <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> rivers</li>
-<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> shaded relief</li>
-<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> shaded relief (greyscale)</li>
+<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> relief</li>
+<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> relief (greyscale)</li>
 </ul>
 <h2>Labels</h2>
-<ul>
+<ul class="columns ui-helper-clearfix">
 <li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> State/Provinces</li>
 <li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> lakes</li>
 <li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> rivers</li>
@@ -167,7 +166,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <h2>Options</h2>
 <ul>
 <li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
-<li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules
+<li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules (grid)
 <div id="graticules-selection">
 <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
 <input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
@@ -212,14 +211,14 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <?php endif; ?>
 <div id="badRecordsViewer" title="Records out of range"><div id="badRecords"></div></div>
 <div id="mapSave" title="Save">
-<div class="fieldset-taxon">
+<p>
 <label for="m-mapSaveTitle">Title<span class="required">*</span></label>
 <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
-</div>
+</p>
 </div>
 <div id="mapExport" title="Download">
 <div class="download-dialog">
-<div id="mapCropMessage" class="sprites">map will be cropped</div>
+<p id="mapCropMessage" class="sprites">map will be cropped</p>
 <p>
 <label for="file-name">File name:</label>
 <input type="text" id="file-name" maxlength="30" size="30" />

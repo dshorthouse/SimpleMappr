@@ -1,7 +1,6 @@
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin-top:5px;}
 a{color:#555555;}
-input, select, textarea{font-size:0.7em !important;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
 #site-title{margin:0px;padding:5px 0px;}
 #site-title span{display:none;}
@@ -19,19 +18,21 @@ ul.navigation li a.map-users{padding-left:20px;margin-left:5px;background-positi
 ul.navigation li a.map-myhelp{padding-left:20px;margin-left:5px;background-position:0 -525px;}
 li.map-extras{float:right !important;}
 #mapSave, #mapExport{display:none;}
+#mapSave p, #mapExport p, #mapEmbed p{font-size:0.8em;margin:5px 0px;}
+#mapSave p input, #mapExport p input, #mapEmbed p input{font-size:1em;}
 .ui-dialog-titlebar .ui-dialog-title{background-color: transparent;background-image: url("../../images/icon_sprites.png");background-repeat: no-repeat;padding-left:20px;}
 .ui-dialog-titlebar #ui-dialog-title-mapSave{background-position: 0 -445px;}
+.ui-dialog-titlebar #ui-dialog-title-mapEmbed{background-position:0 -563px;}
 .ui-dialog-titlebar #ui-dialog-title-mapExport{background-position: 0 -785px;}
 .ui-dialog-titlebar #ui-dialog-title-badRecordsViewer{background-position:0 -478px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message{background-position:0 -478px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-delete{background-position:0 -316px;}
-.ui-dialog-titlebar #ui-dialog-title-mapper-message-embed{background-position:0 -563px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-help{background-position:0 -530px;}
-#mapper-message,#mapper-message-embed{font-size:0.8em;}
+#mapper-message{font-size:0.8em;}
 #mapper-message span.indent{display:block;margin-left:40px;}
 .mapper-loading-message{background-repeat:no-repeat !important;background-position:10px 10px !important;background-color:#FFF;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;position:absolute;top:10px;right:10px;z-index:1000;}
 label{margin-right:0.2em;}
-fieldset{border:1px solid #E0E0E0;}
+fieldset{border:1px solid #E0E0E0;font-size:0.75em;margin-top:10px;}
 .required{color:#FF0000;font-weight:bold;}
 #controls{width:780px;margin-left:20px;}
 button{background-color:#E7E7E7;color:#565656;border:1px solid #abb6bf;border-top:1px solid #EEE;border-left:1px solid #EEE;padding:5px 5px 5px 20px;margin:0 0.2em;cursor:pointer;font-size:0.7em !important;}
@@ -74,7 +75,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-preview{padding:1em 0em;background-color:#FFF;height:460px;}
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}
-#mapWrapper h2{text-align:middle;font-size:0.75em;margin:0;padding:0;}
+#mapWrapper h2{text-align:middle;font-size:0.75em;margin:10px 0 5px;padding:0;}
 #actionsBar{margin:0;padding:0;position:absolute;top:0;left:0;width:810px;outline-color:-moz-use-text-color;outline-style:none;outline-width:medium;font-weight:normal;height:1.4em;}
 #actionsBar a{text-decoration:none;}
 #actionsBar ul.dropdown{list-style:none;margin:0;padding:0;}
@@ -101,7 +102,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #actionsBar ul.sub_menu li a{margin:0px !important;}
 #actionsBar ul li a img{border:0 none;height:16px;margin:2px;width:16px;}
 .customJzoom .jcrop-vline, .customJzoom .jcrop-hline{background-color:#FF0000;}
-.jcrop-coord{position:absolute;border:1px solid #AAA;background-color:#E0E0E0;opacity:0.6;filter:alpha(opacity=60);padding:3px;z-index:500;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;width:100px;}
+.jcrop-coord{position:absolute;border:1px solid #AAA;background-color:#E0E0E0;opacity:0.6;filter:alpha(opacity=60);padding:3px;z-index:500;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;width:100px;font-size:0.7em !important;}
 #jcrop-coord-ul{left:9px;top:9px;text-align:left;}
 #jcrop-coord-lr{right:9px;bottom:9px;text-align:right;}
 #actionsBar #mapTitle{margin:0 0 0 30px;padding:0;font-style:italic;font-size:1em;display:inline;line-height:27px;}
@@ -133,14 +134,13 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapTools .ui-tabs-nav{background:none repeat scroll 0 0 transparent;border-left:0 none;border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;border-right:0px none;border-top:0px none;}
 #mapTools div ul{text-align:left;margin:0 0 10px;padding:0px;}
 #mapTools ul li{list-style-image:none;list-style-position:outside;list-style-type:none;font-size:0.75em;}
+#mapTools ul.columns li{float:left;width:140px;line-height:1.5em;}
 #mapTools label{font-size:1.0em !important;}
 #mapTools #projection{font-size:0.8em !important;}
 #mapTools p{font-size:0.5em;}
 #mapLegend p{margin:0px;padding:0px;font-size:0.65em;}
-#mapExport{font-size:0.8em}
-#mapExport #mapCropMessage{display:none;color:red;background-position:0 -478px;height:20px;line-height:20px;padding:0px 5px 0px 20px;}
+#mapExport #mapCropMessage{display:none;color:red;background-position:0 -478px;padding:0px 0px 10px 20px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;}
-.clear{clear:both;}
 #usermaps-loading{position:relative;}
 #map-mymaps table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
 #map-mymaps table thead tr{height:1.75em;}
@@ -192,6 +192,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-help ul.toolbar span.toolsRefresh{background-position:0 -157px;}
 #map-help ul.toolbar span.toolsRebuild{background-position:0 -125px;}
 #map-help ul.toolbar span.toolsSave{background-position:0 -448px;}
+#map-help ul.toolbar span.toolsEmbed{background-position: 0 -565px;}
 #map-help ul.toolbar span.toolsDownload{background-position:0 -786px;}
 #map-help #example-data{height:220px;}
 #map-help #example-data img{vertical-align:middle;margin-right:20px;}
@@ -265,7 +266,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-widget-overlay{position:absolute;top:0;left:0;width:100%;height:100%;}
 .ui-widget{font-family:Verdana,Arial,sans-serif;font-size:1.1em;}
 .ui-widget .ui-widget{font-size:1em;}
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-family:Verdana,Arial,sans-serif;font-size:1em;}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-family:Verdana,Arial,sans-serif;}
 .ui-widget-content{border:1px solid #aaaaaa;background-color:#ffffff;color:#222222;}
 .ui-widget-header{border:1px solid #aaaaaa;background-color:#e9e9e9;color:#222222;font-weight:bold;}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{border:1px solid #d3d3d3;background-color:#eeeeee;font-weight:normal;color:#555555;}
@@ -328,7 +329,7 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-dialog-titlebar-close{position:absolute;right:.3em;top:50%;width:19px;margin:-10px 0 0 0;padding:1px;height:18px;}
 .ui-dialog .ui-dialog-titlebar-close span{display:block;margin:1px;}
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus{padding:0;}
-.ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em 1em;background:none;overflow:auto;zoom:1;}
+.ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em;background:none;overflow:auto;zoom:1;}
 .ui-dialog .ui-dialog-buttonpane{text-align:left;border-width:1px 0 0 0;background-image:none;margin:.5em 0 0 0;padding:.3em 1em .5em .4em;}
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float:right;}
 .ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;}

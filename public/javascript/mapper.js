@@ -1192,17 +1192,15 @@ $(function () {
         message = '';
 
     $('.map-embed').attr("data-mid", mid).click(function () {
-      message = 'Use the following HTML snippet to embed a png:';
-      message += "<p><input type='text' size='75' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
-      message += "<strong>Additional parameters</strong>:<span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span>";
+      message  = "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
+      message += "<p><strong>Additional parameters</strong>:<br><span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span></p>";
 
-      if($('body').find('#mapper-message-embed').length > 0) {
-        $('#mapper-message-embed').html(message).dialog("open");
+      if($('body').find('#mapEmbed').length > 0) {
+        $('#mapEmbed').html(message).dialog("open");
       } else {
-        $('body').append('<div id="mapper-message-embed" class="ui-state-highlight" title="Embed">' + message + '</div>');
+        $('body').append('<div id="mapEmbed" class="ui-state-highlight" title="Embed">' + message + '</div>');
 
-        $('#mapper-message-embed').dialog({
-          height        : (250).toString(),
+        $('#mapEmbed').dialog({
           width         : (525).toString(),
           autoOpen      : true,
           modal         : true,
@@ -1343,7 +1341,7 @@ $(function () {
     $('#mapSave').dialog({
       autoOpen      : true,
       height        : (175).toString(),
-      width         : (500).toString(),
+      width         : (350).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
@@ -1419,7 +1417,7 @@ $(function () {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (500).toString(),
+      width         : (350).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
