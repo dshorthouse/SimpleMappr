@@ -1056,7 +1056,7 @@ class MAPPR {
             case 'rivernames':
               $layer->set("tolerance", 1);
               $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "Name");
+              $layer->set("labelitem", "NAME");
 
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
