@@ -53,14 +53,14 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <li><a href="#map-preview">Preview</a></li>
 <li><a href="#map-points">Point Data</a></li>
 <li><a href="#map-regions">Regions</a></li>
-<li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
+<li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l" onclick="javascript: Mappr.analytics('/mymaps'); "><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>All Maps<?php else: ?>My Maps<?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites map-users">Users</a></li>
 <?php endif; ?>
-<li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp">Help</a></li>
-<li class="map-extras"><a href="tabs/about.php">About</a></li>
-<li class="map-extras"><a href="tabs/feedback.php">Feedback</a></li>
-<li class="map-extras"><a href="tabs/api.php">API</a></li>
+<li class="map-extras"><a href="tabs/help.php" class="sprites map-myhelp" onclick="javascript: Mappr.analytics('/help'); ">Help</a></li>
+<li class="map-extras"><a href="tabs/about.php" onclick="javascript: Mappr.analytics('/about'); ">About</a></li>
+<li class="map-extras"><a href="tabs/feedback.php" onclick="javascript: Mappr.analytics('/feedback'); ">Feedback</a></li>
+<li class="map-extras"><a href="tabs/api.php" onclick="javascript: Mappr.analytics('/api'); ">API</a></li>
 </ul>
 <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
 

@@ -1217,6 +1217,8 @@ $(function () {
         });
       }
 
+      self.analytics('/embed');
+
       return false;
     }).show();
 
@@ -1385,6 +1387,7 @@ $(function () {
                   Mappr.activateEmbed(data.mid);
                   Mappr.loadMapList();
                   Mappr.hideLoadingMessage();
+                  Mappr.analytics('/save');
                 }
               });
 
@@ -1674,7 +1677,15 @@ $(function () {
       }
     }, 1000);
 
+    self.analytics('/downloads/' + filetype);
+
   }; /** end Mappr.generateDownload **/
+
+  Mappr.analytics = function (url) {
+    if(typeof _gaq === 'function') {
+       _gaq.push(['_trackPageview', url]);
+    }
+  };
 
   Mappr.finishDownload = function () {
     $('.download-message').hide();
