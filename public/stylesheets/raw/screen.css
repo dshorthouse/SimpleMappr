@@ -267,6 +267,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-widget{font-family:Verdana,Arial,sans-serif;font-size:1.1em;}
 .ui-widget .ui-widget{font-size:1em;}
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-family:Verdana,Arial,sans-serif;}
+.ui-widget textarea{font-size:0.7em;}
 .ui-widget-content{border:1px solid #aaaaaa;background-color:#ffffff;color:#222222;}
 .ui-widget-header{border:1px solid #aaaaaa;background-color:#e9e9e9;color:#222222;font-weight:bold;}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{border:1px solid #d3d3d3;background-color:#eeeeee;font-weight:normal;color:#555555;}
