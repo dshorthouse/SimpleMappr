@@ -1338,7 +1338,7 @@ class MAPPR {
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);
-    $this->map_obj->legend->label->set("size", ($this->download) ? $this->_download_factor*6 : 10);
+    $this->map_obj->legend->label->set("size", ($this->download) ? $this->_download_factor*8 : 10);
     $this->map_obj->legend->label->set("antialias", 50);
     $this->map_obj->legend->label->color->setRGB(0,0,0);
     

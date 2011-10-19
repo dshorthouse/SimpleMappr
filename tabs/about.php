@@ -9,6 +9,7 @@ require_once('../config/conf.php');
 <div class="header"><h2>Citing</h2></div>
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2>Recent Updates</h2></div>
+<p class="update"><strong>October 19, 2011</strong><span>Fixed bug in removal of layers. Improved legend appearance in downloads.</span></p>
 <p class="update"><strong>October 18, 2011</strong><span>Made a dedicated label section in map preview settings. State/Province borders were thickened to differentiate from rivers and lake outlines. Lake fills were made less stark to accommodate new lake and river label options.</span></p>
 <p class="update"><strong>October 6, 2011</strong><span>Removed eps as an output format because it was raster-based whereas tiff is equally good. Increased performance by allowing for browser caching; revisits should re-render the application in near sub-second times. Previewing shaded relief layers should be faster because it now produces images with less depth of colour; downloads continue to have quality outputs.</span></p>
 <p class="update"><strong>October 2, 2011</strong><span>Fixed a bug that prevented multiple layers or regions from properly expanding after a saved map is loaded.</span></p>
