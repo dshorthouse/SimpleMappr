@@ -857,9 +857,8 @@ $(function () {
           val = null;
           if (i === children.length-1) {
             $(this).find("button.removemore").show().click(function () {
-              $(clone).remove();
+              self.removeAccordionPanel(clone, data_type);
               counter = self.textareaCounter(data_type, 'decrease');
-              button.removeAttr("disabled");
               return false;
             }).parent()
             .find("button.clearself").click(function () {
@@ -886,6 +885,23 @@ $(function () {
     }
 
   }; /** end Mappr.addAccordionPanel **/
+
+  Mappr.removeAccordionPanel = function (clone, data_type) {
+    var self   = this,
+        button = $(".addmore[data-type='" + data_type + "']");
+
+    clone.nextAll().each(function () {
+      var num = parseInt($(this).find("h3 a").text().split(" ")[1],10);
+      $(this).find("h3 a").text($(this).find("h3 a").text().split(" ")[0] + " " + (num-1).toString());
+      $(this).find("input.m-mapTitle").attr("name", data_type + "["+(num-2).toString()+"][title]");
+      $(this).find("textarea").attr("name", data_type + "["+(num-2).toString()+"][data]");
+      $(this).find("select.m-mapShape").attr("name", data_type + "["+(num-2).toString()+"][shape]");
+      $(this).find("select.m-mapSize").attr("name", data_type + "["+(num-2).toString()+"][size]");
+      $(this).find("input.colorPicker").attr("name", data_type + "["+(num-2).toString()+"][color]");
+    });
+    clone.remove();
+    button.removeAttr("disabled");
+  };
 
   Mappr.addGrippies = function (obj) {
     var textarea     = $(obj).addClass("textarea-processed"),

@@ -653,7 +653,11 @@ class MAPPR {
   * Add legend and scalebar
   */
   private function add_legend_scalebar() {
-    if(array_key_exists('legend', $this->options) && $this->options['legend']) { $this->add_legend(); }
+    if($this->download && array_key_exists('legend', $this->options) && $this->options['legend']) {
+      $this->add_legend();
+    } else if (!$this->download) {
+      $this->add_legend();
+    }
     if(array_key_exists('scalebar', $this->options) && $this->options['scalebar']) { $this->add_scalebar(); }
   }
 
@@ -845,8 +849,6 @@ class MAPPR {
       //do this in reverse order because the legend will otherwise be presented in reverse order
       for($j=count($this->coords)-1; $j>=0; $j--) {
 
-        if(!isset($this->coords[$j])) { continue; }
-
         //clear out previous loop's selection
         $size = '';
         $shape = '';
@@ -929,8 +931,6 @@ class MAPPR {
   public function add_regions() {
     if(isset($this->regions) && $this->regions) {  
       for($j=count($this->regions)-1; $j>=0; $j--) {
-
-        if(!isset($this->regions[$j])) { continue; }
 
         //clear out previous loop's selection
         $color = '';
@@ -1329,20 +1329,17 @@ class MAPPR {
   * Create the legend file
   */
   private function add_legend() {
-    $this->map_obj->legend->set("keysizex", 20);
-    $this->map_obj->legend->set("keysizey", 17);
-    $this->map_obj->legend->set("keyspacingx", 5);
-    $this->map_obj->legend->set("keyspacingy", 5);
-    $this->map_obj->legend->set("postlabelcache", 1); // true
+    $this->map_obj->legend->set("keysizex", ($this->download) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keysizey", ($this->download) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keyspacingx", ($this->download) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("keyspacingy", ($this->download) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("postlabelcache", 1);
     $this->map_obj->legend->set("transparent", 1);
-    $this->map_obj->legend->outlinecolor->setRGB(255,255,255);  //white border
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);
-    $this->map_obj->legend->label->set("size", ($this->download) ? $this->_download_factor*9 : 10);
+    $this->map_obj->legend->label->set("size", ($this->download) ? $this->_download_factor*6 : 10);
     $this->map_obj->legend->label->set("antialias", 50);
-    $this->map_obj->legend->label->set("offsetx", -10);
-    $this->map_obj->legend->label->set("offsety", -13);
     $this->map_obj->legend->label->color->setRGB(0,0,0);
     
     //svg format cannot do legends in MapServer
