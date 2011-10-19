@@ -161,7 +161,7 @@ class USERMAPS {
         $output .= "</td>";
         $output .= "<td class=\"actions\">";
         $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">Load</a>";
-        if($this->_uid == $record['uid']) {
+        if($this->_uid == $record['uid'] || $this->_uid == 1) {
           $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">Delete</a>";
         }
         $output .= "</td>";
@@ -208,12 +208,16 @@ class USERMAPS {
   }
 
   private function destroy_map() {
+    $where = "mid=".$this->_db->escape($this->_request[0]);
+    if($this->_uid != 1) {
+      $where .= " AND uid = ".$this->_db->escape($this->_uid);
+    }
     $sql = "
       DELETE 
       FROM
         maps
       WHERE 
-        uid=".$this->_db->escape($this->_uid)." AND mid=".$this->_db->escape($this->_request[0]);
+        ".$where;
     $this->_db->query($sql);
 
     header("Content-Type: application/json");
