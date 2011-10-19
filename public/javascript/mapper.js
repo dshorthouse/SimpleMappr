@@ -137,8 +137,7 @@ $(function () {
         $('#jcrop-coord-ul').val(ul_coord.x + ', ' + ul_coord.y);
         $('#jcrop-coord-lr').val(lr_coord.x + ', ' + lr_coord.y);
 
-        $('#mapOutput').data('jcrop_coords', { 'jcrop_coord_ul' : $('#jcrop-coord-ul').val(), 'jcrop_coord_lr' : $('#jcrop-coord-lr').val() } );
-        $.cookie('jcrop_coords', "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
+        $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
         $('.jcrop-coord').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
@@ -178,7 +177,6 @@ $(function () {
     lr_arr = $('#jcrop-coord-lr').val().split(",");
     lr_point = this.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
 
-    $('#mapOutput').data("jcrop_coords", { 'jcrop_coord_ul' : $('#jcrop-coord-ul').val(), 'jcrop_coord_lr' : $('#jcrop-coord-lr').val() });
     $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
     this.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
@@ -309,12 +307,6 @@ $(function () {
       return false;
     });
 
-    $('.toolsDraw').click(function () {
-      self.initDraw();
-      self.vars.zoom = false;
-      return false;
-    });
-
     $('.toolsRefresh').click(function () {
       self.mapRefresh();
       return false;
@@ -335,16 +327,10 @@ $(function () {
         lr_arr   = [],
         lr_point = {};
 
-    if($('#mapOutput').data("jcrop_coords") !== "" || $.cookie("jcrop_coords")) {
-      if($('#mapOutput').data("jcrop_coords") !== "") {
-        coords = $('#mapOutput').data("jcrop_coords");
-        ul_arr = coords.jcrop_coord_ul.split(",");
-        lr_arr = coords.jcrop_coord_lr.split(",");
-      } else {
-        coords = $.parseJSON($.cookie("jcrop_coords"));
-        ul_arr = coords.jcrop_coord_ul.split(",");
-        lr_arr = coords.jcrop_coord_lr.split(",");
-      }
+    if($.cookie("jcrop_coords")) {
+      coords = $.parseJSON($.cookie("jcrop_coords"));
+      ul_arr = coords.jcrop_coord_ul.split(",");
+      lr_arr = coords.jcrop_coord_lr.split(",");
       ul_point = Mappr.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
       lr_point = Mappr.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
       Mappr.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
@@ -488,7 +474,6 @@ $(function () {
     $('#projection').change(function () {
       if($(this).val() !== "") {
         $.cookie("jcrop_coords", null);
-        $('#mapOutput').data("jcrop_coords", "");
         self.resetJbbox();
         self.showMap();
       }
@@ -648,59 +633,6 @@ $(function () {
 
     $('.jcrop-tracker').bind('mouseup', self, self.aQuery);
   };
-
-  Mappr.initDraw = function () {
-    var self = this, raphael = this.raphaelConfig;
-
-    self.destroyJcrop();
-
-    $('#mapOutput').mousedown(function (e) {
-      var pos     = raphael.position(e),
-          color   = $('input[name="freehand[0][color]"]').val();
-
-      color = color.split(" ");
-      raphael.path = [['M', pos.x, pos.y]];
-      raphael.wkt = [[pos.x + " " + pos.y]];
-      raphael.color = "#" + self.RGBtoHex(color[0], color[1], color[2]);
-      raphael.size = raphael.selectedSize;
-      raphael.line = raphael.draw(self.path, self.color, self.size);
-      $('#mapOutput').bind('mousemove', raphael.mouseMove);
-    });
-
-    $('#mapOutput').mouseup(function () {
-      var wkt = "";
-
-      $('#mapOutput').unbind('mousemove', raphael.mouseMove);
-      $('input[name="freehand[0][title]"]').val("Freehand Drawing");
-
-      $.ajax({
-        url     : self.settings.baseUrl + '/query/',
-        type    : 'POST',
-        data    : { freehand : raphael.wkt },
-        async   : false,
-        success : function (results) {
-          if(!results) { return; }
-          switch(raphael.selectedTool) {
-            case 'pencil':
-              wkt = "LINESTRING(" + results + ")";
-            break;
-            case 'rectangle':
-              wkt = "POLYGON((" + results + "))";
-            break;
-            case 'circle':
-            break;
-            case 'line':
-              wkt = "LINESTRING(" + results + ")";
-            break;
-          }
-          $('textarea[name="freehand[0][data]"]').val(wkt);
-        },
-        error : function () { return false; }
-      });
-
-    });
-
-  };  /** end Mappr.initDraw **/
 
   Mappr.aZoom = function (event) {
     event.data.showMap();
@@ -1012,12 +944,9 @@ $(function () {
       success  : function (data) {
         self.removeExtraElements();
         $('#form-mapper').clearForm();
-
         $('#filter-mymaps').val(filter);
-
         self.loadCoordinates(data);
         self.loadRegions(data);
-        self.loadFreehands(data);
         self.loadLayers(data);
         self.loadSettings(data);
         self.activateEmbed(id);
@@ -1160,30 +1089,6 @@ $(function () {
       $('input[name="regions['+i.toString()+'][title]"]').val(region_title);
       $('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
       $('input[name="regions['+i.toString()+'][color]"]').val(region_color);
-    }
-
-  };
-
-  Mappr.loadFreehands = function (data) {
-    var self           = this,
-        i              = 0,
-        freehands      = data.map.freehand || [],
-        freehand_title = "",
-        freehand_data  = "",
-        freehand_color = "";
-
-    for(i = 0; i < freehands.length; i += 1) {
-      if(i > 2) {
-        self.addAccordionPanel('freehands');
-      }
-
-      freehand_title = freehands[i].title || "";
-      freehand_data  = freehands[i].data  || "";
-      freehand_color = freehands[i].color || "150 150 150";
-
-      $('input[name="freehand['+i.toString()+'][title]"]').val(freehand_title);
-      $('textarea[name="freehand['+i.toString()+'][data]"]').val(freehand_data);
-      $('input[name="freehand['+i.toString()+'][color]"]').val(freehand_color);
     }
 
   };
@@ -1388,6 +1293,8 @@ $(function () {
               }
 
               Mappr.showLoadingMessage('Saving...');
+
+              if(typeof Mappr.vars.jcropAPI === "undefined") { $('#bbox_rubberband').val(''); }
 
               $.ajax({
                 type        : 'POST',
@@ -1607,8 +1514,8 @@ $(function () {
     $('#legend_url').val(data.legend_url);
     $('#scalebar_url').val(data.scalebar_url);
     $('#bad_points').val(data.bad_points);
-    $('#mapOutputImage').attr("src", data.mapOutputImage).load(function () {
-      if(!load_data) { load_data = { 'map' : { 'bbox_rubberband' : "" }}; }
+    $('#mapOutputImage').attr("src", data.mapOutputImage).one('load', function () {
+      if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
       self.hideLoadingMessage();
     });
@@ -1744,7 +1651,7 @@ $(function () {
       collapsible : true,
       autoHeight : false
     });
-    $('#mapOutput').data("jcrop_coords", "").append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
+    $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $(".tooltip").tipsy({gravity: 's'});
     this.bindHotkeys();
     this.bindToolbar();
@@ -1784,7 +1691,7 @@ $(function () {
       if (tag === 'form') {
         return $(':input',this).clearForm();
       }
-      if (type === 'text' || type === 'password' || tag === 'textarea') {
+      if (type === 'text' || type === 'password' || type === 'hidden' || tag === 'textarea') {
         this.value = '';
       } else if (type === 'checkbox' || type === 'radio') {
        this.checked = false;

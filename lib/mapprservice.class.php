@@ -621,7 +621,9 @@ class MAPPR {
 
     //rotation
     if(isset($this->rotation) && $this->rotation != 0) { $this->map_obj->setRotation($this->rotation); }
-    if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) { $this->reproject_map($this->default_projection, $this->projection); }
+    if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) {
+      $this->reproject_map($this->default_projection, $this->projection);
+    }
 
     //crop
     if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->download) { $this->set_crop(); }
@@ -636,9 +638,6 @@ class MAPPR {
 
     //add the coordinates
     $this->add_coordinates();
-
-    //WIP add the margin
-//    $this->add_margin();
 
     // Add border if requested
     if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
@@ -1206,122 +1205,6 @@ class MAPPR {
       $layer->grid->set("maxarcs", $ticks);
       $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
       $layer->grid->set("maxsubdivide", 2);
-    }
-  }
-
-  /**
-  * WIP: Create a margin around the map
-  */
-  private function add_margin() {
-    if(isset($this->graticules) && $this->graticules) {
-      $ll_point = new stdClass();
-      $ll_point->x = $this->map_obj->width*0.05;
-      $ll_point->y = $this->map_obj->height-($this->map_obj->height*0.05);
-      $ll_coord = $this->pix2geo($ll_point);
-
-      $ur_point = new stdClass();
-      $ur_point->x = $this->map_obj->width-($this->map_obj->width*0.05);
-      $ur_point->y = $this->map_obj->height*0.05;
-      $ur_coord = $this->pix2geo($ur_point);
-
-      $margin_layer = ms_newLayerObj($this->map_obj);
-      $margin_layer->set("name","margin");
-      $margin_layer->set("type", MS_LAYER_POLYGON);
-      $margin_layer->set("status",MS_ON);
-      $margin_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
-
-      $margin_class = ms_newClassObj($margin_layer);
-      $margin_style = ms_newStyleObj($margin_class);
-      $margin_style->color->setRGB(255,255,255);
-
-      $polygon = ms_newShapeObj(MS_SHAPE_POLYGON);
-
-      //bottom
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
-      $polyLine->addXY($this->map_obj->extent->minx,$ll_coord->y);
-      $polyLine->addXY($this->map_obj->extent->maxx,$ll_coord->y);
-      $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->miny);
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
-      $polygon->add($polyLine);
-
-      //top
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
-      $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->maxy);
-      $polyLine->addXY($this->map_obj->extent->maxx,$ur_coord->y);
-      $polyLine->addXY($this->map_obj->extent->minx,$ur_coord->y);
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
-      $polygon->add($polyLine);
-
-      //right
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($this->map_obj->extent->maxx,$ur_coord->y);
-      $polyLine->addXY($this->map_obj->extent->maxx,$ll_coord->y);
-      $polyLine->addXY($ur_coord->x,$ll_coord->y);
-      $polyLine->addXY($ur_coord->x,$ur_coord->y);
-      $polyLine->addXY($this->map_obj->extent->maxx,$ur_coord->y);
-      $polygon->add($polyLine);
-
-      //left
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($this->map_obj->extent->minx,$ur_coord->y);
-      $polyLine->addXY($ll_coord->x,$ur_coord->y);
-      $polyLine->addXY($ll_coord->x,$ll_coord->y);
-      $polyLine->addXY($this->map_obj->extent->minx,$ll_coord->y);
-      $polyLine->addXY($this->map_obj->extent->minx,$ur_coord->y);
-      $polygon->add($polyLine);
-
-      $margin_layer->addFeature($polygon);
-
-      //inner border
-      $inner_margin_layer = ms_newLayerObj($this->map_obj);
-      $inner_margin_layer->set("name","inner-margin");
-      $inner_margin_layer->set("type",MS_LAYER_POLYGON);
-      $inner_margin_layer->set("status",MS_ON);
-      $inner_margin_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
-
-      $inner_border_class = ms_newClassObj($inner_margin_layer);
-      $inner_border_style = ms_newStyleObj($inner_border_class);
-      $inner_border_style->outlinecolor->setRGB(130,130,130);
-
-      $polygon_border = ms_newShapeObj(MS_SHAPE_POLYGON);
-
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($ll_coord->x,$ur_coord->y);
-      $polyLine->addXY($ur_coord->x,$ur_coord->y);
-      $polyLine->addXY($ur_coord->x,$ll_coord->y);
-      $polyLine->addXY($ll_coord->x,$ll_coord->y);
-      $polyLine->addXY($ll_coord->x,$ur_coord->y);
-      $polygon_border->add($polyLine);
-
-      $inner_margin_layer->addFeature($polygon_border);
-
-      //outer border
-      $outer_border_layer = ms_newLayerObj($this->map_obj);
-      $outer_border_layer->set("name","outer-border");
-      $outer_border_layer->set("type",MS_LAYER_POLYGON);
-      $outer_border_layer->set("status",MS_ON);
-      $outer_border_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
-
-      $outer_border_class = ms_newClassObj($outer_border_layer);
-
-      // Add new style to new class
-      $outer_border_style = ms_newStyleObj($outer_border_class);
-      $outer_border_style->set("width", 5);
-      $outer_border_style->outlinecolor->setRGB(255,255,255);
-
-      $polygon_border = ms_newShapeObj(MS_SHAPE_POLYGON);
-
-      $polyLine = ms_newLineObj();
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
-      $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->maxy);
-      $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->miny);
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
-      $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
-      $polygon_border->add($polyLine);
-
-      $outer_border_layer->addFeature($polygon_border);
     }
   }
   
