@@ -156,6 +156,7 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 </ul>
 <h2>Labels</h2>
 <ul class="columns ui-helper-clearfix">
+<li><input type="checkbox" id="countrynames" class="layeropt" name="layers[countrynames]" /> Countries</li>
 <li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> State/Provinces</li>
 <li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> lakes</li>
 <li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> rivers</li>
@@ -239,7 +240,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <input type="checkbox" id="scalebar" disabled="disabled" />
 <label for="scalebar">embed scalebar</label>
 </fieldset>
-<p>*svg download does not include scalebar, legend, or relief layers</p>
+<p>*svg does not include scalebar, legend, or relief layers</p>
 </div>
 <div class="download-message">Building file for download...</div>
 </div>

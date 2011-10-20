@@ -564,18 +564,25 @@ class MAPPR {
       'sort'  => 11
     );
 
+    //Country labels
+    $this->shapes['countrynames'] = array(
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 12
+    );
+
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 12
+      'sort'  => 13
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 13
+      'sort'  => 14
     );
 
   }
@@ -641,7 +648,7 @@ class MAPPR {
 
     // Add border if requested
     // WIP: rotation check because border is getting rotated
-    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
+    if((!$this->rotation || $this->rotation == 0) && $this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
 
     // Prepare the output
     $this->prepare_output();
@@ -1080,6 +1087,22 @@ class MAPPR {
               $style = ms_newStyleObj($class);
               $style->set("width",1.25);
               $style->color->setRGB(10,10,10);
+            break;
+
+            case 'countrynames':
+              $layer->set("tolerance", 5);
+              $layer->set("toleranceunits", "pixels");
+              $layer->set("labelitem", "NAME");
+
+              $class = ms_newClassObj($layer);
+              $class->label->set("font", "arial");
+              $class->label->set("type", MS_TRUETYPE);
+              $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 12);
+              $class->label->set("position", MS_CC);
+              $class->label->set("offsetx", 3);
+              $class->label->set("offsety", 3);
+              $class->label->set("partials", MS_FALSE);
+              $class->label->color->setRGB(10, 10, 10);
             break;
 
             case 'placenames':
