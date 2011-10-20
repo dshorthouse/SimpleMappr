@@ -641,7 +641,7 @@ class MAPPR {
 
     // Add border if requested
     // WIP: rotation check because border is getting rotated
-    if(!$this->rotation && $this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
+    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
 
     // Prepare the output
     $this->prepare_output();
