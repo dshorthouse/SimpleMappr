@@ -640,7 +640,8 @@ class MAPPR {
     $this->add_coordinates();
 
     // Add border if requested
-    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
+    // WIP: rotation check because border is getting rotated
+    if(!$this->rotation && $this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
 
     // Prepare the output
     $this->prepare_output();
@@ -657,7 +658,11 @@ class MAPPR {
     } else if (!$this->download) {
       $this->add_legend();
     }
-    if(array_key_exists('scalebar', $this->options) && $this->options['scalebar']) { $this->add_scalebar(); }
+    if($this->download && array_key_exists('scalebar', $this->options) && $this->options['scalebar']) {
+      $this->add_scalebar();
+    } else if (!$this->download) {
+      $this->add_scalebar();
+    }
   }
 
   /**
@@ -1217,7 +1222,7 @@ class MAPPR {
     $this->map_obj->legend->set("keyspacingx", ($this->download) ? $this->_download_factor*3 : 5);
     $this->map_obj->legend->set("keyspacingy", ($this->download) ? $this->_download_factor*3 : 5);
     $this->map_obj->legend->set("postlabelcache", 1);
-    $this->map_obj->legend->set("transparent", 1);
+    $this->map_obj->legend->set("transparent", 0);
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);
@@ -1229,7 +1234,6 @@ class MAPPR {
     if($this->download && $this->options['legend'] && $this->output != 'svg') {
       $this->map_obj->legend->set("status", MS_EMBED);
       $this->map_obj->legend->set("position", MS_UR);
-      $this->map_obj->legend->set("transparent", 0);
       $this->map_obj->drawLegend();
     }
     if(!$this->download) {
@@ -1250,7 +1254,7 @@ class MAPPR {
     $this->map_obj->scalebar->color->setRGB(30,30,30);
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-    $this->map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
+    $this->map_obj->scalebar->set("transparent", 1);
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
     $this->map_obj->scalebar->label->set("size", ($this->download) ? $this->_download_factor*5 : 8);
@@ -1297,8 +1301,7 @@ class MAPPR {
     $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
     $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
     $polygon->add($polyLine);
-
-    $outline_layer->addFeature($polygon); 
+    $outline_layer->addFeature($polygon);
   }
 
   /**

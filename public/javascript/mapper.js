@@ -454,7 +454,6 @@ $(function () {
         });
       }
     );
-
   };
 
   Mappr.bindSettings = function () {
@@ -478,6 +477,22 @@ $(function () {
         self.showMap();
       }
     });
+
+    $('.download-filetype').change(function () {
+      self.toggleOptions(this);
+    });
+  };
+
+  Mappr.toggleOptions = function (obj) {
+    if($(obj).attr("id") !== 'download-svg') {
+      $.each(["border", "legend", "scalebar"], function () {
+        $('#'+this).removeAttr("disabled");
+      });
+    } else {
+      $.each(["legend", "scalebar"], function () {
+        $('#'+this).attr("checked", false).attr("disabled", "disabled");
+      });
+    }
   };
 
   Mappr.bindColorPickers = function () {
@@ -957,12 +972,13 @@ $(function () {
   };
 
   Mappr.loadSettings = function (data) {
-    var pattern   = /[?*:;{}\\ "']+/g,
-        map_title = "",
-        i         = 0,
-        keyMap    = [],
-        key       = "",
-        self      = this;
+    var pattern           = /[?*:;{}\\ "']+/g,
+        map_title         = "",
+        i                 = 0,
+        keyMap            = [],
+        key               = "",
+        download_filetype = "",
+        self              = this;
 
     map_title = data.map.save.title;
 
@@ -988,9 +1004,24 @@ $(function () {
       $('#download-factor-3').attr('checked', true);
     }
 
+    $.each(["border", "legend", "scalebar"], function () {
+      $('#'+this).attr('checked', false);
+      $('input[name="options['+this+']"]').val("");
+    });
+
+    if(data.map.options !== undefined) {
+      $.each(["border", "legend", "scalebar"], function () {
+        if(data.map.options[this] && data.map.options[this] !== undefined) {
+          $('#'+this).attr('checked', true);
+          $('input[name="options['+this+']"]').val(1);
+        }
+      });
+    }
+
     if(data.map.download_filetype !== undefined && data.map.download_filetype) {
       $('input[name="download_filetype"]').val(data.map.download_filetype);
-      $('#download-' + data.map.download_filetype).attr('checked', true);
+      download_filetype = $('#download-' + data.map.download_filetype).attr('checked', true);
+      self.toggleOptions(download_filetype);
     } else {
       $('#download-svg').attr('checked', true);
     }
@@ -1000,23 +1031,6 @@ $(function () {
       $('#gridspace-' + data.map.grid_space).attr('checked', true);
     } else {
       $('#gridspace').attr('checked', true);
-    }
-
-    if(data.map.options !== undefined) {
-      for(key in data.map.options) {
-        if(data.map.options.hasOwnProperty(key)) { keyMap[keyMap.length] = key; }
-      }
-      for(i = 0 ; i < keyMap.length; i += 1) {
-        if(keyMap[i] === 'border') {
-          $('#border').attr('checked', true);
-          $('input[name="options[border]"]').val(1);
-        } else if (keyMap[i] === 'legend') {
-          $('#legend').attr('checked', true);
-          $('input[name="options[legend]"]').val(1);
-        } else {
-          $('input[name="options['+keyMap[i]+']"]').attr('checked', true);
-        }
-      }
     }
 
   }; //** end Mappr.loadSettings **/
@@ -1096,8 +1110,6 @@ $(function () {
   Mappr.loadLayers = function (data) {
     var i = 0, keyMap = [], key = 0;
 
-    $('input[name="options[border]"]').val("");
-    $('input[name="options[legend]"]').val("");
     if(data.map.layers) {
       for(key in data.map.layers) {
         if(data.map.layers.hasOwnProperty(key)) { keyMap[keyMap.length] = key; }
@@ -1281,17 +1293,8 @@ $(function () {
               $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
               $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
-              if($('#border').is(':checked')) {
-                $('input[name="options[border]"]').val(1);
-              } else {
-                $('input[name="options[border]"]').val("");
-              }
-              if($('#legend').is(':checked')) {
-                $('input[name="options[legend]"]').val(1);
-              } else {
-                $('input[name="options[legend]"]').val("");
-              }
 
+              Mappr.setFormOptions();
               Mappr.showLoadingMessage('Saving...');
 
               if(typeof Mappr.vars.jcropAPI === "undefined") { $('#bbox_rubberband').val(''); }
@@ -1340,7 +1343,7 @@ $(function () {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (350).toString(),
+      width         : (450).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
@@ -1418,13 +1421,7 @@ $(function () {
   };
 
   Mappr.drawScalebar = function () {
-    var scalebar_url = $('#scalebar_url').val();
-
-    if(scalebar_url) {
-      $('#mapScale').html('<img src="' + scalebar_url + '" />');
-    } else {
-      $('#mapScale').html('');
-    }
+    $('#mapScale img').attr('src', $('#scalebar_url').val());
   };
 
   Mappr.showBadPoints = function () {
@@ -1463,48 +1460,33 @@ $(function () {
 
     self.showLoadingMessage('Building preview...');
 
-    $('#mapScale').html('');
-
     $.ajax({
       type : 'POST',
       url : self.settings.baseUrl + "/application/",
       data : formData,
       dataType : 'json',
       success : function (data) {
-        self.parseMapResponse(data, load_data);
+        self.resetFormValues(data);
+        self.resetJbbox();
 
+        self.drawMap(data, load_data);
         self.drawLegend();
         self.drawScalebar();
+
         self.showBadPoints();
+        self.addBadRecordsViewer();
 
         toolsTabs.tabs('select', tabIndex);
-
         $('#mapTools').bind('tabsselect', function (event,ui) {
           event = null;
           $('#selectedtab').val(ui.index);
         });
-
-        self.resetJbbox();
-        $('#bbox_map').val($('#rendered_bbox').val());             // set extent from previous rendering
-        $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
-        $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
-        $('#pan').val('');                                         // reset pan value
-
-        self.addBadRecordsViewer();
-
-        $('.toolsBadRecords').click(function () {
-          $('#badRecordsViewer').dialog("open");
-          return false;
-        });
-
       }
     });
 
   }; /** end Mappr.showMap **/
 
-  Mappr.parseMapResponse = function (data, load_data) {
-    var self = this;
-
+  Mappr.resetFormValues = function (data) {
     $('#mapOutput input').each(function () {
       $(this).val('');
     });
@@ -1514,6 +1496,15 @@ $(function () {
     $('#legend_url').val(data.legend_url);
     $('#scalebar_url').val(data.scalebar_url);
     $('#bad_points').val(data.bad_points);
+    $('#bbox_map').val($('#rendered_bbox').val());             // set extent from previous rendering
+    $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
+    $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
+    $('#pan').val('');                                         // reset pan value
+  };
+
+  Mappr.drawMap = function (data, load_data) {
+    var self = this;
+
     $('#mapOutputImage').attr("src", data.mapOutputImage).one('load', function () {
       if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
@@ -1538,6 +1529,11 @@ $(function () {
         }
       }
     });
+
+    $('.toolsBadRecords').click(function () {
+      $('#badRecordsViewer').dialog("open");
+      return false;
+    });
   };
 
   Mappr.generateDownload = function () {
@@ -1557,18 +1553,7 @@ $(function () {
 
     filetype = $("input[name='download-filetype']:checked").val();
 
-    if($('#border').is(':checked')) {
-      $('input[name="options[border]"]').val(1);
-    } else {
-      $('input[name="options[border]"]').val("");
-    }
-
-    if($('#legend').is(':checked')) {
-      $('input[name="options[legend]"]').val(1);
-    } else {
-      $('input[name="options[legend]"]').val("");
-    }
-
+    self.setFormOptions();
     $('#download_token').val(token);
 
     $('.ui-dialog-buttonpane').hide();
@@ -1601,6 +1586,16 @@ $(function () {
     self.analytics('/downloads/' + filetype);
 
   }; /** end Mappr.generateDownload **/
+
+  Mappr.setFormOptions = function () {
+    $.each(["border", "legend", "scalebar"], function () {
+      if($('#'+this).is(':checked')) {
+        $('input[name="options['+this+']"]').val(1);
+      } else {
+        $('input[name="options['+this+']"]').val("");
+      }
+    });
+  };
 
   Mappr.analytics = function (url) {
     if(typeof _gaq === 'function') {
@@ -1652,6 +1647,7 @@ $(function () {
       autoHeight : false
     });
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
+    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" />');
     $(".tooltip").tipsy({gravity: 's'});
     this.bindHotkeys();
     this.bindToolbar();

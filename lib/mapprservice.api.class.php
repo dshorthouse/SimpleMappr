@@ -294,6 +294,7 @@ class MAPPRAPI extends MAPPR {
   /**
   * Override the method in the MAPPR class
   */
+
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", 3);

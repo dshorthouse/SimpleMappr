@@ -165,7 +165,6 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 </ul>
 <h2>Options</h2>
 <ul>
-<li><input type="checkbox" id="scalebar"  class="layeropt" name="options[scalebar]" /> scalebar</li>
 <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> graticules (grid)
 <div id="graticules-selection">
 <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> fixed
@@ -235,8 +234,10 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <legend>Options</legend>
 <input type="checkbox" id="border" />
 <label for="border">include border</label>
-<input type="checkbox" id="legend" />
-<label for="legend">include legend</label>
+<input type="checkbox" id="legend" disabled="disabled" />
+<label for="legend">embed legend</label>
+<input type="checkbox" id="scalebar" disabled="disabled" />
+<label for="scalebar">embed scalebar</label>
 </fieldset>
 <p>*svg download does not include scalebar, legend, or relief layers</p>
 </div>
@@ -261,6 +262,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <input type="hidden" name="grid_space" />
 <input type="hidden" name="options[border]" />
 <input type="hidden" name="options[legend]" />
+<input type="hidden" name="options[scalebar]" />
 <input type="hidden" id="rendered_bbox" value="" />
 <input type="hidden" id="rendered_rotation" value="" />
 <input type="hidden" id="rendered_projection" value="" />
@@ -387,7 +389,7 @@ function partial_filetypes() {
   foreach($file_types as $type) {
     $checked = ($type == "svg") ? " checked=\"checked\"": "";
     $asterisk = ($type == "svg") ? "*" : "";
-    $output .= "<input type=\"radio\" id=\"download-".$type."\" name=\"download-filetype\" value=\"".$type."\"".$checked." />";
+    $output .= "<input type=\"radio\" id=\"download-".$type."\" class=\"download-filetype\" name=\"download-filetype\" value=\"".$type."\"".$checked." />";
     $output .= "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
   }
 
