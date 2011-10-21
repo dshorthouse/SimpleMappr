@@ -9,6 +9,7 @@ require_once('../config/conf.php');
 <div class="header"><h2>Citing</h2></div>
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2>Recent Updates</h2></div>
+<p class="update"><strong>October 20, 2011</strong><span>Improvements: added a Country label option; scale bar is now always present in preview but optional for download.</span></p>
 <p class="update"><strong>October 19, 2011</strong><span>Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded.</span></p>
 <p class="update"><strong>October 18, 2011</strong><span>Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels.</span></p>
 <p class="update"><strong>October 6, 2011</strong><span>Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster.</span></p>
