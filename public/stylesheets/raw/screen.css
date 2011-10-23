@@ -115,13 +115,20 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapImage{position:relative;}
 #mapImage #mapOutputImage{background-color:#FFF;}
 #mapControlsTransparency{position:absolute;left:0px;top:0px;width:40px;height:40px;opacity:0.65;-moz-opacity:0.65;filter:alpha(opacity=65);background-color:#FFF;}
-#mapControls{position:absolute;left:0px;top:0px;width:40px;height:40px;background-color:transparent;z-index:1000;}
+#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:1000;top:5px;left:5px}
 #mapControls .controls{position:absolute;}
 #mapControls .sprites{width:16px;height:16px;}
-#mapControls .up{top:0px;left:12px;background-position:0 -288px;}
-#mapControls .down{bottom:0px;left:12px;background-position:0 -64px;}
-#mapControls .right{top:12px;right:0px;background-position:0 -192px;}
-#mapControls .left{top:12px;left:0px;background-position:0 -96px;}
+#mapControls .up{top:10px;left:22px;background-position:0 -288px;}
+#mapControls .down{bottom:10px;left:22px;background-position:0 -64px;}
+#mapControls .right{top:22px;right:10px;background-position:0 -192px;}
+#mapControls .left{top:22px;left:10px;background-position:0 -96px;}
+#mapControls .viewport{height:60px;width:60px;position:relative;margin:0 auto;overflow:hidden;}
+#mapControls .overview{position: absolute; width:58px;list-style:none;margin:0;padding:0;left:0;top:0;}
+#mapControls .overview li{height:60px;width:60px;float:left;position:relative;}
+#mapControls .overlay{background:url("../../images/bg-rotatescroll.png") no-repeat 0 0;position:absolute;left:0;top:0;height:60px;width:60px;}
+#mapControls .thumb{cursor:pointer;width:12px;height:12px;position:absolute;cursor:pointer;}
+#mapControls .dot{display:none;}
+#mapControls .dot span {display: none;}
 #badRecordsWarning{display:none;font-size:0.5em;font-weight:bold;position:absolute;top:0px;right:0px;color:#FF0000;height:27px;line-height:27px;text-transform:uppercase;width:155px;z-index:100;background-color:#FFF;opacity:0.9;filter:alpha(opacity=90);padding-left:5px;}
 #badRecordsWarning a.toolsBadRecords{background-position:0 -481px;padding:2px 0px 2px 20px;height:27px;line-height:27px;text-decoration:none;color:#FF0000;}
 #badRecords{font-size:0.75em;}

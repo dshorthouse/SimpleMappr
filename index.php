@@ -96,20 +96,6 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <ul class="dropdown">
 <li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
 <li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
-<li><a href="#" class="sprites rotateAnticlockwise tooltip" title="rotate counterclockwise"></a>
-<ul class="sub_menu">
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-5">5<sup>o</sup></a></li>
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-10">10<sup>o</sup></a></li>
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="-15">15<sup>o</sup></a></li>
-</ul>
-</li>
-<li><a href="#" class="sprites rotateClockwise tooltip" title="rotate clockwise"></a>
-<ul class="sub_menu">
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="5">5<sup>o</sup></a></li>
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="10">10<sup>o</sup></a></li>
-<li class="ui-state-default"><a href="#" class="sprites toolsRotate" data-rotate="15">15<sup>o</sup></a></li>
-</ul>
-</li>
 <li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
 <li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
 <li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
@@ -128,10 +114,19 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <div id="mapImage">
 <div id="mapControlsTransparency"></div>
 <div id="mapControls">
+<div class="viewport">
+<ul class="overview">
+<?php echo rotation_values(); ?>
+</ul>
+</div>
+<div class="dot"></div>
+<div class="overlay">
 <a href="#" class="sprites controls tooltip arrows up" data-pan="up" title="pan up"></a>
 <a href="#" class="sprites controls tooltip arrows right" data-pan="right" title="pan right"></a>
 <a href="#" class="sprites controls tooltip arrows down" data-pan="down" title="pan down"></a>
 <a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
+</div>
+<div class="thumb ui-corner-all ui-widget-header"></div>
 </div>
 <div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords">Records Out of Range</a></div>
 <div id="mapOutput"><span class="mapper-loading-message ui-corner-all ui-widget-content">Building preview...</span></div>
@@ -313,29 +308,29 @@ function partial_layers() {
 
   $output = '';
 
-  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
+  for($i=0;$i<=NUMTEXTAREA-1;$i++) {
     
-    $output .= '<div class="form-item fieldset-points">';
+    $output .= "<div class=\"form-item fieldset-points\">";
 
-    $output .= '<button class="sprites removemore negative" data-type="coords">Remove</button>';
+    $output .= "<button class=\"sprites removemore negative\" data-type=\"coords\">Remove</button>";
   
-    $output .= '<h3><a href="#">Layer '.($j+1).'</a></h3>' . "\n";
-    $output .= '<div>' . "\n";
-    $output .= '<div class="fieldset-taxon">' . "\n";
-    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$j.'][title]" />' . "\n";
-    $output .= '</div>' . "\n";
-    $output .= '<div class="resizable-textarea">' . "\n";
-    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$j.'][data]"></textarea></span>' . "\n";
-    $output .= '</div>' . "\n";
+    $output .= "<h3><a href=\"#\">Layer ".($i+1)."</a></h3>" . "\n";
+    $output .= "<div>" . "\n";
+    $output .= "<div class=\"fieldset-taxon\">" . "\n";
+    $output .= "<span class=\"fieldset-title\">Legend<span class=\"required\">*</span>:</span> <input type=\"text\" class=\"m-mapTitle\" size=\"40\" maxlength=\"40\" name=\"coords[$i][title]\" />" . "\n";
+    $output .= "</div>" . "\n";
+    $output .= "<div class=\"resizable-textarea\">" . "\n";
+    $output .= "<span><textarea class=\"resizable m-mapCoord\" rows=\"5\" cols=\"60\" name=\"coords[$i][data]\"></textarea></span>" . "\n";
+    $output .= "</div>" . "\n";
 
-    $output .= '<div class="fieldset-extras">' . "\n";
-    $output .= '<span class="fieldset-title">Shape:</span> <select class="m-mapShape" name="coords['.$j.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">Size:</span> <select class="m-mapSize" name="coords['.$j.'][size]">'.$marker_size.'</select>' . "\n";
-    $output .= '<span class="fieldset-title">Color:</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$j.'][color]" value="0 0 0" />' . "\n";
-    $output .= '</div>' . "\n";
-    $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
-    $output .= '</div>' . "\n";
+    $output .= "<div class=\"fieldset-extras\">" . "\n";
+    $output .= "<span class=\"fieldset-title\">Shape:</span> <select class=\"m-mapShape\" name=\"coords[$i][shape]\">$marker_shape</select> <span class=\"fieldset-title\">Size:</span> <select class=\"m-mapSize\" name=\"coords[$i][size]\">$marker_size</select>" . "\n";
+    $output .= "<span class=\"fieldset-title\">Color:</span> <input class=\"colorPicker\" type=\"text\" size=\"12\" maxlength=\"11\" name=\"coords[$i][color]\" value=\"0 0 0\" />" . "\n";
+    $output .= "</div>" . "\n";
+    $output .= "<button class=\"sprites clear clearself negative\">Clear</button>" . "\n";
+    $output .= "</div>" . "\n";
   
-    $output .= '</div>' . "\n";
+    $output .= "</div>" . "\n";
   }
 
   return $output;
@@ -344,22 +339,22 @@ function partial_layers() {
 function partial_regions() {
   $output = '';
 
-  for($j=0;$j<=NUMTEXTAREA-1;$j++) {
+  for($i=0;$i<=NUMTEXTAREA-1;$i++) {
     $output .= '<div class="form-item fieldset-regions">';
 
     $output .= '<button class="sprites removemore negative" data-type="regions">Remove</button>';
 
-    $output .= '<h3><a href="#">Region '.($j+1).'</a></h3>' . "\n";
+    $output .= '<h3><a href="#">Region '.($i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
     $output .= '<div class="fieldset-taxon">' . "\n";
-    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$j.'][title]" />' . "\n";
+    $output .= '<span class="fieldset-title">Legend<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$i.'][title]" />' . "\n";
     $output .= '</div>' . "\n";
     $output .= '<div class="resizable-textarea">' . "\n";
-    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$j.'][data]"></textarea></span>' . "\n";
+    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$i.'][data]"></textarea></span>' . "\n";
     $output .= '</div>' . "\n";
   
     $output .= '<div class="fieldset-extras">' . "\n";
-    $output .= '<span class="fieldset-title">Color:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$j.'][color]" value="150 150 150" />' . "\n";
+    $output .= '<span class="fieldset-title">Color:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$i.'][color]" value="150 150 150" />' . "\n";
     $output .= '</div>' . "\n";
     $output .= '<button class="sprites clear clearself negative">Clear</button>' . "\n";
     $output .= '</div>' . "\n";
@@ -394,6 +389,17 @@ function partial_filetypes() {
     $output .= "<label for=\"download-".$type."\">".$type.$asterisk."</label>";
   }
 
+  return $output;
+}
+
+function rotation_values() {
+  $output = "";
+
+  for($i=0;$i<360;$i++) {
+    if($i % 5 == 0) {
+      $output .= "<li data-rotate=\"$i\"></li>";
+    }
+  }
   return $output;
 }
 ?>

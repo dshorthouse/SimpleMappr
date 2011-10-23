@@ -268,15 +268,6 @@ $(function () {
       return false;
     });
 
-    $('.toolsRotate').click(function () {
-      var rotation = (!$('#rendered_rotation').val()) ? 0 : parseInt($('#rendered_rotation').val(), 10);
-
-      self.resetJbbox();
-      $('#rotation').val(rotation+parseInt($(this).attr("data-rotate"), 10));
-      self.showMap();
-      return false;
-    });
-
     $('.toolsCrop').click(function () {
       self.mapCrop();
       return false;
@@ -995,6 +986,8 @@ $(function () {
     $('input[name="projection_map"]').val(data.map.projection_map);
     $('input[name="rotation"]').val(data.map.rotation);
 
+    self.setRotation(data.map.rotation);
+
     self.resetJbbox();
 
     if(data.map.download_factor !== undefined && data.map.download_factor) {
@@ -1637,7 +1630,31 @@ $(function () {
     return false;
   };
 
+  Mappr.performRotation = function (element) {
+    $('#rotation').val($(element).attr("data-rotate"));
+    this.showMap();
+  };
+
+  Mappr.setRotation = function (angle) {
+    var control = $('#mapControls'),
+        thumb   = $('.thumb', control),
+        dots    = $('.overview', control).children(),
+        rads    = 0,
+        degs    = 0,
+        left    = 0,
+        top     = 0;
+
+    angle = parseFloat(angle) < 0 ? parseFloat(angle) +360 : parseFloat(angle);
+    rads = angle * (Math.PI/180)
+
+    $('.overview', control).css("left", -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px');  
+    top = Math.round(-Math.cos(rads) * 28 + (control.outerHeight() /2 - thumb.outerHeight() /2)) + 'px';
+    left = Math.round(Math.sin(rads) * 28 + (control.outerWidth() /2 - thumb.outerWidth() /2)) + 'px';
+    $('.thumb', control).css('top',top).css('left',left);
+  };
+
   Mappr.init = function () {
+    var self = this;
     $('#initial-message').hide();
     $("#tabs").tabs().show();
     $('#mapTools').tabs();
@@ -1649,6 +1666,9 @@ $(function () {
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" />');
     $(".tooltip").tipsy({gravity: 's'});
+    $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+      self.performRotation(element);
+    }});
     this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();

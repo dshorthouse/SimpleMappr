@@ -48,6 +48,7 @@ class HEADER {
     'public/javascript/jquery.uitablefilter.min.js',
     'public/javascript/janrain.min.js',
     'public/javascript/jquery.hotkeys.min.js',
+    'public/javascript/jquery.tinycircleslider.min.js',
     'public/javascript/mapper.js'
   );
 
