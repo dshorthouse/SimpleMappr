@@ -1,5 +1,5 @@
 $(function() {
-  if(Mappr.settings.active === "active") {
+  if(Mappr.settings.active === "false") {
     if (typeof window.janrain !== 'object') window.janrain = {};
     window.janrain.settings = {};
     
