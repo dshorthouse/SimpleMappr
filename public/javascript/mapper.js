@@ -1632,6 +1632,7 @@ $(function () {
 
   Mappr.performRotation = function (element) {
     $('#rotation').val($(element).attr("data-rotate"));
+    this.resetJbbox();
     this.showMap();
   };
 
