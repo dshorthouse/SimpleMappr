@@ -48,13 +48,8 @@ $("#filter-countries")
         <ul class="toolbar">
             <li><span class="sprites toolsZoomIn">&nbsp;</span>Zoom in: click this icon to draw a zoom region on the preview</li>
             <li><span class="sprites toolsZoomOut">&nbsp;</span>Zoom out: click this icon to zoom out one step</li>
-            <li><span class="sprites rotateAnticlockwise">&nbsp;</span>Rotate counter-clockwise: select 5<sup>o</sup>, 10<sup>o</sup>, and 15<sup>o</sup> from the drop-down menu while hovering on this icon</li>
-            <li><span class="sprites rotateClockwise">&nbsp;</span>Rotate clockwise: as above</li>
             <li><span class="sprites toolsCrop">&nbsp;</span>Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels.</li> 
             <li><span class="sprites toolsQuery">&nbsp;</span>Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab.</li>
-<!--
-            <li><span class="sprites toolsDraw">&nbsp;</span>Draw shape: click this icon to draw an free-hand line. A freehand drawing gets automatically added to and replaces the contents of Freehand 1 form under the Freehand tab.</li>
--->
             <li><span class="sprites toolsRefresh">&nbsp;</span>Refresh: refresh the map image</li>
             <li><span class="sprites toolsRebuild">&nbsp;</span>Rebuild: re-render the default presentation at lowest zoom and geographic projection</li>
         </ul>
@@ -135,8 +130,4 @@ $("#filter-countries")
       </tbody>
     </table>
 
-<!--
-    <h2>Freehand</h2>
-    <p>Use the <em>Freehand</em> tab to record freehand drawing data represented as Well-known Text (WKT) and to adjust the color of the rendered line, circle, or polygon. A few examples are: POLYGON((-103 54,-111 51,-100 49,-103 54)) and  LINESTRING(-76 35,-76 35,-76 36,-76 36,-91 40)</p>
--->  
 </div>
