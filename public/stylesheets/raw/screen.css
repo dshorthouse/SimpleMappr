@@ -125,7 +125,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapControls .viewport{height:60px;width:60px;position:relative;margin:0 auto;overflow:hidden;}
 #mapControls .overview{position: absolute; width:58px;list-style:none;margin:0;padding:0;left:0;top:0;}
 #mapControls .overview li{height:60px;width:60px;float:left;position:relative;}
-#mapControls .overlay{background:url("../../images/bg-rotatescroll.png") no-repeat 0 0;position:absolute;left:0;top:0;height:60px;width:60px;}
+#mapControls .overlay{background-repeat:no-repeat;background-position:0 0;position:absolute;left:0;top:0;height:60px;width:60px;}
 #mapControls .thumb{cursor:pointer;width:12px;height:12px;position:absolute;cursor:pointer;}
 #mapControls .dot{display:none;}
 #mapControls .dot span {display: none;}

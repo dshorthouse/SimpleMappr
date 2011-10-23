@@ -272,7 +272,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <?php $header->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>" });
+jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\""; ?> });
 //--><!]]>
 </script>
 <?php $header->getAnalytics(); ?>

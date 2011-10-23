@@ -1656,6 +1656,10 @@ $(function () {
 
   Mappr.init = function () {
     var self = this;
+    $('.overlay','#mapControls').css('background-image', 'url('+self.settings.baseUrl+'/public/images/bg-rotatescroll.png)');
+    $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+      if($('#initial-message').is(':hidden')) { self.performRotation(element); }
+    }});
     $('#initial-message').hide();
     $("#tabs").tabs().show();
     $('#mapTools').tabs();
@@ -1667,9 +1671,6 @@ $(function () {
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" />');
     $(".tooltip").tipsy({gravity: 's'});
-    $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
-      self.performRotation(element);
-    }});
     this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();

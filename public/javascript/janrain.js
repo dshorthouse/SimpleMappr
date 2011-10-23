@@ -1,4 +1,5 @@
 $(function() {
+  if(Mappr.settings.active === "active") {
     if (typeof window.janrain !== 'object') window.janrain = {};
     window.janrain.settings = {};
     
@@ -23,5 +24,5 @@ $(function() {
 
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(e, s);
+  }
 });
-
