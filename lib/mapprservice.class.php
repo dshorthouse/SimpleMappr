@@ -647,8 +647,7 @@ class MAPPR {
     $this->add_coordinates();
 
     // Add border if requested
-    // WIP: rotation check because border is getting rotated
-    if((!$this->rotation || $this->rotation == 0) && $this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
+    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
 
     // Prepare the output
     $this->prepare_output();
@@ -1305,7 +1304,8 @@ class MAPPR {
     $outline_layer->set("name","outline");
     $outline_layer->set("type",MS_LAYER_POLYGON);
     $outline_layer->set("status",MS_ON);
-    $outline_layer->setProjection(self::$accepted_projections[$this->projection]['proj']);
+    $outline_layer->set("transform", MS_FALSE);
+    $outline_layer->set("sizeunits", MS_PIXELS);
 
     // Add new class to new layer
     $outline_class = ms_newClassObj($outline_layer);
@@ -1318,11 +1318,12 @@ class MAPPR {
     $polygon = ms_newShapeObj(MS_SHAPE_POLYGON);
 
     $polyLine = ms_newLineObj();
-    $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
-    $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->miny);
-    $polyLine->addXY($this->map_obj->extent->maxx,$this->map_obj->extent->maxy);
-    $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->maxy);
-    $polyLine->addXY($this->map_obj->extent->minx,$this->map_obj->extent->miny);
+    $polyLine->addXY(0, 0);
+    $polyLine->addXY($this->_download_factor*$this->image_size[0],0);
+    $polyLine->addXY($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
+    $polyLine->addXY(0, $this->_download_factor*$this->image_size[1]);
+    $polyLine->addXY(0, 0);
+
     $polygon->add($polyLine);
     $outline_layer->addFeature($polygon);
   }
