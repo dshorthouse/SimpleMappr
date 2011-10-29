@@ -250,13 +250,9 @@ $(function () {
 
     $("ul.dropdown li").hover(function () {
       $(this).addClass("ui-state-hover");
-      $('ul:first',this).css('visibility', 'visible');
     }, function () {
       $(this).removeClass("ui-state-hover");
-      $('ul:first',this).css('visibility', 'hidden');
     });
-
-    $("ul.dropdown li ul li:has(ul)").find("a:first").append(" &raquo; ");
 
     $('.toolsZoomIn').click(function () {
       self.mapZoomIn();
@@ -909,8 +905,7 @@ $(function () {
     var self         = this,
         i            = 0,
         numPoints    = $('.fieldset-points').size(),
-        numRegions   = $('.fieldset-regions').size(),
-        numFreehands = $('.fieldset-freehands').size();
+        numRegions   = $('.fieldset-regions').size();
 
     if(numPoints > 3) {
       for(i = numPoints-1; i >= 3; i -= 1) {
@@ -926,12 +921,6 @@ $(function () {
       self.vars.newRegionCount = 0;
     }
 
-    if(numFreehands > 3) {
-      for(i = numFreehands-1; i >= 3; i -= 1) {
-        $('#fieldSetsFreehands div.fieldset-freehands:eq('+i.toString()+')').remove();
-      }
-      self.vars.newFreehandCount = 0;
-    }
   };
 
   Mappr.loadMap = function (obj) {
