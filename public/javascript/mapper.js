@@ -1669,7 +1669,7 @@ $(function () {
       autoHeight : false
     });
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
-    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" />');
+    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" width="200" height="27" />');
     $(".tooltip").tipsy({gravity: 's'});
     this.bindHotkeys();
     this.bindToolbar();
