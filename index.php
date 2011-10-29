@@ -94,18 +94,18 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <div id="mapWrapper">
 <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
 <ul class="dropdown">
-<li><a href="#" class="sprites toolsZoomIn tooltip" title="zoom in ctrl+"></a></li>
-<li><a href="#" class="sprites toolsZoomOut tooltip" title="zoom out ctrl-"></a></li>
-<li><a href="#" class="sprites toolsCrop tooltip" title="crop ctrl+x"></a></li>
-<li><a href="#" class="sprites toolsQuery tooltip" title="fill regions"></a></li>
-<li><a href="#" class="sprites toolsRefresh tooltip" title="refresh ctrl+r"></a></li>
-<li><a href="#" class="sprites toolsRebuild tooltip" title="rebuild ctrl+n"></a></li>
+<li><a href="#" class="sprites tooltip toolsZoomIn" title="zoom in ctrl+"></a></li>
+<li><a href="#" class="sprites tooltip toolsZoomOut" title="zoom out ctrl-"></a></li>
+<li><a href="#" class="sprites tooltip toolsCrop" title="crop ctrl+x"></a></li>
+<li><a href="#" class="sprites tooltip toolsQuery" title="fill regions"></a></li>
+<li><a href="#" class="sprites tooltip toolsRefresh" title="refresh ctrl+r"></a></li>
+<li><a href="#" class="sprites tooltip toolsRebuild" title="rebuild ctrl+n"></a></li>
 </ul>
 <h3 id="mapTitle"></h3>
 <div id="map-saveDialog">
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<span><a class="sprites map-saveItem map-save tooltip" href="#" title="save ctrl+s">Save</a></span>
-<span><a class="sprites map-saveItem map-embed tooltip" href="#" title="embed" data-mid="">Embed</a></span>
+<span><a class="sprites tooltip map-saveItem map-save" href="#" title="save ctrl+s">Save</a></span>
+<span><a class="sprites tooltip map-saveItem map-embed" href="#" title="embed" data-mid="">Embed</a></span>
 <?php endif; ?>
 <span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d">Download</a></span>
 </div>
@@ -116,15 +116,15 @@ if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_deco
 <div id="mapControls">
 <div class="viewport">
 <ul class="overview">
-<?php echo rotation_values(); ?>
+<?php echo rotation_values() . "\n"; ?>
 </ul>
 </div>
 <div class="dot"></div>
 <div class="overlay">
-<a href="#" class="sprites controls tooltip arrows up" data-pan="up" title="pan up"></a>
-<a href="#" class="sprites controls tooltip arrows right" data-pan="right" title="pan right"></a>
-<a href="#" class="sprites controls tooltip arrows down" data-pan="down" title="pan down"></a>
-<a href="#" class="sprites controls tooltip arrows left" data-pan="left" title="pan left"></a>
+<a href="#" class="sprites tooltip controls arrows up" data-pan="up" title="pan up"></a>
+<a href="#" class="sprites tooltip controls arrows right" data-pan="right" title="pan right"></a>
+<a href="#" class="sprites tooltip controls arrows down" data-pan="down" title="pan down"></a>
+<a href="#" class="sprites tooltip controls arrows left" data-pan="left" title="pan left"></a>
 </div>
 <div class="thumb ui-corner-all ui-widget-header"></div>
 </div>

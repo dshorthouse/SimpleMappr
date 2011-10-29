@@ -77,7 +77,7 @@ class HEADER {
           unset(self::$local_js_files[$key]);
         }
       }
-      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>');
+      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>');
     }
   }
 
