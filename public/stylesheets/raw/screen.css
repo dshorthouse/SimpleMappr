@@ -5,7 +5,7 @@ a{color:#555555;}
 #site-title{margin:0px;padding:5px 0px;}
 #site-title span{display:none;}
 #site-tagline{position:absolute;top:25px;left:375px;font-size:12px;font-style:italic;}
-#site-logout{position:absolute;top:20px;right:10px;font-size:16px;}
+#site-logout{display:none;position:absolute;top:20px;right:10px;font-size:16px;}
 #site-logout span.site-logout{font-style:normal;}
 #site-logout a.site-logout{height:20px;line-height:20px;padding:0px 5px 0px 20px;background-position:0 -627px;}
 #site-logout span.site-login{font-style:normal;}

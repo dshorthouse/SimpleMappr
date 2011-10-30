@@ -1650,6 +1650,7 @@ $(function () {
       if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
     $('#initial-message').hide();
+    $('#site-logout').show();
     $("#tabs").tabs().show();
     $('#mapTools').tabs();
     $('.fieldSets').accordion({
