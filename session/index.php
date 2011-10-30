@@ -47,7 +47,7 @@ if(isset($_POST['token'])) {
       'surname' => $surname,
       'email' => $email,
     );
-    
+
     $sql = "
     SELECT
       u.uid,
@@ -62,28 +62,26 @@ if(isset($_POST['token'])) {
       u.identifier = '".$identifier."'";
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    
+
     $record = $db->query_first($sql);
-    
+
     $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
-    
+
+    setcookie("simplemappr", json_encode($user), time() + (2 * 7 * 24 * 60 * 60), "/"); //cookie active for two weeks
+
     //set the session
     session_start();
     $_SESSION['simplemappr'] = $user;
 
     //set time last logged in
     $db->query_update('users', array('access' => time()), 'uid='.$user['uid']);
-    
+
     //redirect to My Maps tab
     header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
-    
 
-/* an error occurred */
-} else {
+  } else {
   // gracefully handle the error. Hook this into your native error handling system.
   // echo 'An error occured: ' . $auth_info['err']['msg'];
+  }
 }
-}
-
-
 ?>
