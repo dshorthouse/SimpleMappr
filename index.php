@@ -23,7 +23,7 @@ $header = set_up();
 <div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;">Sign In</a></span></div>
 <?php endif; ?>
 <div id="wrapper">
-<div id="initial-message" class="ui-corner-all ui-widget-content">Building page...</div>
+<div id="initial-message" class="ui-corner-all ui-widget-content">Building application...</div>
 <div id="tabs">
 <ul class="navigation">
 <li><a href="#map-preview">Preview</a></li>
