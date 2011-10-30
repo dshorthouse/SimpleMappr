@@ -1,30 +1,6 @@
 <?php
-
 require_once('config/conf.php');
-
-if(isset($_GET['map'])) {
-  require_once('lib/mapprservice.embed.class.php');
-  $mappr_embed = new MAPPREMBED();
-  $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
-              ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts/fonts.list")
-              ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
-              ->set_tmp_url("/tmp");
-
-  $mappr_embed->get_request()
-              ->execute()
-              ->get_output();
-  exit();
-}
-
-require_once('lib/mapprservice.header.class.php');
-require_once('lib/mapprservice.class.php');
-
-session_start();
-
-$header = new HEADER;
-$host = explode(".", $_SERVER['HTTP_HOST']);
-if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) { header('Location: http://www.simplemappr.net/'); }
-if(isset($_COOKIE["simplemappr"])) { $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"])); }
+$header = set_up();
 ?>
 <!DOCTYPE html>
 <html>
@@ -279,6 +255,39 @@ jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOS
 </body>
 </html>
 <?php
+
+function set_up() {
+  if(isset($_GET['map'])) {
+    require_once('lib/mapprservice.embed.class.php');
+    $mappr_embed = new MAPPREMBED();
+    $mappr_embed->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
+                ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts/fonts.list")
+                ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
+                ->set_tmp_url("/tmp");
+
+    $mappr_embed->get_request()
+                ->execute()
+                ->get_output();
+    exit();
+  } else {
+    session_start();
+    $host = explode(".", $_SERVER['HTTP_HOST']);
+    if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
+      header('Location: http://www.simplemappr.net/');
+    } else {
+      if(isset($_COOKIE["simplemappr"])) {
+        require_once('lib/mapprservice.usersession.class.php');
+        $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
+        USERSESSION::set_active_time($_SESSION["simplemappr"]["uid"]);
+      }
+
+      require_once('lib/mapprservice.header.class.php');
+      require_once('lib/mapprservice.class.php');
+      $header = new HEADER;
+      return $header;
+    }
+  }
+}
 
 function partial_layers() {
   //marker sizes and shapes

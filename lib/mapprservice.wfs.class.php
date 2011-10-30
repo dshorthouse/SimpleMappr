@@ -9,7 +9,7 @@ Description: Extends the base map class for SimpleMappr to support WFS.
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com
 
-Copyright (C) 2010  Marine Biological Laboratory
+Copyright (C) 2010 David P. Shorthouse
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
