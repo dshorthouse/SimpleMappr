@@ -40,6 +40,7 @@ class USERS {
   private $_db;
 
   function __construct() {
+    session_start();
     $this->execute();
   }
 
