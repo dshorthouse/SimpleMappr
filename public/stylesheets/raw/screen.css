@@ -7,7 +7,7 @@ a{color:#555555;}
 #header{color:#BABABA;font-size:0.8em;position:relative;z-index:100;top:0;height:30px;line-height:30px;width:100%;box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color: #333;background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(#111));background-image: -moz-linear-gradient(#333, #111); /* FF3.6 */}
 #header a{color:#BABABA;text-decoration:none;}
 #header a:hover{color:#FFF;}
-#site-title{position:absolute;left:0px;width:180px;margin:0px 15px;padding:0px;}
+#site-title{position:absolute;left:0px;width:180px;margin:0 0.25em;padding:0px;}
 #site-title img{vertical-align:top;}
 #site-title span{display:none;}
 #site-tagline{position:absolute;left:225px;font-style:italic;}
@@ -23,7 +23,7 @@ a{color:#555555;}
 #wrapper{position:absolute;width:100%;top:25px;}
 #tabs{min-height:500px;display:none;border:0px;}
 ul.navigation{border-top:0px;border-left:0px;border-right:0px;border-radius:0px;}
-ul.navigation li.ui-state-default{margin-top:1em;}
+ul.navigation li.ui-state-default{margin-top:0.75em;}
 ul.navigation li a.map-mymaps{padding-left:20px;margin-left:5px;background-position:0 -750px;}
 ul.navigation li a.map-users{padding-left:20px;margin-left:5px;background-position:0 -910px;}
 ul.navigation li a.map-myhelp{padding-left:20px;margin-left:5px;background-position:0 -525px;}
@@ -354,7 +354,7 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
 .ui-tabs{position:relative;padding:0;zoom:1;}
-.ui-tabs .ui-tabs-nav{margin:0;padding:0 .1em 0;}
+.ui-tabs .ui-tabs-nav{margin:0;padding:0 0.5em 0;}
 .ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
 .ui-tabs .ui-tabs-nav li a{float:left;padding:.25em 1em;text-decoration:none;}
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected{margin-bottom:0;padding-bottom:1px;}
