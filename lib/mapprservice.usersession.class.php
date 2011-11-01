@@ -37,10 +37,9 @@ class USERSESSION {
 
   private $_auth_info = array();
 
-  function __construct() {
-    $this->execute();
-  }
-
+  /*
+  * Destroy a user's session and a cookie
+  */
   public static function destroy() {
     session_start();
     session_unset();
@@ -49,25 +48,37 @@ class USERSESSION {
     header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
   }
 
+  /*
+  * Update the access field in the db
+  * @param int $uid
+  */
   public static function set_active_time($uid) {
       $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($uid));
   }
 
-  public function execute() {
-    $this->get_token();
-    $this->make_call();
-    $this->make_session();
+  function __construct() {
+    $this->execute();
+  }
+
+  private function execute() {
+    $this->get_token()
+         ->make_call()
+         ->make_session();
   }
 
   private function get_token() {
     if(isset($_POST['token'])) {
       $this->_token = $_POST['token'];
+      return $this;
     } else {
       exit();
     }
   }
 
+  /*
+  * Execute POST to Janrain (formerly RPXNOW) to obtain OpenID account information
+  */
   private function make_call() {
     $post_data = array('token'  => $this->_token,
                        'apiKey' => RPX_KEY,
@@ -84,8 +95,12 @@ class USERSESSION {
     curl_close($curl);
 
     $this->_auth_info = json_decode($raw_json, true);
+    return $this;
   }
 
+  /*
+  * Create a session and set a cookie
+  */
   private function make_session() {
     if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
       $profile = $this->_auth_info['profile'];

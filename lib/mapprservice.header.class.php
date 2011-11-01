@@ -57,9 +57,9 @@ class HEADER {
   );
 
   function __construct() {
-    $this->remote_js_files();
-    $this->local_js_files();
-    $this->local_css_files();
+    $this->remote_js_files()
+         ->local_js_files()
+         ->local_css_files();
   }
 
   private function file_cached($dir, $x='js') {
@@ -79,6 +79,7 @@ class HEADER {
       }
       $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>');
     }
+    return $this;
   }
 
   private function local_js_files() {
@@ -106,6 +107,7 @@ class HEADER {
         $this->addJS('<script type="text/javascript" src="' . $js_file . '"></script>');
       }
     }
+    return $this;
   }
     
   private function local_css_files() {

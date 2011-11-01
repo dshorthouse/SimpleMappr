@@ -11,12 +11,13 @@ $header = set_up();
 <meta name="author" content="David P. Shorthouse" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
-<?php $header->getCSSHeader(); ?>
+<?php $header[0]->getCSSHeader(); ?>
 </head>
 <?php flush(); ?>
 <body>
 <h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="327" height="40" /><span>SimpleMappr</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
+<div id="site-languages"><ul><?php foreach($header[1]::$accepted_languages as $key => $langs): ?><li><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul></div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _('Sign Out'); ?></a></span></div>
 <?php else: ?>
@@ -57,7 +58,7 @@ $header = set_up();
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-<p><?php echo _('Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON].'); ?> <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help">codes</a></p>
+<p><?php echo _('Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON].'); ?> <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help"><?php echo _('codes'); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">
 <?php echo partial_regions(); ?>
@@ -265,13 +266,13 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
   <p><input type='text' size='65' value=''></input></p>
   <p><strong><?php echo _('Additional parameters'); ?></strong>:<br><span class="indent"><?php echo _('width, height'); ?> (<em>e.g.</em> ?map=<span class="mid"></span>&amp;width=200&amp;height=150)</span></p>
 </div>
-<?php $header->getJSHeader();?>
+<?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\""; ?> });
 //--><!]]>
 </script>
-<?php $header->getAnalytics(); ?>
+<?php $header[0]->getAnalytics(); ?>
 </body>
 </html>
 <?php
@@ -290,31 +291,9 @@ function set_up() {
                 ->get_output();
     exit();
   } else {
-    $lang = 'en_US.UTF-8';
-    if(isset($_GET['lang']) && $_GET['lang']) {
-      switch($_GET['lang']) {
-        case 'en':
-          $lang = 'en_US.UTF-8';
-        break;
+    require_once('lib/mapprservice.i18n.class.php');
+    $i18n = new I18N;
 
-        case 'fr':
-          $lang = 'fr_FR.UTF-8';
-        break;
-
-        case 'es':
-          $lang = 'es_ES.UTF-8';
-        break;
-
-        default:
-          header('Location: http://' . $_SERVER['HTTP_HOST']);
-      }
-    }
-    putenv('LC_ALL='.$lang);
-    setlocale(LC_ALL, $lang);
-    $domain = 'home';
-    bindtextdomain($domain, MAPPR_DIRECTORY."/locale");
-    bind_textdomain_codeset($domain, 'UTF-8'); 
-    textdomain($domain);
     session_start();
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
@@ -329,7 +308,7 @@ function set_up() {
       require_once('lib/mapprservice.header.class.php');
       require_once('lib/mapprservice.class.php');
       $header = new HEADER;
-      return $header;
+      return array($header, $i18n);
     }
   }
 }
@@ -368,7 +347,7 @@ function partial_layers() {
 
     $output .= "<button class=\"sprites removemore negative\" data-type=\"coords\">"._("Remove")."</button>";
   
-    $output .= "<h3><a href=\"#\">"._("Layer")." ".($i+1)."</a></h3>" . "\n";
+    $output .= "<h3><a href=\"#\">".sprintf(_("Layer %d"),$i+1)."</a></h3>" . "\n";
     $output .= "<div>" . "\n";
     $output .= "<div class=\"fieldset-taxon\">" . "\n";
     $output .= "<span class=\"fieldset-title\">"._("Legend")."<span class=\"required\">*</span>:</span> <input type=\"text\" class=\"m-mapTitle\" size=\"40\" maxlength=\"40\" name=\"coords[$i][title]\" />" . "\n";
@@ -398,7 +377,7 @@ function partial_regions() {
 
     $output .= '<button class="sprites removemore negative" data-type="regions">'._('Remove').'</button>';
 
-    $output .= '<h3><a href="#">'._('Region').' '.($i+1).'</a></h3>' . "\n";
+    $output .= '<h3><a href="#">'.sprintf(_('Region %d'), $i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
     $output .= '<div class="fieldset-taxon">' . "\n";
     $output .= '<span class="fieldset-title">'._('Legend').'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$i.'][title]" />' . "\n";
