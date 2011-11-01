@@ -159,7 +159,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapLegend p{margin:0px;padding:0px;font-size:0.65em;}
 #mapExport #mapCropMessage{display:none;color:red;background-position:0 -478px;padding:0px 0px 10px 20px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;}
-#usermaps-loading,#userdata-loading{position:relative;}
+.usermaps-loading,.userdata-loading{position:relative;}
 #map-mymaps table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
 #map-mymaps table thead tr{height:1.75em;}
 #map-mymaps table thead td{background-color:#E9E9E9;font-weight:normal;text-align:center;}

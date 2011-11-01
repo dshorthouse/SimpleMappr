@@ -875,16 +875,16 @@ $(function () {
   }; /** end Mappr.bindAddButtons **/
 
   Mappr.loadMapList = function () {
-    var self    = this;
+    var self = this, clone = $('.usermaps-loading').clone(true);
 
-    $('#usermaps').append($('#usermaps-loading').show());
+    $('#usermaps').html("").append(clone.show());
 
     $.ajax({
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/",
       dataType : 'html',
       success  : function(data) {
-        $('#usermaps').find('#usermaps-loading').remove().end().html(data);
+        $('#usermaps').find('.usermaps-loading').remove().end().html(data);
 
         $('.map-load').click(function () {
           self.loadMap(this);
@@ -1163,16 +1163,16 @@ $(function () {
   };
 
   Mappr.loadUserList = function () {
-    var self    = this;
+    var self = this, clone = $('.userdata-loading').clone(true);
 
-    $('#userdata').append($('#userdata-loading').show());
+    $('#userdata').html("").append(clone.show());
 
     $.ajax({
       type     : 'GET',
       url      : this.settings.baseUrl + "/users/",
       dataType : 'html',
       success  : function (data) {
-        $('#userdata').find('#userdata-loading').remove().end().html(data);
+        $('#userdata').find('.userdata-loading').remove().end().html(data);
 
         $('.user-delete').click(function () {
           self.deleteUserConfirmation(this);

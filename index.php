@@ -259,8 +259,8 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <div id="mapper-loading-message" class="hidden-message"><?php echo _('Building preview...'); ?></div>
 <div id="mapper-saving-message" class="hidden-message"><?php echo _('Saving...'); ?></div>
 <div id="mapper-missing-legend" class="hidden-message"><?php echo _('You are missing a legend for at least one of your Point Data or Regions layers.'); ?></div>
-<div id="usermaps-loading" class="hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _('Loading your maps...'); ?></span></div>
-<div id="userdata-loading" class="hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _('Loading user list...'); ?></span></div>
+<div class="usermaps-loading hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _('Loading your maps...'); ?></span></div>
+<div class="userdata-loading hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _('Loading user list...'); ?></span></div>
 <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="<?php echo _('Delete'); ?>"><?php echo _('Are you sure you want to delete');?> <span></span>?</div>
 <div id="mapper-legend-message" class="hidden-message"><?php echo _('legend will appear here'); ?></div>
 <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="<?php echo _('Example Coordinates'); ?>"></div>
