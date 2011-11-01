@@ -875,17 +875,16 @@ $(function () {
   }; /** end Mappr.bindAddButtons **/
 
   Mappr.loadMapList = function () {
-    var self    = this,
-        message = '<div id="usermaps-loading"><span class="mapper-loading-message ui-corner-all ui-widget-content">Loading your maps...</span></div>';
+    var self    = this;
 
-    $('#usermaps').html(message);
+    $('#usermaps').append($('#usermaps-loading').show());
 
     $.ajax({
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/",
       dataType : 'html',
       success  : function(data) {
-        $('#usermaps').html(data);
+        $('#usermaps').find('#usermaps-loading').remove().end().html(data);
 
         $('.map-load').click(function () {
           self.loadMap(this);
@@ -930,7 +929,7 @@ $(function () {
 
     $("#tabs").tabs('select',0);
 
-    self.showLoadingMessage('Building preview...');
+    self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
       type     : 'GET',
@@ -1103,48 +1102,35 @@ $(function () {
   };
 
   Mappr.activateEmbed = function (mid) {
-    var self    = this,
-        message = '';
+    var self    = this;
 
-    $('.map-embed').attr("data-mid", mid).click(function () {
-      message  = "<p><input type='text' size='65' value='&lt;img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" /&gt;'></input></p>";
-      message += "<p><strong>Additional parameters</strong>:<br><span class=\"indent\">width, height (<em>e.g.</em> ?map=" + mid + "&amp;width=200&amp;height=150)</span></p>";
-
-      if($('body').find('#mapEmbed').length > 0) {
-        $('#mapEmbed').html(message).dialog("open");
-      } else {
-        $('body').append('<div id="mapEmbed" class="ui-state-highlight" title="Embed">' + message + '</div>');
-
-        $('#mapEmbed').dialog({
-          width         : (525).toString(),
-          autoOpen      : true,
-          modal         : true,
-          closeOnEscape : false,
-          draggable     : false,
-          resizable     : false,
-          buttons       : {
-            OK: function () {
-              $(this).dialog("destroy").remove();
-            }
-          }
-        });
-      }
-
-      self.analytics('/embed');
-
+    $('.map-embed').attr("data-mid", mid).show().click(function () {
+      $('#mapEmbed').find("input").val("<img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" />").end()
+                    .find("span.mid").text(mid).end()
+                    .dialog({
+                      width         : (525).toString(),
+                      autoOpen      : true,
+                      modal         : true,
+                      closeOnEscape : false,
+                      draggable     : false,
+                      resizable     : false,
+                      buttons       : {
+                        OK: function () {
+                          $(this).dialog("destroy");
+                        }
+                      }
+                    }).show();
       return false;
-    }).show();
-
+    });
+    self.analytics('/embed');
   };
 
   Mappr.deleteMapConfirmation = function (obj) {
     var self    = this,
         id      = $(obj).attr("data-mid"),
-        message = 'Are you sure you want to delete<p><em>' + $(obj).parent().parent().find(".title").html() + '</em>?</p>';
+        message = '<em>' + $(obj).parent().parent().find(".title").html() + '</em>';
 
-    $('body').append('<div id="mapper-message-delete" class="ui-state-highlight" title="Delete">' + message + '</div>');
-
-    $('#mapper-message-delete').dialog({
+    $('#mapper-message-delete').find('span').html(message).end().dialog({
       height        : (250).toString(),
       width         : (500).toString(),
       modal         : true,
@@ -1153,7 +1139,7 @@ $(function () {
       resizable     : false,
       buttons       : [
         {
-          "text"  : "Delete",
+          "text"  : $('#button-titles span.delete').text(),
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
@@ -1162,32 +1148,31 @@ $(function () {
                 self.loadMapList();
               }
             });
-            $(this).dialog("destroy").remove();
+            $(this).dialog("destroy");
           }
         },
         {
-          "text"  : "Cancel",
+          "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
           "click" : function () {
-            $(this).dialog("destroy").remove();
+            $(this).dialog("destroy");
           }
         }]
-    });
+    }).show();
 
   };
 
   Mappr.loadUserList = function () {
-    var self    = this,
-        message = '<div id="userdata-loading"><span class="mapper-loading-message ui-corner-all ui-widget-content">Loading user list...</span></div>';
+    var self    = this;
 
-    $('#userdata').html(message);
+    $('#userdata').append($('#userdata-loading').show());
 
     $.ajax({
       type     : 'GET',
       url      : this.settings.baseUrl + "/users/",
       dataType : 'html',
       success  : function (data) {
-        $('#userdata').html(data);
+        $('#userdata').find('#userdata-loading').remove().end().html(data);
 
         $('.user-delete').click(function () {
           self.deleteUserConfirmation(this);
@@ -1202,11 +1187,9 @@ $(function () {
   Mappr.deleteUserConfirmation = function (obj) {
     var self    = this,
         id      = $(obj).attr("data-uid"),
-        message = 'Are you sure you want to delete <em>' + $(obj).parent().parent().children("td:first").html() + '</em>?<br>All their map data will also be deleted.';
+        message = '<em>' + $(obj).parent().parent().children("td:first").html() + '</em>';
 
-    $('body').append('<div id="mapper-message-delete" class="ui-state-highlight" title="Delete">' + message + '</div>');
-
-    $('#mapper-message-delete').dialog({
+    $('#mapper-message-delete').find("span").html(message).end().dialog({
       height        : (250).toString(),
       width         : (500).toString(),
       modal         : true,
@@ -1215,7 +1198,7 @@ $(function () {
       resizable     : false,
       buttons       : [
         {
-          "text"  : "Delete",
+          "text"  : $('#button-titles span.delete').text(),
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
@@ -1224,17 +1207,17 @@ $(function () {
                 self.loadUserList();
               }
             });
-            $(this).dialog("destroy").remove();
+            $(this).dialog("destroy");
           }
         },
         {
-          "text"  : "Cancel",
+          "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
           "click" : function () {
-            $(this).dialog("destroy").remove();
+            $(this).dialog("destroy");
           }
         }]
-    });
+    }).show();
   };
 
   Mappr.bindSave = function () {
@@ -1263,7 +1246,7 @@ $(function () {
       resizable     : false,
       buttons       : [
         {
-          "text"  : "Save",
+          "text"  : $('#button-titles span.save').text(),
           "click" : function () {
             if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
             if(missingTitle) {
@@ -1277,7 +1260,7 @@ $(function () {
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
 
               Mappr.setFormOptions();
-              Mappr.showLoadingMessage('Saving...');
+              Mappr.showLoadingMessage($('#mapper-saving-message').text());
 
               if(typeof Mappr.vars.jcropAPI === "undefined") { $('#bbox_rubberband').val(''); }
 
@@ -1302,7 +1285,7 @@ $(function () {
           }
       },
       {
-        "text"  : "Cancel",
+        "text"  : $('#button-titles span.cancel').text(),
         "class" : "ui-button-cancel",
         "click" : function () {
           $(this).dialog("destroy");
@@ -1332,13 +1315,13 @@ $(function () {
       resizable     : false,
       buttons       : [
         {
-          "text"  : "Download",
+          "text"  : $('#button-titles span.download').text(),
           "click" : function() {
             Mappr.generateDownload();
           }
         },
         {
-          "text"  : "Cancel",
+          "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
           "click" : function () {
             $(this).dialog("destroy");
@@ -1359,8 +1342,7 @@ $(function () {
       });
 
       if(missingTitle) {
-        var message = 'You are missing a legend for at least one of your Point Data or Regions layers';
-        self.showMessage(message);
+        self.showMessage($('#mapper-missing-legend').text());
       }
       else {
         self.showMap();
@@ -1374,7 +1356,7 @@ $(function () {
   Mappr.showMessage = function (message) {
 
     if($('#mapper-message').length === 0) {
-      $('body').append('<div id="mapper-message" class="ui-state-error" title="Warning"></div>');
+      $('body').append($('#mapper-message').show());
     }
     $('#mapper-message').html(message).dialog({
       autoOpen      : true,
@@ -1386,7 +1368,7 @@ $(function () {
       resizable     : false,
       buttons       : {
         Ok : function () {
-          $(this).dialog("destroy").remove();
+          $(this).dialog("destroy");
         }
       }
     });
@@ -1398,7 +1380,7 @@ $(function () {
     if(legend_url) {
       $('#mapLegend').html("<img src=\"" + legend_url + "\" />");
     } else {
-      $('#mapLegend').html('<p><em>legend will appear here</em></p>');
+      $('#mapLegend').html('<p><em>' + $('#mapper-legend-message').text() + '</em></p>');
     }
   };
 
@@ -1440,7 +1422,7 @@ $(function () {
 
     formData = $("form").serialize();
 
-    self.showLoadingMessage('Building preview...');
+    self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
       type : 'POST',
@@ -1594,28 +1576,23 @@ $(function () {
   };
 
   Mappr.showExamples = function() {
-    var message = '<img src="public/images/help_data.png" alt="Example Data Entry" />';
+    var message = '<img src="public/images/help_data.png" alt="" />';
 
-    if($('body').find('#mapper-message-help').length > 0) {
-      $('#mapper-message-help').html(message).dialog("open");
-    } else {
-      $('body').append('<div id="mapper-message-help" class="ui-state-highlight" title="Example Coordinates">' + message + '</div>');
-
-      $('#mapper-message-help').dialog({
-        height        : (350).toString(),
-        width         : (525).toString(),
-        autoOpen      : true,
-        modal         : true,
-        closeOnEscape : false,
-        draggable     : false,
-        resizable     : false,
-        buttons       : {
-          OK: function () {
-            $(this).dialog("destroy").remove();
-          }
+    $('#mapper-message-help').html(message).dialog({
+      height        : (350).toString(),
+      width         : (525).toString(),
+      autoOpen      : true,
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : false,
+      resizable     : false,
+      buttons       : {
+        OK: function () {
+          $(this).dialog("destroy");
         }
-      });
-    }
+      }
+    }).show();
+
     return false;
   };
 

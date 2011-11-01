@@ -2,6 +2,7 @@ html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin-top:5px;}
 a{color:#555555;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
+.hidden-message{display:none;}
 #site-title{margin:0px;padding:5px 0px;}
 #site-title span{display:none;}
 #site-tagline{position:absolute;top:25px;left:375px;font-size:12px;font-style:italic;}
@@ -28,7 +29,7 @@ li.map-extras{float:right !important;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message{background-position:0 -478px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-delete{background-position:0 -316px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-help{background-position:0 -530px;}
-#mapper-message{font-size:0.8em;}
+#mapper-message{display:none;font-size:0.8em;}
 #mapper-message span.indent{display:block;margin-left:40px;}
 .mapper-loading-message{background-repeat:no-repeat !important;background-position:10px 10px !important;background-color:#FFF;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;position:absolute;top:10px;right:10px;z-index:1000;}
 label{margin-right:0.2em;}
@@ -148,7 +149,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapLegend p{margin:0px;padding:0px;font-size:0.65em;}
 #mapExport #mapCropMessage{display:none;color:red;background-position:0 -478px;padding:0px 0px 10px 20px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;}
-#usermaps-loading{position:relative;}
+#usermaps-loading,#userdata-loading{position:relative;}
 #map-mymaps table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
 #map-mymaps table thead tr{height:1.75em;}
 #map-mymaps table thead td{background-color:#E9E9E9;font-weight:normal;text-align:center;}
@@ -165,7 +166,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-mymaps #usermaps fieldset{margin-top:10px;font-size:0.8em;width:20%;}
 #map-mymaps #janrainEngageEmbed {margin-top:10px;}
 #map-mymaps #janrainEngageEmbed div{margin:0px;}
-#userdata-loading{position:relative;}
 #map-users table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
 #map-users table thead tr{height:1.75em;}
 #map-users table thead td{background-color:#E9E9E9;font-weight:normal;text-align:center;}

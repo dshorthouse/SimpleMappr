@@ -129,7 +129,9 @@ class USERSESSION {
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
-      header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
+      $qlang = isset($_GET['lang']) ? "/?lang=" . $_GET['lang'] : "";
+
+      header('Location: http://' . $_SERVER['SERVER_NAME'] . $qlang);
     } else {
       // echo 'An error occured: ' . $this->_auth_info['err']['msg'];
       exit();
