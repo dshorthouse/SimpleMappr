@@ -1355,9 +1355,6 @@ $(function () {
 
   Mappr.showMessage = function (message) {
 
-    if($('#mapper-message').length === 0) {
-      $('body').append($('#mapper-message').show());
-    }
     $('#mapper-message').html(message).dialog({
       autoOpen      : true,
       height        : (200).toString(),
@@ -1371,7 +1368,7 @@ $(function () {
           $(this).dialog("destroy");
         }
       }
-    });
+    }).show();
   };
 
   Mappr.drawLegend = function () {
