@@ -53,8 +53,8 @@ class USERSESSION {
   * @param int $uid
   */
   public static function set_active_time($uid) {
-      $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-      $db->query_update('users', array('access' => time()), 'uid='.$db->escape($uid));
+    $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($uid));
   }
 
   function __construct() {

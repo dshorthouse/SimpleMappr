@@ -32,7 +32,7 @@ $header = set_up();
 <li><a href="#map-preview"><?php echo _('Preview'); ?></a></li>
 <li><a href="#map-points"><?php echo _('Point Data'); ?></a></li>
 <li><a href="#map-regions"><?php echo _('Regions'); ?></a></li>
-<li><a href="#map-mymaps" class="sprites map-mymaps tooltip" title="Saved Maps ctrl+l" onclick="javascript: Mappr.analytics('/mymaps'); "><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _('All Maps'); ?><?php else: ?><?php echo _('My Maps'); ?><?php endif; ?></a></li>
+<li><a href="#map-mymaps" class="sprites map-mymaps" onclick="javascript: Mappr.analytics('/mymaps'); "><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _('All Maps'); ?><?php else: ?><?php echo _('My Maps'); ?><?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites map-users"><?php echo _('Users'); ?></a></li>
 <?php endif; ?>

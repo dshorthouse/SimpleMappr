@@ -3,7 +3,7 @@ body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
 a{color:#555555;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
 .hidden-message{display:none;}
-#header,#tabs{min-width:1120px;}
+#header,#tabs{min-width:1125px;}
 #header{color:#BABABA;font-size:0.8em;position:relative;z-index:100;top:0;height:30px;line-height:30px;width:100%;box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color: #333;background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(#111));background-image: -moz-linear-gradient(#333, #111); /* FF3.6 */}
 #header a{color:#BABABA;text-decoration:none;}
 #header a:hover{color:#FFF;}
@@ -22,6 +22,7 @@ a{color:#555555;}
 #initial-message{width:180px;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;margin:40px 20px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;}
 #wrapper{position:absolute;width:100%;top:25px;}
 #tabs{min-height:500px;display:none;border:0px;}
+ul.navigation{border-top:0px;border-left:0px;border-right:0px;border-radius:0px;}
 ul.navigation li.ui-state-default{margin-top:1em;}
 ul.navigation li a.map-mymaps{padding-left:20px;margin-left:5px;background-position:0 -750px;}
 ul.navigation li a.map-users{padding-left:20px;margin-left:5px;background-position:0 -910px;}
@@ -290,8 +291,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited{color:#555555;text-decoration:none;}
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{border:1px solid #999999;background-color:#dadada;font-weight:normal;color:#212121;}
 .ui-state-hover a, .ui-state-hover a:hover{color:#212121;text-decoration:none;}
-ul.navigation{background-color:#F6F6F6;border-top:0px;border-left:0px;border-right:0px;border-radius:0px;}
-
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{border:1px solid #aaaaaa;background-color:#ffffff;font-weight:normal;color:#212121;}
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{color:#212121;text-decoration:none;}
 .ui-widget:active{outline:none;}
