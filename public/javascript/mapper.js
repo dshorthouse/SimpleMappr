@@ -1628,6 +1628,7 @@ $(function () {
     }});
     $('#initial-message').hide();
     $('#site-logout').show();
+    $('#site-languages').show();
     $("#tabs").tabs().show();
     $('#mapTools').tabs();
     $('.fieldSets').accordion({

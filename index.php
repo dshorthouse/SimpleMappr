@@ -15,7 +15,8 @@ $header = set_up();
 </head>
 <?php flush(); ?>
 <body>
-<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="327" height="40" /><span>SimpleMappr</span></h1>
+<div id="header" class="clearfix">
+<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="180" height="30" /><span>SimpleMappr</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
 <div id="site-languages"><ul><?php foreach($header[1]::$accepted_languages as $key => $langs): ?><li><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul></div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
@@ -23,6 +24,7 @@ $header = set_up();
 <?php else: ?>
 <div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;"><?php echo _('Sign In'); ?></a></span></div>
 <?php endif; ?>
+</div>
 <div id="wrapper">
 <div id="initial-message" class="ui-corner-all ui-widget-content"><?php echo _('Building application...'); ?></div>
 <div id="tabs">
