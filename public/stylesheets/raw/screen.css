@@ -149,7 +149,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:430px;}
 #mapTools #graticules-selection{padding:0px;margin-left:20px;}
 #mapTools div{padding:5px;}
-#mapTools .ui-tabs-nav{background:none repeat scroll 0 0 transparent;border-left:0 none;border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;border-right:0px none;border-top:0px none;}
+#mapTools .ui-tabs-nav{border-left:0 none;border-radius:4px 4px 0 0;-moz-border-radius:4px 4px 0 0;-webkit-border-radius:4px 4px 0 0;border-right:0px none;border-top:0px none;}
 #mapTools div ul{text-align:left;margin:0 0 10px;padding:0px;}
 #mapTools ul li{list-style-image:none;list-style-position:outside;list-style-type:none;font-size:0.75em;}
 #mapTools ul.columns li{float:left;width:140px;line-height:1.5em;}
@@ -353,8 +353,8 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
-.ui-tabs{position:relative;padding:0.2em 0;zoom:1;}
-.ui-tabs .ui-tabs-nav{margin:0;padding:0 .2em 0;}
+.ui-tabs{position:relative;padding:0;zoom:1;}
+.ui-tabs .ui-tabs-nav{margin:0;padding:0 .1em 0;}
 .ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
 .ui-tabs .ui-tabs-nav li a{float:left;padding:.25em 1em;text-decoration:none;}
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected{margin-bottom:0;padding-bottom:1px;}
