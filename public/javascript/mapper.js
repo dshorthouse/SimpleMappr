@@ -1397,7 +1397,7 @@ $(function () {
   Mappr.showLoadingMessage = function (content) {
     var message = '<span class="mapper-loading-message ui-corner-all ui-widget-content">' + content + '</span>';
 
-    if($('.mapper-loading-message').length === 0) { $('#mapOutput').append(message); }
+    $('#mapOutput').append(message);
   };
 
   Mappr.hideLoadingMessage = function () {
