@@ -5,8 +5,12 @@ Disallow: /api/
 Disallow: /application/
 Disallow: /config/
 Disallow: /error/
+Disallow: /i18n/
 Disallow: /lib/
+Disallow: /logout/
+Disallow: /public/
 Disallow: /query/
+Disallow: /session/
 Disallow: /tabs/
 Disallow: /tmp/
 Disallow: /usermaps/
