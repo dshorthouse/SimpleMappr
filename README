@@ -88,3 +88,18 @@ $ ./configure \
 5. Verify that mapserv is working by executing ./mapserv -v
 6. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory
 	(usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+
+/***********************************************************************
+* INTERNATIONALIZATION
+***********************************************************************/
+
+Background:http://onlamp.com/pub/a/php/2002/06/13/php.html
+
+Apache server requires php5_gettext.so extension for PHP5
+
+$ xgettext -n index.php [Makes a message.po file to be moved to i18n/fr_FR.UTF-8/LC_MESSAGES for example]
+$ msgfmt messages.po [Makes a binary message.mo to be moved to i18n/fr_FR.UTF-8/LC_MESSAGES for example]
+
+Or, use the ruby utility, crawler.rb in /i18n:
+
+$ ruby crawler.rb ../
