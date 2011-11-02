@@ -31,6 +31,8 @@ require_once(dirname(dirname(__FILE__)).'/config/conf.php');
 
 class I18N {
 
+  public $domain = 'messages';
+
   public $lang;
 
   public static $accepted_languages = array(
@@ -42,7 +44,7 @@ class I18N {
       'code'   => 'fr_FR.UTF-8'),
     'es' => array(
       'native' => 'Español',
-      'code'   => 'es_ES.UTF8')
+      'code'   => 'es_ES.UTF-8')
   );
 
   function __construct() {
@@ -54,10 +56,9 @@ class I18N {
     $this->lang = (array_key_exists($lang, self::$accepted_languages)) ? self::$accepted_languages[$lang]['code'] : 'en_US.UTF-8';
     putenv('LC_ALL='.$this->lang);
     setlocale(LC_ALL, $this->lang);
-    $domain = 'simplemappr';
-    bindtextdomain($domain, MAPPR_DIRECTORY."/i18n");
-    bind_textdomain_codeset($domain, 'UTF-8'); 
-    textdomain($domain);
+    bindtextdomain($this->domain, MAPPR_DIRECTORY."/i18n");
+    bind_textdomain_codeset($this->domain, 'UTF-8'); 
+    textdomain($this->domain);
   }
 
   /**

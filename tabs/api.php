@@ -4,7 +4,7 @@ require_once('../lib/mapprservice.class.php');
 <!-- api tab -->
 <div id="map-api">
     <div id="general-api" class="panel ui-corner-all">
-        <p><?php echo _('A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below.'); ?></p>
+        <p><?php echo _("A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."); ?></p>
     </div>
     <p><em>e.g.</em> http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/?<br>file=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/api/demo.txt'); ?>&amp;<br>shape[0]=square&amp;size[0]=10&amp;color[0]=20,20,20&amp;<br>shape[1]=triangle&amp;size[1]=10&amp;color[1]=40,40,40&amp;<br>shape[2]=star&amp;size[2]=14&amp;color[2]=60,60,60&amp;<br>width=500&amp;height=300&amp;<br>bbox=-130,40,-60,50&amp;<br>layers=lakes,stateprovinces&amp;graticules=true&amp;projection=esri:102009&amp;legend=true&amp;<br>shade[places]=Alberta,USA[MT|WA]&amp;shade[title]=Selected Regions&amp;shade[color]=150,150,150</p>
     <p><strong>Produces:</strong></p>

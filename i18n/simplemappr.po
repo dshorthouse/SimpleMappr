@@ -1,0 +1,637 @@
+# SimpleMappr Translation File.
+# Copyright (C) 2011 David P. Shorthouse
+# This file is distributed under the same license as the SimpleMappr application.
+# David P. Shorthouse <(snipped)>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SimpleMappr v1.5\n"
+"Report-Msgid-Bugs-To: (snipped)\n"
+"POT-Creation-Date: 2011-11-01 00:29-0500\n"
+"PO-Revision-Date: 2011-11-02 00:11-0500\n"
+"Last-Translator: David Shorthouse <(snipped)>\n"
+"Language-Team: English (en) <(snipped)>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:382
+#, php-format
+msgid "Region %d"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:9
+msgid "A publication-quality, point map application."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:10
+msgid "publication,map"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:20
+msgid "point maps for publication"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:23
+msgid "Sign Out"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:25
+msgid "Sign In"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:29
+msgid "Building application..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:32
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:56
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:69
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:43
+msgid "Preview"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:33
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:95
+msgid "Point Data"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:34
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:110
+msgid "Regions"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:35
+msgid "All Maps"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:35
+msgid "My Maps"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:37
+msgid "Users"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:40
+msgid "Help"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:41
+msgid "About"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:42
+msgid "Feedback"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:43
+msgid "API"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:50
+msgid "Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:50
+msgid "examples"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:55
+msgid "Add a layer"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:56
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:69
+msgid "Clear all"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:63
+msgid "Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:63
+msgid "codes"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:68
+msgid "Add a region"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:77
+msgid "zoom in ctrl+"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:78
+msgid "zoom out ctrl-"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:79
+msgid "crop ctrl+x"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:80
+msgid "fill regions"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:81
+msgid "refresh ctrl+r"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:82
+msgid "rebuild ctrl+n"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:87
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:188
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:254
+msgid "Save"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:88
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:267
+msgid "Embed"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:90
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:256
+msgid "Download"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:104
+msgid "pan up"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:105
+msgid "pan right"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:106
+msgid "pan down"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:107
+msgid "pan left"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:111
+msgid "Records Out of Range"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:112
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:259
+msgid "Building preview..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:118
+msgid "Settings"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:119
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:355
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:385
+msgid "Legend"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:121
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:265
+msgid "legend will appear here"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:123
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:57
+msgid "Layers"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:125
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:135
+msgid "State/Provinces"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:126
+msgid "lakes (outline)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:127
+msgid "lakes (greyscale)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:128
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:137
+msgid "rivers"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:129
+msgid "relief"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:130
+msgid "relief (greyscale)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:132
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:67
+msgid "Labels"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:134
+msgid "Countries"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:136
+msgid "lakes"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:138
+msgid "places"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:139
+msgid "physical"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:140
+msgid "marine"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:142
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:210
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:78
+msgid "Options"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:144
+msgid "graticules (grid)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:146
+msgid "fixed"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:152
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:83
+msgid "Projection"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:165
+msgid "zoom prior to setting projection"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:174
+msgid "Save and reload your map data or create a generic template."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:187
+msgid "Records out of range"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:190
+msgid "Title"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:196
+msgid "map will be cropped"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:198
+msgid "File name"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:202
+msgid "Scale"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:206
+msgid "File type"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:212
+msgid "include border"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:214
+msgid "embed legend"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:216
+msgid "embed scalebar"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:218
+msgid "svg does not include scalebar, legend, or relief layers"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:220
+msgid "Building file for download..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:252
+msgid "Warning"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:255
+msgid "Cancel"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:257
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:264
+msgid "Delete"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:260
+msgid "Saving..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:261
+msgid "You are missing a legend for at least one of your Point Data or Regions layers."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:262
+msgid "Loading your maps..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:263
+msgid "Loading user list..."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:264
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:266
+msgid "Example Coordinates"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:269
+msgid "Additional parameters"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:269
+msgid "width, height"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:320
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:328
+msgid "--select--"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:329
+msgid "plus"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:330
+msgid "cross"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:331
+msgid "solid"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:332
+msgid "circle (s)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:333
+msgid "star (s)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:334
+msgid "square (s)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:335
+msgid "triangle (s)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:337
+msgid "open"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:338
+msgid "circle (o)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:339
+msgid "star (o)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:340
+msgid "square (o)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:341
+msgid "triangle (o)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:350
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:380
+msgid "Remove"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:352
+msgid "Layer %d"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:362
+msgid "Shape"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:362
+msgid "Size"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:363
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:392
+msgid "Color"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:365
+#: /Users/dshorthouse/Sites/SimpleMappr/index.php:394
+msgid "Clear"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:37
+#, php-format
+msgid "The code behind SimpleMappr may be obtained at %s"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:41
+#, php-format
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:7
+msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:9
+msgid "Citing"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:11
+msgid "Recent Updates"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:36
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:122
+msgid "Code"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:38
+msgid "History"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:39
+msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/about.php:40
+msgid "Acknowledgments"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/api.php:7
+msgid "A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/feedback.php:5
+msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:39
+msgid "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:45
+msgid "Use the <em>Preview</em> tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:47
+msgid "Toolbar buttons"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:49
+msgid "Zoom in: click this icon to draw a zoom region on the preview"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:50
+msgid "Zoom out: click this icon to zoom out one step"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:51
+msgid "Crop: click this icon to draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:52
+msgid "Fill regions: click this icon to choose a color then draw an expandable, square-shaped rubber band that will shade States and Provinces (if layer visible) or Countries bound within. Selected areas are added under the Regions tab."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:53
+msgid "Refresh: refresh the map image"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:54
+msgid "Rebuild: re-render the default presentation at lowest zoom and geographic projection"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:59
+msgid "State/Provinces: select this checkbox to draw all State and Province borders for all countries"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:60
+msgid "lakes (outline): select this checkbox to overlay lakes as black outlines"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:61
+msgid "lakes (greyscale): select this checkbox to overlay lakes as greyscale polygons"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:62
+msgid "rivers: select this checkbox to overlay rivers as black outlines"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:63
+msgid "relief: select this checkbox to render a color, shaded relief layer"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:64
+msgid "relief (greyscale): select this checkbox to render a greyscale, shaded relief layer"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:69
+msgid "Countries: select this checkbox to label countries"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:70
+msgid "State/Provinces: select this checkbox to label States and Provinces"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:71
+msgid "lakes: select this checkbox to label lakes"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:72
+msgid "rivers: select this checkbox to label rivers"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:73
+msgid "places: select this checkbox to label place names"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:74
+msgid "physical: select this checkbox to label physical features"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:75
+msgid "marine: select this checkbox to label marine features"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:80
+msgid "graticules: select this checkbox to draw a graticule (grid) layer on the map using either fixed, 5<sup>o</sup>, or 10<sup>o</sup> spacing"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:85
+msgid "Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:89
+msgid "Save: while logged in, click this icon to give your map a title and save its settings for later reuse from the <em>My Maps</em> tab."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:90
+msgid "Embed: once a map is saved, click this icon to obtain a URL for embedding on other websites."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:91
+msgid "Download: choose from a web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:97
+msgid "Use the <em>Point Data</em> tab to paste coordinates as <em>latitude, longitude</em> on separate lines and select the marker shape, size, and color."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:100
+msgid "Coordinate format:</strong> <em>e.g.</em> in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:106
+msgid "<strong>Pushpin color:</strong> The pushpin colors are configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:112
+msgid "Use the <em>Regions</em> tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:117
+msgid "Country"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:121
+msgid "State/Province"
+msgstr ""
+
+#: /Users/dshorthouse/Sites/SimpleMappr/tabs/help.php:123
+msgid "Example"
+msgstr ""
+
