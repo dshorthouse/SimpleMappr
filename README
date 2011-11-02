@@ -7,7 +7,7 @@ Description: Installation and configuration instructions for SimpleMappr.
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com
 
-License: GPL
+License: GPLv2
 Copyright: David P. Shorthouse
 
 **************************************************************************/
@@ -93,7 +93,7 @@ $ ./configure \
 * INTERNATIONALIZATION
 ***********************************************************************/
 
-Background:http://onlamp.com/pub/a/php/2002/06/13/php.html
+Background: http://onlamp.com/pub/a/php/2002/06/13/php.html
 
 Apache server requires php5_gettext.so extension for PHP5
 
