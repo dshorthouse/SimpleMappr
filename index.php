@@ -18,7 +18,7 @@ $header = set_up();
 <div id="header" class="clearfix">
 <h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="180" height="30" /><span>SimpleMappr</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
-<div id="site-languages"><ul><?php foreach($header[1]::$accepted_languages as $key => $langs): ?><li><?php if($key == 'en'): ?><?php echo '<a href="/">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul></div>
+<div id="site-languages"><ul><?php foreach($header[1] as $key => $langs): ?><li><?php if($key == 'en'): ?><?php echo '<a href="/" onclick="javascript: Mappr.clearLanguage();">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul></div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _("Sign Out"); ?></a></span></div>
 <?php else: ?>
@@ -293,24 +293,17 @@ function set_up() {
                 ->get_output();
     exit();
   } else {
-    require_once('lib/mapprservice.i18n.class.php');
-    $i18n = new I18N;
-
-    session_start();
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
       header('Location: http://www.simplemappr.net/');
     } else {
-      if(isset($_COOKIE["simplemappr"])) {
-        require_once('lib/mapprservice.usersession.class.php');
-        $_SESSION["simplemappr"] = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
-        USERSESSION::set_active_time($_SESSION["simplemappr"]["uid"]);
-      }
-
+      require_once('lib/mapprservice.usersession.class.php');
       require_once('lib/mapprservice.header.class.php');
       require_once('lib/mapprservice.class.php');
-      $header = new HEADER;
-      return array($header, $i18n);
+
+      USERSESSION::update_activity();
+
+      return array(new HEADER, USERSESSION::$accepted_languages);
     }
   }
 }

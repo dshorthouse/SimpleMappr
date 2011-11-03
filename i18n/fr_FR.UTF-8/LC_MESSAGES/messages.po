@@ -20,15 +20,15 @@ msgstr ""
 #: .index.php:382
 #, php-format
 msgid "Region %d"
-msgstr ""
+msgstr "Région %d"
 
 #: .index.php:9
 msgid "A publication-quality, point map application."
-msgstr ""
+msgstr "Produire des cartes de qualité pour vos publications."
 
 #: .index.php:10
 msgid "publication,map"
-msgstr ""
+msgstr "publication,carte"
 
 #: .index.php:20
 msgid "point maps for publication"
@@ -36,11 +36,11 @@ msgstr "cartes point pour la publication"
 
 #: .index.php:23
 msgid "Sign Out"
-msgstr ""
+msgstr "Déconnecter"
 
 #: .index.php:25
 msgid "Sign In"
-msgstr ""
+msgstr "Connecter"
 
 #: .index.php:29
 msgid "Building application..."
@@ -61,7 +61,7 @@ msgstr ""
 #: .index.php:34
 #: .tabs/help.php:110
 msgid "Regions"
-msgstr ""
+msgstr "Régions"
 
 #: .index.php:35
 msgid "All Maps"
@@ -69,27 +69,27 @@ msgstr ""
 
 #: .index.php:35
 msgid "My Maps"
-msgstr ""
+msgstr "Mes cartes"
 
 #: .index.php:37
 msgid "Users"
-msgstr ""
+msgstr "Usagers"
 
 #: .index.php:40
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 #: .index.php:41
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: .index.php:42
 msgid "Feedback"
-msgstr ""
+msgstr "Réactions"
 
 #: .index.php:43
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: .index.php:50
 msgid "Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"
@@ -97,11 +97,11 @@ msgstr ""
 
 #: .index.php:50
 msgid "examples"
-msgstr ""
+msgstr "exemples"
 
 #: .index.php:55
 msgid "Add a layer"
-msgstr ""
+msgstr "Ajouter"
 
 #: .index.php:56
 #: .index.php:69
@@ -122,7 +122,7 @@ msgstr ""
 
 #: .index.php:77
 msgid "zoom in ctrl+"
-msgstr ""
+msgstr "zoomer ctrl+"
 
 #: .index.php:78
 msgid "zoom out ctrl-"
@@ -130,7 +130,7 @@ msgstr ""
 
 #: .index.php:79
 msgid "crop ctrl+x"
-msgstr ""
+msgstr "recadrée ctrl+x"
 
 #: .index.php:80
 msgid "fill regions"
@@ -138,17 +138,17 @@ msgstr ""
 
 #: .index.php:81
 msgid "refresh ctrl+r"
-msgstr ""
+msgstr "régénérer ctrl+r"
 
 #: .index.php:82
 msgid "rebuild ctrl+n"
-msgstr ""
+msgstr "rebâtis ctrl+n"
 
 #: .index.php:87
 #: .index.php:188
 #: .index.php:254
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: .index.php:88
 #: .index.php:267
@@ -158,7 +158,7 @@ msgstr ""
 #: .index.php:90
 #: .index.php:256
 msgid "Download"
-msgstr ""
+msgstr "Télécharger"
 
 #: .index.php:104
 msgid "pan up"
@@ -183,97 +183,97 @@ msgstr ""
 #: .index.php:112
 #: .index.php:259
 msgid "Building preview..."
-msgstr ""
+msgstr "En train de construire l'aperçu..."
 
 #: .index.php:118
 msgid "Settings"
-msgstr ""
+msgstr "Paramètres"
 
 #: .index.php:119
 #: .index.php:355
 #: .index.php:385
 msgid "Legend"
-msgstr ""
+msgstr "Légende"
 
 #: .index.php:121
 #: .index.php:265
 msgid "legend will appear here"
-msgstr ""
+msgstr "légende apparaîtra ici"
 
 #: .index.php:123
 #: .tabs/help.php:57
 msgid "Layers"
-msgstr ""
+msgstr "Couches"
 
 #: .index.php:125
 #: .index.php:135
 msgid "State/Provinces"
-msgstr ""
+msgstr "États/Provinces"
 
 #: .index.php:126
 msgid "lakes (outline)"
-msgstr ""
+msgstr "lacs (contour)"
 
 #: .index.php:127
 msgid "lakes (greyscale)"
-msgstr ""
+msgstr "lacs (plein)"
 
 #: .index.php:128
 #: .index.php:137
 msgid "rivers"
-msgstr ""
+msgstr "rivières"
 
 #: .index.php:129
 msgid "relief"
-msgstr ""
+msgstr "relief"
 
 #: .index.php:130
 msgid "relief (greyscale)"
-msgstr ""
+msgstr "relief (gris)"
 
 #: .index.php:132
 #: .tabs/help.php:67
 msgid "Labels"
-msgstr ""
+msgstr "Étiquettes"
 
 #: .index.php:134
 msgid "Countries"
-msgstr ""
+msgstr "pays"
 
 #: .index.php:136
 msgid "lakes"
-msgstr ""
+msgstr "lacs"
 
 #: .index.php:138
 msgid "places"
-msgstr ""
+msgstr "places"
 
 #: .index.php:139
 msgid "physical"
-msgstr ""
+msgstr "physiques"
 
 #: .index.php:140
 msgid "marine"
-msgstr ""
+msgstr "marins"
 
 #: .index.php:142
 #: .index.php:210
 #: .tabs/help.php:78
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #: .index.php:144
 msgid "graticules (grid)"
-msgstr ""
+msgstr "graticule"
 
 #: .index.php:146
 msgid "fixed"
-msgstr ""
+msgstr "fixée"
 
 #: .index.php:152
 #: .tabs/help.php:83
 msgid "Projection"
-msgstr ""
+msgstr "Projection"
 
 #: .index.php:165
 msgid "zoom prior to setting projection"
@@ -289,7 +289,7 @@ msgstr ""
 
 #: .index.php:190
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: .index.php:196
 msgid "map will be cropped"
@@ -297,27 +297,27 @@ msgstr ""
 
 #: .index.php:198
 msgid "File name"
-msgstr ""
+msgstr "nom du fichier"
 
 #: .index.php:202
 msgid "Scale"
-msgstr ""
+msgstr "échelle"
 
 #: .index.php:206
 msgid "File type"
-msgstr ""
+msgstr "type de fichier"
 
 #: .index.php:212
 msgid "include border"
-msgstr ""
+msgstr "inclus un cadre"
 
 #: .index.php:214
 msgid "embed legend"
-msgstr ""
+msgstr "inclus une légende"
 
 #: .index.php:216
 msgid "embed scalebar"
-msgstr ""
+msgstr "inclus une échelle"
 
 #: .index.php:218
 msgid "svg does not include scalebar, legend, or relief layers"
@@ -329,16 +329,16 @@ msgstr ""
 
 #: .index.php:252
 msgid "Warning"
-msgstr ""
+msgstr "Attention"
 
 #: .index.php:255
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: .index.php:257
 #: .index.php:264
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: .index.php:260
 msgid "Saving..."
@@ -370,87 +370,87 @@ msgstr ""
 
 #: .index.php:269
 msgid "width, height"
-msgstr ""
+msgstr "largeur, hauteur"
 
 #: .index.php:320
 #: .index.php:328
 msgid "--select--"
-msgstr ""
+msgstr "--choisisser--"
 
 #: .index.php:329
 msgid "plus"
-msgstr ""
+msgstr "plus"
 
 #: .index.php:330
 msgid "cross"
-msgstr ""
+msgstr "croix"
 
 #: .index.php:331
 msgid "solid"
-msgstr ""
+msgstr "plein"
 
 #: .index.php:332
 msgid "circle (s)"
-msgstr ""
+msgstr "cercle (p)"
 
 #: .index.php:333
 msgid "star (s)"
-msgstr ""
+msgstr "étoiles (p)"
 
 #: .index.php:334
 msgid "square (s)"
-msgstr ""
+msgstr "carrés (p)"
 
 #: .index.php:335
 msgid "triangle (s)"
-msgstr ""
+msgstr "triangle (p)"
 
 #: .index.php:337
 msgid "open"
-msgstr ""
+msgstr "ouvert"
 
 #: .index.php:338
 msgid "circle (o)"
-msgstr ""
+msgstr "cercle (o)"
 
 #: .index.php:339
 msgid "star (o)"
-msgstr ""
+msgstr "étoiles (o)"
 
 #: .index.php:340
 msgid "square (o)"
-msgstr ""
+msgstr "carrés (p)"
 
 #: .index.php:341
 msgid "triangle (o)"
-msgstr ""
+msgstr "triangle (o)"
 
 #: .index.php:350
 #: .index.php:380
 msgid "Remove"
-msgstr ""
+msgstr "Enlevez"
 
 #: .index.php:352
 msgid "Layer %d"
-msgstr ""
+msgstr "Couche %d"
 
 #: .index.php:362
 msgid "Shape"
-msgstr ""
+msgstr "Forme"
 
 #: .index.php:362
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: .index.php:363
 #: .index.php:392
 msgid "Color"
-msgstr ""
+msgstr "Couleur"
 
 #: .index.php:365
 #: .index.php:394
 msgid "Clear"
-msgstr ""
+msgstr "Effacer"
 
 #: .tabs/about.php:37
 #, php-format
@@ -477,11 +477,11 @@ msgstr ""
 #: .tabs/about.php:36
 #: .tabs/help.php:122
 msgid "Code"
-msgstr ""
+msgstr "code"
 
 #: .tabs/about.php:38
 msgid "History"
-msgstr ""
+msgstr "Histoire"
 
 #: .tabs/about.php:39
 msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
@@ -489,7 +489,7 @@ msgstr ""
 
 #: .tabs/about.php:40
 msgid "Acknowledgments"
-msgstr ""
+msgstr "Remerciements"
 
 #: .tabs/api.php:7
 msgid "A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."
@@ -625,13 +625,13 @@ msgstr ""
 
 #: .tabs/help.php:117
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: .tabs/help.php:121
 msgid "State/Province"
-msgstr ""
+msgstr "États/Province"
 
 #: .tabs/help.php:123
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 

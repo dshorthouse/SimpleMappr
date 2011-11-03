@@ -21,4 +21,5 @@ setlocale(LC_ALL, 'en_US.utf8');
 //set the default timezone
 date_default_timezone_set('America/New_York');
 
+define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60)); //two week cookie lifetime
 ?>

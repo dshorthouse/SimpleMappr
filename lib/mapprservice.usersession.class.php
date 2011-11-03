@@ -33,28 +33,99 @@ require_once(MAPPR_DIRECTORY.'/lib/db.class.php');
 
 class USERSESSION {
 
+  public static $accepted_languages = array(
+    'en' => array(
+      'native' => 'English',
+      'code'   => 'en_US.UTF-8'),
+    'fr' => array(
+      'native' => 'Français',
+      'code'   => 'fr_FR.UTF-8'),
+    'es' => array(
+      'native' => 'Español',
+      'code'   => 'es_ES.UTF-8')
+  );
+
+  public static $domain = "messages";
+
   private $_token;
+
+  private $_lang;
+
+  private $_lang_code;
 
   private $_auth_info = array();
 
   /*
-  * Destroy a user's session and a cookie
+  * Create a user's session
+  */
+  public static function set_session() {
+    session_start();
+  }
+
+  /*
+  * Destroy a user's session and the simplemappr cookie
   */
   public static function destroy() {
-    session_start();
+    self::set_session();
+    $lang = $_SESSION['simplemappr']['lang'];
     session_unset();
     session_destroy();
     setcookie("simplemappr", "", time() - 3600, "/");
-    header('Location: http://' . $_SERVER['SERVER_NAME'] . '');
+    header('Location: http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($lang));
   }
 
   /*
   * Update the access field in the db
   * @param int $uid
   */
-  public static function set_active_time($uid) {
+  public static function update_activity() {
+    if(isset($_GET["lang"]) && !array_key_exists($_GET["lang"], self::$accepted_languages)) {
+      header('HTTP/1.0 404 Not Found');
+      readfile(MAPPR_DIRECTORY.'/error/404.html');
+      exit();
+    }
+
+    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "");
+
+    if(isset($_GET["lang"]) && array_key_exists($_GET["lang"], self::$accepted_languages)) {
+      putenv('LC_ALL='.self::$accepted_languages[$_GET["lang"]]['code']);
+      setlocale(LC_ALL, self::$accepted_languages[$_GET["lang"]]['code']);
+      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
+      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+      textdomain(self::$domain);
+      $cookie["lang"] = $_GET["lang"];
+    } else {
+      putenv('LC_ALL='.self::$accepted_languages['en']['code']);
+      setlocale(LC_ALL, self::$accepted_languages['en']['code']);
+      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
+      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+      textdomain(self::$domain);
+    }
+
+    if($cookie["lang"] == "en" && isset($_GET["lang"])) {
+      header("Location: http://".$_SERVER["SERVER_NAME"]);
+      exit();
+    }
+    if($cookie["lang"] && $cookie["lang"] != "en" && !isset($_GET["lang"])) {
+      header("Location: http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
+      exit();
+    }
+
+    if(!isset($_COOKIE["simplemappr"])) { return; }
+
+    self::set_session();
+
+    $_SESSION["simplemappr"] = $cookie;
+    setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
+
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($uid));
+    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
+  }
+
+  public static function make_lang_param($lang = "") {
+    $param = "";
+    if($lang && $lang != 'en') { $param = "/?lang=" . $lang; }
+    return $param;
   }
 
   function __construct() {
@@ -62,18 +133,21 @@ class USERSESSION {
   }
 
   private function execute() {
-    $this->get_token()
+    $this->get_language()
+         ->get_token()
          ->make_call()
          ->make_session();
   }
 
+  private function get_language() {
+    $this->_lang = $this->load_param('lang', 'en');
+    $this->_lang_code = (array_key_exists($this->_lang, self::$accepted_languages)) ? self::$accepted_languages[$this->_lang]['code'] : 'en_US.UTF-8';
+    return $this;
+  }
+
   private function get_token() {
-    if(isset($_POST['token'])) {
-      $this->_token = $_POST['token'];
-      return $this;
-    } else {
-      exit();
-    }
+    $this->_token = $this->load_param('token', null);
+    if($this->_token) { return $this; } else { exit(); }
   }
 
   /*
@@ -95,6 +169,7 @@ class USERSESSION {
     curl_close($curl);
 
     $this->_auth_info = json_decode($raw_json, true);
+
     return $this;
   }
 
@@ -135,22 +210,50 @@ class USERSESSION {
         u.identifier = '".$db->escape($identifier)."'";
 
       $record = $db->query_first($sql);
-
       $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
+      $user['lang'] = $this->_lang;
 
-      setcookie("simplemappr", json_encode($user), time() + (2 * 7 * 24 * 60 * 60), "/"); //cookie for two weeks
-      session_start();
+      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/");
+      self::set_session();
       $_SESSION['simplemappr'] = $user;
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
-      $qlang = isset($_GET['lang']) ? "/?lang=" . $_GET['lang'] : "";
-
-      header('Location: http://' . $_SERVER['SERVER_NAME'] . $qlang);
+      header('Location: http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($user['lang']));
     } else {
       // echo 'An error occured: ' . $this->_auth_info['err']['msg'];
       exit();
     }
+  }
+
+  /**
+  * Get a request parameter
+  * @param string $name
+  * @param string $default parameter optional
+  * @return string the parameter value or empty string if null
+  */
+  private function load_param($name, $default = ''){
+    if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) { return $default; }
+    $value = $_REQUEST[$name];
+    if(get_magic_quotes_gpc() != 1) { $value = $this->add_slashes_extended($value); }
+    return $value;
+  }
+
+  /**
+  * Add slashes to either a string or an array
+  * @param string/array $arr_r
+  * @return string/array
+  */
+  private function add_slashes_extended(&$arr_r) {
+    if(is_array($arr_r)) {
+      foreach ($arr_r as &$val) {
+        is_array($val) ? $this->add_slashes_extended($val) : $val = addslashes($val);
+      }
+      unset($val);
+    } else {
+      $arr_r = addslashes($arr_r);
+    }
+    return $arr_r;
   }
 
 }

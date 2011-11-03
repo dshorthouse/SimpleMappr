@@ -1,4 +1,4 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, setTimeout, alert */
+/*global $, jQuery, window, document, self, XMLHttpRequest, alert */
 
 var Mappr = Mappr || { 'settings': {} };
 
@@ -821,8 +821,7 @@ $(function () {
   }; /** end Mappr.addAccordionPanel **/
 
   Mappr.removeAccordionPanel = function (clone, data_type) {
-    var self   = this,
-        button = $(".addmore[data-type='" + data_type + "']");
+    var button = $(".addmore[data-type='" + data_type + "']");
 
     clone.nextAll().each(function () {
       var num = parseInt($(this).find("h3 a").text().split(" ")[1],10);
@@ -953,9 +952,6 @@ $(function () {
   Mappr.loadSettings = function (data) {
     var pattern           = /[?*:;{}\\ "']+/g,
         map_title         = "",
-        i                 = 0,
-        keyMap            = [],
-        key               = "",
         download_filetype = "",
         self              = this;
 
@@ -1559,9 +1555,9 @@ $(function () {
   };
 
   Mappr.analytics = function (url) {
-    if(typeof _gaq === 'function') {
-       _gaq.push(['_trackPageview', url]);
-    }
+    var _gaq = _gaq || [];
+
+    _gaq.push(['_trackPageview', url]);
   };
 
   Mappr.finishDownload = function () {
@@ -1604,12 +1600,11 @@ $(function () {
         thumb   = $('.thumb', control),
         dots    = $('.overview', control).children(),
         rads    = 0,
-        degs    = 0,
         left    = 0,
         top     = 0;
 
     angle = parseFloat(angle) < 0 ? parseFloat(angle) +360 : parseFloat(angle);
-    rads = angle * (Math.PI/180)
+    rads = angle * (Math.PI/180);
 
     $('.overview', control).css("left", -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px');  
     top = Math.round(-Math.cos(rads) * 28 + (control.outerHeight() /2 - thumb.outerHeight() /2)) + 'px';
@@ -1617,10 +1612,73 @@ $(function () {
     $('.thumb', control).css('top',top).css('left',left);
   };
 
+  Mappr.getParameterByName = function (name) {
+    var cname   = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]"),
+        regexS  = "[\\?&]" + cname + "=([^&#]*)",
+        regex   = new RegExp(regexS),
+        results = regex.exec(window.location.href);
+
+    if(results === null) {
+      return "";
+    } else {
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+  };
+
+  Mappr.clearLanguage = function () {
+    var cookie = $.parseJSON($.cookie("simplemappr"));
+
+    if(cookie && typeof cookie === 'object') {
+      cookie.lang = "en";
+      $.cookie("simplemappr", JSON.stringify(cookie));
+    }
+  };
+
+  Mappr.activateJanrain = function () {
+    var tokenUrlparam = "/", e = "", s = "";
+
+    if(Mappr.settings.active === "false") {
+      if (typeof window.janrain !== 'object') { window.janrain = {}; }
+      window.janrain.settings = {};
+
+      if(this.getParameterByName('lang')) {
+        tokenUrlparam = "/?lang=" + Mappr.getParameterByName('lang');
+      }
+    
+      window.janrain.settings.tokenUrl = Mappr.settings.baseUrl + '/session' + tokenUrlparam;
+
+      if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", this.isJanrainReady, false);
+      } else {
+        window.attachEvent('onload', this.isJanrainReady);
+      }
+
+      e = document.createElement('script');
+      e.type = 'text/javascript';
+      e.id = 'janrainAuthWidget';
+
+      if (document.location.protocol === 'https:') {
+        e.src = 'https://rpxnow.com/js/lib/simplemappr/engage.js';
+      } else {
+        e.src = 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js';
+      }
+
+      s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(e, s);
+    }
+  };
+
+  Mappr.isJainrainReady = function () {
+    if (typeof window.janrain !== 'object') { window.janrain = {}; }
+    window.janrain.ready = true;
+  };
+
+
   Mappr.init = function () {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url('+self.settings.baseUrl+'/public/images/bg-rotatescroll.png)');
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+      index = null;
       if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
     $('#initial-message').hide();
@@ -1656,6 +1714,7 @@ $(function () {
       this.loadUserList();
     }
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
+    this.activateJanrain();
   };
 
   Mappr.init();
