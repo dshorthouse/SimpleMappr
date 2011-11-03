@@ -40,12 +40,14 @@ class USERS {
   private $_db;
 
   function __construct() {
-    session_start();
-    $this->execute();
+    $this->set_header()
+         ->execute();
   }
 
+  /*
+  * Utility method
+  */
   private function execute() {
-    $this->set_header();
     if(!isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] !== 1) {
       header("Content-Type: application/json");
       echo "{ \"error\" : \"access denied\" }";
@@ -58,13 +60,21 @@ class USERS {
     }
   }
 
+  /*
+  * Set header to prevent caching
+  */
   private function set_header() {
     header("Pragma: public");
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
+    session_start();
+    return $this;
   }
 
+  /*
+  * Detect type of request and perform appropriate method
+  */
   private function restful_action() {
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -85,6 +95,9 @@ class USERS {
     }
   }
 
+  /*
+  * Index method to produce table of users
+  */
   private function index_users() {
     $sql = "
       SELECT
@@ -105,11 +118,11 @@ class USERS {
      $output .= "<table class=\"grid-users\">" . "\n";
      $output .= "<thead>" . "\n";
      $output .= "<tr>" . "\n";
-     $output .= "<td class=\"left-align\">Username</td>";
-     $output .= "<td class=\"left-align\">Email</td>";
-     $output .= "<td>Maps</td>";
-     $output .= "<td>Last Access</td>";
-     $output .= "<td class=\"actions\">Actions<a href=\"#\" class=\"sprites toolsRefresh\"></a></td>";
+     $output .= "<td class=\"left-align\">"._("Username")."</td>";
+     $output .= "<td class=\"left-align\">"._("Email")."</td>";
+     $output .= "<td>"._("Maps")."</td>";
+     $output .= "<td>"._("Last Access")."</td>";
+     $output .= "<td class=\"actions\">"._("Actions")."<a href=\"#\" class=\"sprites toolsRefresh\"></a></td>";
      $output .= "</tr>" . "\n";
      $output .= "</thead>" . "\n";
      $output .= "<tbody>" . "\n";
@@ -124,7 +137,7 @@ class USERS {
        $output .= "<td class=\"usermaps-center\">" . $access . "</td>";
        $output .= "<td class=\"actions\">";
        if($record['uid'] != 1) {
-         $output .= "<a class=\"sprites user-delete\" data-uid=\"".$record['uid']."\" href=\"#\">Delete</a>";
+         $output .= "<a class=\"sprites user-delete\" data-uid=\"".$record['uid']."\" href=\"#\">"._("Delete")."</a>";
        }
        $output .= "</td>";
        $output .= "</tr>" . "\n";
@@ -144,6 +157,9 @@ class USERS {
    echo $output;
   }
 
+  /*
+  * Destroy method to delete a user
+  */
   private function destroy_user() {
     $sql = "
         DELETE

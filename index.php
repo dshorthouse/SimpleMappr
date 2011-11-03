@@ -9,6 +9,8 @@ $header = set_up();
 <meta name="description" content="<?php echo _("A publication-quality, point map application."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,map"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
+<?php $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en'; ?>
+<meta http-equiv="content-language" content="<?php echo $language; ?>" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php $header[0]->getCSSHeader(); ?>
@@ -60,7 +62,7 @@ $header = set_up();
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-<p><?php echo _("Type countries <em>e.g.</em> Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help"><?php echo _("codes"); ?></a></p>
+<p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help"><?php echo _("codes"); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">
 <?php echo partial_regions(); ?>

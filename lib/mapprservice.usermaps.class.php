@@ -40,12 +40,14 @@ class USERMAPS {
   private $_db;
 
   function __construct() {
-    session_start();
-    $this->execute();
+    $this->set_header()
+         ->execute();
   }
 
+  /*
+  * Utility method
+  */
   private function execute() {
-    $this->set_header();
     if(!isset($_SESSION['simplemappr'])) {
       header("Content-Type: application/json");
       echo "{ \"error\" : \"session timeout\" }";
@@ -58,13 +60,21 @@ class USERMAPS {
     }
   }
 
+  /*
+  * Set header to prevent caching
+  */
   private function set_header() {
     header("Pragma: public");
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
+    session_start();
+    return $this;
   }
 
+  /*
+  * Detect type of request and perform appropriate method
+  */
   private function restful_action() {
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -85,7 +95,7 @@ class USERMAPS {
           'created' => time(),
         );
 
-        //first look to see if map by same title already exists
+        //see if user's map by same title already exists
         $sql = "
           SELECT
             mid
@@ -115,6 +125,9 @@ class USERMAPS {
     }
   }
 
+  /*
+  * Index method to produce table of maps
+  */
   private function index_maps() {
     $where = '';
     $output = '';
@@ -142,8 +155,8 @@ class USERMAPS {
       $output .= "<table class=\"grid-usermaps\">" . "\n";
       $output .= "<thead>" . "\n";
       $output .= "<tr>" . "\n";
-      $output .= "<td class=\"left-align\">Title <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
-      $output .= "<td class=\"actions\">Actions";
+      $output .= "<td class=\"left-align\">"._("Title")." <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
+      $output .= "<td class=\"actions\">"._("Actions");
       if($this->_uid == 1) {
         $output .= "<a href=\"#\" class=\"sprites toolsRefresh\"></a>";
       }
@@ -161,9 +174,9 @@ class USERMAPS {
         $output .= ($this->_uid == 1) ? "</em>" : "";
         $output .= "</td>";
         $output .= "<td class=\"actions\">";
-        $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">Load</a>";
+        $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">"._("Load")."</a>";
         if($this->_uid == $record['uid'] || $this->_uid == 1) {
-          $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">Delete</a>";
+          $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">"._("Delete")."</a>";
         }
         $output .= "</td>";
         $output .= "</tr>" . "\n";
@@ -181,13 +194,16 @@ class USERMAPS {
           .keypress(function(event) { if (event.which === 13) { return false; }
         });</script>";
     } else {
-      $output .= '<div id="mymaps" class="panel ui-corner-all"><p>Start by adding data on the "Point Data" or "Regions" tabs, press the Preview buttons there, then save your map from the top bar of the "Preview" tab.</p><p>Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.</p></div>';
+      $output .= "<div id=\"mymaps\" class=\"panel ui-corner-all\"><p>"._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.")."</p><p>"._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.")."</p></div>";
     }
 
     header("Content-Type: text/html");
     echo $output;
   }
 
+  /*
+  * Show method to obtain map data
+  */
   private function show_map() {
     $where = "";
     if(!$this->_uid == 1) { $where = " AND uid = ".$this->_db->escape($this->_uid); }
@@ -208,6 +224,9 @@ class USERMAPS {
     echo json_encode($data);
   }
 
+  /*
+  * Destroy method to delete a map
+  */
   private function destroy_map() {
     $where = "mid=".$this->_db->escape($this->_request[0]);
     if($this->_uid != 1) {

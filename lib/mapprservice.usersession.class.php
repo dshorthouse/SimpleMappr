@@ -45,7 +45,7 @@ class USERSESSION {
       'code'   => 'es_ES.UTF-8')
   );
 
-  public static $domain = "messages";
+  public static $domain = "messages"; //TODO: make this dynamic to accommodate server-side caching in a way similar to css and js
 
   private $_token;
 

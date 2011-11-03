@@ -35,6 +35,9 @@ class HEADER {
   private $js_header = array();
   private $css_header = array();
 
+  /*
+  * An array of all javascript files to be minified
+  */
   public static $local_js_files = array(
     'public/javascript/jquery-1.6.4.min.js',
     'public/javascript/jquery-ui-1.8.16.min.js',
@@ -51,6 +54,9 @@ class HEADER {
     'public/javascript/mapper.js'
   );
 
+  /*
+  * An array of all css files to be minified
+  */
   public static $local_css_files = array(
     'public/stylesheets/raw/screen.css'
   );
@@ -61,6 +67,11 @@ class HEADER {
          ->local_css_files();
   }
 
+  /*
+  * Obtain a file name in the cache directory
+  * @param string $dir
+  * @param string $x
+  */
   private function file_cached($dir, $x='js') {
     $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
     foreach($files as $file) {
@@ -69,6 +80,9 @@ class HEADER {
     return false;
   }
 
+  /*
+  * Add javascript file(s) from remote CDN
+  */
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
@@ -81,6 +95,9 @@ class HEADER {
     return $this;
   }
 
+  /*
+  * Add existing, minified javascript to header or create if does not already exist
+  */
   private function local_js_files() {
     if(ENVIRONMENT == "production") {
       $cached_js = $this->file_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
@@ -108,7 +125,10 @@ class HEADER {
     }
     return $this;
   }
-    
+
+  /*
+  * Add existing, minified css to header or create if does not already exist
+  */
   private function local_css_files() {
     if(ENVIRONMENT == "production") {
       $cached_css = $this->file_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
@@ -134,23 +154,40 @@ class HEADER {
       }
     }
   }
-    
+
+  /*
+  * Add javascript file to array
+  * @param string $js
+  */
   private function addJS($js) {
     $this->js_header[] = $js;
   }
-  
+
+  /*
+  * Add css file to array
+  * @param string $css
+  */
   private function addCSS($css) {
     $this->css_header[] = $css;
   }
-  
+
+  /*
+  * Create the javascript header
+  */
   public function getJSHeader() {
     echo implode("\n", $this->js_header) . "\n";
   }
-  
+
+  /*
+  * Create the css header
+  */
   public function getCSSHeader() {
     echo implode("\n", $this->css_header) . "\n";
   }
 
+  /*
+  * Create Google Analytics inline javascript
+  */
   public function getAnalytics() {
     $analytics = "";
     if(ENVIRONMENT == "production") {

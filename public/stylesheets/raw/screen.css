@@ -1,6 +1,7 @@
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
 a{color:#555555;}
+#error-message{font-weight:normal;margin:0px;padding:15px;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
 .hidden-message{display:none;}
 #header,#tabs{min-width:1125px;}
@@ -195,22 +196,22 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-chat{margin:10px;}
 #map-help h3{font-size:0.75em;}
 #map-help p{font-size:0.75em;}
-#map-help ul{font-size:0.75em;}
-#map-help ul.toolbar{list-style:none;margin:0px;padding:0px;}
-#map-help ul.toolbar li{list-style:none;line-height:20px;padding-left:24px;text-indent:-20px;}
-#map-help ul.toolbar span{width:20px;height:20px;display:inline-block;}
-#map-help ul.toolbar span.toolsZoomIn{background-position:0 -658px;}
-#map-help ul.toolbar span.toolsZoomOut{background-position:0 -690px;}
-#map-help ul.toolbar span.rotateAnticlockwise{background-position:0 -221px;}
-#map-help ul.toolbar span.rotateClockwise{background-position:0 -253px;}
-#map-help ul.toolbar span.toolsCrop{background-position:0 -882px;}
-#map-help ul.toolbar span.toolsQuery{background-position:0 -819px;}
-#map-help ul.toolbar span.toolsDraw{background-position:0 -850px;}
-#map-help ul.toolbar span.toolsRefresh{background-position:0 -157px;}
-#map-help ul.toolbar span.toolsRebuild{background-position:0 -125px;}
-#map-help ul.toolbar span.toolsSave{background-position:0 -448px;}
-#map-help ul.toolbar span.toolsEmbed{background-position: 0 -565px;}
-#map-help ul.toolbar span.toolsDownload{background-position:0 -786px;}
+#map-help dl{font-size:0.75em;}
+#map-help dl dt{float:left;margin-right:5px;line-height:20px;}
+#map-help dl dt,#map-help dl dd{line-height:20px;}
+#map-help dl.toolbar dt{padding-left:24px;}
+#map-help dl.toolbar dt.toolsZoomIn{background-position:0 -658px;}
+#map-help dl.toolbar dt.toolsZoomOut{background-position:0 -690px;}
+#map-help dl.toolbar dt.rotateAnticlockwise{background-position:0 -221px;}
+#map-help dl.toolbar dt.rotateClockwise{background-position:0 -253px;}
+#map-help dl.toolbar dt.toolsCrop{background-position:0 -882px;}
+#map-help dl.toolbar dt.toolsQuery{background-position:0 -819px;}
+#map-help dl.toolbar dt.toolsDraw{background-position:0 -850px;}
+#map-help dl.toolbar dt.toolsRefresh{background-position:0 -157px;}
+#map-help dl.toolbar dt.toolsRebuild{background-position:0 -125px;}
+#map-help dl.toolbar dt.toolsSave{background-position:0 -448px;}
+#map-help dl.toolbar dt.toolsEmbed{background-position: 0 -565px;}
+#map-help dl.toolbar dt.toolsDownload{background-position:0 -786px;}
 #map-help #example-data{height:220px;}
 #map-help #example-data img{vertical-align:middle;margin-right:20px;}
 #map-help table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
