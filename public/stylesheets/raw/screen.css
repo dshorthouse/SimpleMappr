@@ -80,9 +80,10 @@ div.panel a.help{background-position:0 -533px;padding-left:20px;}
 .submit{text-align:left;margin-top:15px;margin-left:20px;}
 div.header{border-bottom:1px solid #AAA;width:50%;margin-top:20px;}
 div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;font-size:20px;}
-#map-about p{font-size:0.75em;}
+#map-about p,#map-about dl{font-size:0.75em;}
 #map-about p.citation{text-indent:-2em;padding-left:2em;}
-#map-about p.update span{display:block;padding-left:2em;}
+#map-about dl dt.update{font-weight:bold;}
+#map-about dl dd{margin:0 0 10px 25px;}
 #map-about img{border:0px}
 #map-preview{padding:1em 0.3em;background-color:#FFF;height:460px;}
 #map-preview p{font-size:0.75em;}
