@@ -35,93 +35,93 @@ $("#filter-countries")
 <!-- help tab -->
 <div id="map-help">
     
-    <div class="panel ui-corner-all">
-      <p><?php echo _("This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."); ?></p>
-    </div>
+  <div class="panel ui-corner-all">
+    <p><?php echo _("This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."); ?></p>
+  </div>
 
-    <div class="header">
-      <h2><?php echo _("Preview"); ?></h2>
-    </div>
+  <div class="header">
+    <h2><?php echo _("Preview"); ?></h2>
+  </div>
 
-    <p><?php echo _("Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"); ?></p>
+  <p><?php echo _("Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"); ?></p>
 
-    <h3><?php echo _("Toolbar buttons"); ?></h3>
-      <dl class="toolbar ui-helper-clearfix">
-        <dt class="sprites toolsZoomIn"><?php echo _("Zoom in"); ?>:</dt>
-        <dd><?php echo _("draw a zoom region on the preview"); ?></dd>
+  <h3><?php echo _("Toolbar buttons"); ?></h3>
+  <dl class="toolbar ui-helper-clearfix">
+    <dt class="sprites toolsZoomIn"><?php echo _("Zoom in"); ?>:</dt>
+    <dd><?php echo _("draw a zoom region on the preview"); ?></dd>
 
-        <dt class="sprites toolsZoomOut"><?php echo _("Zoom out"); ?>:</dt>
-        <dd><?php echo _("zoom out one step"); ?></dd>
+    <dt class="sprites toolsZoomOut"><?php echo _("Zoom out"); ?>:</dt>
+    <dd><?php echo _("zoom out one step"); ?></dd>
 
-        <dt class="sprites toolsCrop"><?php echo _("Crop"); ?>:</dt>
-        <dd><?php echo _("draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."); ?></dd>
+    <dt class="sprites toolsCrop"><?php echo _("Crop"); ?>:</dt>
+    <dd><?php echo _("draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."); ?></dd>
 
-        <dt class="sprites toolsQuery"><?php echo _("Fill regions"); ?>:</dt>
-        <dd><?php echo _("choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."); ?></dd>
+    <dt class="sprites toolsQuery"><?php echo _("Fill regions"); ?>:</dt>
+    <dd><?php echo _("choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."); ?></dd>
 
-        <dt class="sprites toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
-        <dd><?php echo _("refresh the map image"); ?></dd>
+    <dt class="sprites toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
+    <dd><?php echo _("refresh the map image"); ?></dd>
 
-        <dt class="sprites toolsRebuild"><?php echo _("Rebuild"); ?>:</dt>
-        <dd><?php echo _("re-render the default presentation at lowest zoom and geographic projection"); ?></dd>
-      </dl>
+    <dt class="sprites toolsRebuild"><?php echo _("Rebuild"); ?>:</dt>
+    <dd><?php echo _("re-render the default presentation at lowest zoom and geographic projection"); ?></dd>
+  </dl>
 
-    <h3><?php echo _("Layers"); ?></h3>
-      <dl class="ui-helper-clearfix">
-        <dt><?php echo _("State/Provinces"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to draw all State and Province borders for all countries"); ?></dd>
+  <h3><?php echo _("Layers"); ?></h3>
+  <dl class="ui-helper-clearfix">
+    <dt><?php echo _("State/Provinces"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to draw all State and Province borders for all countries"); ?></dd>
 
-        <dt><?php echo _("lakes (outline)"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to overlay lakes as black outlines"); ?></dd>
+    <dt><?php echo _("lakes (outline)"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to overlay lakes as black outlines"); ?></dd>
 
-        <dt><?php echo _("lakes (greyscale)"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to overlay lakes as greyscale polygons"); ?></dd>
+    <dt><?php echo _("lakes (greyscale)"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to overlay lakes as greyscale polygons"); ?></dd>
 
-        <dt><?php echo _("rivers"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to overlay rivers as black outlines"); ?></dd>
+    <dt><?php echo _("rivers"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to overlay rivers as black outlines"); ?></dd>
 
-        <dt><?php echo _("relief"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to render a color, shaded relief layer"); ?></dd>
+    <dt><?php echo _("relief"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to render a color, shaded relief layer"); ?></dd>
 
-        <dt><?php echo _("relief (greyscale)"); ?>:</dt>
-        <dd><?php echo _("select this checkbox to render a greyscale, shaded relief layer"); ?></dd>
-      </dl>
+    <dt><?php echo _("relief (greyscale)"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to render a greyscale, shaded relief layer"); ?></dd>
+  </dl>
 
-    <h3><?php echo _("Labels"); ?></h3>
-      <dl class="ui-helper-clearfix">
-        <dt><?php echo _("Countries"); ?>:</dt>
-        <dd><?php echo _("label countries"); ?></dd>
+  <h3><?php echo _("Labels"); ?></h3>
+  <dl class="ui-helper-clearfix">
+    <dt><?php echo _("Countries"); ?>:</dt>
+    <dd><?php echo _("label countries"); ?></dd>
 
-        <dt><?php echo _("State/Provinces"); ?>:</dt>
-        <dd><?php echo _("label States and Provinces"); ?></dd>
+    <dt><?php echo _("State/Provinces"); ?>:</dt>
+    <dd><?php echo _("label States and Provinces"); ?></dd>
 
-        <dt><?php echo _("lakes"); ?>:</dt>
-        <dd><?php echo _("label lakes"); ?></dd>
+    <dt><?php echo _("lakes"); ?>:</dt>
+    <dd><?php echo _("label lakes"); ?></dd>
 
-        <dt><?php echo _("rivers"); ?>:</dt>
-        <dd><?php echo _("label rivers"); ?></dd>
+    <dt><?php echo _("rivers"); ?>:</dt>
+    <dd><?php echo _("label rivers"); ?></dd>
 
-        <dt><?php echo _("places"); ?>:</dt>
-        <dd><?php echo _("label city, town names"); ?></dd>
+    <dt><?php echo _("places"); ?>:</dt>
+    <dd><?php echo _("label city, town names"); ?></dd>
 
-        <dt><?php echo _("physical"); ?>:</dt>
-        <dd><?php echo _("label physical features"); ?></dd>
+    <dt><?php echo _("physical"); ?>:</dt>
+    <dd><?php echo _("label physical features"); ?></dd>
 
-        <dt><?php echo _("marine"); ?>:</dt>
-        <dd><?php echo _("label marine features"); ?></dd>
-      </dl>
+    <dt><?php echo _("marine"); ?>:</dt>
+    <dd><?php echo _("label marine features"); ?></dd>
+  </dl>
 
-    <h3><?php echo _("Options"); ?></h3>
-      <dl class="ui-helper-clearfix">
-        <dt><?php echo _("graticules"); ?>:</dt>
-        <dd><?php echo _("draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"); ?></dd>
-      </dl>
+  <h3><?php echo _("Options"); ?></h3>
+  <dl class="ui-helper-clearfix">
+    <dt><?php echo _("graticules"); ?>:</dt>
+    <dd><?php echo _("draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"); ?></dd>
+  </dl>
 
-    <h3><?php echo _("Projection"); ?></h3>
-      <dl class="ui-helper-clearfix">
-        <dt><?php echo _("projection"); ?>:</dt>
-        <dd><?php echo _("Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"); ?></dd>
-      </dl>
+  <h3><?php echo _("Projection"); ?></h3>
+  <dl class="ui-helper-clearfix">
+    <dt><?php echo _("projection"); ?>:</dt>
+    <dd><?php echo _("Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"); ?></dd>
+  </dl>
     
     <dl class="toolbar ui-helper-clearfix">
       <dt class="sprites toolsSave"><?php echo _("Save"); ?>:</dt>
