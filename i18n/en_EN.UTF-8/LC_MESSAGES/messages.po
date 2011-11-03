@@ -1,0 +1,861 @@
+# SimpleMappr Translation File.
+# Copyright (C) 2011 David P. Shorthouse
+# This file is distributed under the same license as the SimpleMappr application.
+# David P. Shorthouse <(snipped)>, 2011.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: SimpleMappr v1.5\n"
+"Report-Msgid-Bugs-To: (snipped)\n"
+"POT-Creation-Date: 2011-11-01 00:29-0500\n"
+"PO-Revision-Date: 2011-11-03 13:30-0500\n"
+"Last-Translator: David Shorthouse <(snipped)>\n"
+"Language-Team: English (en) <(snipped)>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .index.php:377
+#, php-format
+msgid "Region %d"
+msgstr ""
+
+#: .index.php:9
+msgid "A publication-quality, point map application."
+msgstr ""
+
+#: .index.php:10
+msgid "publication,map"
+msgstr ""
+
+#: .index.php:22
+msgid "point maps for publication"
+msgstr ""
+
+#: .index.php:25
+msgid "Sign Out"
+msgstr ""
+
+#: .index.php:27
+msgid "Sign In"
+msgstr ""
+
+#: .index.php:31
+msgid "Building application..."
+msgstr ""
+
+#: .index.php:34
+#: .index.php:58
+#: .index.php:71
+#: .tabs/help.php:43
+msgid "Preview"
+msgstr ""
+
+#: .index.php:35
+#: .tabs/help.php:138
+msgid "Point Data"
+msgstr ""
+
+#: .index.php:36
+#: .tabs/help.php:157
+msgid "Regions"
+msgstr ""
+
+#: .index.php:37
+msgid "All Maps"
+msgstr ""
+
+#: .index.php:37
+msgid "My Maps"
+msgstr ""
+
+#: .index.php:39
+msgid "Users"
+msgstr ""
+
+#: .index.php:42
+msgid "Help"
+msgstr ""
+
+#: .index.php:43
+msgid "About"
+msgstr ""
+
+#: .index.php:44
+msgid "Feedback"
+msgstr ""
+
+#: .index.php:45
+msgid "API"
+msgstr ""
+
+#: .index.php:52
+msgid "Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"
+msgstr ""
+
+#: .index.php:52
+msgid "examples"
+msgstr ""
+
+#: .index.php:57
+msgid "Add a layer"
+msgstr ""
+
+#: .index.php:58
+#: .index.php:71
+msgid "Clear all"
+msgstr ""
+
+#: .index.php:65
+msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."
+msgstr ""
+
+#: .index.php:65
+msgid "codes"
+msgstr ""
+
+#: .index.php:70
+msgid "Add a region"
+msgstr ""
+
+#: .index.php:79
+msgid "zoom in ctrl+"
+msgstr ""
+
+#: .index.php:80
+msgid "zoom out ctrl-"
+msgstr ""
+
+#: .index.php:81
+msgid "crop ctrl+x"
+msgstr ""
+
+#: .index.php:82
+msgid "fill regions"
+msgstr ""
+
+#: .index.php:83
+msgid "refresh ctrl+r"
+msgstr ""
+
+#: .index.php:84
+msgid "rebuild ctrl+n"
+msgstr ""
+
+#: .index.php:89
+#: .index.php:190
+#: .index.php:256
+#: .tabs/help.php:127
+msgid "Save"
+msgstr ""
+
+#: .index.php:90
+#: .index.php:269
+#: .tabs/help.php:130
+msgid "Embed"
+msgstr ""
+
+#: .index.php:92
+#: .index.php:258
+#: .tabs/help.php:133
+msgid "Download"
+msgstr ""
+
+#: .index.php:106
+msgid "pan up"
+msgstr ""
+
+#: .index.php:107
+msgid "pan right"
+msgstr ""
+
+#: .index.php:108
+msgid "pan down"
+msgstr ""
+
+#: .index.php:109
+msgid "pan left"
+msgstr ""
+
+#: .index.php:113
+msgid "Records Out of Range"
+msgstr ""
+
+#: .index.php:114
+#: .index.php:261
+msgid "Building preview..."
+msgstr ""
+
+#: .index.php:120
+msgid "Settings"
+msgstr ""
+
+#: .index.php:121
+#: .index.php:350
+#: .index.php:380
+msgid "Legend"
+msgstr ""
+
+#: .index.php:123
+#: .index.php:267
+msgid "legend will appear here"
+msgstr ""
+
+#: .index.php:125
+#: .tabs/help.php:69
+msgid "Layers"
+msgstr ""
+
+#: .index.php:127
+#: .index.php:137
+#: .tabs/help.php:71
+#: .tabs/help.php:95
+msgid "State/Provinces"
+msgstr ""
+
+#: .index.php:128
+#: .tabs/help.php:74
+msgid "lakes (outline)"
+msgstr ""
+
+#: .index.php:129
+#: .tabs/help.php:77
+msgid "lakes (greyscale)"
+msgstr ""
+
+#: .index.php:130
+#: .index.php:139
+#: .tabs/help.php:80
+#: .tabs/help.php:101
+msgid "rivers"
+msgstr ""
+
+#: .index.php:131
+#: .tabs/help.php:83
+msgid "relief"
+msgstr ""
+
+#: .index.php:132
+#: .tabs/help.php:86
+msgid "relief (greyscale)"
+msgstr ""
+
+#: .index.php:134
+#: .tabs/help.php:90
+msgid "Labels"
+msgstr ""
+
+#: .index.php:136
+#: .tabs/help.php:92
+msgid "Countries"
+msgstr ""
+
+#: .index.php:138
+#: .tabs/help.php:98
+msgid "lakes"
+msgstr ""
+
+#: .index.php:140
+#: .tabs/help.php:104
+msgid "places"
+msgstr ""
+
+#: .index.php:141
+#: .tabs/help.php:107
+msgid "physical"
+msgstr ""
+
+#: .index.php:142
+#: .tabs/help.php:110
+msgid "marine"
+msgstr ""
+
+#: .index.php:144
+#: .index.php:212
+#: .tabs/help.php:114
+msgid "Options"
+msgstr ""
+
+#: .index.php:146
+msgid "graticules (grid)"
+msgstr ""
+
+#: .index.php:148
+msgid "fixed"
+msgstr ""
+
+#: .index.php:154
+#: .tabs/help.php:120
+msgid "Projection"
+msgstr ""
+
+#: .index.php:167
+msgid "zoom prior to setting projection"
+msgstr ""
+
+#: .index.php:176
+msgid "Save and reload your map data or create a generic template."
+msgstr ""
+
+#: .index.php:189
+msgid "Records out of range"
+msgstr ""
+
+#: .index.php:192
+msgid "Title"
+msgstr ""
+
+#: .index.php:198
+msgid "map will be cropped"
+msgstr ""
+
+#: .index.php:200
+msgid "File name"
+msgstr ""
+
+#: .index.php:204
+msgid "Scale"
+msgstr ""
+
+#: .index.php:208
+msgid "File type"
+msgstr ""
+
+#: .index.php:214
+msgid "include border"
+msgstr ""
+
+#: .index.php:216
+msgid "embed legend"
+msgstr ""
+
+#: .index.php:218
+msgid "embed scalebar"
+msgstr ""
+
+#: .index.php:220
+msgid "svg does not include scalebar, legend, or relief layers"
+msgstr ""
+
+#: .index.php:222
+msgid "Building file for download..."
+msgstr ""
+
+#: .index.php:254
+msgid "Warning"
+msgstr ""
+
+#: .index.php:257
+msgid "Cancel"
+msgstr ""
+
+#: .index.php:259
+#: .index.php:266
+msgid "Delete"
+msgstr ""
+
+#: .index.php:262
+msgid "Saving..."
+msgstr ""
+
+#: .index.php:263
+msgid "You are missing a legend for at least one of your Point Data or Regions layers."
+msgstr ""
+
+#: .index.php:264
+msgid "Loading your maps..."
+msgstr ""
+
+#: .index.php:265
+msgid "Loading user list..."
+msgstr ""
+
+#: .index.php:266
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: .index.php:268
+msgid "Example Coordinates"
+msgstr ""
+
+#: .index.php:271
+msgid "Additional parameters"
+msgstr ""
+
+#: .index.php:271
+msgid "width, height"
+msgstr ""
+
+#: .index.php:315
+#: .index.php:323
+msgid "--select--"
+msgstr ""
+
+#: .index.php:324
+msgid "plus"
+msgstr ""
+
+#: .index.php:325
+msgid "cross"
+msgstr ""
+
+#: .index.php:326
+msgid "solid"
+msgstr ""
+
+#: .index.php:327
+msgid "circle (s)"
+msgstr ""
+
+#: .index.php:328
+msgid "star (s)"
+msgstr ""
+
+#: .index.php:329
+msgid "square (s)"
+msgstr ""
+
+#: .index.php:330
+msgid "triangle (s)"
+msgstr ""
+
+#: .index.php:332
+msgid "open"
+msgstr ""
+
+#: .index.php:333
+msgid "circle (o)"
+msgstr ""
+
+#: .index.php:334
+msgid "star (o)"
+msgstr ""
+
+#: .index.php:335
+msgid "square (o)"
+msgstr ""
+
+#: .index.php:336
+msgid "triangle (o)"
+msgstr ""
+
+#: .index.php:345
+#: .index.php:375
+msgid "Remove"
+msgstr ""
+
+#: .index.php:347
+msgid "Layer %d"
+msgstr ""
+
+#: .index.php:357
+msgid "Shape"
+msgstr ""
+
+#: .index.php:357
+msgid "Size"
+msgstr ""
+
+#: .index.php:358
+#: .index.php:387
+msgid "Color"
+msgstr ""
+
+#: .index.php:360
+#: .index.php:389
+msgid "Clear"
+msgstr ""
+
+#: .tabs/about.php:39
+#, php-format
+msgid "The code behind SimpleMappr may be obtained at %s"
+msgstr ""
+
+#: .tabs/about.php:43
+#, php-format
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
+msgstr ""
+
+#: .tabs/about.php:7
+msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
+msgstr ""
+
+#: .tabs/about.php:9
+msgid "Citing"
+msgstr ""
+
+#: .tabs/about.php:11
+msgid "Recent Updates"
+msgstr ""
+
+#: .tabs/about.php:13
+msgid "October 24, 2011"
+msgstr ""
+
+#: .tabs/about.php:13
+msgid "Bug fixes: corrected mechanism to draw map borders to accommodate rotation."
+msgstr ""
+
+#: .tabs/about.php:14
+msgid "October 23, 2011"
+msgstr ""
+
+#: .tabs/about.php:14
+msgid "Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."
+msgstr ""
+
+#: .tabs/about.php:15
+msgid "October 20, 2011"
+msgstr ""
+
+#: .tabs/about.php:15
+msgid "Improvements: added a Country label option; scale bar is now always present in preview but optional for download."
+msgstr ""
+
+#: .tabs/about.php:16
+msgid "October 19, 2011"
+msgstr ""
+
+#: .tabs/about.php:16
+msgid "Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."
+msgstr ""
+
+#: .tabs/about.php:17
+msgid "October 18, 2011"
+msgstr ""
+
+#: .tabs/about.php:17
+msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
+msgstr ""
+
+#: .tabs/about.php:18
+msgid "October 6, 2011"
+msgstr ""
+
+#: .tabs/about.php:18
+msgid "Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."
+msgstr ""
+
+#: .tabs/about.php:19
+msgid "October 2, 2011"
+msgstr ""
+
+#: .tabs/about.php:19
+msgid "Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."
+msgstr ""
+
+#: .tabs/about.php:20
+msgid "October 1, 2011"
+msgstr ""
+
+#: .tabs/about.php:20
+msgid "Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."
+msgstr ""
+
+#: .tabs/about.php:21
+msgid "September 29, 2011"
+msgstr ""
+
+#: .tabs/about.php:21
+msgid "Improvements: crop selection restored after refreshing, zooming, panning, or selecting different layers or options."
+msgstr ""
+
+#: .tabs/about.php:22
+msgid "September 28, 2011"
+msgstr ""
+
+#: .tabs/about.php:22
+msgid "Improvements: editable corner coordinates for crop and improved accuracy."
+msgstr ""
+
+#: .tabs/about.php:23
+msgid "September 26, 2011"
+msgstr ""
+
+#: .tabs/about.php:23
+msgid "Improvements: responsiveness of application improved by accommodating browser caching."
+msgstr ""
+
+#: .tabs/about.php:24
+msgid "September 21, 2011"
+msgstr ""
+
+#: .tabs/about.php:24
+msgid "Improvements: added graticule options (requested by Jeff Skevington); cleaned presentation of download options. Bug fixes: production of KML files."
+msgstr ""
+
+#: .tabs/about.php:25
+msgid "August 2, 2011"
+msgstr ""
+
+#: .tabs/about.php:25
+msgid "Improvements: refined error-handling in coordinate recognition."
+msgstr ""
+
+#: .tabs/about.php:26
+msgid "July 5, 2011"
+msgstr ""
+
+#: .tabs/about.php:26
+msgid "Improvements: filtering My Maps by title."
+msgstr ""
+
+#: .tabs/about.php:27
+msgid "July 4, 2011"
+msgstr ""
+
+#: .tabs/about.php:27
+msgid "Improvements: fill bucket produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map; repeat actions adds another layer to the Regions tab; clear buttons added to each layer in the Point Data and Regions tabs (requested by Chris Borkent)."
+msgstr ""
+
+#: .tabs/about.php:28
+msgid "July 3, 2011"
+msgstr ""
+
+#: .tabs/about.php:28
+msgid "Bug fixes: removed State/Province line artifacts when map is reprojected (reported by Chris Borkent)."
+msgstr ""
+
+#: .tabs/about.php:29
+msgid "June 28, 2011"
+msgstr ""
+
+#: .tabs/about.php:29
+msgid "Improvements: layers on the Point Data or Regions tabs may be removed (requested by Chris Borkent)."
+msgstr ""
+
+#: .tabs/about.php:30
+msgid "June 27, 2011"
+msgstr ""
+
+#: .tabs/about.php:30
+msgid "Improvements: ISO Country codes and regions code table added to the Help tab (requested by API users)."
+msgstr ""
+
+#: .tabs/about.php:31
+msgid "June 26, 2011"
+msgstr ""
+
+#: .tabs/about.php:31
+msgid "Improvements: file names may be specified when downloading."
+msgstr ""
+
+#: .tabs/about.php:33
+msgid "In the Wild"
+msgstr ""
+
+#: .tabs/about.php:38
+#: .tabs/help.php:170
+msgid "Code"
+msgstr ""
+
+#: .tabs/about.php:40
+msgid "History"
+msgstr ""
+
+#: .tabs/about.php:41
+msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
+msgstr ""
+
+#: .tabs/about.php:42
+msgid "Acknowledgments"
+msgstr ""
+
+#: .tabs/api.php:7
+msgid "A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."
+msgstr ""
+
+#: .tabs/feedback.php:5
+msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."
+msgstr ""
+
+#: .tabs/help.php:39
+msgid "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."
+msgstr ""
+
+#: .tabs/help.php:46
+msgid "Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"
+msgstr ""
+
+#: .tabs/help.php:48
+msgid "Toolbar buttons"
+msgstr ""
+
+#: .tabs/help.php:50
+msgid "Zoom in"
+msgstr ""
+
+#: .tabs/help.php:51
+msgid "draw a zoom region on the preview"
+msgstr ""
+
+#: .tabs/help.php:53
+msgid "Zoom out"
+msgstr ""
+
+#: .tabs/help.php:54
+msgid "zoom out one step"
+msgstr ""
+
+#: .tabs/help.php:56
+msgid "Crop"
+msgstr ""
+
+#: .tabs/help.php:57
+msgid "draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."
+msgstr ""
+
+#: .tabs/help.php:59
+msgid "Fill regions"
+msgstr ""
+
+#: .tabs/help.php:60
+msgid "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."
+msgstr ""
+
+#: .tabs/help.php:62
+msgid "Refresh"
+msgstr ""
+
+#: .tabs/help.php:63
+msgid "refresh the map image"
+msgstr ""
+
+#: .tabs/help.php:65
+msgid "Rebuild"
+msgstr ""
+
+#: .tabs/help.php:66
+msgid "re-render the default presentation at lowest zoom and geographic projection"
+msgstr ""
+
+#: .tabs/help.php:72
+msgid "select this checkbox to draw all State and Province borders for all countries"
+msgstr ""
+
+#: .tabs/help.php:75
+msgid "select this checkbox to overlay lakes as black outlines"
+msgstr ""
+
+#: .tabs/help.php:78
+msgid "select this checkbox to overlay lakes as greyscale polygons"
+msgstr ""
+
+#: .tabs/help.php:81
+msgid "select this checkbox to overlay rivers as black outlines"
+msgstr ""
+
+#: .tabs/help.php:84
+msgid "select this checkbox to render a color, shaded relief layer"
+msgstr ""
+
+#: .tabs/help.php:87
+msgid "select this checkbox to render a greyscale, shaded relief layer"
+msgstr ""
+
+#: .tabs/help.php:93
+msgid "label countries"
+msgstr ""
+
+#: .tabs/help.php:96
+msgid "label States and Provinces"
+msgstr ""
+
+#: .tabs/help.php:99
+msgid "label lakes"
+msgstr ""
+
+#: .tabs/help.php:102
+msgid "label rivers"
+msgstr ""
+
+#: .tabs/help.php:105
+msgid "label city, town names"
+msgstr ""
+
+#: .tabs/help.php:108
+msgid "label physical features"
+msgstr ""
+
+#: .tabs/help.php:111
+msgid "label marine features"
+msgstr ""
+
+#: .tabs/help.php:116
+msgid "graticules"
+msgstr ""
+
+#: .tabs/help.php:117
+msgid "draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"
+msgstr ""
+
+#: .tabs/help.php:122
+msgid "projection"
+msgstr ""
+
+#: .tabs/help.php:123
+msgid "Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
+msgstr ""
+
+#: .tabs/help.php:128
+msgid "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."
+msgstr ""
+
+#: .tabs/help.php:131
+msgid "once a map is saved, click this icon to obtain a URL for embedding on other websites."
+msgstr ""
+
+#: .tabs/help.php:134
+msgid "choose from a web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
+msgstr ""
+
+#: .tabs/help.php:140
+msgid "Use the Point Data tab to paste coordinates as latitude, longitude on separate lines and select the marker shape, size, and color."
+msgstr ""
+
+#: .tabs/help.php:143
+msgid "Coordinate format"
+msgstr ""
+
+#: .tabs/help.php:144
+msgid "in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
+msgstr ""
+
+#: .tabs/help.php:147
+msgid "Example Data Entry"
+msgstr ""
+
+#: .tabs/help.php:148
+msgid "38,-100 (North America)"
+msgstr ""
+
+#: .tabs/help.php:149
+msgid "-25,140 (Australia)"
+msgstr ""
+
+#: .tabs/help.php:152
+msgid "Pushpin color"
+msgstr ""
+
+#: .tabs/help.php:153
+msgid "configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray."
+msgstr ""
+
+#: .tabs/help.php:160
+msgid "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
+msgstr ""
+
+#: .tabs/help.php:165
+msgid "Country"
+msgstr ""
+
+#: .tabs/help.php:169
+msgid "State/Province"
+msgstr ""
+
+#: .tabs/help.php:171
+msgid "Example"
+msgstr ""
+
