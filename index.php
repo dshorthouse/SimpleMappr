@@ -20,7 +20,11 @@ $header = set_up();
 <div id="header" class="clearfix">
 <h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="180" height="30" /><span>SimpleMappr</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
-<div id="site-languages"><ul><?php foreach($header[1] as $key => $langs): ?><li><?php if($key == 'en'): ?><?php echo '<a href="/" onclick="javascript: Mappr.clearLanguage();">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul></div>
+<div id="site-languages">
+<!--
+<ul><?php foreach($header[1] as $key => $langs): ?><li><?php if($key == 'en'): ?><?php echo '<a href="/" onclick="javascript: Mappr.clearLanguage();">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul>
+-->
+</div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _("Sign Out"); ?></a></span></div>
 <?php else: ?>

@@ -10,27 +10,27 @@ require_once('../config/conf.php');
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
-<dt class="update">October 24, 2011</dt><dd>Bug fixes: corrected mechanism to draw map borders to accommodate rotation.</dd>
-<dt class="update">October 23, 2011</dt><dd>Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle.</dd>
-<dt class="update">October 20, 2011</dt><dd>Improvements: added a Country label option; scale bar is now always present in preview but optional for download.</dd>
-<dt class="update">October 19, 2011</dt><dd>Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded.</dd>
-<dt class="update">October 18, 2011</dt><dd>Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels.</dd>
-<dt class="update">October 6, 2011</dt><dd>Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster.</dd>
-<dt class="update">October 2, 2011</dt><dd>Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent).</dd>
-<dt class="update">October 1, 2011</dt><dd>Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map).</dd>
-<dt class="update">September 29, 2011</dt><dd>Improvements: crop selection restored after refreshing, zooming, panning, or selecting different layers or options.</dd>
-<dt class="update">September 28, 2011</dt><dd>Improvements: editable corner coordinates for crop and improved accuracy.</dd>
-<dt class="update">September 26, 2011</dt><dd>Improvements: responsiveness of application improved by accommodating browser caching.</dd>
-<dt class="update">September 21, 2011</dt><dd>Improvements: added graticule options (requested by Jeff Skevington); cleaned presentation of download options. Bug fixes: production of KML files.</dd>
-<dt class="update">August 2, 2011</dt><dd>Improvements: refined error-handling in coordinate recognition.</dd>
-<dt class="update">July 5, 2011</dt><dd>Improvements: filtering My Maps by title.</dd>
-<dt class="update">July 4, 2011</dt><dd>Improvements: fill bucket produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map; repeat actions adds another layer to the Regions tab; clear buttons added to each layer in the Point Data and Regions tabs (requested by Chris Borkent).</dd>
-<dt class="update">July 3, 2011</dt><dd>Bug fixes: removed State/Province line artifacts when map is reprojected (reported by Chris Borkent).</dd>
-<dt class="update">June 28, 2011</dt><dd>Improvements: layers on the Point Data or Regions tabs may be removed (requested by Chris Borkent).</dd>
-<dt class="update">June 27, 2011</dt><dd>Improvements: ISO Country codes and regions code table added to the Help tab (requested by API users).</dd>
-<dt class="update">June 26, 2011</dt><dd>Improvements: file names may be specified when downloading.</dd>
+<dt class="update"><?php echo _("October 24, 2011"); ?></dt><dd><?php echo _("Bug fixes: corrected mechanism to draw map borders to accommodate rotation."); ?></dd>
+<dt class="update"><?php echo _("October 23, 2011"); ?></dt><dd><?php echo _("Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."); ?></dd>
+<dt class="update"><?php echo _("October 20, 2011"); ?></dt><dd><?php echo _("Improvements: added a Country label option; scale bar is now always present in preview but optional for download."); ?></dd>
+<dt class="update"><?php echo _("October 19, 2011"); ?></dt><dd><?php echo _("Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."); ?></dd>
+<dt class="update"><?php echo _("October 18, 2011"); ?></dt><dd><?php echo _("Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."); ?></dd>
+<dt class="update"><?php echo _("October 6, 2011"); ?></dt><dd><?php echo _("Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."); ?></dd>
+<dt class="update"><?php echo _("October 2, 2011"); ?></dt><dd><?php echo _("Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."); ?></dd>
+<dt class="update"><?php echo _("October 1, 2011"); ?></dt><dd><?php echo _("Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."); ?></dd>
+<dt class="update"><?php echo _("September 29, 2011"); ?></dt><dd><?php echo _("Improvements: crop selection restored after refreshing, zooming, panning, or selecting different layers or options."); ?></dd>
+<dt class="update"><?php echo _("September 28, 2011"); ?></dt><dd><?php echo _("Improvements: editable corner coordinates for crop and improved accuracy."); ?></dd>
+<dt class="update"><?php echo _("September 26, 2011"); ?></dt><dd><?php echo _("Improvements: responsiveness of application improved by accommodating browser caching."); ?></dd>
+<dt class="update"><?php echo _("September 21, 2011"); ?></dt><dd><?php echo _("Improvements: added graticule options (requested by Jeff Skevington); cleaned presentation of download options. Bug fixes: production of KML files."); ?></dd>
+<dt class="update"><?php echo _("August 2, 2011"); ?></dt><dd><?php echo _("Improvements: refined error-handling in coordinate recognition."); ?></dd>
+<dt class="update"><?php echo _("July 5, 2011"); ?></dt><dd><?php echo _("Improvements: filtering My Maps by title."); ?></dd>
+<dt class="update"><?php echo _("July 4, 2011"); ?></dt><dd><?php echo _("Improvements: fill bucket produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map; repeat actions adds another layer to the Regions tab; clear buttons added to each layer in the Point Data and Regions tabs (requested by Chris Borkent)."); ?></dd>
+<dt class="update"><?php echo _("July 3, 2011"); ?></dt><dd><?php echo _("Bug fixes: removed State/Province line artifacts when map is reprojected (reported by Chris Borkent)."); ?></dd>
+<dt class="update"><?php echo _("June 28, 2011"); ?></dt><dd><?php echo _("Improvements: layers on the Point Data or Regions tabs may be removed (requested by Chris Borkent)."); ?></dd>
+<dt class="update"><?php echo _("June 27, 2011"); ?></dt><dd><?php echo _("Improvements: ISO Country codes and regions code table added to the Help tab (requested by API users)."); ?></dd>
+<dt class="update"><?php echo _("June 26, 2011"); ?></dt><dd><?php echo _("Improvements: file names may be specified when downloading."); ?></dd>
 </dl>
-<div class="header"><h2>In the Wild</h2></div>
+<div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
 <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
 <p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
 <p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a></p>
