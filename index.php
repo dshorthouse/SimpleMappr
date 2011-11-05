@@ -58,8 +58,8 @@ $header = set_up();
 <div id="fieldSetsPoints" class="fieldSets">
 <?php echo partial_layers(); ?>
 </div>
-<div class="addFieldset"><button class="sprites addmore positive" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
-<div class="submit"><button class="sprites submitForm positive"><?php echo _("Preview"); ?></button><button class="sprites clear clearLayers negative"><?php echo _("Clear all"); ?></button></div>
+<div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
+<div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 <!-- close multipoints tab -->
 </div>
 <!-- shaded regions tab -->
@@ -71,8 +71,8 @@ $header = set_up();
 <div id="fieldSetsRegions" class="fieldSets">
 <?php echo partial_regions(); ?>
 </div>
-<div class="addFieldset"><button class="sprites addmore positive" data-type="regions"><?php echo _("Add a region"); ?></button></div>
-<div class="submit"><button class="sprites submitForm positive"><?php echo _("Preview"); ?></button><button class="sprites clear clearRegions negative"><?php echo _("Clear all"); ?></button></div>
+<div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="regions"><?php echo _("Add a region"); ?></button></div>
+<div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 <!-- close shaded regions tab --> 
 <!-- map preview tab -->
@@ -346,7 +346,7 @@ function partial_layers() {
     
     $output .= "<div class=\"form-item fieldset-points\">";
 
-    $output .= "<button class=\"sprites removemore negative\" data-type=\"coords\">"._("Remove")."</button>";
+    $output .= "<button class=\"sprites removemore negative ui-corner-all\" data-type=\"coords\">"._("Remove")."</button>";
   
     $output .= "<h3><a href=\"#\">".sprintf(_("Layer %d"),$i+1)."</a></h3>" . "\n";
     $output .= "<div>" . "\n";
@@ -361,7 +361,7 @@ function partial_layers() {
     $output .= "<span class=\"fieldset-title\">"._("Shape").":</span> <select class=\"m-mapShape\" name=\"coords[$i][shape]\">$marker_shape</select> <span class=\"fieldset-title\">"._("Size").":</span> <select class=\"m-mapSize\" name=\"coords[$i][size]\">$marker_size</select>" . "\n";
     $output .= "<span class=\"fieldset-title\">"._("Color").":</span> <input class=\"colorPicker\" type=\"text\" size=\"12\" maxlength=\"11\" name=\"coords[$i][color]\" value=\"0 0 0\" />" . "\n";
     $output .= "</div>" . "\n";
-    $output .= "<button class=\"sprites clear clearself negative\">"._("Clear")."</button>" . "\n";
+    $output .= "<button class=\"sprites clear clearself negative ui-corner-all\">"._("Clear")."</button>" . "\n";
     $output .= "</div>" . "\n";
   
     $output .= "</div>" . "\n";
@@ -376,7 +376,7 @@ function partial_regions() {
   for($i=0;$i<=NUMTEXTAREA-1;$i++) {
     $output .= "<div class=\"form-item fieldset-regions\">";
 
-    $output .= "<button class=\"sprites removemore negative\" data-type=\"regions\">"._("Remove")."</button>";
+    $output .= "<button class=\"sprites removemore negative ui-corner-all\" data-type=\"regions\">"._("Remove")."</button>";
 
     $output .= "<h3><a href=\"#\">".sprintf(_("Region %d"), $i+1)."</a></h3>" . "\n";
     $output .= "<div>" . "\n";
@@ -390,7 +390,7 @@ function partial_regions() {
     $output .= "<div class=\"fieldset-extras\">" . "\n";
     $output .= "<span class=\"fieldset-title\">"._("Color").":</span> <input type=\"text\" class=\"colorPicker\" size=\"12\" maxlength=\"11\" name=\"regions[$i][color]\" value=\"150 150 150\" />" . "\n";
     $output .= "</div>" . "\n";
-    $output .= "<button class=\"sprites clear clearself negative\">"._("Clear")."</button>" . "\n";
+    $output .= "<button class=\"sprites clear clearself negative ui-corner-all\">"._("Clear")."</button>" . "\n";
     $output .= "</div>" . "\n";
   
     $output .= "</div>" . "\n";
@@ -420,7 +420,7 @@ function partial_filetypes() {
     $checked = ($type == "svg") ? " checked=\"checked\"": "";
     $asterisk = ($type == "svg") ? "*" : "";
     $output .= "<input type=\"radio\" id=\"download-$type\" class=\"download-filetype\" name=\"download-filetype\" value=\"$type\"$checked />";
-    $output .= "<label for=\"download-$type\">$type.$asterisk</label>";
+    $output .= "<label for=\"download-$type\">".$type.$asterisk."</label>";
   }
 
   return $output;
