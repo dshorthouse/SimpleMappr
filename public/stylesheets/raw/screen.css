@@ -317,6 +317,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-selectable-helper{position:absolute;z-index:100;border:1px dotted black;}
 .ui-accordion{width:100%;}
 .ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;zoom:1;border:1px solid #cccccc;background-color:#e9e9e9;}
+.ui-accordion .ui-accordion-header.ui-state-hover{background-color:#dadada;}
 .ui-accordion .ui-accordion-li-fix{display:inline;}
 .ui-accordion .ui-accordion-header-active{border-bottom:0 !important;}
 .ui-accordion .ui-accordion-header a{display:block;font-size:1em;padding:.5em .5em .5em .7em;}
