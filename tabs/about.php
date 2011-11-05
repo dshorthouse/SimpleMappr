@@ -10,6 +10,7 @@ require_once('../config/conf.php');
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("November 4, 2011"); ?></dt><dd><?php echo _("Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."); ?></dd>
 <dt class="update"><?php echo _("October 24, 2011"); ?></dt><dd><?php echo _("Bug fixes: corrected mechanism to draw map borders to accommodate rotation."); ?></dd>
 <dt class="update"><?php echo _("October 23, 2011"); ?></dt><dd><?php echo _("Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."); ?></dd>
 <dt class="update"><?php echo _("October 20, 2011"); ?></dt><dd><?php echo _("Improvements: added a Country label option; scale bar is now always present in preview but optional for download."); ?></dd>
