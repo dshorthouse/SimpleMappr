@@ -65,6 +65,7 @@ class MAPPR {
       OUTPUTFORMAT
         NAME png
         DRIVER AGG/PNG
+        MIMETYPE 'image/png'
         IMAGEMODE RGB
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'QUANTIZE_FORCE=ON'
@@ -75,12 +76,14 @@ class MAPPR {
       OUTPUTFORMAT
         NAME png_download
         DRIVER AGG/PNG
+        MIMETYPE 'image/png'
         IMAGEMODE RGB
       END
 
       OUTPUTFORMAT
         NAME jpg
         DRIVER AGG/JPEG
+        MIMETYPE 'image/jpeg'
         IMAGEMODE RGB
       END
 
@@ -104,6 +107,7 @@ class MAPPR {
       OUTPUTFORMAT
         NAME pnga
         DRIVER AGG/PNG
+        MIMETYPE 'image/png'
         IMAGEMODE RGB
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'QUANTIZE_FORCE=ON'
@@ -114,12 +118,14 @@ class MAPPR {
       OUTPUTFORMAT
         NAME pnga_download
         DRIVER AGG/PNG
+        MIMETYPE 'image/png'
         IMAGEMODE RGB
       END
 
       OUTPUTFORMAT
         NAME jpga
         DRIVER AGG/JPEG
+        MIMETYPE 'image/jpeg'
         IMAGEMODE RGB
       END
 
