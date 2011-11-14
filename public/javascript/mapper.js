@@ -1246,8 +1246,8 @@ $(function () {
           "click" : function () {
             if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
             if(missingTitle) {
-              $('.m-mapSaveTitle').css({'background-color':'#FFB6C1'}).keyup(function () {
-                $(this).css({'background-color':'transparent'});
+              $('.m-mapSaveTitle').addClass('ui-state-error').keyup(function () {
+                $(this).removeClass('ui-state-error');
               });
             } else {
               $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
@@ -1327,20 +1327,22 @@ $(function () {
   };
 
   Mappr.bindSubmit = function () {
-    var self = this, missingTitle = false;
+    var self = this, title = "", missingTitle = false;
 
     $(".submitForm").click(function () {
-
       $('.m-mapCoord').each(function () {
-        if($(this).val() && $(this).parents().find('.m-mapTitle').val() === '') {
+        title = $(this).parents('.ui-accordion-content').find('.m-mapTitle').keyup(function () {
+          missingTitle = false;
+          $(this).removeClass('ui-state-error');
+        });
+        if($(this).val() && $(title).val() === '') {
           missingTitle = true;
+          $(title).addClass('ui-state-error');
         }
       });
-
       if(missingTitle) {
         self.showMessage($('#mapper-missing-legend').text());
-      }
-      else {
+      } else {
         self.showMap();
         $("#tabs").tabs('select',0);
       }
