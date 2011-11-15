@@ -37,6 +37,9 @@ class Kml {
       'http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png',
       'http://maps.google.com/mapfiles/kml/paddle/red-stars.png',
       'http://maps.google.com/mapfiles/kml/paddle/wht-blank.png',
+      'http://maps.google.com/mapfiles/ms/micons/pink-pushpin.png',
+      'http://maps.google.com/mapfiles/ms/micons/purple-pushpin.png',
+      'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
   );
 
   private $_kml = '';
