@@ -1,6 +1,7 @@
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
 a{color:#555555;}
+textarea{resize:none;padding:0;}
 #error-message{font-weight:normal;margin:0px;padding:15px;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
 .hidden-message{display:none;}
@@ -71,7 +72,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .fieldset-taxon{margin-bottom:10px;}
 .fieldset-extras{margin:10px 0px;}
 .fieldset-title{font-size:0.85em;}
-div.grippie{-moz-background-clip:border;-moz-background-inline-policy:continuous;-moz-background-origin:padding;background-position:50% -510px;background-color:#EEEEEE;border-color:#DDDDDD;border-style:solid;border-width:0pt 1px 1px;cursor:s-resize;height:9px;overflow:hidden;}
+div.grippie{-moz-background-clip:border;-moz-background-inline-policy:continuous;-moz-background-origin:padding;background-position:50% -510px;background-color:#EEEEEE;border-color:#DDDDDD;border-style:solid;border-width:0pt 1px 1px;cursor:s-resize;height:9px;width:100%;overflow:hidden;}
 .resizable-textarea{width:99%;}
 .resizable-textarea textarea{display:block;margin-bottom:0;width:100%;}
 .form-item .description{font-size:0.75em;}
@@ -368,7 +369,13 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a{cursor:pointer;}
 .ui-tabs .ui-tabs-panel{display:block;border-width:0;padding:1em 1.4em;background:none;}
 .ui-tabs .ui-tabs-hide{display:none !important;}
-
+.ui-autocomplete{position: absolute; cursor: default;}
+* html .ui-autocomplete{width:1px;}
+.ui-menu{list-style:none;padding:2px;margin:0;display:block;float:left;}
+.ui-menu .ui-menu{margin-top: -3px;}
+.ui-menu .ui-menu-item{margin:0;padding:0;zoom:1;float:left;clear:left;width:100%;font-size:0.7em;}
+.ui-menu .ui-menu-item a{text-decoration:none;display:block;padding:.2em .4em;line-height:1.5;zoom:1;}
+.ui-menu .ui-menu-item a.ui-state-hover,.ui-menu .ui-menu-item a.ui-state-active{font-weight:normal;margin:-1px;}
 .tipsy{padding:5px;font-size:10px;opacity:0.8;filter:alpha(opacity=80);background-repeat:no-repeat;background-image:url("../../images/tipsy.png");}
 .tipsy-inner{border-top:1px solid #F6F6F6;border-left:1px solid #F6F6F6;border-right:1px solid #F6F6F6;padding:5px 8px 4px 8px;background-color:black;color:white;max-width:200px;text-align:center;}
 .tipsy-inner{-moz-border-radius:3px;-webkit-border-radius:3px;}

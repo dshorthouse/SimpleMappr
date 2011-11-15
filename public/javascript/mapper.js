@@ -537,7 +537,46 @@ $(function () {
 
   }; /** end Mappr.bindClearButtons **/
 
-  Mappr.clearSelf = function(el) {
+  Mappr.bindAutocomplete = function () {
+    var self = this, term = "", terms = [];
+    
+    $('textarea', '.fieldset-regions').bind("keydown", function(event) {
+      if (event.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { event.preventDefault(); }
+    }).autocomplete({
+      source: function(request, response) {
+        $.getJSON( "/places/" + self.extractLast(request.term), {}, response);
+      },
+      search: function() {
+        term = self.extractLast(this.value);
+        if (term.length < 2) { return false; }
+      },
+      focus: function() { return false; },
+      select: function(event, ui) {
+        terms = self.split(this.value);
+        terms.pop();
+        terms.push(ui.item.value);
+        terms.push("");
+        this.value = terms.join(", ");
+        return false;
+      }
+    });
+  };
+
+  Mappr.split = function ( val, delimiter ) {
+    switch(delimiter) {
+      case '[':
+       return val.split( /]/ );
+
+      default:
+        return val.split( /,\s*/ );
+    }
+  };
+
+  Mappr.extractLast = function ( term ) {
+    return this.split(term).pop();
+  };
+
+  Mappr.clearSelf = function (el) {
     var box = $(el).parent();
 
     $(box).find('.m-mapTitle').val('');
@@ -1703,6 +1742,7 @@ $(function () {
     this.bindColorPickers();
     this.bindAddButtons();
     this.bindClearButtons();
+    this.bindAutocomplete();
     this.bindSave();
     this.bindDownload();
     this.bindSubmit();

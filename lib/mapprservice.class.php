@@ -963,21 +963,23 @@ class MAPPR {
           foreach($rows as $row) {
             $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
             foreach($regions as $region) {
-              $pos = strpos($region, '[');
-              if($pos !== false) {
-                $baselayer = false;
-                $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
-                $states = preg_split("/[\s|]+/", $split[1]);
-                $statekey = array();
-                foreach($states as $state) {
+              if($region) {
+                $pos = strpos($region, '[');
+                if($pos !== false) {
+                  $baselayer = false;
+                  $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
+                  $states = preg_split("/[\s|]+/", $split[1]);
+                  $statekey = array();
+                  foreach($states as $state) {
                     $statekey[] = "'[HASC_1]' =~ /".$state."$/";
+                  }
+                  $qry['stateprovince'][] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+                  $qry['country'][] = "'[ISO_A3]' = '".trim($split[0])."'";
+                } else {
+                  $region = addslashes(trim($region));
+                  $qry['stateprovince'][] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
+                  $qry['country'][] = "'[NAME]' =~ /".$region."$/ OR '[NAME_FORMA]' =~ /".$region."$/";
                 }
-                $qry['stateprovince'][] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
-                $qry['country'][] = "'[ISO_A3]' = '".trim($split[0])."'";
-              } else {
-                $region = addslashes(trim($region));
-                $qry['stateprovince'][] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
-                $qry['country'][] = "'[NAME]' =~ /".$region."$/ OR '[NAME_FORMA]' =~ /".$region."$/";
               }
             }
           }
