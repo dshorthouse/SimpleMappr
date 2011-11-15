@@ -40,7 +40,7 @@ class HEADER {
   */
   public static $local_js_files = array(
     'public/javascript/jquery-1.6.4.min.js',
-    'public/javascript/jquery-ui-1.8.16.min2.js',
+    'public/javascript/jquery-ui-1.8.16.min.js',
     'public/javascript/jquery.colorpicker.min.js',
     'public/javascript/jquery.scrollTo.min.js',
     'public/javascript/jquery.Jcrop.min.js',
