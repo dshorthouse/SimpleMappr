@@ -652,9 +652,6 @@ class MAPPR {
     //add the coordinates
     $this->add_coordinates();
 
-    // Add border if requested
-    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) { $this->add_border(); }
-
     // Prepare the output
     $this->prepare_output();
 
@@ -1306,32 +1303,34 @@ class MAPPR {
   * Add a border to a downloaded map image
   */
   private function add_border() {
-    $outline_layer = ms_newLayerObj($this->map_obj);
-    $outline_layer->set("name","outline");
-    $outline_layer->set("type",MS_LAYER_POLYGON);
-    $outline_layer->set("status",MS_ON);
-    $outline_layer->set("transform", MS_FALSE);
-    $outline_layer->set("sizeunits", MS_PIXELS);
+    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
+      $outline_layer = ms_newLayerObj($this->map_obj);
+      $outline_layer->set("name","outline");
+      $outline_layer->set("type",MS_LAYER_POLYGON);
+      $outline_layer->set("status",MS_ON);
+      $outline_layer->set("transform", MS_FALSE);
+      $outline_layer->set("sizeunits", MS_PIXELS);
 
-    // Add new class to new layer
-    $outline_class = ms_newClassObj($outline_layer);
+      // Add new class to new layer
+      $outline_class = ms_newClassObj($outline_layer);
 
-    // Add new style to new class
-    $outline_style = ms_newStyleObj($outline_class);
-    $outline_style->outlinecolor->setRGB(0,0,0);
-    $outline_style->set("width",3);
+      // Add new style to new class
+      $outline_style = ms_newStyleObj($outline_class);
+      $outline_style->outlinecolor->setRGB(0,0,0);
+      $outline_style->set("width",3);
 
-    $polygon = ms_newShapeObj(MS_SHAPE_POLYGON);
+      $polygon = ms_newShapeObj(MS_SHAPE_POLYGON);
 
-    $polyLine = ms_newLineObj();
-    $polyLine->addXY(0, 0);
-    $polyLine->addXY($this->_download_factor*$this->image_size[0],0);
-    $polyLine->addXY($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
-    $polyLine->addXY(0, $this->_download_factor*$this->image_size[1]);
-    $polyLine->addXY(0, 0);
+      $polyLine = ms_newLineObj();
+      $polyLine->addXY(0, 0);
+      $polyLine->addXY($this->_download_factor*$this->image_size[0],0);
+      $polyLine->addXY($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
+      $polyLine->addXY(0, $this->_download_factor*$this->image_size[1]);
+      $polyLine->addXY(0, 0);
 
-    $polygon->add($polyLine);
-    $outline_layer->addFeature($polygon);
+      $polygon->add($polyLine);
+      $outline_layer->addFeature($polygon);
+    }
   }
 
   /**
@@ -1341,23 +1340,13 @@ class MAPPR {
     if(isset($this->projection)) {
       if($this->projection != $this->default_projection) {
         $this->reproject_map($this->default_projection, $this->projection);
-        //swap the order of legend and scalebar addition depending on if download or not
-        if($this->download) {
-          $this->add_legend_scalebar();
-          $this->image = $this->map_obj->drawQuery();
-        } else {
-          $this->image = $this->map_obj->drawQuery();
-          $this->add_legend_scalebar();
-        }
+        $this->add_legend_scalebar();
+        $this->add_border();
+        $this->image = $this->map_obj->drawQuery();
       } else {
-        //swap the order of legend and scalebar addition depending on if download or not
-        if($this->download) {
-          $this->add_legend_scalebar();
-          $this->image = $this->map_obj->draw();
-        } else {
-          $this->image = $this->map_obj->draw();
-          $this->add_legend_scalebar();
-        }
+        $this->add_legend_scalebar();
+        $this->add_border();
+        $this->image = $this->map_obj->draw();
       }
     }
   }

@@ -29,12 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Kml {
 
-  private $_kml = '';
-  private $_metadata = array();
-  private $_placemark = array();
-
-  public function __construct() {
-    $this->pushpins = array(
+  public static $pushpins = array(
       'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
       'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png',
       'http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png',
@@ -42,7 +37,14 @@ class Kml {
       'http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png',
       'http://maps.google.com/mapfiles/kml/paddle/red-stars.png',
       'http://maps.google.com/mapfiles/kml/paddle/wht-blank.png',
-    );
+  );
+
+  private $_kml = '';
+  private $_metadata = array();
+  private $_placemark = array();
+
+  public function __construct() {
+    session_start();
   }
 
   /**
@@ -83,7 +85,7 @@ class Kml {
       $this->_kml->startElement('IconStyle');
       $this->_kml->writeAttribute('id', 'simplemapprstyle'.$i);
       $this->_kml->startElement('Icon');
-      $this->_kml->writeElement('href', $this->pushpins[$i]);
+      $this->_kml->writeElement('href', self::$pushpins[$i]);
       $this->_kml->writeElement('scale', '1.0');
       $this->_kml->endElement(); //end Icon
       $this->_kml->endElement(); //end IconStyle
