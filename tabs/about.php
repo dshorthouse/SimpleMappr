@@ -10,6 +10,7 @@ require_once('../config/conf.php');
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("November 16, 2011"); ?></dt><dd><?php echo _("Bug fixes: Correct units selected when projection changed to improve scalebar render (reported by GIS Unit Kew)."); ?></dd>
 <dt class="update"><?php echo _("November 15, 2011"); ?></dt><dd><?php echo _("Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."); ?></dd>
 <dt class="update"><?php echo _("November 4, 2011"); ?></dt><dd><?php echo _("Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."); ?></dd>
 <dt class="update"><?php echo _("October 24, 2011"); ?></dt><dd><?php echo _("Bug fixes: corrected mechanism to draw map borders to accommodate rotation."); ?></dd>
