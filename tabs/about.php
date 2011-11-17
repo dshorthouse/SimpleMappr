@@ -22,19 +22,6 @@ require_once('../config/conf.php');
 <dt class="update"><?php echo _("October 6, 2011"); ?></dt><dd><?php echo _("Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."); ?></dd>
 <dt class="update"><?php echo _("October 2, 2011"); ?></dt><dd><?php echo _("Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."); ?></dd>
 <dt class="update"><?php echo _("October 1, 2011"); ?></dt><dd><?php echo _("Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."); ?></dd>
-<!--
-<dt class="update"><?php echo _("September 29, 2011"); ?></dt><dd><?php echo _("Improvements: crop selection restored after refreshing, zooming, panning, or selecting different layers or options."); ?></dd>
-<dt class="update"><?php echo _("September 28, 2011"); ?></dt><dd><?php echo _("Improvements: editable corner coordinates for crop and improved accuracy."); ?></dd>
-<dt class="update"><?php echo _("September 26, 2011"); ?></dt><dd><?php echo _("Improvements: responsiveness of application improved by accommodating browser caching."); ?></dd>
-<dt class="update"><?php echo _("September 21, 2011"); ?></dt><dd><?php echo _("Improvements: added graticule options (requested by Jeff Skevington); cleaned presentation of download options. Bug fixes: production of KML files."); ?></dd>
-<dt class="update"><?php echo _("August 2, 2011"); ?></dt><dd><?php echo _("Improvements: refined error-handling in coordinate recognition."); ?></dd>
-<dt class="update"><?php echo _("July 5, 2011"); ?></dt><dd><?php echo _("Improvements: filtering My Maps by title."); ?></dd>
-<dt class="update"><?php echo _("July 4, 2011"); ?></dt><dd><?php echo _("Improvements: fill bucket produces a colour selector and regions may be immediately filled by either clicking or click-dragging on the map; repeat actions adds another layer to the Regions tab; clear buttons added to each layer in the Point Data and Regions tabs (requested by Chris Borkent)."); ?></dd>
-<dt class="update"><?php echo _("July 3, 2011"); ?></dt><dd><?php echo _("Bug fixes: removed State/Province line artifacts when map is reprojected (reported by Chris Borkent)."); ?></dd>
-<dt class="update"><?php echo _("June 28, 2011"); ?></dt><dd><?php echo _("Improvements: layers on the Point Data or Regions tabs may be removed (requested by Chris Borkent)."); ?></dd>
-<dt class="update"><?php echo _("June 27, 2011"); ?></dt><dd><?php echo _("Improvements: ISO Country codes and regions code table added to the Help tab (requested by API users)."); ?></dd>
-<dt class="update"><?php echo _("June 26, 2011"); ?></dt><dd><?php echo _("Improvements: file names may be specified when downloading."); ?></dd>
--->
 </dl>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
 <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
