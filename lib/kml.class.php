@@ -51,12 +51,23 @@ class Kml {
   }
 
   /**
+  * Get the request parameter coords
+  * @param $file_name string
+  * @param $coords array
+  */
+  public function get_request($file_name = '', $coords = array()) {
+    $this->coords         = ($coords) ? $coords : $this->load_param('coords', array());
+    $this->file_name      = ($file_name) ? $file_name : $this->load_param('file_name', time());
+    $this->download_token = $this->load_param('download_token', md5(time()));
+    setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
+    return $this;
+  }
+
+  /**
   *  Generate the kml file
-  * @param string $url
   * @return xml
   */
-  public function generate_kml($url = '') {
-    $this->get_request();
+  public function generate_kml() {
 
     $this->set_metadata("name", "SimpleMappr: " . $this->get_filename());
 
@@ -159,16 +170,6 @@ class Kml {
   */
   private function get_all_placemarks() {
     return $this->_placemark;
-  }
-
-  /**
-  * Helper function to get the request parameter coords
-  */
-  private function get_request() {
-    $this->coords         = $this->load_param('coords', array());
-    $this->file_name      = $this->load_param('file_name', time());
-    $this->download_token = $this->load_param('download_token', md5(time()));
-    setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
   }
 
   /**

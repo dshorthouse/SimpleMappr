@@ -33,6 +33,8 @@ require_once ('mapprservice.class.php');
 
 class MAPPREMBED extends MAPPR {
 
+  private $_embed_output;
+
   /**
    * Override the method in the MAPPR class
    */
@@ -58,7 +60,7 @@ class MAPPREMBED extends MAPPR {
     $this->width            = $this->load_param('width', 800);
     $this->height           = $this->load_param('height', 400);
     $this->image_size       = array($this->width, $this->height);
-    $this->output           = 'pnga';
+    $this->output           = $this->load_param('format','pnga');
 
     return $this;
   }
@@ -70,6 +72,13 @@ class MAPPREMBED extends MAPPR {
     imagepng($im);
     imagedestroy($im);
     exit();
+  }
+
+  public function execute() {
+    if($this->output == 'pnga') {
+      parent::execute();
+    }
+    return $this;
   }
 
   /**
@@ -135,13 +144,64 @@ class MAPPREMBED extends MAPPR {
     }
   }
 
+  private function get_coordinates() {
+    $output = array();
+    for($j=0; $j<=count($this->coords)-1; $j++) {
+      $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : '';
+
+      if(trim($this->coords[$j]['data'])) {
+        $whole = trim($this->coords[$j]['data']);
+        $row = explode("\n",$this->remove_empty_lines($whole));
+
+        $point_key = 0;
+        foreach ($row as $loc) {
+          $coord_array = preg_split("/[\s,;]+/",$loc);
+          $coord = new stdClass();
+          $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
+          $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
+          if($this->check_coord($coord) && $title != "") {
+            $output[] = array(
+              'type' => 'Feature',
+              'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),
+              'properties' => array('title' => $title)
+            );
+          }
+        }
+      }
+    }
+    return $output;
+  }
+
   public function get_output() {
     header("Pragma: public");
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
-    header("Content-Type: image/png");
-    $this->image->saveImage("");
+
+    switch($this->output) {
+      case 'pnga':
+        header("Content-Type: image/png");
+        $this->image->saveImage("");
+      break;
+
+      case 'json':
+        header("Content-Type: application/json");
+        $output = new stdClass;
+        $output->type = 'FeatureCollection';
+        $output->features = $this->get_coordinates();
+        $output->crs = array(
+          'type'       => 'name',
+          'properties' => array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84')
+        );
+        echo json_encode($output);
+      break;
+
+      case 'kml':
+        require_once('kml.class.php');
+        $kml = new Kml;
+        $kml->get_request($this->map, $this->coords)->generate_kml();
+      break;
+    }
   }
 
 }

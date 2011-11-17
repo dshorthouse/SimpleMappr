@@ -2,5 +2,6 @@
 require_once('../../lib/kml.class.php');
 
 $kml = new Kml();
-$kml->generate_kml();
+$kml->get_request()
+    ->generate_kml();
 ?>

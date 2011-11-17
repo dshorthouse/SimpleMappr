@@ -31,7 +31,9 @@ ul.navigation li a.map-mymaps{padding-left:20px;margin-left:5px;background-posit
 ul.navigation li a.map-users{padding-left:20px;margin-left:5px;background-position:0 -910px;}
 ul.navigation li a.map-myhelp{padding-left:20px;margin-left:5px;background-position:0 -525px;}
 li.map-extras{float:right !important;}
-#mapSave, #mapExport{display:none;}
+#mapSave, #mapExport, #mapEmbed{display:none;}
+#mapEmbed div.header{margin-top:5px;}
+#mapEmbed div.header h2{font-size:15px;}
 #mapSave p, #mapExport p, #mapEmbed p{font-size:0.8em;margin:5px 0px;}
 #mapSave p input, #mapExport p input, #mapEmbed p input{font-size:1em;}
 .ui-dialog-titlebar .ui-dialog-title{background-color: transparent;background-image: url("../../images/icon_sprites.png");background-repeat: no-repeat;padding-left:20px;}

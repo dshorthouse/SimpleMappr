@@ -606,9 +606,9 @@ class MAPPR {
     $this->map_obj->web->set("imagepath",$this->tmp_path);
     $this->map_obj->web->set("imageurl",$this->tmp_url);
 
-    $units = ($this->projection == $this->default_projection) ? MS_DD : MS_METERS;
+    $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
 
-    $this->map_obj->set("units",$units); //todo: if projection is changed, this also needs to be changed
+    $this->map_obj->set("units",$units);
     $this->map_obj->imagecolor->setRGB(255,255,255);
 
     // Set the output format and size

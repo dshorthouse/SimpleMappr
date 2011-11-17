@@ -1137,11 +1137,19 @@ $(function () {
   };
 
   Mappr.activateEmbed = function (mid) {
-    var self    = this;
+    var self    = this,
+        types   = ['img','kml','json'];
 
     $('.map-embed').attr("data-mid", mid).show().click(function () {
-      $('#mapEmbed').find("input").val("<img src=\"" + self.settings.baseUrl + "/?map=" + mid + "\" alt=\"\" />").end()
-                    .find("span.mid").text(mid).end()
+      $.each(types, function() {
+        if(this === 'img') {
+          $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
+        } else {
+          $('#embed-'+this, '#mapEmbed').val(self.settings.baseUrl + "/map/" + mid + "." + this);
+        }
+      });
+      
+      $('#mapEmbed').find("span.mid").text(mid).end()
                     .dialog({
                       width         : (525).toString(),
                       autoOpen      : true,

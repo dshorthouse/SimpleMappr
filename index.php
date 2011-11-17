@@ -271,8 +271,13 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <div id="mapper-legend-message" class="hidden-message"><?php echo _("legend will appear here"); ?></div>
 <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="<?php echo _("Example Coordinates"); ?>"></div>
 <div id="mapEmbed" class="ui-state-highlight hidden-message" title="<?php echo _("Embed"); ?>">
-  <p><input type='text' size='65' value=''></input></p>
+  <div class="header"><h2><?php echo _('Image'); ?></h2></div>
+  <p><input id="embed-img" type="text" size="65" value=""></input></p>
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> ?map=<span class="mid"></span>&amp;width=200&amp;height=150)</span></p>
+  <div class="header"><h2><?php echo _('KML'); ?></h2></div>
+  <p><input id="embed-kml" type="text" size="65" value=""></input></p>
+  <div class="header"><h2><?php echo _('GeoJSON'); ?></h2></div>
+  <p><input id="embed-json" type="text" size="65" value=""></input></p>
 </div>
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
