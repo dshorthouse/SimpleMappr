@@ -327,7 +327,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .ui-accordion .ui-accordion-content{padding:1em 2.2em;border-top:0;margin-top:-2px;position:relative;top:1px;margin-bottom:2px;overflow:auto;display:none;zoom:1;}
 .ui-accordion .ui-accordion-content-active{display:block;}
 .ui-button{display:inline-block;position:relative;padding:0;margin-right:.1em;text-decoration:none !important;cursor:pointer;text-align:center;zoom:1;overflow:visible;}
-.ui-button-cancel{border:none !important;background:none !important;}
+.ui-button-cancel{border:1px solid transparent !important;background:none !important;}
 .ui-button-cancel span{text-decoration:underline;}
 .ui-button-icon-only{width:2.2em;}
 button.ui-button-icon-only{width:2.4em;}
