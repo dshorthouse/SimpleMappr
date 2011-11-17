@@ -15,9 +15,6 @@ define("GOOGLE_ANALYTICS", "UA-XXXXXX-XX");
 // Google API key
 define("GOOGLE_API", "xxxxxxxxxxxxx");
 
-//set the locale
-setlocale(LC_ALL, 'en_US.utf8');
-
 //set the default timezone
 date_default_timezone_set('America/New_York');
 
