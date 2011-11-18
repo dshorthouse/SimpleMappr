@@ -110,32 +110,37 @@ $(function () {
         y        = parseFloat(c.y),
        x2        = parseFloat(c.x2),
        y2        = parseFloat(c.y2),
+       w         = parseFloat(c.w),
+       h         = parseFloat(c.h),
        ul_holder = '<input type="text" id="jcrop-coord-ul" class="jcrop-coord"></input>',
        lr_holder = '<input type="text" id="jcrop-coord-lr" class="jcrop-coord"></input>',
+       d_holder  = '<span id="jcrop-dimensions"></span>',
        ul_point  = { 'x' : x, 'y' : y },
        lr_point  = { 'x' : x2, 'y' : y2 },
        ul_coord  = {},
-       lr_coord  = {};
+       lr_coord  = {},
+       factor    = $('input[name="download-factor"]:checked').val();
 
     switch(Mappr.vars.jCropType) {
       case 'crop':
         $('.jcrop-holder div:first').css('backgroundColor', 'white');
         $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
 
-        if($('#projection option:selected').text() === 'Geographic') {
+        if($('#projection option:selected').val() === 'epsg:4326') {
           $('.jcrop-coord').css("width", "100px");
         } else {
           $('.jcrop-coord').css("width", "175px");
         }
 
         if($('#jcrop-coord-ul').length === 0 && $('#jcrop-coord-lr').length === 0) {
-          $('.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder);
+          $('.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder).after(d_holder);
         }
 
         ul_coord = Mappr.pix2geo(ul_point);
         lr_coord = Mappr.pix2geo(lr_point);
         $('#jcrop-coord-ul').val(ul_coord.x + ', ' + ul_coord.y);
         $('#jcrop-coord-lr').val(lr_coord.x + ', ' + lr_coord.y);
+        $('#jcrop-dimensions').text(w + ' X ' + h).css({'left' : w/2-$('#jcrop-dimensions').width()/2, 'top' : h/2-$('#jcrop-dimensions').height()/2});
 
         $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
@@ -152,6 +157,8 @@ $(function () {
             this.blur();
           }
         });
+
+        $('span', '#scale-measure').text(factor*w + ' X ' + factor*h).parent().show();
       break;
 
       case 'zoom':
@@ -291,6 +298,7 @@ $(function () {
         self.vars.zoom = false;
       }
     }).click(function () {
+      self.resetJbbox();
       return false;
     });
 
@@ -465,12 +473,34 @@ $(function () {
       }
     });
 
+    self.toggleFileFactor();
+
+    $('.download-factor').change(function() {
+      self.toggleFileFactor($(this).val());
+    });
+
     $('.download-filetype').change(function () {
-      self.toggleOptions(this);
+      self.toggleFileType(this);
     });
   };
 
-  Mappr.toggleOptions = function (obj) {
+  Mappr.toggleFileFactor = function (factor) {
+    var scale      = "",
+        rubberband = $('#bbox_rubberband').val().split(",");
+
+    if(!factor) {
+      factor = $('input[name="download-factor"]:checked').val();
+    }
+
+    if(Mappr.vars.jCropType == 'crop') {
+      scale = factor*(rubberband[2]-rubberband[0]) + " X " + factor*(rubberband[3]-rubberband[1]);
+    } else {
+      scale = factor*($('#mapOutputImage').width()) + " X " + factor*($('#mapOutputImage').height());
+    }
+    $('span', '#scale-measure').text(scale).parent().show();
+  };
+
+  Mappr.toggleFileType = function (obj) {
     if($(obj).attr("id") !== 'download-svg') {
       $.each(["border", "legend", "scalebar"], function () {
         $('#'+this).removeAttr("disabled");
@@ -604,11 +634,15 @@ $(function () {
     $('#mapOutputImage').show();
     $('.jcrop-holder').remove();
     $('#mapCropMessage').hide();
+
+    this.toggleFileFactor();
   };
 
   Mappr.resetJbbox = function () {
+    this.vars.jCropType = "zoom";
     $('#bbox_rubberband').val('');
     $('#bbox_query').val('');
+    this.toggleFileFactor();
   };
 
   Mappr.initJcrop = function (select) {
@@ -991,6 +1025,7 @@ $(function () {
   Mappr.loadSettings = function (data) {
     var pattern           = /[?*:;{}\\ "']+/g,
         map_title         = "",
+        download_factor   = "",
         download_filetype = "",
         self              = this;
 
@@ -1013,13 +1048,6 @@ $(function () {
 
     self.resetJbbox();
 
-    if(data.map.download_factor !== undefined && data.map.download_factor) {
-      $('input[name="download_factor"]').val(data.map.download_factor);
-      $('#download-factor-' + data.map.download_factor).attr('checked', true);
-    } else {
-      $('#download-factor-3').attr('checked', true);
-    }
-
     $.each(["border", "legend", "scalebar"], function () {
       $('#'+this).attr('checked', false);
       $('input[name="options['+this+']"]').val("");
@@ -1034,10 +1062,17 @@ $(function () {
       });
     }
 
+    if(data.map.download_factor !== undefined && data.map.download_factor) {
+      $('input[name="download_factor"]').val(data.map.download_factor);
+      $('#download-factor-' + data.map.download_factor).attr('checked', true);
+    } else {
+      $('#download-factor-3').attr('checked', true);
+    }
+
     if(data.map.download_filetype !== undefined && data.map.download_filetype) {
       $('input[name="download_filetype"]').val(data.map.download_filetype);
       download_filetype = $('#download-' + data.map.download_filetype).attr('checked', true);
-      self.toggleOptions(download_filetype);
+      self.toggleFileType(download_filetype);
     } else {
       $('#download-svg').attr('checked', true);
     }
@@ -1057,6 +1092,7 @@ $(function () {
     if(data.map.bbox_rubberband) {
       rubberband = data.map.bbox_rubberband.split(",");
       self.initJcrop([rubberband[2], rubberband[3], rubberband[0], rubberband[1]]);
+      self.toggleFileFactor(data.map.download_factor);
     } else {
       self.destroyJcrop();
     }
@@ -1163,9 +1199,9 @@ $(function () {
                         }
                       }
                     }).show();
+      self.analytics('/embed');
       return false;
     });
-    self.analytics('/embed');
   };
 
   Mappr.deleteMapConfirmation = function (obj) {

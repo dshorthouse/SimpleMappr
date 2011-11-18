@@ -560,35 +560,35 @@ class MAPPR {
     $this->shapes['placenames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
       'type'  => MS_LAYER_POINT,
-      'sort'  => 10
+      'sort'  => 11
     );
 
     //State/Provincial labels
     $this->shapes['stateprovnames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 11
+      'sort'  => 12
     );
 
     //Country labels
     $this->shapes['countrynames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 12
+      'sort'  => 13
     );
 
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 13
+      'sort'  => 14
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 14
+      'sort'  => 15
     );
 
   }
@@ -1080,7 +1080,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1104,7 +1104,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 12);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
               $class->label->set("position", MS_CC);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1120,7 +1120,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1128,7 +1128,7 @@ class MAPPR {
               $class->label->color->setRGB(10, 10, 10);
               $style = ms_newStyleObj($class);
               $style->set("symbolname","circle");
-              $style->set("size", ($this->download) ? $this->_download_factor*7 : 6);
+              $style->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
               $style->color->setRGB(100,100,100);
             break;
 
@@ -1140,7 +1140,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*8 : 10);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
               $class->label->set("position", MS_CC);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1156,7 +1156,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1172,7 +1172,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1201,7 +1201,7 @@ class MAPPR {
       $class = ms_newClassObj($layer);
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
-      $class->label->set("size", ($this->download) ? $this->_download_factor*9 : 10);
+      $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
       $class->label->set("position", MS_CC);
       $class->label->color->setRGB(30, 30, 30);
 
@@ -1247,16 +1247,16 @@ class MAPPR {
   * Create the legend file
   */
   private function add_legend() {
-    $this->map_obj->legend->set("keysizex", ($this->download) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keysizey", ($this->download) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keyspacingx", ($this->download) ? $this->_download_factor*3 : 5);
-    $this->map_obj->legend->set("keyspacingy", ($this->download) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("keysizex", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keysizey", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keyspacingx", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("keyspacingy", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
     $this->map_obj->legend->set("postlabelcache", 1);
     $this->map_obj->legend->set("transparent", 0);
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);
-    $this->map_obj->legend->label->set("size", ($this->download) ? $this->_download_factor*8 : 10);
+    $this->map_obj->legend->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
     $this->map_obj->legend->label->set("antialias", 50);
     $this->map_obj->legend->label->color->setRGB(0,0,0);
     
@@ -1279,15 +1279,15 @@ class MAPPR {
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", 3);
-    $this->map_obj->scalebar->set("height", ($this->download) ? $this->_download_factor*4 : 8);
-    $this->map_obj->scalebar->set("width", ($this->download) ? $this->_download_factor*100 : 200);
+    $this->map_obj->scalebar->set("height", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*4 : 8);
+    $this->map_obj->scalebar->set("width", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*100 : 200);
     $this->map_obj->scalebar->color->setRGB(30,30,30);
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
     $this->map_obj->scalebar->set("transparent", 1);
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
-    $this->map_obj->scalebar->label->set("size", ($this->download) ? $this->_download_factor*5 : 8);
+    $this->map_obj->scalebar->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
     $this->map_obj->scalebar->label->set("antialias", 50);
     $this->map_obj->scalebar->label->color->setRGB(0,0,0);
     

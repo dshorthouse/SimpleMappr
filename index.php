@@ -60,8 +60,8 @@ $header = set_up();
 </div>
 <div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
 <div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
-<!-- close multipoints tab -->
 </div>
+
 <!-- shaded regions tab -->
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
@@ -74,7 +74,7 @@ $header = set_up();
 <div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="regions"><?php echo _("Add a region"); ?></button></div>
 <div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
-<!-- close shaded regions tab --> 
+
 <!-- map preview tab -->
 <div id="map-preview">
 <div id="mapWrapper">
@@ -169,10 +169,11 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 </li>
 </ul>
 <p>*<?php echo _("zoom prior to setting projection"); ?></p>
-</div> <!-- /mapOptions -->
-</div> <!-- /mapTools -->
 </div>
 </div>
+</div>
+</div>
+
 <!-- my maps tab -->
 <div id="map-mymaps">
 <?php if(!isset($_SESSION['simplemappr'])): ?>
@@ -184,6 +185,7 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <div id="usermaps"></div>
 <?php endif; ?>
 </div>
+
 <!-- users tab -->
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <div id="map-users">
@@ -207,6 +209,7 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <fieldset>
 <legend><?php echo _("Scale"); ?></legend>
 <?php echo partial_scales(); ?>
+<div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
 </fieldset>
 <fieldset>
 <legend><?php echo _("File type"); ?></legend>
@@ -273,7 +276,7 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <div id="mapEmbed" class="ui-state-highlight hidden-message" title="<?php echo _("Embed"); ?>">
   <div class="header"><h2><?php echo _('Image'); ?></h2></div>
   <p><input id="embed-img" type="text" size="65" value=""></input></p>
-  <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> ?map=<span class="mid"></span>&amp;width=200&amp;height=150)</span></p>
+  <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150)</span></p>
   <div class="header"><h2><?php echo _('KML'); ?></h2></div>
   <p><input id="embed-kml" type="text" size="65" value=""></input></p>
   <div class="header"><h2><?php echo _('GeoJSON'); ?></h2></div>
@@ -407,10 +410,10 @@ function partial_regions() {
 function partial_scales() {
   $output = '';
 
-  $file_sizes = array(3,4,5);
+  $file_sizes = array(1,3,4,5);
   foreach($file_sizes as $size) {
-    $checked = ($size == 3) ? " checked=\"checked\"" : "";
-    $output .= "<input type=\"radio\" id=\"download-factor-$size\" name=\"download-factor\" value=\"$size\"$checked />";
+    $checked = ($size == 1) ? " checked=\"checked\"" : "";
+    $output .= "<input type=\"radio\" id=\"download-factor-$size\" class=\"download-factor\" name=\"download-factor\" value=\"$size\"$checked />";
     $output .= "<label for=\"download-factor-$size\">".$size."X</label>";
   }
 
