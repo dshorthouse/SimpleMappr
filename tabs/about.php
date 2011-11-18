@@ -25,6 +25,7 @@ require_once('../config/conf.php');
 <dt class="update"><?php echo _("October 1, 2011"); ?></dt><dd><?php echo _("Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."); ?></dd>
 </dl>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
+<p class="citation">Borrero, Francisco J. and Abraham S.H. Breure. 2011. The Amphibulimidae (Mollusca: Gastropoda: Orthalicoidea) from Colombia and adjacent areas. <em>Zootaxa</em> 3054: 1-59. <a href="http://www.mapress.com/zootaxa/list/2011/3054.html">permalink</a>.
 <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
 <p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
 <p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a></p>
