@@ -39,7 +39,7 @@ WARNING: Although MapServer 6.0.x is currently available, this application uses 
      DocumentRoot /path/to/your/root
      RewriteEngine on
      RewriteRule ^/map/(.+)\.(kml|json)$ /path/to/your/root/index.php?map=$1&format=$2
-     RewriteRule ^/map/(.+)$ /path/to/your/root/index.php?map=$1
+     RewriteRule ^/map/(.+)/?$ /path/to/your/root/index.php?map=$1&%{QUERY_STRING}
      RewriteRule ^/users/(.*)$ /path/to/your/root/users/index.php/$1
      RewriteRule ^/usermaps/(.*)$ /path/to/your/root/usermaps/index.php/$1
      RewriteRule ^/places/(.*)$ /path/to/your/root/places/index.php/$1
