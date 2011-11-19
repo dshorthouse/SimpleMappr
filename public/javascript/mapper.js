@@ -190,8 +190,8 @@ $(function () {
 
   Mappr.updateCropDimensions = function () {
     var rubberband   = $('#bbox_rubberband').val().split(","),
-        rubberband_w = rubberband[2]-rubberband[0],
-        rubberband_h = rubberband[3]-rubberband[1],
+        rubberband_w = parseFloat(rubberband[2])-parseFloat(rubberband[0]),
+        rubberband_h = parseFloat(rubberband[3])-parseFloat(rubberband[1]),
         image_w      = $('#mapOutputImage').width(),
         image_h      = $('#mapOutputImage').height(),
         w            = $('#jcrop-dimension-w').val(),
@@ -201,12 +201,12 @@ $(function () {
         y            = rubberband[1],
         y2           = rubberband[3];
 
-    w = (w > image_w) ? image_w/2 : (rubberband_w - w)/2;
-    h = (h > image_h) ? image_h/2 : (rubberband_h - h)/2;
-    x  = rubberband[2] - w;
-    x2 = rubberband[0] + w;
-    y  = rubberband[1] - h;
-    y2 = rubberband[3] + h;
+    w = (w > image_w) ? image_w : (rubberband_w - w)/2;
+    h = (h > image_h) ? image_h : (rubberband_h - h)/2;
+    x  = parseFloat(rubberband[2])-w;
+    x2 = parseFloat(rubberband[0])+w;
+    y  = parseFloat(rubberband[1])+h;
+    y2 = parseFloat(rubberband[3])-h;
 
     if(w >= image_w) {
       x  = 0;
