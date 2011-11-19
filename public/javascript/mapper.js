@@ -114,7 +114,7 @@ $(function () {
        h         = parseFloat(c.h),
        ul_holder = '<input type="text" id="jcrop-coord-ul" class="jcrop-coord"></input>',
        lr_holder = '<input type="text" id="jcrop-coord-lr" class="jcrop-coord"></input>',
-       d_holder  = '<span id="jcrop-dimensions"></span>',
+       d_holder  = '<div id="jcrop-dimension-wrapper"><input type="text" id="jcrop-dimension-w" class="jcrop-dimension"></input>X<input type="text" id="jcrop-dimension-h" class="jcrop-dimension"></input></div>',
        ul_point  = { 'x' : x, 'y' : y },
        lr_point  = { 'x' : x2, 'y' : y2 },
        ul_coord  = {},
@@ -140,13 +140,29 @@ $(function () {
         lr_coord = Mappr.pix2geo(lr_point);
         $('#jcrop-coord-ul').val(ul_coord.x + ', ' + ul_coord.y);
         $('#jcrop-coord-lr').val(lr_coord.x + ', ' + lr_coord.y);
-        $('#jcrop-dimensions').text(w + ' X ' + h).css({'left' : w/2-$('#jcrop-dimensions').width()/2, 'top' : h/2-$('#jcrop-dimensions').height()/2});
+        $('#jcrop-dimension-w').val(w);
+        $('#jcrop-dimension-h').val(h);
+        $('#jcrop-dimension-wrapper').css({'left' : w/2-$('#jcrop-dimension-wrapper').width()/2, 'top' : h/2-$('#jcrop-dimension-wrapper').height()/2});
 
         $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
         $('.jcrop-coord').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
-            Mappr.vars.cropUpdated = Mappr.updateCrop();
+            Mappr.vars.cropUpdated = Mappr.updateCropCoordinates();
+          }
+        })
+        .live("keypress", function(e) {
+          var key = e.keyCode || e.which;
+          if(key === 13 || key === 9) {
+            e.preventDefault();
+            Mappr.vars.cropUpdated = false;
+            this.blur();
+          }
+        });
+
+        $('.jcrop-dimension').live("blur", function() {
+          if(!Mappr.vars.cropUpdated) {
+            Mappr.vars.cropUpdated = Mappr.updateCropDimensions();
           }
         })
         .live("keypress", function(e) {
@@ -172,7 +188,40 @@ $(function () {
     }
   };
 
-  Mappr.updateCrop = function () {
+  Mappr.updateCropDimensions = function () {
+    var rubberband   = $('#bbox_rubberband').val().split(","),
+        rubberband_w = rubberband[2]-rubberband[0],
+        rubberband_h = rubberband[3]-rubberband[1],
+        image_w      = $('#mapOutputImage').width(),
+        image_h      = $('#mapOutputImage').height(),
+        w            = $('#jcrop-dimension-w').val(),
+        h            = $('#jcrop-dimension-h').val(),
+        x            = rubberband[0],
+        x2           = rubberband[2],
+        y            = rubberband[1],
+        y2           = rubberband[3];
+
+    w = (w > image_w) ? image_w/2 : (rubberband_w - w)/2;
+    h = (h > image_h) ? image_h/2 : (rubberband_h - h)/2;
+    x  = rubberband[2] - w;
+    x2 = rubberband[0] + w;
+    y  = rubberband[1] - h;
+    y2 = rubberband[3] + h;
+
+    if(w >= image_w) {
+      x  = 0;
+      x2 = image_w; 
+    }
+    if(h >= image_h) {
+      y  = 0;
+      y2 = image_h;
+    }
+
+    this.loadCropSettings({ 'map' : { 'bbox_rubberband' : x.toString() + "," + y.toString() + "," + x2.toString() + "," + y2.toString() } });
+    return true;
+  };
+
+  Mappr.updateCropCoordinates = function () {
     var ul_arr   = [],
         ul_point = {},
         lr_arr   = [],
@@ -492,7 +541,7 @@ $(function () {
       factor = $('input[name="download-factor"]:checked').val();
     }
 
-    if(Mappr.vars.jCropType == 'crop') {
+    if(Mappr.vars.jCropType === 'crop') {
       scale = factor*(rubberband[2]-rubberband[0]) + " X " + factor*(rubberband[3]-rubberband[1]);
     } else {
       scale = factor*($('#mapOutputImage').width()) + " X " + factor*($('#mapOutputImage').height());
@@ -582,6 +631,7 @@ $(function () {
       },
       focus: function() { return false; },
       select: function(event, ui) {
+        event = null;
         terms = self.split(this.value);
         terms.pop();
         terms.push(ui.item.value);
@@ -1025,7 +1075,6 @@ $(function () {
   Mappr.loadSettings = function (data) {
     var pattern           = /[?*:;{}\\ "']+/g,
         map_title         = "",
-        download_factor   = "",
         download_filetype = "",
         self              = this;
 
@@ -1199,7 +1248,6 @@ $(function () {
                         }
                       }
                     }).show();
-      self.analytics('/embed');
       return false;
     });
   };
@@ -1355,7 +1403,6 @@ $(function () {
                   Mappr.activateEmbed(data.mid);
                   Mappr.loadMapList();
                   Mappr.hideLoadingMessage();
-                  Mappr.analytics('/save');
                 }
               });
 
@@ -1625,8 +1672,6 @@ $(function () {
       }
     }, 1000);
 
-    self.analytics('/downloads/' + filetype);
-
   }; /** end Mappr.generateDownload **/
 
   Mappr.setFormOptions = function () {
@@ -1637,12 +1682,6 @@ $(function () {
         $('input[name="options['+this+']"]').val("");
       }
     });
-  };
-
-  Mappr.analytics = function (url) {
-    var _gaq = _gaq || [];
-
-    _gaq.push(['_trackPageview', url]);
   };
 
   Mappr.finishDownload = function () {

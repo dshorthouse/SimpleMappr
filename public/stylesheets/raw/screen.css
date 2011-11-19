@@ -123,7 +123,10 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 .jcrop-coord{position:absolute;border:1px solid #AAA;background-color:#E0E0E0;opacity:0.6;filter:alpha(opacity=60);padding:3px;z-index:500;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;width:100px;font-size:0.7em !important;}
 #jcrop-coord-ul{left:9px;top:9px;text-align:left;}
 #jcrop-coord-lr{right:9px;bottom:9px;text-align:right;}
-#jcrop-dimensions{position:absolute;z-index:500;font-size:1em;padding:3px;background-color:#FFF;opacity:0.6;filter:alpha(opacity=60);border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#jcrop-dimension-wrapper{position:absolute;z-index:500;padding:3px;border:1px solid #AAA;background-color:#E0E0E0;opacity:0.6;filter:alpha(opacity=60);border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#jcrop-dimension-wrapper .jcrop-dimension{border:0px;background-color:transparent;font-size:1em;width:40px;}
+#jcrop-dimension-wrapper #jcrop-dimension-w{margin-right:2px;text-align:right;}
+#jcrop-dimension-wrapper #jcrop-dimension-h{margin-left:2px;text-align:left;}
 #actionsBar #mapTitle{margin:0 0 0 30px;padding:0;font-style:italic;font-size:1em;display:inline;line-height:27px;}
 #actionsBar #map-saveDialog{font-size:0.75em;display:inline;line-height:27px;position:absolute;right:0px;}
 #actionsBar #map-saveDialog a.map-saveItem{padding:0px 5px 0px 20px;}

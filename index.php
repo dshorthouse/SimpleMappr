@@ -38,15 +38,15 @@ $header = set_up();
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
 <li><a href="#map-points"><?php echo _("Point Data"); ?></a></li>
 <li><a href="#map-regions"><?php echo _("Regions"); ?></a></li>
-<li><a href="#map-mymaps" class="sprites map-mymaps" onclick="javascript: Mappr.analytics('/mymaps'); "><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
+<li><a href="#map-mymaps" class="sprites map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites map-users"><?php echo _("Users"); ?></a></li>
 <?php endif; ?>
 <?php $qlang = isset($_GET['lang']) ? "?lang=" . $_GET["lang"] : ""; ?>
-<li class="map-extras"><a href="tabs/help.php<?php echo $qlang; ?>" class="sprites map-myhelp" onclick="javascript: Mappr.analytics('/help'); "><?php echo _("Help"); ?></a></li>
-<li class="map-extras"><a href="tabs/about.php<?php echo $qlang; ?>" onclick="javascript: Mappr.analytics('/about'); "><?php echo _("About"); ?></a></li>
-<li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>" onclick="javascript: Mappr.analytics('/feedback'); "><?php echo _("Feedback"); ?></a></li>
-<li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>" onclick="javascript: Mappr.analytics('/api'); "><?php echo _("API"); ?></a></li>
+<li class="map-extras"><a href="tabs/help.php<?php echo $qlang; ?>" class="sprites map-myhelp"><?php echo _("Help"); ?></a></li>
+<li class="map-extras"><a href="tabs/about.php<?php echo $qlang; ?>"><?php echo _("About"); ?></a></li>
+<li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>"><?php echo _("Feedback"); ?></a></li>
+<li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>"><?php echo _("API"); ?></a></li>
 </ul>
 <form id="form-mapper" action="application/" method="post" autocomplete = "off">  
 
