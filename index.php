@@ -18,7 +18,7 @@ $header = set_up();
 <?php flush(); ?>
 <body>
 <div id="header" class="clearfix">
-<h1 id="site-title"><img src="public/images/logo.png" alt="SimpleMappr" width="180" height="30" /><span>SimpleMappr</span></h1>
+<h1 id="site-title" class="sprites">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
 <div id="site-languages">
 <!--
