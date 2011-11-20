@@ -1,10 +1,11 @@
 <?php
 require_once('config/conf.php');
 $header = set_up();
+header('Content-Type: text/html; charset=utf-8');
 $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $laguage; ?>">
+<html lang="<?php echo $language; ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A publication-quality, point map application."); ?>" />
