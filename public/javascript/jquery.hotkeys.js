@@ -9,8 +9,10 @@
  * Original idea by:
  * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
 */
-
+/*global $, jQuery */
 (function(jQuery){
+	
+	"use strict";
 	
 	jQuery.hotkeys = {
 		version: "0.8",
@@ -51,7 +53,7 @@
 			// Keypress represents characters, not special keys
 			var special = event.type !== "keypress" && jQuery.hotkeys.specialKeys[ event.which ],
 				character = String.fromCharCode( event.which ).toLowerCase(),
-				key, modif = "", possible = {};
+				key, modif = "", possible = {}, i = 0, l = 0;
 
 			// check combinations (alt|ctrl|shift+anything)
 			if ( event.altKey && special !== "alt" ) {
@@ -84,7 +86,7 @@
 				}
 			}
 
-			for ( var i = 0, l = keys.length; i < l; i++ ) {
+			for ( i = 0, l = keys.length; i < l; i += 1 ) {
 				if ( possible[ keys[i] ] ) {
 					return origHandler.apply( this, arguments );
 				}

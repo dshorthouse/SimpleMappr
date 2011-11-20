@@ -1,4 +1,9 @@
+/*global $, jQuery, document, setTimeout, window */
+
 (function($) {
+
+    "use strict";
+
     $.fn.tipsy = function(options) {
 
         options = $.extend({}, $.fn.tipsy.defaults, options);
@@ -9,33 +14,41 @@
             
             $(this).hover(function() {
 
+                var tip = '',
+                    title = '',
+                    pos = '',
+                    actualWidth = '',
+                    actualHeight = '',
+                    gravity = '';
+
                 $.data(this, 'cancel.tipsy', true);
 
-                var tip = $.data(this, 'active.tipsy');
+                tip = $.data(this, 'active.tipsy');
+
                 if (!tip) {
                     tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>');
                     tip.css({position: 'absolute', zIndex: 100000});
                     $.data(this, 'active.tipsy', tip);
                 }
 
-                if ($(this).attr('title') || typeof($(this).attr('original-title')) != 'string') {
+                if ($(this).attr('title') || typeof($(this).attr('original-title')) !== 'string') {
                     $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
                 }
 
-                var title;
-                if (typeof opts.title == 'string') {
-                    title = $(this).attr(opts.title == 'title' ? 'original-title' : opts.title);
-                } else if (typeof opts.title == 'function') {
+                if (typeof opts.title === 'string') {
+                    title = $(this).attr(opts.title === 'title' ? 'original-title' : opts.title);
+                } else if (typeof opts.title === 'function') {
                     title = opts.title.call(this);
                 }
 
                 tip.find('.tipsy-inner')[opts.html ? 'html' : 'text'](title || opts.fallback);
 
-                var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
+                pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
                 tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
                 tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).appendTo(document.body);
-                var actualWidth = tip[0].offsetWidth, actualHeight = tip[0].offsetHeight;
-                var gravity = (typeof opts.gravity == 'function') ? opts.gravity.call(this) : opts.gravity;
+                actualWidth = tip[0].offsetWidth;
+                actualHeight = tip[0].offsetHeight;
+                gravity = (typeof opts.gravity === 'function') ? opts.gravity.call(this) : opts.gravity;
 
                 switch (gravity.charAt(0)) {
                     case 'n':
@@ -62,7 +75,7 @@
                 $.data(this, 'cancel.tipsy', false);
                 var self = this;
                 setTimeout(function() {
-                    if ($.data(this, 'cancel.tipsy')) return;
+                    if ($.data(this, 'cancel.tipsy')) { return; }
                     var tip = $.data(self, 'active.tipsy');
                     if (opts.fade) {
                         tip.stop().fadeOut(function() { $(this).remove(); });

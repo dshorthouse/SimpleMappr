@@ -1,16 +1,15 @@
 <?php
 require_once('config/conf.php');
 $header = set_up();
+$language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo $laguage; ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A publication-quality, point map application."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,map"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
-<?php $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en'; ?>
-<meta http-equiv="content-language" content="<?php echo $language; ?>" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php $header[0]->getCSSHeader(); ?>
@@ -275,12 +274,12 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="<?php echo _("Example Coordinates"); ?>"></div>
 <div id="mapEmbed" class="ui-state-highlight hidden-message" title="<?php echo _("Embed"); ?>">
   <div class="header"><h2><?php echo _('Image'); ?></h2></div>
-  <p><input id="embed-img" type="text" size="65" value=""></input></p>
+  <p><input id="embed-img" type="text" size="65" value="" /></p>
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150)</span></p>
   <div class="header"><h2><?php echo _('KML'); ?></h2></div>
-  <p><input id="embed-kml" type="text" size="65" value=""></input></p>
+  <p><input id="embed-kml" type="text" size="65" value="" /></p>
   <div class="header"><h2><?php echo _('GeoJSON'); ?></h2></div>
-  <p><input id="embed-json" type="text" size="65" value=""></input></p>
+  <p><input id="embed-json" type="text" size="65" value="" /></p>
 </div>
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
