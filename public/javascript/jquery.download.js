@@ -11,13 +11,14 @@
 
       if(url && data){
         data = (typeof data === 'string') ? data : $.param(data);
-        form = $('<form action="' + url + '" method="' + (method||'post') + '"></form>');
+        form = $('<form id="jquery-download-extension" action="' + url + '" method="' + (method||'post') + '"></form>');
         $.each(data.split('&'), function(){
           pair = this.split('=');
           id = 'jquery-download-' + unescape(pair[0]);
           form.append('<input type="hidden" name="' + unescape(pair[0]) + '" id="' + id + '" value="' + unescape(pair[1].replace(/\+/g,' ')) + '" />');
         });
-        form.appendTo($('body')).submit().remove();
+        form.appendTo($('body'));
+        $('#jquery-download-extension').submit().remove();
       }
     });
 
