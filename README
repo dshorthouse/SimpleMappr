@@ -103,6 +103,9 @@ Apache server requires php5_gettext.so extension for PHP5
 $ xgettext -n index.php [Makes a message.po file to be moved to i18n/fr_FR.UTF-8/LC_MESSAGES for example]
 $ msgfmt messages.po [Makes a binary message.mo to be moved to i18n/fr_FR.UTF-8/LC_MESSAGES for example]
 
-Or, use the ruby utility, crawler.rb in /i18n:
+Or, use the ruby utility, crawler.rb from the /i18n directory:
 
+$ cd i18n
 $ ruby crawler.rb ../
+
+Then move/copy the resultant messages.po file to the LC_MESSAGES directories
