@@ -1627,7 +1627,7 @@ $(function () {
 
   Mappr.generateDownload = function () {
     var self        = this,
-        pattern     = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
+        pattern     = /[~$?*,:;{}\[\]\\ "'\/@#!%^()<>.+=|`&]+/g,
         map_title   = $('#file-name').val(),
         token       = new Date().getTime().toString(),
         cookieValue = "",
