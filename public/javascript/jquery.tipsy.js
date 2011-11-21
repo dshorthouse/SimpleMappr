@@ -1,6 +1,6 @@
 /*global $, jQuery, document, setTimeout, window */
 
-(function($) {
+(function() {
 
     "use strict";
 
@@ -114,4 +114,4 @@
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
     
-})(jQuery);
+}(jQuery));

@@ -39,7 +39,7 @@ class HEADER {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'public/javascript/jquery-1.6.4.min.js',
+    'public/javascript/jquery-1.7.min.js',
     'public/javascript/jquery-ui-1.8.16.min.js',
     'public/javascript/jquery.colorpicker.min.js',
     'public/javascript/jquery.scrollTo.min.js',
@@ -47,6 +47,7 @@ class HEADER {
     'public/javascript/jquery.textarearesizer.compressed.js',
     'public/javascript/jquery.cookie.min.js',
     'public/javascript/jquery.download.min.js',
+    'public/javascript/jquery.clearform.min.js',
     'public/javascript/jquery.tipsy.min.js',
     'public/javascript/jquery.uitablefilter.min.js',
     'public/javascript/jquery.hotkeys.min.js',
@@ -86,11 +87,11 @@ class HEADER {
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
-        if ($value == 'public/javascript/jquery-1.6.4.min.js') {
+        if ($value == 'public/javascript/jquery-1.7.min.js') {
           unset(self::$local_js_files[$key]);
         }
       }
-      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>');
+      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>');
     }
     return $this;
   }

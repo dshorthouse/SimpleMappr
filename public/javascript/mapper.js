@@ -1652,7 +1652,7 @@ $(function () {
     switch(filetype) {
       case 'kml':
         formData = $("form").serialize();
-        $.download(self.settings.baseUrl + "/application/kml/", formData, 'post');
+        $('body').download(self.settings.baseUrl + "/application/kml/", formData, 'post');
       break;
 
       default:
@@ -1660,7 +1660,7 @@ $(function () {
         $('#output').val(filetype);
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $.download(self.settings.baseUrl + "/application/", formData, 'post');
+        $('body').download(self.settings.baseUrl + "/application/", formData, 'post');
         $('#download').val('');
         $('#output').val('pnga');
     }
@@ -1845,27 +1845,3 @@ $(function () {
   Mappr.init();
 
 });
-
-/******* jQUERY EXTENSIONS *******/
-
-(function () {
-
-  "use strict";
-
-  $.fn.clearForm = function () {
-    return this.each(function () {
-      var type = this.type, tag = this.tagName.toLowerCase();
-      if (tag === 'form') {
-        return $(':input',this).clearForm();
-      }
-      if (type === 'text' || type === 'password' || type === 'hidden' || tag === 'textarea') {
-        this.value = '';
-      } else if (type === 'checkbox' || type === 'radio') {
-       this.checked = false;
-      } else if (tag === 'select') {
-       this.selectedIndex = 0;
-      }
-    });
-  };
-
-}( jQuery ));
