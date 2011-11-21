@@ -162,7 +162,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <?php
 foreach(MAPPR::$accepted_projections as $key => $value) {
 $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
-echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
+echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 }
 ?>
 </select>
@@ -285,7 +285,7 @@ echo "<option value=\"$key\"$selected>".$value['name']."</option>" . "\n";
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\""; ?> });
+jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? '"true"' : '"false"'; ?> });
 //--><!]]>
 </script>
 <?php $header[0]->getAnalytics(); ?>
@@ -324,55 +324,55 @@ function set_up() {
 
 function partial_layers() {
   //marker sizes and shapes
-  $marker_size  = "<option value=\"\">"._("--select--")."</option>";
-  $marker_size .= "<option value=\"6\">6pt</option>";
-  $marker_size .= "<option value=\"8\">8pt</option>";
-  $marker_size .= "<option value=\"10\" selected=\"selected\">10pt</option>";
-  $marker_size .= "<option value=\"12\">12pt</option>";
-  $marker_size .= "<option value=\"14\">14pt</option>";
-  $marker_size .= "<option value=\"16\">16pt</option>";
+  $marker_size  = '<option value="">'._("--select--").'</option>';
+  $marker_size .= '<option value="6">6pt</option>';
+  $marker_size .= '<option value="8">8pt</option>';
+  $marker_size .= '<option value="10" selected="selected">10pt</option>';
+  $marker_size .= '<option value="12">12pt</option>';
+  $marker_size .= '<option value="14">14pt</option>';
+  $marker_size .= '<option value="16">16pt</option>';
 
-  $marker_shape  = "<option value=\"\">"._("--select--")."</option>";
-  $marker_shape .= "<option value=\"plus\">"._("plus")."</option>";
-  $marker_shape .= "<option value=\"cross\">"._("cross")."</option>";
-  $marker_shape .= "<optgroup label=\""._("solid")."\">";
-  $marker_shape .= "<option value=\"circle\" selected=\"selected\">"._("circle (s)")."</option>";
-  $marker_shape .= "<option value=\"star\">"._("star (s)")."</option>";
-  $marker_shape .= "<option value=\"square\">"._("square (s)")."</option>";
-  $marker_shape .= "<option value=\"triangle\">"._("triangle (s)")."</option>";
-  $marker_shape .= "</optgroup>";
-  $marker_shape .= "<optgroup label=\""._("open")."\">";
-  $marker_shape .= "<option value=\"opencircle\">"._("circle (o)")."</option>";
-  $marker_shape .= "<option value=\"openstar\">"._("star (o)")."</option>";
-  $marker_shape .= "<option value=\"opensquare\">"._("square (o)")."</option>";
-  $marker_shape .= "<option value=\"opentriangle\">"._("triangle (o)")."</option>";
-  $marker_shape .= "</optgroup>";
+  $marker_shape  = '<option value="">'._("--select--").'</option>';
+  $marker_shape .= '<option value="plus">'._("plus").'</option>';
+  $marker_shape .= '<option value="cross">'._("cross").'</option>';
+  $marker_shape .= '<optgroup label="'._("solid").'">';
+  $marker_shape .= '<option value="circle" selected="selected">'._("circle (s)").'</option>';
+  $marker_shape .= '<option value="star">'._("star (s)").'</option>';
+  $marker_shape .= '<option value="square">'._("square (s)").'</option>';
+  $marker_shape .= '<option value="triangle">'._("triangle (s)").'</option>';
+  $marker_shape .= '</optgroup>';
+  $marker_shape .= '<optgroup label="'._("open").'">';
+  $marker_shape .= '<option value="opencircle">'._("circle (o)").'</option>';
+  $marker_shape .= '<option value="openstar">'._("star (o)").'</option>';
+  $marker_shape .= '<option value="opensquare">'._("square (o)").'</option>';
+  $marker_shape .= '<option value="opentriangle">'._("triangle (o)").'</option>';
+  $marker_shape .= '</optgroup>';
 
   $output = '';
 
   for($i=0;$i<=NUMTEXTAREA-1;$i++) {
     
-    $output .= "<div class=\"form-item fieldset-points\">";
+    $output .= '<div class="form-item fieldset-points">';
 
-    $output .= "<button class=\"sprites removemore negative ui-corner-all\" data-type=\"coords\">"._("Remove")."</button>";
+    $output .= '<button class="sprites removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
   
-    $output .= "<h3><a href=\"#\">".sprintf(_("Layer %d"),$i+1)."</a></h3>" . "\n";
-    $output .= "<div>" . "\n";
-    $output .= "<div class=\"fieldset-taxon\">" . "\n";
-    $output .= "<span class=\"fieldset-title\">"._("Legend")."<span class=\"required\">*</span>:</span> <input type=\"text\" class=\"m-mapTitle\" size=\"40\" maxlength=\"40\" name=\"coords[$i][title]\" />" . "\n";
-    $output .= "</div>" . "\n";
-    $output .= "<div class=\"resizable-textarea\">" . "\n";
-    $output .= "<span><textarea class=\"resizable m-mapCoord\" rows=\"5\" cols=\"60\" name=\"coords[$i][data]\"></textarea></span>" . "\n";
-    $output .= "</div>" . "\n";
+    $output .= '<h3><a href="#">'.sprintf(_("Layer %d"),$i+1).'</a></h3>' . "\n";
+    $output .= '<div>' . "\n";
+    $output .= '<div class="fieldset-taxon">' . "\n";
+    $output .= '<span class="fieldset-title">'._("Legend").'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords[$i][title]" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<div class="resizable-textarea">' . "\n";
+    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$i.'][data]"></textarea></span>' . "\n";
+    $output .= '</div>' . "\n";
 
-    $output .= "<div class=\"fieldset-extras\">" . "\n";
-    $output .= "<span class=\"fieldset-title\">"._("Shape").":</span> <select class=\"m-mapShape\" name=\"coords[$i][shape]\">$marker_shape</select> <span class=\"fieldset-title\">"._("Size").":</span> <select class=\"m-mapSize\" name=\"coords[$i][size]\">$marker_size</select>" . "\n";
-    $output .= "<span class=\"fieldset-title\">"._("Color").":</span> <input class=\"colorPicker\" type=\"text\" size=\"12\" maxlength=\"11\" name=\"coords[$i][color]\" value=\"0 0 0\" />" . "\n";
-    $output .= "</div>" . "\n";
-    $output .= "<button class=\"sprites clear clearself negative ui-corner-all\">"._("Clear")."</button>" . "\n";
-    $output .= "</div>" . "\n";
+    $output .= '<div class="fieldset-extras">' . "\n";
+    $output .= '<span class="fieldset-title">'._("Shape").':</span> <select class="m-mapShape" name="coords['.$i.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">'._("Size").':</span> <select class="m-mapSize" name="coords['.$i.'][size]">'.$marker_size.'</select>' . "\n";
+    $output .= '<span class="fieldset-title">'._("Color").':</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$i.'][color]" value="0 0 0" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<button class="sprites clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
+    $output .= '</div>' . "\n";
   
-    $output .= "</div>" . "\n";
+    $output .= '</div>' . "\n";
   }
 
   return $output;
@@ -382,26 +382,26 @@ function partial_regions() {
   $output = '';
 
   for($i=0;$i<=NUMTEXTAREA-1;$i++) {
-    $output .= "<div class=\"form-item fieldset-regions\">";
+    $output .= '<div class="form-item fieldset-regions">';
 
-    $output .= "<button class=\"sprites removemore negative ui-corner-all\" data-type=\"regions\">"._("Remove")."</button>";
+    $output .= '<button class="sprites removemore negative ui-corner-all" data-type="regions">'._("Remove").'</button>';
 
-    $output .= "<h3><a href=\"#\">".sprintf(_("Region %d"), $i+1)."</a></h3>" . "\n";
-    $output .= "<div>" . "\n";
-    $output .= "<div class=\"fieldset-taxon\">" . "\n";
-    $output .= "<span class=\"fieldset-title\">"._("Legend")."<span class=\"required\">*</span>:</span> <input type=\"text\" class=\"m-mapTitle\" size=\"40\" maxlength=\"40\" name=\"regions[$i][title]\" />" . "\n";
-    $output .= "</div>" . "\n";
-    $output .= "<div class=\"resizable-textarea\">" . "\n";
-    $output .= "<span><textarea class=\"resizable m-mapCoord\" rows=\"5\" cols=\"60\" name=\"regions[$i][data]\"></textarea></span>" . "\n";
-    $output .= "</div>" . "\n";
+    $output .= '<h3><a href="#">'.sprintf(_("Region %d"), $i+1).'</a></h3>' . "\n";
+    $output .= '<div>' . "\n";
+    $output .= '<div class="fieldset-taxon">' . "\n";
+    $output .= '<span class="fieldset-title">'._("Legend").'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions['.$i.'][title]" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<div class="resizable-textarea">' . "\n";
+    $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions['.$i.'][data]"></textarea></span>' . "\n";
+    $output .= '</div>' . "\n";
   
-    $output .= "<div class=\"fieldset-extras\">" . "\n";
-    $output .= "<span class=\"fieldset-title\">"._("Color").":</span> <input type=\"text\" class=\"colorPicker\" size=\"12\" maxlength=\"11\" name=\"regions[$i][color]\" value=\"150 150 150\" />" . "\n";
-    $output .= "</div>" . "\n";
-    $output .= "<button class=\"sprites clear clearself negative ui-corner-all\">"._("Clear")."</button>" . "\n";
-    $output .= "</div>" . "\n";
+    $output .= '<div class="fieldset-extras">' . "\n";
+    $output .= '<span class="fieldset-title">'._("Color").':</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$i.'][color]" value="150 150 150" />' . "\n";
+    $output .= '</div>' . "\n";
+    $output .= '<button class="sprites clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
+    $output .= '</div>' . "\n";
   
-    $output .= "</div>" . "\n";
+    $output .= '</div>' . "\n";
   }
 
   return $output;
@@ -412,9 +412,9 @@ function partial_scales() {
 
   $file_sizes = array(1,3,4,5);
   foreach($file_sizes as $size) {
-    $checked = ($size == 1) ? " checked=\"checked\"" : "";
-    $output .= "<input type=\"radio\" id=\"download-factor-$size\" class=\"download-factor\" name=\"download-factor\" value=\"$size\"$checked />";
-    $output .= "<label for=\"download-factor-$size\">".$size."X</label>";
+    $checked = ($size == 1) ? ' checked="checked"' : '';
+    $output .= '<input type="radio" id="download-factor-'.$size.'" class="download-factor" name="download-factor" value="'.$size.'"'.$checked.' />';
+    $output .= '<label for="download-factor-'.$size.'">'.$size.'X</label>';
   }
 
   return $output;
@@ -425,10 +425,10 @@ function partial_filetypes() {
 
   $file_types = array('svg', 'png', 'tif', 'kml');
   foreach($file_types as $type) {
-    $checked = ($type == "svg") ? " checked=\"checked\"": "";
-    $asterisk = ($type == "svg") ? "*" : "";
-    $output .= "<input type=\"radio\" id=\"download-$type\" class=\"download-filetype\" name=\"download-filetype\" value=\"$type\"$checked />";
-    $output .= "<label for=\"download-$type\">".$type.$asterisk."</label>";
+    $checked = ($type == "svg") ? ' checked="checked"': '';
+    $asterisk = ($type == "svg") ? '*' : '';
+    $output .= '<input type="radio" id="download-'.$type.'" class="download-filetype" name="download-filetype" value="'.$type.'"'.$checked.' />';
+    $output .= '<label for="download-'.$type.'">'.$type.$asterisk.'</label>';
   }
 
   return $output;
@@ -439,7 +439,7 @@ function rotation_values() {
 
   for($i=0;$i<360;$i++) {
     if($i % 5 == 0) {
-      $output .= "<li data-rotate=\"$i\"></li>";
+      $output .= '<li data-rotate="'.$i.'"></li>';
     }
   }
   return $output;

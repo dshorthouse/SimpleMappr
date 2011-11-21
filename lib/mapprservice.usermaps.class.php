@@ -113,7 +113,7 @@ class USERMAPS {
         }
 
         header("Content-Type: application/json");
-        echo "{\"status\":\"ok\", \"mid\":\"" . $mid . "\"}";
+        echo '{"status":"ok", "mid":"'.$mid.'"}';
       break;
 
       case 'DELETE':
@@ -152,49 +152,49 @@ class USERMAPS {
     $rows = $this->_db->query($sql);
 
     if($this->_db->affected_rows > 0) {
-      $output .= "<table class=\"grid-usermaps\">" . "\n";
-      $output .= "<thead>" . "\n";
-      $output .= "<tr>" . "\n";
-      $output .= "<td class=\"left-align\">"._("Title")." <input type=\"text\" id=\"filter-mymaps\" size=\"25\" maxlength=\"35\" value=\"\" name=\"filter-mymap\" /></td>";
-      $output .= "<td class=\"actions\">"._("Actions");
+      $output .= '<table class="grid-usermaps">' . "\n";
+      $output .= '<thead>' . "\n";
+      $output .= '<tr>' . "\n";
+      $output .= '<td class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></td>';
+      $output .= '<td class="actions">'._("Actions");
       if($this->_uid == 1) {
-        $output .= "<a href=\"#\" class=\"sprites toolsRefresh\"></a>";
+        $output .= '<a href="#" class="sprites toolsRefresh"></a>';
       }
-      $output .= "</td>";
-      $output .= "</tr>" . "\n";
-      $output .= "</thead>" . "\n";
-      $output .= "<tbody>" . "\n";
+      $output .= '</td>';
+      $output .= '</tr>' . "\n";
+      $output .= '</thead>' . "\n";
+      $output .= '<tbody>' . "\n";
       $i=0;
       while ($record = $this->_db->fetch_array($rows)) {
-        $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-        $output .= "<tr ".$class.">";
-        $output .= "<td class=\"title\">";
-        $output .= ($this->_uid == 1) ? $record['username'] . " (" . gmdate("M d, Y", $record['created']) . "): <em>" : "";
+        $class = ($i % 2) ? 'class="even"' : 'class="odd"';
+        $output .= '<tr '.$class.'>';
+        $output .= '<td class="title">';
+        $output .= ($this->_uid == 1) ? $record['username'].' ('.gmdate("M d, Y", $record['created']).'): <em>' : '';
         $output .= stripslashes($record['title']);
-        $output .= ($this->_uid == 1) ? "</em>" : "";
-        $output .= "</td>";
-        $output .= "<td class=\"actions\">";
-        $output .= "<a class=\"sprites map-load\" data-mid=\"".$record['mid']."\" href=\"#\">"._("Load")."</a>";
+        $output .= ($this->_uid == 1) ? '</em>' : '';
+        $output .= '</td>';
+        $output .= '<td class="actions">';
+        $output .= '<a class="sprites map-load" data-mid="'.$record['mid'].'" href="#">'._("Load").'</a>';
         if($this->_uid == $record['uid'] || $this->_uid == 1) {
-          $output .= "<a class=\"sprites map-delete\" data-mid=\"".$record['mid']."\" href=\"#\">"._("Delete")."</a>";
+          $output .= '<a class="sprites map-delete" data-mid="'.$record['mid'].'" href="#">'._("Delete").'</a>';
         }
-        $output .= "</td>";
-        $output .= "</tr>" . "\n";
+        $output .= '</td>';
+        $output .= '</tr>' . "\n";
         $i++;
       }
-      $output .= "</tbody>" . "\n";
-      $output .= "</table>" . "\n";
-      $output .= "<script type=\"text/javascript\">
-        $(\".grid-usermaps td.actions a.toolsRefresh\").click(function(){
+      $output .= '</tbody>' . "\n";
+      $output .= '</table>' . "\n";
+      $output .= '<script type="text/javascript">
+        $(".grid-usermaps td.actions a.toolsRefresh").click(function(){
           Mappr.loadMapList();
           return false;
         });
-        $(\"#filter-mymaps\")
-          .keyup(function() { $.uiTableFilter( $('#usermaps table'), this.value ); })
+        $("#filter-mymaps")
+          .keyup(function() { $.uiTableFilter( $("#usermaps table"), this.value ); })
           .keypress(function(event) { if (event.which === 13) { return false; }
-        });</script>";
+        });</script>';
     } else {
-      $output .= "<div id=\"mymaps\" class=\"panel ui-corner-all\"><p>"._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.")."</p><p>"._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.")."</p></div>";
+      $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
     }
 
     header("Content-Type: text/html");
@@ -230,7 +230,7 @@ class USERMAPS {
   private function destroy_map() {
     $where = "mid=".$this->_db->escape($this->_request[0]);
     if($this->_uid != 1) {
-      $where .= " AND uid = ".$this->_db->escape($this->_uid);
+      $where .= ' AND uid = '.$this->_db->escape($this->_uid);
     }
     $sql = "
       DELETE 
@@ -241,7 +241,7 @@ class USERMAPS {
     $this->_db->query($sql);
 
     header("Content-Type: application/json");
-    echo "{\"status\":\"ok\"}";
+    echo '{"status":"ok"}';
   }
 
 }

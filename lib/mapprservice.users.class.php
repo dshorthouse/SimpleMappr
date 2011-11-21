@@ -50,7 +50,7 @@ class USERS {
   private function execute() {
     if(!isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] !== 1) {
       header("Content-Type: application/json");
-      echo "{ \"error\" : \"access denied\" }";
+      echo '{ "error" : "access denied" }';
       exit;
     } else {
       $this->_uid = $_SESSION['simplemappr']['uid'];
@@ -115,42 +115,42 @@ class USERS {
    $output = "";
 
    if($this->_db->affected_rows > 0) {
-     $output .= "<table class=\"grid-users\">" . "\n";
-     $output .= "<thead>" . "\n";
-     $output .= "<tr>" . "\n";
-     $output .= "<td class=\"left-align\">"._("Username")."</td>";
-     $output .= "<td class=\"left-align\">"._("Email")."</td>";
-     $output .= "<td>"._("Maps")."</td>";
-     $output .= "<td>"._("Last Access")."</td>";
-     $output .= "<td class=\"actions\">"._("Actions")."<a href=\"#\" class=\"sprites toolsRefresh\"></a></td>";
-     $output .= "</tr>" . "\n";
-     $output .= "</thead>" . "\n";
-     $output .= "<tbody>" . "\n";
+     $output .= '<table class="grid-users">' . "\n";
+     $output .= '<thead>' . "\n";
+     $output .= '<tr>' . "\n";
+     $output .= '<td class="left-align">'._("Username").'</td>';
+     $output .= '<td class="left-align">'._("Email").'</td>';
+     $output .= '<td>'._("Maps").'</td>';
+     $output .= '<td>'._("Last Access").'</td>';
+     $output .= '<td class="actions">'._("Actions").'<a href="#" class="sprites toolsRefresh"></a></td>';
+     $output .= '</tr>' . "\n";
+     $output .= '</thead>' . "\n";
+     $output .= '<tbody>' . "\n";
      $i=0;
      while ($record = $this->_db->fetch_array($rows)) {
-       $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-       $output .= "<tr ".$class.">";
-       $output .= "<td>" . stripslashes($record['username']) . "</td>";
-       $output .= "<td>" . stripslashes($record['email']) . "</td>";
-       $output .= "<td class=\"usermaps-center\">" . $record['num'] . "</td>";
-       $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : "-";
-       $output .= "<td class=\"usermaps-center\">" . $access . "</td>";
-       $output .= "<td class=\"actions\">";
+       $class = ($i % 2) ? 'class="even"' : 'class="odd"';
+       $output .= '<tr '.$class.'>';
+       $output .= '<td>'.stripslashes($record['username']).'</td>';
+       $output .= '<td>'.stripslashes($record['email']).'</td>';
+       $output .= '<td class="usermaps-center">'.$record['num'].'</td>';
+       $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
+       $output .= '<td class="usermaps-center">'.$access.'</td>';
+       $output .= '<td class="actions">';
        if($record['uid'] != 1) {
-         $output .= "<a class=\"sprites user-delete\" data-uid=\"".$record['uid']."\" href=\"#\">"._("Delete")."</a>";
+         $output .= '<a class="sprites user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }
-       $output .= "</td>";
-       $output .= "</tr>" . "\n";
+       $output .= '</td>';
+       $output .= '</tr>' . "\n";
        $i++;
      }
-     $output .= "</tbody>" . "\n";
-     $output .= "</table>" . "\n";
-     $output .= "<script type=\"text/javascript\">
-       $(\".grid-users td.actions a.toolsRefresh\").click(function(){
+     $output .= '</tbody>' . "\n";
+     $output .= '</table>' . "\n";
+     $output .= '<script type="text/javascript">
+       $(".grid-users td.actions a.toolsRefresh").click(function(){
          Mappr.loadUserList();
          return false;
        });
-       </script>";
+       </script>';
    }
 
    header("Content-Type: text/html");
@@ -173,7 +173,7 @@ class USERS {
     $this->_db->query($sql);
 
     header("Content-Type: application/json");
-    echo "{\"status\":\"ok\"}";
+    echo '{"status":"ok"}';
   }
 
 }
