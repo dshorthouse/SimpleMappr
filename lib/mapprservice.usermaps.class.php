@@ -205,18 +205,18 @@ class USERMAPS {
   * Show method to obtain map data
   */
   private function show_map() {
-    $where = "";
-    if(!$this->_uid == 1) { $where = " AND uid = ".$this->_db->escape($this->_uid); }
-    $sql = "
+    $where = '';
+    if(!$this->_uid == 1) { $where = ' AND uid = "'.$this->_db->escape($this->_uid).'"'; }
+    $sql = '
       SELECT
         mid, map
       FROM 
         maps
       WHERE
-        mid=".$this->_db->escape($this->_request[0]) . $where;
+        mid="'.$this->_db->escape($this->_request[0]) . '"'.$where;
     $record = $this->_db->query_first($sql);
 
-    $data['status'] = "ok";
+    $data['status'] = 'ok';
     $data['mid'] = $record['mid'];
     $data['map'] = unserialize($record['map']);
 
@@ -228,16 +228,16 @@ class USERMAPS {
   * Destroy method to delete a map
   */
   private function destroy_map() {
-    $where = "mid=".$this->_db->escape($this->_request[0]);
+    $where = 'mid='.$this->_db->escape($this->_request[0]);
     if($this->_uid != 1) {
       $where .= ' AND uid = '.$this->_db->escape($this->_uid);
     }
-    $sql = "
+    $sql = '
       DELETE 
       FROM
         maps
       WHERE 
-        ".$where;
+        '.$where;
     $this->_db->query($sql);
 
     header("Content-Type: application/json");

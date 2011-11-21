@@ -359,7 +359,7 @@ function partial_layers() {
     $output .= '<h3><a href="#">'.sprintf(_("Layer %d"),$i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
     $output .= '<div class="fieldset-taxon">' . "\n";
-    $output .= '<span class="fieldset-title">'._("Legend").'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords[$i][title]" />' . "\n";
+    $output .= '<span class="fieldset-title">'._("Legend").'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$i.'][title]" />' . "\n";
     $output .= '</div>' . "\n";
     $output .= '<div class="resizable-textarea">' . "\n";
     $output .= '<span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="coords['.$i.'][data]"></textarea></span>' . "\n";
