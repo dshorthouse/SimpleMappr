@@ -55,6 +55,10 @@ class MAPPR {
 
   public $image;
 
+  public $scale;
+
+  public $legend;
+
   /* shapes and their mapfile configurations */
   public $shapes = array();
 
@@ -113,6 +117,14 @@ class MAPPR {
         FORMATOPTION 'QUANTIZE_FORCE=ON'
         FORMATOPTION 'QUANTIZE_DITHER=OFF'
         FORMATOPTION 'QUANTIZE_COLORS=256'
+      END
+
+      OUTPUTFORMAT
+        NAME pnga_transparent
+        DRIVER AGG/PNG
+        MIMETYPE 'image/png'
+        IMAGEMODE RGBA
+        TRANSPARENT ON
       END
 
       OUTPUTFORMAT
@@ -614,6 +626,7 @@ class MAPPR {
     // Set the output format and size
     if(isset($this->output) && $this->output) {
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
+      if($output == 'pptx') { $output = 'pnga_transparent'; }
       $this->map_obj->selectOutputFormat($output);
     }
 
@@ -627,7 +640,7 @@ class MAPPR {
     $this->add_base_layer();
 
     //zoom in
-    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->download) $this->zoom_in();
+    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !($this->download || $this->output == 'pptx')) { $this->zoom_in(); }
 
     //zoom out
     if(isset($this->zoom_out) && $this->zoom_out) { $this->zoom_out(); }
@@ -642,7 +655,9 @@ class MAPPR {
     }
 
     //crop
-    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->download) { $this->set_crop(); }
+    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && ($this->download || $this->output == 'pptx')) {
+      $this->set_crop();
+    }
 
     //add shaded political regions
     $this->add_regions();
@@ -655,7 +670,6 @@ class MAPPR {
     //add the coordinates
     $this->add_coordinates();
 
-    // Prepare the output
     $this->prepare_output();
 
     return $this;
@@ -851,7 +865,11 @@ class MAPPR {
     //set the size as selected
     $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
     $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
-    $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+    if($this->output == 'pptx') {
+      $this->map_obj->setSize($width,$height);
+    } else {
+      $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+    }
 
     //set the extent to match that of the crop
     $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
@@ -1268,8 +1286,8 @@ class MAPPR {
     }
     if(!$this->download) {
       $this->map_obj->legend->set("status", MS_DEFAULT);
-      $legend = $this->map_obj->drawLegend();
-      $this->_legend_url = $legend->saveWebImage();
+      $this->legend = $this->map_obj->drawLegend();
+      $this->_legend_url = $this->legend->saveWebImage();
     }
   }
   
@@ -1299,8 +1317,8 @@ class MAPPR {
     }
     if(!$this->download) {
       $this->map_obj->scalebar->set("status", MS_DEFAULT);
-      $scale = $this->map_obj->drawScalebar();
-      $this->_scalebar_url = $scale->saveWebImage();
+      $this->scale = $this->map_obj->drawScalebar();
+      $this->_scalebar_url = $this->scale->saveWebImage();
     }
   }
 
@@ -1308,7 +1326,7 @@ class MAPPR {
   * Add a border to a downloaded map image
   */
   private function add_border() {
-    if($this->download && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
+    if(($this->download || $this->output == 'pptx') && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
       $outline_layer = ms_newLayerObj($this->map_obj);
       $outline_layer->set("name","outline");
       $outline_layer->set("type",MS_LAYER_POLYGON);
@@ -1368,7 +1386,7 @@ class MAPPR {
   * Get a user-defined file name, cleaned of illegal characters
   * @return string
   */
-  private function get_file_name() {
+  public function get_file_name() {
     return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name) . "." . $this->output;
   }
   

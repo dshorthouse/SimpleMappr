@@ -14,5 +14,6 @@ $mappr_wfs->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
 $mappr_wfs->get_request()
           ->make_service()
           ->execute()
+          ->prepapre_output()
           ->get_output();
 ?>

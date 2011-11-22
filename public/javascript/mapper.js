@@ -1650,6 +1650,14 @@ $(function () {
     $('.download-message').show();
 
     switch(filetype) {
+      case 'pptx':
+        $('#output').val('pptx');
+        if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
+        formData = $("form").serialize();
+        $('body').download(self.settings.baseUrl + "/application/pptx/", formData, 'post');
+        $('#output').val('pnga');
+      break;
+
       case 'kml':
         formData = $("form").serialize();
         $('body').download(self.settings.baseUrl + "/application/kml/", formData, 'post');

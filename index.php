@@ -19,7 +19,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <body>
 <div id="header" class="clearfix">
 <h1 id="site-title" class="sprites">SimpleMapp<span>r</span></h1>
-<div id="site-tagline"><?php echo _("point maps for publication"); ?></div>
+<div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
 <div id="site-languages">
 <!--
 <ul><?php foreach($header[1] as $key => $langs): ?><li><?php if($key == 'en'): ?><?php echo '<a href="/" onclick="javascript: Mappr.clearLanguage();">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'">'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul>
@@ -423,7 +423,7 @@ function partial_scales() {
 function partial_filetypes() {
   $output = '';
 
-  $file_types = array('svg', 'png', 'tif', 'kml');
+  $file_types = array('svg', 'png', 'tif', 'pptx', 'kml');
   foreach($file_types as $type) {
     $checked = ($type == "svg") ? ' checked="checked"': '';
     $asterisk = ($type == "svg") ? '*' : '';
