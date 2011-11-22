@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: SimpleMappr v1.5\n"
 "Report-Msgid-Bugs-To: (snipped)\n"
 "POT-Creation-Date: 2011-11-01 00:29-0500\n"
-"PO-Revision-Date: 2011-11-21 17:25-0500\n"
+"PO-Revision-Date: 2011-11-22 17:12-0500\n"
 "Last-Translator: David Shorthouse <(snipped)>\n"
 "Language-Team: English (en) <(snipped)>\n"
 "Language: en\n"
@@ -36,7 +36,7 @@ msgid "publication,map"
 msgstr ""
 
 #: .index.php:22
-msgid "point maps for publication"
+msgid "point maps for publication and presentation"
 msgstr ""
 
 #: .index.php:29
@@ -473,12 +473,12 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: .tabs/about.php:34
+#: .tabs/about.php:35
 #, php-format
 msgid "The code behind SimpleMappr may be obtained at %s"
 msgstr ""
 
-#: .tabs/about.php:38
+#: .tabs/about.php:39
 #, php-format
 msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
 msgstr ""
@@ -496,127 +496,135 @@ msgid "Recent Updates"
 msgstr ""
 
 #: .tabs/about.php:13
-msgid "November 18, 2011"
+msgid "November 22, 2011"
 msgstr ""
 
 #: .tabs/about.php:13
+msgid "Improvements: Added download as PowerPoint (.pptx)."
+msgstr ""
+
+#: .tabs/about.php:14
+msgid "November 18, 2011"
+msgstr ""
+
+#: .tabs/about.php:14
 msgid "Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."
 msgstr ""
 
-#: .tabs/about.php:14
+#: .tabs/about.php:15
 msgid "November 17, 2011"
 msgstr ""
 
-#: .tabs/about.php:14
+#: .tabs/about.php:15
 msgid "Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."
 msgstr ""
 
-#: .tabs/about.php:15
+#: .tabs/about.php:16
 msgid "November 16, 2011"
 msgstr ""
 
-#: .tabs/about.php:15
+#: .tabs/about.php:16
 msgid "Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."
 msgstr ""
 
-#: .tabs/about.php:16
+#: .tabs/about.php:17
 msgid "November 15, 2011"
 msgstr ""
 
-#: .tabs/about.php:16
+#: .tabs/about.php:17
 msgid "Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."
 msgstr ""
 
-#: .tabs/about.php:17
+#: .tabs/about.php:18
 msgid "November 4, 2011"
 msgstr ""
 
-#: .tabs/about.php:17
+#: .tabs/about.php:18
 msgid "Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."
 msgstr ""
 
-#: .tabs/about.php:18
+#: .tabs/about.php:19
 msgid "October 24, 2011"
 msgstr ""
 
-#: .tabs/about.php:18
+#: .tabs/about.php:19
 msgid "Bug fixes: corrected mechanism to draw map borders to accommodate rotation."
 msgstr ""
 
-#: .tabs/about.php:19
+#: .tabs/about.php:20
 msgid "October 23, 2011"
 msgstr ""
 
-#: .tabs/about.php:19
+#: .tabs/about.php:20
 msgid "Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."
 msgstr ""
 
-#: .tabs/about.php:20
+#: .tabs/about.php:21
 msgid "October 20, 2011"
 msgstr ""
 
-#: .tabs/about.php:20
+#: .tabs/about.php:21
 msgid "Improvements: added a Country label option; scale bar is now always present in preview but optional for download."
 msgstr ""
 
-#: .tabs/about.php:21
+#: .tabs/about.php:22
 msgid "October 19, 2011"
 msgstr ""
 
-#: .tabs/about.php:21
+#: .tabs/about.php:22
 msgid "Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."
 msgstr ""
 
-#: .tabs/about.php:22
+#: .tabs/about.php:23
 msgid "October 18, 2011"
 msgstr ""
 
-#: .tabs/about.php:22
+#: .tabs/about.php:23
 msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
 msgstr ""
 
-#: .tabs/about.php:23
+#: .tabs/about.php:24
 msgid "October 6, 2011"
 msgstr ""
 
-#: .tabs/about.php:23
+#: .tabs/about.php:24
 msgid "Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."
 msgstr ""
 
-#: .tabs/about.php:24
+#: .tabs/about.php:25
 msgid "October 2, 2011"
 msgstr ""
 
-#: .tabs/about.php:24
+#: .tabs/about.php:25
 msgid "Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."
 msgstr ""
 
-#: .tabs/about.php:25
+#: .tabs/about.php:26
 msgid "October 1, 2011"
 msgstr ""
 
-#: .tabs/about.php:25
+#: .tabs/about.php:26
 msgid "Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."
 msgstr ""
 
-#: .tabs/about.php:27
+#: .tabs/about.php:28
 msgid "In the Wild"
 msgstr ""
 
-#: .tabs/about.php:33
+#: .tabs/about.php:34
 #: .tabs/help.php:170
 msgid "Code"
 msgstr ""
 
-#: .tabs/about.php:35
+#: .tabs/about.php:36
 msgid "History"
 msgstr ""
 
-#: .tabs/about.php:36
+#: .tabs/about.php:37
 msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
 msgstr ""
 
-#: .tabs/about.php:37
+#: .tabs/about.php:38
 msgid "Acknowledgments"
 msgstr ""
 
