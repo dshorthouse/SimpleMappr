@@ -97,29 +97,27 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapWrapper h2{text-align:middle;font-size:0.75em;margin:10px 0 5px;padding:0;}
 #actionsBar{margin:0;padding:0;position:absolute;top:0;left:0;width:810px;outline-color:-moz-use-text-color;outline-style:none;outline-width:medium;font-weight:normal;height:1.4em;}
 #actionsBar a{text-decoration:none;}
-#actionsBar ul.dropdown{list-style:none;margin:0;padding:0;}
-#actionsBar ul.dropdown li{list-style:none;font-size:small;float:left;zoom:1;z-index:1001;border:1px solid transparent;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
-#actionsBar ul.dropdown li.hover, #actionsBar ul.dropdown li:hover{position:relative;}
-#actionsBar ul.dropdown li a{display:block;margin:3px 4px;}
-#actionsBar ul.dropdown li a.tooltip{width:16px;height:16px;}
-#actionsBar ul.dropdown li a.toolsZoomIn{background-position:0 -661px;}
-#actionsBar ul.dropdown li a.toolsZoomOut{background-position:0 -693px;}
-#actionsBar ul.dropdown li a.rotateAnticlockwise{background-position:0 -224px;}
-#actionsBar ul.dropdown li a.rotateClockwise{background-position:0 -256px;}
-#actionsBar ul.dropdown li a.toolsCrop{background-position:0 -885px;}
-#actionsBar ul.dropdown li a.toolsQuery{background-position:0 -821px;}
-#actionsBar ul.dropdown li a.toolsDraw{background-position:0 -853px;}
-#actionsBar ul.dropdown li a.toolsRefresh{background-position:0 -160px;}
-#actionsBar ul.dropdown li a.toolsRebuild{background-position:0 -128px;}
-#actionsBar ul.dropdown li ul{visibility:hidden;position:absolute;top:100%;left:0;width:50px;margin:0;padding:0;}
-#actionsBar ul.dropdown li ul li{float:none;z-index:1002;}
-#actionsBar ul.dropdown li ul li a{width:100%;display:block;text-decoration:none;background:none;}
-#actionsBar ul.sub_menu{border-top:none;border-right:1px solid #AAA;border-bottom:1px solid #AAA;border-left:1px solid #AAA;border-radius:0 0 4px 4px;-moz-border-radius:0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;}
-#actionsBar ul.sub_menu li{border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;}
-#actionsBar ul.sub_menu li.ui-state-default{background:#CCC}
-#actionsBar ul.sub_menu li.ui-state-hover{background:none;background:#E2E2E2;}
-#actionsBar ul.sub_menu li a{margin:0px !important;}
+#actionsBar ul{margin:0;padding:0;}
+#actionsBar ul li{list-style:none;font-size:small;float:left;zoom:1;z-index:1001;border:1px solid transparent;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
+#actionsBar ul li.hover, #actionsBar ul li:hover{position:relative;}
+#actionsBar ul li a{display:block;margin:3px 4px;}
+#actionsBar ul li a.tooltip{width:16px;height:16px;}
+#actionsBar ul li a.toolsZoomIn{background-position:0 -661px;}
+#actionsBar ul li a.toolsZoomOut{background-position:0 -693px;}
+#actionsBar ul li a.rotateAnticlockwise{background-position:0 -224px;}
+#actionsBar ul li a.rotateClockwise{background-position:0 -256px;}
+#actionsBar ul li a.toolsCrop{background-position:0 -885px;}
+#actionsBar ul li a.toolsQuery{background-position:0 -821px;}
+#actionsBar ul li a.toolsDraw{background-position:0 -853px;}
+#actionsBar ul li a.toolsRefresh{background-position:0 -160px;}
+#actionsBar ul li a.toolsRebuild{background-position:0 -128px;}
+#actionsBar ul li a.map-saveItem{padding:0px 0px 0px 20px;width:auto;}
+#actionsBar ul li a.map-download{background-position:0 -789px;}
+#actionsBar ul li a.map-save{background-position:0 -448px;}
+#actionsBar ul li a.map-embed{display:none;background-position:0 -565px;}
 #actionsBar ul li a img{border:0 none;height:16px;margin:2px;width:16px;}
+#actionsBar #mapTitle{margin:0 0 0 20px;padding:0;font-style:italic;font-size:1em;display:inline;height:1.3em;line-height:1.3em;}
+#actionsBar #map-saveDialog{display:inline;position:absolute;right:0px;}
 .customJzoom .jcrop-vline, .customJzoom .jcrop-hline{background-color:#FF0000;}
 .jcrop-coord{position:absolute;border:1px solid #AAA;background-color:#E0E0E0;opacity:0.6;filter:alpha(opacity=60);padding:3px;z-index:500;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;width:100px;font-size:0.7em !important;}
 #jcrop-coord-ul{left:9px;top:9px;text-align:left;}
@@ -128,12 +126,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #jcrop-dimension-wrapper .jcrop-dimension{border:0px;background-color:transparent;font-size:1em;width:40px;}
 #jcrop-dimension-wrapper #jcrop-dimension-w{margin-right:2px;text-align:right;}
 #jcrop-dimension-wrapper #jcrop-dimension-h{margin-left:2px;text-align:left;}
-#actionsBar #mapTitle{margin:0 0 0 30px;padding:0;font-style:italic;font-size:1em;display:inline;line-height:27px;}
-#actionsBar #map-saveDialog{font-size:0.75em;display:inline;line-height:27px;position:absolute;right:0px;}
-#actionsBar #map-saveDialog a.map-saveItem{padding:0px 5px 0px 20px;}
-#actionsBar #map-saveDialog a.map-download{background-position:0 -789px;width:16px;height:16px;}
-#actionsBar #map-saveDialog a.map-save{background-position:0 -448px;width:16px;height:16px;}
-#actionsBar #map-saveDialog a.map-embed{display:none;background-position:0 -565px;width:16px;height:16px;}
 #map{position:absolute;top:40px;left:0;width:800px;}
 #mapImage{position:relative;}
 #mapImage #mapOutputImage{background-color:#FFF;}

@@ -79,7 +79,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <div id="map-preview">
 <div id="mapWrapper">
 <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
-<ul class="dropdown">
+<ul>
 <li><a href="#" class="sprites tooltip toolsZoomIn" title="<?php echo _("zoom in ctrl+"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out ctrl-"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsCrop" title="<?php echo _("crop ctrl+x"); ?>"></a></li>
@@ -88,13 +88,13 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <li><a href="#" class="sprites tooltip toolsRebuild" title="<?php echo _("rebuild ctrl+n"); ?>"></a></li>
 </ul>
 <h3 id="mapTitle"></h3>
-<div id="map-saveDialog">
+<ul id="map-saveDialog">
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<span><a class="sprites tooltip map-saveItem map-save" href="#" title="save ctrl+s"><?php echo _("Save"); ?></a></span>
-<span><a class="sprites tooltip map-saveItem map-embed" href="#" title="embed" data-mid=""><?php echo _("Embed"); ?></a></span>
+<li><a class="sprites tooltip map-saveItem map-save" href="#" title="save ctrl+s"><?php echo _("Save"); ?></a></li>
+<li><a class="sprites tooltip map-saveItem map-embed" href="#" title="embed" data-mid=""><?php echo _("Embed"); ?></a></li>
 <?php endif; ?>
-<span><a class="sprites map-saveItem map-download tooltip" href="#" title="download ctrl+d"><?php echo _("Download"); ?></a></span>
-</div>
+<li><a class="sprites tooltip map-saveItem map-download" href="#" title="download ctrl+d"><?php echo _("Download"); ?></a></li>
+</ul>
 </div>
 <div id="map">
 <div id="mapImage">

@@ -304,7 +304,7 @@ $(function () {
   Mappr.bindToolbar = function () {
     var self = this;
 
-    $("ul.dropdown li").hover(function () {
+    $("#actionsBar ul li").hover(function () {
       $(this).addClass("ui-state-hover");
     }, function () {
       $(this).removeClass("ui-state-hover");
@@ -1231,7 +1231,7 @@ $(function () {
     var self    = this,
         types   = ['img','kml','json'];
 
-    $('.map-embed').attr("data-mid", mid).show().click(function () {
+    $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function () {
       $.each(types, function() {
         if(this === 'img') {
           $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
