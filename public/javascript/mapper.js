@@ -1440,7 +1440,7 @@ $(function () {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (450).toString(),
+      width         : (500).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,

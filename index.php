@@ -207,16 +207,15 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <input type="text" id="file-name" maxlength="30" size="30" />
 </p>
 <fieldset>
-<legend><?php echo _("Scale"); ?></legend>
-<?php echo partial_scales(); ?>
-<div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
-</fieldset>
-<fieldset>
 <legend><?php echo _("File type"); ?></legend>
 <?php echo partial_filetypes(); ?>
 </fieldset>
 <fieldset>
 <legend><?php echo _("Options"); ?></legend>
+<div class="download-options">
+<?php echo partial_scales(); ?>
+<div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
+</div>
 <input type="checkbox" id="border" />
 <label for="border"><?php echo _("include border"); ?></label>
 <input type="checkbox" id="legend" disabled="disabled" />
@@ -224,7 +223,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <input type="checkbox" id="scalebar" disabled="disabled" />
 <label for="scalebar"><?php echo _("embed scalebar"); ?></label>
 </fieldset>
-<p>*<?php echo _("svg does not include scalebar, legend, or relief layers"); ?></p>
+<p>*<?php echo _("does not include scalebar, legend, or relief layers"); ?></p>
 </div>
 <div class="download-message"><?php echo _("Building file for download..."); ?></div>
 </div>
@@ -422,13 +421,15 @@ function partial_scales() {
 
 function partial_filetypes() {
   $output = '';
-
   $file_types = array('svg', 'png', 'tif', 'pptx', 'kml');
   foreach($file_types as $type) {
+    $extra = '';
     $checked = ($type == "svg") ? ' checked="checked"': '';
-    $asterisk = ($type == "svg") ? '*' : '';
     $output .= '<input type="radio" id="download-'.$type.'" class="download-filetype" name="download-filetype" value="'.$type.'"'.$checked.' />';
-    $output .= '<label for="download-'.$type.'">'.$type.$asterisk.'</label>';
+    $asterisk = ($type == "svg" || $type == "kml") ? '*' : '';
+    if($type == 'kml') { $extra = ' (Google Earth)'; }
+    if($type == 'pptx') { $extra = ' (PowerPoint)'; }
+    $output .= '<label for="download-'.$type.'">'.$type.$asterisk.$extra.'</label>';
   }
 
   return $output;
