@@ -550,14 +550,20 @@ $(function () {
   };
 
   Mappr.toggleFileType = function (obj) {
-    if($(obj).attr("id") !== 'download-svg') {
-      $.each(["border", "legend", "scalebar"], function () {
-        $('#'+this).removeAttr("disabled");
-      });
-    } else {
+    if($(obj).attr("id") === 'download-svg' || $(obj).attr("id") === 'download-pptx') {
       $.each(["legend", "scalebar"], function () {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
+      $('#border').removeAttr("disabled");
+    } else if($(obj).attr("id") === 'download-kml') {
+      $.each(["legend", "scalebar", "border"], function () {
+        $('#'+this).attr("checked", false).attr("disabled", "disabled");
+      });
+    } else {
+      $.each(["border", "legend", "scalebar"], function () {
+        $('#'+this).removeAttr("disabled");
+      });
+      $('#border').removeAttr("disabled");
     }
   };
 
