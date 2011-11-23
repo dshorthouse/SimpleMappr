@@ -20,6 +20,7 @@ textarea{resize:none;padding:0;}
 #site-languages{display:none;position:absolute;right:300px;}
 #site-languages ul{list-style:none;margin:0px;padding:0px;}
 #site-languages li{list-style:none;display:inline;margin:0px 5px;padding:0px;}
+#site-languages li a.selected{color:white;}
 #initial-message{width:180px;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;margin:40px 20px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;}
 #wrapper{position:absolute;width:100%;top:25px;}
 #tabs{min-height:500px;display:none;border:0px;}
@@ -99,7 +100,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #actionsBar a{text-decoration:none;}
 #actionsBar ul{margin:0;padding:0;}
 #actionsBar ul li{list-style:none;font-size:small;float:left;zoom:1;z-index:1001;border:1px solid transparent;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;}
-#actionsBar ul li.hover, #actionsBar ul li:hover{position:relative;}
 #actionsBar ul li a{display:block;margin:3px 4px;}
 #actionsBar ul li a.tooltip{width:16px;height:16px;}
 #actionsBar ul li a.toolsZoomIn{background-position:0 -661px;}
