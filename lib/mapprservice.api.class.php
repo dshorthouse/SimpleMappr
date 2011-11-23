@@ -42,10 +42,14 @@ class MAPPRAPI extends MAPPR {
     //ping API to return JSON
     $this->ping             = $this->load_param('ping', false);
     if($this->ping) {
+      header("Pragma: public");
+      header("Expires: 0");
+      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+      header("Cache-Control: private",false);
       header("Content-Type: application/json");
       $output = array("status" => "ok");
       echo json_encode($output);
-      exit;
+      exit();
     }
 
     $this->download         = true;
