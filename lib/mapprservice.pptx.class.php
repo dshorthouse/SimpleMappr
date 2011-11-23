@@ -62,26 +62,38 @@ class MAPPRPPTX extends MAPPR {
       $currentSlide = $objPHPPowerPoint->getActiveSlide();
       $currentSlide->setSlideLayout( PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT );
 
+      $width = 950;
+      $height = 720;
+
+      $files = array();
       $images = array('image', 'scale', 'legend');
       foreach($images as $image) {
-        $file = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
-        $size = getimagesize($file);
+        $files[$image]['file'] = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
+        $files[$image]['size'] = getimagesize($files[$image]['file']);
+      }
+
+      $scale = ($files['image']['size'][0] > $width) ? $files['image']['size'][0]/$width : 1;
+
+      foreach($files as $type => $value) {
+        $size = getimagesize($value['file']);
         $shape = $currentSlide->createDrawingShape();
         $shape->setName('SimpleMappr ' . $this->get_file_name());
         $shape->setDescription('SimpleMappr ' . $this->get_file_name());
-        $shape->setPath($file);
-        $shape->setWidth($size[0]);
-        $shape->setHeight($size[1]);
-        if($image == 'image') {
-          $shape->setOffsetX((950-round($size[0]))/2);
-          $shape->setOffsetY((720-round($size[1]))/2);
+        $shape->setPath($value['file']);
+        $shape->setWidth(round($value['size'][0]/$scale));
+        $shape->setHeight(round($value['size'][1]/$scale));
+        $shape_width = $shape->getWidth();
+        $shape_height = $shape->getHeight();
+        if($type == 'image') {
+          $shape->setOffsetX(($width-$shape_width)/2);
+          $shape->setOffsetY(($height-$shape_height)/2);
         }
-        if($image == 'scale') {
-          $shape->setOffsetX(950-round($size[0]*1.5)-$this->_slidepadding);
-          $shape->setOffsetY(720-round($size[1])*4-$this->_slidepadding);
+        if($type == 'scale') {
+          $shape->setOffsetX($width-round($shape_width*1.5)-$this->_slidepadding);
+          $shape->setOffsetY($height-round($shape_height*4)-$this->_slidepadding);
         }
-        if($image == 'legend') {
-          $shape->setOffsetX(950-round($size[0])-$this->_slidepadding);
+        if($type == 'legend') {
+          $shape->setOffsetX($width-$shape_width-$this->_slidepadding);
           $shape->setOffsetY(200);
         }
       }
@@ -89,8 +101,8 @@ class MAPPRPPTX extends MAPPR {
       $shape = $currentSlide->createRichTextShape();
       $shape->setHeight(25);
       $shape->setWidth(450);
-      $shape->setOffsetX(950 - 450 - $this->_slidepadding);
-      $shape->setOffsetY(720 - 25 - $this->_slidepadding);
+      $shape->setOffsetX($width - 450 - $this->_slidepadding);
+      $shape->setOffsetY($height - 25 - $this->_slidepadding);
       $shape->getAlignment()->setHorizontal( PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT );
       $shape->getAlignment()->setVertical( PHPPowerPoint_Style_Alignment::VERTICAL_CENTER );
       $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));

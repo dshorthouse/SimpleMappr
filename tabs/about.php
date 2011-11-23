@@ -10,6 +10,7 @@ require_once('../config/conf.php');
 <p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("November 23, 2011"); ?></dt><dd><?php echo _("Improvements: Added download as Word (.pptx)."); ?></dd>
 <dt class="update"><?php echo _("November 22, 2011"); ?></dt><dd><?php echo _("Improvements: Added download as PowerPoint (.pptx)."); ?></dd>
 <dt class="update"><?php echo _("November 18, 2011"); ?></dt><dd><?php echo _("Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."); ?></dd>
 <dt class="update"><?php echo _("November 17, 2011"); ?></dt><dd><?php echo _("Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."); ?></dd>

@@ -550,7 +550,7 @@ $(function () {
   };
 
   Mappr.toggleFileType = function (obj) {
-    if($(obj).attr("id") === 'download-svg' || $(obj).attr("id") === 'download-pptx') {
+    if($(obj).attr("id") === 'download-svg' || $(obj).attr("id") === 'download-pptx' || $(obj).attr("id") === 'download-docx') {
       $.each(["legend", "scalebar"], function () {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
@@ -1440,7 +1440,7 @@ $(function () {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (500).toString(),
+      width         : (600).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : false,
@@ -1661,6 +1661,14 @@ $(function () {
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
         $('body').download(self.settings.baseUrl + "/application/pptx/", formData, 'post');
+        $('#output').val('pnga');
+      break;
+
+      case 'docx':
+        $('#output').val('docx');
+        if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
+        formData = $("form").serialize();
+        $('body').download(self.settings.baseUrl + "/application/docx/", formData, 'post');
         $('#output').val('pnga');
       break;
 

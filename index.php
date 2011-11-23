@@ -421,7 +421,7 @@ function partial_scales() {
 
 function partial_filetypes() {
   $output = '';
-  $file_types = array('svg', 'png', 'tif', 'pptx', 'kml');
+  $file_types = array('svg', 'png', 'tif', 'pptx', 'docx', 'kml');
   foreach($file_types as $type) {
     $extra = '';
     $checked = ($type == "svg") ? ' checked="checked"': '';
@@ -429,6 +429,7 @@ function partial_filetypes() {
     $asterisk = ($type == "svg" || $type == "kml") ? '*' : '';
     if($type == 'kml') { $extra = ' (Google Earth)'; }
     if($type == 'pptx') { $extra = ' (PowerPoint)'; }
+    if($type == 'docx') { $extra = ' (Word)'; }
     $output .= '<label for="download-'.$type.'">'.$type.$asterisk.$extra.'</label>';
   }
 

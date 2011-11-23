@@ -626,7 +626,7 @@ class MAPPR {
     // Set the output format and size
     if(isset($this->output) && $this->output) {
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
-      if($output == 'pptx') { $output = 'pnga_transparent'; }
+      if($output == 'pptx' || $output == 'docx') { $output = 'pnga_transparent'; }
       $this->map_obj->selectOutputFormat($output);
     }
 
@@ -640,7 +640,9 @@ class MAPPR {
     $this->add_base_layer();
 
     //zoom in
-    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !($this->download || $this->output == 'pptx')) { $this->zoom_in(); }
+    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
+      $this->zoom_in();
+    }
 
     //zoom out
     if(isset($this->zoom_out) && $this->zoom_out) { $this->zoom_out(); }
@@ -655,7 +657,7 @@ class MAPPR {
     }
 
     //crop
-    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && ($this->download || $this->output == 'pptx')) {
+    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->is_resize()) {
       $this->set_crop();
     }
 
@@ -740,7 +742,7 @@ class MAPPR {
   */ 
   private function set_map_size() {
     $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
-    if($this->download) {
+    if($this->is_resize()) {
       $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
     }
   }
@@ -865,11 +867,7 @@ class MAPPR {
     //set the size as selected
     $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
     $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
-    if($this->output == 'pptx') {
-      $this->map_obj->setSize($width,$height);
-    } else {
-      $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
-    }
+    $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
 
     //set the extent to match that of the crop
     $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
@@ -893,7 +891,7 @@ class MAPPR {
         if($this->coords[$j]['size']) {
           $size = $this->coords[$j]['size'];
         }
-        if($this->download) {
+        if($this->is_resize()) {
           $size = ($this->coords[$j]['size']) ? $this->_download_factor*$this->coords[$j]['size'] : $this->_download_factor*8;
         }
         $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
@@ -1098,7 +1096,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1122,7 +1120,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
               $class->label->set("position", MS_CC);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1138,7 +1136,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1146,7 +1144,7 @@ class MAPPR {
               $class->label->color->setRGB(10, 10, 10);
               $style = ms_newStyleObj($class);
               $style->set("symbolname","circle");
-              $style->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
+              $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
               $style->color->setRGB(100,100,100);
             break;
 
@@ -1158,7 +1156,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
               $class->label->set("position", MS_CC);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1174,7 +1172,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1190,7 +1188,7 @@ class MAPPR {
               $class = ms_newClassObj($layer);
               $class->label->set("font", "arial");
               $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
               $class->label->set("position", MS_UR);
               $class->label->set("offsetx", 3);
               $class->label->set("offsety", 3);
@@ -1219,7 +1217,7 @@ class MAPPR {
       $class = ms_newClassObj($layer);
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
-      $class->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
+      $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
       $class->label->set("position", MS_CC);
       $class->label->color->setRGB(30, 30, 30);
 
@@ -1265,16 +1263,16 @@ class MAPPR {
   * Create the legend file
   */
   private function add_legend() {
-    $this->map_obj->legend->set("keysizex", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keysizey", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keyspacingx", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
-    $this->map_obj->legend->set("keyspacingy", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keysizey", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+    $this->map_obj->legend->set("keyspacingx", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+    $this->map_obj->legend->set("keyspacingy", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
     $this->map_obj->legend->set("postlabelcache", 1);
     $this->map_obj->legend->set("transparent", 0);
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);
-    $this->map_obj->legend->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+    $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
     $this->map_obj->legend->label->set("antialias", 50);
     $this->map_obj->legend->label->color->setRGB(0,0,0);
     
@@ -1290,6 +1288,13 @@ class MAPPR {
       $this->_legend_url = $this->legend->saveWebImage();
     }
   }
+
+  private function is_resize() {
+    if($this->download || $this->output == 'pptx' || $this->output == 'docx') {
+      return true;
+    }
+    return false;
+  }
   
   /**
   * Create a scalebar image
@@ -1297,15 +1302,15 @@ class MAPPR {
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", 3);
-    $this->map_obj->scalebar->set("height", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*4 : 8);
-    $this->map_obj->scalebar->set("width", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*100 : 200);
+    $this->map_obj->scalebar->set("height", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*4 : 8);
+    $this->map_obj->scalebar->set("width", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*100 : 200);
     $this->map_obj->scalebar->color->setRGB(30,30,30);
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
     $this->map_obj->scalebar->set("transparent", 1);
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
-    $this->map_obj->scalebar->label->set("size", ($this->download && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
+    $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
     $this->map_obj->scalebar->label->set("antialias", 50);
     $this->map_obj->scalebar->label->color->setRGB(0,0,0);
     
@@ -1326,7 +1331,7 @@ class MAPPR {
   * Add a border to a downloaded map image
   */
   private function add_border() {
-    if(($this->download || $this->output == 'pptx') && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
+    if($this->is_resize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
       $outline_layer = ms_newLayerObj($this->map_obj);
       $outline_layer->set("name","outline");
       $outline_layer->set("type",MS_LAYER_POLYGON);
