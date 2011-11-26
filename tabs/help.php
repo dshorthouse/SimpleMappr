@@ -131,7 +131,7 @@ $("#filter-countries")
       <dd><?php echo _("once a map is saved, click this icon to obtain a URL for embedding on other websites."); ?></dd>
 
       <dt class="sprites toolsDownload"><?php echo _("Download"); ?>:</dt>
-      <dd><?php echo _("choose from a web-friendly png, high resolution tif, pptx (PowerPoint), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."); ?></dd>
+      <dd><?php echo _("choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."); ?></dd>
     </dl>
 
     <div class="header">
