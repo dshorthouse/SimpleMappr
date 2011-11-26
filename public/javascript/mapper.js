@@ -1012,17 +1012,19 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/",
       dataType : 'html',
       success  : function(data) {
-        $('#usermaps').find('.usermaps-loading').remove().end().html(data);
-
-        $('.map-load').click(function () {
-          self.loadMap(this);
-          return false;
-        });
-
-        $('.map-delete').click(function () {
-          self.deleteMapConfirmation(this);
-          return false;
-        });
+        if(typeof data === 'object' && data.error) {
+          window.location.reload();
+        } else {
+          $('#usermaps').find('.usermaps-loading').remove().end().html(data);
+          $('.map-load').click(function () {
+            self.loadMap(this);
+            return false;
+          });
+          $('.map-delete').click(function () {
+            self.deleteMapConfirmation(this);
+            return false;
+          });
+        }
       }
     });
 
@@ -1305,13 +1307,15 @@ $(function () {
       url      : this.settings.baseUrl + "/users/",
       dataType : 'html',
       success  : function (data) {
-        $('#userdata').find('.userdata-loading').remove().end().html(data);
-
-        $('.user-delete').click(function () {
-          self.deleteUserConfirmation(this);
-          return false;
-        });
-
+        if(typeof data === 'object' && data.error) {
+          window.location.reload();
+        } else {
+          $('#userdata').find('.userdata-loading').remove().end().html(data);
+          $('.user-delete').click(function () {
+            self.deleteUserConfirmation(this);
+            return false;
+          });
+        }
       }
     });
 

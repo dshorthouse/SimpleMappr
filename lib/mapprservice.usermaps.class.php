@@ -45,6 +45,18 @@ class USERMAPS {
   }
 
   /*
+  * Set header to prevent caching
+  */
+  private function set_header() {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
+    session_start();
+    return $this;
+  }
+
+  /*
   * Utility method
   */
   private function execute() {
@@ -58,18 +70,6 @@ class USERMAPS {
       $this->_db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
       $this->restful_action();
     }
-  }
-
-  /*
-  * Set header to prevent caching
-  */
-  private function set_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    session_start();
-    return $this;
   }
 
   /*
