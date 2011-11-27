@@ -1012,7 +1012,7 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/",
       dataType : 'html',
       success  : function(data) {
-        if(typeof data === 'object' && data.error) {
+        if(data.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
           $('#usermaps').find('.usermaps-loading').remove().end().html(data);
@@ -1307,7 +1307,7 @@ $(function () {
       url      : this.settings.baseUrl + "/users/",
       dataType : 'html',
       success  : function (data) {
-        if(typeof data === 'object' && data.error) {
+        if(data.indexOf("access denied") !== -1) {
           window.location.reload();
         } else {
           $('#userdata').find('.userdata-loading').remove().end().html(data);
