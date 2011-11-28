@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: SimpleMappr v1.5\n"
 "Report-Msgid-Bugs-To: (snipped)\n"
 "POT-Creation-Date: 2011-11-01 00:29-0500\n"
-"PO-Revision-Date: 2011-11-22 17:12-0500\n"
+"PO-Revision-Date: 2011-11-27 21:51-0500\n"
 "Last-Translator: David Shorthouse <(snipped)>\n"
 "Language-Team: English (en) <(snipped)>\n"
 "Language: en\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .index.php:212
+#: .index.php:217
 #, php-format
 msgid "Dimensions: %s"
 msgstr ""
 
-#: .index.php:389
+#: .index.php:388
 #, php-format
 msgid "Region %d"
 msgstr ""
@@ -151,19 +151,19 @@ msgstr ""
 
 #: .index.php:93
 #: .index.php:196
-#: .index.php:263
+#: .index.php:262
 #: .tabs/help.php:127
 msgid "Save"
 msgstr ""
 
 #: .index.php:94
-#: .index.php:276
+#: .index.php:275
 #: .tabs/help.php:130
 msgid "Embed"
 msgstr ""
 
 #: .index.php:96
-#: .index.php:265
+#: .index.php:264
 #: .tabs/help.php:133
 msgid "Download"
 msgstr ""
@@ -189,7 +189,7 @@ msgid "Records Out of Range"
 msgstr ""
 
 #: .index.php:118
-#: .index.php:268
+#: .index.php:267
 msgid "Building preview..."
 msgstr ""
 
@@ -198,13 +198,13 @@ msgid "Settings"
 msgstr ""
 
 #: .index.php:125
-#: .index.php:362
-#: .index.php:392
+#: .index.php:361
+#: .index.php:391
 msgid "Legend"
 msgstr ""
 
 #: .index.php:127
-#: .index.php:274
+#: .index.php:273
 msgid "legend will appear here"
 msgstr ""
 
@@ -278,7 +278,7 @@ msgid "marine"
 msgstr ""
 
 #: .index.php:148
-#: .index.php:219
+#: .index.php:214
 #: .tabs/help.php:114
 msgid "Options"
 msgstr ""
@@ -321,164 +321,160 @@ msgid "File name"
 msgstr ""
 
 #: .index.php:210
-msgid "Scale"
-msgstr ""
-
-#: .index.php:215
 msgid "File type"
 msgstr ""
 
-#: .index.php:221
+#: .index.php:220
 msgid "include border"
 msgstr ""
 
-#: .index.php:223
+#: .index.php:222
 msgid "embed legend"
 msgstr ""
 
-#: .index.php:225
+#: .index.php:224
 msgid "embed scalebar"
 msgstr ""
 
-#: .index.php:227
-msgid "svg does not include scalebar, legend, or relief layers"
+#: .index.php:226
+msgid "does not include scalebar, legend, or relief layers"
 msgstr ""
 
-#: .index.php:229
+#: .index.php:228
 msgid "Building file for download..."
 msgstr ""
 
-#: .index.php:261
+#: .index.php:260
 msgid "Warning"
 msgstr ""
 
-#: .index.php:264
+#: .index.php:263
 msgid "Cancel"
 msgstr ""
 
-#: .index.php:266
-#: .index.php:273
+#: .index.php:265
+#: .index.php:272
 msgid "Delete"
 msgstr ""
 
-#: .index.php:269
+#: .index.php:268
 msgid "Saving..."
 msgstr ""
 
-#: .index.php:270
+#: .index.php:269
 msgid "You are missing a legend for at least one of your Point Data or Regions layers."
 msgstr ""
 
-#: .index.php:271
+#: .index.php:270
 msgid "Loading your maps..."
 msgstr ""
 
-#: .index.php:272
+#: .index.php:271
 msgid "Loading user list..."
 msgstr ""
 
-#: .index.php:273
+#: .index.php:272
 msgid "Are you sure you want to delete"
 msgstr ""
 
-#: .index.php:275
+#: .index.php:274
 msgid "Example Coordinates"
 msgstr ""
 
-#: .index.php:279
+#: .index.php:278
 msgid "Additional parameters"
 msgstr ""
 
-#: .index.php:279
+#: .index.php:278
 msgid "width, height"
 msgstr ""
 
-#: .index.php:327
-#: .index.php:335
+#: .index.php:326
+#: .index.php:334
 msgid "--select--"
 msgstr ""
 
-#: .index.php:336
+#: .index.php:335
 msgid "plus"
 msgstr ""
 
-#: .index.php:337
+#: .index.php:336
 msgid "cross"
 msgstr ""
 
-#: .index.php:338
+#: .index.php:337
 msgid "solid"
 msgstr ""
 
-#: .index.php:339
+#: .index.php:338
 msgid "circle (s)"
 msgstr ""
 
-#: .index.php:340
+#: .index.php:339
 msgid "star (s)"
 msgstr ""
 
-#: .index.php:341
+#: .index.php:340
 msgid "square (s)"
 msgstr ""
 
-#: .index.php:342
+#: .index.php:341
 msgid "triangle (s)"
 msgstr ""
 
-#: .index.php:344
+#: .index.php:343
 msgid "open"
 msgstr ""
 
-#: .index.php:345
+#: .index.php:344
 msgid "circle (o)"
 msgstr ""
 
-#: .index.php:346
+#: .index.php:345
 msgid "star (o)"
 msgstr ""
 
-#: .index.php:347
+#: .index.php:346
 msgid "square (o)"
 msgstr ""
 
-#: .index.php:348
+#: .index.php:347
 msgid "triangle (o)"
 msgstr ""
 
-#: .index.php:357
-#: .index.php:387
+#: .index.php:356
+#: .index.php:386
 msgid "Remove"
 msgstr ""
 
-#: .index.php:359
+#: .index.php:358
 msgid "Layer %d"
 msgstr ""
 
-#: .index.php:369
+#: .index.php:368
 msgid "Shape"
 msgstr ""
 
-#: .index.php:369
+#: .index.php:368
 msgid "Size"
 msgstr ""
 
-#: .index.php:370
-#: .index.php:399
+#: .index.php:369
+#: .index.php:398
 msgid "Color"
 msgstr ""
 
-#: .index.php:372
-#: .index.php:401
+#: .index.php:371
+#: .index.php:400
 msgid "Clear"
 msgstr ""
 
-#: .tabs/about.php:35
+#: .tabs/about.php:36
 #, php-format
 msgid "The code behind SimpleMappr may be obtained at %s"
 msgstr ""
 
-#: .tabs/about.php:39
+#: .tabs/about.php:40
 #, php-format
 msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
 msgstr ""
@@ -496,135 +492,143 @@ msgid "Recent Updates"
 msgstr ""
 
 #: .tabs/about.php:13
-msgid "November 22, 2011"
+msgid "November 23, 2011"
 msgstr ""
 
 #: .tabs/about.php:13
+msgid "Improvements: Added download as Word (.docx)."
+msgstr ""
+
+#: .tabs/about.php:14
+msgid "November 22, 2011"
+msgstr ""
+
+#: .tabs/about.php:14
 msgid "Improvements: Added download as PowerPoint (.pptx)."
 msgstr ""
 
-#: .tabs/about.php:14
+#: .tabs/about.php:15
 msgid "November 18, 2011"
 msgstr ""
 
-#: .tabs/about.php:14
+#: .tabs/about.php:15
 msgid "Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."
 msgstr ""
 
-#: .tabs/about.php:15
+#: .tabs/about.php:16
 msgid "November 17, 2011"
 msgstr ""
 
-#: .tabs/about.php:15
+#: .tabs/about.php:16
 msgid "Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."
 msgstr ""
 
-#: .tabs/about.php:16
+#: .tabs/about.php:17
 msgid "November 16, 2011"
 msgstr ""
 
-#: .tabs/about.php:16
+#: .tabs/about.php:17
 msgid "Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."
 msgstr ""
 
-#: .tabs/about.php:17
+#: .tabs/about.php:18
 msgid "November 15, 2011"
 msgstr ""
 
-#: .tabs/about.php:17
+#: .tabs/about.php:18
 msgid "Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."
 msgstr ""
 
-#: .tabs/about.php:18
+#: .tabs/about.php:19
 msgid "November 4, 2011"
 msgstr ""
 
-#: .tabs/about.php:18
+#: .tabs/about.php:19
 msgid "Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."
 msgstr ""
 
-#: .tabs/about.php:19
+#: .tabs/about.php:20
 msgid "October 24, 2011"
 msgstr ""
 
-#: .tabs/about.php:19
+#: .tabs/about.php:20
 msgid "Bug fixes: corrected mechanism to draw map borders to accommodate rotation."
 msgstr ""
 
-#: .tabs/about.php:20
+#: .tabs/about.php:21
 msgid "October 23, 2011"
 msgstr ""
 
-#: .tabs/about.php:20
+#: .tabs/about.php:21
 msgid "Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."
 msgstr ""
 
-#: .tabs/about.php:21
+#: .tabs/about.php:22
 msgid "October 20, 2011"
 msgstr ""
 
-#: .tabs/about.php:21
+#: .tabs/about.php:22
 msgid "Improvements: added a Country label option; scale bar is now always present in preview but optional for download."
 msgstr ""
 
-#: .tabs/about.php:22
+#: .tabs/about.php:23
 msgid "October 19, 2011"
 msgstr ""
 
-#: .tabs/about.php:22
+#: .tabs/about.php:23
 msgid "Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."
 msgstr ""
 
-#: .tabs/about.php:23
+#: .tabs/about.php:24
 msgid "October 18, 2011"
 msgstr ""
 
-#: .tabs/about.php:23
+#: .tabs/about.php:24
 msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
 msgstr ""
 
-#: .tabs/about.php:24
+#: .tabs/about.php:25
 msgid "October 6, 2011"
 msgstr ""
 
-#: .tabs/about.php:24
+#: .tabs/about.php:25
 msgid "Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."
 msgstr ""
 
-#: .tabs/about.php:25
+#: .tabs/about.php:26
 msgid "October 2, 2011"
 msgstr ""
 
-#: .tabs/about.php:25
+#: .tabs/about.php:26
 msgid "Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."
 msgstr ""
 
-#: .tabs/about.php:26
+#: .tabs/about.php:27
 msgid "October 1, 2011"
 msgstr ""
 
-#: .tabs/about.php:26
+#: .tabs/about.php:27
 msgid "Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."
 msgstr ""
 
-#: .tabs/about.php:28
+#: .tabs/about.php:29
 msgid "In the Wild"
 msgstr ""
 
-#: .tabs/about.php:34
+#: .tabs/about.php:35
 #: .tabs/help.php:170
 msgid "Code"
 msgstr ""
 
-#: .tabs/about.php:36
+#: .tabs/about.php:37
 msgid "History"
 msgstr ""
 
-#: .tabs/about.php:37
+#: .tabs/about.php:38
 msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
 msgstr ""
 
-#: .tabs/about.php:38
+#: .tabs/about.php:39
 msgid "Acknowledgments"
 msgstr ""
 
@@ -773,7 +777,7 @@ msgid "once a map is saved, click this icon to obtain a URL for embedding on oth
 msgstr ""
 
 #: .tabs/help.php:134
-msgid "choose from a web-friendly png, high resolution tif, kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
+msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
 msgstr ""
 
 #: .tabs/help.php:140
