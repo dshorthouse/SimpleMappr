@@ -20,11 +20,9 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <div id="header" class="clearfix">
 <h1 id="site-title" class="sprites">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
-<!--
 <div id="site-languages">
 <ul><?php foreach($header[1] as $key => $langs): ?><?php $selected = ''; if($key == $language) { $selected = ' class="selected" '; } ?><li><?php if($key == 'en'): ?><?php echo '<a href="/"'.$selected.' onclick="javascript: Mappr.clearLanguage();">'.$langs['native'].'</a>'; ?><?php else: ?><?php echo '<a href="/?lang='.$key.'"'.$selected.'>'.$langs['native'].'</a>'; ?><?php endif; ?></li><?php endforeach; ?></ul>
 </div>
--->
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _("Sign Out"); ?></a></span></div>
 <?php else: ?>

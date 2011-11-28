@@ -3,7 +3,7 @@ require 'find'
 system(`rm -f messages.po`)
 po_file = File.open("messages.po", 'a')
 
-excludes = [".git", ".gitignore", ".DS_Store", "api", "application", "config", "error", "i18n", "lib", "logout", "places", "public", "query", "session", "tmp", "usermaps", "users", "wfs"]
+excludes = [".git", ".gitignore", ".DS_Store", "api", "application", "config", "error", "i18n", "logout", "places", "public", "query", "session", "tmp", "usermaps", "users", "wfs"]
 exclude_files = []
 strings = []
 lines = []
