@@ -61,6 +61,7 @@ class MAPPREMBED extends MAPPR {
     $this->height           = $this->load_param('height', 400);
     $this->image_size       = array($this->width, $this->height);
     $this->output           = $this->load_param('format','pnga');
+    $this->callback         = $this->load_param('callback', null);
 
     return $this;
   }
@@ -193,7 +194,11 @@ class MAPPREMBED extends MAPPR {
           'type'       => 'name',
           'properties' => array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84')
         );
-        echo json_encode($output);
+        $output = json_encode($output);
+        if(isset($this->callback) && $this->callback) {
+          $output = $this->callback . '(' . $output . ');';
+        }
+        echo $output;
       break;
 
       case 'kml':

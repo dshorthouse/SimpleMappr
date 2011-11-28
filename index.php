@@ -280,6 +280,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
   <p><input id="embed-kml" type="text" size="65" value="" /></p>
   <div class="header"><h2><?php echo _('GeoJSON'); ?></h2></div>
   <p><input id="embed-json" type="text" size="65" value="" /></p>
+  <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
 </div>
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
