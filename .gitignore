@@ -24,3 +24,7 @@ lib/mapserver/maps/**/*
 .DS_Store
 ehthumbs.db
 Thumbs.db
+
+# Translation files #
+#####################
+*.mo
