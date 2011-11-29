@@ -1009,7 +1009,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/",
+      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage(),
       dataType : 'html',
       success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
@@ -1304,7 +1304,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : this.settings.baseUrl + "/users/",
+      url      : this.settings.baseUrl + "/users/" + self.getLanguage(),
       dataType : 'html',
       success  : function (data) {
         if(data.indexOf("access denied") !== -1) {
@@ -1320,6 +1320,29 @@ $(function () {
     });
 
   };
+
+  Mappr.getParameterByName = function (name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS  = "[\\?&]" + name + "=([^&#]*)",
+        regex   = new RegExp(regexS),
+        results = regex.exec(window.location.href);
+
+    if(results === null) {
+      return "";
+    } else {
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+  };
+
+  Mappr.getLanguage = function() {
+    var param = "", lang = this.getParameterByName("lang");
+
+    if(lang === "fr" || lang === "es") {
+      param = "?lang=" + lang;
+    }
+    return param;
+  };
+
 
   Mappr.deleteUserConfirmation = function (obj) {
     var self    = this,
@@ -1834,7 +1857,7 @@ $(function () {
     $('#initial-message').hide();
     $('#site-logout').show();
     $('#site-languages').show();
-    $("#tabs").tabs().show();
+    $("#tabs").tabs( { cache : false }).show();
     $('#mapTools').tabs();
     $('.fieldSets').accordion({
       header : 'h3',

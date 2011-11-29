@@ -847,7 +847,7 @@ msgstr ""
 
 #: .tabs/help.php:149
 msgid "-25,140 (Australia)"
-msgstr ""
+msgstr "-25,140 (Australie)"
 
 #: .tabs/help.php:152
 msgid "Pushpin color"

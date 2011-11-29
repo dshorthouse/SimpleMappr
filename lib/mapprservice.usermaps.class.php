@@ -30,6 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require_once('../config/conf.php');
 require_once('../config/conf.db.php');
 require_once('db.class.php');
+require_once('mapprservice.usersession.class.php');
+
 
 class USERMAPS {
 
@@ -40,6 +42,7 @@ class USERMAPS {
   private $_db;
 
   function __construct() {
+    USERSESSION::select_language();
     $this->set_header()
          ->execute();
   }

@@ -1,3 +1,7 @@
+<?php
+require_once('../lib/mapprservice.usersession.class.php');
+USERSESSION::select_language();
+?>
 <div id="map-feedback">
 <div id="general-feedback" class="panel ui-corner-all">
 <p><?php echo _("Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."); ?></p>

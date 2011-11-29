@@ -2,6 +2,8 @@
 require_once('../config/conf.php');
 require_once('../config/conf.db.php');
 require_once('../lib/db.class.php');
+require_once('../lib/mapprservice.usersession.class.php');
+USERSESSION::select_language();
 
 $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 $sql = "SELECT * FROM stateprovinces ORDER BY country";

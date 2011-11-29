@@ -1,5 +1,7 @@
 <?php
 require_once('../config/conf.php');
+require_once('../lib/mapprservice.usersession.class.php');
+USERSESSION::select_language();
 ?>
 <!-- about tab -->
 <div id="map-about">

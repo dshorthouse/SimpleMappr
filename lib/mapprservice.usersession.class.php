@@ -87,19 +87,10 @@ class USERSESSION {
 
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "");
 
+    self::select_language();
+
     if(isset($_GET["lang"]) && array_key_exists($_GET["lang"], self::$accepted_languages)) {
-      putenv('LC_ALL='.self::$accepted_languages[$_GET["lang"]]['code']);
-      setlocale(LC_ALL, self::$accepted_languages[$_GET["lang"]]['code']);
-      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
-      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
-      textdomain(self::$domain);
       $cookie["lang"] = $_GET["lang"];
-    } else {
-      putenv('LC_ALL='.self::$accepted_languages['en']['code']);
-      setlocale(LC_ALL, self::$accepted_languages['en']['code']);
-      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
-      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
-      textdomain(self::$domain);
     }
 
     if($cookie["lang"] == "en" && isset($_GET["lang"])) {
@@ -126,6 +117,22 @@ class USERSESSION {
     $param = "";
     if($lang && $lang != 'en') { $param = "/?lang=" . $lang; }
     return $param;
+  }
+
+  public static function select_language() {
+    if(isset($_GET["lang"]) && array_key_exists($_GET["lang"], self::$accepted_languages)) {
+      putenv('LC_ALL='.self::$accepted_languages[$_GET["lang"]]['code']);
+      setlocale(LC_ALL, self::$accepted_languages[$_GET["lang"]]['code']);
+      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
+      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+      textdomain(self::$domain);
+    } else {
+      putenv('LC_ALL='.self::$accepted_languages['en']['code']);
+      setlocale(LC_ALL, self::$accepted_languages['en']['code']);
+      bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
+      bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+      textdomain(self::$domain);
+    }
   }
 
   function __construct() {
