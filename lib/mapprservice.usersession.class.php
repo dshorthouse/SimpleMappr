@@ -40,12 +40,14 @@ class USERSESSION {
     'fr' => array(
       'native' => 'Français',
       'code'   => 'fr_FR.UTF-8'),
+/*
     'es' => array(
       'native' => 'Español',
       'code'   => 'es_ES.UTF-8')
+*/
   );
 
-  public static $domain = "messages"; //TODO: make this dynamic to accommodate server-side caching in a way similar to css and js
+  public static $domain = "messages";
 
   private $_token;
 

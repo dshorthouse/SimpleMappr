@@ -88,10 +88,10 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <h3 id="mapTitle"></h3>
 <ul id="map-saveDialog">
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<li><a class="sprites tooltip map-saveItem map-save" href="#" title="save ctrl+s"><?php echo _("Save"); ?></a></li>
-<li><a class="sprites tooltip map-saveItem map-embed" href="#" title="embed" data-mid=""><?php echo _("Embed"); ?></a></li>
+<li><a class="sprites tooltip map-saveItem map-save" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
+<li><a class="sprites tooltip map-saveItem map-embed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
 <?php endif; ?>
-<li><a class="sprites tooltip map-saveItem map-download" href="#" title="download ctrl+d"><?php echo _("Download"); ?></a></li>
+<li><a class="sprites tooltip map-saveItem map-download" href="#" title="<?php echo _("download ctrl+d"); ?>"><?php echo _("Download"); ?></a></li>
 </ul>
 </div>
 <div id="map">

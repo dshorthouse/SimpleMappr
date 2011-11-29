@@ -41,11 +41,11 @@ msgstr "cartes point pour la publication et présentation"
 
 #: .index.php:27
 msgid "Sign Out"
-msgstr "Déconnecter"
+msgstr "Déconnectez"
 
 #: .index.php:29
 msgid "Sign In"
-msgstr "Connecter"
+msgstr "Connectez"
 
 #: .index.php:33
 msgid "Building application..."
@@ -74,7 +74,7 @@ msgstr "Cartes"
 
 #: .index.php:39
 msgid "My Maps"
-msgstr "Me cartes"
+msgstr "Mes cartes"
 
 #: .index.php:41
 msgid "Users"
@@ -106,7 +106,7 @@ msgstr "exemples"
 
 #: .index.php:59
 msgid "Add a layer"
-msgstr "Ajouter"
+msgstr "Ajoutez"
 
 #: .index.php:60
 #: .index.php:73
@@ -115,7 +115,7 @@ msgstr "Effacer tous"
 
 #: .index.php:67
 msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."
-msgstr ""
+msgstr "Taper des pays comme Mexico, Venezuela et/ou des codes pour États/Provinces séparés par des espaces et préfixé par trois lettres de code national ISO <em>ex.</em> USA[VA], CAN[AB ON]."
 
 #: .index.php:67
 msgid "codes"
@@ -123,7 +123,7 @@ msgstr "codes"
 
 #: .index.php:72
 msgid "Add a region"
-msgstr "Ajouter"
+msgstr "Ajoutez"
 
 #: .index.php:81
 msgid "zoom in ctrl+"
@@ -131,15 +131,15 @@ msgstr "zoomer ctrl+"
 
 #: .index.php:82
 msgid "zoom out ctrl-"
-msgstr "zoom arrière ctrl-"
+msgstr "dézoomer ctrl-"
 
 #: .index.php:83
 msgid "crop ctrl+x"
-msgstr "recadrée ctrl+x"
+msgstr "recadrer ctrl+x"
 
 #: .index.php:84
 msgid "fill regions"
-msgstr "remplissez"
+msgstr "remplisser"
 
 #: .index.php:85
 msgid "refresh ctrl+r"
@@ -150,6 +150,10 @@ msgid "rebuild ctrl+n"
 msgstr "rebâtis ctrl+n"
 
 #: .index.php:91
+msgid "save ctrl+s"
+msgstr "enregistrer ctrl+s"
+
+#: .index.php:91
 #: .index.php:194
 #: .index.php:260
 #: .tabs/help.php:127
@@ -157,10 +161,18 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: .index.php:92
+msgid "embed"
+msgstr "intégrer"
+
+#: .index.php:92
 #: .index.php:273
 #: .tabs/help.php:130
 msgid "Embed"
 msgstr "Intégrer"
+
+#: .index.php:94
+msgid "download ctrl+d"
+msgstr "télécharger ctrl+d"
 
 #: .index.php:94
 #: .index.php:262
@@ -170,23 +182,23 @@ msgstr "Télécharger"
 
 #: .index.php:108
 msgid "pan up"
-msgstr ""
+msgstr "déplacer vers le haut"
 
 #: .index.php:109
 msgid "pan right"
-msgstr "pan a droite"
+msgstr "déplacer vers la droite"
 
 #: .index.php:110
 msgid "pan down"
-msgstr ""
+msgstr "déplacer vers le bas"
 
 #: .index.php:111
 msgid "pan left"
-msgstr "pan a gauche"
+msgstr "déplacer vers la gauche"
 
 #: .index.php:115
 msgid "Records Out of Range"
-msgstr ""
+msgstr "Données hors de portée"
 
 #: .index.php:116
 #: .index.php:265
@@ -285,7 +297,7 @@ msgstr "Options"
 
 #: .index.php:148
 msgid "graticules (grid)"
-msgstr "graticules ()"
+msgstr "réticules"
 
 #: .index.php:150
 msgid "fixed"
@@ -298,15 +310,15 @@ msgstr "Projection"
 
 #: .index.php:169
 msgid "zoom prior to setting projection"
-msgstr ""
+msgstr "zoomer avant de fixer la projection"
 
 #: .index.php:179
 msgid "Save and reload your map data or create a generic template."
-msgstr ""
+msgstr "Enregistrer et recharger vos donnée ou créer un modèle générique."
 
 #: .index.php:193
 msgid "Records out of range"
-msgstr ""
+msgstr "Données hors de portée"
 
 #: .index.php:196
 #: .lib/mapprservice.usermaps.class.php:158
@@ -315,7 +327,7 @@ msgstr "Titre"
 
 #: .index.php:202
 msgid "map will be cropped"
-msgstr ""
+msgstr "la carte sera recadrée"
 
 #: .index.php:204
 msgid "File name"
@@ -339,11 +351,11 @@ msgstr "inclus une échelle"
 
 #: .index.php:224
 msgid "does not include scalebar, legend, or relief layers"
-msgstr ""
+msgstr "ne comprend pas la barre d'échelle, légende, ou les couches de relief"
 
 #: .index.php:226
 msgid "Building file for download..."
-msgstr ""
+msgstr "En train de construire le fichier..."
 
 #: .index.php:258
 msgid "Warning"
@@ -362,32 +374,32 @@ msgstr "Supprimer"
 
 #: .index.php:266
 msgid "Saving..."
-msgstr ""
+msgstr "Enregistrer..."
 
 #: .index.php:267
 msgid "You are missing a legend for at least one of your Point Data or Regions layers."
-msgstr ""
+msgstr "Il vous manque une légende pour au moins un de vos Points de Données ou des Régions."
 
 #: .index.php:268
 msgid "Loading your maps..."
-msgstr ""
+msgstr "En train de charger vos cartes..."
 
 #: .index.php:269
 msgid "Loading user list..."
-msgstr ""
+msgstr "En train de charger la liste des utilisateurs"
 
 #: .index.php:270
 msgid "Are you sure you want to delete"
-msgstr ""
+msgstr "Etes-vous sûr de vouloir supprimer"
 
 #: .index.php:272
 msgid "Example Coordinates"
-msgstr ""
+msgstr "exemple des coordonnées"
 
 #: .index.php:276
 #: .index.php:281
 msgid "Additional parameters"
-msgstr ""
+msgstr "Paramètres supplémentaires"
 
 #: .index.php:276
 msgid "width, height"
@@ -395,7 +407,7 @@ msgstr "largeur, hauteur"
 
 #: .index.php:281
 msgid "callback"
-msgstr ""
+msgstr "callback"
 
 #: .index.php:325
 #: .index.php:333
@@ -428,11 +440,11 @@ msgstr "carrés (p)"
 
 #: .index.php:340
 msgid "triangle (s)"
-msgstr "traingles (p)"
+msgstr "triangles (p)"
 
 #: .index.php:342
 msgid "open"
-msgstr "overt"
+msgstr "ouvert"
 
 #: .index.php:343
 msgid "circle (o)"
@@ -475,36 +487,36 @@ msgstr "Couleur"
 #: .index.php:370
 #: .index.php:399
 msgid "Clear"
-msgstr "Effacer"
+msgstr "Effacez"
 
 #: .lib/mapprservice.pptx.class.php:108
 msgid "Created with SimpleMappr, http://www.simplemappr.net"
-msgstr ""
+msgstr "Créé avec SimpleMappr, http://www.simplemappr.net"
 
 #: .lib/mapprservice.usermaps.class.php:159
 #: .lib/mapprservice.users.class.php:125
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #: .lib/mapprservice.usermaps.class.php:177
 msgid "Load"
-msgstr ""
+msgstr "Chargez"
 
 #: .lib/mapprservice.usermaps.class.php:197
 msgid "Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab."
-msgstr ""
+msgstr "Commencez par ajouter des données sur le Point de Données ou des Régions, appuyez sur les boutons Aperçu là, puis enregistrez votre carte dans la barre supérieure de l'onglet Aperçu."
 
 #: .lib/mapprservice.usermaps.class.php:197
 msgid "Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade."
-msgstr ""
+msgstr "Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données"
 
 #: .lib/mapprservice.users.class.php:121
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #: .lib/mapprservice.users.class.php:122
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: .lib/mapprservice.users.class.php:123
 msgid "Maps"
@@ -512,29 +524,29 @@ msgstr "Cartes"
 
 #: .lib/mapprservice.users.class.php:124
 msgid "Last Access"
-msgstr ""
+msgstr "Accédé"
 
 #: .tabs/about.php:36
 #, php-format
 msgid "The code behind SimpleMappr may be obtained at %s"
-msgstr ""
+msgstr "Le code pour SimpleMappr peuvent être obtenus à %s"
 
 #: .tabs/about.php:40
 #, php-format
 msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
-msgstr ""
+msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel de cartographie utilisé est MapServer, %s via PHP MapScript."
 
 #: .tabs/about.php:7
 msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
-msgstr ""
+msgstr "Créez des cartes point de niveaux de gris en copiant et collant les coordonnées géographiques en couches, en choisissant des styles punaise, puis en téléchargeant le résultat."
 
 #: .tabs/about.php:9
 msgid "Citing"
-msgstr ""
+msgstr "Citer"
 
 #: .tabs/about.php:11
 msgid "Recent Updates"
-msgstr ""
+msgstr "Mises à jour"
 
 #: .tabs/about.php:13
 msgid "November 23, 2011"
@@ -542,7 +554,7 @@ msgstr "23 novembre, 2011"
 
 #: .tabs/about.php:13
 msgid "Improvements: Added download as Word (.docx)."
-msgstr ""
+msgstr "Améliorations: Ajout de téléchargement en tant que document Word (.docx)."
 
 #: .tabs/about.php:14
 msgid "November 22, 2011"
@@ -550,7 +562,7 @@ msgstr "22 novembre, 2011"
 
 #: .tabs/about.php:14
 msgid "Improvements: Added download as PowerPoint (.pptx)."
-msgstr ""
+msgstr "Améliorations: Ajout de téléchargement en tant que présentation PowerPoint (.pptx)."
 
 #: .tabs/about.php:15
 msgid "November 18, 2011"
@@ -558,7 +570,7 @@ msgstr "18 novembre, 2011"
 
 #: .tabs/about.php:15
 msgid "Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."
-msgstr ""
+msgstr "Améliorations: Ajout des indicateurs pour la recadrée et dimensions de téléchargement. Corrections: largeur et hauteur des images intégrées ne fonctionnent pas comme prévu."
 
 #: .tabs/about.php:16
 msgid "November 17, 2011"
@@ -566,7 +578,7 @@ msgstr "17 novembre, 2011"
 
 #: .tabs/about.php:16
 msgid "Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."
-msgstr ""
+msgstr "Améliorations: Propre URL pour image intégrées; ajouter KML and GeoJSON"
 
 #: .tabs/about.php:17
 msgid "November 16, 2011"
@@ -574,7 +586,7 @@ msgstr "16 novembre, 2011"
 
 #: .tabs/about.php:17
 msgid "Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."
-msgstr ""
+msgstr "Corrections: barre d'échelle a montré mesures exposants (rapporté par GIS Unit Kew)."
 
 #: .tabs/about.php:18
 msgid "November 15, 2011"
@@ -582,7 +594,7 @@ msgstr "15 novembre, 2011"
 
 #: .tabs/about.php:18
 msgid "Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."
-msgstr ""
+msgstr "Améliorations: ajout d'un mécanisme d'autocomplétion des noms de pays dans l'onglet Régions. Corrections: Ajout de plus de punaises de Google Earth."
 
 #: .tabs/about.php:19
 msgid "November 4, 2011"
@@ -590,7 +602,7 @@ msgstr "4 novembre, 2011"
 
 #: .tabs/about.php:19
 msgid "Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."
-msgstr ""
+msgstr "Améliorations: une nouvelle présentation pour une meilleure internationalisation"
 
 #: .tabs/about.php:20
 msgid "October 24, 2011"
@@ -598,7 +610,7 @@ msgstr "24 octobre, 2011"
 
 #: .tabs/about.php:20
 msgid "Bug fixes: corrected mechanism to draw map borders to accommodate rotation."
-msgstr ""
+msgstr "Corrections: corrigé le mécanisme qui dessine une bordure autour d'une carte tournée."
 
 #: .tabs/about.php:21
 msgid "October 23, 2011"
@@ -606,7 +618,7 @@ msgstr "23 octobre, 2011"
 
 #: .tabs/about.php:21
 msgid "Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."
-msgstr ""
+msgstr "Améliorations: converti le mécanisme faire pivoter la carte dans les curseur circulaire."
 
 #: .tabs/about.php:22
 msgid "October 20, 2011"
@@ -614,7 +626,7 @@ msgstr "20 octobre, 2011"
 
 #: .tabs/about.php:22
 msgid "Improvements: added a Country label option; scale bar is now always present in preview but optional for download."
-msgstr ""
+msgstr "Amélioration: ajouté une option de l'étiquette de pays, la barre d'échelle est maintenant toujours présent dans l'aperçu, mais est facultative pour le téléchargement."
 
 #: .tabs/about.php:23
 msgid "October 19, 2011"
@@ -622,7 +634,7 @@ msgstr "19 octobre, 2011"
 
 #: .tabs/about.php:23
 msgid "Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."
-msgstr ""
+msgstr "Améliorations: légende dans les téléchargements et les API. Corrections: un rendu correct après un ou plusieurs Points de Données ou Régions ont été enlevés; amélioration du recadrée lorsque la carte est chargée."
 
 #: .tabs/about.php:24
 msgid "October 18, 2011"
@@ -630,7 +642,7 @@ msgstr "18 octobre, 2011"
 
 #: .tabs/about.php:24
 msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
-msgstr ""
+msgstr "Améliorations: section d'étiquette dédiée au paramètres; frontières de l'Etat/Province épaissi à différencier des rivières et des contours du lac, les lacs se remplit en moins fort pour accueillir les étiquettes."
 
 #: .tabs/about.php:25
 msgid "October 6, 2011"
@@ -638,7 +650,7 @@ msgstr "6 octobre, 2011"
 
 #: .tabs/about.php:25
 msgid "Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."
-msgstr ""
+msgstr "Améliorations: suppression le format eps car il a été raster; aperçu des couches relief fait plus rapidement."
 
 #: .tabs/about.php:26
 msgid "October 2, 2011"
@@ -646,7 +658,7 @@ msgstr "2 octobre, 2011"
 
 #: .tabs/about.php:26
 msgid "Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."
-msgstr ""
+msgstr "Corrections: extension incorrecte des Points de Données/Régions après une carte enregistrée est chargée (rapporté par Chris Borkent)."
 
 #: .tabs/about.php:27
 msgid "October 1, 2011"
@@ -654,11 +666,11 @@ msgstr "1 octobre, 2011"
 
 #: .tabs/about.php:27
 msgid "Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."
-msgstr ""
+msgstr "Améliorations: raccourcis clavier pour les actions ordinaires."
 
 #: .tabs/about.php:29
 msgid "In the Wild"
-msgstr ""
+msgstr "Trouvés ailleurs"
 
 #: .tabs/about.php:35
 #: .tabs/help.php:170
@@ -671,7 +683,7 @@ msgstr "Histoire"
 
 #: .tabs/about.php:38
 msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
-msgstr ""
+msgstr "La première version de cette application a été développée par David P. Shorthouse pour aider les participants dans deux inventaire de la biodiversité planétaire (National Science Foundation). Le financement de ce travail a été coordonné par le Dr Norman Platnick, American Museum of Natural History."
 
 #: .tabs/about.php:39
 msgid "Acknowledgments"
@@ -679,131 +691,131 @@ msgstr "Remerciements"
 
 #: .tabs/api.php:7
 msgid "A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."
-msgstr ""
+msgstr "Un API peut être utilisé avec des fichiers texte séparés par des tabulations avec des paramètres supplémentaires décrites ci-dessous."
 
 #: .tabs/feedback.php:3
 msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."
-msgstr ""
+msgstr "Avez-vous utilisé SimpleMappr dans un manuscrit, une affiche, une présentation PowerPoint ou avez-vous utilisé l'API? S'il vous plaît aussi écrire une note si vous avez des demandes ou de fonctionnalité de rapports de bogues."
 
 #: .tabs/help.php:39
 msgid "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."
-msgstr ""
+msgstr "Cette application fait un usage intensif de JavaScript. Un navigateur moderne comme Internet Explorer 9, FireFox 6+, Google Chrome ou Safari 5+ est fortement recommandée."
 
 #: .tabs/help.php:46
 msgid "Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"
-msgstr ""
+msgstr "Utilisez l'onglet Aperçu pour affiner votre carte en ajustant les différentes options, télécharger le résultat, ou l'enregistrer pour réutilisation ultérieure (lorsque vous êtes connecté)"
 
 #: .tabs/help.php:48
 msgid "Toolbar buttons"
-msgstr ""
+msgstr "Boutons"
 
 #: .tabs/help.php:50
 msgid "Zoom in"
-msgstr "Zoomer"
+msgstr "zoomer"
 
 #: .tabs/help.php:51
 msgid "draw a zoom region on the preview"
-msgstr ""
+msgstr "dessiner une région de zoom sur l'aperçu"
 
 #: .tabs/help.php:53
 msgid "Zoom out"
-msgstr "Zoom en arrière"
+msgstr "dézoomer"
 
 #: .tabs/help.php:54
 msgid "zoom out one step"
-msgstr ""
+msgstr "dézoomer une étape"
 
 #: .tabs/help.php:56
 msgid "Crop"
-msgstr ""
+msgstr "recadrer"
 
 #: .tabs/help.php:57
 msgid "draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."
-msgstr ""
+msgstr "dessiner une extensible, élastique en forme de carré qui définit précisément une partie recadrée de la carte que vous souhaitez voir apparaître dans la carte exportée."
 
 #: .tabs/help.php:59
 msgid "Fill regions"
-msgstr ""
+msgstr "remplissez les régions"
 
 #: .tabs/help.php:60
 msgid "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."
-msgstr ""
+msgstr "choisissez une couleur puis tracez une extensible, élastique en forme de carré à l'ombre des États/provinces (si la couche visible) ou des pays. Les sélections sont ajoutés séquentiellement dans l'onglet Régions."
 
 #: .tabs/help.php:62
 msgid "Refresh"
-msgstr ""
+msgstr "régénérer"
 
 #: .tabs/help.php:63
 msgid "refresh the map image"
-msgstr ""
+msgstr "régénérer la carte"
 
 #: .tabs/help.php:65
 msgid "Rebuild"
-msgstr ""
+msgstr "rebâtis"
 
 #: .tabs/help.php:66
 msgid "re-render the default presentation at lowest zoom and geographic projection"
-msgstr ""
+msgstr "rendre la présentation par défaut au plus bas de zoom et projection géographique"
 
 #: .tabs/help.php:72
 msgid "select this checkbox to draw all State and Province borders for all countries"
-msgstr ""
+msgstr "tirer toutes les frontières des États et provinces pour tous les pays"
 
 #: .tabs/help.php:75
 msgid "select this checkbox to overlay lakes as black outlines"
-msgstr ""
+msgstr "superposer les lacs sous forme de contours noirs"
 
 #: .tabs/help.php:78
 msgid "select this checkbox to overlay lakes as greyscale polygons"
-msgstr ""
+msgstr "superposer les lacs en polygones gris"
 
 #: .tabs/help.php:81
 msgid "select this checkbox to overlay rivers as black outlines"
-msgstr ""
+msgstr "superposer les rivières sous forme de contours noirs"
 
 #: .tabs/help.php:84
 msgid "select this checkbox to render a color, shaded relief layer"
-msgstr ""
+msgstr "une couche relief ombré"
 
 #: .tabs/help.php:87
 msgid "select this checkbox to render a greyscale, shaded relief layer"
-msgstr ""
+msgstr "une couche relief ombré de gris"
 
 #: .tabs/help.php:93
 msgid "label countries"
-msgstr ""
+msgstr "étiquettes pour pays"
 
 #: .tabs/help.php:96
 msgid "label States and Provinces"
-msgstr ""
+msgstr "étiquettes pour États/provinces"
 
 #: .tabs/help.php:99
 msgid "label lakes"
-msgstr ""
+msgstr "étiquettes pour lacs"
 
 #: .tabs/help.php:102
 msgid "label rivers"
-msgstr ""
+msgstr "étiquettes pour rivières"
 
 #: .tabs/help.php:105
 msgid "label city, town names"
-msgstr ""
+msgstr "étiquettes pour villes et villages"
 
 #: .tabs/help.php:108
 msgid "label physical features"
-msgstr ""
+msgstr "étiquettes pour caractéristiques physiques"
 
 #: .tabs/help.php:111
 msgid "label marine features"
-msgstr ""
+msgstr "étiquettes pour caractéristiques marines"
 
 #: .tabs/help.php:116
 msgid "graticules"
-msgstr ""
+msgstr "réticules"
 
 #: .tabs/help.php:117
 msgid "draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"
-msgstr ""
+msgstr "dessiner un réticule sur la carte en utilisant soit fixe, 5, ou 10 degrés l'espacement"
 
 #: .tabs/help.php:122
 msgid "projection"
@@ -811,39 +823,39 @@ msgstr "projection"
 
 #: .tabs/help.php:123
 msgid "Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
-msgstr ""
+msgstr "Choisissez parmi plusieurs projections. [Suggestion: pour obtenir les meilleurs effets, utilisez le zoom avant ajuster la projection]"
 
 #: .tabs/help.php:128
 msgid "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."
-msgstr ""
+msgstr "en étant connecté, cliquez sur cette icône pour donner votre carte un titre et enregistrer ses paramètres."
 
 #: .tabs/help.php:131
 msgid "once a map is saved, click this icon to obtain a URL for embedding on other websites."
-msgstr ""
+msgstr "une fois qu'une carte est enregistrée, cliquez sur cette icône pour obtenir une URL pour l'intégration sur d'autres sites."
 
 #: .tabs/help.php:134
 msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
-msgstr ""
+msgstr "choisir png, tif à haute résolution, pptx (PowerPoint), docx (Word), kml (Google Earth) ou scalable vector graphic (svg). Ce dernier est recommandé pour la préparation des figures dans les manuscrits, car elle est sans perte. Toutefois, le téléchargement svg ne comprend pas une barre d'échelle, légende, ou une couche relief ombré car ce sont des raster."
 
 #: .tabs/help.php:140
 msgid "Use the Point Data tab to paste coordinates as latitude, longitude on separate lines and select the marker shape, size, and color."
-msgstr ""
+msgstr "Utilisez l'onglet Points de Données pour coller des coordonnées en latitude, longitude sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
 
 #: .tabs/help.php:143
 msgid "Coordinate format"
-msgstr ""
+msgstr "Format de coordonnées"
 
 #: .tabs/help.php:144
 msgid "in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
-msgstr ""
+msgstr "dans l'hémisphère occidental dessus de l'équateur 45.55, -120.25, dans l'hémisphère occidental dessous de l'équateur -15.66, -65.10; hémisphère oriental dessus de l'équateur 64.82, 75.1"
 
 #: .tabs/help.php:147
 msgid "Example Data Entry"
-msgstr ""
+msgstr "Exemple de données"
 
 #: .tabs/help.php:148
 msgid "38,-100 (North America)"
-msgstr ""
+msgstr "38,-100 (l'Amérique du Nord)"
 
 #: .tabs/help.php:149
 msgid "-25,140 (Australia)"
@@ -851,15 +863,15 @@ msgstr "-25,140 (Australie)"
 
 #: .tabs/help.php:152
 msgid "Pushpin color"
-msgstr ""
+msgstr "couleur du marqueur"
 
 #: .tabs/help.php:153
 msgid "configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray."
-msgstr ""
+msgstr "configuré en utilisant le schéma de couleurs RGB et un sélecteur de couleur est fourni. Par défaut, \"0 0 0\" (noir) est sélectionné. Nuances de gris peut être configuré en tapant des variations de triplets même numéro. Par exemple, \"10 10 10\" est gris foncé tandis que \"100 100 100\" est une nuance de gris."
 
 #: .tabs/help.php:160
 msgid "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
-msgstr ""
+msgstr "Utilisez l'onglet Régions pour taper une liste des régions politiques que vous aimeriez ombragé et sélectionner la couleur d'ombre. Séparez chaque région politique par une virgule ou un point virgule. Alternativement, vous pouvez utiliser les codes de l'Etat/Province, comme USA[WY|WA|MT], CAN[AB BC] qui sera l'ombre du Wyoming, Washington, Montana, l'Alberta et la Colombie-Britannique. Notez que les États ou les provinces sont séparées par un espace ou un tuyau et ce sont enveloppés avec des crochets, précédée du code à trois lettres ISO du pays."
 
 #: .tabs/help.php:165
 msgid "Country"
