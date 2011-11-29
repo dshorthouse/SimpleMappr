@@ -1854,7 +1854,7 @@ $(function () {
       index = null;
       if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
-    $('#initial-message').hide();
+    $('#initial-message').css('width', ($('span', '#initial-message').width() + 10).toString() + 'px').hide();
     $('#site-logout').show();
     $('#site-languages').show();
     $("#tabs").tabs( { cache : false }).show();

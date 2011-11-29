@@ -87,7 +87,7 @@ class USERSESSION {
       exit();
     }
 
-    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "");
+    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en");
 
     self::select_language();
 

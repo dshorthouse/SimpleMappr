@@ -30,7 +30,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <?php endif; ?>
 </div>
 <div id="wrapper">
-<div id="initial-message" class="ui-corner-all ui-widget-content"><?php echo _("Building application..."); ?></div>
+<div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
 <div id="tabs">
 <ul class="navigation">
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
