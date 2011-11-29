@@ -175,8 +175,9 @@ msgid "download ctrl+d"
 msgstr "télécharger ctrl+d"
 
 #: .index.php:94
+#: .index.php:200
 #: .index.php:262
-#: .tabs/help.php:133
+#: .tabs/help.php:135
 msgid "Download"
 msgstr "Télécharger"
 

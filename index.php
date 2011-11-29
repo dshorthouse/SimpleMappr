@@ -197,7 +197,7 @@ echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
 </p>
 </div>
-<div id="mapExport" title="Download">
+<div id="mapExport" title="<?php echo _("Download"); ?>">
 <div class="download-dialog">
 <p id="mapCropMessage" class="sprites"><?php echo _("map will be cropped"); ?></p>
 <p>
