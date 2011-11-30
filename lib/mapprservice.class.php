@@ -211,6 +211,9 @@ class MAPPR {
   /* post-draw padding for latitude extent to be used as a correction factor on front-end */
   private $_oy_pad = 0;
 
+  /* toggle for producing legend as required */
+  private $_data_present = false;
+
   function __construct() {
     if (!extension_loaded("MapScript")) {
       $this->set_error("php_mapscript.so extension is not loaded");
@@ -903,7 +906,9 @@ class MAPPR {
         $data = trim($this->coords[$j]['data']);
 
         if($data) {
-      
+
+          $this->_data_present = true;
+
           $layer = ms_newLayerObj($this->map_obj);
           $layer->set("name","layer_".$j);
           $layer->set("status",MS_ON);
@@ -975,6 +980,7 @@ class MAPPR {
         $data = trim($this->regions[$j]['data']);
 
         if($data) {
+          $this->_data_present = true;
           $baselayer = true;
           //grab the textarea for regions & split
           $rows = explode("\n",$this->remove_empty_lines($data));
@@ -1282,7 +1288,7 @@ class MAPPR {
       $this->map_obj->legend->set("position", MS_UR);
       $this->map_obj->drawLegend();
     }
-    if(!$this->download) {
+    if(!$this->download && $this->_data_present) {
       $this->map_obj->legend->set("status", MS_DEFAULT);
       $this->legend = $this->map_obj->drawLegend();
       $this->_legend_url = $this->legend->saveWebImage();
