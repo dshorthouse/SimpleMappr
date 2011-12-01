@@ -1329,7 +1329,6 @@ class MAPPR {
 
   /**
   * Add a border to a downloaded map image
-  * TODO: border on lhs and bottom not being produced as expected
   */
   private function add_border() {
     if($this->is_resize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {

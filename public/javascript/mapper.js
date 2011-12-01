@@ -651,10 +651,10 @@ $(function () {
   Mappr.split = function ( val, delimiter ) {
     switch(delimiter) {
       case '[':
-       return val.split( /]/ );
+       return val.split(/\]/);
 
       default:
-        return val.split( /,\s*/ );
+        return val.split(/,\s*/);
     }
   };
 
@@ -811,7 +811,6 @@ $(function () {
               break;
             } else {
               if(i === (num_fieldsets-1)) { self.addAccordionPanel('regions'); num_fieldsets += 1; }
-              continue;
             }
           }
 
@@ -938,6 +937,8 @@ $(function () {
           autoHeight  : false,
           active      : false
         });
+
+        if(data_type === 'regions') { self.bindAutocomplete(); }
 
       }
 
@@ -1493,6 +1494,7 @@ $(function () {
     var self = this, title = "", missingTitle = false;
 
     $(".submitForm").click(function () {
+      missingTitle = false;
       $('.m-mapCoord').each(function () {
         title = $(this).parents('.ui-accordion-content').find('.m-mapTitle').keyup(function () {
           missingTitle = false;
@@ -1846,10 +1848,22 @@ $(function () {
     window.janrain.ready = true;
   };
 
+  Mappr.mapCircleSlider = function () {
+    var i = 0, output = "";
+
+    for(i = 0; i < 360; i += 1) {
+      if(i % 5 === 0) {
+        output += '<li data-rotate="' + i + '"></li>';
+      }
+    }
+    return output;
+  };
+
 
   Mappr.init = function () {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url('+self.settings.baseUrl+'/public/images/bg-rotatescroll.png)');
+    $('.overview', '#mapControls').append(self.mapCircleSlider());
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
       index = null;
       if($('#initial-message').is(':hidden')) { self.performRotation(element); }

@@ -99,9 +99,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <div id="mapControlsTransparency"></div>
 <div id="mapControls">
 <div class="viewport">
-<ul class="overview">
-<?php echo rotation_values() . "\n"; ?>
-</ul>
+<ul class="overview"></ul>
 </div>
 <div class="dot"></div>
 <div class="overlay">
@@ -432,17 +430,6 @@ function partial_filetypes() {
     $output .= '<label for="download-'.$type.'">'.$type.$asterisk.$extra.'</label>';
   }
 
-  return $output;
-}
-
-function rotation_values() {
-  $output = "";
-
-  for($i=0;$i<360;$i++) {
-    if($i % 5 == 0) {
-      $output .= '<li data-rotate="'.$i.'"></li>';
-    }
-  }
   return $output;
 }
 ?>
