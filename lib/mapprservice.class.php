@@ -211,9 +211,6 @@ class MAPPR {
   /* post-draw padding for latitude extent to be used as a correction factor on front-end */
   private $_oy_pad = 0;
 
-  /* toggle for producing legend as required */
-  private $_data_present = false;
-
   function __construct() {
     if (!extension_loaded("MapScript")) {
       $this->set_error("php_mapscript.so extension is not loaded");
@@ -907,8 +904,6 @@ class MAPPR {
 
         if($data) {
 
-          $this->_data_present = true;
-
           $layer = ms_newLayerObj($this->map_obj);
           $layer->set("name","layer_".$j);
           $layer->set("status",MS_ON);
@@ -980,7 +975,6 @@ class MAPPR {
         $data = trim($this->regions[$j]['data']);
 
         if($data) {
-          $this->_data_present = true;
           $baselayer = true;
           //grab the textarea for regions & split
           $rows = explode("\n",$this->remove_empty_lines($data));
@@ -1288,7 +1282,7 @@ class MAPPR {
       $this->map_obj->legend->set("position", MS_UR);
       $this->map_obj->drawLegend();
     }
-    if(!$this->download && $this->_data_present) {
+    if(!$this->download) {
       $this->map_obj->legend->set("status", MS_DEFAULT);
       $this->legend = $this->map_obj->drawLegend();
       $this->_legend_url = $this->legend->saveWebImage();
@@ -1335,6 +1329,7 @@ class MAPPR {
 
   /**
   * Add a border to a downloaded map image
+  * TODO: border on lhs and bottom not being produced as expected
   */
   private function add_border() {
     if($this->is_resize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
@@ -1357,9 +1352,9 @@ class MAPPR {
 
       $polyLine = ms_newLineObj();
       $polyLine->addXY(0, 0);
-      $polyLine->addXY($this->_download_factor*$this->image_size[0],0);
-      $polyLine->addXY($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
-      $polyLine->addXY(0, $this->_download_factor*$this->image_size[1]);
+      $polyLine->addXY($this->map_obj->width, 0);
+      $polyLine->addXY($this->map_obj->width, $this->map_obj->height);
+      $polyLine->addXY(0, $this->map_obj->height);
       $polyLine->addXY(0, 0);
 
       $polygon->add($polyLine);
