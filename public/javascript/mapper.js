@@ -1687,7 +1687,7 @@ $(function () {
         $('#output').val('pptx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/pptx/", formData, 'post');
+        $('body').download(self.settings.baseUrl + "/application/pptx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
@@ -1695,7 +1695,7 @@ $(function () {
         $('#output').val('docx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/docx/", formData, 'post');
+        $('body').download(self.settings.baseUrl + "/application/docx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
