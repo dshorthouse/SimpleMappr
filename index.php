@@ -46,7 +46,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>"><?php echo _("Feedback"); ?></a></li>
 <li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>"><?php echo _("API"); ?></a></li>
 </ul>
-<form id="form-mapper" action="application/" method="post" autocomplete = "off">  
+<form id="form-mapper" action="application/" method="post" autocomplete="off">
 
 <!-- multipoint tab -->
 <div id="map-points">
@@ -157,8 +157,8 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <select id="projection" name="projection">
 <?php
 foreach(MAPPR::$accepted_projections as $key => $value) {
-$selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
-echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
+  $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
+  echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 }
 ?>
 </select>
