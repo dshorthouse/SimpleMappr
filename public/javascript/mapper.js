@@ -1859,7 +1859,6 @@ $(function () {
     return output;
   };
 
-
   Mappr.init = function () {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url('+self.settings.baseUrl+'/public/images/bg-rotatescroll.png)');

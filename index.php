@@ -46,7 +46,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>"><?php echo _("Feedback"); ?></a></li>
 <li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>"><?php echo _("API"); ?></a></li>
 </ul>
-<form id="form-mapper" action="application/" method="post" autocomplete="off">
+<form id="form-mapper" action="application/" method="post" enctype="multipart/form-data" autocomplete="off">
 
 <!-- multipoint tab -->
 <div id="map-points">

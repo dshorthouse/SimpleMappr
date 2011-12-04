@@ -69,8 +69,9 @@ class MAPPR {
       OUTPUTFORMAT
         NAME png
         DRIVER AGG/PNG
-        MIMETYPE 'image/png'
         IMAGEMODE RGB
+        MIMETYPE 'image/png'
+        EXTENSION 'png'
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'QUANTIZE_FORCE=ON'
         FORMATOPTION 'QUANTIZE_DITHER=OFF'
@@ -80,39 +81,17 @@ class MAPPR {
       OUTPUTFORMAT
         NAME png_download
         DRIVER AGG/PNG
+        IMAGEMODE RGB
         MIMETYPE 'image/png'
-        IMAGEMODE RGB
-      END
-
-      OUTPUTFORMAT
-        NAME jpg
-        DRIVER AGG/JPEG
-        MIMETYPE 'image/jpeg'
-        IMAGEMODE RGB
-      END
-
-      OUTPUTFORMAT
-        NAME tif
-        DRIVER 'GDAL/GTiff'
-        MIMETYPE 'image/tiff'
-        IMAGEMODE RGBA
-        EXTENSION 'tif'
-        TRANSPARENT OFF
-      END
-
-      OUTPUTFORMAT
-        NAME svg
-        DRIVER svg
-        MIMETYPE 'image/svg+xml'
-        FORMATOPTION 'COMPRESSED_OUTPUT=FALSE'
-        FORMATOPTION 'FULL_RESOLUTION=TRUE'
+        EXTENSION 'png'
       END
 
       OUTPUTFORMAT
         NAME pnga
         DRIVER AGG/PNG
-        MIMETYPE 'image/png'
         IMAGEMODE RGB
+        MIMETYPE 'image/png'
+        EXTENSION 'png'
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'QUANTIZE_FORCE=ON'
         FORMATOPTION 'QUANTIZE_DITHER=OFF'
@@ -122,23 +101,46 @@ class MAPPR {
       OUTPUTFORMAT
         NAME pnga_transparent
         DRIVER AGG/PNG
-        MIMETYPE 'image/png'
         IMAGEMODE RGBA
+        MIMETYPE 'image/png'
+        EXTENSION 'png'
         TRANSPARENT ON
       END
 
       OUTPUTFORMAT
-        NAME pnga_download
-        DRIVER AGG/PNG
-        MIMETYPE 'image/png'
+        NAME jpg
+        DRIVER AGG/JPEG
         IMAGEMODE RGB
+        MIMETYPE 'image/jpeg'
+        EXTENSION 'jpg'
       END
 
       OUTPUTFORMAT
         NAME jpga
         DRIVER AGG/JPEG
-        MIMETYPE 'image/jpeg'
         IMAGEMODE RGB
+        MIMETYPE 'image/jpeg'
+        EXTENSION 'jpg'
+      END
+
+      OUTPUTFORMAT
+        NAME tif
+        DRIVER GDAL/GTiff
+        IMAGEMODE RGB
+        MIMETYPE 'image/tiff'
+        EXTENSION 'tif'
+        FORMATOPTION 'COMPRESS=JPEG'
+        FORMATOPTION 'JPEG_QUALITY=100'
+        FORMATOPTION 'PHOTOMETRIC=YCBCR'
+      END
+
+      OUTPUTFORMAT
+        NAME svg
+        DRIVER svg
+        MIMETYPE 'image/svg+xml'
+        EXTENSION 'svg'
+        FORMATOPTION 'COMPRESSED_OUTPUT=FALSE'
+        FORMATOPTION 'FULL_RESOLUTION=TRUE'
       END
 
       END
@@ -220,8 +222,6 @@ class MAPPR {
   }
   
   function __destruct() {
-    unset($this->image);
-    unset($this->map_obj);
   }
 
   public function __call($name, $arguments) {
@@ -618,9 +618,14 @@ class MAPPR {
     $this->map_obj->web->set("imagepath",$this->tmp_path);
     $this->map_obj->web->set("imageurl",$this->tmp_url);
 
-    $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
+    if($this->output == 'tif') {
+      $this->map_obj->set("defresolution", 300);
+      $this->map_obj->set("resolution", 300);
+    }
 
+    $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
     $this->map_obj->set("units",$units);
+
     $this->map_obj->imagecolor->setRGB(255,255,255);
 
     // Set the output format and size
