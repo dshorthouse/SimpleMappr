@@ -56,8 +56,9 @@ class MAPPRAPI extends MAPPR {
     $this->options          = array();
 
     //load the file
-    $this->file             = urldecode($this->load_param('file', '')); 
+    $this->file             = urldecode($this->load_param('file', ''));
     $this->georss           = urldecode($this->load_param('georss', ''));
+    $this->points           = $this->load_param('point', array());
     $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
     $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
     $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
@@ -69,13 +70,6 @@ class MAPPRAPI extends MAPPR {
       'data' => (array_key_exists('places', $shaded)) ? $shaded['places'] : "",
       'title' => (array_key_exists('title', $shaded)) ? $shaded['title'] : "",
       'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ",$shaded['color']) : "120 120 120"
-    );
-
-    $wkt = $this->load_param('wkt', array());
-    $this->wkt = array(
-      'data' => (array_key_exists('data', $wkt)) ? $wkt['data'] : "",
-      'title' => (array_key_exists('title', $wkt)) ? $wkt['title'] : "",
-      'color' => (array_key_exists('color', $wkt)) ? $wkt['color'] : ""
     );
 
     $this->output           = $this->load_param('output','pnga');
@@ -100,7 +94,7 @@ class MAPPRAPI extends MAPPR {
 
     //set the image size from width & height to array(width, height)
     $this->width            = $this->load_param('width', 800);
-    $this->height           = $this->load_param('height', 400);
+    $this->height           = $this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
     $this->image_size       = array($this->width, $this->height);
 
     return $this;
@@ -114,7 +108,7 @@ class MAPPRAPI extends MAPPR {
     $legend = array();
     $col = 0;
 
-    if($this->file || $this->georss) {
+    if($this->file || $this->georss || $this->points) {
       if($this->file) {
         if (@$fp = fopen($this->file, 'r')) {
           while ($line = fread($fp, 1024)) {
@@ -146,6 +140,15 @@ class MAPPRAPI extends MAPPR {
               $coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
             }
           }
+        }
+      }
+      if($this->points) {
+        $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+        foreach($this->points as $point) {
+          $coord = explode(",", $point);
+          $legend[$num_cols] = "";
+          $coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+          $num_cols++;
         }
       }
 
@@ -328,7 +331,6 @@ class MAPPRAPI extends MAPPR {
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
-
     switch($this->output) {
       case 'tif': 
         header("Content-Type: image/tiff");

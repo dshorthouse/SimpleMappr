@@ -34,6 +34,9 @@ USERSESSION::select_language();
     <dt>georss</dt>
     <dd>a URL-encoded, remote GeoRSS feed. <strong>NOTE:</strong> If both <em>file</em> and <em>georss</em> are included, points in the GeoRSS feed are treated as a single, additional "column" for <em>shape[x]</em>, <em>size[x]</em>, <em>color[x]</em> below. <em>e.g. georss=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></em></dd>
 
+    <dt>point[x]</dt>
+    <dd>single marker written as latitude,longitude <em>e.g. point[0]=45,-120</em></dd>
+
     <dt>shape[x]</dt>
     <dd>shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar <em>e.g. shape[0]=circle</em></dd>
 
