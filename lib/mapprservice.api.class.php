@@ -53,6 +53,7 @@ class MAPPRAPI extends MAPPR {
     }
 
     $this->download         = true;
+    $this->watermark        = true;
     $this->options          = array();
 
     //load the file

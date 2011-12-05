@@ -286,6 +286,8 @@ class MAPPR {
 
     $this->graticules       = (array_key_exists('grid', $this->layers)) ? true : false;
 
+    $this->watermark        = $this->load_param('watermark', false);
+
     $this->gridspace        = $this->load_param('gridspace', false);
 
     $this->download         = $this->load_param('download', false);
@@ -684,6 +686,8 @@ class MAPPR {
 
     //add the coordinates
     $this->add_coordinates();
+
+    $this->add_watermark();
 
     $this->prepare_output();
 
@@ -1218,6 +1222,36 @@ class MAPPR {
           }
         }
       }
+    }
+  }
+
+  private function add_watermark() {
+    if(isset($this->watermark) && $this->watermark) {
+      $layer = ms_newLayerObj($this->map_obj);
+      $layer->set("name", 'watermark');
+      $layer->set("type", MS_LAYER_ANNOTATION);
+      $layer->set("status", MS_ON);
+      $layer->set("transform", MS_FALSE);
+      $layer->set("sizeunits", MS_PIXELS);
+
+      $class = ms_newClassObj($layer);
+      $class->settext("http://www.simplemappr.net");
+      $class->label->set("font", "arial");
+      $class->label->set("type", MS_TRUETYPE);
+      $class->label->set("size", 8);
+      $class->label->set("position", MS_XY);
+      $class->label->color->setRGB(10, 10, 10);
+      $class->label->backgroundcolor->setRGB(255,255,255);
+
+      $shape = ms_newShapeObj(MS_SHAPE_POINT);
+      $line = ms_newLineObj();
+
+      $point = ms_newPointObj();
+      $point->setXY(5, $this->map_obj->height-5);
+
+      $line->add($point);
+      $shape->add($line);
+      $layer->addFeature($shape);
     }
   }
 

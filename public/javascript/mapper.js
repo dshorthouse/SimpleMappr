@@ -1870,7 +1870,7 @@ $(function () {
     $('#initial-message').hide();
     $('#site-logout').show();
     $('#site-languages').show();
-    $("#tabs").tabs( { cache : false }).show();
+    $("#tabs").tabs({cache : false}).show();
     $('#mapTools').tabs();
     $('.fieldSets').accordion({
       header : 'h3',
@@ -1879,7 +1879,7 @@ $(function () {
     });
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" width="200" height="27" />');
-    $(".tooltip").tipsy({gravity: 's'});
+    $(".tooltip").tipsy({gravity : 's'});
     this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();
