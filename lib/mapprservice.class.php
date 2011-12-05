@@ -1241,13 +1241,12 @@ class MAPPR {
       $class->label->set("size", 8);
       $class->label->set("position", MS_XY);
       $class->label->color->setRGB(10, 10, 10);
-//      $class->label->backgroundcolor->setRGB(255,255,255);
 
       $shape = ms_newShapeObj(MS_SHAPE_POINT);
       $line = ms_newLineObj();
 
       $point = ms_newPointObj();
-      $point->setXY(5, $this->map_obj->height-5);
+      $point->setXY(2, $this->map_obj->height-2);
 
       $line->add($point);
       $shape->add($line);
