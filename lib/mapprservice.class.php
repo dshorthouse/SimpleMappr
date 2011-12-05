@@ -737,17 +737,22 @@ class MAPPR {
       }
     }
 
+    $ext0 = (min($ext[0], $ext[2]) == $ext[0]) ? $ext[0] : $ext[2];
+    $ext2 = (max($ext[0], $ext[2]) == $ext[2]) ? $ext[2] : $ext[0];
+    $ext1 = (min($ext[1], $ext[3]) == $ext[1]) ? $ext[1] : $ext[3];
+    $ext3 = (max($ext[1], $ext[3]) == $ext[3]) ? $ext[3] : $ext[1];
+
     // Set the padding correction factors because final extent produced after draw() is off from setExtent
-    $cellsize = max(($ext[2] - $ext[0])/($this->image_size[0]-1), ($ext[3] - $ext[1])/($this->image_size[1]-1));
+    $cellsize = max(($ext2 - $ext0)/($this->image_size[0]-1), ($ext3 - $ext1)/($this->image_size[1]-1));
 
     if($cellsize > 0) {
-      $ox = max((($this->image_size[0]-1) - ($ext[2] - $ext[0])/$cellsize)/2,0);
-      $oy = max((($this->image_size[1]-1) - ($ext[3] - $ext[1])/$cellsize)/2,0);
+      $ox = max((($this->image_size[0]-1) - ($ext2 - $ext0)/$cellsize)/2,0);
+      $oy = max((($this->image_size[1]-1) - ($ext3 - $ext1)/$cellsize)/2,0);
       $this->_ox_pad = $ox*$cellsize;
       $this->_oy_pad = $oy*$cellsize;
     }
 
-    $this->map_obj->setExtent($ext[0], $ext[1], $ext[2], $ext[3]);
+    $this->map_obj->setExtent($ext0, $ext1, $ext2, $ext3);
   }
 
   /**
