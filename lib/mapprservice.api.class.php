@@ -333,12 +333,12 @@ class MAPPRAPI extends MAPPR {
     header("Cache-Control: private",false);
 
     switch($this->output) {
-      case 'tif': 
+      case 'tif':
         header("Content-Type: image/tiff");
         header("Content-Transfer-Encoding: binary");
       break;
 
-      case 'svg': 
+      case 'svg':
         header("Content-Type: image/svg+xml");
       break;
 
