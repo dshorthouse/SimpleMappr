@@ -9,6 +9,7 @@ Disallow: /i18n/
 Disallow: /lib/
 Disallow: /logout/
 Disallow: /public/
+Disallow: /places/
 Disallow: /query/
 Disallow: /session/
 Disallow: /tabs/

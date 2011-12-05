@@ -12,9 +12,6 @@ define("NUMTEXTAREA", 3);
 // Google Analytics UA-XXXXXX-XX key
 define("GOOGLE_ANALYTICS", "UA-XXXXXX-XX");
 
-// Google API key
-define("GOOGLE_API", "xxxxxxxxxxxxx");
-
 //set the default timezone
 date_default_timezone_set('America/New_York');
 
