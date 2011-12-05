@@ -187,6 +187,7 @@ class USERSESSION {
   */
   private function make_session() {
     if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
+
       $profile = $this->_auth_info['profile'];
 
       $identifier = $profile['identifier'];
@@ -200,7 +201,7 @@ class USERSESSION {
         'username'   => $username,
         'givenname'  => $givenname,
         'surname'    => $surname,
-        'email'      => $email,
+        'email'      => $email
       );
 
       $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -212,7 +213,7 @@ class USERSESSION {
         u.email,
         u.username,
         u.givenname,
-        u.surname 
+        u.surname
       FROM 
         users u 
       WHERE  

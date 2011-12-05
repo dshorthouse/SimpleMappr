@@ -304,9 +304,9 @@ class MAPPRAPI extends MAPPR {
 
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
-    $this->map_obj->scalebar->set("intervals", 3);
+    $this->map_obj->scalebar->set("intervals", ($this->width <= 500) ? 2 : 3);
     $this->map_obj->scalebar->set("height", 8);
-    $this->map_obj->scalebar->set("width", 200);
+    $this->map_obj->scalebar->set("width", ($this->width <= 500) ? 100 : 200);
     $this->map_obj->scalebar->color->setRGB(30,30,30);
     $this->map_obj->scalebar->backgroundcolor->setRGB(255,255,255);
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
@@ -314,7 +314,7 @@ class MAPPRAPI extends MAPPR {
     $this->map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
-    $this->map_obj->scalebar->label->set("size", 10);
+    $this->map_obj->scalebar->label->set("size", ($this->width <= 500) ? 8 : 10);
     $this->map_obj->scalebar->label->set("antialias", 50);
     $this->map_obj->scalebar->label->color->setRGB(0,0,0);
 
