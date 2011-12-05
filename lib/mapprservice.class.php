@@ -1241,7 +1241,7 @@ class MAPPR {
       $class->label->set("size", 8);
       $class->label->set("position", MS_XY);
       $class->label->color->setRGB(10, 10, 10);
-      $class->label->backgroundcolor->setRGB(255,255,255);
+//      $class->label->backgroundcolor->setRGB(255,255,255);
 
       $shape = ms_newShapeObj(MS_SHAPE_POINT);
       $line = ms_newLineObj();
