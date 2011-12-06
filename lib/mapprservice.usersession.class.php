@@ -73,7 +73,7 @@ class USERSESSION {
     session_unset();
     session_destroy();
     setcookie("simplemappr", "", time() - 3600, "/");
-    header('Location: http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($lang));
+    self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($lang));
   }
 
   /*
@@ -235,7 +235,7 @@ class USERSESSION {
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
-      header('Location: http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($user['lang']));
+      self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($user['lang']));
     } else {
       // echo 'An error occured: ' . $this->_auth_info['err']['msg'];
       exit();
