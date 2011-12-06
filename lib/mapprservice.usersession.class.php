@@ -89,17 +89,18 @@ class USERSESSION {
 
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en");
 
-    if(isset($_GET["lang"])) {
-      $cookie["lang"] = $_GET["lang"];
-    }
-
-    if($cookie["lang"] == "en" && isset($_GET["lang"])) {
-      if(isset($_COOKIE["simplemappr"])) { setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/"); }
-      header("Location: http://".$_SERVER["SERVER_NAME"]);
-      exit();
-    } else if($cookie["lang"] != "en" && !isset($_GET["lang"])) {
+    if($cookie["lang"] != "en" && !isset($_GET["lang"])) {
       header("Location: http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
       exit();
+    } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en") {
+      if(isset($_COOKIE["simplemappr"])) {
+        $cookie["lang"] = "en";
+        setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
+      }
+      header("Location: http://".$_SERVER["SERVER_NAME"]);
+      exit();
+    } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en") {
+      $cookie["lang"] = $_GET["lang"];
     }
 
     self::select_language();
@@ -117,7 +118,7 @@ class USERSESSION {
 
   public static function make_lang_param($lang = "") {
     $param = "";
-    if($lang && $lang != 'en') { $param = "/?lang=" . $lang; }
+    if($lang) { $param = "/?lang=" . $lang; }
     return $param;
   }
 
