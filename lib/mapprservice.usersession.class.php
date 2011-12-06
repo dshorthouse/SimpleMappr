@@ -90,15 +90,13 @@ class USERSESSION {
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en");
 
     if($cookie["lang"] != "en" && !isset($_GET["lang"])) {
-      header("Location: http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
-      exit();
+      self::redirect("http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
     } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en") {
       if(isset($_COOKIE["simplemappr"])) {
         $cookie["lang"] = "en";
         setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
       }
-      header("Location: http://".$_SERVER["SERVER_NAME"]);
-      exit();
+      self::redirect("http://".$_SERVER["SERVER_NAME"]);
     } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en") {
       $cookie["lang"] = $_GET["lang"];
     }
@@ -114,6 +112,15 @@ class USERSESSION {
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
     $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
+  }
+
+  public static function redirect($url) {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
+    header("Location: " . $url);
+    exit();
   }
 
   public static function make_lang_param($lang = "") {
