@@ -328,10 +328,6 @@ class MAPPRAPI extends MAPPR {
   }
 
   public function get_output() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
 
     switch($this->output) {
       case 'tif':
