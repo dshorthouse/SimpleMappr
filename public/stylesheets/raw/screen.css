@@ -198,6 +198,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-api dl{font-size:0.75em;}
 #map-api dl dt{font-weight:bold;}
 #map-api dl dd{margin-bottom:1.5em;}
+#map-api dl dd span.api-example{color:green;display:block;}
 #map-chat{margin:10px;}
 #map-help h3{font-size:0.75em;}
 #map-help p{font-size:0.75em;}

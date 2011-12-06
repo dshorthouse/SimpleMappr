@@ -93,7 +93,7 @@ $ ./configure \
 	(usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
 
 /***********************************************************************
-* UBUNTU SERVER (LAMP) INSTALLATION FROM SOURCE
+* UBUNTU SERVER (LAMP) INSTALLATION
 ***********************************************************************/
 
 sudo apt-get install php5-mapscript
