@@ -1800,15 +1800,6 @@ $(function () {
     }
   };
 
-  Mappr.clearLanguage = function () {
-    var cookie = $.parseJSON($.cookie("simplemappr"));
-
-    if(cookie && typeof cookie === 'object') {
-      cookie.lang = "en";
-      $.cookie("simplemappr", JSON.stringify(cookie));
-    }
-  };
-
   Mappr.activateJanrain = function () {
     var tokenUrlparam = "/", e = "", s = "";
 
