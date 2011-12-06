@@ -89,20 +89,20 @@ class USERSESSION {
 
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en");
 
-    self::select_language();
-
-    if(isset($_GET["lang"]) && array_key_exists($_GET["lang"], self::$accepted_languages)) {
+    if(isset($_GET["lang"])) {
       $cookie["lang"] = $_GET["lang"];
     }
 
     if($cookie["lang"] == "en" && isset($_GET["lang"])) {
+      if(isset($_COOKIE["simplemappr"])) { setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/"); }
       header("Location: http://".$_SERVER["SERVER_NAME"]);
       exit();
-    }
-    if($cookie["lang"] && $cookie["lang"] != "en" && !isset($_GET["lang"])) {
+    } else if($cookie["lang"] != "en" && !isset($_GET["lang"])) {
       header("Location: http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
       exit();
     }
+
+    self::select_language();
 
     if(!isset($_COOKIE["simplemappr"])) { return; }
 
