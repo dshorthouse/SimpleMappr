@@ -328,7 +328,6 @@ class MAPPRAPI extends MAPPR {
   }
 
   public function get_output() {
-
     switch($this->output) {
       case 'tif':
         header("Content-Type: image/tiff");
