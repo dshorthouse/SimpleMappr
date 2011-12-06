@@ -119,12 +119,11 @@ class USERSESSION {
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
     header("Location: " . $url);
-    exit();
   }
 
   public static function make_lang_param($lang = "") {
     $param = "";
-    if($lang) { $param = "/?lang=" . $lang; }
+    if($lang && $lang != "en") { $param = "/?lang=" . $lang; }
     return $param;
   }
 
