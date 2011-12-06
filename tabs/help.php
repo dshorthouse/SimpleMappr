@@ -146,9 +146,9 @@ $("#filter-countries")
       <dd><?php echo _("in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"); ?></dd>
     </dl>
     <div id="example-data">
-      <img src="../public/images/help_data.png" alt="<?php echo _("Example Data Entry"); ?>" />
-      <img src="../public/images/38100.png" alt="<?php echo _("38,-100 (North America)"); ?>" />
-      <img src="../public/images/25140.png" alt="<?php echo _("-25,140 (Australia)"); ?>" />
+      <img src="../public/images/help_data.png" alt="<?php echo _("Example Data Entry"); ?>" width="400" height="215" />
+      <img src="../public/images/38100.png" alt="<?php echo _("38,-100 (North America)"); ?>" width="200" height="100" />
+      <img src="../public/images/25140.png" alt="<?php echo _("-25,140 (Australia)"); ?>" width="200" height="100" />
     </div>
     <dl class="ui-helper-clearfix">
       <dt><?php echo _("Pushpin color"); ?>:</dt>
