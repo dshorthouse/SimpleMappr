@@ -106,7 +106,6 @@ class USERSESSION {
     if(!isset($_COOKIE["simplemappr"])) { return; }
 
     self::set_session();
-
     $_SESSION["simplemappr"] = $cookie;
     setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
 
@@ -231,9 +230,9 @@ class USERSESSION {
       $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
       $user['lang'] = $this->_lang;
 
-      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/");
       self::set_session();
       $_SESSION['simplemappr'] = $user;
+      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/");
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
