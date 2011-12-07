@@ -59,9 +59,20 @@ class PHPPowerPoint_Shape_Drawing extends PHPPowerPoint_Shape_BaseDrawing implem
     {
     	// Initialise values
     	$this->_path				= '';
+        $this->_alignment = new PHPPowerPoint_Style_Alignment();
     	
     	// Initialize parent
     	parent::__construct();
+    }
+
+    /**
+     * Get alignment
+     * 
+     * @return PHPPowerPoint_Style_Alignment
+     */
+    public function getAlignment()
+    {
+    	return $this->_alignment;
     }
     
     /**

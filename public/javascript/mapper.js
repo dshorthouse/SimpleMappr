@@ -1803,6 +1803,8 @@ $(function () {
   Mappr.activateJanrain = function () {
     var tokenUrlparam = "/", e = "", s = "";
 
+    function isJanrainReady() { window.janrain.ready = true; }
+
     if(Mappr.settings.active === "false") {
       if (typeof window.janrain !== 'object') { window.janrain = {}; }
       window.janrain.settings = {};
@@ -1814,9 +1816,11 @@ $(function () {
       window.janrain.settings.tokenUrl = Mappr.settings.baseUrl + '/session' + tokenUrlparam;
 
       if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", this.isJanrainReady, false);
-      } else {
-        window.attachEvent('onload', this.isJanrainReady);
+        document.addEventListener("DOMContentLoaded", isJanrainReady, false);
+      } else if (window.attachEvent) {
+        window.attachEvent('onload', isJanrainReady);
+      } else if (window.onLoad) {
+        window.onload = isJanrainReady;
       }
 
       e = document.createElement('script');
@@ -1832,11 +1836,6 @@ $(function () {
       s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(e, s);
     }
-  };
-
-  Mappr.isJainrainReady = function () {
-    if (typeof window.janrain !== 'object') { window.janrain = {}; }
-    window.janrain.ready = true;
   };
 
   Mappr.mapCircleSlider = function () {

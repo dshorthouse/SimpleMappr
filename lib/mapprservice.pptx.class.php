@@ -31,7 +31,6 @@ require_once ('mapprservice.class.php');
 
 /** PHPPowerPoint */
 set_include_path(MAPPR_DIRECTORY . '/lib/PHPPowerPoint/');
-
 include_once 'PHPPowerPoint.php';
 include_once 'PHPPowerPoint/IOFactory.php';
 
@@ -60,7 +59,7 @@ class MAPPRPPTX extends MAPPR {
 
       // Create slide
       $currentSlide = $objPHPPowerPoint->getActiveSlide();
-      $currentSlide->setSlideLayout( PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT );
+      $currentSlide->setSlideLayout(PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
 
       $width = 950;
       $height = 720;
@@ -87,6 +86,7 @@ class MAPPRPPTX extends MAPPR {
         if($type == 'image') {
           $shape->setOffsetX(($width-$shape_width)/2);
           $shape->setOffsetY(($height-$shape_height)/2);
+          $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER);
         }
         if($type == 'scale') {
           $shape->setOffsetX($width-round($shape_width*1.5)-$this->_slidepadding);
@@ -101,10 +101,10 @@ class MAPPRPPTX extends MAPPR {
       $shape = $currentSlide->createRichTextShape();
       $shape->setHeight(25);
       $shape->setWidth(450);
-      $shape->setOffsetX($width - 450 - $this->_slidepadding);
-      $shape->setOffsetY($height - 25 - $this->_slidepadding);
-      $shape->getAlignment()->setHorizontal( PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT );
-      $shape->getAlignment()->setVertical( PHPPowerPoint_Style_Alignment::VERTICAL_CENTER );
+      $shape->setOffsetX($width - 450);
+      $shape->setOffsetY($height - 10 - $this->_slidepadding);
+      $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
+      $shape->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
       $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
       $textRun->getFont()->setBold(true);
       $textRun->getFont()->setSize(12);
