@@ -48,8 +48,8 @@ li.map-extras{float:right !important;}
 #mapper-message span.indent{display:block;margin-left:40px;}
 .mapper-loading-message{background-repeat:no-repeat !important;background-position:10px 12px !important;background-color:#FFF;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;position:absolute;top:10px;right:10px;z-index:1000;}
 label{margin-right:0.2em;}
-fieldset{border:1px solid #E0E0E0;font-size:0.75em;margin-top:10px;padding:0px 10px 10px 10px;}
-fieldset legend{color:#222;margin-bottom:5px;}
+fieldset{border:1px solid #E0E0E0;font-size:0.75em;margin-top:10px;padding:10px;}
+fieldset legend{color:#222;}
 fieldset.half{width:50%;}
 fieldset .download-options{margin-bottom:10px;}
 fieldset #scale-measure{display:none;margin:5px 0 0 5px;}
