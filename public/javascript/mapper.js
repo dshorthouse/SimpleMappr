@@ -481,6 +481,8 @@ $(function () {
       'right' : self.mapPanRight
     };
 
+    if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
+
     $.each(keys, function(key, value) {
       $(document).bind('keydown', key, value);
     });
