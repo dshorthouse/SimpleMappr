@@ -304,6 +304,10 @@ msgstr "réticules"
 msgid "fixed"
 msgstr "fixée"
 
+#: .index.php:155
+msgid "Border Thickness"
+msgstr "Epaisseur des bordures"
+
 #: .index.php:156
 #: .tabs/help.php:120
 msgid "Projection"
@@ -548,6 +552,14 @@ msgstr "Citer"
 #: .tabs/about.php:11
 msgid "Recent Updates"
 msgstr "Mises à jour"
+
+#: .tabs/about.php:11
+msgid "December 8, 2011"
+msgstr "8 décembre, 2011"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added a border thickness slider."
+msgstr "Améliorations: Ajout un curseur pour régler épaisseur des bordures."
 
 #: .tabs/about.php:13
 msgid "November 23, 2011"
