@@ -39,7 +39,7 @@ class HEADER {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'public/javascript/jquery-1.7.min.js',
+    'public/javascript/jquery-1.7.1.min.js',
     'public/javascript/jquery-ui-1.8.16.min.js',
     'public/javascript/jquery.colorpicker.min.js',
     'public/javascript/jquery.scrollTo.min.js',
@@ -91,7 +91,7 @@ class HEADER {
           unset(self::$local_js_files[$key]);
         }
       }
-      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>');
+      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>');
     }
     return $this;
   }
