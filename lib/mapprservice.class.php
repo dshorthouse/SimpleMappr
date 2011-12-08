@@ -315,6 +315,8 @@ class MAPPR {
 
     $this->options          = $this->load_param('options', array()); //scalebar, legend
 
+    $this->border_thickness = $this->load_param('border_thickness', 1.25);
+
     $this->rotation         = $this->load_param('rotation', 0);
     $this->zoom_out         = $this->load_param('zoom_out', false);
 
@@ -805,6 +807,7 @@ class MAPPR {
 
       // Add new style to new class
       $style = ms_newStyleObj($class);
+      $style->set("width", $this->border_thickness);
       $style->color->setRGB(10,10,10);
     }
   }
@@ -1149,7 +1152,7 @@ class MAPPR {
             case 'stateprovinces':
               $class = ms_newClassObj($layer);
               $style = ms_newStyleObj($class);
-              $style->set("width",1.25);
+              $style->set("width",$this->border_thickness);
               $style->color->setRGB(10,10,10);
             break;
 

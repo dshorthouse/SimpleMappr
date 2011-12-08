@@ -534,6 +534,21 @@ $(function () {
     });
   };
 
+  Mappr.bindSlider = function() {
+    var self = this;
+
+    $("#border-slider").slider({
+      value : 1,
+      min   : 1,
+      max   : 2,
+      step  : 0.25,
+      slide: function( event, ui ) {
+        $('input[name="border_thickness"]').val(ui.value);
+        self.showMap();
+      }
+    });
+  };
+
   Mappr.toggleFileFactor = function (factor) {
     var scale      = "",
         rubberband = $('#bbox_rubberband').val().split(",");
@@ -1096,6 +1111,13 @@ $(function () {
     $('input[name="bbox_map"]').val(data.map.bbox_map);
     $('input[name="projection_map"]').val(data.map.projection_map);
     $('input[name="rotation"]').val(data.map.rotation);
+
+    $('input[name="border_thickness"]').val(1);
+    $('#border-slider').slider({value:1});
+    if(data.map.border_thickness !== undefined && data.map.border_thickness) {
+      $('input[name="border_thickness"]').val(data.map.border_thickness);
+      $('#border-slider').slider({value:data.map.border_thickness});
+    }
 
     self.setRotation(data.map.rotation);
 
@@ -1790,9 +1812,15 @@ $(function () {
     if(this.settings.active === "false") {
       if (typeof window.janrain !== 'object') { window.janrain = {}; }
       window.janrain.settings = {};
+      window.janrain.settings.showAttribution = false;
+      window.janrain.settings.borderColor = "#fff";
+      window.janrain.settings.buttonBackgroundStyle = "white";
+      window.janrain.settings.fontColor = '#ccc';
+      window.janrain.settings.fontFamily = "Verdana,Arial,Helvetica";
 
       if(this.getParameterByName('lang')) {
         tokenUrlparam = "/?lang=" + this.getParameterByName('lang');
+        window.janrain.settings.language = this.getParameterByName('lang');
       }
     
       window.janrain.settings.tokenUrl = this.settings.baseUrl + '/session' + tokenUrlparam;
@@ -1855,6 +1883,7 @@ $(function () {
     this.bindToolbar();
     this.bindArrows();
     this.bindSettings();
+    this.bindSlider();
     this.bindColorPickers();
     this.bindAddButtons();
     this.bindClearButtons();

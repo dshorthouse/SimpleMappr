@@ -151,6 +151,8 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 </li>
 </ul>
+<h2><?php echo _("Border Thickness"); ?>
+<div id="border-slider"></div>
 <h2><?php echo _("Projection"); ?>*</h2>
 <ul>
 <li>
@@ -243,6 +245,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <input type="hidden" name="options[border]" />
 <input type="hidden" name="options[legend]" />
 <input type="hidden" name="options[scalebar]" />
+<input type="hidden" name="border_thickness" id="border_thickness" />
 <input type="hidden" id="rendered_bbox" value="" />
 <input type="hidden" id="rendered_rotation" value="" />
 <input type="hidden" id="rendered_projection" value="" />
