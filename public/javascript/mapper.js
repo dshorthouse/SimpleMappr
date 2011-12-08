@@ -1322,19 +1322,6 @@ $(function () {
 
   };
 
-  Mappr.getParameterByName = function (name) {
-    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    var regexS  = "[\\?&]" + name + "=([^&#]*)",
-        regex   = new RegExp(regexS),
-        results = regex.exec(window.location.href);
-
-    if(results === null) {
-      return "";
-    } else {
-      return decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-  };
-
   Mappr.getLanguage = function() {
     var param = "", lang = this.getParameterByName("lang");
 
@@ -1662,7 +1649,7 @@ $(function () {
 
   Mappr.generateDownload = function () {
     var self        = this,
-        pattern     = /[~$?*,:;{}\[\]\\ "'\/@#!%^()<>.+=|`&]+/g,
+        pattern     = /[~$?*,:;{}\[\]\\ "'\/@#!%\^()<>.+=|`&]+/g,
         map_title   = $('#file-name').val(),
         token       = new Date().getTime().toString(),
         cookieValue = "",
@@ -1788,7 +1775,7 @@ $(function () {
   };
 
   Mappr.getParameterByName = function (name) {
-    var cname   = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]"),
+    var cname   = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"),
         regexS  = "[\\?&]" + cname + "=([^&#]*)",
         regex   = new RegExp(regexS),
         results = regex.exec(window.location.href);
@@ -1805,15 +1792,15 @@ $(function () {
 
     function isJanrainReady() { window.janrain.ready = true; }
 
-    if(Mappr.settings.active === "false") {
+    if(this.settings.active === "false") {
       if (typeof window.janrain !== 'object') { window.janrain = {}; }
       window.janrain.settings = {};
 
       if(this.getParameterByName('lang')) {
-        tokenUrlparam = "/?lang=" + Mappr.getParameterByName('lang');
+        tokenUrlparam = "/?lang=" + this.getParameterByName('lang');
       }
     
-      window.janrain.settings.tokenUrl = Mappr.settings.baseUrl + '/session' + tokenUrlparam;
+      window.janrain.settings.tokenUrl = this.settings.baseUrl + '/session' + tokenUrlparam;
 
       if (document.addEventListener) {
         document.addEventListener("DOMContentLoaded", isJanrainReady, false);
