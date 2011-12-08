@@ -365,7 +365,7 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
 .ui-slider{position:relative;text-align:left;}
-.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:1em;height:1em;cursor:default;}
+.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:1em;height:1em;cursor:default;cursor:move;}
 .ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:0.7em;display:block;border:0;background-position:0 0;}
 .ui-slider-horizontal{height:0.5em;}
 .ui-slider-horizontal .ui-slider-handle{top:-0.3em;margin-left:-0.6em;border:1px solid #999; background-color:#DADADA}
