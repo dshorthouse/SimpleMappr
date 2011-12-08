@@ -26,7 +26,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _("Sign Out"); ?></a></span></div>
 <?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#" onclick="javascript:Mappr.tabSelector(3);return false;"><?php echo _("Sign In"); ?></a></span></div>
+<div id="site-logout"><span><a class="sprites site-login" href="#"><?php echo _("Sign In"); ?></a></span></div>
 <?php endif; ?>
 </div>
 <div id="wrapper">
@@ -51,7 +51,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <!-- multipoint tab -->
 <div id="map-points">
 <div id="general-points" class="panel ui-corner-all">
-<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"); ?> <a href="#" onclick="javascript:Mappr.showExamples(); return false;" class="sprites help"><?php echo _("examples"); ?></a></p>
+<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"); ?> <a href="#" class="sprites help show-examples"><?php echo _("examples"); ?></a></p>
 </div>
 <div id="fieldSetsPoints" class="fieldSets">
 <?php echo partial_layers(); ?>
@@ -64,7 +64,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-<p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" onclick="javascript:Mappr.tabSelector(<?php echo $tabIndex; ?>);return false;" class="sprites help"><?php echo _("codes"); ?></a></p>
+<p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" data-tab="<?php echo $tabIndex; ?>" class="sprites help show-codes"><?php echo _("codes"); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">
 <?php echo partial_regions(); ?>
