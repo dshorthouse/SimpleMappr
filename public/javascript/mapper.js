@@ -9,7 +9,6 @@ $(function () {
   Mappr.vars = {
     newPointCount      : 0,
     newRegionCount     : 0,
-    newFreehandCount   : 0,
     maxTextareaCount   : 10,
     zoom               : true,
     fileDownloadTimer  : {},
@@ -543,7 +542,7 @@ $(function () {
       factor = $('input[name="download-factor"]:checked').val();
     }
 
-    if(Mappr.vars.jCropType === 'crop') {
+    if(this.vars.jCropType === 'crop') {
       scale = factor*(rubberband[2]-rubberband[0]) + " X " + factor*(rubberband[3]-rubberband[1]);
     } else {
       scale = factor*($('#mapOutputImage').width()) + " X " + factor*($('#mapOutputImage').height());
@@ -836,8 +835,6 @@ $(function () {
             return self.vars.newPointCount;
           case 'regions':
             return self.vars.newRegionCount;
-          case 'freehand':
-            return self.vars.newFreehandCount;
         }
         break;
 
@@ -847,8 +844,6 @@ $(function () {
             return (self.vars.newPointCount += 1);
           case 'regions':
             return (self.vars.newRegionCount += 1);
-          case 'freehands':
-            return (self.vars.newFreehandCount += 1);
         }
         break;
 
@@ -858,8 +853,6 @@ $(function () {
             return (self.vars.newPointCount -= 1);
           case 'regions':
             return (self.vars.newRegionCount -= 1);
-          case 'freehands':
-            return (self.vars.newFreehandCount -= 1);
         }
         break;
     }
