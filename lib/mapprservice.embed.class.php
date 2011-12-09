@@ -40,11 +40,12 @@ class MAPPREMBED extends MAPPR {
    */
   public function get_request() {
     $this->map              = (int)$this->load_param('map', 0);
+    $this->output           = $this->load_param('format','pnga');
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
     $sql = "SELECT map FROM maps WHERE mid=" . $db->escape($this->map);
     $record = $db->query_first($sql);
-    if(!$record) { $this->set_not_found(); }
+    if(!$record) { $this->set_not_found(); exit(); }
 
     $result = unserialize($record['map']);
     foreach($result as $key => $data) {
@@ -62,7 +63,7 @@ class MAPPREMBED extends MAPPR {
     $this->width            = $this->load_param('width', 800);
     $this->height           = $this->load_param('height', 400);
     $this->image_size       = array($this->width, $this->height);
-    $this->output           = $this->load_param('format','pnga');
+    $this->output           = $this->load_param('format','pnga'); //executed again to overwrite from $record
     $this->callback         = $this->load_param('callback', null);
 
     return $this;
@@ -70,11 +71,19 @@ class MAPPREMBED extends MAPPR {
 
   private function set_not_found() {
     header("HTTP/1.0 404 Not Found");
-    header("Content-Type: image/png");
-    $im = imagecreatefrompng(MAPPR_DIRECTORY . "/public/images/not-found.png");
-    imagepng($im);
-    imagedestroy($im);
-    exit();
+    switch($this->output) {
+      case 'pnga':
+        header("Content-Type: image/png");
+        $im = imagecreatefrompng(MAPPR_DIRECTORY . "/public/images/not-found.png");
+        imagepng($im);
+        imagedestroy($im);
+      break;
+
+      case 'json':
+        header("Content-Type: application/json");
+        echo '{ "error" : "not found" }';
+      break;
+    }
   }
 
   public function execute() {
