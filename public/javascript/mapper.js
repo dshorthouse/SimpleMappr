@@ -538,7 +538,7 @@ $(function () {
     var self = this;
 
     $("#border-slider").slider({
-      value : 1,
+      value : 1.25,
       min   : 1,
       max   : 2,
       step  : 0.25,
@@ -1112,8 +1112,8 @@ $(function () {
     $('input[name="projection_map"]').val(data.map.projection_map);
     $('input[name="rotation"]').val(data.map.rotation);
 
-    $('input[name="border_thickness"]').val(1);
-    $('#border-slider').slider({value:1});
+    $('input[name="border_thickness"]').val(1.25);
+    $('#border-slider').slider({value:1.25});
     if(data.map.border_thickness !== undefined && data.map.border_thickness) {
       $('input[name="border_thickness"]').val(data.map.border_thickness);
       $('#border-slider').slider({value:data.map.border_thickness});
