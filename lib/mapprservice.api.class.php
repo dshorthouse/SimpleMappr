@@ -65,7 +65,7 @@ class MAPPRAPI extends MAPPR {
     $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
     $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
 
-    $this->outlinecolor     = $this->load_param('outlinecolor', '255,255,255');
+    $this->outlinecolor     = $this->load_param('outlinecolor', null);
 
     $shaded = $this->load_param('shade', array());
     $this->regions = array(
@@ -181,8 +181,8 @@ class MAPPRAPI extends MAPPR {
           $style->color->setRGB(0,0,0);
         }
 
-        if(array_key_exists($col, $this->shape) && !substr($this->shape[$col], 0, 4) == 'open') {
-          $outlinecolor = explode(",", $this->outlinecolor);  
+        if($this->outlinecolor && substr($class->getStyle(0)->symbolname, 0, 4) != 'open') {
+          $outlinecolor = explode(",", $this->outlinecolor);
           $style->outlinecolor->setRGB(
             (array_key_exists(0, $outlinecolor)) ? $outlinecolor[0] : 255,
             (array_key_exists(1, $outlinecolor)) ? $outlinecolor[1] : 255,
