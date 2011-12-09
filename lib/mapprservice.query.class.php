@@ -39,6 +39,7 @@ class MAPPRQUERY extends MAPPR {
   public function get_request() {
     $this->download         = false;
     $this->options          = array();
+    $this->border_thickness = 1.25;
     $this->output           = $this->load_param('output','pnga');
     $this->projection       = $this->load_param('projection', 'epsg:4326');
     $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');

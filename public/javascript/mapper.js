@@ -161,7 +161,7 @@ $(function () {
 
         $('.jcrop-dimension').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
-            Mappr.vars.cropUpdated = Mappr.updateCropDimensions();
+            Mappr.vars.cropUpdated = self.updateCropDimensions();
           }
         })
         .live("keypress", function(e) {
@@ -723,7 +723,7 @@ $(function () {
     self.destroyJcrop();
     self.resetJbbox();
 
-    self.vars.jCropType = "crop";
+    vars.jCropType = "crop";
 
     vars.jcropAPI = $.Jcrop('#mapOutputImage', {
       bgColor   : ($('#mapOutputImage').attr("src") === "public/images/basemap.png") ? 'grey' : 'black',
@@ -733,17 +733,16 @@ $(function () {
       setSelect : select
     });
 
-    $('.jcrop-tracker').unbind('mouseup', self, self.aZoom);
     $('#mapCropMessage').show();
   };
 
   Mappr.initJzoom = function () {
-    var self = this, vars = this.vars;
+    var self = this, vars = this.vars, isDown = false;
 
     self.destroyJcrop();
     self.resetJbbox();
 
-    self.vars.jCropType = "zoom";
+    vars.jCropType = "zoom";
 
     vars.jzoomAPI = $.Jcrop('#mapOutputImage', {
       addClass      : "customJzoom",
@@ -756,16 +755,16 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').bind('mouseup', self, self.aZoom);
+    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('zoom'); });
   };
 
   Mappr.initJquery = function () {
-    var self = this, vars = this.vars;
+    var self = this, vars = this.vars, isDown = false;
 
     self.destroyJcrop();
     self.resetJbbox();
 
-    self.vars.jCropType = "query";
+    vars.jCropType = "query";
 
     vars.jqueryAPI = $.Jcrop('#mapOutputImage', {
       addClass      : "customJzoom",
@@ -778,15 +777,27 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').bind('mouseup', self, self.aQuery);
+    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('query'); });
+  };
+
+  Mappr.activateJcrop = function (type) {
+    switch(type) {
+      case 'zoom':
+        $(document).bind("mouseup", this, this.aZoom);
+      break;
+
+      case 'query':
+        $(document).bind("mouseup", this, this.aQuery);
+      break;
+    }
   };
 
   Mappr.aZoom = function (event) {
     event.data.showMap();
+    $(document).unbind("mouseup", event.data.aZoom);
   };
 
   Mappr.aQuery = function (event) {
-
     var self      = event.data,
         i         = 0,
         fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
@@ -797,6 +808,8 @@ $(function () {
           projection_map : $('#projection_map').val(),
           qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base'
         };
+
+    $(document).unbind("mouseup", self.aQuery);
 
     self.destroyJcrop();
 
