@@ -199,7 +199,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 </div>
 <div id="mapExport" title="<?php echo _("Download"); ?>">
 <div class="download-dialog">
-<p id="mapCropMessage" class="sprites"><?php echo _("map will be cropped"); ?></p>
 <p>
 <label for="file-name"><?php echo _("File name"); ?></label>
 <input type="text" id="file-name" maxlength="30" size="30" />
@@ -210,6 +209,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 </fieldset>
 <fieldset>
 <legend><?php echo _("Options"); ?></legend>
+<p id="mapCropMessage" class="sprites"><?php echo _("map will be cropped"); ?></p>
 <div class="download-options">
 <?php echo partial_scales(); ?>
 <div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
