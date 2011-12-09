@@ -161,7 +161,7 @@ $(function () {
 
         $('.jcrop-dimension').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
-            Mappr.vars.cropUpdated = self.updateCropDimensions();
+            Mappr.vars.cropUpdated = Mappr.updateCropDimensions();
           }
         })
         .live("keypress", function(e) {
