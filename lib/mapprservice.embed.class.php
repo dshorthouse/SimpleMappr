@@ -57,6 +57,7 @@ class MAPPREMBED extends MAPPR {
 
     $this->download         = true;
     $this->watermark        = true;
+
     unset($this->options['border']);
     $this->width            = $this->load_param('width', 800);
     $this->height           = $this->load_param('height', 400);

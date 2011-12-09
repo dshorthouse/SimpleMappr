@@ -807,7 +807,7 @@ class MAPPR {
 
       // Add new style to new class
       $style = ms_newStyleObj($class);
-      $style->set("width", $this->border_thickness);
+      $style->set("width", isset($this->border_thickness) ? $this->border_thickness : 1.25);
       $style->color->setRGB(10,10,10);
     }
   }
@@ -1152,7 +1152,7 @@ class MAPPR {
             case 'stateprovinces':
               $class = ms_newClassObj($layer);
               $style = ms_newStyleObj($class);
-              $style->set("width",$this->border_thickness);
+              $style->set("width",isset($this->border_thickness) ? $this->border_thickness : 1.25);
               $style->color->setRGB(10,10,10);
             break;
 
