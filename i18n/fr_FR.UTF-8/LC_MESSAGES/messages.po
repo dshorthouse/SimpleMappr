@@ -554,6 +554,14 @@ msgid "Recent Updates"
 msgstr "Mises à jour"
 
 #: .tabs/about.php:11
+msgid "December 9, 2011"
+msgstr "9 décembre, 2011"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Zoom now executes when rectangle is drawn at edge of map (reported by GIS Unit Kew)."
+msgstr "Corrections: Fonction zoom s'exécute correctement quand rectangle est dessiné au bord de la carte (rapporté par GIS Unit Kew)."
+
+#: .tabs/about.php:11
 msgid "December 8, 2011"
 msgstr "8 décembre, 2011"
 
