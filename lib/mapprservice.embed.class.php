@@ -185,10 +185,6 @@ class MAPPREMBED extends MAPPR {
   }
 
   public function get_output() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
 
     switch($this->output) {
       case 'pnga':
@@ -197,6 +193,7 @@ class MAPPREMBED extends MAPPR {
       break;
 
       case 'json':
+        $this->add_header();
         header("Content-Type: application/json");
         $output = new stdClass;
         $output->type = 'FeatureCollection';
@@ -214,10 +211,18 @@ class MAPPREMBED extends MAPPR {
 
       case 'kml':
         require_once('kml.class.php');
+        $this->add_header();
         $kml = new Kml;
         $kml->get_request($this->map, $this->coords)->generate_kml();
       break;
     }
+  }
+
+  private function add_header() {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
   }
 
 }
