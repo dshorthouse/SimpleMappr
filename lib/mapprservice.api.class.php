@@ -55,6 +55,7 @@ class MAPPRAPI extends MAPPR {
     $this->download         = true;
     $this->watermark        = true;
     $this->options          = array();
+    $this->border_thickness = 1.25;
 
     //load the file
     $this->file             = urldecode($this->load_param('file', ''));

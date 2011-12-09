@@ -96,7 +96,8 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-preview{padding:1em 0.3em;background-color:#FFF;height:460px;}
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}
-#mapWrapper h2{text-align:middle;font-size:0.75em;margin:10px 0 5px;padding:0;}
+#mapWrapper h2{font-size:0.75em;margin:10px 0 5px;padding:0;}
+#mapWrapper h3{font-size:0.75em;font-weight:normal;margin:10px 0 5px 0.5em;padding:0;}
 #actionsBar{margin:0;padding:0;position:absolute;top:0;left:0;width:810px;outline-color:-moz-use-text-color;outline-style:none;outline-width:medium;font-weight:normal;height:1.4em;}
 #actionsBar a{text-decoration:none;}
 #actionsBar ul{margin:0;padding:0;}
@@ -154,7 +155,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:430px;}
 #mapTools #graticules-selection{padding:0px;margin-left:20px;}
 #mapTools div{padding:5px;}
-#mapTools #border-slider{padding:0px;margin:10px 0px 0px 10px;width:270px;}
+#mapTools #border-slider{padding:0px;margin:10px 0px 0px 2em;width:125px;}
 #mapTools .ui-tabs-nav{border-left:0 none;border-radius:4px 4px 0 0;-moz-border-radius:4px 4px 0 0;-webkit-border-radius:4px 4px 0 0;border-right:0px none;border-top:0px none;}
 #mapTools .ui-tabs-nav .ui-state-default{border:1px solid transparent;}
 #mapTools .ui-tabs-nav .ui-state-hover{border:1px solid #aaa;}
@@ -365,10 +366,10 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px;}
 .ui-draggable .ui-dialog-titlebar{cursor:move;}
 .ui-slider{position:relative;text-align:left;}
-.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:1em;height:1em;cursor:default;cursor:move;}
+.ui-slider .ui-slider-handle{position:absolute;z-index:2;width:0.75em;height:0.75em;cursor:default;cursor:move;}
 .ui-slider .ui-slider-range{position:absolute;z-index:1;font-size:0.7em;display:block;border:0;background-position:0 0;}
-.ui-slider-horizontal{height:0.5em;}
-.ui-slider-horizontal .ui-slider-handle{top:-0.3em;margin-left:-0.6em;border:1px solid #999; background-color:#DADADA}
+.ui-slider-horizontal{height:0.4em;}
+.ui-slider-horizontal .ui-slider-handle{top:-0.25em;margin-left:-0.6em;border:1px solid #999; background-color:#DADADA}
 .ui-slider-horizontal .ui-slider-range{top:0;height:100%;}
 .ui-slider-horizontal .ui-slider-range-min{left:0;}
 .ui-slider-horizontal .ui-slider-range-max{right:0;}
