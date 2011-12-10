@@ -820,18 +820,12 @@ class MAPPR {
     if($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
       $zoom_point = ms_newPointObj();
       $zoom_point->setXY($bbox_rubberband[0],$bbox_rubberband[1]);
-      $max_extent = ms_newRectObj();
-      $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
-      if($this->projection != $this->default_projection) {
-        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
-        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
-        $max_extent->project($origProjObj,$newProjObj);   
-      }
-      $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+      $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
     } else {
       $zoom_rect = ms_newRectObj();
       $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
-      $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);   
+      $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
+      $this->reset_zoom();
     }
   }
 
@@ -841,6 +835,15 @@ class MAPPR {
   private function zoom_out() {
     $zoom_point = ms_newPointObj();
     $zoom_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
+    $max_extent = $this->get_max_extent();
+    $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+  }
+
+  /**
+  * Determine max extent possible
+  * @return obj
+  */
+  private function get_max_extent() {
     $max_extent = ms_newRectObj();
     $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
     if($this->projection != $this->default_projection) {
@@ -848,7 +851,17 @@ class MAPPR {
       $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
       $max_extent->project($origProjObj,$newProjObj);   
     }
-    $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+    return $max_extent;
+  }
+
+  private function reset_zoom() {
+    $extent = $this->map_obj->extent;
+    $max_extent = $this->get_max_extent();
+    if($extent->minx < $max_extent->minx || $extent->miny < $max_extent->miny || $extent->maxx > $max_extent->maxx || $extent->maxy > $max_extent->maxy) {
+      $new_point = ms_newPointObj();
+      $new_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
+      $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+    }
   }
   
   /**
@@ -879,14 +892,7 @@ class MAPPR {
 
     $new_point = ms_newPointObj();
     $new_point->setXY($this->map_obj->width/2*$x_offset,$this->map_obj->height/2*$y_offset);
-    $max_extent = ms_newRectObj();
-    $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
-    if($this->projection != $this->default_projection) {
-      $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
-      $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
-      $max_extent->project($origProjObj,$newProjObj); 
-    }
-
+    $max_extent = $this->get_max_extent();
     $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
   }
 
@@ -1536,7 +1542,7 @@ class MAPPR {
           'rendered_projection' => $this->projection,
           'legend_url'          => $this->_legend_url,
           'scalebar_url'        => $this->_scalebar_url,
-          'bad_points'          => $this->get_bad_points()
+          'bad_points'          => $this->get_bad_points(),
         );
 
         echo json_encode($output);
