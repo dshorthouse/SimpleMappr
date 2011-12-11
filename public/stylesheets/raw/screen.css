@@ -97,7 +97,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}
 #mapWrapper h2{font-size:0.75em;margin:10px 0 5px;padding:0;}
-#mapWrapper h3{font-size:0.75em;font-weight:normal;margin:10px 0 5px 0.5em;padding:0;}
 #actionsBar{margin:0;padding:0;position:absolute;top:0;left:0;width:810px;outline-color:-moz-use-text-color;outline-style:none;outline-width:medium;font-weight:normal;height:1.4em;}
 #actionsBar a{text-decoration:none;}
 #actionsBar ul{margin:0;padding:0;}
@@ -153,6 +152,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapOutput svg{position:absolute;top:0;left:0;}
 #mapScale{text-align:right;}
 #mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:430px;}
+#mapTools h3{font-size:0.75em;font-weight:normal;margin:10px 0 5px 0.5em;padding:0;}
 #mapTools #graticules-selection{padding:0px;margin-left:20px;}
 #mapTools div{padding:5px;}
 #mapTools #border-slider{padding:0px;margin:10px 0px 0px 1.5em;width:140px;}
