@@ -60,8 +60,9 @@ class MAPPREMBED extends MAPPR {
     $this->watermark        = true;
 
     unset($this->options['border']);
-    $this->width            = $this->load_param('width', 800);
-    $this->height           = $this->load_param('height', 400);
+    $this->width            = (float)$this->load_param('width', 800);
+    $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+    if($this->width == 0 || $this->height == 0) { $this->width = 800; $this->height = 400; }
     $this->image_size       = array($this->width, $this->height);
     $this->output           = $this->load_param('format','pnga'); //executed again to overwrite from $record
     $this->callback         = $this->load_param('callback', null);

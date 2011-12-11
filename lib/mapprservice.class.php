@@ -315,12 +315,12 @@ class MAPPR {
 
     $this->options          = $this->load_param('options', array()); //scalebar, legend
 
-    $this->border_thickness = $this->load_param('border_thickness', 1.25);
+    $this->border_thickness = (float)$this->load_param('border_thickness', 1.25);
 
-    $this->rotation         = $this->load_param('rotation', 0);
+    $this->rotation         = (int)$this->load_param('rotation', 0);
     $this->zoom_out         = $this->load_param('zoom_out', false);
 
-    $this->_download_factor = $this->load_param('download_factor', 1);
+    $this->_download_factor = (int)$this->load_param('download_factor', 1);
 
     $this->file_name        = $this->load_param('file_name', time());
 

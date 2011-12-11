@@ -55,7 +55,6 @@ class MAPPRAPI extends MAPPR {
     $this->download         = true;
     $this->watermark        = true;
     $this->options          = array();
-    $this->border_thickness = 1.25;
 
     //load the file
     $this->file             = urldecode($this->load_param('file', ''));
@@ -66,6 +65,7 @@ class MAPPRAPI extends MAPPR {
     $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
 
     $this->outlinecolor     = $this->load_param('outlinecolor', null);
+    $this->border_thickness = (float)$this->load_param('thickness', 1.25);
 
     $shaded = $this->load_param('shade', array());
     $this->regions = array(
@@ -95,8 +95,9 @@ class MAPPRAPI extends MAPPR {
     if($this->load_param('scalebar', false)) { $this->options['scalebar'] = true; }
 
     //set the image size from width & height to array(width, height)
-    $this->width            = $this->load_param('width', 800);
-    $this->height           = $this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+    $this->width            = (float)$this->load_param('width', 800);
+    $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+    if($this->width == 0 || $this->height == 0) { $this->width = 800; $this->height = 400; }
     $this->image_size       = array($this->width, $this->height);
 
     return $this;
