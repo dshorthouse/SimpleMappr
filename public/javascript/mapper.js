@@ -469,8 +469,9 @@ $(function () {
       'ctrl+r' : self.mapRefresh,
       'ctrl+n' : self.mapRebuild,
       'ctrl+x' : self.mapCrop,
-      'ctrl++': self.mapZoomIn,
-      'ctrl+-': self.mapZoomOut
+      'ctrl++' : self.mapZoomIn,
+      'ctrl+-' : self.mapZoomOut,
+      'esc'    : self.destroyJcrop
     };
 
     arrows = {
@@ -697,7 +698,8 @@ $(function () {
   };
 
   Mappr.destroyJcrop = function () {
-    var vars = this.vars;
+    //Note: object reference must be Mappr.x for hotkeys to work
+    var vars = Mappr.vars;
 
     if(typeof vars.jzoomAPI !== "undefined") { vars.jzoomAPI.destroy(); }
     if(typeof vars.jcropAPI !== "undefined") { vars.jcropAPI.destroy(); }
@@ -707,7 +709,7 @@ $(function () {
     $('.jcrop-holder').remove();
     $('#mapCropMessage').hide();
 
-    this.toggleFileFactor();
+    Mappr.toggleFileFactor();
   };
 
   Mappr.resetJbbox = function () {
