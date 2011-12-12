@@ -9,7 +9,7 @@ USERSESSION::select_language();
 <p><?php echo _("Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."); ?></p>
 </div>
 <div class="header"><h2><?php echo _("Citing"); ?></h2></div>
-<p>Shorthouse, David P. 2010. SimpleMappr, a web-enabled tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
+<p>Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
 <dt class="update"><?php echo _("December 9, 2011"); ?></dt><dd><?php echo _("Bug fixes: Zoom now executes when rectangle is drawn at edge of map (reported by GIS Unit Kew)."); ?></dd>

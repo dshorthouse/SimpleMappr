@@ -8,8 +8,8 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <html lang="<?php echo $language; ?>">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="<?php echo _("A publication-quality, point map application."); ?>" />
-<meta name="keywords" content="<?php echo _("publication,map"); ?>" />
+<meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
+<meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />

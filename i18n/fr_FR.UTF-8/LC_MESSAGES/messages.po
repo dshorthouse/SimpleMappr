@@ -28,12 +28,12 @@ msgid "Region %d"
 msgstr "Région %d"
 
 #: .index.php:11
-msgid "A publication-quality, point map application."
-msgstr "Produire des cartes de qualité pour vos publications."
+msgid "A point map application for publications and presentations."
+msgstr "Une application pour produire des cartes de qualité pour vos publications et présentations."
 
 #: .index.php:12
-msgid "publication,map"
-msgstr "publication,carte"
+msgid "publication,presentation,map,georeference"
+msgstr "publication,présentation,carte,géoréférencer"
 
 #: .index.php:22
 msgid "point maps for publication and presentation"
@@ -49,7 +49,7 @@ msgstr "Connectez"
 
 #: .index.php:33
 msgid "Building application..."
-msgstr "En train de construire l'application..."
+msgstr "Construit l'application..."
 
 #: .index.php:36
 #: .index.php:60
