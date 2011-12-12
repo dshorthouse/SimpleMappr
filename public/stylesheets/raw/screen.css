@@ -2,7 +2,6 @@ html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
 a{color:#555555;}
 textarea{resize:none;padding:0;}
-#error-message{font-weight:normal;margin:0px;padding:15px;}
 .sprites{background-image:url("../../images/icon_sprites.png");background-color:transparent;background-repeat:no-repeat;}
 .hidden-message{display:none;}
 #header,#tabs{min-width:1125px;}
@@ -13,9 +12,7 @@ textarea{resize:none;padding:0;}
 #site-title span{color:#3AD1FF;text-shadow: 0px -2px 2px #B5EFFF;}
 #site-tagline{position:absolute;left:225px;font-style:italic;}
 #site-logout{display:none;position:absolute;right:0px;}
-#site-logout span.site-logout{font-style:normal;}
 #site-logout a.site-logout{padding:0px 5px 0px 20px;background-position:0 -629px;}
-#site-logout span.site-login{font-style:normal;}
 #site-logout a.site-login{padding:0px 5px 0px 20px;background-position:0 -597px;}
 #site-languages{display:none;position:absolute;right:300px;}
 #site-languages ul{list-style:none;margin:0px;padding:0px;}
@@ -45,16 +42,13 @@ li.map-extras{float:right !important;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-delete{background-position:0 -316px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-help{background-position:0 -530px;}
 #mapper-message{display:none;font-size:0.8em;}
-#mapper-message span.indent{display:block;margin-left:40px;}
 .mapper-loading-message{background-repeat:no-repeat !important;background-position:10px 12px !important;background-color:#FFF;background-image:url("../../images/throbber.gif") !important;-moz-box-shadow:0px 5px 5px #AAAAAA;-webkit-box-shadow:#AAAAAA 0px 5px 5px;box-shadow:#AAAAAA 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;position:absolute;top:10px;right:10px;z-index:1000;}
 label{margin-right:0.2em;}
 fieldset{border:1px solid #E0E0E0;font-size:0.75em;margin-top:10px;padding:10px;}
 fieldset legend{color:#222;}
-fieldset.half{width:50%;}
 fieldset .download-options{margin-bottom:10px;}
 fieldset #scale-measure{display:none;margin:5px 0 0 5px;}
 .required{color:#FF0000;font-weight:bold;}
-#controls{width:780px;margin-left:20px;}
 button{background-color:#E7E7E7;color:#565656;border:1px solid #ccc;padding:5px 5px 5px 20px;margin:0 0.2em;cursor:pointer;font-size:0.7em !important;}
 button:hover{color:#c7c7c7;background-color:#4f4f4f;border:1px solid #585858;}
 button:active{color:#CCC !important;}
@@ -65,13 +59,10 @@ button.negative{color:#d12f19;}
 button.negative:hover{background-color:#eca8a8 !important;color:#d12f19;}
 button.negative:active{background-color:#782c21 !important;}
 .submitForm{background-position:3px 6px;}
-.bulkdownload{background-position:3px -445px;}
 .clear{background-position:3px -410px;}
 .addmore{background-position:3px -26px;}
 .removemore{display:none;background-position:3px -410px;position:absolute;right:6px;top:6px;z-index:10;background-color:#FFF}
-div#okButton{margin:0px auto;width:100px;text-align:middle;margin-top:10px;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#CCC !important;border:1px solid #EEE;cursor:wait;}
-.hidden, #blankRow, .hiddenControls, .newRow td div{display:none;}
 .fieldSets{margin-top:10px !important}
 .addFieldset{margin-left:20px;margin-top:20px;}
 .fieldset-points, .fieldset-regions{position:relative;width:672px !important;}
@@ -81,7 +72,6 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 div.grippie{-moz-background-clip:border;-moz-background-inline-policy:continuous;-moz-background-origin:padding;background-position:50% -510px;background-color:#EEEEEE;border-color:#DDDDDD;border-style:solid;border-width:0pt 1px 1px;cursor:s-resize;height:9px;width:100%;overflow:hidden;}
 .resizable-textarea{width:99%;}
 .resizable-textarea textarea{display:block;margin-bottom:0;width:100%;}
-.form-item .description{font-size:0.75em;}
 div.panel{padding:10px;border:1px solid #AAAAAA;background-color:#E9E9E9;width:650px;margin-bottom:5px;}
 div.panel p{font-size:0.75em;}
 div.panel a.help{background-position:0 -533px;padding-left:20px;}
@@ -92,7 +82,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-about p.citation{text-indent:-2em;padding-left:2em;}
 #map-about dl dt.update{font-weight:bold;}
 #map-about dl dd{margin:0 0 10px 25px;}
-#map-about img{border:0px}
 #map-preview{padding:1em 0.3em;background-color:#FFF;height:460px;}
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}
@@ -105,18 +94,14 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #actionsBar ul li a.tooltip{width:16px;height:16px;}
 #actionsBar ul li a.toolsZoomIn{background-position:0 -661px;}
 #actionsBar ul li a.toolsZoomOut{background-position:0 -693px;}
-#actionsBar ul li a.rotateAnticlockwise{background-position:0 -224px;}
-#actionsBar ul li a.rotateClockwise{background-position:0 -256px;}
 #actionsBar ul li a.toolsCrop{background-position:0 -885px;}
 #actionsBar ul li a.toolsQuery{background-position:0 -821px;}
-#actionsBar ul li a.toolsDraw{background-position:0 -853px;}
 #actionsBar ul li a.toolsRefresh{background-position:0 -160px;}
 #actionsBar ul li a.toolsRebuild{background-position:0 -128px;}
 #actionsBar ul li a.map-saveItem{padding:0px 0px 0px 20px;width:auto;}
 #actionsBar ul li a.map-download{background-position:0 -789px;}
 #actionsBar ul li a.map-save{background-position:0 -448px;}
 #actionsBar ul li a.map-embed{display:none;background-position:0 -565px;}
-#actionsBar ul li a img{border:0 none;height:16px;margin:2px;width:16px;}
 #actionsBar #mapTitle{margin:0 0 0 20px;padding:0;font-style:italic;font-size:1em;display:inline;height:1.3em;line-height:1.3em;}
 #actionsBar #map-saveDialog{display:inline;position:absolute;right:0px;}
 .customJzoom .jcrop-vline, .customJzoom .jcrop-hline{background-color:#FF0000;}
@@ -149,7 +134,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #badRecordsWarning a.toolsBadRecords{background-position:0 -481px;padding:2px 0px 2px 20px;height:27px;line-height:27px;text-decoration:none;color:#FF0000;}
 #badRecords{font-size:0.75em;}
 #mapOutput{position:relative;}
-#mapOutput svg{position:absolute;top:0;left:0;}
 #mapScale{text-align:right;}
 #mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:430px;}
 #mapTools h3{font-size:0.75em;font-weight:normal;margin:10px 0 5px 0.5em;padding:0;}
@@ -162,7 +146,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #mapTools div ul{text-align:left;margin:0 0 10px;padding:0px;}
 #mapTools ul li{list-style-image:none;list-style-position:outside;list-style-type:none;font-size:0.75em;}
 #mapTools ul.columns li{float:left;width:140px;line-height:1.5em;}
-#mapTools label{font-size:1.0em !important;}
 #mapTools #projection{font-size:0.8em !important;}
 #mapTools p{font-size:0.5em;}
 #mapLegend p{margin:0px;padding:0px;font-size:0.65em;}
@@ -180,9 +163,7 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-mymaps table td.actions a{height:20px;line-height:20px;padding-left:20px;margin-left:10px;}
 #map-mymaps table td.actions a.map-delete{background-position:0 -317px;}
 #map-mymaps table td.actions a.map-load{background-position:0 -754px;}
-#map-mymaps table td.download{width:25px;text-align:center;}
 #map-mymaps table td input{vertical-align:top;}
-#map-mymaps #usermaps fieldset{margin-top:10px;font-size:0.8em;width:20%;}
 #map-mymaps #janrainEngageEmbed {margin-top:10px;}
 #map-mymaps #janrainEngageEmbed div{margin:0px;}
 #map-users table{background:none repeat scroll 0 0 #E6E6E6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
@@ -203,7 +184,6 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-api dl dd{margin-bottom:1.5em;}
 #map-api dl dd span.api-example{color:green;display:block;}
 #map-api dl dd span.api-example a {color:green;}
-#map-chat{margin:10px;}
 #map-help h3{font-size:0.75em;}
 #map-help p{font-size:0.75em;}
 #map-help dl{font-size:0.75em;}
@@ -212,11 +192,8 @@ div.header h2{border-bottom:2px solid #BBB;margin:0px;padding:3px 0px;width:40%;
 #map-help dl.toolbar dt{padding-left:24px;}
 #map-help dl.toolbar dt.toolsZoomIn{background-position:0 -658px;}
 #map-help dl.toolbar dt.toolsZoomOut{background-position:0 -690px;}
-#map-help dl.toolbar dt.rotateAnticlockwise{background-position:0 -221px;}
-#map-help dl.toolbar dt.rotateClockwise{background-position:0 -253px;}
 #map-help dl.toolbar dt.toolsCrop{background-position:0 -882px;}
 #map-help dl.toolbar dt.toolsQuery{background-position:0 -819px;}
-#map-help dl.toolbar dt.toolsDraw{background-position:0 -850px;}
 #map-help dl.toolbar dt.toolsRefresh{background-position:0 -157px;}
 #map-help dl.toolbar dt.toolsRebuild{background-position:0 -125px;}
 #map-help dl.toolbar dt.toolsSave{background-position:0 -448px;}
