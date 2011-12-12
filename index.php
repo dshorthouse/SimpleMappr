@@ -151,7 +151,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 </li>
 </ul>
-<h3><?php echo _("Border Thickness"); ?></h3>
+<h3><?php echo _("Line Thickness"); ?></h3>
 <div id="border-slider"></div>
 <h2><?php echo _("Projection"); ?>*</h2>
 <ul>

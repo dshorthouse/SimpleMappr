@@ -545,7 +545,7 @@ class MAPPR {
 
     //base map
     $this->shapes['base'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
       'type'  => MS_LAYER_LINE,
       'sort'  => 2
     );
@@ -615,7 +615,7 @@ class MAPPR {
 
     //Country labels
     $this->shapes['countrynames'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_countries",
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 13
     );

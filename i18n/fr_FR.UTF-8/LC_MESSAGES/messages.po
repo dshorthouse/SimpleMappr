@@ -305,8 +305,8 @@ msgid "fixed"
 msgstr "fixée"
 
 #: .index.php:155
-msgid "Border Thickness"
-msgstr "Epaisseur des bordures"
+msgid "Line Thickness"
+msgstr "Epaisseur des lignes"
 
 #: .index.php:156
 #: .tabs/help.php:120
