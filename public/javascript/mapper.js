@@ -1487,7 +1487,7 @@ $(function () {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (600).toString(),
+      width         : (620).toString(),
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
