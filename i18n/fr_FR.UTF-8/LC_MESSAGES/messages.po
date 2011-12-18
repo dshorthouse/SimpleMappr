@@ -414,6 +414,10 @@ msgstr "largeur, hauteur"
 msgid "callback"
 msgstr "callback"
 
+#: .index.php:284
+msgid "Apply"
+msgstr "appl..."
+
 #: .index.php:325
 #: .index.php:333
 msgid "--select--"
