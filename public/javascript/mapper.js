@@ -1281,7 +1281,7 @@ $(function () {
                       autoOpen      : true,
                       modal         : true,
                       closeOnEscape : false,
-                      draggable     : false,
+                      draggable     : true,
                       resizable     : false,
                       buttons       : {
                         OK: function () {
@@ -1303,7 +1303,7 @@ $(function () {
       width         : (500).toString(),
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : [
         {
@@ -1374,7 +1374,7 @@ $(function () {
       width         : (500).toString(),
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : [
         {
@@ -1422,7 +1422,7 @@ $(function () {
       width         : (350).toString(),
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : [
         {
@@ -1490,7 +1490,7 @@ $(function () {
       width         : (600).toString(),
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : [
         {
@@ -1543,7 +1543,7 @@ $(function () {
       width         : (400).toString(),
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : {
         Ok : function () {
@@ -1664,7 +1664,7 @@ $(function () {
       position      : [200, 200],
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons: {
         Ok: function () {
@@ -1771,7 +1771,7 @@ $(function () {
       autoOpen      : true,
       modal         : true,
       closeOnEscape : false,
-      draggable     : false,
+      draggable     : true,
       resizable     : false,
       buttons       : {
         OK: function () {
