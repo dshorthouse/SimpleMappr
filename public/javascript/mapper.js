@@ -819,7 +819,7 @@ $(function () {
 
     $.ajax({
       type : 'POST',
-      url : self.settings.baseUrl + "/query/",
+      url  : '/query/',
       data : formData,
       success: function (data) {
         if(data.length > 0) {
@@ -1035,7 +1035,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage(),
+      url      : "/usermaps/" + self.getLanguage(),
       dataType : 'html',
       success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
@@ -1089,7 +1089,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/" + id,
+      url      : "/usermaps/" + id,
       dataType : 'json',
       success  : function (data) {
         self.removeExtraElements();
@@ -1269,9 +1269,9 @@ $(function () {
     $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function () {
       $.each(types, function() {
         if(this === 'img') {
-          $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
+          $('#embed-'+this, '#mapEmbed').val("<img src=\"/map/" + mid + "\" alt=\"\" />");
         } else {
-          $('#embed-'+this, '#mapEmbed').val(self.settings.baseUrl + "/map/" + mid + "." + this);
+          $('#embed-'+this, '#mapEmbed').val("/map/" + mid + "." + this);
         }
       });
       
@@ -1316,7 +1316,7 @@ $(function () {
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
-              url     :  self.settings.baseUrl + "/usermaps/" + id,
+              url     :  "/usermaps/" + id,
               success : function() {
                 self.loadMapList();
               }
@@ -1342,7 +1342,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : this.settings.baseUrl + "/users/" + self.getLanguage(),
+      url      : '/users/' + self.getLanguage(),
       dataType : 'html',
       success  : function (data) {
         if(data.indexOf("access denied") !== -1) {
@@ -1388,7 +1388,7 @@ $(function () {
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
-              url     :  self.settings.baseUrl + "/users/" + id,
+              url     : "/users/" + id,
               success : function() {
                 self.loadUserList();
               }
@@ -1453,8 +1453,8 @@ $(function () {
 
               $.ajax({
                 type        : 'POST',
-                url         :  Mappr.settings.baseUrl + "/usermaps/",
-                data        :  $("form").serialize(),
+                url         : '/usermaps/',
+                data        : $("form").serialize(),
                 dataType    : 'json',
                 success     : function(data) {
                   $('#mapTitle').text($('.m-mapSaveTitle').val());
@@ -1617,7 +1617,7 @@ $(function () {
 
     $.ajax({
       type : 'POST',
-      url : self.settings.baseUrl + "/application/",
+      url  : '/application/',
       data : formData,
       dataType : 'json',
       success : function (data) {
@@ -1724,7 +1724,7 @@ $(function () {
         $('#output').val('pptx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/pptx/" + self.getLanguage(), formData, 'post');
+        $('body').download("/application/pptx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
@@ -1732,13 +1732,13 @@ $(function () {
         $('#output').val('docx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/docx/" + self.getLanguage(), formData, 'post');
+        $('body').download("/application/docx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
       case 'kml':
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/kml/", formData, 'post');
+        $('body').download("/application/kml/", formData, 'post');
       break;
 
       default:
@@ -1746,7 +1746,7 @@ $(function () {
         $('#output').val(filetype);
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download(self.settings.baseUrl + "/application/", formData, 'post');
+        $('body').download("/application/", formData, 'post');
         $('#download').val('');
         $('#output').val('pnga');
     }
