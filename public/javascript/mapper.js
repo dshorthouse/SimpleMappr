@@ -1839,50 +1839,6 @@ $(function () {
     }
   };
 
-  Mappr.activateJanrain = function () {
-    var tokenUrlparam = "/", e = "", s = "";
-
-    function isJanrainReady() { window.janrain.ready = true; }
-
-    if(this.settings.active === "false") {
-      if (typeof window.janrain !== 'object') { window.janrain = {}; }
-      window.janrain.settings = {};
-      window.janrain.settings.showAttribution = false;
-      window.janrain.settings.borderColor = "#fff";
-      window.janrain.settings.buttonBackgroundStyle = "white";
-      window.janrain.settings.fontColor = '#ccc';
-      window.janrain.settings.fontFamily = "Verdana,Arial,Helvetica";
-
-      if(this.getParameterByName('lang')) {
-        tokenUrlparam = "/?lang=" + this.getParameterByName('lang');
-        window.janrain.settings.language = this.getParameterByName('lang');
-      }
-    
-      window.janrain.settings.tokenUrl = this.settings.baseUrl + '/session' + tokenUrlparam;
-
-      if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", isJanrainReady, false);
-      } else if (window.attachEvent) {
-        window.attachEvent('onload', isJanrainReady);
-      } else if (window.onLoad) {
-        window.onload = isJanrainReady;
-      }
-
-      e = document.createElement('script');
-      e.type = 'text/javascript';
-      e.id = 'janrainAuthWidget';
-
-      if (document.location.protocol === 'https:') {
-        e.src = 'https://rpxnow.com/js/lib/simplemappr/engage.js';
-      } else {
-        e.src = 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js';
-      }
-
-      s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(e, s);
-    }
-  };
-
   Mappr.mapCircleSlider = function () {
     var i = 0, output = "";
 
@@ -1935,7 +1891,6 @@ $(function () {
       this.loadUserList();
     }
     $("input").keypress(function(event) { if (event.which === 13) { return false; } });
-    this.activateJanrain();
   };
 
   Mappr.init();
