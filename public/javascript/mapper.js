@@ -1763,7 +1763,7 @@ $(function () {
   };
 
   Mappr.showExamples = function() {
-    var message = '<img src="public/images/help_data.png" alt="" />';
+    var message = '<img src="public/images/help-data.png" alt="" />';
 
     $('#mapper-message-help').html(message).dialog({
       height        : (350).toString(),
@@ -1883,16 +1883,15 @@ $(function () {
       if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
     $('#initial-message').hide();
-    $('#site-logout').show();
-    $('#site-languages').show();
+    $('#header>div').show();
     $("#tabs").tabs({cache : false}).show();
     $('#mapTools').tabs();
-    $('a.site-login').click(function() { self.tabSelector(3); return false; });
+    $('a.login','#site-session').click(function() { self.tabSelector(3); return false; });
     $('a.show-examples').click(function() { self.showExamples(); return false; });
     $('a.show-codes').click(function() { self.tabSelector(parseInt($(this).attr("data-tab"))); return false; });
     $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
-    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap_scalebar.png" width="200" height="27" />');
+    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
     $(".tooltip").tipsy({gravity : 's'});
     this.bindHotkeys();
     this.bindToolbar();

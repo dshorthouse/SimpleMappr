@@ -416,7 +416,7 @@ msgstr "callback"
 
 #: .index.php:284
 msgid "Apply"
-msgstr "appl..."
+msgstr "appliquer"
 
 #: .index.php:325
 #: .index.php:333

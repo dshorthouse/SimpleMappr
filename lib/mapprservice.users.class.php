@@ -124,7 +124,7 @@ class USERS {
      $output .= '<td class="left-align">'._("Email").'</td>';
      $output .= '<td>'._("Maps").'</td>';
      $output .= '<td>'._("Last Access").'</td>';
-     $output .= '<td class="actions">'._("Actions").'<a href="#" class="sprites toolsRefresh"></a></td>';
+     $output .= '<td class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></td>';
      $output .= '</tr>' . "\n";
      $output .= '</thead>' . "\n";
      $output .= '<tbody>' . "\n";
@@ -139,7 +139,7 @@ class USERS {
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
        if($record['uid'] != 1) {
-         $output .= '<a class="sprites user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
+         $output .= '<a class="sprites-before user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }
        $output .= '</td>';
        $output .= '</tr>' . "\n";

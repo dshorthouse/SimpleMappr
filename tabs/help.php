@@ -49,22 +49,22 @@ $("#filter-countries")
 
   <h3><?php echo _("Toolbar buttons"); ?></h3>
   <dl class="toolbar ui-helper-clearfix">
-    <dt class="sprites toolsZoomIn"><?php echo _("Zoom in"); ?>:</dt>
+    <dt class="sprites-before toolsZoomIn"><?php echo _("Zoom in"); ?>:</dt>
     <dd><?php echo _("draw a zoom region on the preview"); ?></dd>
 
-    <dt class="sprites toolsZoomOut"><?php echo _("Zoom out"); ?>:</dt>
+    <dt class="sprites-before toolsZoomOut"><?php echo _("Zoom out"); ?>:</dt>
     <dd><?php echo _("zoom out one step"); ?></dd>
 
-    <dt class="sprites toolsCrop"><?php echo _("Crop"); ?>:</dt>
+    <dt class="sprites-before toolsCrop"><?php echo _("Crop"); ?>:</dt>
     <dd><?php echo _("draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."); ?></dd>
 
-    <dt class="sprites toolsQuery"><?php echo _("Fill regions"); ?>:</dt>
+    <dt class="sprites-before toolsQuery"><?php echo _("Fill regions"); ?>:</dt>
     <dd><?php echo _("choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."); ?></dd>
 
-    <dt class="sprites toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
+    <dt class="sprites-before toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
     <dd><?php echo _("refresh the map image"); ?></dd>
 
-    <dt class="sprites toolsRebuild"><?php echo _("Rebuild"); ?>:</dt>
+    <dt class="sprites-before toolsRebuild"><?php echo _("Rebuild"); ?>:</dt>
     <dd><?php echo _("re-render the default presentation at lowest zoom and geographic projection"); ?></dd>
   </dl>
 
@@ -126,13 +126,13 @@ $("#filter-countries")
   </dl>
     
     <dl class="toolbar ui-helper-clearfix">
-      <dt class="sprites toolsSave"><?php echo _("Save"); ?>:</dt>
+      <dt class="sprites-before map-save"><?php echo _("Save"); ?>:</dt>
       <dd><?php echo _("while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."); ?></dd>
 
-      <dt class="sprites toolsEmbed"><?php echo _("Embed"); ?>:</dt>
+      <dt class="sprites-before map-embed"><?php echo _("Embed"); ?>:</dt>
       <dd><?php echo _("once a map is saved, click this icon to obtain a URL for embedding on other websites."); ?></dd>
 
-      <dt class="sprites toolsDownload"><?php echo _("Download"); ?>:</dt>
+      <dt class="sprites-before map-download"><?php echo _("Download"); ?>:</dt>
       <dd><?php echo _("choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."); ?></dd>
     </dl>
 
@@ -146,7 +146,7 @@ $("#filter-countries")
       <dd><?php echo _("in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"); ?></dd>
     </dl>
     <div id="example-data">
-      <img src="../public/images/help_data.png" alt="<?php echo _("Example Data Entry"); ?>" width="400" height="215" />
+      <img src="../public/images/help-data.png" alt="<?php echo _("Example Data Entry"); ?>" width="400" height="215" />
       <img src="../public/images/38100.png" alt="<?php echo _("38,-100 (North America)"); ?>" width="200" height="100" />
       <img src="../public/images/25140.png" alt="<?php echo _("-25,140 (Australia)"); ?>" width="200" height="100" />
     </div>

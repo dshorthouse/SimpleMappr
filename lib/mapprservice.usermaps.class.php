@@ -161,7 +161,7 @@ class USERMAPS {
       $output .= '<td class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></td>';
       $output .= '<td class="actions">'._("Actions");
       if($this->_uid == 1) {
-        $output .= '<a href="#" class="sprites toolsRefresh"></a>';
+        $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
       }
       $output .= '</td>';
       $output .= '</tr>' . "\n";
@@ -177,9 +177,9 @@ class USERMAPS {
         $output .= ($this->_uid == 1) ? '</em>' : '';
         $output .= '</td>';
         $output .= '<td class="actions">';
-        $output .= '<a class="sprites map-load" data-mid="'.$record['mid'].'" href="#">'._("Load").'</a>';
+        $output .= '<a class="sprites-before map-load" data-mid="'.$record['mid'].'" href="#">'._("Load").'</a>';
         if($this->_uid == $record['uid'] || $this->_uid == 1) {
-          $output .= '<a class="sprites map-delete" data-mid="'.$record['mid'].'" href="#">'._("Delete").'</a>';
+          $output .= '<a class="sprites-before map-delete" data-mid="'.$record['mid'].'" href="#">'._("Delete").'</a>';
         }
         $output .= '</td>';
         $output .= '</tr>' . "\n";

@@ -18,16 +18,21 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <?php flush(); ?>
 <body>
 <div id="header" class="clearfix">
-<h1 id="site-title" class="sprites">SimpleMapp<span>r</span></h1>
+<h1 id="site-title" class="sprites-after">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
 <div id="site-languages">
 <ul><?php foreach($header[1] as $key => $langs): ?><?php $selected = ''; if($key == $language) { $selected = ' class="selected" '; } ?><li><?php echo '<a href="/?lang='.$key.'"'.$selected.'>'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<div id="site-logout"><?php echo $_SESSION['simplemappr']['username']; ?> <span><a class="sprites site-logout" href="/logout/"><?php echo _("Sign Out"); ?></a></span></div>
-<?php else: ?>
-<div id="site-logout"><span><a class="sprites site-login" href="#"><?php echo _("Sign In"); ?></a></span></div>
+<div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>
 <?php endif; ?>
+<div id="site-session">
+<?php if(isset($_SESSION['simplemappr'])): ?>
+<a class="sprites-before logout" href="/logout/"><?php echo _("Sign Out"); ?></a>
+<?php else: ?>
+<a class="sprites-before login" href="#"><?php echo _("Sign In"); ?></a>
+<?php endif; ?>
+</div>
 </div>
 <div id="wrapper">
 <div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
@@ -36,12 +41,12 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
 <li><a href="#map-points"><?php echo _("Point Data"); ?></a></li>
 <li><a href="#map-regions"><?php echo _("Regions"); ?></a></li>
-<li><a href="#map-mymaps" class="sprites map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
+<li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
-<li><a href="#map-users" class="sprites map-users"><?php echo _("Users"); ?></a></li>
+<li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <?php endif; ?>
 <?php $qlang = isset($_GET['lang']) ? "?lang=" . $_GET["lang"] : ""; ?>
-<li class="map-extras"><a href="tabs/help.php<?php echo $qlang; ?>" class="sprites map-myhelp"><?php echo _("Help"); ?></a></li>
+<li class="map-extras"><a href="tabs/help.php<?php echo $qlang; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
 <li class="map-extras"><a href="tabs/about.php<?php echo $qlang; ?>"><?php echo _("About"); ?></a></li>
 <li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>"><?php echo _("Feedback"); ?></a></li>
 <li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>"><?php echo _("API"); ?></a></li>
@@ -51,26 +56,26 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <!-- multipoint tab -->
 <div id="map-points">
 <div id="general-points" class="panel ui-corner-all">
-<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"); ?> <a href="#" class="sprites help show-examples"><?php echo _("examples"); ?></a></p>
+<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
 </div>
 <div id="fieldSetsPoints" class="fieldSets">
 <?php echo partial_layers(); ?>
 </div>
-<div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
-<div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
+<div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
+<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
 <!-- shaded regions tab -->
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
-<p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" data-tab="<?php echo $tabIndex; ?>" class="sprites help show-codes"><?php echo _("codes"); ?></a></p>
+<p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" data-tab="<?php echo $tabIndex; ?>" class="sprites-before help show-codes"><?php echo _("codes"); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">
 <?php echo partial_regions(); ?>
 </div>
-<div class="addFieldset"><button class="sprites addmore positive ui-corner-all" data-type="regions"><?php echo _("Add a region"); ?></button></div>
-<div class="submit"><button class="sprites submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
+<div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="regions"><?php echo _("Add a region"); ?></button></div>
+<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
 <!-- map preview tab -->
@@ -88,10 +93,10 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <h3 id="mapTitle"></h3>
 <ul id="map-saveDialog">
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<li><a class="sprites tooltip map-saveItem map-save" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
-<li><a class="sprites tooltip map-saveItem map-embed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem map-save" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem map-embed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
 <?php endif; ?>
-<li><a class="sprites tooltip map-saveItem map-download" href="#" title="<?php echo _("download ctrl+d"); ?>"><?php echo _("Download"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem map-download" href="#" title="<?php echo _("download ctrl+d"); ?>"><?php echo _("Download"); ?></a></li>
 </ul>
 </div>
 <div id="map">
@@ -110,7 +115,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 <div class="thumb ui-corner-all ui-widget-header"></div>
 </div>
-<div id="badRecordsWarning"><a href="#" class="sprites toolsBadRecords"><?php echo _("Records Out of Range"); ?></a></div>
+<div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords"><?php echo _("Records Out of Range"); ?></a></div>
 <div id="mapOutput"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Building preview..."); ?></span></div>
 </div>
 <div id="mapScale"></div>
@@ -209,7 +214,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 </fieldset>
 <fieldset>
 <legend><?php echo _("Options"); ?></legend>
-<p id="mapCropMessage" class="sprites"><?php echo _("map will be cropped"); ?></p>
+<p id="mapCropMessage" class="sprites-before"><?php echo _("map will be cropped"); ?></p>
 <div class="download-options">
 <?php echo partial_scales(); ?>
 <div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
@@ -281,7 +286,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <p><input id="embed-json" type="text" size="65" value="" /></p>
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
 </div>
-<div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_submit colorpicker"><?php echo _("Apply"); ?></div></div></div>
+<div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit"><?php echo _("Apply"); ?></div></div></div>
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -354,7 +359,7 @@ function partial_layers() {
     
     $output .= '<div class="form-item fieldset-points">';
 
-    $output .= '<button class="sprites removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
+    $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
   
     $output .= '<h3><a href="#">'.sprintf(_("Layer %d"),$i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
@@ -369,7 +374,7 @@ function partial_layers() {
     $output .= '<span class="fieldset-title">'._("Shape").':</span> <select class="m-mapShape" name="coords['.$i.'][shape]">'.$marker_shape.'</select> <span class="fieldset-title">'._("Size").':</span> <select class="m-mapSize" name="coords['.$i.'][size]">'.$marker_size.'</select>' . "\n";
     $output .= '<span class="fieldset-title">'._("Color").':</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords['.$i.'][color]" value="0 0 0" />' . "\n";
     $output .= '</div>' . "\n";
-    $output .= '<button class="sprites clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
+    $output .= '<button class="sprites-before clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
     $output .= '</div>' . "\n";
   
     $output .= '</div>' . "\n";
@@ -384,7 +389,7 @@ function partial_regions() {
   for($i=0;$i<=NUMTEXTAREA-1;$i++) {
     $output .= '<div class="form-item fieldset-regions">';
 
-    $output .= '<button class="sprites removemore negative ui-corner-all" data-type="regions">'._("Remove").'</button>';
+    $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="regions">'._("Remove").'</button>';
 
     $output .= '<h3><a href="#">'.sprintf(_("Region %d"), $i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
@@ -398,7 +403,7 @@ function partial_regions() {
     $output .= '<div class="fieldset-extras">' . "\n";
     $output .= '<span class="fieldset-title">'._("Color").':</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions['.$i.'][color]" value="150 150 150" />' . "\n";
     $output .= '</div>' . "\n";
-    $output .= '<button class="sprites clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
+    $output .= '<button class="sprites-before clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
     $output .= '</div>' . "\n";
   
     $output .= '</div>' . "\n";
