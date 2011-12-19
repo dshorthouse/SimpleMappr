@@ -1,6 +1,6 @@
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
-a{color:#555555;}
+a{color:#555;}
 textarea{resize:none;padding:0;}
 .sprites{background-image:url("../../images/sprites.png");background-color:transparent;background-repeat:no-repeat;}
 .sprites-before:before, .ui-dialog-titlebar .ui-dialog-title:before{background-image:url("../../images/sprites.png");content:"";float:left;height:16px;width:16px;margin:0 0.2em;}
@@ -10,7 +10,7 @@ textarea{resize:none;padding:0;}
 #header{color:#bababa;font-size:0.8em;position:relative;z-index:100;top:0;height:2.5em;line-height:2.5em;width:100%;box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color: #333;background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(#111));background-image: -moz-linear-gradient(#333, #111); /* FF3.6 */}
 #header a{color:#bababa;text-decoration:none;}
 #header a:hover{color:#fff;}
-#site-title{position:absolute;left:0px;margin:0 0.25em;color:#FFF;font-size:1.5em;line-height:1.5em;text-shadow: 0px -2px 2px #ccc;}
+#site-title{position:absolute;left:0px;margin:0 0.25em;color:#fff;font-size:1.5em;line-height:1.5em;text-shadow: 0px -2px 2px #ccc;}
 #site-title:after{background-position:-180px -284px;}
 #site-title span{color:#3ad1ff;text-shadow: 0px -2px 2px #b5efff;}
 #site-tagline{position:absolute;left:15em;font-style:italic;}
@@ -56,11 +56,11 @@ fieldset #scale-measure{display:none;margin:5px 0 0 5px;}
 button{background-color:transparent;color:#565656;border:1px solid #aaa;padding:5px 5px 5px 0;margin:0 0.2em;cursor:pointer;font-size:0.7em !important;}
 button:hover{color:#c7c7c7;background-color:#4f4f4f;border:1px solid #585858;}
 button:active{color:#CCC !important;}
-button.positive{color:#4c8318;}
-button.positive:hover{background-color:#a9bea3 !important;color:#396212;}
+button.positive{color:#4c8318 !important;}
+button.positive:hover{background-color:#a9bea3 !important;}
 button.positive:active{background-color:#3d5b40 !important;}
-button.negative{color:#d12f19;}
-button.negative:hover{background-color:#eca8a8 !important;color:#d12f19;}
+button.negative{color:#d12f19 !important;}
+button.negative:hover{background-color:#eca8a8 !important;}
 button.negative:active{background-color:#782c21 !important;}
 .submitForm:before{background-position:-260px -304px;}
 .clear:before{background-position:-260px -264px;}
@@ -161,14 +161,14 @@ div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em
 #mapExport #mapCropMessage:before{background-position:-240px -264px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;}
 .usermaps-loading,.userdata-loading{position:relative;}
-#map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
+#map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
 #map-mymaps table thead tr{height:1.75em;}
 #map-mymaps table thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-mymaps table thead td.left-align{text-align:left;padding-left:20px;}
 #map-mymaps table thead td a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
 #map-mymaps table tr{border:1px solid #aaa;}
 #map-mymaps table tr.odd{background:none repeat scroll 0 0 #fff;}
-#map-mymaps table td.actions{width:14em;}
+#map-mymaps table td.actions{width:14em;text-align:right;padding-right:10px;}
 #map-mymaps table td.actions a{display:inline-block;}
 #map-mymaps table tbody td.actions a{margin-left:10px;}
 #map-mymaps table td.actions a.map-delete:before{background-position:-260px -284px;margin:0.2em;}
@@ -178,16 +178,16 @@ div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em
 #map-mymaps table td input{vertical-align:top;}
 #map-mymaps #janrainEngageEmbed {margin-top:10px;}
 #map-mymaps #janrainEngageEmbed div{margin:0px;}
-#map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
+#map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
 #map-users table thead tr{height:1.75em;}
 #map-users table thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-users table thead td.left-align{text-align:left;padding-left:20px;}
-#map-users table thead td a.toolsRefresh:after{background-position:-240px -324px;margin:0.2em;}
+#map-users table thead td a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
 #map-users table tr{border:1px solid #aaa;}
 #map-users table tr.odd{background:none repeat scroll 0 0 #fff;}
 #map-users table tr td.usermaps-center{text-align:center;}
-#map-users table td.actions{width:7em;}
-#map-users table td.actions a{height:20px;line-height:20px;}
+#map-users table td.actions{width:7em;text-align:right;padding-right:10px;}
+#map-users table td.actions a{display:inline-block;}
 #map-users table td.actions a.user-delete:before{background-position:-260px -284px;margin-top:0.2em;}
 #map-api #general-base{margin-top:20px;}
 #map-api p{font-size:0.75em;}
@@ -204,7 +204,7 @@ div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em
 #map-help dl dt,#map-help dl dd{line-height:20px;}
 #map-help #example-data{height:220px;}
 #map-help #example-data img{vertical-align:middle;margin-right:20px;}
-#map-help table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555555;}
+#map-help table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
 #map-help table thead tr{height:1.75em;}
 #map-help table thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
 #map-help table thead td.title{width:35%;padding-left:20px;}
@@ -263,13 +263,13 @@ div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em
 .ui-widget .ui-widget{font-size:1em;}
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{font-family:Verdana,Arial,sans-serif;}
 .ui-widget textarea{font-size:0.7em;}
-.ui-widget-content{border:1px solid #aaa;background-color:#ffffff;color:#222222;}
-.ui-widget-header{border:1px solid #aaa;background-color:#e9e9e9;color:#222222;font-weight:bold;}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{font-weight:normal;color:#555555;}
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited{color:#555555;text-decoration:none;}
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{border:1px solid #999999;background-color:#dadada;font-weight:normal;color:#212121;}
+.ui-widget-content{border:1px solid #aaa;background-color:#fff;color:#222;}
+.ui-widget-header{border:1px solid #aaa;background-color:#e9e9e9;color:#222;font-weight:bold;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{font-weight:normal;color:#555;}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited{color:#555;text-decoration:none;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{border:1px solid #999;background-color:#dadada;font-weight:normal;color:#212121;}
 .ui-state-hover a, .ui-state-hover a:hover{color:#212121;text-decoration:none;}
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{border:1px solid #aaaaaa !important;background-color:#fff !important;font-weight:normal;color:#212121;}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{border:1px solid #aaa !important;background-color:#fff !important;font-weight:normal;color:#212121;}
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited{color:#212121;text-decoration:none;}
 .ui-widget:active{outline:none;}
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{border:1px solid #fcefa1;background-color:#fbf9ee;color:#363636;}
@@ -322,9 +322,6 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .ui-dialog{position:absolute;padding:.2em;width:300px;overflow:hidden;}
 .ui-dialog .ui-dialog-titlebar{padding:.4em 0.5em;position:relative;}
 .ui-dialog .ui-dialog-title{float:left;margin:.1em 16px .1em 0;}
-.ui-dialog .ui-dialog-titlebar-close{position:absolute;right:.3em;top:50%;width:19px;margin:-10px 0 0 0;padding:1px;height:18px;}
-.ui-dialog .ui-dialog-titlebar-close span{display:block;margin:1px;}
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus{padding:0;}
 .ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em;background:none;overflow:auto;zoom:1;}
 .ui-dialog .ui-dialog-buttonpane{text-align:left;border-width:1px 0 0 0;background-image:none;margin:.5em 0 0 0;padding:.3em 1em .5em .4em;}
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float:right;}

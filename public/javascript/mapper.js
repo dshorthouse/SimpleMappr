@@ -1283,11 +1283,15 @@ $(function () {
                       closeOnEscape : false,
                       draggable     : true,
                       resizable     : false,
-                      buttons       : {
-                        OK: function () {
-                          $(this).dialog("destroy");
+                      buttons       : [
+                        {
+                          "text"  : "OK",
+                          "class" : "positive",
+                          "click" : function () {
+                            $(this).dialog("destroy");
+                          }
                         }
-                      }
+                      ]
                     }).show();
       return false;
     });
@@ -1308,6 +1312,7 @@ $(function () {
       buttons       : [
         {
           "text"  : $('#button-titles span.delete').text(),
+          "class" : "negative",
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
@@ -1379,6 +1384,7 @@ $(function () {
       buttons       : [
         {
           "text"  : $('#button-titles span.delete').text(),
+          "class" : "negative",
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
@@ -1427,6 +1433,7 @@ $(function () {
       buttons       : [
         {
           "text"  : $('#button-titles span.save').text(),
+          "class" : "positive",
           "click" : function () {
             if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
             if(missingTitle) {
@@ -1495,6 +1502,7 @@ $(function () {
       buttons       : [
         {
           "text"  : $('#button-titles span.download').text(),
+          "class" : "positive",
           "click" : function() {
             Mappr.generateDownload();
           }
@@ -1545,11 +1553,15 @@ $(function () {
       closeOnEscape : false,
       draggable     : true,
       resizable     : false,
-      buttons       : {
-        Ok : function () {
-          $(this).dialog("destroy");
+      buttons       : [
+        {
+          "text"  : "OK",
+          "class" : "positive",
+          "click" : function() {
+            $(this).dialog("destroy");
+          }
         }
-      }
+      ]
     }).show();
   };
 
@@ -1666,11 +1678,15 @@ $(function () {
       closeOnEscape : false,
       draggable     : true,
       resizable     : false,
-      buttons: {
-        Ok: function () {
-          $(this).dialog("close");
+      buttons: [
+        {
+          "text"  : "OK",
+          "class" : "positive",
+          "click" : function() {
+            $(this).dialog("destroy");
+          }
         }
-      }
+      ]
     });
 
     $('.toolsBadRecords').click(function () {
@@ -1773,11 +1789,15 @@ $(function () {
       closeOnEscape : false,
       draggable     : true,
       resizable     : false,
-      buttons       : {
-        OK: function () {
-          $(this).dialog("destroy");
+      buttons       : [
+        {
+          "text"  : "OK",
+          "class" : "positive",
+          "click" : function() {
+            $(this).dialog("destroy");
+          }
         }
-      }
+      ]
     }).show();
 
     return false;
