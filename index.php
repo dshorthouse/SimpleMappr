@@ -290,7 +290,9 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <?php $header[0]->getJSHeader();?>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? '"true"' : '"false"'; ?> });
+head.ready(function(){
+  jQuery.extend(Mappr.settings, { "baseUrl": "http://<?php echo $_SERVER['HTTP_HOST']; ?>", "active" : <?php echo (isset($_SESSION['simplemappr'])) ? '"true"' : '"false"'; ?> });
+});
 //--><!]]>
 </script>
 <?php $header[0]->getAnalytics(); ?>

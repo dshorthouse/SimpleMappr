@@ -91,7 +91,7 @@ class HEADER {
           unset(self::$local_js_files[$key]);
         }
       }
-      $this->addJS('<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>');
+      $this->addJS("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
     }
     return $this;
   }
@@ -115,13 +115,13 @@ class HEADER {
         fwrite($handle, $js_min);
         fclose($handle);
 
-        $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $js_min_file . '"></script>');
+        $this->addJS("public/javascript/cache/" . $js_min_file);
       } else {
-        $this->addJS('<script type="text/javascript" src="public/javascript/cache/' . $cached_js . '"></script>');
+        $this->addJS("public/javascript/cache/" . $cached_js);
       }
     } else {
       foreach(self::$local_js_files as $js_file) {
-        $this->addJS('<script type="text/javascript" src="' . $js_file . '"></script>');
+        $this->addJS($js_file);
       }
     }
     return $this;
@@ -176,7 +176,18 @@ class HEADER {
   * Create the javascript header
   */
   public function getJSHeader() {
-    echo implode("\n", $this->js_header) . "\n";
+    $head  = '<script type="text/javascript" src="public/javascript/head.load.min.js"></script>' . "\n";
+    $head .= '<script type="text/javascript">' . "\n";
+    $head .= 'head.js(';
+    $counter = 1;
+    foreach($this->js_header as $js) {
+      $head .= "\"$js\"";
+      if($counter < count($this->js_header)) { $head .= ","; }
+      $counter++;
+    }
+    $head .= ');' . "\n";
+    $head .= '</script>' . "\n";
+    echo $head;
   }
 
   /*
