@@ -1852,7 +1852,7 @@ $(function () {
 
   Mappr.init = function () {
     var self = this;
-    $('.overlay','#mapControls').css('background-image', 'url('+self.settings.baseUrl+'/public/images/bg-rotatescroll.png)');
+    $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
     $('.overview', '#mapControls').append(self.mapCircleSlider());
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
       index = null;
