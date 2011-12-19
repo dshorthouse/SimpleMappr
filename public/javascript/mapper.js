@@ -815,7 +815,7 @@ $(function () {
 
     self.destroyJcrop();
 
-    self.showLoadingMessage('Building preview...');
+    self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
       type : 'POST',
