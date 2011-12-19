@@ -819,7 +819,7 @@ $(function () {
 
     $.ajax({
       type : 'POST',
-      url  : '/query/',
+      url  : self.settings.baseUrl + '/query/',
       data : formData,
       success: function (data) {
         if(data.length > 0) {
@@ -1035,7 +1035,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : "/usermaps/" + self.getLanguage(),
+      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage(),
       dataType : 'html',
       success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
@@ -1089,7 +1089,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : "/usermaps/" + id,
+      url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
       success  : function (data) {
         self.removeExtraElements();
@@ -1316,7 +1316,7 @@ $(function () {
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
-              url     :  "/usermaps/" + id,
+              url     :  self.settings.baseUrl + "/usermaps/" + id,
               success : function() {
                 self.loadMapList();
               }
@@ -1342,7 +1342,7 @@ $(function () {
 
     $.ajax({
       type     : 'GET',
-      url      : '/users/' + self.getLanguage(),
+      url      : self.settings.baseUrl + '/users/' + self.getLanguage(),
       dataType : 'html',
       success  : function (data) {
         if(data.indexOf("access denied") !== -1) {
@@ -1388,7 +1388,7 @@ $(function () {
           "click" : function () {
             $.ajax({
               type    : 'DELETE',
-              url     : "/users/" + id,
+              url     : self.settings.baseUrl + "/users/" + id,
               success : function() {
                 self.loadUserList();
               }
@@ -1453,7 +1453,7 @@ $(function () {
 
               $.ajax({
                 type        : 'POST',
-                url         : '/usermaps/',
+                url         : Mappr.settings.baseUrl + '/usermaps/',
                 data        : $("form").serialize(),
                 dataType    : 'json',
                 success     : function(data) {
@@ -1617,7 +1617,7 @@ $(function () {
 
     $.ajax({
       type : 'POST',
-      url  : '/application/',
+      url  : self.settings.baseUrl + '/application/',
       data : formData,
       dataType : 'json',
       success : function (data) {
@@ -1852,7 +1852,7 @@ $(function () {
 
   Mappr.init = function () {
     var self = this;
-    $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
+    $('.overlay','#mapControls').css('background-image', 'url("' + self.settings.baseUrl + '/public/images/bg-rotatescroll.png")');
     $('.overview', '#mapControls').append(self.mapCircleSlider());
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
       index = null;
