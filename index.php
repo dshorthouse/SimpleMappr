@@ -118,7 +118,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <div id="mapOutput"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Building preview..."); ?></span></div>
 </div>
 <div id="mapScale"></div>
-<div id="mapToolsCollapse" class="mapTools-default ui-widget-header ui-corner-left"><a href="#" class="slide-right tooltip" title="<?php echo _("expand/collpase"); ?>"></a></div>
+<div id="mapToolsCollapse" class="mapTools-default ui-widget-header ui-corner-left"><a href="#" class="sprites tooltip" title="<?php echo _("expand/collpase"); ?>"></a></div>
 </div>
 <div id="mapTools">
 <ul>

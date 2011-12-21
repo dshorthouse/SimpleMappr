@@ -279,8 +279,8 @@ class MAPPR {
     $this->regions          = $this->load_param('regions', array());
 
     $this->output           = $this->load_param('output','pnga');
-    $this->width            = $this->load_param('width', 800);
-    $this->height           = $this->load_param('height', $this->width/2);
+    $this->width            = (float)$this->load_param('width', 800);
+    $this->height           = (float)$this->load_param('height', $this->width/2);
 
     $this->image_size       = array($this->width, $this->height);
 

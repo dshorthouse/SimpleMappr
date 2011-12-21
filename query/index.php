@@ -8,8 +8,7 @@ $mappr_query->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
             ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
             ->set_tmp_url("/tmp")
             ->set_default_projection("epsg:4326")
-            ->set_max_extent("-180,-90,180,90")
-            ->set_image_size("800,400");
+            ->set_max_extent("-180,-90,180,90");
 
 $mappr_query->get_request()
             ->execute()

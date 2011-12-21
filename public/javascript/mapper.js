@@ -809,7 +809,9 @@ $(function () {
           bbox_query     : $('#bbox_query').val(),
           projection     : $('#projection').val(),
           projection_map : $('#projection_map').val(),
-          qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base'
+          qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base',
+          width          : $('input[name="width"]').val(),
+          height         : $('input[name="height"]').val()
         };
 
     $(document).unbind("mouseup", self.aQuery);
@@ -1555,9 +1557,10 @@ $(function () {
       $('#mapOutputScale').hide();
       $(this).parent().addClass("mapTools-collapsed");
       $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
-        $('#actionsBar').animate({ width : "100%" }, 250);
-        $('#map').animate({ width : "100%" }, 250, function() {
-          $('input[name="width"]').val($(window).width()*0.95);
+        var new_width = $(window).width()*0.98;
+        $('#actionsBar').animate({ width : new_width }, 250);
+        $('#map').animate({ width : new_width }, 250, function() {
+          $('input[name="width"]').val(new_width);
           self.mapRefresh();
         });
       });

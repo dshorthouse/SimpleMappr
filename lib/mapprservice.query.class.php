@@ -40,6 +40,9 @@ class MAPPRQUERY extends MAPPR {
     $this->download         = false;
     $this->options          = array();
     $this->border_thickness = 1.25;
+    $this->width            = (float)$this->load_param('width', 800);
+    $this->height           = (float)$this->load_param('height', $this->width/2);
+    $this->image_size       = array($this->width, $this->height);
     $this->output           = $this->load_param('output','pnga');
     $this->projection       = $this->load_param('projection', 'epsg:4326');
     $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
@@ -49,9 +52,6 @@ class MAPPRQUERY extends MAPPR {
 
     $this->bbox_query       = $this->load_param('bbox_query', '0,0,0,0');
     $this->queryLayer       = $this->load_param('qlayer', 'base');
-
-    $this->freehandCoords   = $this->load_param('freehand', array());
-
     return $this;
   }
 

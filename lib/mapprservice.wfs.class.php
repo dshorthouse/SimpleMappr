@@ -81,7 +81,6 @@ class MAPPRWFS extends MAPPR {
     $this->download = false;
 
     return $this;
-
   }
 
   /*
