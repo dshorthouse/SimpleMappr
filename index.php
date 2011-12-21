@@ -101,7 +101,6 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 <div id="map">
 <div id="mapImage">
-<div id="mapControlsTransparency"></div>
 <div id="mapControls">
 <div class="viewport">
 <ul class="overview"></ul>
@@ -246,6 +245,8 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <input type="hidden" name="save[title]" />
 <input type="hidden" name="file_name" />
 <input type="hidden" name="download_factor" />
+<input type="hidden" name="width" />
+<input type="hidden" name="height" />
 <input type="hidden" name="download_filetype" />
 <input type="hidden" name="grid_space" />
 <input type="hidden" name="options[border]" />

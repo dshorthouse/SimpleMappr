@@ -50,9 +50,6 @@ class MAPPR {
   /* default projection when map first loaded */
   public $default_projection = 'epsg:4326';
 
-  /* base image size in pixels (length, height) */
-  public $image_size = array(800,400);
-
   public $image;
 
   public $scale;
@@ -275,16 +272,6 @@ class MAPPR {
   }
 
   /**
-  * Set the image size
-  * @param array $image_size
-  */
-  public function set_image_size($image_size = array()) {
-    $image_size = explode(',', $image_size);
-    $this->image_size = $image_size;
-    return $this;
-  }
-
-  /**
   * Flexibly load up all the request parameters
   */
   public function get_request() {
@@ -292,6 +279,11 @@ class MAPPR {
     $this->regions          = $this->load_param('regions', array());
 
     $this->output           = $this->load_param('output','pnga');
+    $this->width            = $this->load_param('width', 800);
+    $this->height           = $this->load_param('height', $this->width/2);
+
+    $this->image_size       = array($this->width, $this->height);
+
     $this->projection       = $this->load_param('projection', 'epsg:4326');
     $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
 
@@ -1537,6 +1529,7 @@ class MAPPR {
 
         $output = array(
           'mapOutputImage'      => $this->image_url,
+          'size'                => $this->image_size,
           'rendered_bbox'       => ($this->map_obj->extent->minx + $this->_ox_pad) . ',' . ($this->map_obj->extent->miny + $this->_oy_pad) . ',' . ($this->map_obj->extent->maxx - $this->_ox_pad) . ',' . ($this->map_obj->extent->maxy - $this->_oy_pad),
           'rendered_rotation'   => $this->rotation,
           'rendered_projection' => $this->projection,

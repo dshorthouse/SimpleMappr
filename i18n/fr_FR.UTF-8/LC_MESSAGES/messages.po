@@ -206,6 +206,10 @@ msgstr "Données hors de portée"
 msgid "Building preview..."
 msgstr "En train de construire l'aperçu..."
 
+#: .index.php:120
+msgid "expand/collapse"
+msgstr "ouvrir/fermer"
+
 #: .index.php:122
 msgid "Settings"
 msgstr "Paramètres"
@@ -556,6 +560,14 @@ msgstr "Citer"
 #: .tabs/about.php:11
 msgid "Recent Updates"
 msgstr "Mises à jour"
+
+#: .tabs/about.php:11
+msgid "December 21, 2011"
+msgstr "21 décembre, 2011"
+
+#: ./tabls/about.php:11
+msgid "Improvements: Settings panel may now be collapsed/expanded."
+msgstr "Améliorations: panneau paramètres peut maintenant être effondré/élargi."
 
 #: .tabs/about.php:11
 msgid "December 9, 2011"

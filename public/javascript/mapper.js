@@ -1095,7 +1095,10 @@ $(function () {
       dataType : 'json',
       success  : function (data) {
         self.removeExtraElements();
+        var width = $('input[name="width"]').val(), height = $('input[name="height"]').val();
         $('#form-mapper').clearForm();
+        $('input[name="width"]').val(width);
+        $('input[name="height"]').val(height);
         $('#filter-mymaps').val(filter);
         self.loadCoordinates(data);
         self.loadRegions(data);
@@ -1548,16 +1551,28 @@ $(function () {
     var self = this;
     $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggle(function (e) {
       e.preventDefault();
+      $('#mapOutputImage').attr("width", 0).attr("height", 0);
+      $('#mapOutputScale').hide();
       $(this).parent().addClass("mapTools-collapsed");
-      $('#mapTools').hide("slide", { direction : "right" }, 250);
-      $('#actionsBar').animate({ width : "100%" }, 250);
-      $('#map').animate({ width : "100%" }, 250, function() { self.mapRefresh(); });
+      $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
+        $('#actionsBar').animate({ width : "100%" }, 250);
+        $('#map').animate({ width : "100%" }, 250, function() {
+          $('input[name="width"]').val($(window).width()*0.95);
+          self.mapRefresh();
+        });
+      });
     }, function (e) {
       e.preventDefault();
+      $('#mapOutputImage').attr("width", 0).attr("height", 0);
+      $('#mapOutputScale').hide();
       $(this).parent().removeClass("mapTools-collapsed");
-      $('#mapTools').show("slide", { direction : "right" }, 250);
-      $('#actionsBar').animate({ width : "810px" }, 250);
-      $('#map').animate({ width : "800px" }, 250, function() { self.mapRefresh(); });
+      $('#mapTools').show("slide", { direction : "right" }, 250, function() {
+        $('#actionsBar').animate({ width : "810px" }, 250);
+        $('#map').animate({ width : "800px" }, function() {
+           $('input[name="width"]').val(800);
+           self.mapRefresh();
+        });
+      });
     });
   };
 
@@ -1594,7 +1609,7 @@ $(function () {
   };
 
   Mappr.drawScalebar = function () {
-    $('#mapScale img').attr('src', $('#scalebar_url').val());
+    $('#mapScale img').attr('src', $('#scalebar_url').val()).show();
   };
 
   Mappr.showBadPoints = function () {
@@ -1641,7 +1656,6 @@ $(function () {
       success : function (data) {
         self.resetFormValues(data);
         self.resetJbbox();
-
         self.drawMap(data, load_data);
         self.drawLegend();
         self.drawScalebar();
@@ -1678,12 +1692,11 @@ $(function () {
   Mappr.drawMap = function (data, load_data) {
     var self = this;
 
-    $('#mapOutputImage').attr("src", data.mapOutputImage).one('load', function () {
+    $('#mapOutputImage').attr("width", data.size[0]).attr("height", data.size[1]).attr("src", data.mapOutputImage).one('load', function () {
       if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
       self.hideLoadingMessage();
     });
-
   };
 
   Mappr.addBadRecordsViewer = function () {
