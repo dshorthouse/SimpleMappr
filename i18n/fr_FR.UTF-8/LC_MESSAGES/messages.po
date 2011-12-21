@@ -207,8 +207,8 @@ msgid "Building preview..."
 msgstr "En train de construire l'aperçu..."
 
 #: .index.php:120
-msgid "expand/collapse"
-msgstr "ouvrir/fermer"
+msgid "expand/collapse ctrl+e"
+msgstr "ouvrir/fermer ctrl+e"
 
 #: .index.php:122
 msgid "Settings"

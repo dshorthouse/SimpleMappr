@@ -469,6 +469,7 @@ $(function () {
       'ctrl+r' : self.mapRefresh,
       'ctrl+n' : self.mapRebuild,
       'ctrl+x' : self.mapCrop,
+      'ctrl+e' : self.mapToggleSettings,
       'ctrl++' : self.mapZoomIn,
       'ctrl+-' : self.mapZoomOut,
       'esc'    : self.destroyJcrop
@@ -1548,6 +1549,11 @@ $(function () {
         $("#tabs").tabs('select',0);
       }
     });
+  };
+
+  Mappr.mapToggleSettings = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    $('#mapToolsCollapse a').trigger('click');
   };
 
   Mappr.bindPanelToggle = function () {
