@@ -1905,8 +1905,8 @@ $(function () {
     $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
     $('a.show-codes').click(function(e) { e.preventDefault(); self.tabSelector(parseInt($(this).attr("data-tab"), 10)); });
     $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
-    $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
-    $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
+    $('#mapOutput').append('<img id="mapOutputImage" src="' + self.settings.baseUrl + '/public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
+    $('#mapScale').append('<img id="mapOutputScale" src="' + self.settings.baseUrl + '/public/images/basemap-scalebar.png" width="200" height="27" />');
     $(".tooltip").tipsy({gravity : 's'});
     this.bindHotkeys();
     this.bindToolbar();
