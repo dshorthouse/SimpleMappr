@@ -512,7 +512,7 @@ $(function () {
     });
 
     $('.gridopt').click(function () {
-      if(!$('#graticules').is(':checked')) { $('#graticules').attr('checked', true); }
+      if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
       self.resetJbbox();
       self.showMap();
     });
@@ -811,7 +811,7 @@ $(function () {
           bbox_query     : $('#bbox_query').val(),
           projection     : $('#projection').val(),
           projection_map : $('#projection_map').val(),
-          qlayer         : ($('#stateprovince').is(':checked')) ? 'stateprovinces_polygon' : 'base',
+          qlayer         : ($('#stateprovince').prop('checked')) ? 'stateprovinces_polygon' : 'base',
           width          : $('input[name="width"]').val(),
           height         : $('input[name="height"]').val()
         };
@@ -1803,7 +1803,7 @@ $(function () {
 
   Mappr.setFormOptions = function () {
     $.each(["border", "legend", "scalebar"], function () {
-      if($('#'+this).is(':checked')) {
+      if($('#'+this).prop('checked')) {
         $('input[name="options['+this+']"]').val(1);
       } else {
         $('input[name="options['+this+']"]').val("");
