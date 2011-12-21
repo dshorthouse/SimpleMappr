@@ -42,7 +42,6 @@ class HEADER {
     'jquery'    => 'public/javascript/jquery-1.7.1.min.js',
     'jquery-ui' => 'public/javascript/jquery-ui-1.8.16.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
-    'scroll'    => 'public/javascript/jquery.scrollTo.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
     'textarea'  => 'public/javascript/jquery.textarearesizer.compressed.js',
     'cookie'    => 'public/javascript/jquery.cookie.min.js',
@@ -52,7 +51,7 @@ class HEADER {
     'filter'    => 'public/javascript/jquery.uitablefilter.min.js',
     'hotkeys'   => 'public/javascript/jquery.hotkeys.min.js',
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
-    'mappr'     => 'public/javascript/mapper.js'
+    'mappr'     => 'public/javascript/mappr.min.js'
   );
 
   /*

@@ -13,7 +13,7 @@
 			inAction,
 			charMin = 65,
 			visible,
-			tpl = '<div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_submit colorpicker"></div></div>',
+			tpl = $('#colorpicker').html(),
 			defaults = {
 				eventName: 'click',
 				onShow: function () {},
@@ -195,19 +195,19 @@
 				$(this).removeClass('colorpicker_focus');
 			},
 			clickSubmit = function (ev) {
-				var cal = $(this).parent();
-				var col = cal.data('colorpicker').color;
+				var cal = $(this).parent(),
+				    col = cal.data('colorpicker').color;
 				cal.data('colorpicker').origColor = col;
 				setCurrentColor(col, cal.get(0));
 				cal.data('colorpicker').onSubmit(col, HSBToHex(col), HSBToRGB(col), cal.data('colorpicker').el);
 			},
 			show = function (ev) {
-				var cal = $('#' + $(this).data('colorpickerId'));
+				var cal      = $('#' + $(this).data('colorpickerId')),
+				    pos      = $(this).offset(),
+				    viewPort = getViewport(),
+				    top      = pos.top + this.offsetHeight,
+				    left     = pos.left;
 				cal.data('colorpicker').onBeforeShow.apply(this, [cal.get(0)]);
-				var pos = $(this).offset();
-				var viewPort = getViewport();
-				var top = pos.top + this.offsetHeight;
-				var left = pos.left;
 				if (top + 176 > viewPort.t + viewPort.h) {
 					top -= this.offsetHeight + 176;
 				}
@@ -294,10 +294,10 @@
 					h: 0,
 					s: 0,
 					b: 0
-				};
-				var min = Math.min(rgb.r, rgb.g, rgb.b);
-				var max = Math.max(rgb.r, rgb.g, rgb.b);
-				var delta = max - min;
+				},
+				min = Math.min(rgb.r, rgb.g, rgb.b),
+				max = Math.max(rgb.r, rgb.g, rgb.b),
+				delta = max - min;
 				hsb.b = max;
 				if (max != 0) {
 					
@@ -323,10 +323,10 @@
 				return hsb;
 			},
 			HSBToRGB = function (hsb) {
-				var rgb = {};
-				var h = Math.round(hsb.h);
-				var s = Math.round(hsb.s*255/100);
-				var v = Math.round(hsb.b*255/100);
+				var rgb = {},
+				      h = Math.round(hsb.h),
+				      s = Math.round(hsb.s*255/100),
+				      v = Math.round(hsb.b*255/100);
 				if(s == 0) {
 					rgb.r = rgb.g = rgb.b = v;
 				} else {
@@ -334,13 +334,13 @@
 					var t2 = (255-s)*v/255;
 					var t3 = (t1-t2)*(h%60)/60;
 					if(h==360) h = 0;
-					if(h<60) {rgb.r=t1;	rgb.b=t2; rgb.g=t2+t3}
-					else if(h<120) {rgb.g=t1; rgb.b=t2;	rgb.r=t1-t3}
-					else if(h<180) {rgb.g=t1; rgb.r=t2;	rgb.b=t2+t3}
-					else if(h<240) {rgb.b=t1; rgb.r=t2;	rgb.g=t1-t3}
-					else if(h<300) {rgb.b=t1; rgb.g=t2;	rgb.r=t2+t3}
-					else if(h<360) {rgb.r=t1; rgb.g=t2;	rgb.b=t1-t3}
-					else {rgb.r=0; rgb.g=0;	rgb.b=0}
+					if(h<60) {rgb.r=t1;	rgb.b=t2; rgb.g=t2+t3;}
+					else if(h<120) {rgb.g=t1; rgb.b=t2; rgb.r=t1-t3;}
+					else if(h<180) {rgb.g=t1; rgb.r=t2; rgb.b=t2+t3;}
+					else if(h<240) {rgb.b=t1; rgb.r=t2; rgb.g=t1-t3;}
+					else if(h<300) {rgb.b=t1; rgb.g=t2; rgb.r=t2+t3;}
+					else if(h<360) {rgb.r=t1; rgb.g=t2; rgb.b=t1-t3;}
+					else {rgb.r=0; rgb.g=0; rgb.b=0;}
 				}
 				return {r:Math.round(rgb.r), g:Math.round(rgb.g), b:Math.round(rgb.b)};
 			},
@@ -361,8 +361,8 @@
 				return RGBToHex(HSBToRGB(hsb));
 			},
 			restoreOriginal = function () {
-				var cal = $(this).parent();
-				var col = cal.data('colorpicker').origColor;
+				var cal = $(this).parent(),
+				    col = cal.data('colorpicker').origColor;
 				cal.data('colorpicker').color = col;
 				fillRGBFields(col, cal.get(0));
 				fillHexFields(col, cal.get(0));
@@ -387,7 +387,7 @@
 					if (!$(this).data('colorpickerId')) {
 						var options = $.extend({}, opt);
 						options.origColor = opt.color;
-						var id = 'collorpicker_' + parseInt(Math.random() * 1000);
+						var id = 'collorpicker_' + parseInt(Math.random() * 1000, 10);
 						$(this).data('colorpickerId', id);
 						var cal = $(tpl).attr('id', id);
 						if (options.flat) {

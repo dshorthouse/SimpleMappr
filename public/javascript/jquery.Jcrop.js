@@ -27,8 +27,10 @@
  *
  * }}}
  */
+/*global $, jQuery */
+(function () {
 
-(function ($) {
+  "use strict";
 
   $.Jcrop = function (obj, opt) {
     var options = $.extend({}, $.Jcrop.defaults),

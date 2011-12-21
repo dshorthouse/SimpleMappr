@@ -1,3 +1,5 @@
+/*global $, jQuery, window, document, self, XMLHttpRequest, alert */
+
 (function () {
 
   "use strict";

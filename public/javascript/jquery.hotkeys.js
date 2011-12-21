@@ -10,7 +10,7 @@
  * Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
 */
 /*global $, jQuery */
-(function(jQuery){
+(function(){
 	
 	"use strict";
 	
@@ -53,7 +53,7 @@
 			// Keypress represents characters, not special keys
 			var special = event.type !== "keypress" && jQuery.hotkeys.specialKeys[ event.which ],
 				character = String.fromCharCode( event.which ).toLowerCase(),
-				key, modif = "", possible = {}, i = 0, l = 0;
+				modif = "", possible = {}, i = 0, l = 0;
 
 			// check combinations (alt|ctrl|shift+anything)
 			if ( event.altKey && special !== "alt" ) {
@@ -98,4 +98,4 @@
 		jQuery.event.special[ this ] = { add: keyHandler };
 	});
 
-})( jQuery );
+}( jQuery ));
