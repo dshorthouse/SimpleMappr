@@ -115,9 +115,9 @@ class HEADER {
         fwrite($handle, $js_min);
         fclose($handle);
 
-        $this->addJS("compiled", MAPPR_MAPS_URL . "/public/javascript/cache/" . $js_min_file);
+        $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
       } else {
-        $this->addJS("compiled", MAPPR_MAPS_URL . "/public/javascript/cache/" . $cached_js);
+        $this->addJS("compiled", "public/javascript/cache/" . $cached_js);
       }
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
@@ -144,14 +144,14 @@ class HEADER {
         fwrite($handle, $css_min);
         fclose($handle);
 
-        $this->addCSS('<link type="text/css" href="'.MAPPR_MAPS_URL.'/public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
       } else {
-        $this->addCSS('<link type="text/css" href="'.MAPPR_MAPS_URL.'/public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
       }
 
     } else {
       foreach(self::$local_css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . MAPPR_MAPS_URL . '/' . $css_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
       }
     }
   }
@@ -184,7 +184,7 @@ class HEADER {
   * Create the javascript header
   */
   public function getJSHeader() {
-    $header  = "<script type=\"text/javascript\" src=\"".MAPPR_MAPS_URL."/public/javascript/head.load.min.js\"></script>" . "\n";
+    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
     $header .= "head.js(";
     $counter = 1;
@@ -244,7 +244,7 @@ jrs.parentNode.insertBefore(js, jrs);
     if(ENVIRONMENT == "production") {
       $analytics  = "<script type=\"text/javascript\">" . "\n";
       $analytics .= "var _gaq = _gaq || [];" . "\n";
-      $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."']); _gaq.push(['_trackPageview']);" . "\n";
+      $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."'], ['_trackPageview']);" . "\n";
       $analytics .= "(function(d,s,id) {
 var js, gjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
