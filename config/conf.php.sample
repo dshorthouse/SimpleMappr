@@ -6,6 +6,9 @@ define("ENVIRONMENT", "development");
 // System root directory to the SimpleMappr application without a trailing slash
 define("MAPPR_DIRECTORY", "/var/www/simplemappr");
 
+// Domain from where images will be served served, without a trailing slash
+define("MAPPR_MAPS_URL", "http://maps.simplemappr.net");
+
 // Number of textarea boxes for user data entry
 define("NUMTEXTAREA", 3);
 

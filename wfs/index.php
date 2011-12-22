@@ -6,10 +6,9 @@ $mappr_wfs = new MAPPRWFS();
 $mappr_wfs->set_shape_path(MAPPR_DIRECTORY . "/lib/mapserver/maps")
           ->set_font_file(MAPPR_DIRECTORY . "/lib/mapserver/fonts/fonts.list")
           ->set_tmp_path(MAPPR_DIRECTORY . "/tmp/")
-          ->set_tmp_url("/tmp")
+          ->set_tmp_url(MAPPR_MAPS_URL)
           ->set_default_projection("epsg:4326")
-          ->set_max_extent("-180,-90,180,90")
-          ->set_image_size("800,400");
+          ->set_max_extent("-180,-90,180,90");
 
 $mappr_wfs->get_request()
           ->make_service()
