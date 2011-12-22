@@ -35,7 +35,9 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 </div>
 <div id="wrapper">
+<?php if (!isset($_COOKIE["simplemappr"])): ?>
 <div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
+<?php endif; ?>
 <div id="tabs">
 <ul class="navigation">
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>

@@ -231,6 +231,7 @@ class USERSESSION {
 
       self::set_session();
       $_SESSION['simplemappr'] = $user;
+
       setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/");
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
