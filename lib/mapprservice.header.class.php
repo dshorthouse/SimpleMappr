@@ -182,21 +182,26 @@ class HEADER {
   /*
   * Create the javascript header
   */
-  public function getJSFooter() {
-    $foot  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
-    $foot .= "<script type=\"text/javascript\">";
-    $foot .= "head.js(";
+  public function getJSHeader() {
+    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+    $header .= "<script type=\"text/javascript\">";
+    $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $foot .= "{\"" . $key . "\":\"" . $file . "\"}";
-      if($counter < count($this->js_header)) { $foot .= ","; }
+      $header .= "{\"" . $key . "\":\"" . $file . "\"}";
+      if($counter < count($this->js_header)) { $header .= ","; }
       $counter++;
     }
-    $foot .= ");" . "\n";
+    $header .= ");" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $key = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $foot .= "head.ready(\"" . $key . "\", function(){ jQuery.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
-    $foot .= "</script>" . "\n";
+    $header .= "head.ready(\"" . $key . "\", function(){ jQuery.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $header .= "</script>" . "\n";
+    echo $header;
+  }
+
+  public function getJSFooter() {
+    $foot = "";
     if(!isset($_SESSION['simplemappr'])) {
       $foot .= $this->getJanrain();
     }

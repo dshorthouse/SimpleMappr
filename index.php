@@ -14,6 +14,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <title>SimpleMappr</title>
 <link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php $header[0]->getCSSHeader(); ?>
+<?php $header[0]->getJSHeader(); ?>
 </head>
 <?php flush(); ?>
 <body>
