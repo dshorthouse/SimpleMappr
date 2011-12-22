@@ -216,17 +216,21 @@ class HEADER {
     $lang = isset($_GET["lang"]) ? $_GET["lang"] : "";
     $lang_q = isset($_GET["lang"]) ? "?lang=" . $_GET["lang"] : "";
     $janrain  = "<script type=\"text/javascript\">" . "\n";
-    $janrain .= "(function() {
-if (typeof window.janrain !== 'object') { window.janrain = {}; }
-window.janrain.settings = {}; window.janrain.settings.language = '" . $lang . "'; window.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $lang_q . "';
+    $janrain .= "(function(w,d,s,id) {
+var js, jrs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) {return;}
+if (typeof w.janrain !== 'object') { w.janrain = {}; }
+w.janrain.settings = {};
+w.janrain.settings.language = '" . $lang . "';
+w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $lang_q . "';
 function isJanrainReady() { janrain.ready = true; };
-if (document.addEventListener) { document.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
-else if (window.attachEvent) { window.attachEvent('onload', isJanrainReady); }
-else if (window.onLoad) { window.onload = isJanrainReady; }
-var e = document.createElement('script'), s = document.getElementsByTagName('script')[0];
-e.type = 'text/javascript'; e.id = 'janrainAuthWidget'; e.src = (document.location.protocol === 'https:') ? 'https://rpxnow.com/js/lib/simplemappr/engage.js' : 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js';
-s.parentNode.insertBefore(e, s);
-})();" . "\n";
+if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
+else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
+else if (w.onLoad) { w.onload = isJanrainReady; }
+js = d.createElement(s);
+js.id = id; js.src = (d.location.protocol === 'https:') ? 'https://rpxnow.com/js/lib/simplemappr/engage.js' : 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js';
+jrs.parentNode.insertBefore(js, jrs);
+})(window,document,'script','janrainAuthWidget');" . "\n";
     $janrain .= "</script>" . "\n";
     return $janrain;
   }
@@ -243,7 +247,7 @@ s.parentNode.insertBefore(e, s);
       $analytics .= "(function(d,s,id) {
 var js, gjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
-js = d.createElement('script'); js.id = id;
+js = d.createElement(s); js.id = id;
 js.src = '//google-analytics.com/ga.js';
 gjs.parentNode.insertBefore(js, gjs);
 })(document,'script','ga-analytics');" . "\n";
