@@ -195,7 +195,7 @@ class HEADER {
     $foot .= ");" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $key = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $foot .= "head.ready(\"" . $key . "\", function(){ jQuery.extend(Mappr.settings, { \"baseUrl\": \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $foot .= "head.ready(\"" . $key . "\", function(){ jQuery.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
     $foot .= "</script>" . "\n";
     if(!isset($_SESSION['simplemappr'])) {
       $foot .= $this->getJanrain();
