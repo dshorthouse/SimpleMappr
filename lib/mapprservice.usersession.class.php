@@ -94,7 +94,7 @@ class USERSESSION {
     } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en") {
       if(isset($_COOKIE["simplemappr"])) {
         $cookie["lang"] = "en";
-        setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", $_SERVER['SERVER_NAME']);
+        setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
       }
       self::redirect("http://".$_SERVER["SERVER_NAME"]);
     } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en") {
@@ -107,7 +107,7 @@ class USERSESSION {
 
     self::set_session();
     $_SESSION["simplemappr"] = $cookie;
-    setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", $_SERVER['SERVER_NAME']);
+    setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
     $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
@@ -232,7 +232,7 @@ class USERSESSION {
       self::set_session();
       $_SESSION['simplemappr'] = $user;
 
-      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/", $_SERVER['SERVER_NAME']);
+      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/");
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
