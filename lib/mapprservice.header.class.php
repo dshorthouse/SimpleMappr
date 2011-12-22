@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
+require_once(dirname(dirname(__FILE__)).'/config/conf.php');
 require_once('jsmin.php');
 require_once('cssmin.php');
 
@@ -143,14 +144,14 @@ class HEADER {
         fwrite($handle, $css_min);
         fclose($handle);
 
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="'.MAPPR_MAPS_URL.'/public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
       } else {
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="'.MAPPR_MAPS_URL.'/public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
       }
 
     } else {
       foreach(self::$local_css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="' . MAPPR_MAPS_URL . '/' . $css_file . '" rel="stylesheet" />');
       }
     }
   }
@@ -183,12 +184,12 @@ class HEADER {
   * Create the javascript header
   */
   public function getJSHeader() {
-    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+    $header  = "<script type=\"text/javascript\" src=\"".MAPPR_MAPS_URL."/public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
     $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $header .= "{\"" . $key . "\":\"" . $file . "\"}";
+      $header .= "{\"" . $key . "\":\"" . MAPPR_MAPS_URL . "/" . $file . "\"}";
       if($counter < count($this->js_header)) { $header .= ","; }
       $counter++;
     }
