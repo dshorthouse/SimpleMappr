@@ -115,9 +115,9 @@ class HEADER {
         fwrite($handle, $js_min);
         fclose($handle);
 
-        $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
+        $this->addJS("compiled", MAPPR_MAPS_URL . "/public/javascript/cache/" . $js_min_file);
       } else {
-        $this->addJS("compiled", "public/javascript/cache/" . $cached_js);
+        $this->addJS("compiled", MAPPR_MAPS_URL . "/public/javascript/cache/" . $cached_js);
       }
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
@@ -189,7 +189,7 @@ class HEADER {
     $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $header .= "{\"" . $key . "\":\"" . MAPPR_MAPS_URL . "/" . $file . "\"}";
+      $header .= "{\"" . $key . "\" : \"" . $file . "\"}";
       if($counter < count($this->js_header)) { $header .= ","; }
       $counter++;
     }
