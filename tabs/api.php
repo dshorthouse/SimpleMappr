@@ -4,6 +4,15 @@ require_once('../lib/mapprservice.usersession.class.php');
 USERSESSION::select_language();
 ?>
 <!-- api tab -->
+<style type="text/css">
+#map-api #general-base{margin-top:20px;}
+#map-api p{font-size:0.75em;}
+#map-api dl{font-size:0.75em;}
+#map-api dl dt{font-weight:bold;}
+#map-api dl dd{margin-bottom:1.5em;}
+#map-api dl dd span.api-example{color:green;display:block;}
+#map-api dl dd span.api-example a {color:green;}
+</style>
 <div id="map-api">
   <div id="general-api" class="panel ui-corner-all">
     <p><?php echo _("A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."); ?></p>

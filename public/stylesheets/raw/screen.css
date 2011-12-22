@@ -85,10 +85,6 @@ div.panel a.help:before{background-position:-220px -264px;display:inline-block;f
 .submit{text-align:left;margin-top:15px;margin-left:20px;}
 div.header{border-bottom:1px solid #aaa;width:50%;margin-top:20px;}
 div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em;font-size:1em;}
-#map-about p,#map-about dl{font-size:0.75em;}
-#map-about p.citation{text-indent:-2em;padding-left:2em;}
-#map-about dl dt.update{font-weight:bold;}
-#map-about dl dd{margin:0 0 10px 25px;}
 #map-preview{padding:1em 0.3em;background-color:#fff;height:460px;}
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}
@@ -167,57 +163,8 @@ div.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:10em
 #mapExport #mapCropMessage:before{background-position:-240px -264px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;_text-indent:25px;background-image:url("../../images/throbber.gif") !important;}
 .usermaps-loading,.userdata-loading{position:relative;}
-#map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
-#map-mymaps table thead tr{height:1.75em;}
-#map-mymaps table thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
-#map-mymaps table thead td.left-align{text-align:left;padding-left:20px;}
-#map-mymaps table thead td a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
-#map-mymaps table tr{border:1px solid #aaa;}
-#map-mymaps table tr.odd{background:none repeat scroll 0 0 #fff;}
-#map-mymaps table td.actions{width:14em;text-align:right;padding-right:10px;}
-#map-mymaps table td.actions a{display:inline-block;}
-#map-mymaps table tbody td.actions a{margin-left:10px;}
-#map-mymaps table td.actions a.map-delete:before{background-position:-260px -284px;margin:0.2em;}
-#map-mymaps table td.actions a.map-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
-#map-mymaps table td.actions a.map-load:before{background-position:-200px -284px;margin:0.2em;}
-#map-mymaps table td.actions a.map-load:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
-#map-mymaps table td input{vertical-align:top;}
 #map-mymaps #janrainEngageEmbed {margin-top:10px;}
 #map-mymaps #janrainEngageEmbed div{margin:0px;}
-#map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
-#map-users table thead tr{height:1.75em;}
-#map-users table thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
-#map-users table thead td.left-align{text-align:left;padding-left:20px;}
-#map-users table thead td a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
-#map-users table tr{border:1px solid #aaa;}
-#map-users table tr.odd{background:none repeat scroll 0 0 #fff;}
-#map-users table tr td.usermaps-center{text-align:center;}
-#map-users table td.actions{width:7em;text-align:right;padding-right:10px;}
-#map-users table td.actions a{display:inline-block;}
-#map-users table td.actions a.user-delete:before{background-position:-260px -284px;margin-top:0.2em;}
-#map-api #general-base{margin-top:20px;}
-#map-api p{font-size:0.75em;}
-#map-api dl{font-size:0.75em;}
-#map-api dl dt{font-weight:bold;}
-#map-api dl dd{margin-bottom:1.5em;}
-#map-api dl dd span.api-example{color:green;display:block;}
-#map-api dl dd span.api-example a {color:green;}
-#map-help h3{font-size:0.75em;}
-#map-help p{font-size:0.75em;}
-#map-help dl{font-size:0.75em;}
-#map-help dl dt{float:left;margin-right:5px;line-height:20px;}
-#map-help dl.toolbar dt:before{margin-top:0.2em !important;}
-#map-help dl dt,#map-help dl dd{line-height:20px;}
-#map-help #example-data{height:220px;}
-#map-help #example-data img{vertical-align:middle;margin-right:20px;}
-#map-help table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
-#map-help table thead tr{height:1.75em;}
-#map-help table thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
-#map-help table thead td.title{width:35%;padding-left:20px;}
-#map-help table thead td.code{width:45px;}
-#map-help table thead td.example{width:60px;}
-#map-help table tr{border:1px solid #aaa;}
-#map-help table tr.odd{background:none repeat scroll 0 0 #fff;}
 .ui-dialog-titlebar-close{display:none !important;}
 #colorpicker{display:none;}
 .colorpicker{background:url("../../images/sprites.png") no-repeat top left;}
