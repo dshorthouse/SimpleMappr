@@ -72,7 +72,7 @@ class USERSESSION {
     $lang = $_SESSION['simplemappr']['lang'];
     session_unset();
     session_destroy();
-    setcookie("simplemappr", "", time() - 3600, "/", $_SERVER['SERVER_NAME']);
+    setcookie("simplemappr", "", time() - 3600, "/");
     self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($lang));
   }
 
