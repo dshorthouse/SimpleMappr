@@ -235,11 +235,13 @@ s.parentNode.insertBefore(e, s);
       $analytics  = "<script type=\"text/javascript\">" . "\n";
       $analytics .= "var _gaq = _gaq || [];" . "\n";
       $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."']); _gaq.push(['_trackPageview']);" . "\n";
-      $analytics .= "(function() {
-var ga = document.createElement('script'), s = document.getElementsByTagName('script')[0];
-ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-s.parentNode.insertBefore(ga, s);
-})();" . "\n";
+      $analytics .= "(function(d,s,id) {
+var js, gjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement('script'); js.id = id;
+js.src = '//google-analytics.com/ga.js';
+gjs.parentNode.insertBefore(js, gjs);
+})(document,'script','ga-analytics');" . "\n";
       $analytics .= "</script>" . "\n";
     }
     return $analytics;
