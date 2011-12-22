@@ -654,7 +654,12 @@ class MAPPR {
     // Set the output format and size
     if(isset($this->output) && $this->output) {
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
-      if($output == 'pptx' || $output == 'docx') { $output = 'pnga_transparent'; }
+      if($output == 'pptx' || $output == 'docx') {
+        $output = 'pnga_transparent';
+        if(isset($this->layers['relief'])) {
+          $output = 'pnga'; //produces opaque legend, but point colours more faithfully preserved
+        }
+      }
       $this->map_obj->selectOutputFormat($output);
     }
 
