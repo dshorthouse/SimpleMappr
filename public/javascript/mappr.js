@@ -1278,7 +1278,7 @@ $(function () {
     $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function (e) {
       e.preventDefault();
       $.each(types, function() {
-        if(this === 'img') {
+        if(this.toString() === 'img') {
           $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
         } else {
           $('#embed-'+this, '#mapEmbed').val(self.settings.baseUrl + "/map/" + mid + "." + this);
