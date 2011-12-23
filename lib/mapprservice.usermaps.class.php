@@ -32,7 +32,6 @@ require_once('../config/conf.db.php');
 require_once('db.class.php');
 require_once('mapprservice.usersession.class.php');
 
-
 class USERMAPS {
 
   private $_uid;
