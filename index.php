@@ -35,9 +35,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 </div>
 </div>
 <div id="wrapper">
-<?php if (!isset($_SESSION["simplemappr"])): ?>
 <div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
-<?php endif; ?>
 <div id="tabs">
 <ul class="navigation">
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
@@ -89,6 +87,8 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <li><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out ctrl-"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsCrop" title="<?php echo _("crop ctrl+x"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsQuery" title="<?php echo _("fill regions"); ?>"></a></li>
+<li><a href="#" class="sprites tooltip toolsUndoDisabled" title="<?php echo _("undo ctrl+z"); ?>"></a></li>
+<li><a href="#" class="sprites tooltip toolsRedoDisabled" title="<?php echo _("redo ctrl+y"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsRefresh" title="<?php echo _("refresh ctrl+r"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsRebuild" title="<?php echo _("rebuild ctrl+n"); ?>"></a></li>
 </ul>

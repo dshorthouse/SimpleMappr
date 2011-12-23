@@ -52,7 +52,8 @@ class HEADER {
     'filter'    => 'public/javascript/jquery.uitablefilter.min.js',
     'hotkeys'   => 'public/javascript/jquery.hotkeys.min.js',
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
-    'mappr'     => 'public/javascript/mappr.min.js'
+    'jstorage'  => 'public/javascript/jstorage.min.js',
+    'mappr'     => 'public/javascript/mappr.js'
   );
 
   /*

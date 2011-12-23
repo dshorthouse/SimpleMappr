@@ -79,6 +79,12 @@ $("#filter-countries")
     <dt class="sprites-before toolsQuery"><?php echo _("Fill regions"); ?>:</dt>
     <dd><?php echo _("choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."); ?></dd>
 
+    <dt class="sprites-before toolsUndo"><?php echo _("Undo"); ?>:</dt>
+    <dd><?php echo _("undo the last executed action"); ?></dd>
+
+    <dt class="sprites-before toolsRedo"><?php echo _("Redo"); ?>:</dt>
+    <dd><?php echo _("redo the last executed action"); ?></dd>
+
     <dt class="sprites-before toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
     <dd><?php echo _("refresh the map image"); ?></dd>
 

@@ -459,6 +459,25 @@ $(function () {
     $('#zoom_out').val('');
   };
 
+  Mappr.mapUndo = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    var index = $.jStorage.index(), data = {};
+/*
+    data = $.jStorage.get(Mappr.vars.currentKey);  //TODO: how to move up/down array by index in face of undo/redo?
+    Mappr.postData(data);
+*/
+    $('.toolsRedoDisabled').addClass('toolsRedo').click(function (e) {
+      e.preventDefault();
+      Mappr.mapRedo();
+    });
+
+  };
+
+  Mappr.mapRedo = function () {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    //TODO: how to accommodate this? HTML5 local data storage?
+  };
+
   Mappr.bindHotkeys = function () {
     var self = this, keys = {}, arrows = {};
 
@@ -472,7 +491,9 @@ $(function () {
       'ctrl+e' : self.mapToggleSettings,
       'ctrl++' : self.mapZoomIn,
       'ctrl+-' : self.mapZoomOut,
-      'esc'    : self.destroyJcrop
+      'esc'    : self.destroyJcrop,
+      'ctrl+z' : self.mapUndo,
+      'ctrl+y' : self.mapRedo
     };
 
     arrows = {
@@ -1087,7 +1108,9 @@ $(function () {
   Mappr.loadMap = function (obj) {
     var self   = this,
         id     = $(obj).attr("data-mid"),
-        filter = $('#filter-mymaps').val();
+        filter = $('#filter-mymaps').val(),
+        width  = $('input[name="width"]').val(),
+        height = $('input[name="height"]').val();
 
     $("#tabs").tabs('select',0);
 
@@ -1099,7 +1122,6 @@ $(function () {
       dataType : 'json',
       success  : function (data) {
         self.removeExtraElements();
-        var width = $('input[name="width"]').val(), height = $('input[name="height"]').val();
         $('#form-mapper').clearForm();
         $('input[name="width"]').val(width);
         $('input[name="height"]').val(height);
@@ -1110,9 +1132,9 @@ $(function () {
         self.loadSettings(data);
         self.activateEmbed(id);
         self.showMap(data);
+        self.clearStorage();
       }
     });
-
   };
 
   Mappr.loadSettings = function (data) {
@@ -1644,9 +1666,7 @@ $(function () {
   Mappr.showMap = function (load_data) {
     var self         = this,
         token        = new Date().getTime(),
-        formData     = {},
-        toolsTabs    = $('#mapTools').tabs(),
-        tabIndex     = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val(), 10) : 0;
+        formData     = {};
 
     self.destroyJcrop();
 
@@ -1655,9 +1675,20 @@ $(function () {
     $('#download_token').val(token); // set a token to be used for cookie
 
     formData = $("form").serialize();
+    self.postData(formData, load_data);
+    $.jStorage.set(token, formData);  //TODO: in face of do/undo, where/how is position in the index going to be stored?
+    $('.toolsUndoDisabled').addClass('toolsUndo').click(function (e) {
+      e.preventDefault();
+      self.mapUndo();
+    });
+  }; /** end Mappr.showMap **/
+
+  Mappr.postData = function (formData, load_data) {
+    var self      = this,
+        toolsTabs = $('#mapTools').tabs(),
+        tabIndex  = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val(), 10) : 0;
 
     self.showLoadingMessage($('#mapper-loading-message').text());
-
     $.ajax({
       type : 'POST',
       url  : self.settings.baseUrl + '/application/',
@@ -1680,8 +1711,7 @@ $(function () {
         });
       }
     });
-
-  }; /** end Mappr.showMap **/
+  };
 
   Mappr.resetFormValues = function (data) {
     $('#mapOutput input').each(function () {
@@ -1889,13 +1919,21 @@ $(function () {
     return output;
   };
 
+  Mappr.clearStorage = function () {
+    var formData = {}, token = new Date().getTime().toString();
+
+    $.jStorage.flush();
+    formData = $("form").serialize();
+    $.jStorage.set(token, formData);
+  };
+
   Mappr.init = function () {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
     $('.overview', '#mapControls').append(self.mapCircleSlider());
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
       index = null;
-      if($('#initial-message').is(':hidden') || $('#initial-message').length === 0) { self.performRotation(element); }
+      if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
     $('#initial-message').hide();
     $('#header>div').show();
@@ -1909,6 +1947,7 @@ $(function () {
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
     $(".tooltip").tipsy({gravity : 's'});
+    this.clearStorage();
     this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();

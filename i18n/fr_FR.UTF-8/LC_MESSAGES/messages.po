@@ -141,6 +141,14 @@ msgstr "recadrer ctrl+x"
 msgid "fill regions"
 msgstr "remplisser"
 
+#: .index.php:84
+msgid "undo ctrl+z"
+msgstr "défaire"
+
+#: .index.php:85
+msgid "redo ctrl+y"
+msgstr "refaire"
+
 #: .index.php:85
 msgid "refresh ctrl+r"
 msgstr "régénérer ctrl+r"
@@ -773,6 +781,22 @@ msgstr "dessiner une extensible, élastique en forme de carré qui définit pré
 #: .tabs/help.php:59
 msgid "Fill regions"
 msgstr "remplissez les régions"
+
+#: .tabs/help.php:59
+msgid "Undo"
+msgstr "Défaire"
+
+#: . tabs/help.php:59
+msgid "undo the last executed action"
+msgstr "annuler la dernière action"
+
+#: .tabs/help.php:59
+msgid "Redo"
+msgstr "Refaire"
+
+#: .tabs/help.php
+msgid "redo the last executed action"
+msgstr "rétablir la dernière action"
 
 #: .tabs/help.php:60
 msgid "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."
