@@ -1895,7 +1895,7 @@ $(function () {
     $('.overview', '#mapControls').append(self.mapCircleSlider());
     $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
       index = null;
-      if($('#initial-message').is(':hidden')) { self.performRotation(element); }
+      if($('#initial-message').is(':hidden') || $('#initial-message').length === 0) { self.performRotation(element); }
     }});
     $('#initial-message').hide();
     $('#header>div').show();
