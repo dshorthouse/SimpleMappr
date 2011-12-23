@@ -1677,10 +1677,6 @@ $(function () {
     formData = $("form").serialize();
     self.postData(formData, load_data);
     $.jStorage.set(token, formData);  //TODO: in face of do/undo, where/how is position in the index going to be stored?
-    $('.toolsUndoDisabled').addClass('toolsUndo').click(function (e) {
-      e.preventDefault();
-      self.mapUndo();
-    });
   }; /** end Mappr.showMap **/
 
   Mappr.postData = function (formData, load_data) {
@@ -1736,6 +1732,10 @@ $(function () {
       if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
       self.hideLoadingMessage();
+      $('.toolsUndoDisabled').addClass('toolsUndo').click(function (e) {
+        e.preventDefault();
+        self.mapUndo();
+      });
     });
   };
 
