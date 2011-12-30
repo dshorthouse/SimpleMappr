@@ -459,23 +459,45 @@ $(function () {
     $('#zoom_out').val('');
   };
 
+  Mappr.storageType = function (type) {
+    var index = 0;
+
+    index = $.grep($.jStorage.index(), function(value, i) {
+      return (value.substring(0, type.length) === type)
+    });
+
+    return index;
+  };
+
   Mappr.mapUndo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var index = $.jStorage.index(), data = {};
-/*
-    data = $.jStorage.get(Mappr.vars.currentKey);  //TODO: how to move up/down array by index in face of undo/redo?
-    Mappr.postData(data);
-*/
+    var index = Mappr.storageType("do"), curr_key = "", curr_data = {}, prev_key = "", prev_data = {};
+
+    if(index.length === 1) { return; }
+
+    curr_key = index[index.length-1];
+    curr_data = $.jStorage.get(curr_key);
+    prev_key = index[index.length-2];
+    prev_data = $.jStorage.get(prev_key);
+    Mappr.postData(prev_data);
+    $.jStorage.deleteKey(curr_key);
+    $.jStorage.set("un" + curr_key, curr_data);
+
     $('.toolsRedoDisabled').addClass('toolsRedo').click(function (e) {
       e.preventDefault();
       Mappr.mapRedo();
     });
-
   };
 
   Mappr.mapRedo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    //TODO: how to accommodate this? HTML5 local data storage?
+    var index = Mappr.storageType("undo"), key = "";
+
+    if(index.length === 0) { return; }
+
+    key = index.pop();
+    Mappr.postData($.jStorage.get(key));
+    $.jStorage.deleteKey(key);
   };
 
   Mappr.bindHotkeys = function () {
@@ -1676,7 +1698,11 @@ $(function () {
 
     formData = $("form").serialize();
     self.postData(formData, load_data);
-    $.jStorage.set(token, formData);  //TODO: in face of do/undo, where/how is position in the index going to be stored?
+    $.jStorage.set("do-" + token.toString(), formData);
+    $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').click(function (e) {
+      e.preventDefault();
+      self.mapUndo();
+    });
   }; /** end Mappr.showMap **/
 
   Mappr.postData = function (formData, load_data) {
@@ -1686,11 +1712,11 @@ $(function () {
 
     self.showLoadingMessage($('#mapper-loading-message').text());
     $.ajax({
-      type : 'POST',
-      url  : self.settings.baseUrl + '/application/',
-      data : formData,
+      type     : 'POST',
+      url      : self.settings.baseUrl + '/application/',
+      data     : formData,
       dataType : 'json',
-      success : function (data) {
+      success  : function (data) {
         self.resetFormValues(data);
         self.resetJbbox();
         self.drawMap(data, load_data);
@@ -1732,10 +1758,6 @@ $(function () {
       if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
       self.hideLoadingMessage();
-      $('.toolsUndoDisabled').addClass('toolsUndo').click(function (e) {
-        e.preventDefault();
-        self.mapUndo();
-      });
     });
   };
 
@@ -1924,22 +1946,31 @@ $(function () {
 
     $.jStorage.flush();
     formData = $("form").serialize();
-    $.jStorage.set(token, formData);
+    $.jStorage.set("do-" + token, formData);
+  };
+
+  Mappr.bindRotateWheel = function () {
+    var self = this;
+    $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
+      $('.overview', '#mapControls').append(self.mapCircleSlider());
+      $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+        index = null;
+        if($('#initial-message').is(':hidden')) { self.performRotation(element); }
+    }});
+  };
+
+  Mappr.bindTabs = function () {
+    //odd tabs handling to fix IE issues
+    $('#mapTools').tabs({selected: 0});
+    $("#tabs").tabs({cache : false}).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
   };
 
   Mappr.init = function () {
     var self = this;
-    $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
-    $('.overview', '#mapControls').append(self.mapCircleSlider());
-    $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
-      index = null;
-      if($('#initial-message').is(':hidden')) { self.performRotation(element); }
-    }});
+    this.bindRotateWheel();
     $('#initial-message').hide();
     $('#header>div').show();
-    //odd tabs handling to fix IE issues
-    $('#mapTools').tabs({selected: 0});
-    $("#tabs").tabs({cache : false}).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+    this.bindTabs();
     $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
     $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
     $('a.show-codes').click(function(e) { e.preventDefault(); self.tabSelector(parseInt($(this).attr("data-tab"), 10)); });
@@ -1961,6 +1992,8 @@ $(function () {
     this.bindDownload();
     this.bindSubmit();
     this.bindPanelToggle();
+    $('.toolsUndoDisabled').click(false);
+    $('.toolsRedoDisabled').click(false);
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
       $("#tabs").tabs('select',3);
