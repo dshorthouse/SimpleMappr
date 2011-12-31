@@ -6,6 +6,11 @@ $(function () {
 
   "use strict";
 
+  Mappr.settings = {
+    'baseUrl' : '',
+    'active'  : false
+  };
+
   Mappr.vars = {
     newPointCount      : 0,
     newRegionCount     : 0,
@@ -474,16 +479,19 @@ $(function () {
     var index = Mappr.storageType("do"), curr_key = "", curr_data = {}, prev_key = "", prev_data = {};
 
     if(index.length === 1) { return; }
+    if(index.length === 2) { $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo'); }
 
     curr_key = index[index.length-1];
     curr_data = $.jStorage.get(curr_key);
     prev_key = index[index.length-2];
     prev_data = $.jStorage.get(prev_key);
     Mappr.postData(prev_data);
+//TODO: prev_data is a string and need to convert to object
+//    Mappr.loadInputs(prev_data);
     $.jStorage.deleteKey(curr_key);
     $.jStorage.set("un" + curr_key, curr_data);
 
-    $('.toolsRedoDisabled').addClass('toolsRedo').click(function (e) {
+    $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').click(function (e) {
       e.preventDefault();
       Mappr.mapRedo();
     });
@@ -491,13 +499,19 @@ $(function () {
 
   Mappr.mapRedo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var index = Mappr.storageType("undo"), key = "";
+    var index = Mappr.storageType("undo"), key = "", data = {};
 
+    $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo');
     if(index.length === 0) { return; }
 
     key = index.pop();
-    Mappr.postData($.jStorage.get(key));
+    data = $.jStorage.get(key);
+    Mappr.postData(data);
+    // TODO: set form elements after postData
+    // Mappr.loadInputs(data);
     $.jStorage.deleteKey(key);
+    key = key.replace("un","");
+    $.jStorage.set(key, data);
   };
 
   Mappr.bindHotkeys = function () {
@@ -1124,18 +1138,32 @@ $(function () {
       }
       self.vars.newRegionCount = 0;
     }
+  };
 
+  Mappr.loadInputs = function (data) {
+    var self   = this,
+        width  = $('input[name="width"]').val(),
+        height = $('input[name="height"]').val(),
+        filter = $('#filter-mymaps').val();
+
+    self.removeExtraElements();
+    $('#form-mapper').clearForm();
+    $('input[name="width"]').val(width);
+    $('input[name="height"]').val(height);
+    $('#filter-mymaps').val(filter);
+    self.loadCoordinates(data);
+    self.loadRegions(data);
+    self.loadLayers(data);
+    self.loadSettings(data);
   };
 
   Mappr.loadMap = function (obj) {
     var self   = this,
-        id     = $(obj).attr("data-mid"),
-        filter = $('#filter-mymaps').val(),
-        width  = $('input[name="width"]').val(),
-        height = $('input[name="height"]').val();
+        id     = $(obj).attr("data-mid");
 
     $("#tabs").tabs('select',0);
 
+    self.clearStorage();
     self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
@@ -1143,18 +1171,9 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
       success  : function (data) {
-        self.removeExtraElements();
-        $('#form-mapper').clearForm();
-        $('input[name="width"]').val(width);
-        $('input[name="height"]').val(height);
-        $('#filter-mymaps').val(filter);
-        self.loadCoordinates(data);
-        self.loadRegions(data);
-        self.loadLayers(data);
-        self.loadSettings(data);
-        self.activateEmbed(id);
+        self.loadInputs(data)
         self.showMap(data);
-        self.clearStorage();
+        self.activateEmbed(id);
       }
     });
   };
@@ -1706,9 +1725,7 @@ $(function () {
   }; /** end Mappr.showMap **/
 
   Mappr.postData = function (formData, load_data) {
-    var self      = this,
-        toolsTabs = $('#mapTools').tabs(),
-        tabIndex  = ($('#selectedtab').val()) ? parseInt($('#selectedtab').val(), 10) : 0;
+    var self      = this;
 
     self.showLoadingMessage($('#mapper-loading-message').text());
     $.ajax({
@@ -1722,15 +1739,8 @@ $(function () {
         self.drawMap(data, load_data);
         self.drawLegend();
         self.drawScalebar();
-
         self.showBadPoints();
         self.addBadRecordsViewer();
-
-        toolsTabs.tabs('select', tabIndex);
-        $('#mapTools').bind('tabsselect', function (event,ui) {
-          event = null;
-          $('#selectedtab').val(ui.index);
-        });
       }
     });
   };

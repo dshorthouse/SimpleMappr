@@ -196,8 +196,7 @@ class HEADER {
     }
     $header .= ");" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-    $key = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $header .= "head.ready(\"" . $key . "\", function(){ jQuery.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $header .= "head.ready(function() { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
     $header .= "</script>" . "\n";
     echo $header;
   }

@@ -243,7 +243,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <input type="hidden" name="zoom_out" id="zoom_out" />
 <input type="hidden" name="crop" id="crop" />
 <input type="hidden" name="rotation" id="rotation" />
-<input type="hidden" name="selectedtab" id="selectedtab" />
 <input type="hidden" name="save[title]" />
 <input type="hidden" name="file_name" />
 <input type="hidden" name="download_factor" />
