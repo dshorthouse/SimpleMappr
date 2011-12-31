@@ -474,12 +474,37 @@ $(function () {
     return index;
   };
 
+  Mappr.toggleUndo = function (activate) {
+    var self = this;
+
+    if(activate && self.storageType("do").length > 0) {
+      $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function (e) {
+        e.preventDefault();
+        self.mapUndo();
+      });
+    } else {
+      $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo').unbind("click");
+    }
+  };
+
+  Mappr.toggleRedo = function (activate) {
+    var self = this;
+
+    if(activate) {
+      $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function (e) {
+        e.preventDefault();
+        self.mapRedo();
+      });
+    } else {
+      $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+    }
+  };
+
   Mappr.mapUndo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     var index = Mappr.storageType("do"), curr_key = "", curr_data = {}, prev_key = "", prev_data = {};
 
     if(index.length === 1) { return; }
-    if(index.length === 2) { $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo'); }
 
     curr_key = index[index.length-1];
     curr_data = $.jStorage.get(curr_key);
@@ -490,20 +515,17 @@ $(function () {
 //    Mappr.loadInputs(prev_data);
     $.jStorage.deleteKey(curr_key);
     $.jStorage.set("un" + curr_key, curr_data);
-
-    $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').click(function (e) {
-      e.preventDefault();
-      Mappr.mapRedo();
-    });
+    Mappr.toggleRedo(true);
+    if(index.length === 2) { Mappr.toggleUndo(); }
   };
 
   Mappr.mapRedo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     var index = Mappr.storageType("undo"), key = "", data = {};
 
-    $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo');
     if(index.length === 0) { return; }
 
+    Mappr.toggleRedo();
     key = index.pop();
     data = $.jStorage.get(key);
     Mappr.postData(data);
@@ -512,6 +534,7 @@ $(function () {
     $.jStorage.deleteKey(key);
     key = key.replace("un","");
     $.jStorage.set(key, data);
+    Mappr.toggleUndo(true);
   };
 
   Mappr.bindHotkeys = function () {
@@ -1164,6 +1187,8 @@ $(function () {
     $("#tabs").tabs('select',0);
 
     self.clearStorage();
+    self.toggleUndo();
+    self.toggleRedo();
     self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
@@ -1718,10 +1743,7 @@ $(function () {
     formData = $("form").serialize();
     self.postData(formData, load_data);
     $.jStorage.set("do-" + token.toString(), formData);
-    $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').click(function (e) {
-      e.preventDefault();
-      self.mapUndo();
-    });
+    self.toggleUndo(true);
   }; /** end Mappr.showMap **/
 
   Mappr.postData = function (formData, load_data) {
@@ -1952,9 +1974,13 @@ $(function () {
   };
 
   Mappr.clearStorage = function () {
-    var formData = {}, token = new Date().getTime().toString();
-
     $.jStorage.flush();
+  };
+
+  Mappr.bindStorage = function () {
+    var formData = "", token = new Date().getTime();
+
+    this.clearStorage();
     formData = $("form").serialize();
     $.jStorage.set("do-" + token, formData);
   };
@@ -1988,7 +2014,7 @@ $(function () {
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
     $(".tooltip").tipsy({gravity : 's'});
-    this.clearStorage();
+    this.bindStorage();
     this.bindHotkeys();
     this.bindToolbar();
     this.bindArrows();
