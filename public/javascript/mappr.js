@@ -392,6 +392,7 @@ $(function () {
   Mappr.mapRefresh = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetJbbox();
+    Mappr.destroyRedo();
     Mappr.showMap();
     $("#tabs").tabs('select',0);
   };
@@ -404,6 +405,7 @@ $(function () {
     $('#rotation').val('');
     $('#projection').val('');
     $('#pan').val('');
+    Mappr.destroyRedo();
     Mappr.showMap();
   };
 
@@ -422,6 +424,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('up');
     Mappr.resetJbbox();
+    Mappr.destroyRedo();
     Mappr.showMap();
   };
 
@@ -429,6 +432,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('down');
     Mappr.resetJbbox();
+    Mappr.destroyRedo();
     Mappr.showMap();
   };
 
@@ -436,6 +440,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('left');
     Mappr.resetJbbox();
+    Mappr.destroyRedo();
     Mappr.showMap();
   };
 
@@ -443,6 +448,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('right');
     Mappr.resetJbbox();
+    Mappr.destroyRedo();
     Mappr.showMap();
   };
 
@@ -460,6 +466,7 @@ $(function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetJbbox();
     $('#zoom_out').val(1);
+    Mappr.destroyRedo();
     Mappr.showMap();
     $('#zoom_out').val('');
   };
@@ -477,32 +484,46 @@ $(function () {
   Mappr.toggleUndo = function (activate) {
     var self = this;
 
-    if(activate && self.storageType("do").length > 0) {
+    $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo').unbind("click");
+
+    if(activate && self.storageType("do").length > 1) {
       $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function (e) {
         e.preventDefault();
         self.mapUndo();
       });
-    } else {
-      $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo').unbind("click");
     }
   };
 
   Mappr.toggleRedo = function (activate) {
     var self = this;
 
+    $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+
     if(activate) {
       $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function (e) {
         e.preventDefault();
         self.mapRedo();
       });
-    } else {
-      $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
     }
+  };
+
+  Mappr.destroyRedo = function () {
+    var index = Mappr.storageType("undo");
+
+    if(index.length === 0) { return; }
+
+    $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+    $.jStorage.deleteKey(index.pop());
   };
 
   Mappr.mapUndo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var index = Mappr.storageType("do"), curr_key = "", curr_data = {}, prev_key = "", prev_data = {};
+    var index          = Mappr.storageType("do"),
+        curr_key       = "",
+        curr_data      = {},
+        prev_key       = "",
+        prev_data      = {},
+        prev_data_prep = {};
 
     if(index.length === 1) { return; }
 
@@ -510,30 +531,55 @@ $(function () {
     curr_data = $.jStorage.get(curr_key);
     prev_key = index[index.length-2];
     prev_data = $.jStorage.get(prev_key);
-    Mappr.postData(prev_data);
-//TODO: prev_data is a string and need to convert to object
-//    Mappr.loadInputs(prev_data);
+
+    prev_data_prep = Mappr.prepareInputs(prev_data);
+    Mappr.loadInputs(prev_data_prep);
+
+    if(prev_data.width !== curr_data.width) {
+      Mappr.mapToggleSettings();
+    } else {
+      Mappr.postData(decodeURIComponent($.param(prev_data)));
+    }
+
     $.jStorage.deleteKey(curr_key);
     $.jStorage.set("un" + curr_key, curr_data);
+
     Mappr.toggleRedo(true);
     if(index.length === 2) { Mappr.toggleUndo(); }
   };
 
   Mappr.mapRedo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var index = Mappr.storageType("undo"), key = "", data = {};
+    var index     = Mappr.storageType("undo"),
+        do_index  = Mappr.storageType("do"),
+        key       = "",
+        data      = {},
+        do_key    = "",
+        do_data   = {},
+        data_prep = {},
+        token     = new Date().getTime();
 
     if(index.length === 0) { return; }
 
     Mappr.toggleRedo();
     key = index.pop();
+
     data = $.jStorage.get(key);
-    Mappr.postData(data);
-    // TODO: set form elements after postData
-    // Mappr.loadInputs(data);
+    do_key = do_index[do_index.length-1];
+    do_data = $.jStorage.get(do_key);
+
+    data_prep = Mappr.prepareInputs(data);
+    Mappr.loadInputs(data_prep);
+
+    if(data.width !== do_data.width) {
+      Mappr.mapToggleSettings();
+    } else {
+      Mappr.postData(decodeURIComponent($.param(data)));
+    }
+
     $.jStorage.deleteKey(key);
-    key = key.replace("un","");
-    $.jStorage.set(key, data);
+    $.jStorage.set("do-" + token.toString(), data);
+
     Mappr.toggleUndo(true);
   };
 
@@ -588,12 +634,14 @@ $(function () {
 
     $('.layeropt').click(function () {
       self.resetJbbox();
+      self.destroyRedo();
       self.showMap();
     });
 
     $('.gridopt').click(function () {
       if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
       self.resetJbbox();
+      self.destroyRedo();
       self.showMap();
     });
 
@@ -601,6 +649,7 @@ $(function () {
       if($(this).val() !== "") {
         $.cookie("jcrop_coords", null);
         self.resetJbbox();
+        self.destroyRedo();
         self.showMap();
       }
     });
@@ -627,6 +676,7 @@ $(function () {
       slide: function( event, ui ) {
         event = null;
         $('input[name="border_thickness"]').val(ui.value);
+        self.destroyRedo();
         self.showMap();
       }
     });
@@ -878,6 +928,7 @@ $(function () {
   };
 
   Mappr.aZoom = function (event) {
+    event.data.destroyRedo();
     event.data.showMap();
     $(document).unbind("mouseup", event.data.aZoom);
   };
@@ -931,6 +982,7 @@ $(function () {
           }
 
           $('#fieldSetsRegions').accordion("activate", i-1);
+          self.destroyRedo();
           self.showMap();
         } else {
           self.hideLoadingMessage();
@@ -1161,6 +1213,73 @@ $(function () {
       }
       self.vars.newRegionCount = 0;
     }
+  };
+
+  Mappr.prepareInputs = function (data) {
+    var inputs = {}, item = [];
+
+    inputs = {
+      "status" : "ok",
+      "mid"    : $('.map-embed').attr("data-mid"),
+      "map"    : data
+    };
+
+    inputs.map.coords  = [];
+    inputs.map.regions = [];
+    inputs.map.layers  = {};
+    inputs.map.options = {};
+
+    String.prototype.clean = function() {
+      return this.replace(/[\[\]]/g, "");
+    };
+
+    $.each(data, function(key, value) {
+      if(key.indexOf("coords") !== -1) {
+        item = key.match(/\[(.*?)\]/g);
+        if(item){
+          if(inputs.map.coords[parseInt(item[0].clean(),10)] === undefined) { inputs.map.coords[parseInt(item[0].clean(),10)] = {}; }
+          inputs.map.coords[parseInt(item[0].clean(),10)][item[1].clean()] = value;
+          delete inputs.map["coords" + item[0] + item[1]];
+        }
+      }
+      if(key.indexOf("regions") !== -1) {
+        item = key.match(/\[(.*?)\]/g);
+        if(item) {
+          if(inputs.map.regions[parseInt(item[0].clean(),10)] === undefined) { inputs.map.regions[parseInt(item[0].clean(),10)] = {}; }
+          inputs.map.regions[parseInt(item[0].clean(),10)][item[1].clean()] = value;
+          delete inputs.map["regions" + item[0] + item[1]];
+        }
+      }
+      if(key.indexOf("layers") !== -1) {
+        item = key.match(/\[(.*?)\]/);
+        if(item) {
+          inputs.map.layers[item[1]] = value;
+          delete inputs.map["layers[" + item[1] + "]"];
+        }
+      }
+      if(key.indexOf("options") !== -1) {
+        item = key.match(/\[(.*?)\]/);
+        if(item) {
+          inputs.map.options[item[1]] = value;
+          delete inputs.map["options[" + item[1] + "]"];
+        }
+      }
+      if(key === "save[title]") {
+        inputs.map.save = { 'title' : value };
+        delete inputs.map["save[title]"];
+      }
+      if(key === "gridspace") {
+        inputs.map.grid_space = value;
+      }
+      if(key === "download-filetype") {
+        inputs.map.download_filetype = value;
+      }
+      if(key === "download-factor") {
+        inputs.map.download_factor = value;
+      }
+    });
+
+    return inputs;
   };
 
   Mappr.loadInputs = function (data) {
@@ -1633,13 +1752,14 @@ $(function () {
       if(missingTitle) {
         self.showMessage($('#mapper-missing-legend').text());
       } else {
+        self.destroyRedo();
         self.showMap();
         $("#tabs").tabs('select',0);
       }
     });
   };
 
-  Mappr.mapToggleSettings = function () {
+  Mappr.mapToggleSettings = function (noreload) {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#mapToolsCollapse a').trigger('click');
   };
@@ -1732,7 +1852,8 @@ $(function () {
   Mappr.showMap = function (load_data) {
     var self         = this,
         token        = new Date().getTime(),
-        formData     = {};
+        formString   = "",
+        formObj      = {};
 
     self.destroyJcrop();
 
@@ -1740,9 +1861,10 @@ $(function () {
     $('#badRecordsWarning').hide();  // hide the bad records warning
     $('#download_token').val(token); // set a token to be used for cookie
 
-    formData = $("form").serialize();
-    self.postData(formData, load_data);
-    $.jStorage.set("do-" + token.toString(), formData);
+    formString = $("form").serialize();
+    formObj    = $("form").serializeJSON();
+    self.postData(formString, load_data);
+    $.jStorage.set("do-" + token.toString(), formObj);
     self.toggleUndo(true);
   }; /** end Mappr.showMap **/
 
@@ -1929,6 +2051,7 @@ $(function () {
   Mappr.performRotation = function (element) {
     $('#rotation').val($(element).attr("data-rotate"));
     this.resetJbbox();
+    this.destroyRedo();
     this.showMap();
   };
 
@@ -1974,15 +2097,16 @@ $(function () {
   };
 
   Mappr.clearStorage = function () {
+    this.destroyRedo();
     $.jStorage.flush();
   };
 
   Mappr.bindStorage = function () {
-    var formData = "", token = new Date().getTime();
+    var formData = {}, token = new Date().getTime();
 
     this.clearStorage();
-    formData = $("form").serialize();
-    $.jStorage.set("do-" + token, formData);
+    formData = $("form").serializeJSON();
+    $.jStorage.set("do-" + token.toString(), formData);
   };
 
   Mappr.bindRotateWheel = function () {

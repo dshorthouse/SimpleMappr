@@ -53,6 +53,7 @@ class HEADER {
     'hotkeys'   => 'public/javascript/jquery.hotkeys.min.js',
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
     'jstorage'  => 'public/javascript/jstorage.min.js',
+    'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
     'mappr'     => 'public/javascript/mappr.js'
   );
 

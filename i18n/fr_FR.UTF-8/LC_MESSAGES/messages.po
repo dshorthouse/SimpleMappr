@@ -143,11 +143,11 @@ msgstr "remplisser"
 
 #: .index.php:84
 msgid "undo ctrl+z"
-msgstr "défaire"
+msgstr "défaire ctrl+z"
 
 #: .index.php:85
 msgid "redo ctrl+y"
-msgstr "refaire"
+msgstr "refaire ctrl+y"
 
 #: .index.php:85
 msgid "refresh ctrl+r"
