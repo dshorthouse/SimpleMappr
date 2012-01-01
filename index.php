@@ -12,7 +12,6 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
 <title>SimpleMappr</title>
-<link type="image/x-icon" href="favicon.ico" rel="SHORTCUT ICON" />
 <?php $header[0]->getCSSHeader(); ?>
 </head>
 <?php flush(); ?>
