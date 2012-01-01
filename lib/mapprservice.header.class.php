@@ -64,10 +64,18 @@ class HEADER {
     'public/stylesheets/raw/screen.css'
   );
 
+  /*
+  * An array of all css print files to be minified
+  */
+  public static $local_css_files_print = array(
+    'public/stylesheets/raw/print.css'
+  );
+
   function __construct() {
     $this->remote_js_files()
          ->local_js_files()
-         ->local_css_files();
+         ->local_css_files()
+         ->local_css_files_print();
   }
 
   /*
@@ -150,16 +158,47 @@ class HEADER {
         fwrite($handle, $css_min);
         fclose($handle);
 
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen" />');
       } else {
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" media="screen" />');
       }
 
     } else {
       foreach(self::$local_css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" />');
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="screen" />');
       }
     }
+    return $this;
+  }
+
+  /*
+  * Add existing, minified print css to header or create if does not already exist
+  */
+  private function local_css_files_print() {
+    if(ENVIRONMENT == "production") {
+      $cached_css = $this->file_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
+
+      if(!$cached_css) {
+        $css_min = '';
+        foreach(self::$local_css_files_print as $css_file) {
+          $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
+        }
+        $css_min_file = md5(time()) . ".css";
+        $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
+        fwrite($handle, $css_min);
+        fclose($handle);
+
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="print" />');
+      } else {
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" media="print" />');
+      }
+
+    } else {
+      foreach(self::$local_css_files_print as $css_file) {
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="print" />');
+      }
+    }
+    return $this;
   }
 
   /*
