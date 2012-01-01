@@ -1254,17 +1254,17 @@ $(function () {
         }
       }
       if(key.indexOf("layers") !== -1) {
-        item = key.match(/\[[A-Za-z0-9]*?\]/);
+        item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item) {
-          inputs.map.layers[item[1]] = value;
-          delete inputs.map["layers[" + item[1] + "]"];
+          inputs.map.layers[item[0].clean()] = value;
+          delete inputs.map["layers" + item[0]];
         }
       }
       if(key.indexOf("options") !== -1) {
-        item = key.match(/\[[A-Za-z0-9]*?\]/);
+        item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item) {
-          inputs.map.options[item[1]] = value;
-          delete inputs.map["options[" + item[1] + "]"];
+          inputs.map.options[item[0].clean()] = value;
+          delete inputs.map["options" + item[0]];
         }
       }
       if(key === "save[title]") {
