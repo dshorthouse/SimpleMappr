@@ -18,6 +18,7 @@ USERSESSION::select_language();
 <p>Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("January 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."); ?></dd>
 <dt class="update"><?php echo _("December 21, 2011"); ?></dt><dd><?php echo _("Improvements: Settings panel may now be collapsed/expanded."); ?></dd>
 <dt class="update"><?php echo _("December 9, 2011"); ?></dt><dd><?php echo _("Bug fixes: Zoom now executes when rectangle is drawn at edge of map (reported by GIS Unit Kew)."); ?></dd>
 <dt class="update"><?php echo _("December 8, 2011"); ?></dt><dd><?php echo _("Improvements: Added a border thickness slider."); ?></dd>

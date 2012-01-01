@@ -570,6 +570,14 @@ msgid "Recent Updates"
 msgstr "Mises à jour"
 
 #: .tabs/about.php:11
+msgid "January 1, 2012"
+msgstr "1 janvier, 2012"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."
+msgstr "Améliorations: Ajout défaire et refaire. Corrections: La liste des cartes enregistrées montre maintenant pour les utilisateurs d'Internet Explorer."
+
+#: .tabs/about.php:11
 msgid "December 21, 2011"
 msgstr "21 décembre, 2011"
 
