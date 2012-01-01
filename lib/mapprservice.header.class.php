@@ -87,6 +87,9 @@ class HEADER {
   * Add javascript file(s) from remote CDN
   */
   private function remote_js_files() {
+    if(!isset($_SESSION['simplemappr'])) {
+      $this->addJS("janrain", "http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js");
+    }
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
         if ($value == 'public/javascript/jquery-1.7.1.min.js') {
@@ -94,6 +97,7 @@ class HEADER {
         }
       }
       $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+      $this->addJS("ga", "http://google-analytics.com/ga.js");
     }
     return $this;
   }
@@ -218,9 +222,7 @@ class HEADER {
     $lang = isset($_GET["lang"]) ? $_GET["lang"] : "";
     $lang_q = isset($_GET["lang"]) ? "?lang=" . $_GET["lang"] : "";
     $janrain  = "<script type=\"text/javascript\">" . "\n";
-    $janrain .= "(function(w,d,s,id) {
-var js, jrs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) {return;}
+    $janrain .= "(function(w,d) {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
 w.janrain.settings.language = '" . $lang . "';
@@ -229,10 +231,7 @@ function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
 else if (w.onLoad) { w.onload = isJanrainReady; }
-js = d.createElement(s);
-js.id = id; js.src = (d.location.protocol === 'https:') ? 'https://rpxnow.com/js/lib/simplemappr/engage.js' : 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js';
-jrs.parentNode.insertBefore(js, jrs);
-})(window,document,'script','janrainAuthWidget');" . "\n";
+})(window,document);" . "\n";
     $janrain .= "</script>" . "\n";
     return $janrain;
   }
@@ -246,13 +245,6 @@ jrs.parentNode.insertBefore(js, jrs);
       $analytics  = "<script type=\"text/javascript\">" . "\n";
       $analytics .= "var _gaq = _gaq || [];" . "\n";
       $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."'], ['_trackPageview']);" . "\n";
-      $analytics .= "(function(d,s,id) {
-var js, gjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) {return;}
-js = d.createElement(s); js.id = id;
-js.src = '//google-analytics.com/ga.js';
-gjs.parentNode.insertBefore(js, gjs);
-})(document,'script','ga-analytics');" . "\n";
       $analytics .= "</script>" . "\n";
     }
     return $analytics;
