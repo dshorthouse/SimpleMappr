@@ -83,12 +83,13 @@ class HEADER {
   * @param string $dir
   * @param string $x
   */
-  private function file_cached($dir, $x='js') {
-    $files = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
-    foreach($files as $file) {
-      if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) { return $file; }
+  private function files_cached($dir, $x='js') {
+    $allfiles = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
+    $results = array();
+    foreach($allfiles as $file) {
+      if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) { $results[] = $file; }
     }
-    return false;
+    return $results;
   }
 
   /*
@@ -115,7 +116,7 @@ class HEADER {
   */
   private function local_js_files() {
     if(ENVIRONMENT == "production") {
-      $cached_js = $this->file_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
+      $cached_js = $this->files_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
       if (!$cached_js) {
         $js_contents = '';
@@ -124,14 +125,14 @@ class HEADER {
         }
 
         $js_min = JSMin::minify($js_contents);
-        $js_min_file = md5(time()) . ".js";
+        $js_min_file = md5(microtime()) . ".js";
         $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
         fwrite($handle, $js_min);
         fclose($handle);
 
         $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
       } else {
-        $this->addJS("compiled", "public/javascript/cache/" . $cached_js);
+        $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
       }
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
@@ -146,21 +147,26 @@ class HEADER {
   */
   private function local_css_files() {
     if(ENVIRONMENT == "production") {
-      $cached_css = $this->file_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
+      $cached_css = $this->files_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
 
       if(!$cached_css) {
         $css_min = '';
         foreach(self::$local_css_files as $css_file) {
           $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
         }
-        $css_min_file = md5(time()) . ".css";
+        $css_min_file = md5(microtime()) . ".css";
         $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
 
         $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen" />');
       } else {
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" media="screen" />');
+        foreach($cached_css as $css) {
+          if(substr($css, -10) !== "-print.css") {
+            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen" />');
+            break;
+          }
+        }
       }
 
     } else {
@@ -176,21 +182,26 @@ class HEADER {
   */
   private function local_css_files_print() {
     if(ENVIRONMENT == "production") {
-      $cached_css = $this->file_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
+      $cached_css = $this->files_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
 
-      if(!$cached_css) {
+      if(count($cached_css) == 1) {
         $css_min = '';
         foreach(self::$local_css_files_print as $css_file) {
           $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
         }
-        $css_min_file = md5(time()) . ".css";
+        $css_min_file = md5(microtime()) . "-print.css";
         $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
 
         $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="print" />');
       } else {
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $cached_css . '" rel="stylesheet" media="print" />');
+        foreach($cached_css as $css) {
+          if(substr($css, -10) == "-print.css") {
+            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="print" />');
+            break;
+          }
+        }
       }
 
     } else {
