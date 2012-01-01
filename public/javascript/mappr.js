@@ -7,8 +7,8 @@ $(function () {
   "use strict";
 
   Mappr.settings = {
-    'baseUrl' : '',
-    'active'  : false
+    'baseUrl' : Mappr.settings.baseUrl || '',
+    'active'  : Mappr.settings.active || false
   };
 
   Mappr.vars = {

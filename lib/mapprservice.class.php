@@ -529,38 +529,38 @@ class MAPPR {
       'sort'  => 1
     );
 
-    //base map
-    $this->shapes['base'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
-      'type'  => MS_LAYER_LINE,
-      'sort'  => 2
-    );
-
-    //stateprovinces_polygon
-    $this->shapes['stateprovinces_polygon'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
-      'type'  => MS_LAYER_POLYGON,
-      'sort'  => 3
-    );
-
-    //stateprovinces
-    $this->shapes['stateprovinces'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp",
-      'type'  => MS_LAYER_LINE,
-      'sort'  => 4
-    );
-
     //lakes outline
     $this->shapes['lakesOutline'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_lakes",
       'type'  => MS_LAYER_LINE,
-      'sort'  => 5
+      'sort'  => 2
     );
 
     //lakes
     $this->shapes['lakes'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_lakes",
       'type'  => MS_LAYER_POLYGON,
+      'sort'  => 3
+    );
+
+    //base map
+    $this->shapes['base'] = array(
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
+      'type'  => MS_LAYER_LINE,
+      'sort'  => 4
+    );
+
+    //stateprovinces_polygon
+    $this->shapes['stateprovinces_polygon'] = array(
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 5
+    );
+
+    //stateprovinces
+    $this->shapes['stateprovinces'] = array(
+      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp",
+      'type'  => MS_LAYER_LINE,
       'sort'  => 6
     );
 
@@ -589,35 +589,35 @@ class MAPPR {
     $this->shapes['placenames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
       'type'  => MS_LAYER_POINT,
-      'sort'  => 11
+      'sort'  => 10
     );
 
     //State/Provincial labels
     $this->shapes['stateprovnames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 12
+      'sort'  => 11
     );
 
     //Country labels
     $this->shapes['countrynames'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 13
+      'sort'  => 12
     );
 
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 14
+      'sort'  => 13
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
       'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
       'type'  => MS_LAYER_POLYGON,
-      'sort'  => 15
+      'sort'  => 14
     );
 
   }
@@ -662,9 +662,6 @@ class MAPPR {
 
     // Adjust map size
     $this->set_map_size();
-
-    // Add the base layer
-    $this->add_base_layer();
 
     //zoom in
     if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
@@ -778,28 +775,6 @@ class MAPPR {
     $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
     if($this->is_resize()) {
       $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
-    }
-  }
-
-  /**
-  * Add the base layer
-  */
-  private function add_base_layer() {
-    if(!isset($this->layers['relief']) && !isset($this->layers['reliefgrey'])) {
-      $layer = ms_newLayerObj($this->map_obj);
-      $layer->set("name","baselayer");
-      $layer->set("status",MS_ON);
-      $layer->set("data",$this->shapes['base']['shape']);
-      $layer->set("type",$this->shapes['base']['type']);
-      $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
-
-      // Add new class to new layer
-      $class = ms_newClassObj($layer);
-
-      // Add new style to new class
-      $style = ms_newStyleObj($class);
-      $style->set("width", isset($this->border_thickness) ? $this->border_thickness : 1.25);
-      $style->color->setRGB(10,10,10);
     }
   }
 
@@ -1080,165 +1055,163 @@ class MAPPR {
   * Add all selected layers to the map
   */
   private function add_layers() {
-    if(isset($this->layers) && $this->layers) {
+    $sort = array();
 
-      unset($this->layers['grid']);
-      $sort = array();
+    $this->layers['base'] = 'on';
+    unset($this->layers['grid']);
 
-      if(isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) { $this->layers['base'] = 'on'; }
-      if(isset($this->output) && $this->output == 'svg') { unset($this->layers['relief'], $this->layers['reliefgrey']); }
+    if(isset($this->output) && $this->output == 'svg') { unset($this->layers['relief'], $this->layers['reliefgrey']); }
 
-      foreach($this->layers as $key => $row) {
-        $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
-      }
-      array_multisort($sort, SORT_ASC, $this->layers);
+    foreach($this->layers as $key => $row) {
+      $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
+    }
+    array_multisort($sort, SORT_ASC, $this->layers);
 
-      $srs_projections = implode(array_keys(self::$accepted_projections), " ");
-                          
-      foreach($this->layers as $name => $status) {
-        //make the layer
-        if(array_key_exists($name, $this->shapes)) {
-          $layer = ms_newLayerObj($this->map_obj);
-          $layer->set("name", $name);
-          $layer->setMetaData("wfs_title", $name);
-          $layer->setMetaData("wfs_typename", $name);
-          $layer->setMetaData("wfs_srs", $srs_projections);
-          $layer->setMetaData("wfs_extent", "-180 -90 180 90");
-          $layer->setMetaData("wfs_encoding", "UTF-8");
-          $layer->setMetaData("gml_include_items", "all");
-          $layer->setMetaData("gml_featureid", "OBJECTID");
-          $layer->set("type", $this->shapes[$name]['type']);
-          $layer->set("status",MS_ON);
-          $layer->setConnectionType(MS_SHAPEFILE);
-          $layer->set("data", $this->shapes[$name]['shape']);
-          $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
-          $layer->set("template", "template.html");
-          $layer->set("dump", true);
+    $srs_projections = implode(array_keys(self::$accepted_projections), " ");
+                        
+    foreach($this->layers as $name => $status) {
+      //make the layer
+      if(array_key_exists($name, $this->shapes)) {
+        $layer = ms_newLayerObj($this->map_obj);
+        $layer->set("name", $name);
+        $layer->setMetaData("wfs_title", $name);
+        $layer->setMetaData("wfs_typename", $name);
+        $layer->setMetaData("wfs_srs", $srs_projections);
+        $layer->setMetaData("wfs_extent", "-180 -90 180 90");
+        $layer->setMetaData("wfs_encoding", "UTF-8");
+        $layer->setMetaData("gml_include_items", "all");
+        $layer->setMetaData("gml_featureid", "OBJECTID");
+        $layer->set("type", $this->shapes[$name]['type']);
+        $layer->set("status",MS_ON);
+        $layer->setConnectionType(MS_SHAPEFILE);
+        $layer->set("data", $this->shapes[$name]['shape']);
+        $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+        $layer->set("template", "template.html");
+        $layer->set("dump", true);
 
-          switch($name) {
-            case 'lakesOutline':
-              $class = ms_newClassObj($layer);
-              $style = ms_newStyleObj($class);
-              $style->color->setRGB(80,80,80);
-            break;
-            case 'rivers':
-            case 'lakes':
-              $class = ms_newClassObj($layer);
-              $style = ms_newStyleObj($class);
-              $style->color->setRGB(120,120,120);
-            break;
+        switch($name) {
+          case 'lakesOutline':
+            $class = ms_newClassObj($layer);
+            $style = ms_newStyleObj($class);
+            $style->color->setRGB(80,80,80);
+          break;
+          case 'rivers':
+          case 'lakes':
+            $class = ms_newClassObj($layer);
+            $style = ms_newStyleObj($class);
+            $style->color->setRGB(120,120,120);
+          break;
 
-            case 'rivernames':
-            case 'lakenames':
-              $layer->set("tolerance", 1);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "Name1");
+          case 'rivernames':
+          case 'lakenames':
+            $layer->set("tolerance", 1);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "Name1");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-              $class->label->set("position", MS_UR);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
-            
-            case 'base':
-            case 'stateprovinces':
-              $class = ms_newClassObj($layer);
-              $style = ms_newStyleObj($class);
-              $style->set("width",isset($this->border_thickness) ? $this->border_thickness : 1.25);
-              $style->color->setRGB(10,10,10);
-            break;
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $class->label->set("position", MS_UR);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
+          
+          case 'base':
+          case 'stateprovinces':
+            $class = ms_newClassObj($layer);
+            $style = ms_newStyleObj($class);
+            $style->set("width",isset($this->border_thickness) ? $this->border_thickness : 1.25);
+            $style->color->setRGB(10,10,10);
+          break;
 
-            case 'countrynames':
-              $layer->set("tolerance", 5);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "NAME");
+          case 'countrynames':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "NAME");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
-              $class->label->set("position", MS_CC);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
+            $class->label->set("position", MS_CC);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
 
-            case 'placenames':
-              $layer->set("tolerance", 5);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "NAMEASCII");
+          case 'placenames':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "NAMEASCII");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-              $class->label->set("position", MS_UR);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-              $style = ms_newStyleObj($class);
-              $style->set("symbolname","circle");
-              $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
-              $style->color->setRGB(100,100,100);
-            break;
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $class->label->set("position", MS_UR);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+            $style = ms_newStyleObj($class);
+            $style->set("symbolname","circle");
+            $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
+            $style->color->setRGB(100,100,100);
+          break;
 
-            case 'stateprovnames':
-              $layer->set("tolerance", 5);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "NAME_1");
+          case 'stateprovnames':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "NAME_1");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-              $class->label->set("position", MS_CC);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+            $class->label->set("position", MS_CC);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
 
-            case 'physicalLabels':
-              $layer->set("tolerance", 5);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "Name");
+          case 'physicalLabels':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "Name");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-              $class->label->set("position", MS_UR);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
-            
-            case 'marineLabels':
-              $layer->set("tolerance", 5);
-              $layer->set("toleranceunits", "pixels");
-              $layer->set("labelitem", "Name");
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $class->label->set("position", MS_UR);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
+          
+          case 'marineLabels':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "Name");
 
-              $class = ms_newClassObj($layer);
-              $class->label->set("font", "arial");
-              $class->label->set("type", MS_TRUETYPE);
-              $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-              $class->label->set("position", MS_UR);
-              $class->label->set("offsetx", 3);
-              $class->label->set("offsety", 3);
-              $class->label->set("partials", MS_FALSE);
-              $class->label->color->setRGB(10, 10, 10);
-            break;
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $class->label->set("position", MS_UR);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
 
-            default:
-          }
+          default:
         }
       }
     }
