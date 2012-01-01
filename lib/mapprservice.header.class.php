@@ -54,7 +54,7 @@ class HEADER {
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
     'jstorage'  => 'public/javascript/jstorage.min.js',
     'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
-    'mappr'     => 'public/javascript/mappr.js'
+    'mappr'     => 'public/javascript/mappr.min.js'
   );
 
   /*

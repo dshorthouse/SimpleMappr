@@ -476,7 +476,8 @@ $(function () {
     var index = 0;
 
     index = $.grep($.jStorage.index(), function(value, i) {
-      return (value.substring(0, type.length) === type)
+      i = null;
+      return (value.substring(0, type.length) === type);
     });
 
     return index;
@@ -532,13 +533,15 @@ $(function () {
 
     Mappr.destroyRedo();
 
-    curr_key = index[index.length-1];
-    curr_data = $.jStorage.get(curr_key);
-    prev_key = index[index.length-2];
-    prev_data = $.jStorage.get(prev_key);
-
+    curr_key       = index[index.length-1];
+    curr_data      = $.jStorage.get(curr_key);
+    prev_key       = index[index.length-2];
+    prev_data      = $.jStorage.get(prev_key);
     prev_data_prep = Mappr.prepareInputs(prev_data);
     Mappr.loadInputs(prev_data_prep);
+
+    $.jStorage.deleteKey(curr_key);
+    $.jStorage.set("un" + curr_key, curr_data);
 
     if(prev_data.width !== curr_data.width) {
       Mappr.mapToggleSettings();
@@ -546,44 +549,39 @@ $(function () {
       Mappr.postData(decodeURIComponent($.param(prev_data)));
     }
 
-    $.jStorage.deleteKey(curr_key);
-    $.jStorage.set("un" + curr_key, curr_data);
-
     Mappr.toggleRedo(true);
     if(index.length === 2) { Mappr.toggleUndo(); }
   };
 
   Mappr.mapRedo = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    var index     = Mappr.storageType("undo"),
-        do_index  = Mappr.storageType("do"),
-        key       = "",
-        data      = {},
-        do_key    = "",
-        do_data   = {},
-        data_prep = {},
-        token     = new Date().getTime();
+    var undo_index     = Mappr.storageType("undo"),
+        undo_key       = "",
+        undo_data      = {},
+        undo_data_prep = {},
+        do_index       = Mappr.storageType("do"),
+        do_key         = "",
+        do_data        = {},
+        token          = new Date().getTime();
 
-    if(index.length === 0) { return; }
+    if(undo_index.length === 0) { return; }
 
     Mappr.toggleRedo();
-    key = index.pop();
+    undo_key       = undo_index.pop();
+    undo_data      = $.jStorage.get(undo_key);
+    do_key         = do_index[do_index.length-1];
+    do_data        = $.jStorage.get(do_key);
+    undo_data_prep = Mappr.prepareInputs(undo_data);
+    Mappr.loadInputs(undo_data_prep);
 
-    data = $.jStorage.get(key);
-    do_key = do_index[do_index.length-1];
-    do_data = $.jStorage.get(do_key);
+    $.jStorage.deleteKey(undo_key);
+    $.jStorage.set("do-" + token.toString(), undo_data);
 
-    data_prep = Mappr.prepareInputs(data);
-    Mappr.loadInputs(data_prep);
-
-    if(data.width !== do_data.width) {
+    if(undo_data.width !== do_data.width) {
       Mappr.mapToggleSettings();
     } else {
-      Mappr.postData(decodeURIComponent($.param(data)));
+      Mappr.postData(decodeURIComponent($.param(undo_data)));
     }
-
-    $.jStorage.deleteKey(key);
-    $.jStorage.set("do-" + token.toString(), data);
 
     Mappr.toggleUndo(true);
   };
@@ -1229,10 +1227,10 @@ $(function () {
       "map"    : data
     };
 
-    inputs.map.coords  = [];
-    inputs.map.regions = [];
-    inputs.map.layers  = {};
-    inputs.map.options = {};
+    inputs.map.coords  = inputs.map.coords || [];
+    inputs.map.regions = inputs.map.regions || [];
+    inputs.map.layers  = inputs.map.layers || {};
+    inputs.map.options = inputs.map.options || {};
 
     String.prototype.clean = function() {
       return this.replace(/[\[\]]/g, "");
@@ -1240,7 +1238,7 @@ $(function () {
 
     $.each(data, function(key, value) {
       if(key.indexOf("coords") !== -1) {
-        item = key.match(/\[(.*?)\]/g);
+        item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item){
           if(inputs.map.coords[parseInt(item[0].clean(),10)] === undefined) { inputs.map.coords[parseInt(item[0].clean(),10)] = {}; }
           inputs.map.coords[parseInt(item[0].clean(),10)][item[1].clean()] = value;
@@ -1248,7 +1246,7 @@ $(function () {
         }
       }
       if(key.indexOf("regions") !== -1) {
-        item = key.match(/\[(.*?)\]/g);
+        item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item) {
           if(inputs.map.regions[parseInt(item[0].clean(),10)] === undefined) { inputs.map.regions[parseInt(item[0].clean(),10)] = {}; }
           inputs.map.regions[parseInt(item[0].clean(),10)][item[1].clean()] = value;
@@ -1256,14 +1254,14 @@ $(function () {
         }
       }
       if(key.indexOf("layers") !== -1) {
-        item = key.match(/\[(.*?)\]/);
+        item = key.match(/\[[A-Za-z0-9]*?\]/);
         if(item) {
           inputs.map.layers[item[1]] = value;
           delete inputs.map["layers[" + item[1] + "]"];
         }
       }
       if(key.indexOf("options") !== -1) {
-        item = key.match(/\[(.*?)\]/);
+        item = key.match(/\[[A-Za-z0-9]*?\]/);
         if(item) {
           inputs.map.options[item[1]] = value;
           delete inputs.map["options[" + item[1] + "]"];
@@ -1305,12 +1303,11 @@ $(function () {
   };
 
   Mappr.loadMap = function (obj) {
-    var self   = this,
-        id     = $(obj).attr("data-mid");
+    var self     = this,
+        id       = $(obj).attr("data-mid");
 
     $("#tabs").tabs('select',0);
 
-    self.clearStorage();
     self.toggleUndo();
     self.toggleRedo();
     self.showLoadingMessage($('#mapper-loading-message').text());
@@ -1320,8 +1317,9 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
       success  : function (data) {
-        self.loadInputs(data)
+        self.loadInputs(data);
         self.showMap(data);
+        self.bindStorage();
         self.activateEmbed(id);
       }
     });
@@ -1764,7 +1762,7 @@ $(function () {
     });
   };
 
-  Mappr.mapToggleSettings = function (noreload) {
+  Mappr.mapToggleSettings = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#mapToolsCollapse a').trigger('click');
   };
