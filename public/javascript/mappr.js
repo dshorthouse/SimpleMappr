@@ -19,7 +19,8 @@ $(function () {
     fileDownloadTimer  : {},
     fillColor          : "",
     jCropType          : "zoom",
-    cropUpdated        : false
+    cropUpdated        : false,
+    undoSize           : 10
   };
 
   $.ajaxSetup({
@@ -482,11 +483,13 @@ $(function () {
   };
 
   Mappr.toggleUndo = function (activate) {
-    var self = this;
+    var self  = this,
+        index = this.storageType("do");
 
     $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo').unbind("click");
 
-    if(activate && self.storageType("do").length > 1) {
+    if(activate && index.length > 1) {
+      if(index.length > self.vars.undoSize) { $.jStorage.deleteKey(index.shift()); }
       $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function (e) {
         e.preventDefault();
         self.mapUndo();
@@ -510,10 +513,10 @@ $(function () {
   Mappr.destroyRedo = function () {
     var index = Mappr.storageType("undo");
 
-    if(index.length === 0) { return; }
-
-    $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
-    $.jStorage.deleteKey(index.pop());
+    if(index.length > 0) {
+      $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+      $.jStorage.deleteKey(index.pop());
+    }
   };
 
   Mappr.mapUndo = function () {
@@ -526,6 +529,8 @@ $(function () {
         prev_data_prep = {};
 
     if(index.length === 1) { return; }
+
+    Mappr.destroyRedo();
 
     curr_key = index[index.length-1];
     curr_data = $.jStorage.get(curr_key);
@@ -950,6 +955,7 @@ $(function () {
     $(document).unbind("mouseup", self.aQuery);
 
     self.destroyJcrop();
+    self.destroyRedo();
 
     self.showLoadingMessage($('#mapper-loading-message').text());
 
@@ -982,7 +988,6 @@ $(function () {
           }
 
           $('#fieldSetsRegions').accordion("activate", i-1);
-          self.destroyRedo();
           self.showMap();
         } else {
           self.hideLoadingMessage();
