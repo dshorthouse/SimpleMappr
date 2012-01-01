@@ -32,19 +32,19 @@ if($db->affected_rows > 0) {
 #map-help h3{font-size:0.75em;}
 #map-help p{font-size:0.75em;}
 #map-help dl{font-size:0.75em;}
-#map-help dl dt{float:left;margin-right:5px;line-height:20px;}
+#map-help dt{float:left;margin-right:5px;line-height:20px;}
 #map-help dl.toolbar dt:before{margin-top:0.2em !important;}
-#map-help dl dt,#map-help dl dd{line-height:20px;}
-#map-help #example-data{height:220px;}
-#map-help #example-data img{vertical-align:middle;margin-right:20px;}
+#map-help dt,#map-help dd{line-height:20px;}
+#example-data{height:220px;}
+#example-data img{vertical-align:middle;margin-right:20px;}
 #map-help table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
-#map-help table thead tr{height:1.75em;}
-#map-help table thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
-#map-help table thead td.title{width:35%;padding-left:20px;}
-#map-help table thead td.code{width:45px;}
-#map-help table thead td.example{width:60px;}
-#map-help table tr{border:1px solid #aaa;}
-#map-help table tr.odd{background:none repeat scroll 0 0 #fff;}
+#map-help thead tr{height:1.75em;}
+#map-help thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
+#map-help td.title{width:35%;padding-left:20px;}
+#map-help td.code{width:45px;}
+#map-help td.example{width:60px;}
+#map-help tr{border:1px solid #aaa;}
+#map-help tr.odd{background:none repeat scroll 0 0 #fff;}
 </style>
 <script type="text/javascript">
 $("#filter-countries")

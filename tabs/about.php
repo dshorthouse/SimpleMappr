@@ -7,8 +7,8 @@ USERSESSION::select_language();
 <style type="text/css">
 #map-about p,#map-about dl{font-size:0.75em;}
 #map-about p.citation{text-indent:-2em;padding-left:2em;}
-#map-about dl dt.update{font-weight:bold;}
-#map-about dl dd{margin:0 0 10px 25px;}
+#map-about dt.update{font-weight:bold;}
+#map-about dd{margin:0 0 10px 25px;}
 </style>
 <div id="map-about">
 <div id="general-about" class="panel ui-corner-all">
