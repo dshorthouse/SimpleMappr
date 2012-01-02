@@ -538,6 +538,7 @@ $(function () {
     prev_key       = index[index.length-2];
     prev_data      = $.jStorage.get(prev_key);
     prev_data_prep = Mappr.prepareInputs(prev_data);
+
     Mappr.loadInputs(prev_data_prep);
 
     $.jStorage.deleteKey(curr_key);
@@ -2065,6 +2066,8 @@ $(function () {
         rads    = 0,
         left    = 0,
         top     = 0;
+
+    if(!angle) { angle = 0; }
 
     angle = parseFloat(angle) < 0 ? parseFloat(angle) +360 : parseFloat(angle);
     rads = angle * (Math.PI/180);
