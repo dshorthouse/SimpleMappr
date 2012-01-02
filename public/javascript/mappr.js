@@ -623,12 +623,14 @@ $(function () {
         $.each(arrows, function(key, value) {
           $(document).bind('keydown', key, value);
         });
+        $('#mapOutputImage').dblclick(function(e) { self.dblclickZoom(this, e); });
       },
       function () {
         $.each(arrows, function(key, value) {
           key = null;
           $(document).unbind('keydown', value);
         });
+        $('#mapOutputImage').unbind('dblclick');
       }
     );
   };
@@ -932,9 +934,23 @@ $(function () {
   };
 
   Mappr.aZoom = function (event) {
-    event.data.destroyRedo();
-    event.data.showMap();
-    $(document).unbind("mouseup", event.data.aZoom);
+    var self = event.data;
+
+    self.destroyRedo();
+    self.showMap();
+    $(document).unbind("mouseup", self.aZoom);
+  };
+
+  Mappr.dblclickZoom = function(obj, event) {
+    var x = 0, y = 0, pos = {};
+
+    pos = $(obj).offset();
+    x   = (event.pageX - pos.left);
+    y   = (event.pageY - pos.top);
+
+    $('#bbox_rubberband').val(x+','+y+','+x+','+y);
+    this.destroyRedo();
+    this.showMap();
   };
 
   Mappr.aQuery = function (event) {

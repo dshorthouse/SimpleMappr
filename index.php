@@ -20,7 +20,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <h1 id="site-title" class="sprites-after">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
 <div id="site-languages">
-<ul><?php foreach($header[1] as $key => $langs): ?><?php $selected = ''; if($key == $language) { $selected = ' class="selected" '; } ?><li><?php echo '<a href="/?lang='.$key.'"'.$selected.'>'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul>
+<ul><?php foreach($header[1] as $key => $langs): ?><?php $selected = ''; if($key == $language) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?lang='.$key.'"'.$selected.'>'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>
@@ -196,6 +196,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <div id="userdata"></div>
 </div>
 <?php endif; ?>
+
 <div id="badRecordsViewer" title="<?php echo _("Records out of range"); ?>"><div id="badRecords"></div></div>
 <div id="mapSave" title="<?php echo _("Save"); ?>">
 <p>
