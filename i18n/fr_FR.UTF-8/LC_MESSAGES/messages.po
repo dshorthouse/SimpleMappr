@@ -97,8 +97,8 @@ msgid "API"
 msgstr "API"
 
 #: .index.php:54
-msgid "Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"
-msgstr "Taper les coordonnées géographiques sur des lignes séparées en degrés décimaux Latitude Longitude (séparés par un espace, une virgule ou point-virgule)"
+msgid "Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"
+msgstr "Taper les coordonnées géographiques sur des lignes séparées en degrés décimaux (DD) ou DD°MM'SS\" comme latitude,longitude séparés par un espace (DD seulement), une virgule ou point-virgule"
 
 #: .index.php:54
 msgid "examples"
@@ -570,6 +570,14 @@ msgid "Recent Updates"
 msgstr "Mises à jour"
 
 #: .tabs/about.php:11
+msgid "January 2, 2012"
+msgstr "1 janvier, 2012"
+
+#: .tabs/about.php:11
+msgid "Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."
+msgstr "Améliorations: reconnaissance de coordonnées permettent maintenant degrés décimaux et DDMMSS."
+
+#: .tabs/about.php:11
 msgid "January 1, 2012"
 msgstr "1 janvier, 2012"
 
@@ -915,8 +923,8 @@ msgid "Coordinate format"
 msgstr "Format de coordonnées"
 
 #: .tabs/help.php:144
-msgid "in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
-msgstr "dans l'hémisphère occidental dessus de l'équateur 45.55, -120.25, dans l'hémisphère occidental dessous de l'équateur -15.66, -65.10; hémisphère oriental dessus de l'équateur 64.82, 75.1"
+msgid "in western hemisphere above equator 45.55, -120.25 (or 45° 33'N, 120° 15'W); in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
+msgstr "dans l'hémisphère occidental dessus de l'équateur 45.55, -120.25 (ou 45° 33'N, 120° 15'W); dans l'hémisphère occidental dessous de l'équateur -15.66, -65.10; hémisphère oriental dessus de l'équateur 64.82, 75.1"
 
 #: .tabs/help.php:147
 msgid "Example Data Entry"

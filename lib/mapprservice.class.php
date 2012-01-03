@@ -949,8 +949,14 @@ class MAPPR {
           $points = array(); //create an array to hold unique locations
       
           foreach ($row as $loc) {
-            $loc = trim(preg_replace('/[^\d\s,;.-]/', '', $loc));
-            $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
+            $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
+            if(preg_match('/[NSEW]/', $loc) != 0) {
+              $coord = preg_split("/[,;]/", $loc);
+              $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+              $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+            } else {
+              $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
+            }
             $coord = new stdClass();
             $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
             $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
@@ -958,7 +964,7 @@ class MAPPR {
             if($this->check_coord($coord) && $title != "") {
               $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
             } else {
-              $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $coord->y . ',' . $coord->x;
+              $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $loc;
             }
           }
           foreach($points as $point) {
@@ -1565,6 +1571,29 @@ class MAPPR {
     $output = false;
     if((float)$coord->x && (float)$coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
     return $output;
+  }
+
+  /**
+   * Convert a coordinate in dms to deg
+   * @param string $dms coordinate
+   * @return float
+   */
+  public function dms_to_deg($dms) {
+    $dms = stripslashes($dms);
+    $neg = (preg_match('/[SW]/', $dms) == 0) ? 1 : -1;
+    $dms = preg_replace('/(^\s?-)|(\s?[NSEW]\s?)/i','', $dms);
+    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+    if (!$parts) { return; }
+    // parts: 0 = degree, 1 = minutes, 2 = seconds
+    $d = isset($parts[0]) ? (float)$parts[0] : 0;
+    $m = isset($parts[1]) ? (float)$parts[1] : 0;
+    if(strpos($dms, ".") > 1 && isset($parts[2])) {
+      $m = (float)($parts[1] . '.' . $parts[2]);
+      unset($parts[2]);
+    }
+    $s = isset($parts[2]) ? (float)$parts[2] : 0;
+    $dec = ($d + ($m/60) + ($s/3600))*$neg; 
+    return $dec;
   }
   
   /**

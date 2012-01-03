@@ -1936,6 +1936,8 @@ $(function () {
   };
 
   Mappr.addBadRecordsViewer = function () {
+    var self = this;
+
     $('#badRecordsViewer').dialog({
       autoOpen      : false,
       height        : (200).toString(),
@@ -1958,6 +1960,7 @@ $(function () {
 
     $('.toolsBadRecords').click(function (e) {
       e.preventDefault();
+      self.addBadRecordsViewer();
       $('#badRecordsViewer').dialog("open");
     });
   };

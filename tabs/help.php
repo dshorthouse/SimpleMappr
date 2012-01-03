@@ -163,11 +163,11 @@ $("#filter-countries")
     <div class="header">
       <h2><?php echo _("Point Data"); ?></h2>
     </div>
-    <p><?php echo _("Use the Point Data tab to paste coordinates as latitude, longitude on separate lines and select the marker shape, size, and color."); ?></p>
+    <p><?php echo _("Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color."); ?></p>
 
     <dl class="ui-helper-clearfix">
       <dt><?php echo _("Coordinate format"); ?>:</dt>
-      <dd><?php echo _("in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"); ?></dd>
+      <dd><?php echo _("in western hemisphere above equator 45.55, -120.25 (or 45° 33'N, 120° 15'W); in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"); ?></dd>
     </dl>
     <div id="example-data">
       <img src="../public/images/help-data.png" alt="<?php echo _("Example Data Entry"); ?>" width="400" height="215" />

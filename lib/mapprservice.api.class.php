@@ -123,7 +123,17 @@ class MAPPRAPI extends MAPPR {
             foreach($rows as $row) {
               $cols = explode("\t", $row);
               for($i=0;$i<$num_cols;$i++) {
-                $coord_cols[$i][] = array_key_exists($i, $cols) ? preg_split("/[\s,;]+/",$cols[$i]) : array();
+                if(!array_key_exists($i, $cols)) {
+                  $coord_cols[$i][] = array();
+                } else {
+                  if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
+                    $coord = preg_split("/[,;]/", $cols[$i]);
+                    $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+                    $coord_cols[$i][] = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+                  } else {
+                    $coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
+                  }
+                }
               }
             }
           }
@@ -148,8 +158,10 @@ class MAPPRAPI extends MAPPR {
       if($this->points) {
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
         foreach($this->points as $point) {
-          $coord = explode(",", $point);
+          $coord = preg_split("/[,;]/", $point);
           $legend[$num_cols] = "";
+          if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
+          if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
           $coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
           $num_cols++;
         }

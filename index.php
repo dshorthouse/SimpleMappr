@@ -55,7 +55,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <!-- multipoint tab -->
 <div id="map-points">
 <div id="general-points" class="panel ui-corner-all">
-<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
+<p><?php echo _("Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
 </div>
 <div id="fieldSetsPoints" class="fieldSets">
 <?php echo partial_layers(); ?>
