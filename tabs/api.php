@@ -44,7 +44,7 @@ USERSESSION::select_language();
     <dd><?php echo _("a URL-encoded, remote GeoRSS feed. <strong>NOTE:</strong> If both <em>file</em> and <em>georss</em> are included, points in the GeoRSS feed are treated as a single, additional \"column\" for <em>shape[x]</em>, <em>size[x]</em>, <em>color[x]</em> below."); ?> <span class="api-example"><em>e.g.</em> georss=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></span></dd>
 
     <dt>point[x]</dt>
-    <dd><?php echo _("single marker written as latitude,longitude"); ?> <span class="api-example"><em>e.g.</em> point[0]=45,-120</span></dd>
+    <dd><?php echo _("single marker written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm"); ?> <span class="api-example"><em>e.g.</em> point[0]=45,-120 or point[0]=45°52'30"N,120W or point[0]=45°52.5N,120W</span></dd>
 
     <dt>shape[x]</dt>
     <dd><?php echo _("shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar"); ?> <span class="api-example"><em>e.g.</em> shape[0]=circle</span></dd>
