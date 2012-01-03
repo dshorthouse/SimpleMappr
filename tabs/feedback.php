@@ -10,7 +10,7 @@ $lang = USERSESSION::select_language();
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   var disqus_shortname = 'simplemappr',
-      disqus_language  = '<?php echo $lang; ?>';
+  disqus_config = function() { this.language = '<?php echo $lang; ?>'; };
   (function() {
    var dsq = document.createElement('script');
    dsq.type = 'text/javascript'; dsq.async = true;
