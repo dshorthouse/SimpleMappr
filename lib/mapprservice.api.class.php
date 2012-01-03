@@ -373,7 +373,7 @@ class MAPPRAPI extends MAPPR {
 
   private function setZoom() {
     if($this->zoom == 0 || $this->zoom > 10) { return; }
-    $centroid = $this->getCentroid($this->_coord_cols);
+    $centroid = $this->getMidpoint($this->_coord_cols);
     $x = $this->map_obj->width*(($centroid[0] + 180)/360);
     $y = $this->map_obj->height*((90 - $centroid[1])/180);
     $zoom_point = ms_newPointObj();
@@ -381,7 +381,7 @@ class MAPPRAPI extends MAPPR {
     $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
   }
 
-  private function getCentroid($array) {
+  private function getMidpoint($array) {
     $x = $y = $z = array();
     foreach($array as $coords) {
       foreach($coords as $coord) {
@@ -394,11 +394,9 @@ class MAPPRAPI extends MAPPR {
         }
       }
     }
-
     $X = array_sum($x)/count($x);
     $Y = array_sum($y)/count($y);
     $Z = array_sum($z)/count($z);
-
     return array(rad2deg(atan2($Y,$X)), rad2deg(atan2($Z, sqrt(pow($X,2) + pow($Y,2)))));
   }
 
