@@ -915,8 +915,8 @@ msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), d
 msgstr "choisir png, tif à haute résolution, pptx (PowerPoint), docx (Word), kml (Google Earth) ou scalable vector graphic (svg). Ce dernier est recommandé pour la préparation des figures dans les manuscrits, car elle est sans perte. Toutefois, le téléchargement svg ne comprend pas une barre d'échelle, légende, ou une couche relief ombré car ce sont des raster."
 
 #: .tabs/help.php:140
-msgid "Use the Point Data tab to paste coordinates as latitude, longitude on separate lines and select the marker shape, size, and color."
-msgstr "Utilisez l'onglet Points de Données pour coller des coordonnées en latitude, longitude sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
+msgid "Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color."
+msgstr "Utilisez l'onglet Points de Données pour coller des coordonnées latitude, longitude en degrés décimaux ou DD°MM'SS\" sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
 
 #: .tabs/help.php:143
 msgid "Coordinate format"
