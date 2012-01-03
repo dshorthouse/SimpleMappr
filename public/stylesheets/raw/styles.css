@@ -1,3 +1,4 @@
+@media screen{
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
 a{color:#555;}
@@ -338,3 +339,12 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .tipsy{padding:5px;font-size:10px;opacity:0.8;filter:alpha(opacity=80);background-repeat:no-repeat;background-image:url("../../images/tipsy.png");}
 .tipsy-inner{border-top:1px solid #f6f6f6;border-left:1px solid #f6f6f6;border-right:1px solid #f6f6f6;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;padding:5px 8px 4px 8px;background-color:black;color:white;max-width:200px;text-align:center;}
 .tipsy-south{background-position:bottom center;}
+}
+@media print{
+html, body{border:none;}
+body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
+#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-mymaps,#map-users,#map-help,#map-about,#map-api,#map-feedback,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
+#mapScale{text-align: right;}
+#mapLegend p{display:none;}
+#mapLegend img{display:block;}
+}

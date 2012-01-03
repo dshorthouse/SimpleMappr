@@ -61,21 +61,13 @@ class HEADER {
   * An array of all css files to be minified
   */
   public static $local_css_files = array(
-    'public/stylesheets/raw/screen.css'
-  );
-
-  /*
-  * An array of all css print files to be minified
-  */
-  public static $local_css_files_print = array(
-    'public/stylesheets/raw/print.css'
+    'public/stylesheets/raw/styles.css'
   );
 
   function __construct() {
     $this->remote_js_files()
          ->local_js_files()
-         ->local_css_files()
-         ->local_css_files_print();
+         ->local_css_files();
   }
 
   /*
@@ -159,11 +151,11 @@ class HEADER {
         fwrite($handle, $css_min);
         fclose($handle);
 
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen" />');
+        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
       } else {
         foreach($cached_css as $css) {
           if(substr($css, -10) !== "-print.css") {
-            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen" />');
+            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
             break;
           }
         }
@@ -171,42 +163,7 @@ class HEADER {
 
     } else {
       foreach(self::$local_css_files as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="screen" />');
-      }
-    }
-    return $this;
-  }
-
-  /*
-  * Add existing, minified print css to header or create if does not already exist
-  */
-  private function local_css_files_print() {
-    if(ENVIRONMENT == "production") {
-      $cached_css = $this->files_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
-
-      if(count($cached_css) == 1) {
-        $css_min = '';
-        foreach(self::$local_css_files_print as $css_file) {
-          $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
-        }
-        $css_min_file = md5(microtime()) . "-print.css";
-        $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
-        fwrite($handle, $css_min);
-        fclose($handle);
-
-        $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="print" />');
-      } else {
-        foreach($cached_css as $css) {
-          if(substr($css, -10) == "-print.css") {
-            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="print" />');
-            break;
-          }
-        }
-      }
-
-    } else {
-      foreach(self::$local_css_files_print as $css_file) {
-        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="print" />');
+        $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="screen,print" />');
       }
     }
     return $this;

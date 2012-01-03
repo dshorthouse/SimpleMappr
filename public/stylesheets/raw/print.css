@@ -1,6 +1,0 @@
-html, body{border:none;}
-body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
-#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-mymaps,#map-users,#map-help,#map-about,#map-api,#map-feedback,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
-#mapScale{text-align: right;}
-#mapLegend p{display:none;}
-#mapLegend img{display:block;}

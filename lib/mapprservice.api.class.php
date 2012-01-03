@@ -374,13 +374,13 @@ class MAPPRAPI extends MAPPR {
    * Set a zoom level
    */
   private function setZoom() {
-    if($this->zoom == 0 || $this->zoom > 10) { return; }
+    if($this->zoom == 0 || $this->zoom > 20) { return; }
     $midpoint = $this->getMidpoint($this->_coord_cols);
     $x = $this->map_obj->width*(($midpoint[0] + 180)/360);
     $y = $this->map_obj->height*((90 - $midpoint[1])/180);
     $zoom_point = ms_newPointObj();
     $zoom_point->setXY($x,$y);
-    $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
+    $this->map_obj->zoompoint($this->zoom*5, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
   }
 
   /**
