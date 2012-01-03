@@ -134,12 +134,14 @@ class USERSESSION {
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
+      return $_REQUEST["lang"];
     } else {
       putenv('LC_ALL='.self::$accepted_languages['en']['code']);
       setlocale(LC_ALL, self::$accepted_languages['en']['code']);
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
+      return 'en';
     }
   }
 
