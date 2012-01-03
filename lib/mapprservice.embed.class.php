@@ -52,6 +52,8 @@ class MAPPREMBED extends MAPPR {
       $this->{$key} = $data;
     }
 
+    if(isset($this->border_thickness) && !$this->border_thickness) { $this->border_thickness = 1.25; }
+
     (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
     if(!isset($this->projection_map) || $this->projection_map == "") { $this->projection_map = 'epsg:4326'; }
     if(!isset($this->bbox_map) || $this->bbox_map == "" || $this->bbox_map == "0,0,0,0") { $this->bbox_map = '-180,-90,180,90'; }
@@ -106,11 +108,13 @@ class MAPPREMBED extends MAPPR {
       $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
       $class = ms_newClassObj($layer);
-      $class->label->set("font", "arial");
-      $class->label->set("type", MS_TRUETYPE);
-      $class->label->set("size", 10);
-      $class->label->set("position", MS_UC);
-      $class->label->color->setRGB(30, 30, 30);
+      if(isset($this->gridlabel) && $this->gridlabel == 1) {
+        $class->label->set("font", "arial");
+        $class->label->set("type", MS_TRUETYPE);
+        $class->label->set("size", 10);
+        $class->label->set("position", MS_UC);
+        $class->label->color->setRGB(30, 30, 30);
+      }
       $style = ms_newStyleObj($class);
       $style->color->setRGB(200,200,200);
 

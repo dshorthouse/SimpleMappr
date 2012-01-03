@@ -154,6 +154,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
 <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> <?php echo _("fixed"); ?>
 <input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
 <input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> 10<sup>o</sup>
+<input type="checkbox" id="gridlabel" name="gridlabel" /> <?php echo _("hide labels"); ?>
 </div>
 </li>
 </ul>

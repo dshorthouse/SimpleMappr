@@ -316,6 +316,10 @@ msgstr "réticules"
 msgid "fixed"
 msgstr "fixée"
 
+#: .index.php:150
+msgid "hide labels"
+msgstr "cacher étiquettes"
+
 #: .index.php:155
 msgid "Line Thickness"
 msgstr "Epaisseur des lignes"

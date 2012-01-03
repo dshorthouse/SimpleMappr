@@ -295,6 +295,8 @@ class MAPPR {
 
     $this->gridspace        = $this->load_param('gridspace', false);
 
+    $this->gridlabel        = (int)$this->load_param('gridlabel', 1);
+
     $this->download         = $this->load_param('download', false);
 
     $this->crop             = $this->load_param('crop', false);
@@ -1074,7 +1076,7 @@ class MAPPR {
     array_multisort($sort, SORT_ASC, $this->layers);
 
     $srs_projections = implode(array_keys(self::$accepted_projections), " ");
-                        
+                       
     foreach($this->layers as $name => $status) {
       //make the layer
       if(array_key_exists($name, $this->shapes)) {
@@ -1264,11 +1266,14 @@ class MAPPR {
       $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
 
       $class = ms_newClassObj($layer);
-      $class->label->set("font", "arial");
-      $class->label->set("type", MS_TRUETYPE);
-      $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
-      $class->label->set("position", MS_CC);
-      $class->label->color->setRGB(30, 30, 30);
+
+      if($this->gridlabel != 0) {
+        $class->label->set("font", "arial");
+        $class->label->set("type", MS_TRUETYPE);
+        $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
+        $class->label->set("position", MS_CC);
+        $class->label->color->setRGB(30, 30, 30);
+      }
 
       $style = ms_newStyleObj($class);
       $style->color->setRGB(200,200,200);

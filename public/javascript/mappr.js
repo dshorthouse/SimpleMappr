@@ -651,6 +651,14 @@ $(function () {
       self.showMap();
     });
 
+    $('#gridlabel').click(function () {
+      if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
+      if($(this).prop('checked')) { $(this).val('false'); }
+      self.resetJbbox();
+      self.destroyRedo();
+      self.showMap();
+    });
+
     $('#projection').change(function () {
       if($(this).val() !== "") {
         $.cookie("jcrop_coords", null);
@@ -1408,6 +1416,12 @@ $(function () {
       $('#gridspace-' + data.map.grid_space).attr('checked', true);
     } else {
       $('#gridspace').attr('checked', true);
+    }
+
+    if(data.map.gridlabel !== undefined && data.map.gridlabel) {
+      $('input[name="gridlabel"]').attr('checked', true).val('false');
+    } else {
+      $('#gridlabel').attr('checked', false);
     }
 
   }; //** end Mappr.loadSettings **/

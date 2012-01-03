@@ -91,6 +91,7 @@ class MAPPRAPI extends MAPPR {
     $this->layers           = $layers;
     $this->graticules       = $this->load_param('graticules', false);
     $this->gridspace        = $this->load_param('spacing', false);
+    $this->gridlabel        = $this->load_param('gridlabel', "true");
 
     if($this->load_param('border', false)) { $this->options['border'] = true; }
     if($this->load_param('legend', false)) { $this->options['legend'] = true; }
@@ -290,11 +291,15 @@ class MAPPRAPI extends MAPPR {
       $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
       $class = ms_newClassObj($layer);
-      $class->label->set("font", "arial");
-      $class->label->set("type", MS_TRUETYPE);
-      $class->label->set("size", 10);
-      $class->label->set("position", MS_UC);
-      $class->label->color->setRGB(30, 30, 30);
+
+      if($this->gridlabel == "true") {
+        $class->label->set("font", "arial");
+        $class->label->set("type", MS_TRUETYPE);
+        $class->label->set("size", 10);
+        $class->label->set("position", MS_UC);
+        $class->label->color->setRGB(30, 30, 30);
+      }
+
       $style = ms_newStyleObj($class);
       $style->color->setRGB(200,200,200);
 
