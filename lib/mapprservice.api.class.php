@@ -37,7 +37,7 @@ class MAPPRAPI extends MAPPR {
   private $_coord_cols;
 
   /**
-  * Override the method in the MAPPR class
+  * Override method in parent class
   */
   public function get_request() {
     //ping API to return JSON
@@ -106,7 +106,7 @@ class MAPPRAPI extends MAPPR {
   }
   
   /**
-  * Override the method in the MAPPR class
+  * Override method in parent class
   */ 
   public function add_coordinates() {  
     $coord_cols = array();
@@ -231,7 +231,7 @@ class MAPPRAPI extends MAPPR {
   }
   
   /**
-  * Override the method in the MAPPR class
+  * Override method in the parent class
   */
   public function add_regions() {
     if($this->regions['data']) {            
@@ -279,7 +279,7 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-  * Override the method in the MAPPR class
+  * Override method in parent class
   */
   public function add_graticules() {
     if($this->graticules) {
@@ -316,9 +316,8 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-  * Override the method in the MAPPR class
+  * Override method in parent class
   */
-
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", ($this->width <= 500) ? 2 : 3);
@@ -371,16 +370,24 @@ class MAPPRAPI extends MAPPR {
     $this->image->saveImage("");
   }
 
+  /**
+   * Set a zoom level
+   */
   private function setZoom() {
     if($this->zoom == 0 || $this->zoom > 10) { return; }
-    $centroid = $this->getMidpoint($this->_coord_cols);
-    $x = $this->map_obj->width*(($centroid[0] + 180)/360);
-    $y = $this->map_obj->height*((90 - $centroid[1])/180);
+    $midpoint = $this->getMidpoint($this->_coord_cols);
+    $x = $this->map_obj->width*(($midpoint[0] + 180)/360);
+    $y = $this->map_obj->height*((90 - $midpoint[1])/180);
     $zoom_point = ms_newPointObj();
     $zoom_point->setXY($x,$y);
     $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
   }
 
+  /**
+   * Find the geographic midpoint of a nested array of exploded dd coords
+   * @param array $array
+   * @return array(long,lat)
+   */
   private function getMidpoint($array) {
     $x = $y = $z = array();
     foreach($array as $coords) {
