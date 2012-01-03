@@ -34,6 +34,7 @@ class MAPPRAPI extends MAPPR {
 
   private $_file;
   private $_data;
+  private $_coord_cols;
 
   /**
   * Override the method in the MAPPR class
@@ -79,6 +80,7 @@ class MAPPRAPI extends MAPPR {
     $this->projection_map   = $this->projection;
 
     $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
+    $this->zoom             = (int)$this->load_param('zoom', false);
 
     //convert layers as comma-separated values to an array
     $_layers                = explode(',', $this->load_param('layers', ''));
@@ -123,15 +125,13 @@ class MAPPRAPI extends MAPPR {
             foreach($rows as $row) {
               $cols = explode("\t", $row);
               for($i=0;$i<$num_cols;$i++) {
-                if(!array_key_exists($i, $cols)) {
-                  $coord_cols[$i][] = array();
-                } else {
+                if(array_key_exists($i, $cols)) {
                   if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
                     $coord = preg_split("/[,;]/", $cols[$i]);
                     $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
-                    $coord_cols[$i][] = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+                    $this->_coord_cols[$i][] = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
                   } else {
-                    $coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
+                    $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
                   }
                 }
               }
@@ -146,11 +146,11 @@ class MAPPRAPI extends MAPPR {
           $legend[$num_cols] = $rss->channel['title'];
           foreach ($rss->items as $item) {
             if(isset($item['georss']) && isset($item['georss']['point'])) {
-              $coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['georss']['point']);
+              $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['georss']['point']);
             } elseif(isset($item['geo']) && isset($item['geo']['lat']) && isset($item['geo']['lat'])) {
-              $coord_cols[$num_cols][] = array($item['geo']['lat'], $item['geo']['long']);
+              $this->_coord_cols[$num_cols][] = array($item['geo']['lat'], $item['geo']['long']);
             } elseif(isset($item['geo']) && isset($item['geo']['lat_long'])) {
-              $coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
+              $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
             }
           }
         }
@@ -162,12 +162,12 @@ class MAPPRAPI extends MAPPR {
           $legend[$num_cols] = "";
           if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
           if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
-          $coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+          $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
           $num_cols++;
         }
       }
 
-      foreach($coord_cols as $col => $coords) {
+      foreach($this->_coord_cols as $col => $coords) {
         $mlayer = ms_newLayerObj($this->map_obj);
         $mlayer->set("name",$legend[$col]);
         $mlayer->set("status",MS_ON);
@@ -225,6 +225,8 @@ class MAPPRAPI extends MAPPR {
 
         $col++;
       }
+
+      if($this->zoom) { $this->setZoom(); }
     }
   }
   
@@ -367,6 +369,37 @@ class MAPPRAPI extends MAPPR {
     }
 
     $this->image->saveImage("");
+  }
+
+  private function setZoom() {
+    if($this->zoom == 0 || $this->zoom > 10) { return; }
+    $centroid = $this->getCentroid($this->_coord_cols);
+    $x = $this->map_obj->width*(($centroid[0] + 180)/360);
+    $y = $this->map_obj->height*((90 - $centroid[1])/180);
+    $zoom_point = ms_newPointObj();
+    $zoom_point->setXY($x,$y);
+    $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
+  }
+
+  private function getCentroid($array) {
+    $x = $y = $z = array();
+    foreach($array as $coords) {
+      foreach($coords as $coord) {
+        if(isset($coord[0]) && isset($coord[1])) {
+          $rx = deg2rad($coord[1]);
+          $ry = deg2rad($coord[0]);
+          $x[] = cos($ry)*cos($rx);
+          $y[] = cos($ry)*sin($rx);
+          $z[] = sin($ry);
+        }
+      }
+    }
+
+    $X = array_sum($x)/count($x);
+    $Y = array_sum($y)/count($y);
+    $Z = array_sum($z)/count($z);
+
+    return array(rad2deg(atan2($Y,$X)), rad2deg(atan2($Z, sqrt(pow($X,2) + pow($Y,2)))));
   }
 
 }

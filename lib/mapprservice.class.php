@@ -809,7 +809,7 @@ class MAPPR {
   * Determine max extent possible
   * @return obj
   */
-  private function get_max_extent() {
+  public function get_max_extent() {
     $max_extent = ms_newRectObj();
     $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
     if($this->projection != $this->default_projection) {

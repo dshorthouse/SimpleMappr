@@ -58,6 +58,9 @@ USERSESSION::select_language();
     <dt>outlinecolor</dt>
     <dd><?php echo ("comma-separated RGB colors for halo around all solid markers"); ?> <span class="api-example"><em>e.g.</em> outlinecolor=40,40,40</span></dd>
 
+    <dt>zoom</dt>
+    <dd><?php echo ("integer from 1 to 10, centered on the geographic midpoint of all coordinates"); ?> <span class="api-example"><em>e.g.</em> zoom=8</span></dd>
+
     <dt>bbox</dt>
     <dd><?php echo sprintf(_("comma-separated bounding box in decimal degrees %s"), "(minx, miny, maxx, maxy)"); ?> <span class="api-example"><em>e.g.</em> bbox=-130,40,-60,50</span></dd>
 
