@@ -168,7 +168,13 @@ class MAPPREMBED extends MAPPR {
 
         $point_key = 0;
         foreach ($row as $loc) {
-          $coord_array = preg_split("/[\s,;]+/",$loc);
+          if(preg_match('/[NSEW]/', $loc) != 0) {
+            $coord = preg_split("/[,;]/", $loc);
+            $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+            $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+          } else {
+            $coord_array = preg_split("/[\s,;]+/",$loc);
+          }
           $coord = new stdClass();
           $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
           $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
