@@ -575,7 +575,7 @@ msgstr "Mises à jour"
 
 #: .tabs/about.php:11
 msgid "January 2, 2012"
-msgstr "1 janvier, 2012"
+msgstr "2 janvier, 2012"
 
 #: .tabs/about.php:11
 msgid "Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."

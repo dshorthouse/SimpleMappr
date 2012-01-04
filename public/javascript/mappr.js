@@ -1333,8 +1333,6 @@ $(function () {
 
     $("#tabs").tabs('select',0);
 
-    self.toggleUndo();
-    self.toggleRedo();
     self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
@@ -1346,6 +1344,8 @@ $(function () {
         self.showMap(data);
         self.bindStorage();
         self.activateEmbed(id);
+        self.toggleUndo();
+        self.toggleRedo();
       }
     });
   };
