@@ -318,9 +318,14 @@ function set_up() {
                 ->get_output();
     exit();
   } else {
+    if(isset($_GET['lang']) && $_GET['lang'] == 'en') {
+      header('Location: http://' . $_SERVER['HTTP_HOST'] . '/?lang=en_US');
+      exit();
+    }
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-      header('Location: http://www.simplemappr.net/');
+      header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
+      exit();
     } else {
       require_once('lib/mapprservice.usersession.class.php');
       require_once('lib/mapprservice.header.class.php');
