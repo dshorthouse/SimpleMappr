@@ -1,32 +1,6 @@
 <?php
-require_once('../config/conf.php');
-require_once('../config/conf.db.php');
-require_once('../lib/db.class.php');
 require_once('../lib/mapprservice.usersession.class.php');
 USERSESSION::select_language();
-
-$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-$sql = "SELECT * FROM stateprovinces ORDER BY country";
-$rows = $db->query($sql);
-
-$output = "";
-
-if($db->affected_rows > 0) {
-  $i=0;
-  while ($record = $db->fetch_array($rows)) {
-    $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-    $output .= "<tr ".$class.">";
-    $output .= "<td>" . $record['country'] . "</td>";
-    $output .= "<td>" . $record['country_iso'] . "</td>";
-    $output .= "<td>" . $record['stateprovince'] . "</td>";
-    $output .= "<td>" . $record['stateprovince_code'] . "</td>";
-    $example = ($record['stateprovince_code']) ? $record['country_iso'] . "[" . $record['stateprovince_code'] . "]" : "";
-    $output .= "<td>" . $example . "</td>";
-    $output .= "</tr>" . "\n";
-    $i++;
-  }
-}
-
 ?>
 <style type="text/css">
 #map-help h3{font-size:0.75em;}
@@ -37,19 +11,26 @@ if($db->affected_rows > 0) {
 #map-help dt,#map-help dd{line-height:20px;}
 #example-data{height:220px;}
 #example-data img{vertical-align:middle;margin-right:20px;}
-#map-help table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
-#map-help thead tr{height:1.75em;}
-#map-help thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
-#map-help td.title{width:35%;padding-left:20px;}
-#map-help td.code{width:45px;}
-#map-help td.example{width:60px;}
-#map-help tr{border:1px solid #aaa;}
-#map-help tr.odd{background:none repeat scroll 0 0 #fff;}
+#country-codes{position:relative;width:200px;}
+#country-codes .mapper-loading-message{left:5%;}
 </style>
+<script type="text/javascript" src="../public/javascript/jquery.waypoints.min.js"></script>
 <script type="text/javascript">
-$("#filter-countries")
-  .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
-  .keypress(function(event) { if (event.which === 13) { return false; }
+$(function () {
+  $('#country-codes').html($('#mapper-message-codes').html());
+  $('#map-help').waypoint(function() {
+    if($('#country-codes .mapper-loading-message').length > 0) {
+      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + Mappr.getLanguage(), function(data) {
+        $('#country-codes').css('width', '100%').html(data);
+        $("#filter-countries")
+          .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
+          .keypress(function(event) { if (event.which === 13) { return false; }
+        });
+      }, 'html');
+    } else {
+      $('#country-codes').css('width', '100%');
+    }
+  });
 });
 </script>
 <!-- help tab -->
@@ -185,23 +166,6 @@ $("#filter-countries")
 
     <p><?php echo _("Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."); ?></p>
 
-    <table id="countrycodes">
-      <thead>
-        <tr>
-          <td class="title"><?php echo _("Country"); ?>
-            <input id="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />
-          </td>
-          <td class="code">ISO</td>
-          <td class="title"><?php echo _("State/Province"); ?></td>
-          <td class="code"><?php echo _("Code"); ?></td>
-          <td class="example"><?php echo _("Example"); ?></td>
-        </tr>
-      </thead>
-      <tbody>
-      <?php
-        echo $output;
-      ?>
-      </tbody>
-    </table>
+    <div id="country-codes"></div>
 
 </div>

@@ -417,6 +417,14 @@ msgstr "Etes-vous sûr de vouloir supprimer"
 msgid "Example Coordinates"
 msgstr "exemple des coordonnées"
 
+#: .index.php:282
+msgid "State/Province Codes"
+msgstr "Codes des États/Province"
+
+#: .index.php:282
+msgid "Loading..."
+msgstr "En train de charger..."
+
 #: .index.php:276
 #: .index.php:281
 msgid "Additional parameters"
@@ -707,7 +715,7 @@ msgstr "18 octobre, 2011"
 
 #: .tabs/about.php:24
 msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
-msgstr "Améliorations: section d'étiquette dédiée au paramètres; frontières de l'Etat/Province épaissi à différencier des rivières et des contours du lac, les lacs se remplit en moins fort pour accueillir les étiquettes."
+msgstr "Améliorations: section d'étiquette dédiée au paramètres; frontières de l'État/Province épaissi à différencier des rivières et des contours du lac, les lacs se remplit en moins fort pour accueillir les étiquettes."
 
 #: .tabs/about.php:25
 msgid "October 6, 2011"

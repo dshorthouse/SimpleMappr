@@ -8,8 +8,8 @@ Disallow: /error/
 Disallow: /i18n/
 Disallow: /lib/
 Disallow: /logout/
-Disallow: /public/
 Disallow: /places/
+Disallow: /public/
 Disallow: /query/
 Disallow: /session/
 Disallow: /tabs/

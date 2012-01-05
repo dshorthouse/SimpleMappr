@@ -2062,7 +2062,7 @@ $(function () {
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
 
-  Mappr.showExamples = function() {
+  Mappr.showExamples = function () {
     var message = '<img src="public/images/help-data.png" alt="" />';
 
     $('#mapper-message-help').html(message).dialog({
@@ -2083,6 +2083,37 @@ $(function () {
         }
       ]
     }).show();
+  };
+
+  Mappr.showCodes = function () {
+    $('#mapper-message-codes').dialog({
+      height        : (450).toString(),
+      width         : (850).toString(),
+      autoOpen      : true,
+      modal         : true,
+      closeOnEscape : false,
+      draggable     : true,
+      resizable     : false,
+      buttons       : [
+        {
+          "text"  : "OK",
+          "class" : "positive",
+          "click" : function() {
+            $(this).dialog("destroy");
+          }
+        }
+      ]
+    }).show();
+
+    if($('#mapper-message-codes .mapper-loading-message').length > 0) {
+      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function(data) {
+        $('#mapper-message-codes').html(data);
+        $("#filter-countries")
+          .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
+          .keypress(function(event) { if (event.which === 13) { return false; }
+        });
+      }, 'html');
+    }
   };
 
   Mappr.performRotation = function (element) {
@@ -2170,12 +2201,12 @@ $(function () {
     $('#initial-message').hide();
     $('#header>div').show();
     this.bindTabs();
-    $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
-    $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
-    $('a.show-codes').click(function(e) { e.preventDefault(); self.tabSelector(parseInt($(this).attr("data-tab"), 10)); });
-    $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
+    $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
+    $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
+    $('a.show-codes').click(function(e) { e.preventDefault(); self.showCodes(); });
+    $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
     $(".tooltip").tipsy({gravity : 's'});
     this.bindStorage();
     this.bindHotkeys();
