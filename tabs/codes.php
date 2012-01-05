@@ -28,21 +28,21 @@ if($db->affected_rows > 0) {
 }
 ?>
 <style type="text/css">
-#countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
-#countrycodes thead tr{height:1.75em;}
-#countrycodes thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
-#countrycodes td.title{width:35%;}
-#countrycodes td.code{width:60px;}
-#countrycodes td.example{width:60px;}
-#countrycodes tr{border:1px solid #aaa;}
-#countrycodes tr.odd{background:none repeat scroll 0 0 #fff;}
+.countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
+.countrycodes thead tr{height:1.75em;}
+.countrycodes thead td{background-color:#e9e9e9;font-weight:normal;text-align:left;}
+.countrycodes td.title{width:35%;}
+.countrycodes td.code{width:60px;}
+.countrycodes td.example{width:60px;}
+.countrycodes tr{border:1px solid #aaa;}
+.countrycodes tr.odd{background:none repeat scroll 0 0 #fff;}
 </style>
 
-    <table id="countrycodes">
+    <table class="countrycodes">
       <thead>
         <tr>
           <td class="title"><?php echo _("Country"); ?>
-            <input id="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />
+            <input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />
           </td>
           <td class="code">ISO</td>
           <td class="title"><?php echo _("State/Province"); ?></td>

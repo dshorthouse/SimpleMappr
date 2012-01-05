@@ -21,9 +21,8 @@ $(function () {
   $('#map-help').waypoint(function() {
     if($('#country-codes .mapper-loading-message').length > 0) {
       $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + Mappr.getLanguage(), function(data) {
-        $('#country-codes').css('width', '100%').html(data);
-        $("#filter-countries")
-          .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
+        $('#country-codes').css('width', '100%').html(data).find('.filter-countries')
+          .keyup(function() { $.uiTableFilter( $('#country-codes .countrycodes'), this.value ); })
           .keypress(function(event) { if (event.which === 13) { return false; }
         });
       }, 'html');

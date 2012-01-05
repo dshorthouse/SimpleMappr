@@ -2107,9 +2107,8 @@ $(function () {
 
     if($('#mapper-message-codes .mapper-loading-message').length > 0) {
       $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function(data) {
-        $('#mapper-message-codes').html(data);
-        $("#filter-countries")
-          .keyup(function() { $.uiTableFilter( $('#countrycodes'), this.value ); })
+        $('#mapper-message-codes').html(data).find('.filter-countries')
+          .keyup(function() { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
           .keypress(function(event) { if (event.which === 13) { return false; }
         });
       }, 'html');
