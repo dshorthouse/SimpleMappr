@@ -5,7 +5,7 @@ header('Content-Type: text/html; charset=utf-8');
 $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $header[1][$language]['canonical']; ?>">
+<html lang="<?php echo $header[1][$language]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
