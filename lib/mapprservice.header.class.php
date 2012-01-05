@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **************************************************************************/
 
 require_once(dirname(dirname(__FILE__)).'/config/conf.php');
+require_once('mapprservice.usersession.class.php');
 require_once('jsmin.php');
 require_once('cssmin.php');
 
@@ -226,13 +227,13 @@ class HEADER {
   * Create Janrain inline javascript
   */
   private function getJanrain() {
-    $lang = isset($_GET["lang"]) ? $_GET["lang"] : "";
-    $lang_q = isset($_GET["lang"]) ? "?lang=" . $_GET["lang"] : "";
+    $lang = isset($_GET["lang"]) ? $_GET["lang"] : "en_US";
+    $lang_q = isset($_GET["lang"]) ? "?lang=" . $lang : "";
     $janrain  = "<script type=\"text/javascript\">" . "\n";
     $janrain .= "(function(w,d) {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
-w.janrain.settings.language = '" . $lang . "';
+w.janrain.settings.language = '" . USERSESSION::$accepted_languages[$lang]['canonical'] . "';
 w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $lang_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }

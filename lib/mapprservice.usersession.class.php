@@ -34,16 +34,19 @@ require_once(MAPPR_DIRECTORY.'/lib/db.class.php');
 class USERSESSION {
 
   public static $accepted_languages = array(
-    'en' => array(
-      'native' => 'English',
-      'code'   => 'en_US.UTF-8'),
-    'fr' => array(
-      'native' => 'Français',
-      'code'   => 'fr_FR.UTF-8'),
+    'en_US' => array(
+      'canonical' => 'en',
+         'native' => 'English',
+         'code'   => 'en_US.UTF-8'),
+    'fr_FR' => array(
+      'canonical' => 'fr',
+         'native' => 'Français',
+         'code'   => 'fr_FR.UTF-8'),
 /*
-    'es' => array(
-      'native' => 'Español',
-      'code'   => 'es_ES.UTF-8')
+    'es_ES' => array(
+       'canonical' => 'es',
+          'native' => 'Español',
+          'code'   => 'es_ES.UTF-8')
 */
   );
 
@@ -87,17 +90,17 @@ class USERSESSION {
       exit();
     }
 
-    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en");
+    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en_US");
 
-    if($cookie["lang"] != "en" && !isset($_GET["lang"])) {
+    if($cookie["lang"] != "en_US" && !isset($_GET["lang"])) {
       self::redirect("http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
-    } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en") {
+    } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en_US") {
       if(isset($_COOKIE["simplemappr"])) {
-        $cookie["lang"] = "en";
+        $cookie["lang"] = "en_US";
         setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
       }
       self::redirect("http://".$_SERVER["SERVER_NAME"]);
-    } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en") {
+    } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en_US") {
       $cookie["lang"] = $_GET["lang"];
     }
 
@@ -123,7 +126,7 @@ class USERSESSION {
 
   public static function make_lang_param($lang = "") {
     $param = "";
-    if($lang && $lang != "en") { $param = "/?lang=" . $lang; }
+    if($lang && $lang != "en_US") { $param = "/?lang=" . $lang; }
     return $param;
   }
 
@@ -134,14 +137,14 @@ class USERSESSION {
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
-      return $_REQUEST["lang"];
+      return self::$accepted_languages[$_REQUEST["lang"]];
     } else {
-      putenv('LC_ALL='.self::$accepted_languages['en']['code']);
-      setlocale(LC_ALL, self::$accepted_languages['en']['code']);
+      putenv('LC_ALL='.self::$accepted_languages['en_US']['code']);
+      setlocale(LC_ALL, self::$accepted_languages['en_US']['code']);
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
-      return 'en';
+      return self::$accepted_languages['en_US'];
     }
   }
 
@@ -157,7 +160,7 @@ class USERSESSION {
   }
 
   private function get_language() {
-    $this->_lang = $this->load_param('lang', 'en');
+    $this->_lang = $this->load_param('lang', 'en_US');
     $this->_lang_code = (array_key_exists($this->_lang, self::$accepted_languages)) ? self::$accepted_languages[$this->_lang]['code'] : 'en_US.UTF-8';
     return $this;
   }

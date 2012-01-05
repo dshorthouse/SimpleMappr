@@ -1612,7 +1612,7 @@ $(function () {
   Mappr.getLanguage = function() {
     var param = "", lang = this.getParameterByName("lang");
 
-    if(lang === "fr" || lang === "es") {
+    if(lang === "fr_FR" || lang === "es_ES") {
       param = "?lang=" + lang;
     }
     return param;

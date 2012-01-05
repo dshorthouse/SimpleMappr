@@ -2,15 +2,21 @@
 require_once('config/conf.php');
 $header = set_up();
 header('Content-Type: text/html; charset=utf-8');
-$language = isset($_GET["lang"]) ? $_GET["lang"] : 'en';
+$language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $language; ?>">
+<html lang="<?php echo $header[1][$language]['canonical']; ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
+<meta property="og:title" content="SimpleMappr" />
+<meta property="og:description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
+<meta property="og:locale" content="<?php echo $language; ?>">
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
+<meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo.png" />
 <title>SimpleMappr</title>
 <?php $header[0]->getCSSHeader(); ?>
 </head>
