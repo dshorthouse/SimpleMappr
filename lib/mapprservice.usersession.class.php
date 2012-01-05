@@ -36,15 +36,18 @@ class USERSESSION {
   public static $accepted_languages = array(
     'en_US' => array(
       'canonical' => 'en',
+         'locale' => 'en_US',
          'native' => 'English',
          'code'   => 'en_US.UTF-8'),
     'fr_FR' => array(
       'canonical' => 'fr',
+         'locale' => 'fr_FR',
          'native' => 'Français',
          'code'   => 'fr_FR.UTF-8'),
 /*
     'es_ES' => array(
        'canonical' => 'es',
+          'locale' => 'es_ES',
           'native' => 'Español',
           'code'   => 'es_ES.UTF-8')
 */

@@ -227,7 +227,7 @@ class HEADER {
   * Create Janrain inline javascript
   */
   private function getJanrain() {
-    $lang = isset($_GET["lang"]) ? $_GET["lang"] : "en_US";
+    $lang = $this->getLanguage();
     $lang_q = isset($_GET["lang"]) ? "?lang=" . $lang : "";
     $janrain  = "<script type=\"text/javascript\">" . "\n";
     $janrain .= "(function(w,d) {
@@ -256,6 +256,10 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
       $analytics .= "</script>" . "\n";
     }
     return $analytics;
+  }
+
+  private function getLanguage() {
+    return isset($_GET["lang"]) ? $_GET["lang"] : "en_US";
   }
 
 }
