@@ -9,6 +9,8 @@ USERSESSION::select_language();
 #map-about p.citation{text-indent:-2em;padding-left:2em;}
 #map-about dt.update{font-weight:bold;}
 #map-about dd{margin:0 0 10px 25px;}
+#twitter_div{float:right;margin-right:25px;}
+.twtr-tweet-text{font-size:1.5em;}
 </style>
 <div id="map-about">
 <div id="general-about" class="panel ui-corner-all">
@@ -17,6 +19,7 @@ USERSESSION::select_language();
 <div class="header"><h2><?php echo _("Citing"); ?></h2></div>
 <p>Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
+<div id="twitter_div"></div>
 <dl>
 <dt class="update"><?php echo _("January 2, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."); ?></dd>
 <dt class="update"><?php echo _("January 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."); ?></dd>
@@ -52,3 +55,35 @@ USERSESSION::select_language();
 <div class="header"><h2><?php echo _("Acknowledgments"); ?></h2></div>
 <p><?php echo sprintf(_("Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."), "<a href=\"http://www.naturalearthdata.com/\" target=\"_blank\">http://www.naturalearthdata.com/</a>", "<a href=\"http://mapserver.org\" target=\"_blank\">http://mapserver.org</a>"); ?></p>
 </div>
+<script type="text/javascript">
+$(function() {
+  $.getScript('http://widgets.twimg.com/j/2/widget.js', function() {
+      twitter = new TWTR.Widget({
+          version: 2,
+             type: 'profile',
+              rpp: 4,
+         interval: 30000,
+            width: 250,
+           height: 300,
+               id: 'twitter_div',
+            theme: {
+              shell: {
+                background: '#e9e9e9',
+                     color: '#222222'
+              },
+              tweets: {
+                background: '#ffffff',
+                     color: '#222222',
+                     links: '#ff0000'
+                }
+              },
+              features: {
+                scrollbar: true,
+                     loop: false,
+                     live: true,
+                 behavior: 'all'
+              }
+      }).render().setUser('SimpleMappr').start();
+  });
+});
+</script>
