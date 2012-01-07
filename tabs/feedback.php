@@ -5,7 +5,6 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 ?>
 <style type="text/css">
 .fb_iframe_widget,.twitter-share-button{vertical-align:top;}
-.dsq-avatar{top:0 !important;right:7em !important;left:none !important;}
 </style>
 <div id="map-feedback">
 <div id="general-feedback" class="panel ui-corner-all">

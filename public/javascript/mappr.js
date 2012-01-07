@@ -248,6 +248,8 @@ $(function () {
     var deltaX = 0,
         deltaY = 0,
         bbox   = $('#bbox_map').val(),
+        width  = parseFloat($('#mapOutputImage').width()),
+        height = parseFloat($('#mapOutputImage').height()),
         geo    = {};
 
     if(bbox === "") {
@@ -258,8 +260,8 @@ $(function () {
     deltaX = Math.abs(parseFloat($.trim(bbox[2])) - parseFloat($.trim(bbox[0])));
     deltaY = Math.abs(parseFloat($.trim(bbox[3])) - parseFloat($.trim(bbox[1])));
 
-    geo.x = this.roundNumber(parseFloat(bbox[0]) + (parseFloat(point.x)*deltaX)/parseFloat($('#mapOutputImage').width()),2);
-    geo.y = this.roundNumber(parseFloat(bbox[1]) + (parseFloat($('#mapOutputImage').height() - parseFloat(point.y))*deltaY)/parseFloat($('#mapOutputImage').height()),2);
+    geo.x = this.roundNumber(parseFloat(bbox[0]) + (parseFloat(point.x)*deltaX)/width,2);
+    geo.y = this.roundNumber(parseFloat(bbox[1]) + (parseFloat(height - parseFloat(point.y))*deltaY)/height,2);
 
     return geo;
   };
