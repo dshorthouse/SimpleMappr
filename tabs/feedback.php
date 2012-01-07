@@ -13,7 +13,7 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 <div id="social">
 <fb:like href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/" width="120" data-layout="button_count" data-show-faces="false"></fb:like>
 <g:plusone size="medium" annotation="inline" width="120"></g:plusone>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>" data-via="SimpleMappr"><?php echo $tweet; ?></a>
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="@SimpleMappr" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>"><?php echo $tweet; ?></a>
 </div>
 <p class="ui-helper-clearfix">
 <?php echo _("Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."); ?>
