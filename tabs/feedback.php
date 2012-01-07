@@ -5,9 +5,8 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 ?>
 <style type="text/css">
 .fb_iframe_widget,.twitter-share-button{margin-bottom:5px;}
-#social{border-left:1px solid #ccc;width:150px;float:right;padding-left:10px;}
-.ui-helper-clearfix{margin-left:165px;}
-.panel p{margin:0.5em 13em 0 0;padding:0;}
+#social{border-left:1px solid #ccc;width:100px;float:right;padding-left:10px;}
+.panel p{margin-left:0;margin-right:13em;}
 </style>
 <div id="map-feedback">
 <div id="general-feedback" class="panel ui-corner-all">
