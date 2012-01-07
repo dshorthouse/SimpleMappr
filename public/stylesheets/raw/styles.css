@@ -339,7 +339,7 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;}
 .tipsy{padding:5px;font-size:10px;opacity:0.8;filter:alpha(opacity=80);background-repeat:no-repeat;background-image:url("../../images/tipsy.png");}
 .tipsy-inner{border-top:1px solid #f6f6f6;border-left:1px solid #f6f6f6;border-right:1px solid #f6f6f6;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;padding:5px 8px 4px 8px;background-color:black;color:white;max-width:200px;text-align:center;}
 .tipsy-south{background-position:bottom center;}
-#dsq-reply .dsq-avatar img{position:absolute;top:3.5em;}
+#dsq-reply .dsq-avatar img{position:absolute;}
 }
 @media print{
 html, body{border:none;}
