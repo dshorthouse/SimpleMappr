@@ -9,7 +9,10 @@ USERSESSION::select_language();
 #map-about p.citation{text-indent:-2em;padding-left:2em;}
 #map-about dt.update{font-weight:bold;}
 #map-about dd{margin:0 0 10px 25px;}
-#twitter_div{float:right;margin-right:25px;}
+#recent-updates{float:left;width:65%;}
+#live-updates{margin-left:65%;width:300px;padding:0.5em;}
+#live-updates .header{width:85%;}
+#twitter_div{margin-top:1em;}
 .twtr-tweet-text{font-size:1.5em;}
 </style>
 <div id="map-about">
@@ -18,8 +21,9 @@ USERSESSION::select_language();
 </div>
 <div class="header"><h2><?php echo _("Citing"); ?></h2></div>
 <p>Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. Retrieved from http://www.simplemappr.net. Accessed <?php echo date("Y-m-d"); ?>.</p>
+<div class="ui-helper-clearfix">
+<div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
-<div id="twitter_div"></div>
 <dl>
 <dt class="update"><?php echo _("January 2, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."); ?></dd>
 <dt class="update"><?php echo _("January 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."); ?></dd>
@@ -32,16 +36,13 @@ USERSESSION::select_language();
 <dt class="update"><?php echo _("November 17, 2011"); ?></dt><dd><?php echo _("Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."); ?></dd>
 <dt class="update"><?php echo _("November 16, 2011"); ?></dt><dd><?php echo _("Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."); ?></dd>
 <dt class="update"><?php echo _("November 15, 2011"); ?></dt><dd><?php echo _("Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."); ?></dd>
-<dt class="update"><?php echo _("November 4, 2011"); ?></dt><dd><?php echo _("Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."); ?></dd>
-<dt class="update"><?php echo _("October 24, 2011"); ?></dt><dd><?php echo _("Bug fixes: corrected mechanism to draw map borders to accommodate rotation."); ?></dd>
-<dt class="update"><?php echo _("October 23, 2011"); ?></dt><dd><?php echo _("Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."); ?></dd>
-<dt class="update"><?php echo _("October 20, 2011"); ?></dt><dd><?php echo _("Improvements: added a Country label option; scale bar is now always present in preview but optional for download."); ?></dd>
-<dt class="update"><?php echo _("October 19, 2011"); ?></dt><dd><?php echo _("Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."); ?></dd>
-<dt class="update"><?php echo _("October 18, 2011"); ?></dt><dd><?php echo _("Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."); ?></dd>
-<dt class="update"><?php echo _("October 6, 2011"); ?></dt><dd><?php echo _("Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."); ?></dd>
-<dt class="update"><?php echo _("October 2, 2011"); ?></dt><dd><?php echo _("Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."); ?></dd>
-<dt class="update"><?php echo _("October 1, 2011"); ?></dt><dd><?php echo _("Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."); ?></dd>
 </dl>
+</div>
+<div id="live-updates">
+<div class="header"><h2><?php echo _("Live Updates"); ?></h2></div>
+<div id="twitter_div"></div>
+</div>
+</div>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
 <p class="citation">Borrero, Francisco J. and Abraham S.H. Breure. 2011. The Amphibulimidae (Mollusca: Gastropoda: Orthalicoidea) from Colombia and adjacent areas. <em>Zootaxa</em> 3054: 1-59. <a href="http://www.mapress.com/zootaxa/list/2011/3054.html">permalink</a>.
 <p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a></p>
@@ -74,7 +75,7 @@ $(function() {
               tweets: {
                 background: '#ffffff',
                      color: '#222222',
-                     links: '#ff0000'
+                     links: '#555555'
                 }
               },
               features: {
