@@ -581,6 +581,10 @@ msgstr "Citer"
 msgid "Recent Updates"
 msgstr "Mises à jour"
 
+#: .tabs/aboyt.php:11
+msgid "Live Updates"
+msgstr "Mises à jour direct"
+
 #: .tabs/about.php:11
 msgid "January 2, 2012"
 msgstr "2 janvier, 2012"
