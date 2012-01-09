@@ -144,7 +144,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #badRecords{font-size:0.75em;}
 #mapOutput{position:relative;}
 #mapScale{text-align:right;}
-#mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:430px;}
+#mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:410px;}
 #mapToolsCollapse{position:absolute;top:0;width:16px;z-index:10;padding:5px;}
 #mapToolsCollapse a{display:block;background-color:transparent;background-repeat:no-repeat;width:16px;height:16px;}
 .mapTools-default{right:-21px;}
