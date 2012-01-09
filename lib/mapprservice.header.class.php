@@ -89,9 +89,6 @@ class HEADER {
   * Add javascript file(s) from remote CDN
   */
   private function remote_js_files() {
-    if(!isset($_SESSION['simplemappr'])) {
-      $this->addJS("janrain", "http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js");
-    }
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
         if ($value == 'public/javascript/jquery-1.7.1.min.js') {
@@ -99,7 +96,6 @@ class HEADER {
         }
       }
       $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
-      $this->addJS("ga", "http://google-analytics.com/ga.js");
     }
     return $this;
   }
@@ -127,10 +123,14 @@ class HEADER {
       } else {
         $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
       }
+      $this->addJS("ga", "http://google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
         $this->addJS($key, $js_file);
       }
+    }
+    if(!isset($_SESSION['simplemappr'])) {
+      $this->addJS("janrain", "http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js");
     }
     return $this;
   }
@@ -209,7 +209,8 @@ class HEADER {
     }
     $header .= ");" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-    $header .= "head.ready(function() { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
+    $header .= "head.ready(\"".$namespace."\", function() { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
     $header .= "</script>" . "\n";
     echo $header;
   }
