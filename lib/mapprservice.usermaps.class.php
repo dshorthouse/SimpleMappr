@@ -95,6 +95,7 @@ class USERMAPS {
           'title' => $_POST['save']['title'],
           'map' => serialize($_POST),
           'created' => time(),
+          'updated' => time()
         );
 
         //see if user's map by same title already exists
@@ -108,6 +109,7 @@ class USERMAPS {
         $record = $this->_db->query_first($sql);
 
         if($record['mid']) {
+          unset($data['created']);
           $this->_db->query_update('maps', $data, 'mid='.$record['mid']);
           $mid = $record['mid'];
         } else {
@@ -141,6 +143,7 @@ class USERMAPS {
         m.mid,
         m.title,
         m.created,
+        m.updated,
         u.email,
         u.uid,
         u.username 
@@ -158,6 +161,8 @@ class USERMAPS {
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
       $output .= '<td class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></td>';
+      $output .= '<td class="center-align">'._("Created").'</td>';
+      $output .= '<td class="center-align">'._("Updated").'</td>';
       $output .= '<td class="actions">'._("Actions");
       if($this->_uid == 1) {
         $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
@@ -171,9 +176,12 @@ class USERMAPS {
         $class = ($i % 2) ? 'class="even"' : 'class="odd"';
         $output .= '<tr '.$class.'>';
         $output .= '<td class="title">';
-        $output .= ($this->_uid == 1) ? $record['username'].' ('.gmdate("M d, Y", $record['created']).'): <em>' : '';
+        $output .= ($this->_uid == 1) ? $record['username'] . ': ' : '';
         $output .= stripslashes($record['title']);
-        $output .= ($this->_uid == 1) ? '</em>' : '';
+        $output .= '</td>';
+        $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
+        $output .= '<td class="center-align">';
+        $output .= ($record['updated']) ? gmdate("M d, Y", $record['updated']) : ' - ';
         $output .= '</td>';
         $output .= '<td class="actions">';
         $output .= '<a class="sprites-before map-load" data-mid="'.$record['mid'].'" href="#">'._("Load").'</a>';

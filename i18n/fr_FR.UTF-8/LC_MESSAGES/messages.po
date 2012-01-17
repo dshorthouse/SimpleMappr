@@ -346,6 +346,14 @@ msgstr "Données hors de portée"
 msgid "Title"
 msgstr "Titre"
 
+#: .lib/mapprservice.usermaps.class.php:164
+msgid "Created"
+msgstr "Crée"
+
+#: .lib/mapprservice.usermaps.class.php:165
+msgid "Updated"
+msgstr "Mise à jour"
+
 #: .index.php:202
 msgid "map will be cropped"
 msgstr "la carte sera recadrée"
