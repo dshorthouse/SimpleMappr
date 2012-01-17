@@ -7,7 +7,7 @@ textarea{resize:none;padding:0;}
 .sprites-before:before, .ui-dialog-titlebar .ui-dialog-title:before{background-image:url("../../images/sprites.png");content:"";float:left;height:16px;width:16px;margin:0 0.2em;}
 .sprites-after:after{background-image:url("../../images/sprites.png");content:"";float:right;height:16px;width:16px;margin:0.45em 0.2em;}
 .hidden-message{display:none;}
-#header,#tabs{min-width:1024px;}
+#header,#tabs{min-width:1115px;}
 #header{color:#bababa;font-size:0.8em;position:relative;z-index:100;top:0;height:2.5em;line-height:2.5em;width:100%;box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);-webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color: #333;background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333), to(#111));background-image: -moz-linear-gradient(#333, #111); /* FF3.6 */}
 #header a{color:#bababa;text-decoration:none;}
 #header a:hover{color:#fff;}
@@ -170,7 +170,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .usermaps-loading,.userdata-loading{position:relative;}
 #janrainEngageEmbed {margin-top:10px;}
 #janrainEngageEmbed div{margin:0px;}
-#map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
+#map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:95%;color:#555;}
 #map-mymaps thead tr{height:1.75em;}
 #map-mymaps thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-mymaps .left-align{text-align:left;padding-left:20px;}
@@ -186,7 +186,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-mymaps a.map-load:before{background-position:-200px -284px;margin:0.2em;}
 #map-mymaps a.map-load:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-mymaps input{vertical-align:top;}
-#map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:90%;color:#555;}
+#map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:95%;color:#555;}
 #map-users thead tr{height:1.75em;}
 #map-users thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-users .left-align{text-align:left;padding-left:20px;}
