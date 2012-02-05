@@ -2191,9 +2191,16 @@ $(function () {
   };
 
   Mappr.bindTabs = function () {
+    var config = {
+      cache : true,
+      load  : function(event, ui){
+        event = null;
+        $(ui.tab).data("cache.tabs",($(ui.panel).html() == "") ? false : true);
+      }
+    };
     //odd tabs handling to fix IE issues
     $('#mapTools').tabs({selected: 0});
-    $("#tabs").tabs({cache : false}).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+    $("#tabs").tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
   };
 
   Mappr.init = function () {
