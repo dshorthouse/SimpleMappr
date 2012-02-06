@@ -136,31 +136,31 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 <div id="mapOptions">
 <h2><?php echo _("Layers"); ?></h2>
 <ul class="columns ui-helper-clearfix">
-<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> <?php echo _("State/Provinces"); ?></li>
-<li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> <?php echo _("lakes (outline)"); ?></li>
-<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> <?php echo _("lakes (greyscale)"); ?></li>
-<li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <?php echo _("rivers"); ?></li>
-<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> <?php echo _("relief"); ?></li>
-<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> <?php echo _("relief (greyscale)"); ?></li>
+<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> <label for="stateprovince"><?php echo _("State/Provinces"); ?></label></li>
+<li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> <label for="lakesOutline"><?php echo _("lakes (outline)"); ?></label></li>
+<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> <label for="lakes"><?php echo _("lakes (greyscale)"); ?></label></li>
+<li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <label for="rivers"><?php echo _("rivers"); ?></label></li>
+<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> <label for="relief"><?php echo _("relief"); ?></label></li>
+<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> <label for="reliefgrey"><?php echo _("relief (greyscale)"); ?></label></li>
 </ul>
 <h2><?php echo _("Labels"); ?></h2>
 <ul class="columns ui-helper-clearfix">
-<li><input type="checkbox" id="countrynames" class="layeropt" name="layers[countrynames]" /> <?php echo _("Countries"); ?></li>
-<li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> <?php echo _("State/Provinces"); ?></li>
-<li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> <?php echo _("lakes"); ?></li>
-<li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> <?php echo _("rivers"); ?></li>
-<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> <?php echo _("places"); ?></li>
-<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> <?php echo _("physical"); ?></li>
-<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> <?php echo _("marine"); ?></li>
+<li><input type="checkbox" id="countrynames" class="layeropt" name="layers[countrynames]" /> <label for="countrynames"><?php echo _("Countries"); ?></label></li>
+<li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> <label for="stateprovincenames"><?php echo _("State/Provinces"); ?></label></li>
+<li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> <label for="lakenames"><?php echo _("lakes"); ?></label></li>
+<li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> <label for="rivernames"><?php echo _("rivers"); ?></label></li>
+<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> <label for="placenames"><?php echo _("places"); ?></label></li>
+<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> <label for="physicalLabels"><?php echo _("physical"); ?></label></li>
+<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> <label for="marineLabels"><?php echo _("marine"); ?></label></li>
 </ul>
 <h2><?php echo _("Options"); ?></h2>
 <ul>
-<li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> <?php echo _("graticules (grid)"); ?>
+<li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> <label for="graticules"><?php echo _("graticules (grid)"); ?></label>
 <div id="graticules-selection">
-<input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> <?php echo _("fixed"); ?>
-<input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> 5<sup>o</sup>
-<input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> 10<sup>o</sup>
-<input type="checkbox" id="gridlabel" name="gridlabel" /> <?php echo _("hide labels"); ?>
+<input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> <label for="gridspace"><?php echo _("fixed"); ?></label>
+<input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> <label for="gridspace-5">5<sup>o</sup></label>
+<input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> <label for="gridspace-10">10<sup>o</sup></label>
+<input type="checkbox" id="gridlabel" name="gridlabel" /> <label for="gridlabel"><?php echo _("hide labels"); ?></label>
 </div>
 </li>
 </ul>
