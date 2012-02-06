@@ -41,18 +41,18 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
     fjs.parentNode.insertBefore(js, fjs);
   })(document, 'script', 'facebook-jssdk');
   (function(d, s, id) {
-    var js, fjs=d.getElementsByTagName(s)[0];
+    var js, tjs=d.getElementsByTagName(s)[0];
     if(d.getElementById(id)) { remove(id); }
     js=d.createElement(s); js.id=id;
     js.src="//platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js,fjs);
+    tjs.parentNode.insertBefore(js,tjs);
   })(document, 'script', 'twitter-wjs');
   (function(d, s, id) {
-    var js, pls=d.getElementsByTagName('script')[0];
+    var js, pjs=d.getElementsByTagName('script')[0];
     if(d.getElementById(id)) { remove(id); }
     js=d.createElement(s); js.id=id;
     js.src='https://apis.google.com/js/plusone.js';
-    pls.parentNode.insertBefore(js, pls);
+    pjs.parentNode.insertBefore(js, pjs);
   })(document, 'script', 'google-plus-1');
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=simplemappr">comments</a>.</noscript>
