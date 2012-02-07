@@ -197,7 +197,7 @@ class HEADER {
   /*
   * Create the javascript header
   */
-  public function getJSHeader() {
+  public function getJSFooter() {
     $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
     $header .= "head.js(";
@@ -215,12 +215,11 @@ class HEADER {
     echo $header;
   }
 
-  public function getJSFooter() {
-    $foot = "";
+  public function getJSVars() {
+    $foot = $this->getAnalytics();
     if(!isset($_SESSION['simplemappr'])) {
       $foot .= $this->getJanrain();
     }
-    $foot .= $this->getAnalytics();
     echo $foot;
   }
 
