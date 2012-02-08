@@ -215,7 +215,9 @@ class Kml {
 
         $point_key = 0;
         foreach ($row as $loc) {
+          $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
           if(preg_match('/[NSEW]/', $loc) != 0) {
+print_r($loc);
             $coord = preg_split("/[,;]/", $loc);
             $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
             $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
@@ -223,8 +225,8 @@ class Kml {
             $coord_array = preg_split("/[\s,;]+/",$loc);
           }
           $coord = new stdClass();
-          $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
-          $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
+          $coord->x = array_key_exists(1, $coord_array) ? $this->clean_coord($coord_array[1]) : "nil";
+          $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : "nil";
           if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
             $this->set_placemark($j, $point_key, "name", $title);
             $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
@@ -233,6 +235,10 @@ class Kml {
         }
       }
     }
+  }
+
+  private function clean_coord($coord) {
+    return preg_replace('/[^\d.-]/i', '', $coord);
   }
 
   /**

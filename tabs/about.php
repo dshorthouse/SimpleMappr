@@ -25,6 +25,7 @@ USERSESSION::select_language();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("February 8, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS now properly download."); ?></dd>
 <dt class="update"><?php echo _("January 2, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."); ?></dd>
 <dt class="update"><?php echo _("January 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."); ?></dd>
 <dt class="update"><?php echo _("December 21, 2011"); ?></dt><dd><?php echo _("Improvements: Settings panel may now be collapsed/expanded."); ?></dd>

@@ -594,6 +594,14 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "February 8, 2012"
+msgstr "8 février, 2012"
+
+#: .tabs/about.php
+msgid "Bug fixes: Map coordinates in DDMMSS now properly download."
+msgstr "Corrections: coordonées en DDMMSS permettent maintenant un téléchargement"
+
+#: .tabs/about.php:11
 msgid "January 2, 2012"
 msgstr "2 janvier, 2012"
 

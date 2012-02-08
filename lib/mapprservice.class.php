@@ -905,13 +905,7 @@ class MAPPR {
         $color = '';
 
         $title = ($this->coords[$j]['title']) ? $this->coords[$j]['title'] : '';
-        $size = 8;
-        if($this->coords[$j]['size']) {
-          $size = $this->coords[$j]['size'];
-        }
-        if($this->is_resize()) {
-          $size = ($this->coords[$j]['size']) ? $this->_download_factor*$this->coords[$j]['size'] : $this->_download_factor*8;
-        }
+        $size = ($this->coords[$j]['size']) ? $this->_download_factor*$this->coords[$j]['size'] : $this->_download_factor*8;
         $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
         $color = ($this->coords[$j]['color']) ? explode(" ",$this->coords[$j]['color']) : explode(" ","0 0 0");
         if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
@@ -949,7 +943,7 @@ class MAPPR {
 
           $row = explode("\n",$this->remove_empty_lines($data));  //split the lines that have data
           $points = array(); //create an array to hold unique locations
-      
+
           foreach ($row as $loc) {
             $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
             if(preg_match('/[NSEW]/', $loc) != 0) {
@@ -960,8 +954,8 @@ class MAPPR {
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
             }
             $coord = new stdClass();
-            $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
-            $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
+            $coord->x = array_key_exists(1, $coord_array) ? $this->clean_coord($coord_array[1]) : "nil";
+            $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : "nil";
             //only add point when data are good & a title
             if($this->check_coord($coord) && $title != "") {
               $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
@@ -979,6 +973,13 @@ class MAPPR {
         }
       }
     }
+  }
+
+  /**
+  * Clean extraneous materials in coordinate that should (in theory) be DD
+  */
+  public function clean_coord($coord) {
+    return preg_replace('/[^\d.-]/i', '', $coord);
   }
 
   /**

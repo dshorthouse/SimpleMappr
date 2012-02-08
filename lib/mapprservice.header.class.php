@@ -126,6 +126,7 @@ class HEADER {
       $this->addJS("ga", "http://google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
+        if($key == "mappr") { $js_file = str_replace(".min", "",$js_file); }
         $this->addJS($key, $js_file);
       }
     }

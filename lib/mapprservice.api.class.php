@@ -211,8 +211,8 @@ class MAPPRAPI extends MAPPR {
         foreach ($coords as $coord) {
           if(is_array($coord) && array_key_exists(0, $coord) && array_key_exists(1, $coord)) {
             $_coord = new stdClass;
-            $_coord->y = trim($coord[0]);
-            $_coord->x = trim($coord[1]);
+            $_coord->y = $this->clean_coord($coord[0]);
+            $_coord->x = $this->clean_coord($coord[1]);
             if($this->check_coord($_coord)) {
               $mcoord_point = ms_newPointObj();
               $mcoord_point->setXY($_coord->x, $_coord->y);
