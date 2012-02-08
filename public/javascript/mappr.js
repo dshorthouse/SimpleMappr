@@ -1446,7 +1446,8 @@ $(function () {
         coords      = data.map.coords || [],
         coord_title = "",
         coord_data  = "",
-        coord_color = "";
+        coord_color = "",
+        pattern     = /[?*{}\\]+/g;
 
     for(i = 0; i < coords.length; i += 1) {
       if(i > 2) {
@@ -1454,7 +1455,7 @@ $(function () {
       }
 
       coord_title = coords[i].title || "";
-      coord_data  = coords[i].data  || "";
+      coord_data  = coords[i].data.replace(pattern, "")  || "";
       coord_color = coords[i].color || "0 0 0";
 
       $('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
