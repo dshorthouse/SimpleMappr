@@ -37,7 +37,7 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
     var js, fjs=d.getElementsByTagName(s)[0];
     if(d.getElementById(id)) { remove(id); }
     js=d.createElement(s); js.id=id;
-    js.src="//connect.facebook.net/<?php echo $lang['locale']; ?>/all.js#xfbml=1";
+    js.src="//connect.facebook.net/<?php echo $lang['locale']; ?>/all.js#xfbml=1&appId=283657208313184";
     fjs.parentNode.insertBefore(js, fjs);
   })(document, 'script', 'facebook-jssdk');
   (function(d, s, id) {

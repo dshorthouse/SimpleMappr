@@ -217,7 +217,6 @@ class Kml {
         foreach ($row as $loc) {
           $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
           if(preg_match('/[NSEW]/', $loc) != 0) {
-print_r($loc);
             $coord = preg_split("/[,;]/", $loc);
             $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
             $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
