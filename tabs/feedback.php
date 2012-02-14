@@ -12,48 +12,29 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 <div id="social">
 <g:plusone size="medium" annotation="inline" width="120"></g:plusone>
 <a href="https://twitter.com/share" class="twitter-share-button" data-text="@SimpleMappr" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>"><?php echo $tweet; ?></a>
-<fb:like href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/" width="120" data-layout="button_count" data-show-faces="false"></fb:like>
+<div class="fb-like" data-href="<?php echo $_SERVER['HTTP_HOST']; ?>" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
 </div>
 <p class="ui-helper-clearfix">
 <?php echo _("Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."); ?>
 </div>
 <!-- Disqus BEGIN -->
 <div id="disqus_thread"></div>
+<div id="fb-root"></div>
 <script type="text/javascript">
   var disqus_shortname = 'simplemappr',
   disqus_config = function() { this.language = "<?php echo $lang['canonical']; ?>"; };
   window.___gcfg = {lang: '<?php echo $lang['canonical']; ?>'};
-  function remove(id) {
-    return (elem=document.getElementById(id)).parentNode.removeChild(elem);
-  }
-  (function(d, s, id) {
-   var js, djs=d.getElementsByTagName(s)[0];
-   if(d.getElementById(id)) { remove(id); }
-   js=d.createElement(s); js.id=id;
-   js.src='//' + disqus_shortname + '.disqus.com/embed.js';
-   djs.parentNode.insertBefore(js, djs);
-  })(document, 'script', 'disqus-wjs');
-  (function(d, s, id) {
-    var js, fjs=d.getElementsByTagName(s)[0];
-    if(d.getElementById(id)) { remove(id); }
-    js=d.createElement(s); js.id=id;
-    js.src="//connect.facebook.net/<?php echo $lang['locale']; ?>/all.js#xfbml=1&appId=283657208313184";
-    fjs.parentNode.insertBefore(js, fjs);
-  })(document, 'script', 'facebook-jssdk');
-  (function(d, s, id) {
-    var js, tjs=d.getElementsByTagName(s)[0];
-    if(d.getElementById(id)) { remove(id); }
-    js=d.createElement(s); js.id=id;
-    js.src="//platform.twitter.com/widgets.js";
-    tjs.parentNode.insertBefore(js,tjs);
-  })(document, 'script', 'twitter-wjs');
-  (function(d, s, id) {
-    var js, pjs=d.getElementsByTagName('script')[0];
-    if(d.getElementById(id)) { remove(id); }
-    js=d.createElement(s); js.id=id;
-    js.src='https://apis.google.com/js/plusone.js';
-    pjs.parentNode.insertBefore(js, pjs);
-  })(document, 'script', 'google-plus-1');
+(function(d, s) {
+    var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.src = url; js.id = id;
+      fjs.parentNode.insertBefore(js, fjs);
+    };
+    load('//connect.facebook.net/<?php echo $lang['locale']; ?>/all.js#xfbml=1&appId=283657208313184', 'fbjssdk');
+    load('https://apis.google.com/js/plusone.js', 'gplus1js');
+    load('//platform.twitter.com/widgets.js', 'tweetjs');
+    load('//' + disqus_shortname + '.disqus.com/embed.js', 'disqusjs');
+}(document, 'script'));
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=simplemappr">comments</a>.</noscript>
 <!-- Disqus END -->
