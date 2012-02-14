@@ -120,11 +120,11 @@ class USERS {
      $output .= '<table class="grid-users">' . "\n";
      $output .= '<thead>' . "\n";
      $output .= '<tr>' . "\n";
-     $output .= '<td class="left-align">'._("Username").'</td>';
-     $output .= '<td class="left-align">'._("Email").'</td>';
-     $output .= '<td>'._("Maps").'</td>';
-     $output .= '<td>'._("Last Access").'</td>';
-     $output .= '<td class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></td>';
+     $output .= '<th class="left-align">'._("Username").'</th>';
+     $output .= '<th class="left-align">'._("Email").'</th>';
+     $output .= '<th>'._("Maps").'</th>';
+     $output .= '<th>'._("Last Access").'</th>';
+     $output .= '<th class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></th>';
      $output .= '</tr>' . "\n";
      $output .= '</thead>' . "\n";
      $output .= '<tbody>' . "\n";
@@ -148,7 +148,7 @@ class USERS {
      $output .= '</tbody>' . "\n";
      $output .= '</table>' . "\n";
      $output .= '<script type="text/javascript">
-       $(".grid-users td.actions a.toolsRefresh").click(function(){
+       $(".toolsRefresh", "#grid-users").click(function(){
          Mappr.loadUserList();
          return false;
        });

@@ -172,7 +172,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #janrainEngageEmbed div{margin:0px;}
 #map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:95%;color:#555;}
 #map-mymaps thead tr{height:1.75em;}
-#map-mymaps thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
+#map-mymaps thead th{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-mymaps .left-align{text-align:left;padding-left:20px;}
 #map-mymaps .right-align{text-align:right;}
 #map-mymaps .center-align{text-align:center;}
@@ -188,7 +188,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-mymaps input{vertical-align:top;}
 #map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:95%;color:#555;}
 #map-users thead tr{height:1.75em;}
-#map-users thead td{background-color:#e9e9e9;font-weight:normal;text-align:center;}
+#map-users thead th{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-users .left-align{text-align:left;padding-left:20px;}
 #map-users a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
 #map-users tr{border:1px solid #aaa;}

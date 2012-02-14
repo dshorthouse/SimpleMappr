@@ -160,14 +160,14 @@ class USERMAPS {
       $output .= '<table class="grid-usermaps">' . "\n";
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
-      $output .= '<td class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></td>';
-      $output .= '<td class="center-align">'._("Created").'</td>';
-      $output .= '<td class="center-align">'._("Updated").'</td>';
-      $output .= '<td class="actions">'._("Actions");
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></th>';
+      $output .= '<th class="center-align">'._("Created").'</th>';
+      $output .= '<th class="center-align">'._("Updated").'</th>';
+      $output .= '<th class="actions">'._("Actions");
       if($this->_uid == 1) {
         $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
       }
-      $output .= '</td>';
+      $output .= '</th>';
       $output .= '</tr>' . "\n";
       $output .= '</thead>' . "\n";
       $output .= '<tbody>' . "\n";
@@ -195,7 +195,7 @@ class USERMAPS {
       $output .= '</tbody>' . "\n";
       $output .= '</table>' . "\n";
       $output .= '<script type="text/javascript">
-        $(".grid-usermaps td.actions a.toolsRefresh").click(function(){
+        $(".toolsRefresh", ".grid-usermaps").click(function(){
           Mappr.loadMapList();
           return false;
         });
