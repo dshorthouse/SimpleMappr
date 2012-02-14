@@ -148,7 +148,7 @@ class USERS {
      $output .= '</tbody>' . "\n";
      $output .= '</table>' . "\n";
      $output .= '<script type="text/javascript">
-       $(".toolsRefresh", "#grid-users").click(function(){
+       $(".toolsRefresh", ".grid-users").click(function(){
          Mappr.loadUserList();
          return false;
        });
