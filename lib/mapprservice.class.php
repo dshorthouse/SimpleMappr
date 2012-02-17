@@ -885,7 +885,11 @@ class MAPPR {
     //set the size as selected
     $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
     $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
-    $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+
+    $this->map_obj->setSize($width,$height);
+    if($this->is_resize() && $this->_download_factor > 1) {
+      $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+    }
 
     //set the extent to match that of the crop
     $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
@@ -905,7 +909,10 @@ class MAPPR {
         $color = '';
 
         $title = ($this->coords[$j]['title']) ? $this->coords[$j]['title'] : '';
-        $size = ($this->coords[$j]['size']) ? $this->_download_factor*$this->coords[$j]['size'] : $this->_download_factor*8;
+        $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
+        if($this->is_resize() && $this->_download_factor > 1) {
+          $size = $this->_download_factor*$size;
+        }
         $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
         $color = ($this->coords[$j]['color']) ? explode(" ",$this->coords[$j]['color']) : explode(" ","0 0 0");
         if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
