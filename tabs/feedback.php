@@ -12,6 +12,7 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 <div id="social">
 <g:plusone size="medium" annotation="inline" width="120"></g:plusone>
 <a href="https://twitter.com/share" class="twitter-share-button" data-text="@SimpleMappr" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>"><?php echo $tweet; ?></a>
+<script type="IN/Share" data-url="//<?php echo $_SERVER['HTTP_HOST']; ?>" data-counter="right"></script>
 <div class="fb-like" data-href="<?php echo $_SERVER['HTTP_HOST']; ?>" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
 </div>
 <p class="ui-helper-clearfix">
@@ -33,6 +34,7 @@ $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
     load('//connect.facebook.net/<?php echo $lang['locale']; ?>/all.js#xfbml=1&appId=283657208313184', 'fbjssdk');
     load('https://apis.google.com/js/plusone.js', 'gplus1js');
     load('//platform.twitter.com/widgets.js', 'tweetjs');
+    load('//platform.linkedin.com/in.js', 'linkedinjs');
     load('//' + disqus_shortname + '.disqus.com/embed.js', 'disqusjs');
 }(document, 'script'));
 </script>
