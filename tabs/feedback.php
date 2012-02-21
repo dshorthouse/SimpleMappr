@@ -4,19 +4,18 @@ $lang = USERSESSION::select_language();
 $tweet = ($lang['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 ?>
 <style type="text/css">
-#social{border-left:1px solid #ccc;width:15%;float:right;padding-left:10px;}
 #general-feedback .ui-helper-clearfix{margin-left:0;}
 </style>
 <div id="map-feedback">
 <div id="general-feedback" class="panel ui-corner-all">
-<div id="social">
-<g:plusone size="medium" annotation="inline" width="120"></g:plusone>
-<a href="https://twitter.com/share" class="twitter-share-button" data-text="@SimpleMappr" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>"><?php echo $tweet; ?></a>
-<script type="IN/Share" data-url="//<?php echo $_SERVER['HTTP_HOST']; ?>" data-counter="right"></script>
-<div class="fb-like" data-href="<?php echo $_SERVER['HTTP_HOST']; ?>" data-send="false" data-layout="button_count" data-width="120" data-show-faces="false"></div>
-</div>
 <p class="ui-helper-clearfix">
-<?php echo _("Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."); ?>
+<?php echo _("Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."); ?></p>
+</div>
+<div id="social">
+<div class="g-plusone" data-size="tall"></div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-text="@SimpleMappr" data-url="http://<?php echo $_SERVER['HTTP_HOST']; ?>" data-lang="<?php echo $lang['canonical']; ?>" data-count="vertical"><?php echo $tweet; ?></a>
+<script type="IN/Share" data-url="//<?php echo $_SERVER['HTTP_HOST']; ?>" data-counter="top"></script>
+<div class="fb-like" data-href="<?php echo $_SERVER['HTTP_HOST']; ?>" data-send="false" data-layout="box_count" data-width="120" data-show-faces="false"></div>
 </div>
 <!-- Disqus BEGIN -->
 <div id="disqus_thread"></div>
