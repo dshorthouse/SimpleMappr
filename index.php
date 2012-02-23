@@ -324,7 +324,7 @@ function set_up() {
     }
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-      header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
+      header('Location: http://www.' . $_SERVER['HTTP_HOST'] . '/');
       exit();
     } else {
       require_once('lib/mapprservice.usersession.class.php');
