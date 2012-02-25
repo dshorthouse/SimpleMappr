@@ -51,6 +51,10 @@ msgstr ""
 msgid "Building application..."
 msgstr ""
 
+#: .index.php:35
+msgid "Sorry, you must enable javascript to use this site."
+msgstr ""
+
 #: .index.php:36
 #: .index.php:60
 #: .index.php:73
