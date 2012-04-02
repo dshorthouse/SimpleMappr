@@ -952,7 +952,7 @@ class MAPPR {
           $points = array(); //create an array to hold unique locations
 
           foreach ($row as $loc) {
-            $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
+            $loc = trim(preg_replace('/[\p{Z}\s]/u', ' ', $loc));
             $loc = preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $loc);
             if(preg_match('/[NSEW]/', $loc) != 0) {
               $coord = preg_split("/[,;]/", $loc);
