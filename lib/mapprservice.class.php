@@ -952,7 +952,8 @@ class MAPPR {
           $points = array(); //create an array to hold unique locations
 
           foreach ($row as $loc) {
-            $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
+            $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
+            $loc = preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $loc);
             if(preg_match('/[NSEW]/', $loc) != 0) {
               $coord = preg_split("/[,;]/", $loc);
               $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
@@ -1595,7 +1596,7 @@ class MAPPR {
     $dms = stripslashes($dms);
     $neg = (preg_match('/[SW]/', $dms) == 0) ? 1 : -1;
     $dms = preg_replace('/(^\s?-)|(\s?[NSEW]\s?)/i','', $dms);
-    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); //TODO: check this for minutes or seconds wih decimals
     if (!$parts) { return; }
     // parts: 0 = degree, 1 = minutes, 2 = seconds
     $d = isset($parts[0]) ? (float)$parts[0] : 0;

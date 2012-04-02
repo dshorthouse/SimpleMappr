@@ -146,7 +146,7 @@ class HEADER {
       if(!$cached_css) {
         $css_min = '';
         foreach(self::$local_css_files as $css_file) {
-          $css_min = CssMin::minify(file_get_contents($css_file)) . "\n";
+          $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
         }
         $css_min_file = md5(microtime()) . ".css";
         $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');

@@ -593,13 +593,21 @@ msgstr "Citer"
 msgid "Recent Updates"
 msgstr "Mises à jour"
 
-#: .tabs/aboyt.php:11
+#: .tabs/about.php:11
 msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "April 2, 2012"
+msgstr "2 avril, 2012"
+
+#: .tabs/about.php:11
 msgid "February 8, 2012"
 msgstr "8 février, 2012"
+
+#: .tabs/about.php
+msgid "Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."
+msgstr "Corrections: coordonées en DDMMSS copiés/collés à partir d'Excel sont correctement interprétés."
 
 #: .tabs/about.php
 msgid "Bug fixes: Map coordinates in DDMMSS now properly download."
