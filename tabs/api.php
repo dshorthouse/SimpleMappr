@@ -17,7 +17,7 @@ USERSESSION::select_language();
   <div id="general-api" class="panel ui-corner-all">
     <p><?php echo _("A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."); ?></p>
   </div>
-  <p><em>e.g.</em> http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/?<br>file=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/api/demo.txt'); ?>&amp;<br>shape[0]=square&amp;size[0]=10&amp;color[0]=20,20,20&amp;<br>shape[1]=triangle&amp;size[1]=10&amp;color[1]=40,40,40&amp;<br>shape[2]=star&amp;size[2]=14&amp;color[2]=60,60,60&amp;<br>width=500&amp;height=300&amp;<br>bbox=-130,40,-60,50&amp;<br>layers=lakes,stateprovinces&amp;graticules=true&amp;projection=esri:102009&amp;legend=true&amp;<br>shade[places]=Alberta,USA[MT|WA]&amp;shade[title]=Selected Regions&amp;shade[color]=150,150,150</p>
+  <p><em>e.g.</em> http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/?<br>url=<?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/api/demo.txt'); ?>&amp;<br>shape[0]=square&amp;size[0]=10&amp;color[0]=20,20,20&amp;<br>shape[1]=triangle&amp;size[1]=10&amp;color[1]=40,40,40&amp;<br>shape[2]=star&amp;size[2]=14&amp;color[2]=60,60,60&amp;<br>width=500&amp;height=300&amp;<br>bbox=-130,40,-60,50&amp;<br>layers=lakes,stateprovinces&amp;graticules=true&amp;projection=esri:102009&amp;legend=true&amp;<br>shade[places]=Alberta,USA[MT|WA]&amp;shade[title]=Selected Regions&amp;shade[color]=150,150,150</p>
   <p><strong><?php echo _("Produces"); ?></strong></p>
   <p><img src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/api.png" width="500" height="300" alt="<?php echo _("My Map"); ?>" /></p>
 
@@ -37,11 +37,13 @@ USERSESSION::select_language();
     <dt>ping</dt>
     <dd><?php echo sprintf(_("if %s is included, a JSON response will be produced in place of an image as: %s"), "ping=true", "{\"status\" : \"ok\"}"); ?></dd>
     
-    <dt>file</dt>
-    <dd><?php echo _("a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points."); ?> <span class="api-example"><em>e.g.</em> file=<a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/demo.txt"><?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/api/demo.txt'); ?></a></span></dd>
-    
-    <dt>georss</dt>
-    <dd><?php echo _("a URL-encoded, remote GeoRSS feed. <strong>NOTE:</strong> If both <em>file</em> and <em>georss</em> are included, points in the GeoRSS feed are treated as a single, additional \"column\" for <em>shape[x]</em>, <em>size[x]</em>, <em>color[x]</em> below."); ?> <span class="api-example"><em>e.g.</em> georss=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></span></dd>
+    <dt>url</dt>
+    <dd><?php echo _("a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points."); ?>
+      <span class="api-example"><em>e.g.</em> url=<a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/demo.txt"><?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/api/demo.txt'); ?></a></span>
+      <br>
+      <?php echo _("a URL-encoded, remote GeoRSS feed."); ?> 
+      <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></span>
+    </dd>
 
     <dt>point[x]</dt>
     <dd><?php echo _("single marker written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm"); ?> <span class="api-example"><em>e.g.</em> point[0]=45,-120 or point[0]=45°52'30"N,120W or point[0]=45°52.5N,120W</span></dd>

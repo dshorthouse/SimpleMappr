@@ -215,6 +215,7 @@ class Kml {
 
         $point_key = 0;
         foreach ($row as $loc) {
+          $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
           $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
           if(preg_match('/[NSEW]/', $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc);

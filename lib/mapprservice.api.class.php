@@ -56,10 +56,17 @@ class MAPPRAPI extends MAPPR {
     $this->download         = true;
     $this->watermark        = true;
     $this->options          = array();
+    $this->legend           = array();
 
-    //load the file
-    $this->file             = urldecode($this->load_param('file', ''));
-    $this->georss           = urldecode($this->load_param('georss', ''));
+    //TODO: deprecate use of 'file' or 'georss' because 'url' is now sufficient for all cases
+    $url    = urldecode($this->load_param('url', ''));
+    $file   = urldecode($this->load_param('file', ''));
+    $georss = urldecode($this->load_param('georss', ''));
+
+    if($georss) { $this->url = $georss; }
+    if($file)   { $this->url = $file; }
+    if($url)    { $this->url = $url; }
+
     $this->points           = $this->load_param('point', array());
     $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
     $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
@@ -109,68 +116,29 @@ class MAPPRAPI extends MAPPR {
   /**
   * Override method in parent class
   */ 
-  public function add_coordinates() {  
-    $coord_cols = array();
-    $legend = array();
-    $col = 0;
+  public function add_coordinates() {
+    if($this->url || $this->points) {
 
-    if($this->file || $this->georss || $this->points) {
-      if($this->file) {
-        if (@$fp = fopen($this->file, 'r')) {
-          while ($line = fread($fp, 1024)) {
-            $rows = preg_split("/[\r\n]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
-            $cols = explode("\t", $rows[0]);
-            $num_cols = count($cols);
-            $legend = explode("\t", $rows[0]);
-            unset($rows[0]);
-            foreach($rows as $row) {
-              $cols = explode("\t", $row);
-              for($i=0;$i<$num_cols;$i++) {
-                if(array_key_exists($i, $cols)) {
-                  if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
-                    $coord = preg_split("/[,;]/", $cols[$i]);
-                    $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
-                    $this->_coord_cols[$i][] = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
-                  } else {
-                    $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
-                  }
-                }
-              }
-            }
-          }
+      if($this->url) {
+        $headers = get_headers($this->url, 1);
+
+        if(array_key_exists('Location', $headers)) {
+          $this->url = array_pop($headers['Location']);
+          $headers['Content-Type'] = array_pop($headers['Content-Type']);
         }
-      }
-      if($this->georss) {
-        $rss = fetch_rss($this->georss);
-        if(isset($rss->items)) {
-          $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-          $legend[$num_cols] = $rss->channel['title'];
-          foreach ($rss->items as $item) {
-            if(isset($item['georss']) && isset($item['georss']['point'])) {
-              $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['georss']['point']);
-            } elseif(isset($item['geo']) && isset($item['geo']['lat']) && isset($item['geo']['lat'])) {
-              $this->_coord_cols[$num_cols][] = array($item['geo']['lat'], $item['geo']['long']);
-            } elseif(isset($item['geo']) && isset($item['geo']['lat_long'])) {
-              $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
-            }
-          }
-        }
-      }
-      if($this->points) {
-        $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-        foreach($this->points as $point) {
-          $coord = preg_split("/[,;]/", $point);
-          $legend[$num_cols] = "";
-          if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
-          if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
-          $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
-          $num_cols++;
-        }
+
+        if(strstr($headers['Content-Type'], 'text')) { $this->parseFile(); }
+        if(strstr($headers['Content-Type'], 'json')) { $this->parseGeoJSON(); }
+//TODO: what about proper RSS header?
+        if(strstr($headers['Content-Type'], 'xml'))  { $this->parseGeoRSS(); }
       }
 
+      if($this->points) { $this->parsePoints(); }
+
+      $col = 0;
       foreach($this->_coord_cols as $col => $coords) {
         $mlayer = ms_newLayerObj($this->map_obj);
-        $mlayer->set("name",$legend[$col]);
+        $mlayer->set("name",$this->legend[$col]);
         $mlayer->set("status",MS_ON);
         $mlayer->set("type",MS_LAYER_POINT);
         $mlayer->set("tolerance",5);
@@ -178,7 +146,7 @@ class MAPPRAPI extends MAPPR {
         $mlayer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
         $class = ms_newClassObj($mlayer);
-        $class->set("name",$legend[$col]);
+        $class->set("name",$this->legend[$col]);
 
         $style = ms_newStyleObj($class);
         $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
@@ -410,6 +378,80 @@ class MAPPRAPI extends MAPPR {
     $Y = array_sum($y)/count($y);
     $Z = array_sum($z)/count($z);
     return array(rad2deg(atan2($Y,$X)), rad2deg(atan2($Z, sqrt(pow($X,2) + pow($Y,2)))));
+  }
+
+  /**
+   * Parse all POSTed data into cleaned array of points
+   */
+  private function parsePoints() {
+    $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+    foreach($this->points as $point) {
+      $coord = preg_split("/[,;]/", $point);
+      $this->legend[$num_cols] = "";
+      if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
+      if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
+      $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+      $num_cols++;
+    }
+  }
+
+  /**
+   * Parse text file into cleaned array of points
+   */
+  private function parseFile() {
+    if(@$fp = fopen($this->url, 'r')) {
+      while ($line = fread($fp, 1024)) {
+        $rows = preg_split("/[\r\n]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
+        $cols = explode("\t", $rows[0]);
+        $num_cols = count($cols);
+        $this->legend = explode("\t", $rows[0]);
+        unset($rows[0]);
+        foreach($rows as $row) {
+          $cols = explode("\t", $row);
+          for($i=0;$i<$num_cols;$i++) {
+            if(array_key_exists($i, $cols)) {
+              if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
+                $coord = preg_split("/[,;]/", $cols[$i]);
+                $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+                $this->_coord_cols[$i][] = array(
+                  $this->dms_to_deg(trim($coord[0])),
+                  $this->dms_to_deg(trim($coord[1]))
+                );
+              } else {
+                $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Parse GeoRSS into cleaned array of points
+   */
+  private function parseGeoRSS() {
+    $rss = fetch_rss($this->url);
+    if(isset($rss->items)) {
+      $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+      $this->legend[$num_cols] = $rss->channel['title'];
+      foreach ($rss->items as $item) {
+        if(isset($item['georss']) && isset($item['georss']['point'])) {
+          $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['georss']['point']);
+        } elseif(isset($item['geo']) && isset($item['geo']['lat']) && isset($item['geo']['lat'])) {
+          $this->_coord_cols[$num_cols][] = array($item['geo']['lat'], $item['geo']['long']);
+        } elseif(isset($item['geo']) && isset($item['geo']['lat_long'])) {
+          $this->_coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
+        }
+      }
+    }
+  }
+
+  /**
+   * Parse GeoJSON into cleaned array of points
+   */
+  private function parseGeoJSON() {
+
   }
 
 }
