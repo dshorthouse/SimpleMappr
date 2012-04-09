@@ -58,10 +58,10 @@ class MAPPRAPI extends MAPPR {
     $this->options          = array();
     $this->legend           = array();
 
-    //TODO: deprecate use of 'file' or 'georss' because 'url' is now sufficient for all cases
-    $url    = urldecode($this->load_param('url', ''));
-    $file   = urldecode($this->load_param('file', ''));
-    $georss = urldecode($this->load_param('georss', ''));
+    $this->url              = false;
+    $url                    = urldecode($this->load_param('url', false));
+    $file                   = urldecode($this->load_param('file', false));
+    $georss                 = urldecode($this->load_param('georss', false));
 
     if($georss) { $this->url = $georss; }
     if($file)   { $this->url = $file; }

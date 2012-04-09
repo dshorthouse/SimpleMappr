@@ -816,10 +816,14 @@ class MAPPR {
     $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
     if($this->projection != $this->default_projection) {
       $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
-      $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
+      $newProjObj = ms_newProjectionObj($this->accetable_projection());
       $max_extent->project($origProjObj,$newProjObj);   
     }
     return $max_extent;
+  }
+
+  private function accetable_projection() {
+  return isset(self::$accepted_projections[$this->projection]['proj']) ? self::$accepted_projections[$this->projection]['proj'] : self::$accepted_projections[$this->default_projection]['proj'];
   }
 
   private function reset_zoom() {
