@@ -1,4 +1,4 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, alert */
+/*global $, jQuery, window, document, self, XMLHttpRequest, alert, _gaq */
 
 var Mappr = Mappr || { 'settings': {} };
 
@@ -45,6 +45,10 @@ $(function () {
       width   : '100%'
     });
   });
+
+  Mappr.trackEvent = function(category, action) {
+    if (typeof _gaq !== "undefined") { _gaq.push(['_trackEvent', category, action]); }
+  };
 
   Mappr.getPageSize = function () {
     var xScroll, yScroll, windowWidth, windowHeight, pageHeight, pageWidth;
@@ -320,16 +324,19 @@ $(function () {
     $('.toolsZoomIn').click(function (e) {
       e.preventDefault();
       self.mapZoomIn();
+      self.trackEvent('toolbar', 'zoomin');
     });
 
     $('.toolsZoomOut').click(function (e) {
       e.preventDefault();
       self.mapZoomOut();
+      self.trackEvent('toolbar', 'zoomout');
     });
 
     $('.toolsCrop').click(function (e) {
       e.preventDefault();
       self.mapCrop();
+      self.trackEvent('toolbar', 'crop');
     });
 
     $('.toolsQuery').ColorPicker({
@@ -352,6 +359,7 @@ $(function () {
         self.vars.fillColor = rgb;
         self.initJquery();
         self.vars.zoom = false;
+        self.trackEvent('toolbar', 'query');
       }
     }).click(function (e) {
       e.preventDefault();
@@ -361,11 +369,13 @@ $(function () {
     $('.toolsRefresh').click(function (e) {
       e.preventDefault();
       self.mapRefresh();
+      self.trackEvent('toolbar', 'refresh');
     });
 
     $('.toolsRebuild').click(function (e) {
       e.preventDefault();
       self.mapRebuild();
+      self.trackEvent('toolbar', 'rebuild');
     });
 
   }; /** end Mappr.bindToolbar **/
@@ -420,6 +430,7 @@ $(function () {
       $('#pan').val($(this).attr("data-pan"));
       self.resetJbbox();
       self.showMap();
+      self.trackEvent('arrows', $(this).attr("data-pan"));
     });
   };
 
@@ -496,6 +507,7 @@ $(function () {
       $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function (e) {
         e.preventDefault();
         self.mapUndo();
+        self.trackEvent('edit', 'undo');
       });
     }
   };
@@ -509,6 +521,7 @@ $(function () {
       $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function (e) {
         e.preventDefault();
         self.mapRedo();
+        self.trackEvent('edit', 'redo');
       });
     }
   };
@@ -694,6 +707,7 @@ $(function () {
         $('input[name="border_thickness"]').val(ui.value);
         self.destroyRedo();
         self.showMap();
+        self.trackEvent('slider', ui.value);
       }
     });
   };
@@ -1213,6 +1227,7 @@ $(function () {
           $('.map-load').click(function (e) {
             e.preventDefault();
             self.loadMap(this);
+            self.trackEvent('map', 'load');
           });
           $('.map-delete').click(function (e) {
             e.preventDefault();
@@ -1572,6 +1587,7 @@ $(function () {
               url     :  self.settings.baseUrl + "/usermaps/" + id,
               success : function() {
                 self.loadMapList();
+                self.trackEvent('map', 'delete');
               }
             });
             $(this).dialog("destroy");
@@ -1644,6 +1660,7 @@ $(function () {
               url     : self.settings.baseUrl + "/users/" + id,
               success : function() {
                 self.loadUserList();
+                self.trackEvent('user', 'delete');
               }
             });
             $(this).dialog("destroy");
@@ -1716,6 +1733,7 @@ $(function () {
                   Mappr.activateEmbed(data.mid);
                   Mappr.loadMapList();
                   Mappr.hideLoadingMessage();
+                  Mappr.trackEvent('map', 'save');
                 }
               });
 
@@ -2045,6 +2063,8 @@ $(function () {
       }
     }, 1000);
 
+    self.trackEvent('download', filetype);
+
   }; /** end Mappr.generateDownload **/
 
   Mappr.setFormOptions = function () {
@@ -2123,6 +2143,7 @@ $(function () {
     this.resetJbbox();
     this.destroyRedo();
     this.showMap();
+    this.trackEvent('rotate', $(element).attr("data-rotate"));
   };
 
   Mappr.setRotation = function (angle) {
@@ -2150,11 +2171,8 @@ $(function () {
         regex   = new RegExp(regexS),
         results = regex.exec(window.location.href);
 
-    if(results === null) {
-      return "";
-    } else {
-      return decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+    if(results === null) { return ""; }
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
   Mappr.mapCircleSlider = function () {
@@ -2196,7 +2214,7 @@ $(function () {
       cache : true,
       load  : function(event, ui){
         event = null;
-        $(ui.tab).data("cache.tabs",($(ui.panel).html() == "") ? false : true);
+        $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
       }
     };
     //odd tabs handling to fix IE issues
