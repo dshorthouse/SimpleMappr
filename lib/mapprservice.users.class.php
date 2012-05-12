@@ -134,7 +134,7 @@ class USERS {
        $output .= '<tr '.$class.'>';
        $output .= '<td>'.stripslashes($record['username']).'</td>';
        $output .= '<td>'.stripslashes($record['email']).'</td>';
-       $output .= '<td class="usermaps-center">'.$record['num'].'</td>';
+       $output .= '<td class="usermaps-number">'.$record['num'].'</td>';
        $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
