@@ -42,10 +42,6 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 <div id="wrapper">
 <div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
 <noscript>
-<style type="text/css">
-#initial-message{display:none;}
-#noscript{margin:3em;font-style:italic;}
-</style>
 <div id="noscript"><?php echo _("Sorry, you must enable javascript to use this site."); ?></div>
 </noscript>
 <div id="tabs">
@@ -275,7 +271,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <input type="hidden" id="scalebar_url" value="" />
 <input type="hidden" id="bad_points" value="" />
 </form>
-<!-- close tabs wrapper -->
+
 </div>
 </div>
 <div id="mapper-message" class="ui-state-error" title="<?php echo _("Warning"); ?>"></div>
