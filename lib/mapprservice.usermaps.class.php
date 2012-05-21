@@ -133,10 +133,29 @@ class USERMAPS {
   * Index method to produce table of maps
   */
   private function index_maps() {
-    $where = '';
+    $where = array();
     $output = '';
 
-    if($this->_uid != 1) { $where =  " WHERE m.uid = ".$this->_db->escape($this->_uid); }
+    if($this->_uid != 1) {
+      $where['user'] =  "WHERE m.uid = ".$this->_db->escape($this->_uid);
+    }
+
+    $sql = "
+      SELECT
+        COUNT(m.mid) AS total
+      FROM
+        maps m
+      INNER JOIN
+        users u ON (m.uid = u.uid)
+      ".implode("",$where);
+
+    $total = $this->_db->query_first($sql);
+
+    $b = "";
+    if(isset($_GET['q'])) {
+      if($this->_uid == 1) { $b = "WHERE "; }
+      $where['title'] = $b."LOWER(m.title) LIKE '%".$this->_db->escape($_GET['q'])."%'";
+    }
 
     $sql = "
       SELECT
@@ -151,12 +170,12 @@ class USERMAPS {
         maps m 
       INNER JOIN
         users u ON (m.uid = u.uid)
-      ".$where."
+      ".implode(" AND ", $where)."
       ORDER BY m.created DESC";
 
     $rows = $this->_db->query($sql);
 
-    if($this->_db->affected_rows > 0) {
+    if($total['total'] > 0) {
       $output .= '<table class="grid-usermaps">' . "\n";
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
@@ -195,14 +214,17 @@ class USERMAPS {
       $output .= '</tbody>' . "\n";
       $output .= '</table>' . "\n";
       $output .= '<script type="text/javascript">
-        $(".toolsRefresh", ".grid-usermaps").click(function(){
+        function loadList(self) {
+          if(self.value.length >= 2) { Mappr.loadMapList(self.value); }
+          if(self.value.length === 0) { Mappr.loadMapList(); }
+        }
+        $(".toolsRefresh", ".grid-usermaps").click(function(e){
+          e.preventDefault();
           Mappr.loadMapList();
-          return false;
         });
         $("#filter-mymaps")
-          .keyup(function() { $.uiTableFilter( $("#usermaps table"), this.value ); })
-          .keypress(function(event) { if (event.which === 13) { return false; }
-        });</script>';
+          .keypress(function(e) { if (e.which === 13) { loadList(this); } })
+          .blur(function(e) { loadList(this); });</script>';
     } else {
       $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
     }

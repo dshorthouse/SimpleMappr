@@ -1,4 +1,4 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, alert, _gaq */
+/*global $, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
 
 var Mappr = Mappr || { 'settings': {} };
 
@@ -1210,20 +1210,29 @@ $(function () {
 
   }; /** end Mappr.bindAddButtons **/
 
-  Mappr.loadMapList = function () {
-    var self = this, clone = $('.usermaps-loading').clone(true);
+  Mappr.loadMapList = function (q) {
+    var self  = this,
+        clone = $('.usermaps-loading').clone(true),
+        query = "";
 
     $('#usermaps').html("").append(clone.show());
 
+    if(q && self.getLanguage()) {
+      query = "&q=" + encodeURIComponent(q.toLowerCase());
+    } else if(q && self.getLanguage() === "") {
+      query = "?q=" + encodeURIComponent(q.toLowerCase());
+    }
+
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage(),
+      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage() + query,
       dataType : 'html',
       success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
           $('#usermaps').find('.usermaps-loading').remove().end().html(data);
+          $('#filter-mymaps').val(q);
           $('.map-load').click(function (e) {
             e.preventDefault();
             self.loadMap(this);

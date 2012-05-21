@@ -175,11 +175,11 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-mymaps thead th{background-color:#e9e9e9;font-weight:normal;text-align:center;}
 #map-mymaps .left-align{text-align:left;padding-left:20px;}
 #map-mymaps .right-align{text-align:right;}
-#map-mymaps .center-align{width:200px;text-align:center;}
+#map-mymaps .center-align{width:165px;text-align:center;}
 #map-mymaps a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
 #map-mymaps tr{border:1px solid #aaa;}
 #map-mymaps .odd{background:none repeat scroll 0 0 #fff;}
-#map-mymaps .actions{width:10em;text-align:right;padding-right:10px;}
+#map-mymaps .actions{width:250px;text-align:right;padding-right:10px;}
 #map-mymaps a{display:inline-block;margin-left:10px;}
 #map-mymaps a.map-delete:before{background-position:-260px -284px;margin:0.2em;}
 #map-mymaps a.map-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
