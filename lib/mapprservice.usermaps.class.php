@@ -215,8 +215,7 @@ class USERMAPS {
       $output .= '</table>' . "\n";
       $output .= '<script type="text/javascript">
         function loadList(self) {
-          if(self.value.length >= 2) { Mappr.loadMapList(self.value); }
-          if(self.value.length === 0) { Mappr.loadMapList(); }
+          if(self.value.length === 0) { Mappr.loadMapList(); } else { Mappr.loadMapList(self.value); }
         }
         $(".toolsRefresh", ".grid-usermaps").click(function(e){
           e.preventDefault();
