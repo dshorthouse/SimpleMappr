@@ -154,7 +154,10 @@ class USERMAPS {
     $b = "";
     if(isset($_GET['q'])) {
       if($this->_uid == 1) { $b = "WHERE "; }
-      $where['title'] = $b."LOWER(m.title) LIKE '%".$this->_db->escape($_GET['q'])."%'";
+      $where['where'] = $b."LOWER(m.title) LIKE '%".$this->_db->escape($_GET['q'])."%'";
+      if($this->_uid == 1) {
+        $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->_db->escape($_GET['q'])."%'";
+      }
     }
 
     $sql = "
@@ -179,7 +182,7 @@ class USERMAPS {
       $output .= '<table class="grid-usermaps">' . "\n";
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
-      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /></th>';
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.$this->_db->affected_rows.' of '.$total['total'].'</th>';
       $output .= '<th class="center-align">'._("Created").'</th>';
       $output .= '<th class="center-align">'._("Updated").'</th>';
       $output .= '<th class="actions">'._("Actions");
