@@ -350,6 +350,10 @@ msgstr "Données hors de portée"
 msgid "Title"
 msgstr "Titre"
 
+#: .lib/mapprservice.usermaps.class.php:200
+msgid "%d of %d"
+msgstr "%d de %d"
+
 #: .lib/mapprservice.usermaps.class.php:164
 msgid "Created"
 msgstr "Crée"

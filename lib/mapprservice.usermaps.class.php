@@ -182,7 +182,7 @@ class USERMAPS {
       $output .= '<table class="grid-usermaps">' . "\n";
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
-      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.$this->_db->affected_rows.' of '.$total['total'].'</th>';
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']).'</th>';
       $output .= '<th class="center-align">'._("Created").'</th>';
       $output .= '<th class="center-align">'._("Updated").'</th>';
       $output .= '<th class="actions">'._("Actions");
