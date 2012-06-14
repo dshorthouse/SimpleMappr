@@ -602,12 +602,20 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "June 14, 2012"
+msgstr "14 juin, 2012"
+
+#: .tabs/about.php:11
 msgid "April 2, 2012"
 msgstr "2 avril, 2012"
 
 #: .tabs/about.php:11
 msgid "February 8, 2012"
 msgstr "8 février, 2012"
+
+#: .tabs/about.php
+msgid "Bug fixes: lorsque la légende est sélectionnée en l'absence de régions ou des coordonnées, un téléchargement a entraîné une erreur."
+msgstr "Corrections: coordonées en DDMMSS copiés/collés à partir d'Excel sont correctement interprétés."
 
 #: .tabs/about.php
 msgid "Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."
