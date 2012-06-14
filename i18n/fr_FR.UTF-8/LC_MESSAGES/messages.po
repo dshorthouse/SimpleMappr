@@ -614,7 +614,7 @@ msgid "February 8, 2012"
 msgstr "8 février, 2012"
 
 #: .tabs/about.php
-msgid "Bug fixes: Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."
+msgid "Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."
 msgstr "Corrections: lorsque la légende est sélectionnée en l'absence de régions ou des coordonnées, un téléchargement a entraîné une erreur."
 
 #: .tabs/about.php
