@@ -228,14 +228,14 @@ class HEADER {
   * Create Janrain inline javascript
   */
   private function getJanrain() {
-    $lang = $this->getLanguage();
-    $lang_q = isset($_GET["lang"]) ? "?lang=" . $lang : "";
+    $locale = $this->getLocale();
+    $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
     $janrain  = "<script type=\"text/javascript\">" . "\n";
     $janrain .= "(function(w,d) {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
-w.janrain.settings.language = '" . USERSESSION::$accepted_languages[$lang]['canonical'] . "';
-w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $lang_q . "';
+w.janrain.settings.language = '" . USERSESSION::$accepted_locales[$locale]['canonical'] . "';
+w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
@@ -259,8 +259,8 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     return $analytics;
   }
 
-  private function getLanguage() {
-    return isset($_GET["lang"]) ? $_GET["lang"] : "en_US";
+  private function getLocale() {
+    return isset($_GET["locale"]) ? $_GET["locale"] : "en_US";
   }
 
 }

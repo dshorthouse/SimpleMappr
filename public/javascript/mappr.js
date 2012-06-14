@@ -1638,10 +1638,10 @@ $(function () {
   };
 
   Mappr.getLanguage = function() {
-    var param = "", lang = this.getParameterByName("lang");
+    var param = "", locale = this.getParameterByName("locale");
 
-    if(lang === "fr_FR" || lang === "es_ES") {
-      param = "?lang=" + lang;
+    if(locale === "fr_FR" || locale === "es_ES") {
+      param = "?locale=" + locale;
     }
     return param;
   };

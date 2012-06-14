@@ -33,7 +33,7 @@ require_once(MAPPR_DIRECTORY.'/lib/db.class.php');
 
 class USERSESSION {
 
-  public static $accepted_languages = array(
+  public static $accepted_locales = array(
     'en_US' => array(
       'canonical' => 'en',
          'locale' => 'en_US',
@@ -44,22 +44,15 @@ class USERSESSION {
          'locale' => 'fr_FR',
          'native' => 'Français',
          'code'   => 'fr_FR.UTF-8'),
-/*
-    'es_ES' => array(
-       'canonical' => 'es',
-          'locale' => 'es_ES',
-          'native' => 'Español',
-          'code'   => 'es_ES.UTF-8')
-*/
   );
 
   public static $domain = "messages";
 
   private $_token;
 
-  private $_lang;
+  private $_locale;
 
-  private $_lang_code;
+  private $_locale_code;
 
   private $_auth_info = array();
 
@@ -75,11 +68,11 @@ class USERSESSION {
   */
   public static function destroy() {
     self::set_session();
-    $lang = $_SESSION['simplemappr']['lang'];
+    $locale = $_SESSION['simplemappr']['locale'];
     session_unset();
     session_destroy();
     setcookie("simplemappr", "", time() - 3600, "/");
-    self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($lang));
+    self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_locale_param($locale));
   }
 
   /*
@@ -87,27 +80,33 @@ class USERSESSION {
   * @param int $uid
   */
   public static function update_activity() {
-    if(isset($_GET["lang"]) && !array_key_exists($_GET["lang"], self::$accepted_languages)) {
+    if(isset($_GET["locale"]) && !array_key_exists($_GET["locale"], self::$accepted_locales)) {
       header('HTTP/1.0 404 Not Found');
       readfile(MAPPR_DIRECTORY.'/error/404.html');
       exit();
     }
 
-    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("lang" => "en_US");
+    $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
-    if($cookie["lang"] != "en_US" && !isset($_GET["lang"])) {
-      self::redirect("http://".$_SERVER["SERVER_NAME"].USERSESSION::make_lang_param($cookie["lang"]));
-    } elseif (isset($_GET["lang"]) && $_GET["lang"] == "en_US") {
+    //handle legacy parameter in cookie
+    if (isset($cookie["lang"])) {
+      $cookie["locale"] = $cookie["lang"];
+      unset($cookie["lang"]);
+    }
+
+    if(!isset($_GET["locale"]) && $cookie["locale"] != "en_US") {
+      self::redirect("http://".$_SERVER["SERVER_NAME"].USERSESSION::make_locale_param($cookie["locale"]));
+    } elseif (isset($_GET["locale"]) && $_GET["locale"] == "en_US") {
       if(isset($_COOKIE["simplemappr"])) {
-        $cookie["lang"] = "en_US";
+        $cookie["locale"] = "en_US";
         setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/");
       }
       self::redirect("http://".$_SERVER["SERVER_NAME"]);
-    } elseif (isset($_GET["lang"]) && $_GET["lang"] != "en_US") {
-      $cookie["lang"] = $_GET["lang"];
+    } elseif (isset($_GET["locale"]) && $_GET["locale"] != "en_US") {
+      $cookie["locale"] = $_GET["locale"];
     }
 
-    self::select_language();
+    self::select_locale();
 
     if(!isset($_COOKIE["simplemappr"])) { return; }
 
@@ -127,27 +126,27 @@ class USERSESSION {
     header("Location: " . $url);
   }
 
-  public static function make_lang_param($lang = "") {
+  public static function make_locale_param($locale = "") {
     $param = "";
-    if($lang && $lang != "en_US") { $param = "/?lang=" . $lang; }
+    if($locale && $locale != "en_US") { $param = "/?locale=" . $locale; }
     return $param;
   }
 
-  public static function select_language() {
-    if(isset($_REQUEST["lang"]) && array_key_exists($_REQUEST["lang"], self::$accepted_languages)) {
-      putenv('LC_ALL='.self::$accepted_languages[$_REQUEST["lang"]]['code']);
-      setlocale(LC_ALL, self::$accepted_languages[$_REQUEST["lang"]]['code']);
+  public static function select_locale() {
+    if(isset($_REQUEST["locale"]) && array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
+      putenv('LC_ALL='.self::$accepted_locales[$_REQUEST["locale"]]['code']);
+      setlocale(LC_ALL, self::$accepted_locales[$_REQUEST["locale"]]['code']);
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
-      return self::$accepted_languages[$_REQUEST["lang"]];
+      return self::$accepted_locales[$_REQUEST["locale"]];
     } else {
-      putenv('LC_ALL='.self::$accepted_languages['en_US']['code']);
-      setlocale(LC_ALL, self::$accepted_languages['en_US']['code']);
+      putenv('LC_ALL='.self::$accepted_locales['en_US']['code']);
+      setlocale(LC_ALL, self::$accepted_locales['en_US']['code']);
       bindtextdomain(self::$domain, MAPPR_DIRECTORY."/i18n");
       bind_textdomain_codeset(self::$domain, 'UTF-8'); 
       textdomain(self::$domain);
-      return self::$accepted_languages['en_US'];
+      return self::$accepted_locales['en_US'];
     }
   }
 
@@ -156,15 +155,15 @@ class USERSESSION {
   }
 
   private function execute() {
-    $this->get_language()
+    $this->get_locale()
          ->get_token()
          ->make_call()
          ->make_session();
   }
 
-  private function get_language() {
-    $this->_lang = $this->load_param('lang', 'en_US');
-    $this->_lang_code = (array_key_exists($this->_lang, self::$accepted_languages)) ? self::$accepted_languages[$this->_lang]['code'] : 'en_US.UTF-8';
+  private function get_locale() {
+    $this->_locale = $this->load_param('locale', 'en_US');
+    $this->_locale_code = (array_key_exists($this->_locale, self::$accepted_locales)) ? self::$accepted_locales[$this->_locale]['code'] : 'en_US.UTF-8';
     return $this;
   }
 
@@ -235,7 +234,7 @@ class USERSESSION {
 
       $record = $db->query_first($sql);
       $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
-      $user['lang'] = $this->_lang;
+      $user['locale'] = $this->_locale;
 
       self::set_session();
       $_SESSION['simplemappr'] = $user;
@@ -244,7 +243,7 @@ class USERSESSION {
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
-      self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_lang_param($user['lang']));
+      self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_locale_param($user['locale']));
     } else {
       // echo 'An error occured: ' . $this->_auth_info['err']['msg'];
       exit();

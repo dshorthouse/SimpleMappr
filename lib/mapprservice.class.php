@@ -210,6 +210,9 @@ class MAPPR {
     'triangle'
   );
 
+  /* placeholder for presence of anything that might need a legend */
+  private $_legend_required = false;
+
   /* base download factor to rescale the resultant image */
   private $_download_factor = 1;
 
@@ -926,7 +929,7 @@ class MAPPR {
         $data = trim($this->coords[$j]['data']);
 
         if($data) {
-
+          $this->_legend_required = true;
           $layer = ms_newLayerObj($this->map_obj);
           $layer->set("name","layer_".$j);
           $layer->set("status",MS_ON);
@@ -1012,6 +1015,7 @@ class MAPPR {
         $data = trim($this->regions[$j]['data']);
 
         if($data) {
+          $this->_legend_required = true;
           $baselayer = true;
           //grab the textarea for regions & split
           $rows = explode("\n",$this->remove_empty_lines($data));
@@ -1330,29 +1334,31 @@ class MAPPR {
   * Create the legend file
   */
   private function add_legend() {
-    $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keysizey", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-    $this->map_obj->legend->set("keyspacingx", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
-    $this->map_obj->legend->set("keyspacingy", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
-    $this->map_obj->legend->set("postlabelcache", 1);
-    $this->map_obj->legend->set("transparent", 0);
-    $this->map_obj->legend->label->set("font", "arial");
-    $this->map_obj->legend->label->set("type", MS_TRUETYPE);
-    $this->map_obj->legend->label->set("position", 1);
-    $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-    $this->map_obj->legend->label->set("antialias", 50);
-    $this->map_obj->legend->label->color->setRGB(0,0,0);
+    if($this->_legend_required) {
+      $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+      $this->map_obj->legend->set("keysizey", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+      $this->map_obj->legend->set("keyspacingx", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+      $this->map_obj->legend->set("keyspacingy", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+      $this->map_obj->legend->set("postlabelcache", 1);
+      $this->map_obj->legend->set("transparent", 0);
+      $this->map_obj->legend->label->set("font", "arial");
+      $this->map_obj->legend->label->set("type", MS_TRUETYPE);
+      $this->map_obj->legend->label->set("position", 1);
+      $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+      $this->map_obj->legend->label->set("antialias", 50);
+      $this->map_obj->legend->label->color->setRGB(0,0,0);
     
-    //svg format cannot do legends in MapServer
-    if($this->download && $this->options['legend'] && $this->output != 'svg') {
-      $this->map_obj->legend->set("status", MS_EMBED);
-      $this->map_obj->legend->set("position", MS_UR);
-      $this->map_obj->drawLegend();
-    }
-    if(!$this->download) {
-      $this->map_obj->legend->set("status", MS_DEFAULT);
-      $this->legend = $this->map_obj->drawLegend();
-      $this->_legend_url = $this->legend->saveWebImage();
+      //svg format cannot do legends in MapServer
+      if($this->download && $this->options['legend'] && $this->output != 'svg') {
+        $this->map_obj->legend->set("status", MS_EMBED);
+        $this->map_obj->legend->set("position", MS_UR);
+        $this->map_obj->drawLegend();
+      }
+      if(!$this->download) {
+        $this->map_obj->legend->set("status", MS_DEFAULT);
+        $this->legend = $this->map_obj->drawLegend();
+        $this->_legend_url = $this->legend->saveWebImage();
+      }
     }
   }
 

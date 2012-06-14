@@ -1,6 +1,6 @@
 <?php
 require_once('../lib/mapprservice.usersession.class.php');
-USERSESSION::select_language();
+USERSESSION::select_locale();
 ?>
 <style type="text/css">
 #map-help h3{font-size:0.75em;}

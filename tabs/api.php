@@ -1,7 +1,7 @@
 <?php
 require_once('../lib/mapprservice.class.php');
 require_once('../lib/mapprservice.usersession.class.php');
-USERSESSION::select_language();
+USERSESSION::select_locale();
 ?>
 <!-- api tab -->
 <style type="text/css">

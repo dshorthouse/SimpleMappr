@@ -2,10 +2,10 @@
 require_once('config/conf.php');
 $header = set_up();
 header('Content-Type: text/html; charset=utf-8');
-$language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
+$locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $header[1][$language]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
+<html lang="<?php echo $header[1][$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
@@ -13,7 +13,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 <meta name="author" content="David P. Shorthouse" />
 <meta property="og:title" content="SimpleMappr" />
 <meta property="og:description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
-<meta property="og:locale" content="<?php echo $language; ?>">
+<meta property="og:locale" content="<?php echo $locale; ?>">
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo.png" />
@@ -26,7 +26,7 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 <h1 id="site-title" class="sprites-after">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
 <div id="site-languages">
-<ul><?php foreach($header[1] as $key => $langs): ?><?php $selected = ''; if($key == $language) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?lang='.$key.'"'.$selected.'>'.$langs['native'].'</a>'; ?></li><?php endforeach; ?></ul>
+<ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>
@@ -53,11 +53,11 @@ $language = isset($_GET["lang"]) ? $_GET["lang"] : 'en_US';
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <?php endif; ?>
-<?php $qlang = isset($_GET['lang']) ? "?lang=" . $_GET["lang"] : ""; ?>
-<li class="map-extras"><a href="tabs/help.php<?php echo $qlang; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
-<li class="map-extras"><a href="tabs/about.php<?php echo $qlang; ?>"><?php echo _("About"); ?></a></li>
-<li class="map-extras"><a href="tabs/feedback.php<?php echo $qlang; ?>"><?php echo _("Feedback"); ?></a></li>
-<li class="map-extras"><a href="tabs/api.php<?php echo $qlang; ?>"><?php echo _("API"); ?></a></li>
+<?php $qlocale = isset($_GET['locale']) ? "?locale=" . $_GET["locale"] : ""; ?>
+<li class="map-extras"><a href="tabs/help.php<?php echo $qlocale; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
+<li class="map-extras"><a href="tabs/about.php<?php echo $qlocale; ?>"><?php echo _("About"); ?></a></li>
+<li class="map-extras"><a href="tabs/feedback.php<?php echo $qlocale; ?>"><?php echo _("Feedback"); ?></a></li>
+<li class="map-extras"><a href="tabs/api.php<?php echo $qlocale; ?>"><?php echo _("API"); ?></a></li>
 </ul>
 <form id="form-mapper" action="application/" method="post" autocomplete="off">
 
@@ -321,8 +321,8 @@ function set_up() {
                 ->get_output();
     exit();
   } else {
-    if(isset($_GET['lang']) && $_GET['lang'] == 'en') {
-      header('Location: http://' . $_SERVER['HTTP_HOST'] . '/?lang=en_US');
+    if(isset($_GET['locale']) && $_GET['locale'] == 'en') {
+      header('Location: http://' . $_SERVER['HTTP_HOST'] . '/?locale=en_US');
       exit();
     }
     $host = explode(".", $_SERVER['HTTP_HOST']);
@@ -336,7 +336,7 @@ function set_up() {
 
       USERSESSION::update_activity();
 
-      return array(new HEADER, USERSESSION::$accepted_languages);
+      return array(new HEADER, USERSESSION::$accepted_locales);
     }
   }
 }

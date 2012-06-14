@@ -41,7 +41,7 @@ class USERMAPS {
   private $_db;
 
   function __construct() {
-    USERSESSION::select_language();
+    USERSESSION::select_locale();
     $this->set_header()
          ->execute();
   }
