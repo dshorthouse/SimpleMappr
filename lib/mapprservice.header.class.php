@@ -42,7 +42,7 @@ class HEADER {
   */
   public static $local_js_files = array(
     'jquery'    => 'public/javascript/jquery-1.7.2.min.js',
-    'jquery-ui' => 'public/javascript/jquery-ui-1.8.18.min.js',
+    'jquery-ui' => 'public/javascript/jquery-ui-1.8.21.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
     'textarea'  => 'public/javascript/jquery.textarearesizer.compressed.js',
