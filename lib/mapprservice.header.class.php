@@ -96,7 +96,7 @@ class HEADER {
         }
       }
       $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
-      $this->addJS("jquery-ui", "public/javascript/jquery-ui-1.8.21.min.js");
+      $this->addJS("jquery-ui", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js");
     }
     return $this;
   }
