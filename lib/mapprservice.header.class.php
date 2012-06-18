@@ -91,11 +91,12 @@ class HEADER {
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
-        if ($value == 'public/javascript/jquery-1.7.1.min.js') {
+        if ($key == 'jquery' || $key == 'jquery-ui') {
           unset(self::$local_js_files[$key]);
         }
       }
       $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
+      $this->addJS("jquery-ui", "public/javascript/jquery-ui-1.8.21.min.js");
     }
     return $this;
   }
