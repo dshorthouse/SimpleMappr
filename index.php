@@ -59,7 +59,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <li class="map-extras"><a href="tabs/feedback.php<?php echo $qlocale; ?>"><?php echo _("Feedback"); ?></a></li>
 <li class="map-extras"><a href="tabs/api.php<?php echo $qlocale; ?>"><?php echo _("API"); ?></a></li>
 </ul>
-<form id="form-mapper" action="application/" method="post" autocomplete="off">
+<form id="form-mapper" accept-charset="UTF-8" action="application/" method="post" autocomplete="off">
 
 <!-- multipoint tab -->
 <div id="map-points">

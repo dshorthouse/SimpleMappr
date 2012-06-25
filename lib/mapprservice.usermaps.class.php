@@ -254,7 +254,7 @@ class USERMAPS {
     $data['mid'] = $record['mid'];
     $data['map'] = unserialize($record['map']);
 
-    header("Content-Type: application/json");            
+    header("Content-Type: application/json");
     echo json_encode($data);
   }
 
