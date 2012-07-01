@@ -602,6 +602,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "July 1, 2012"
+msgstr "1 juillet, 2012"
+
+#: .tabs/about.php:11
 msgid "June 14, 2012"
 msgstr "14 juin, 2012"
 
@@ -612,6 +616,10 @@ msgstr "2 avril, 2012"
 #: .tabs/about.php:11
 msgid "February 8, 2012"
 msgstr "8 février, 2012"
+
+#: .tabs/about.php
+msgid "Improvements: Added sort to columns in My Maps."
+msgstr "Améliorations: Ajout capacité de trier les colonnes dans Mes cartes"
 
 #: .tabs/about.php
 msgid "Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."

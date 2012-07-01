@@ -25,6 +25,7 @@ USERSESSION::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("July 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added sort to columns in My Maps."); ?></dd>
 <dt class="update"><?php echo _("June 14, 2012"); ?></dt><dd><?php echo _("Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."); ?></dd>
 <dt class="update"><?php echo _("April 2, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."); ?></dd>
 <dt class="update"><?php echo _("February 8, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS now properly download."); ?></dd>
@@ -37,8 +38,6 @@ USERSESSION::select_locale();
 <dt class="update"><?php echo _("November 22, 2011"); ?></dt><dd><?php echo _("Improvements: Added download as PowerPoint (.pptx)."); ?></dd>
 <dt class="update"><?php echo _("November 18, 2011"); ?></dt><dd><?php echo _("Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."); ?></dd>
 <dt class="update"><?php echo _("November 17, 2011"); ?></dt><dd><?php echo _("Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."); ?></dd>
-<dt class="update"><?php echo _("November 16, 2011"); ?></dt><dd><?php echo _("Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."); ?></dd>
-<dt class="update"><?php echo _("November 15, 2011"); ?></dt><dd><?php echo _("Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."); ?></dd>
 </dl>
 </div>
 <div id="live-updates">

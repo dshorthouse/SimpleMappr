@@ -101,6 +101,18 @@ class USERS {
   * Index method to produce table of users
   */
   private function index_users() {
+    $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+    $order = "u.access ".$dir;
+
+    if(isset($_GET['sort'])) {
+      $order = "";
+      if($_GET['sort'] == "num" || $_GET['sort'] == "access" || $_GET['sort'] == "username") {
+        if($_GET['sort'] == "accessed") { $order = "m."; }
+        if($_GET['sort'] == "username") { $order = "u."; }
+        $order = $order.$this->_db->escape($_GET['sort'])." ".$dir;
+      }
+    }
+
     $sql = "
       SELECT
         u.uid, u.username, u.email, u.access, count(m.mid) as num
@@ -110,7 +122,7 @@ class USERS {
         maps m ON (u.uid = m.uid)
       GROUP BY
         u.username
-      ORDER BY u.access DESC";
+      ORDER BY ".$order;
 
    $rows = $this->_db->query($sql);
 
@@ -120,10 +132,14 @@ class USERS {
      $output .= '<table class="grid-users">' . "\n";
      $output .= '<thead>' . "\n";
      $output .= '<tr>' . "\n";
-     $output .= '<th class="left-align">'._("Username").'</th>';
+     $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$dir : "";
+     $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
      $output .= '<th class="left-align">'._("Email").'</th>';
-     $output .= '<th>'._("Maps").'</th>';
-     $output .= '<th>'._("Last Access").'</th>';
+     $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "num" && isset($_GET['dir'])) ? " ".$dir : "";
+     $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="num" href="#">'._("Maps").'</a></th>';
+     $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "access" && isset($_GET['dir'])) ? " ".$dir : "";
+     if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
+     $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="access" href="#">'._("Last Access").'</a></th>';
      $output .= '<th class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></th>';
      $output .= '</tr>' . "\n";
      $output .= '</thead>' . "\n";
@@ -147,10 +163,18 @@ class USERS {
      }
      $output .= '</tbody>' . "\n";
      $output .= '</table>' . "\n";
+
+     $dir = ($dir == "desc") ? "asc" : "desc";
+
      $output .= '<script type="text/javascript">
-       $(".toolsRefresh", ".grid-users").click(function(){
+       $(".toolsRefresh", ".grid-users").click(function (e) {
+         e.preventDefault();
          Mappr.loadUserList();
-         return false;
+       });
+       $(".ui-icon-triangle-sort", ".grid-users").click(function (e) {
+         e.preventDefault();
+         var item = $(this).attr("data-sort");
+         Mappr.loadUserList({ sort : { item : item, dir: "'.$dir.'" }});
        });
        </script>';
    }

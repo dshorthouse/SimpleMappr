@@ -135,6 +135,8 @@ class USERMAPS {
   private function index_maps() {
     $where = array();
     $output = '';
+    $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+    $order = "m.created ".$dir;
 
     if($this->_uid != 1) {
       $where['user'] =  "WHERE m.uid = ".$this->_db->escape($this->_uid);
@@ -159,6 +161,11 @@ class USERMAPS {
         $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->_db->escape($_GET['q'])."%'";
       }
     }
+    if(isset($_GET['sort'])) {
+      if($_GET['sort'] == "created" || $_GET['sort'] == "updated") {
+        $order = "m.".$_GET['sort'] . " ".$dir;
+      }
+    }
 
     $sql = "
       SELECT
@@ -174,7 +181,7 @@ class USERMAPS {
       INNER JOIN
         users u ON (m.uid = u.uid)
       ".implode(" AND ", $where)."
-      ORDER BY m.created DESC";
+      ORDER BY ".$order;
 
     $rows = $this->_db->query($sql);
 
@@ -183,8 +190,11 @@ class USERMAPS {
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
       $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']).'</th>';
-      $output .= '<th class="center-align">'._("Created").'</th>';
-      $output .= '<th class="center-align">'._("Updated").'</th>';
+      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$dir : "";
+      if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
+      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
+      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "updated" && isset($_GET['dir'])) ? " ".$dir : "";
+      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="updated" href="#">'._("Updated").'</th>';
       $output .= '<th class="actions">'._("Actions");
       if($this->_uid == 1) {
         $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
@@ -216,13 +226,33 @@ class USERMAPS {
       }
       $output .= '</tbody>' . "\n";
       $output .= '</table>' . "\n";
+
+      $dir = ($dir == "desc") ? "asc" : "desc";
+
       $output .= '<script type="text/javascript">
         function loadList(self) {
-          if(self.value.length === 0) { Mappr.loadMapList(); } else { Mappr.loadMapList(self.value); }
+          var data = {};
+          $.each($(".ui-icon-triangle-sort", ".grid-usermaps"), function() {
+            if($(this).hasClass("asc")) {
+              data["sort"] = { item : $(this).attr("data-sort"), dir : "asc" };
+            } else if ($(this).hasClass("desc")) {
+              data.sort = { item : $(this).attr("data-sort"), dir : "desc" };
+            }
+          });
+          if(self.value.length !== 0) { data["q"] = self.value; }
+          Mappr.loadMapList(data);
         }
-        $(".toolsRefresh", ".grid-usermaps").click(function(e){
+        $(".toolsRefresh", ".grid-usermaps").click(function(e) {
           e.preventDefault();
           Mappr.loadMapList();
+        });
+        $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
+          e.preventDefault();
+          var data = { sort : { item : $(this).attr("data-sort"), dir : "'.$dir.'" } };
+          if($("#filter-mymaps").val().length !== 0) {
+            data.q = $("#filter-mymaps").val();
+          }
+          Mappr.loadMapList(data);
         });
         $("#filter-mymaps")
           .keypress(function(e) { if (e.which === 13) { loadList(this); } })

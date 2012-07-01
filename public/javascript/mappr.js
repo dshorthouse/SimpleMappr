@@ -1210,29 +1210,38 @@ $(function () {
 
   }; /** end Mappr.bindAddButtons **/
 
-  Mappr.loadMapList = function (q) {
+  Mappr.loadMapList = function (object) {
     var self  = this,
+        obj = object || {},
         clone = $('.usermaps-loading').clone(true),
-        query = "";
+        data = {};
 
     $('#usermaps').html("").append(clone.show());
 
-    if(q && self.getLanguage()) {
-      query = "&q=" + encodeURIComponent(q.toLowerCase());
-    } else if(q && self.getLanguage() === "") {
-      query = "?q=" + encodeURIComponent(q.toLowerCase());
+    data = {
+      locale : self.getParameterByName("locale"),
+      q      : (obj.q) ? encodeURIComponent(obj.q.toLowerCase()) : null
+    };
+
+    if(obj.sort) {
+      data.sort = obj.sort.item;
+      data.dir = obj.sort.dir;
     }
+
+    if(!data.locale) { delete data.locale; }
+    if(!data.q) { delete data.q; }
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/" + self.getLanguage() + query,
+      url      : self.settings.baseUrl + "/usermaps/",
+      data     : data,
       dataType : 'html',
       success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
           $('#usermaps').find('.usermaps-loading').remove().end().html(data);
-          $('#filter-mymaps').val(q);
+          $('#filter-mymaps').val(obj.q);
           $('.map-load').click(function (e) {
             e.preventDefault();
             self.loadMap(this);
@@ -1613,14 +1622,25 @@ $(function () {
 
   };
 
-  Mappr.loadUserList = function () {
-    var self = this, clone = $('.userdata-loading').clone(true);
+  Mappr.loadUserList = function (object) {
+    var self  = this,
+        clone = $('.userdata-loading').clone(true),
+        obj   = object || {},
+        data  = { locale : this.getParameterByName("locale") };
 
     $('#userdata').html("").append(clone.show());
 
+    if(obj.sort) {
+      data.sort = obj.sort.item;
+      data.dir = obj.sort.dir;
+    }
+
+    if(!data.locale) { delete data.locale; }
+
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + '/users/' + self.getLanguage(),
+      url      : self.settings.baseUrl + '/users/',
+      data     : data,
       dataType : 'html',
       success  : function (data) {
         if(data.indexOf("access denied") !== -1) {
