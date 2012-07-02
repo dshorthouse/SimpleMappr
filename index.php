@@ -296,6 +296,8 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150)</span></p>
   <div class="header"><h2><?php echo _('KML'); ?></h2></div>
   <p><input id="embed-kml" type="text" size="65" value="" /></p>
+  <div class="header"><h2><?php echo _('SVG'); ?></h2></div>
+  <p><input id="embed-svg" type="text" size="65" value="" /></p>
   <div class="header"><h2><?php echo _('GeoJSON'); ?></h2></div>
   <p><input id="embed-json" type="text" size="65" value="" /></p>
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>

@@ -602,6 +602,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "July 2, 2012"
+msgstr "2 juillet, 2012"
+
+#: .tabs/about.php:11
 msgid "July 1, 2012"
 msgstr "1 juillet, 2012"
 
@@ -616,6 +620,10 @@ msgstr "2 avril, 2012"
 #: .tabs/about.php:11
 msgid "February 8, 2012"
 msgstr "8 février, 2012"
+
+#: .tabs/about
+msgid "Improvements: Added svg as an embedded output format."
+msgstr "Améliorations: Ajout format intégré svg."
 
 #: .tabs/about.php
 msgid "Improvements: Added sort to columns in My Maps."

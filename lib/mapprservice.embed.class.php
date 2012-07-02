@@ -90,7 +90,7 @@ class MAPPREMBED extends MAPPR {
   }
 
   public function execute() {
-    if($this->output == 'pnga') {
+    if($this->output == 'pnga' || $this->output == 'svg') {
       parent::execute();
     }
     return $this;
@@ -225,6 +225,11 @@ class MAPPREMBED extends MAPPR {
         $this->add_header();
         $kml = new Kml;
         $kml->get_request($this->map, $this->coords)->generate_kml();
+      break;
+
+      case 'svg': 
+        header("Content-Type: image/svg+xml");
+        $this->image->saveImage("");
       break;
     }
   }

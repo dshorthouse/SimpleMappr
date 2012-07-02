@@ -1550,7 +1550,7 @@ $(function () {
 
   Mappr.activateEmbed = function (mid) {
     var self    = this,
-        types   = ['img','kml','json'];
+        types   = ['img','kml','svg','json'];
 
     $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function (e) {
       e.preventDefault();
