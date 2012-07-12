@@ -2,7 +2,7 @@
 
 var Mappr = Mappr || { 'settings': {} };
 
-$(function () {
+$(function() {
 
   "use strict";
 
@@ -24,10 +24,10 @@ $(function () {
   };
 
   $.ajaxSetup({
-    xhr:function () { return new XMLHttpRequest(); }
+    xhr:function() { return new XMLHttpRequest(); }
   });
 
-  $(window).resize(function () {
+  $(window).resize(function() {
     var arrPageSizes  = Mappr.getPageSize(),
         arrPageScroll = Mappr.getPageScroll();
 
@@ -46,11 +46,11 @@ $(function () {
     });
   });
 
-  Mappr.trackEvent = function (category, action) {
+  Mappr.trackEvent = function(category, action) {
     if (typeof _gaq !== "undefined") { _gaq.push(['_trackEvent', category, action]); }
   };
 
-  Mappr.getPageSize = function () {
+  Mappr.getPageSize = function() {
     var xScroll, yScroll, windowWidth, windowHeight, pageHeight, pageWidth;
 
     if (window.innerHeight && window.scrollMaxY) {
@@ -95,7 +95,7 @@ $(function () {
 
   }; /** end Mappr.getPageSize **/
 
-  Mappr.getPageScroll = function () {
+  Mappr.getPageScroll = function() {
     var xScroll, yScroll;
 
     if (self.pageYOffset) {
@@ -113,7 +113,7 @@ $(function () {
 
   }; /** end Mappr.getPageScroll **/
 
-  Mappr.showCoords = function (c) {
+  Mappr.showCoords = function(c) {
     var x        = parseFloat(c.x),
         y        = parseFloat(c.y),
        x2        = parseFloat(c.x2),
@@ -154,12 +154,12 @@ $(function () {
 
         $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
-        $('.jcrop-coord').live("blur", function () {
+        $('.jcrop-coord').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
             Mappr.vars.cropUpdated = Mappr.updateCropCoordinates();
           }
         })
-        .live("keypress", function (e) {
+        .live("keypress", function(e) {
           var key = e.keyCode || e.which;
           if(key === 13 || key === 9) {
             e.preventDefault();
@@ -168,12 +168,12 @@ $(function () {
           }
         });
 
-        $('.jcrop-dimension').live("blur", function () {
+        $('.jcrop-dimension').live("blur", function() {
           if(!Mappr.vars.cropUpdated) {
             Mappr.vars.cropUpdated = Mappr.updateCropDimensions();
           }
         })
-        .live("keypress", function (e) {
+        .live("keypress", function(e) {
           var key = e.keyCode || e.which;
           if(key === 13 || key === 9) {
             e.preventDefault();
@@ -196,7 +196,7 @@ $(function () {
     }
   };
 
-  Mappr.updateCropDimensions = function () {
+  Mappr.updateCropDimensions = function() {
     var rubberband   = $('#bbox_rubberband').val().split(","),
         rubberband_w = parseFloat(rubberband[2])-parseFloat(rubberband[0]),
         rubberband_h = parseFloat(rubberband[3])-parseFloat(rubberband[1]),
@@ -229,7 +229,7 @@ $(function () {
     return true;
   };
 
-  Mappr.updateCropCoordinates = function () {
+  Mappr.updateCropCoordinates = function() {
     var ul_arr   = [],
         ul_point = {},
         lr_arr   = [],
@@ -247,7 +247,7 @@ $(function () {
     return true;
   };
 
-  Mappr.pix2geo = function (point) {
+  Mappr.pix2geo = function(point) {
     var deltaX = 0,
         deltaY = 0,
         bbox   = $('#bbox_map').val(),
@@ -269,7 +269,7 @@ $(function () {
     return geo;
   };
 
-  Mappr.geo2pix = function (coord) {
+  Mappr.geo2pix = function(coord) {
     var deltaX = 0,
         deltaY = 0,
         bbox   = $('#bbox_map').val(),
@@ -289,19 +289,19 @@ $(function () {
     return point;
   };
 
-  Mappr.roundNumber = function (num, dec) {
+  Mappr.roundNumber = function(num, dec) {
     return Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
   };
 
-  Mappr.tabSelector = function (tab) {
+  Mappr.tabSelector = function(tab) {
     $("#tabs").tabs('select',tab);
   };
 
-  Mappr.RGBtoHex = function (R,G,B) {
+  Mappr.RGBtoHex = function(R,G,B) {
     return this.toHex(R)+this.toHex(G)+this.toHex(B);
   };
 
-  Mappr.toHex = function (N) {
+  Mappr.toHex = function(N) {
     if (N === null) { return "00"; }
     N = parseInt(N, 10);
     if (N === 0 || isNaN(N)) { return "00"; }
@@ -311,47 +311,47 @@ $(function () {
     return "0123456789ABCDEF".charAt((N-N%16)/16) + "0123456789ABCDEF".charAt(N%16);
   };
 
-  Mappr.bindToolbar = function () {
+  Mappr.bindToolbar = function() {
     var self = this;
 
-    $("#actionsBar ul li").hover(function () {
+    $("#actionsBar ul li").hover(function() {
       $(this).addClass("ui-state-hover");
-    }, function () {
+    }, function() {
       $(this).removeClass("ui-state-hover");
     });
 
-    $('.toolsZoomIn').click(function (e) {
+    $('.toolsZoomIn').click(function(e) {
       e.preventDefault();
       self.mapZoomIn();
       self.trackEvent('toolbar', 'zoomin');
     });
 
-    $('.toolsZoomOut').click(function (e) {
+    $('.toolsZoomOut').click(function(e) {
       e.preventDefault();
       self.mapZoomOut();
       self.trackEvent('toolbar', 'zoomout');
     });
 
-    $('.toolsCrop').click(function (e) {
+    $('.toolsCrop').click(function(e) {
       e.preventDefault();
       self.mapCrop();
       self.trackEvent('toolbar', 'crop');
     });
 
     $('.toolsQuery').ColorPicker({
-      onBeforeShow: function () {
+      onBeforeShow: function() {
         $(this).ColorPickerSetColor(self.RGBtoHex(150, 150, 150));
       },
-      onShow: function (colpkr) {
+      onShow: function(colpkr) {
         $(colpkr).show();
         self.destroyJcrop();
         return false;
       },
-      onHide: function (colpkr) {
+      onHide: function(colpkr) {
         $(colpkr).hide();
         return false;
       },
-      onSubmit: function (hsb, hex, rgb, el) {
+      onSubmit: function(hsb, hex, rgb, el) {
         hsb = null;
         hex = null;
         $(el).ColorPickerHide();
@@ -360,18 +360,18 @@ $(function () {
         self.vars.zoom = false;
         self.trackEvent('toolbar', 'query');
       }
-    }).click(function (e) {
+    }).click(function(e) {
       e.preventDefault();
       self.resetJbbox();
     });
 
-    $('.toolsRefresh').click(function (e) {
+    $('.toolsRefresh').click(function(e) {
       e.preventDefault();
       self.mapRefresh();
       self.trackEvent('toolbar', 'refresh');
     });
 
-    $('.toolsRebuild').click(function (e) {
+    $('.toolsRebuild').click(function(e) {
       e.preventDefault();
       self.mapRebuild();
       self.trackEvent('toolbar', 'rebuild');
@@ -379,7 +379,7 @@ $(function () {
 
   }; /** end Mappr.bindToolbar **/
 
-  Mappr.mapCrop = function () {
+  Mappr.mapCrop = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     var coords   = {},
         ul_arr   = [],
@@ -401,27 +401,31 @@ $(function () {
     Mappr.vars.zoom = false;
   };
 
-  Mappr.mapRefresh = function () {
-    //Note: method calls must be Mappr.x for hotkeys to work
+  Mappr.resetAndBuild = function() {
     Mappr.resetJbbox();
     Mappr.destroyRedo();
     Mappr.showMap();
+  };
+
+  Mappr.mapRefresh = function() {
+    //Note: method calls must be Mappr.x for hotkeys to work
+    Mappr.resetAndBuild();
     $("#tabs").tabs('select',0);
   };
 
-  Mappr.mapRebuild = function () {
+  Mappr.mapRebuild = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
-    $.each(['bbox_map', 'projection_map', 'bbox_rubberband', 'rotation', 'projection', 'pan'], function () {
+    $.each(['bbox_map', 'projection_map', 'bbox_rubberband', 'rotation', 'projection', 'pan'], function() {
       $('#' + this).val('');
     });
     Mappr.destroyRedo();
     Mappr.showMap();
   };
 
-  Mappr.bindArrows = function () {
+  Mappr.bindArrows = function() {
     var self = this;
 
-    $('.arrows').click(function (e) {
+    $('.arrows').click(function(e) {
       e.preventDefault();
       $('#pan').val($(this).attr("data-pan"));
       self.resetJbbox();
@@ -430,49 +434,41 @@ $(function () {
     });
   };
 
-  Mappr.mapPanUp = function () {
+  Mappr.mapPanUp = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('up');
-    Mappr.resetJbbox();
-    Mappr.destroyRedo();
-    Mappr.showMap();
+    Mappr.resetAndBuild();
   };
 
-  Mappr.mapPanDown = function () {
+  Mappr.mapPanDown = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('down');
-    Mappr.resetJbbox();
-    Mappr.destroyRedo();
-    Mappr.showMap();
+    Mappr.resetAndBuild();
   };
 
-  Mappr.mapPanLeft = function () {
+  Mappr.mapPanLeft = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('left');
-    Mappr.resetJbbox();
-    Mappr.destroyRedo();
-    Mappr.showMap();
+    Mappr.resetAndBuild();
   };
 
-  Mappr.mapPanRight = function () {
+  Mappr.mapPanRight = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#pan').val('right');
-    Mappr.resetJbbox();
-    Mappr.destroyRedo();
-    Mappr.showMap();
+    Mappr.resetAndBuild();
   };
 
-  Mappr.mapList = function () {
+  Mappr.mapList = function() {
     $("#tabs").tabs('select',3);
   };
 
-  Mappr.mapZoomIn = function () {
+  Mappr.mapZoomIn = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.initJzoom();
     Mappr.vars.zoom = true;
   };
 
-  Mappr.mapZoomOut = function () {
+  Mappr.mapZoomOut = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetJbbox();
     $('#zoom_out').val(1);
@@ -481,10 +477,10 @@ $(function () {
     $('#zoom_out').val('');
   };
 
-  Mappr.storageType = function (type) {
+  Mappr.storageType = function(type) {
     var index = 0;
 
-    index = $.grep($.jStorage.index(), function (value, i) {
+    index = $.grep($.jStorage.index(), function(value, i) {
       i = null;
       return (value.substring(0, type.length) === type);
     });
@@ -492,7 +488,7 @@ $(function () {
     return index;
   };
 
-  Mappr.toggleUndo = function (activate) {
+  Mappr.toggleUndo = function(activate) {
     var self  = this,
         index = this.storageType("do");
 
@@ -500,7 +496,7 @@ $(function () {
 
     if(activate && index.length > 1) {
       if(index.length > self.vars.undoSize) { $.jStorage.deleteKey(index.shift()); }
-      $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function (e) {
+      $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function(e) {
         e.preventDefault();
         self.mapUndo();
         self.trackEvent('edit', 'undo');
@@ -508,13 +504,13 @@ $(function () {
     }
   };
 
-  Mappr.toggleRedo = function (activate) {
+  Mappr.toggleRedo = function(activate) {
     var self = this;
 
     $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
 
     if(activate) {
-      $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function (e) {
+      $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function(e) {
         e.preventDefault();
         self.mapRedo();
         self.trackEvent('edit', 'redo');
@@ -522,7 +518,7 @@ $(function () {
     }
   };
 
-  Mappr.destroyRedo = function () {
+  Mappr.destroyRedo = function() {
     var index = Mappr.storageType("undo");
 
     if(index.length > 0) {
@@ -531,7 +527,7 @@ $(function () {
     }
   };
 
-  Mappr.mapUndo = function () {
+  Mappr.mapUndo = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     var index          = Mappr.storageType("do"),
         curr_key       = "",
@@ -565,7 +561,7 @@ $(function () {
     if(index.length === 2) { Mappr.toggleUndo(); }
   };
 
-  Mappr.mapRedo = function () {
+  Mappr.mapRedo = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     var undo_index     = Mappr.storageType("undo"),
         undo_key       = "",
@@ -598,7 +594,7 @@ $(function () {
     Mappr.toggleUndo(true);
   };
 
-  Mappr.bindHotkeys = function () {
+  Mappr.bindHotkeys = function() {
     var self = this, keys = {}, arrows = {};
 
     keys = {
@@ -625,19 +621,19 @@ $(function () {
 
     if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
 
-    $.each(keys, function (key, value) {
+    $.each(keys, function(key, value) {
       $(document).bind('keydown', key, value);
     });
 
     $('#mapOutput').hover(
-      function () {
-        $.each(arrows, function (key, value) {
+      function() {
+        $.each(arrows, function(key, value) {
           $(document).bind('keydown', key, value);
         });
-        $('#mapOutputImage').dblclick(function (e) { self.dblclickZoom(this, e); });
+        $('#mapOutputImage').dblclick(function(e) { self.dblclickZoom(this, e); });
       },
-      function () {
-        $.each(arrows, function (key, value) {
+      function() {
+        $.each(arrows, function(key, value) {
           key = null;
           $(document).unbind('keydown', value);
         });
@@ -646,31 +642,31 @@ $(function () {
     );
   };
 
-  Mappr.hardResetShowMap = function () {
+  Mappr.hardResetShowMap = function() {
     this.resetJbbox();
     this.destroyRedo();
     this.showMap();
   };
 
-  Mappr.bindSettings = function () {
+  Mappr.bindSettings = function() {
     var self = this;
 
-    $('.layeropt').click(function () {
+    $('.layeropt').click(function() {
       self.hardResetShowMap();
     });
 
-    $('.gridopt').click(function () {
+    $('.gridopt').click(function() {
       if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
       self.hardResetShowMap();
     });
 
-    $('#gridlabel').click(function () {
+    $('#gridlabel').click(function() {
       if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
       if($(this).prop('checked')) { $(this).val('false'); }
       self.hardResetShowMap();
     });
 
-    $('#projection').change(function () {
+    $('#projection').change(function() {
       if($(this).val() !== "") {
         $.cookie("jcrop_coords", null);
         self.hardResetShowMap();
@@ -679,16 +675,16 @@ $(function () {
 
     self.toggleFileFactor();
 
-    $('.download-factor').change(function () {
+    $('.download-factor').change(function() {
       self.toggleFileFactor($(this).val());
     });
 
-    $('.download-filetype').change(function () {
+    $('.download-filetype').change(function() {
       self.toggleFileType(this);
     });
   };
 
-  Mappr.bindSlider = function () {
+  Mappr.bindSlider = function() {
     var self = this;
 
     $("#border-slider").slider({
@@ -696,7 +692,7 @@ $(function () {
       min   : 1,
       max   : 2,
       step  : 0.25,
-      slide: function (e, ui) {
+      slide: function(e, ui) {
         e = null;
         $('input[name="border_thickness"]').val(ui.value);
         self.destroyRedo();
@@ -706,7 +702,7 @@ $(function () {
     });
   };
 
-  Mappr.toggleFileFactor = function (factor) {
+  Mappr.toggleFileFactor = function(factor) {
     var scale      = "",
         rubberband = $('#bbox_rubberband').val().split(",");
 
@@ -722,58 +718,58 @@ $(function () {
     $('span', '#scale-measure').text(scale).parent().show();
   };
 
-  Mappr.toggleFileType = function (obj) {
+  Mappr.toggleFileType = function(obj) {
     if($(obj).attr("id") === 'download-svg' || $(obj).attr("id") === 'download-pptx' || $(obj).attr("id") === 'download-docx') {
-      $.each(["legend", "scalebar"], function () {
+      $.each(["legend", "scalebar"], function() {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
       $('#border').removeAttr("disabled");
     } else if($(obj).attr("id") === 'download-kml') {
-      $.each(["legend", "scalebar", "border"], function () {
+      $.each(["legend", "scalebar", "border"], function() {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
     } else {
-      $.each(["border", "legend", "scalebar"], function () {
+      $.each(["border", "legend", "scalebar"], function() {
         $('#'+this).removeAttr("disabled");
       });
       $('#border').removeAttr("disabled");
     }
   };
 
-  Mappr.bindColorPickers = function () {
+  Mappr.bindColorPickers = function() {
     var self = this;
 
     $('.colorPicker').ColorPicker({
       element : $(this),
-      onBeforeShow: function () {
+      onBeforeShow: function() {
         var color = $(this).val().split(" ");
         $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
       },
-      onHide: function (colpkr) {
+      onHide: function(colpkr) {
         $(colpkr).hide();
         return false;
       },
-      onSubmit: function (hsb, hex, rgb, el) {
+      onSubmit: function(hsb, hex, rgb, el) {
         hsb = null;
         hex = null;
         $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
         $(el).ColorPickerHide();
       }
-    }).bind('keyup', function () {
+    }).bind('keyup', function() {
       var color = $(this).val().split(" ");
       $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
     });
   };
 
-  Mappr.bindClearButtons = function () {
+  Mappr.bindClearButtons = function() {
     var self = this;
 
-    $('.clearLayers, .clearRegions, .clearFreehand').click(function (e) {
+    $('.clearLayers, .clearRegions, .clearFreehand').click(function(e) {
       var fieldsets = $(this).parent().prev().prev().children();
 
       e.preventDefault();
-      $.each(['.m-mapTitle', 'textarea'], function () { $(fieldsets).find(this).val(''); });
-      $.each(['Shape', 'Size'], function () {
+      $.each(['.m-mapTitle', 'textarea'], function() { $(fieldsets).find(this).val(''); });
+      $.each(['Shape', 'Size'], function() {
         if($(fieldsets).find('.m-map'+this).length > 0) { $(fieldsets).find('.m-map'+this)[0].selectedIndex = 3; }
       });
       if($(this).hasClass("clearLayers")) {
@@ -785,28 +781,28 @@ $(function () {
       return false;
     });
 
-    $('.clearself').click(function (e) {
+    $('.clearself').click(function(e) {
       e.preventDefault();
       self.clearSelf($(this));
     });
 
   }; /** end Mappr.bindClearButtons **/
 
-  Mappr.bindAutocomplete = function () {
+  Mappr.bindAutocomplete = function() {
     var self = this, term = "", terms = [];
     
-    $('textarea', '.fieldset-regions').bind("keydown", function (e) {
+    $('textarea', '.fieldset-regions').bind("keydown", function(e) {
       if (e.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { e.preventDefault(); }
     }).autocomplete({
-      source: function (request, response) {
+      source: function(request, response) {
         $.getJSON( "/places/" + self.extractLast(request.term), {}, response);
       },
-      search: function () {
+      search: function() {
         term = self.extractLast(this.value);
         if (term.length < 2) { return false; }
       },
-      focus: function () { return false; },
-      select: function (e, ui) {
+      focus: function() { return false; },
+      select: function(e, ui) {
         e = null;
         terms = self.split(this.value);
         terms.pop();
@@ -818,7 +814,7 @@ $(function () {
     });
   };
 
-  Mappr.split = function ( val, delimiter ) {
+  Mappr.split = function( val, delimiter ) {
     switch(delimiter) {
       case '[':
        return val.split(/\]/);
@@ -828,16 +824,16 @@ $(function () {
     }
   };
 
-  Mappr.extractLast = function ( term ) {
+  Mappr.extractLast = function( term ) {
     return this.split(term).pop();
   };
 
-  Mappr.clearSelf = function (el) {
+  Mappr.clearSelf = function(el) {
     var box = $(el).parent(),
         color_picker = $(box).find('.colorPicker');
 
-    $.each(['.m-mapTitle', 'textarea'], function () { $(box).find(this).val(''); });
-    $.each(['Shape', 'Size'], function () {
+    $.each(['.m-mapTitle', 'textarea'], function() { $(box).find(this).val(''); });
+    $.each(['Shape', 'Size'], function() {
       if($(box).find('.m-map'+this).length > 0) { $(box).find('.m-map'+this)[0].selectedIndex = 3; }
     });
     if($(box).parent().hasClass("fieldset-points")) {
@@ -847,7 +843,7 @@ $(function () {
     }
   };
 
-  Mappr.destroyJcrop = function () {
+  Mappr.destroyJcrop = function() {
     //Note: object reference must be Mappr.x for hotkeys to work
     var vars = Mappr.vars;
 
@@ -862,13 +858,13 @@ $(function () {
     Mappr.toggleFileFactor();
   };
 
-  Mappr.resetJbbox = function () {
+  Mappr.resetJbbox = function() {
     this.vars.jCropType = "zoom";
-    $.each(['rubberband', 'query'], function () { $('#bbox_' + this).val(''); });
+    $.each(['rubberband', 'query'], function() { $('#bbox_' + this).val(''); });
     this.toggleFileFactor();
   };
 
-  Mappr.initJcrop = function (select) {
+  Mappr.initJcrop = function(select) {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -887,7 +883,7 @@ $(function () {
     $('#mapCropMessage').show();
   };
 
-  Mappr.initJzoom = function () {
+  Mappr.initJzoom = function() {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -906,10 +902,10 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').mousedown(function () { self.activateJcrop('zoom'); });
+    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('zoom'); });
   };
 
-  Mappr.initJquery = function () {
+  Mappr.initJquery = function() {
     var self = this, vars = this.vars;
 
     self.destroyJcrop();
@@ -928,10 +924,10 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').mousedown(function () { self.activateJcrop('query'); });
+    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('query'); });
   };
 
-  Mappr.activateJcrop = function (type) {
+  Mappr.activateJcrop = function(type) {
     switch(type) {
       case 'zoom':
         $(document).bind("mouseup", this, this.aZoom);
@@ -943,15 +939,14 @@ $(function () {
     }
   };
 
-  Mappr.aZoom = function (event) {
+  Mappr.aZoom = function(event) {
     var self = event.data;
-
     self.destroyRedo();
     self.showMap();
     $(document).unbind("mouseup", self.aZoom);
   };
 
-  Mappr.dblclickZoom = function (obj, e) {
+  Mappr.dblclickZoom = function(obj, e) {
     var x = 0, y = 0, pos = {};
 
     pos = $(obj).offset();
@@ -963,7 +958,7 @@ $(function () {
     this.showMap();
   };
 
-  Mappr.aQuery = function (e) {
+  Mappr.aQuery = function(e) {
     var self      = e.data,
         i         = 0,
         fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
@@ -988,7 +983,7 @@ $(function () {
       type : 'POST',
       url  : self.settings.baseUrl + '/query/',
       data : formData,
-      success: function (data) {
+      success: function(data) {
         if(data.length > 0) {
           var regions       = "",
               num_fieldsets = $('.fieldset-regions').length;
@@ -1022,7 +1017,7 @@ $(function () {
 
   }; /** end Mappr.aQuery **/
 
-  Mappr.textareaCounter = function (type, action) {
+  Mappr.textareaCounter = function(type, action) {
     var self = this;
 
     switch(action) {
@@ -1056,7 +1051,7 @@ $(function () {
 
   }; /** end Mappr.textareaCounter **/
 
-  Mappr.addAccordionPanel = function (data_type) {
+  Mappr.addAccordionPanel = function(data_type) {
     var self     = this,
         counter  = self.textareaCounter(data_type, 'get'),
         button   = $(".addmore[data-type='" + data_type + "']"),
@@ -1079,43 +1074,43 @@ $(function () {
                 .attr("name", data_type + "["+num.toString()+"][data]")
                 .removeClass("textarea-processed")
                 .val("")
-                .each(function () {
+                .each(function() {
                   self.addGrippies(this);
                 });
 
         clone.find("select.m-mapShape").attr("name", data_type + "["+num.toString()+"][shape]").val("circle");
         clone.find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
         clone.find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
-          onBeforeShow: function () {
+          onBeforeShow: function() {
             var color = $(this).val().split(" ");
             $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
           },
-          onHide: function (colpkr) {
+          onHide: function(colpkr) {
             $(colpkr).hide();
             return false;
           },
-          onSubmit: function (hsb, hex, rgb, el) {
+          onSubmit: function(hsb, hex, rgb, el) {
             hsb = null;
             hex = null;
             $(el).val(rgb.r + " " + rgb.g + " " + rgb.b);
             $(el).ColorPickerHide();
           }
-        }).bind('keyup', function () {
+        }).bind('keyup', function() {
           var color = $(this).val().split(" ");
           $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
         });
 
         children = button.parent().prev().append(clone).children("div");
 
-        children.each(function (i, val) {
+        children.each(function(i, val) {
           val = null;
           if (i === children.length-1) {
-            $(this).find("button.removemore").show().click(function (e) {
+            $(this).find("button.removemore").show().click(function(e) {
               e.preventDefault();
               self.removeAccordionPanel(clone, data_type);
               counter = self.textareaCounter(data_type, 'decrease');
             }).parent()
-            .find("button.clearself").click(function (e) {
+            .find("button.clearself").click(function(e) {
               e.preventDefault();
               self.clearSelf($(this));
             }).parent().parent()
@@ -1142,10 +1137,10 @@ $(function () {
 
   }; /** end Mappr.addAccordionPanel **/
 
-  Mappr.removeAccordionPanel = function (clone, data_type) {
+  Mappr.removeAccordionPanel = function(clone, data_type) {
     var button = $(".addmore[data-type='" + data_type + "']");
 
-    clone.nextAll().each(function () {
+    clone.nextAll().each(function() {
       var num = parseInt($(this).find("h3 a").text().split(" ")[1],10);
       $(this).find("h3 a").text($(this).find("h3 a").text().split(" ")[0] + " " + (num-1).toString());
       $(this).find("input.m-mapTitle").attr("name", data_type + "["+(num-2).toString()+"][title]");
@@ -1158,7 +1153,7 @@ $(function () {
     button.removeAttr("disabled");
   };
 
-  Mappr.addGrippies = function (obj) {
+  Mappr.addGrippies = function(obj) {
     var textarea     = $(obj).addClass("textarea-processed"),
         staticOffset = null;
 
@@ -1182,10 +1177,10 @@ $(function () {
     $(obj).parent().find(".grippie").bind('mousedown', startDrag);
   };
 
-  Mappr.bindAddButtons = function () {
+  Mappr.bindAddButtons = function() {
     var self = this;
 
-    $('.addmore').click(function (e) {
+    $('.addmore').click(function(e) {
       var data_type = $(this).attr("data-type"), fieldsets = 0;
       e.preventDefault();
       self.addAccordionPanel(data_type);
@@ -1196,7 +1191,7 @@ $(function () {
 
   }; /** end Mappr.bindAddButtons **/
 
-  Mappr.loadMapList = function (object) {
+  Mappr.loadMapList = function(object) {
     var self  = this,
         obj = object || {},
         clone = $('.usermaps-loading').clone(true),
@@ -1222,18 +1217,18 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/",
       data     : data,
       dataType : 'html',
-      success  : function (data) {
+      success  : function(data) {
         if(data.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
           $('#usermaps').find('.usermaps-loading').remove().end().html(data);
           $('#filter-mymaps').val(obj.q);
-          $('.map-load').click(function (e) {
+          $('.map-load').click(function(e) {
             e.preventDefault();
             self.loadMap(this);
             self.trackEvent('map', 'load');
           });
-          $('.map-delete').click(function (e) {
+          $('.map-delete').click(function(e) {
             e.preventDefault();
             self.deleteMapConfirmation(this);
           });
@@ -1243,7 +1238,7 @@ $(function () {
 
   };
 
-  Mappr.removeExtraElements = function () {
+  Mappr.removeExtraElements = function() {
     var self         = this,
         i            = 0,
         numPoints    = $('.fieldset-points').size(),
@@ -1264,7 +1259,7 @@ $(function () {
     }
   };
 
-  Mappr.prepareInputs = function (data) {
+  Mappr.prepareInputs = function(data) {
     var inputs = {}, item = [];
 
     inputs = {
@@ -1278,11 +1273,11 @@ $(function () {
     inputs.map.layers  = inputs.map.layers || {};
     inputs.map.options = inputs.map.options || {};
 
-    String.prototype.clean = function () {
+    String.prototype.clean = function() {
       return this.replace(/[\[\]]/g, "");
     };
 
-    $.each(data, function (key, value) {
+    $.each(data, function(key, value) {
       if(key.indexOf("coords") !== -1) {
         item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item){
@@ -1331,13 +1326,13 @@ $(function () {
     return inputs;
   };
 
-  Mappr.loadInputs = function (data) {
+  Mappr.loadInputs = function(data) {
     var self   = this,
         filter = $('#filter-mymaps').val();
 
     self.removeExtraElements();
     $('#form-mapper').clearForm();
-    $.each(['width', 'height'], function () { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
+    $.each(['width', 'height'], function() { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
     $('#filter-mymaps').val(filter);
     self.loadCoordinates(data);
     self.loadRegions(data);
@@ -1345,7 +1340,7 @@ $(function () {
     self.loadSettings(data);
   };
 
-  Mappr.loadMap = function (obj) {
+  Mappr.loadMap = function(obj) {
     var self     = this,
         id       = $(obj).attr("data-mid");
 
@@ -1357,7 +1352,7 @@ $(function () {
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
-      success  : function (data) {
+      success  : function(data) {
         self.loadInputs(data);
         self.showMap(data);
         self.bindStorage();
@@ -1368,7 +1363,7 @@ $(function () {
     });
   };
 
-  Mappr.loadSettings = function (data) {
+  Mappr.loadSettings = function(data) {
     var pattern           = /[?*:;{}\\ "']+/g,
         map_title         = "",
         download_filetype = "",
@@ -1384,7 +1379,7 @@ $(function () {
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
     $("#projection").val(data.map.projection);
-    $.each(['bbox_map', 'projection_map', 'rotation'], function () { $('input[name="'+this+'"]').val(data.map[this]); });
+    $.each(['bbox_map', 'projection_map', 'rotation'], function() { $('input[name="'+this+'"]').val(data.map[this]); });
 
     $('input[name="border_thickness"]').val(1.25);
     $('#border-slider').slider({value:1.25});
@@ -1396,13 +1391,13 @@ $(function () {
     self.setRotation(data.map.rotation);
     self.resetJbbox();
 
-    $.each(["border", "legend", "scalebar"], function () {
+    $.each(["border", "legend", "scalebar"], function() {
       $('#'+this).attr('checked', false);
       $('input[name="options['+this+']"]').val("");
     });
 
     if(data.map.options !== undefined) {
-      $.each(["border", "legend", "scalebar"], function () {
+      $.each(["border", "legend", "scalebar"], function() {
         if(data.map.options[this] && data.map.options[this] !== undefined) {
           $('#'+this).attr('checked', true);
           $('input[name="options['+this+']"]').val(1);
@@ -1440,7 +1435,7 @@ $(function () {
 
   }; //** end Mappr.loadSettings **/
 
-  Mappr.loadCropSettings = function (data) {
+  Mappr.loadCropSettings = function(data) {
     var self = this, rubberband = [];
 
     if(data.map.bbox_rubberband) {
@@ -1452,8 +1447,8 @@ $(function () {
     }
   };
 
-  Mappr.loadShapeSize = function (i, coords) {
-    $.each(['shape', 'size'], function () {
+  Mappr.loadShapeSize = function(i, coords) {
+    $.each(['shape', 'size'], function() {
       if(coords[i][this].toString() === "") {
         $('select[name="coords['+i.toString()+']['+this+']"]')[0].selectedIndex = 3;
       } else {
@@ -1462,7 +1457,7 @@ $(function () {
     });
   };
 
-  Mappr.loadCoordinates = function (data) {
+  Mappr.loadCoordinates = function(data) {
     var self        = this,
         i           = 0,
         coords      = data.map.coords || [],
@@ -1490,7 +1485,7 @@ $(function () {
 
   };
 
-  Mappr.loadRegions = function (data) {
+  Mappr.loadRegions = function(data) {
     var self         = this,
         i            = 0,
         regions      = data.map.regions || [],
@@ -1514,7 +1509,7 @@ $(function () {
 
   };
 
-  Mappr.loadLayers = function (data) {
+  Mappr.loadLayers = function(data) {
     var i = 0, keyMap = [], key = 0;
 
     if(data.map.layers) {
@@ -1527,13 +1522,13 @@ $(function () {
     }
   };
 
-  Mappr.activateEmbed = function (mid) {
+  Mappr.activateEmbed = function(mid) {
     var self    = this,
         types   = ['img','kml','svg','json'];
 
-    $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function (e) {
+    $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function(e) {
       e.preventDefault();
-      $.each(types, function () {
+      $.each(types, function() {
         if(this.toString() === 'img') {
           $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
         } else {
@@ -1553,7 +1548,7 @@ $(function () {
                         {
                           "text"  : "OK",
                           "class" : "positive",
-                          "click" : function () {
+                          "click" : function() {
                             $(this).dialog("destroy");
                           }
                         }
@@ -1562,7 +1557,7 @@ $(function () {
     });
   };
 
-  Mappr.deleteMapConfirmation = function (obj) {
+  Mappr.deleteMapConfirmation = function(obj) {
     var self    = this,
         id      = $(obj).attr("data-mid"),
         message = '<em>' + $(obj).parent().parent().find(".title").html() + '</em>';
@@ -1578,11 +1573,11 @@ $(function () {
         {
           "text"  : $('#button-titles span.delete').text(),
           "class" : "negative",
-          "click" : function () {
+          "click" : function() {
             $.ajax({
               type    : 'DELETE',
               url     :  self.settings.baseUrl + "/usermaps/" + id,
-              success : function () {
+              success : function() {
                 self.loadMapList();
                 self.trackEvent('map', 'delete');
               }
@@ -1593,7 +1588,7 @@ $(function () {
         {
           "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }]
@@ -1601,7 +1596,7 @@ $(function () {
 
   };
 
-  Mappr.loadUserList = function (object) {
+  Mappr.loadUserList = function(object) {
     var self  = this,
         clone = $('.userdata-loading').clone(true),
         obj   = object || {},
@@ -1621,12 +1616,12 @@ $(function () {
       url      : self.settings.baseUrl + '/users/',
       data     : data,
       dataType : 'html',
-      success  : function (data) {
+      success  : function(data) {
         if(data.indexOf("access denied") !== -1) {
           window.location.reload();
         } else {
           $('#userdata').find('.userdata-loading').remove().end().html(data);
-          $('.user-delete').click(function (e) {
+          $('.user-delete').click(function(e) {
             e.preventDefault();
             self.deleteUserConfirmation(this);
           });
@@ -1636,7 +1631,7 @@ $(function () {
 
   };
 
-  Mappr.getLanguage = function () {
+  Mappr.getLanguage = function() {
     var param = "", locale = this.getParameterByName("locale");
 
     if(locale === "fr_FR" || locale === "es_ES") {
@@ -1646,7 +1641,7 @@ $(function () {
   };
 
 
-  Mappr.deleteUserConfirmation = function (obj) {
+  Mappr.deleteUserConfirmation = function(obj) {
     var self    = this,
         id      = $(obj).attr("data-uid"),
         message = '<em>' + $(obj).parent().parent().children("td:first").html() + '</em>';
@@ -1662,11 +1657,11 @@ $(function () {
         {
           "text"  : $('#button-titles span.delete').text(),
           "class" : "negative",
-          "click" : function () {
+          "click" : function() {
             $.ajax({
               type    : 'DELETE',
               url     : self.settings.baseUrl + "/users/" + id,
-              success : function () {
+              success : function() {
                 self.loadUserList();
                 self.trackEvent('user', 'delete');
               }
@@ -1677,24 +1672,24 @@ $(function () {
         {
           "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }]
     }).show();
   };
 
-  Mappr.bindSave = function () {
+  Mappr.bindSave = function() {
     var self = this;
 
-    $(".map-save").click(function (e) {
+    $(".map-save").click(function(e) {
       e.preventDefault();
       self.mapSave();
     });
 
   };
 
-  Mappr.mapSave = function () {
+  Mappr.mapSave = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     var missingTitle = false,
         pattern      = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
@@ -1712,15 +1707,15 @@ $(function () {
         {
           "text"  : $('#button-titles span.save').text(),
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
             if(missingTitle) {
-              $('.m-mapSaveTitle').addClass('ui-state-error').keyup(function () {
+              $('.m-mapSaveTitle').addClass('ui-state-error').keyup(function() {
                 $(this).removeClass('ui-state-error');
               });
             } else {
               $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-              $.each(['factor', 'filetype'], function () { $('input[name="download_'+this+'"]').val($('input[name="download-'+this+'"]:checked').val()); });
+              $.each(['factor', 'filetype'], function() { $('input[name="download_'+this+'"]').val($('input[name="download-'+this+'"]:checked').val()); });
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
 
               Mappr.setFormOptions();
@@ -1733,7 +1728,7 @@ $(function () {
                 url         : Mappr.settings.baseUrl + '/usermaps/',
                 data        : $("form").serialize(),
                 dataType    : 'json',
-                success     : function (data) {
+                success     : function(data) {
                   $('#mapTitle').text($('.m-mapSaveTitle').val());
                   map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
                   $('#file-name').val(map_title);
@@ -1751,23 +1746,23 @@ $(function () {
       {
         "text"  : $('#button-titles span.cancel').text(),
         "class" : "ui-button-cancel",
-        "click" : function () {
+        "click" : function() {
           $(this).dialog("destroy");
         }
       }]
     });
   };
 
-  Mappr.bindDownload = function () {
+  Mappr.bindDownload = function() {
     var self = this;
 
-    $(".map-download").click(function (e) {
+    $(".map-download").click(function(e) {
       e.preventDefault();
       self.mapDownload();
     });
   };
 
-  Mappr.mapDownload = function () {
+  Mappr.mapDownload = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
 
     $('#mapExport').dialog({
@@ -1781,28 +1776,28 @@ $(function () {
         {
           "text"  : $('#button-titles span.download').text(),
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             Mappr.generateDownload();
           }
         },
         {
           "text"  : $('#button-titles span.cancel').text(),
           "class" : "ui-button-cancel",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }]
     });
   };
 
-  Mappr.bindSubmit = function () {
+  Mappr.bindSubmit = function() {
     var self = this, title = "", missingTitle = false;
 
-    $(".submitForm").click(function (e) {
+    $(".submitForm").click(function(e) {
       e.preventDefault();
       missingTitle = false;
-      $('.m-mapCoord').each(function () {
-        title = $(this).parents('.ui-accordion-content').find('.m-mapTitle').keyup(function () {
+      $('.m-mapCoord').each(function() {
+        title = $(this).parents('.ui-accordion-content').find('.m-mapTitle').keyup(function() {
           missingTitle = false;
           $(this).removeClass('ui-state-error');
         });
@@ -1821,34 +1816,34 @@ $(function () {
     });
   };
 
-  Mappr.mapToggleSettings = function () {
+  Mappr.mapToggleSettings = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     $('#mapToolsCollapse a').trigger('click');
   };
 
-  Mappr.bindPanelToggle = function () {
+  Mappr.bindPanelToggle = function() {
     var self = this;
-    $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggle(function (e) {
+    $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggle(function(e) {
       e.preventDefault();
       $('#mapOutputImage').attr("width", 0).attr("height", 0);
       $('#mapOutputScale').hide();
       $(this).parent().addClass("mapTools-collapsed");
-      $('#mapTools').hide("slide", { direction : "right" }, 250, function () {
+      $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
         var new_width = $(window).width()*0.98;
         $('#actionsBar').animate({ width : new_width }, 250);
-        $('#map').animate({ width : new_width }, 250, function () {
+        $('#map').animate({ width : new_width }, 250, function() {
           $('input[name="width"]').val(new_width);
           self.mapRefresh();
         });
       });
-    }, function (e) {
+    }, function(e) {
       e.preventDefault();
       $('#mapOutputImage').attr("width", 0).attr("height", 0);
       $('#mapOutputScale').hide();
       $(this).parent().removeClass("mapTools-collapsed");
-      $('#mapTools').show("slide", { direction : "right" }, 250, function () {
+      $('#mapTools').show("slide", { direction : "right" }, 250, function() {
         $('#actionsBar').animate({ width : "810px" }, 250);
-        $('#map').animate({ width : "800px" }, function () {
+        $('#map').animate({ width : "800px" }, function() {
            $('input[name="width"]').val(800);
            self.mapRefresh();
         });
@@ -1856,7 +1851,7 @@ $(function () {
     });
   };
 
-  Mappr.showMessage = function (message) {
+  Mappr.showMessage = function(message) {
 
     $('#mapper-message').html(message).dialog({
       autoOpen      : true,
@@ -1870,7 +1865,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }
@@ -1878,7 +1873,7 @@ $(function () {
     }).show();
   };
 
-  Mappr.drawLegend = function () {
+  Mappr.drawLegend = function() {
     var legend_url = $('#legend_url').val();
 
     if(legend_url) {
@@ -1888,11 +1883,11 @@ $(function () {
     }
   };
 
-  Mappr.drawScalebar = function () {
+  Mappr.drawScalebar = function() {
     $('#mapScale img').attr('src', $('#scalebar_url').val()).show();
   };
 
-  Mappr.showBadPoints = function () {
+  Mappr.showBadPoints = function() {
     var bad_points = $('#bad_points').val();
 
     if(bad_points) {
@@ -1901,21 +1896,22 @@ $(function () {
     }
   };
 
-  Mappr.showLoadingMessage = function (content) {
+  Mappr.showLoadingMessage = function(content) {
     var message = '<span class="mapper-loading-message ui-corner-all ui-widget-content">' + content + '</span>';
 
     $('#mapOutput').append(message);
   };
 
-  Mappr.hideLoadingMessage = function () {
+  Mappr.hideLoadingMessage = function() {
     $('#mapOutput .mapper-loading-message').remove();
   };
 
-  Mappr.showMap = function (load_data) {
+  Mappr.showMap = function(load_data) {
     var self         = this,
         token        = new Date().getTime(),
         formString   = "",
-        formObj      = {};
+        formObj      = {},
+        showloader   = false;
 
     self.destroyJcrop();
 
@@ -1925,21 +1921,22 @@ $(function () {
 
     formString = $("form").serialize();
     formObj    = $("form").serializeJSON();
-    self.postData(formString, load_data);
+    if(formObj["layers[relief]"] || formObj["layers[reliefgrey]"] || formString.length > 7000 || formObj.projection !== "epsg:4326") { showloader = true; }
+    self.postData(formString, load_data, showloader);
     $.jStorage.set("do-" + token.toString(), formObj);
     self.toggleUndo(true);
   }; /** end Mappr.showMap **/
 
-  Mappr.postData = function (formData, load_data) {
+  Mappr.postData = function(formData, load_data, loader) {
     var self      = this;
 
-    self.showLoadingMessage($('#mapper-loading-message').text());
+    if(loader) { self.showLoadingMessage($('#mapper-loading-message').text()); }
     $.ajax({
       type     : 'POST',
       url      : self.settings.baseUrl + '/application/',
       data     : formData,
       dataType : 'json',
-      success  : function (data) {
+      success  : function(data) {
         self.resetFormValues(data);
         self.resetJbbox();
         self.drawMap(data, load_data);
@@ -1951,9 +1948,9 @@ $(function () {
     });
   };
 
-  Mappr.resetFormValues = function (data) {
-    $('#mapOutput input').each(function () { $(this).val(''); });
-    $.each(["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"], function () {
+  Mappr.resetFormValues = function(data) {
+    $('#mapOutput input').each(function() { $(this).val(''); });
+    $.each(["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"], function() {
       $('#' + this).val(data[this]);
       if(this === 'rendered_bbox') { $('#bbox_map').val($('#' + this).val()); }
       if(this === 'rendered_projection') { $('#projection_map').val($('#' + this).val()); }
@@ -1962,17 +1959,17 @@ $(function () {
     $('#pan').val('');
   };
 
-  Mappr.drawMap = function (data, load_data) {
+  Mappr.drawMap = function(data, load_data) {
     var self = this;
 
-    $('#mapOutputImage').attr("width", data.size[0]).attr("height", data.size[1]).attr("src", data.mapOutputImage).one('load', function () {
+    $('#mapOutputImage').attr("width", data.size[0]).attr("height", data.size[1]).attr("src", data.mapOutputImage).one('load', function() {
       if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
       self.loadCropSettings(load_data);
       self.hideLoadingMessage();
     });
   };
 
-  Mappr.addBadRecordsViewer = function () {
+  Mappr.addBadRecordsViewer = function() {
     var self = this;
 
     $('#badRecordsViewer').dialog({
@@ -1988,21 +1985,21 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }
       ]
     });
 
-    $('.toolsBadRecords').click(function (e) {
+    $('.toolsBadRecords').click(function(e) {
       e.preventDefault();
       self.addBadRecordsViewer();
       $('#badRecordsViewer').dialog("open");
     });
   };
 
-  Mappr.generateDownload = function () {
+  Mappr.generateDownload = function() {
     var self        = this,
         pattern     = /[~$?*,:;{}\[\]\\ "'\/@#!%\^()<>.+=|`&]+/g,
         map_title   = $('#file-name').val(),
@@ -2022,7 +2019,7 @@ $(function () {
     self.setFormOptions();
     $('#download_token').val(token);
 
-    $.each(['ui-dialog-buttonpane', 'download-dialog'], function () { $('.' + this).hide(); });
+    $.each(['ui-dialog-buttonpane', 'download-dialog'], function() { $('.' + this).hide(); });
     $('.download-message').show();
 
     switch(filetype) {
@@ -2057,7 +2054,7 @@ $(function () {
         $('#output').val('pnga');
     }
 
-    self.vars.fileDownloadTimer = window.setInterval(function () {
+    self.vars.fileDownloadTimer = window.setInterval(function() {
       cookieValue = $.cookie('fileDownloadToken');
       if (cookieValue === token) {
         self.finishDownload();
@@ -2068,8 +2065,8 @@ $(function () {
 
   }; /** end Mappr.generateDownload **/
 
-  Mappr.setFormOptions = function () {
-    $.each(["border", "legend", "scalebar"], function () {
+  Mappr.setFormOptions = function() {
+    $.each(["border", "legend", "scalebar"], function() {
       if($('#'+this).prop('checked')) {
         $('input[name="options['+this+']"]').val(1);
       } else {
@@ -2078,14 +2075,14 @@ $(function () {
     });
   };
 
-  Mappr.finishDownload = function () {
+  Mappr.finishDownload = function() {
     $('.download-message').hide();
-    $.each(['download-dialog', 'ui-dialog-buttonpane'], function () { $('.'+this).show(); });
+    $.each(['download-dialog', 'ui-dialog-buttonpane'], function() { $('.'+this).show(); });
     window.clearInterval(this.vars.fileDownloadTimer);
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
 
-  Mappr.showExamples = function () {
+  Mappr.showExamples = function() {
     var message = '<img src="public/images/help-data.png" alt="" />';
 
     $('#mapper-message-help').html(message).dialog({
@@ -2100,7 +2097,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }
@@ -2108,7 +2105,7 @@ $(function () {
     }).show();
   };
 
-  Mappr.showCodes = function () {
+  Mappr.showCodes = function() {
     $('#mapper-message-codes').dialog({
       height        : (450).toString(),
       width         : (850).toString(),
@@ -2121,7 +2118,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function () {
+          "click" : function() {
             $(this).dialog("destroy");
           }
         }
@@ -2129,16 +2126,16 @@ $(function () {
     }).show();
 
     if($('#mapper-message-codes .mapper-loading-message').length > 0) {
-      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function (data) {
+      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function(data) {
         $('#mapper-message-codes').html(data).find('.filter-countries')
-          .keyup(function () { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
-          .keypress(function (event) { if (event.which === 13) { return false; }
+          .keyup(function() { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
+          .keypress(function(event) { if (event.which === 13) { return false; }
         });
       }, 'html');
     }
   };
 
-  Mappr.performRotation = function (element) {
+  Mappr.performRotation = function(element) {
     $('#rotation').val($(element).attr("data-rotate"));
     this.resetJbbox();
     this.destroyRedo();
@@ -2146,7 +2143,7 @@ $(function () {
     this.trackEvent('rotate', $(element).attr("data-rotate"));
   };
 
-  Mappr.setRotation = function (angle) {
+  Mappr.setRotation = function(angle) {
     var control = $('#mapControls'),
         thumb   = $('.thumb', control),
         dots    = $('.overview', control).children(),
@@ -2165,7 +2162,7 @@ $(function () {
     $('.thumb', control).css('top',top).css('left',left);
   };
 
-  Mappr.getParameterByName = function (name) {
+  Mappr.getParameterByName = function(name) {
     var cname   = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"),
         regexS  = "[\\?&]" + cname + "=([^&#]*)",
         regex   = new RegExp(regexS),
@@ -2175,7 +2172,7 @@ $(function () {
     return decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
-  Mappr.mapCircleSlider = function () {
+  Mappr.mapCircleSlider = function() {
     var i = 0, output = "";
 
     for(i = 0; i < 360; i += 1) {
@@ -2186,12 +2183,12 @@ $(function () {
     return output;
   };
 
-  Mappr.clearStorage = function () {
+  Mappr.clearStorage = function() {
     this.destroyRedo();
     $.jStorage.flush();
   };
 
-  Mappr.bindStorage = function () {
+  Mappr.bindStorage = function() {
     var formData = {}, token = new Date().getTime();
 
     this.clearStorage();
@@ -2199,30 +2196,30 @@ $(function () {
     $.jStorage.set("do-" + token.toString(), formData);
   };
 
-  Mappr.bindRotateWheel = function () {
+  Mappr.bindRotateWheel = function() {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
       $('.overview', '#mapControls').append(self.mapCircleSlider());
-      $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function (element,index){
+      $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
         index = null;
         if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
   };
 
-  Mappr.bindTabs = function () {
+  Mappr.bindTabs = function() {
     var config = {
       cache : true,
-      load  : function (e, ui){
+      load  : function(e, ui){
         e = null;
         $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
       }
     };
     //odd tabs handling to fix IE issues
     $('#mapTools').tabs({selected: 0});
-    $("#tabs").tabs(config).find(".ui-state-disabled").each(function () { $(this).removeClass("ui-state-disabled"); }).end().show();
+    $("#tabs").tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
   };
 
-  Mappr.init = function () {
+  Mappr.init = function() {
     var self = this;
     this.bindRotateWheel();
     $('#initial-message').hide();
@@ -2230,9 +2227,9 @@ $(function () {
     this.bindTabs();
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
-    $('a.login','#site-session').click(function (e) { e.preventDefault(); self.tabSelector(3); });
-    $('a.show-examples').click(function (e) { e.preventDefault(); self.showExamples(); });
-    $('a.show-codes').click(function (e) { e.preventDefault(); self.showCodes(); });
+    $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
+    $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
+    $('a.show-codes').click(function(e) { e.preventDefault(); self.showCodes(); });
     $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
     $(".tooltip").tipsy({gravity : 's'});
     this.bindStorage();
@@ -2260,7 +2257,7 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUserList();
     }
-    $("input").keypress(function (e) { if (e.which === 13) { return false; } });
+    $("input").keypress(function(e) { if (e.which === 13) { return false; } });
   };
 
   Mappr.init();
