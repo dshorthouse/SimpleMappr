@@ -46,7 +46,7 @@ $(function () {
     });
   });
 
-  Mappr.trackEvent = function(category, action) {
+  Mappr.trackEvent = function (category, action) {
     if (typeof _gaq !== "undefined") { _gaq.push(['_trackEvent', category, action]); }
   };
 
@@ -94,7 +94,6 @@ $(function () {
     return [pageWidth,pageHeight,windowWidth,windowHeight];
 
   }; /** end Mappr.getPageSize **/
-
 
   Mappr.getPageScroll = function () {
     var xScroll, yScroll;
@@ -155,12 +154,12 @@ $(function () {
 
         $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
-        $('.jcrop-coord').live("blur", function() {
+        $('.jcrop-coord').live("blur", function () {
           if(!Mappr.vars.cropUpdated) {
             Mappr.vars.cropUpdated = Mappr.updateCropCoordinates();
           }
         })
-        .live("keypress", function(e) {
+        .live("keypress", function (e) {
           var key = e.keyCode || e.which;
           if(key === 13 || key === 9) {
             e.preventDefault();
@@ -169,12 +168,12 @@ $(function () {
           }
         });
 
-        $('.jcrop-dimension').live("blur", function() {
+        $('.jcrop-dimension').live("blur", function () {
           if(!Mappr.vars.cropUpdated) {
             Mappr.vars.cropUpdated = Mappr.updateCropDimensions();
           }
         })
-        .live("keypress", function(e) {
+        .live("keypress", function (e) {
           var key = e.keyCode || e.which;
           if(key === 13 || key === 9) {
             e.preventDefault();
@@ -412,12 +411,9 @@ $(function () {
 
   Mappr.mapRebuild = function () {
     //Note: method calls must be Mappr.x for hotkeys to work
-    $('#bbox_map').val('');
-    $('#projection_map').val('');
-    $('#bbox_rubberband').val('');
-    $('#rotation').val('');
-    $('#projection').val('');
-    $('#pan').val('');
+    $.each(['bbox_map', 'projection_map', 'bbox_rubberband', 'rotation', 'projection', 'pan'], function () {
+      $('#' + this).val('');
+    });
     Mappr.destroyRedo();
     Mappr.showMap();
   };
@@ -488,7 +484,7 @@ $(function () {
   Mappr.storageType = function (type) {
     var index = 0;
 
-    index = $.grep($.jStorage.index(), function(value, i) {
+    index = $.grep($.jStorage.index(), function (value, i) {
       i = null;
       return (value.substring(0, type.length) === type);
     });
@@ -629,19 +625,19 @@ $(function () {
 
     if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
 
-    $.each(keys, function(key, value) {
+    $.each(keys, function (key, value) {
       $(document).bind('keydown', key, value);
     });
 
     $('#mapOutput').hover(
       function () {
-        $.each(arrows, function(key, value) {
+        $.each(arrows, function (key, value) {
           $(document).bind('keydown', key, value);
         });
-        $('#mapOutputImage').dblclick(function(e) { self.dblclickZoom(this, e); });
+        $('#mapOutputImage').dblclick(function (e) { self.dblclickZoom(this, e); });
       },
       function () {
-        $.each(arrows, function(key, value) {
+        $.each(arrows, function (key, value) {
           key = null;
           $(document).unbind('keydown', value);
         });
@@ -650,42 +646,40 @@ $(function () {
     );
   };
 
+  Mappr.hardResetShowMap = function () {
+    this.resetJbbox();
+    this.destroyRedo();
+    this.showMap();
+  };
+
   Mappr.bindSettings = function () {
     var self = this;
 
     $('.layeropt').click(function () {
-      self.resetJbbox();
-      self.destroyRedo();
-      self.showMap();
+      self.hardResetShowMap();
     });
 
     $('.gridopt').click(function () {
       if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
-      self.resetJbbox();
-      self.destroyRedo();
-      self.showMap();
+      self.hardResetShowMap();
     });
 
     $('#gridlabel').click(function () {
       if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
       if($(this).prop('checked')) { $(this).val('false'); }
-      self.resetJbbox();
-      self.destroyRedo();
-      self.showMap();
+      self.hardResetShowMap();
     });
 
     $('#projection').change(function () {
       if($(this).val() !== "") {
         $.cookie("jcrop_coords", null);
-        self.resetJbbox();
-        self.destroyRedo();
-        self.showMap();
+        self.hardResetShowMap();
       }
     });
 
     self.toggleFileFactor();
 
-    $('.download-factor').change(function() {
+    $('.download-factor').change(function () {
       self.toggleFileFactor($(this).val());
     });
 
@@ -694,7 +688,7 @@ $(function () {
     });
   };
 
-  Mappr.bindSlider = function() {
+  Mappr.bindSlider = function () {
     var self = this;
 
     $("#border-slider").slider({
@@ -702,8 +696,8 @@ $(function () {
       min   : 1,
       max   : 2,
       step  : 0.25,
-      slide: function( event, ui ) {
-        event = null;
+      slide: function (e, ui) {
+        e = null;
         $('input[name="border_thickness"]').val(ui.value);
         self.destroyRedo();
         self.showMap();
@@ -778,14 +772,10 @@ $(function () {
       var fieldsets = $(this).parent().prev().prev().children();
 
       e.preventDefault();
-      $(fieldsets).find('.m-mapTitle').val('');
-      $(fieldsets).find('textarea').val('');
-      if($(fieldsets).find('.m-mapShape').length > 0) {
-        $(fieldsets).find('.m-mapShape')[0].selectedIndex = 3;
-      }
-      if($(fieldsets).find('.m-mapSize').length > 0) {
-        $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3;
-      }
+      $.each(['.m-mapTitle', 'textarea'], function () { $(fieldsets).find(this).val(''); });
+      $.each(['Shape', 'Size'], function () {
+        if($(fieldsets).find('.m-map'+this).length > 0) { $(fieldsets).find('.m-map'+this)[0].selectedIndex = 3; }
+      });
       if($(this).hasClass("clearLayers")) {
         $(fieldsets).find('.colorPicker').val('0 0 0');
       } else {
@@ -805,19 +795,19 @@ $(function () {
   Mappr.bindAutocomplete = function () {
     var self = this, term = "", terms = [];
     
-    $('textarea', '.fieldset-regions').bind("keydown", function(event) {
-      if (event.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { event.preventDefault(); }
+    $('textarea', '.fieldset-regions').bind("keydown", function (e) {
+      if (e.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { e.preventDefault(); }
     }).autocomplete({
-      source: function(request, response) {
+      source: function (request, response) {
         $.getJSON( "/places/" + self.extractLast(request.term), {}, response);
       },
-      search: function() {
+      search: function () {
         term = self.extractLast(this.value);
         if (term.length < 2) { return false; }
       },
-      focus: function() { return false; },
-      select: function(event, ui) {
-        event = null;
+      focus: function () { return false; },
+      select: function (e, ui) {
+        e = null;
         terms = self.split(this.value);
         terms.pop();
         terms.push(ui.item.value);
@@ -843,20 +833,17 @@ $(function () {
   };
 
   Mappr.clearSelf = function (el) {
-    var box = $(el).parent();
+    var box = $(el).parent(),
+        color_picker = $(box).find('.colorPicker');
 
-    $(box).find('.m-mapTitle').val('');
-    $(box).find('textarea').val('');
-    if($(box).find('.m-mapShape').length > 0) {
-      $(box).find('.m-mapShape')[0].selectedIndex = 3;
-    }
-    if($(box).find('.m-mapSize').length > 0) {
-      $(box).find('.m-mapSize')[0].selectedIndex = 3;
-    }
+    $.each(['.m-mapTitle', 'textarea'], function () { $(box).find(this).val(''); });
+    $.each(['Shape', 'Size'], function () {
+      if($(box).find('.m-map'+this).length > 0) { $(box).find('.m-map'+this)[0].selectedIndex = 3; }
+    });
     if($(box).parent().hasClass("fieldset-points")) {
-      $(box).find('.colorPicker').val('0 0 0');
+      color_picker.val('0 0 0');
     } else {
-      $(box).find('.colorPicker').val('150 150 150');
+      color_picker.val('150 150 150');
     }
   };
 
@@ -877,8 +864,7 @@ $(function () {
 
   Mappr.resetJbbox = function () {
     this.vars.jCropType = "zoom";
-    $('#bbox_rubberband').val('');
-    $('#bbox_query').val('');
+    $.each(['rubberband', 'query'], function () { $('#bbox_' + this).val(''); });
     this.toggleFileFactor();
   };
 
@@ -920,7 +906,7 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('zoom'); });
+    $('.jcrop-tracker').mousedown(function () { self.activateJcrop('zoom'); });
   };
 
   Mappr.initJquery = function () {
@@ -942,7 +928,7 @@ $(function () {
       onSelect      : self.showCoords
     });
 
-    $('.jcrop-tracker').mousedown(function() { self.activateJcrop('query'); });
+    $('.jcrop-tracker').mousedown(function () { self.activateJcrop('query'); });
   };
 
   Mappr.activateJcrop = function (type) {
@@ -965,20 +951,20 @@ $(function () {
     $(document).unbind("mouseup", self.aZoom);
   };
 
-  Mappr.dblclickZoom = function(obj, event) {
+  Mappr.dblclickZoom = function (obj, e) {
     var x = 0, y = 0, pos = {};
 
     pos = $(obj).offset();
-    x   = (event.pageX - pos.left);
-    y   = (event.pageY - pos.top);
+    x   = (e.pageX - pos.left);
+    y   = (e.pageY - pos.top);
 
     $('#bbox_rubberband').val(x+','+y+','+x+','+y);
     this.destroyRedo();
     this.showMap();
   };
 
-  Mappr.aQuery = function (event) {
-    var self      = event.data,
+  Mappr.aQuery = function (e) {
+    var self      = e.data,
         i         = 0,
         fillColor = self.vars.fillColor.r + " " + self.vars.fillColor.g + " " + self.vars.fillColor.b,
         formData  = {
@@ -1121,7 +1107,7 @@ $(function () {
 
         children = button.parent().prev().append(clone).children("div");
 
-        children.each(function(i, val) {
+        children.each(function (i, val) {
           val = null;
           if (i === children.length-1) {
             $(this).find("button.removemore").show().click(function (e) {
@@ -1236,7 +1222,7 @@ $(function () {
       url      : self.settings.baseUrl + "/usermaps/",
       data     : data,
       dataType : 'html',
-      success  : function(data) {
+      success  : function (data) {
         if(data.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
@@ -1292,11 +1278,11 @@ $(function () {
     inputs.map.layers  = inputs.map.layers || {};
     inputs.map.options = inputs.map.options || {};
 
-    String.prototype.clean = function() {
+    String.prototype.clean = function () {
       return this.replace(/[\[\]]/g, "");
     };
 
-    $.each(data, function(key, value) {
+    $.each(data, function (key, value) {
       if(key.indexOf("coords") !== -1) {
         item = key.match(/\[[A-Za-z0-9]*?\]/g);
         if(item){
@@ -1347,14 +1333,11 @@ $(function () {
 
   Mappr.loadInputs = function (data) {
     var self   = this,
-        width  = $('input[name="width"]').val(),
-        height = $('input[name="height"]').val(),
         filter = $('#filter-mymaps').val();
 
     self.removeExtraElements();
     $('#form-mapper').clearForm();
-    $('input[name="width"]').val(width);
-    $('input[name="height"]').val(height);
+    $.each(['width', 'height'], function () { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
     $('#filter-mymaps').val(filter);
     self.loadCoordinates(data);
     self.loadRegions(data);
@@ -1400,11 +1383,8 @@ $(function () {
 
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
-
     $("#projection").val(data.map.projection);
-    $('input[name="bbox_map"]').val(data.map.bbox_map);
-    $('input[name="projection_map"]').val(data.map.projection_map);
-    $('input[name="rotation"]').val(data.map.rotation);
+    $.each(['bbox_map', 'projection_map', 'rotation'], function () { $('input[name="'+this+'"]').val(data.map[this]); });
 
     $('input[name="border_thickness"]').val(1.25);
     $('#border-slider').slider({value:1.25});
@@ -1414,7 +1394,6 @@ $(function () {
     }
 
     self.setRotation(data.map.rotation);
-
     self.resetJbbox();
 
     $.each(["border", "legend", "scalebar"], function () {
@@ -1473,6 +1452,16 @@ $(function () {
     }
   };
 
+  Mappr.loadShapeSize = function (i, coords) {
+    $.each(['shape', 'size'], function () {
+      if(coords[i][this].toString() === "") {
+        $('select[name="coords['+i.toString()+']['+this+']"]')[0].selectedIndex = 3;
+      } else {
+        $('select[name="coords['+i.toString()+']['+this+']"]').val(coords[i][this]);
+      }
+    });
+  };
+
   Mappr.loadCoordinates = function (data) {
     var self        = this,
         i           = 0,
@@ -1494,17 +1483,7 @@ $(function () {
       $('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
       $('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
 
-      if(coords[i].shape === "") {
-        $('select[name="coords['+i.toString()+'][shape]"]')[0].selectedIndex = 3;
-      } else {
-        $('select[name="coords['+i.toString()+'][shape]"]').val(coords[i].shape);
-      }
-
-      if(coords[i].size.toString() === "") {
-        $('select[name="coords['+i.toString()+'][size]"]')[0].selectedIndex = 3;
-      } else {
-        $('select[name="coords['+i.toString()+'][size]"]').val(coords[i].size);
-      }
+      self.loadShapeSize(i, coords);
 
       $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
     }
@@ -1554,7 +1533,7 @@ $(function () {
 
     $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function (e) {
       e.preventDefault();
-      $.each(types, function() {
+      $.each(types, function () {
         if(this.toString() === 'img') {
           $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
         } else {
@@ -1603,7 +1582,7 @@ $(function () {
             $.ajax({
               type    : 'DELETE',
               url     :  self.settings.baseUrl + "/usermaps/" + id,
-              success : function() {
+              success : function () {
                 self.loadMapList();
                 self.trackEvent('map', 'delete');
               }
@@ -1657,7 +1636,7 @@ $(function () {
 
   };
 
-  Mappr.getLanguage = function() {
+  Mappr.getLanguage = function () {
     var param = "", locale = this.getParameterByName("locale");
 
     if(locale === "fr_FR" || locale === "es_ES") {
@@ -1687,7 +1666,7 @@ $(function () {
             $.ajax({
               type    : 'DELETE',
               url     : self.settings.baseUrl + "/users/" + id,
-              success : function() {
+              success : function () {
                 self.loadUserList();
                 self.trackEvent('user', 'delete');
               }
@@ -1741,8 +1720,7 @@ $(function () {
               });
             } else {
               $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-              $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
-              $('input[name="download_filetype"]').val($('input[name="download-filetype"]:checked').val());
+              $.each(['factor', 'filetype'], function () { $('input[name="download_'+this+'"]').val($('input[name="download-'+this+'"]:checked').val()); });
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
 
               Mappr.setFormOptions();
@@ -1755,7 +1733,7 @@ $(function () {
                 url         : Mappr.settings.baseUrl + '/usermaps/',
                 data        : $("form").serialize(),
                 dataType    : 'json',
-                success     : function(data) {
+                success     : function (data) {
                   $('#mapTitle').text($('.m-mapSaveTitle').val());
                   map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
                   $('#file-name').val(map_title);
@@ -1803,7 +1781,7 @@ $(function () {
         {
           "text"  : $('#button-titles span.download').text(),
           "class" : "positive",
-          "click" : function() {
+          "click" : function () {
             Mappr.generateDownload();
           }
         },
@@ -1855,10 +1833,10 @@ $(function () {
       $('#mapOutputImage').attr("width", 0).attr("height", 0);
       $('#mapOutputScale').hide();
       $(this).parent().addClass("mapTools-collapsed");
-      $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
+      $('#mapTools').hide("slide", { direction : "right" }, 250, function () {
         var new_width = $(window).width()*0.98;
         $('#actionsBar').animate({ width : new_width }, 250);
-        $('#map').animate({ width : new_width }, 250, function() {
+        $('#map').animate({ width : new_width }, 250, function () {
           $('input[name="width"]').val(new_width);
           self.mapRefresh();
         });
@@ -1868,9 +1846,9 @@ $(function () {
       $('#mapOutputImage').attr("width", 0).attr("height", 0);
       $('#mapOutputScale').hide();
       $(this).parent().removeClass("mapTools-collapsed");
-      $('#mapTools').show("slide", { direction : "right" }, 250, function() {
+      $('#mapTools').show("slide", { direction : "right" }, 250, function () {
         $('#actionsBar').animate({ width : "810px" }, 250);
-        $('#map').animate({ width : "800px" }, function() {
+        $('#map').animate({ width : "800px" }, function () {
            $('input[name="width"]').val(800);
            self.mapRefresh();
         });
@@ -1892,7 +1870,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function() {
+          "click" : function () {
             $(this).dialog("destroy");
           }
         }
@@ -1974,19 +1952,14 @@ $(function () {
   };
 
   Mappr.resetFormValues = function (data) {
-    $('#mapOutput input').each(function () {
-      $(this).val('');
+    $('#mapOutput input').each(function () { $(this).val(''); });
+    $.each(["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"], function () {
+      $('#' + this).val(data[this]);
+      if(this === 'rendered_bbox') { $('#bbox_map').val($('#' + this).val()); }
+      if(this === 'rendered_projection') { $('#projection_map').val($('#' + this).val()); }
+      if(this === 'rendered_rotation') { $('#rotation').val($('#' + this).val()); }
     });
-    $('#rendered_bbox').val(data.rendered_bbox);
-    $('#rendered_rotation').val(data.rendered_rotation);
-    $('#rendered_projection').val(data.rendered_projection);
-    $('#legend_url').val(data.legend_url);
-    $('#scalebar_url').val(data.scalebar_url);
-    $('#bad_points').val(data.bad_points);
-    $('#bbox_map').val($('#rendered_bbox').val());             // set extent from previous rendering
-    $('#projection_map').val($('#rendered_projection').val()); // set projection from the previous rendering
-    $('#rotation').val($('#rendered_rotation').val());         // reset rotation value
-    $('#pan').val('');                                         // reset pan value
+    $('#pan').val('');
   };
 
   Mappr.drawMap = function (data, load_data) {
@@ -2015,7 +1988,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function() {
+          "click" : function () {
             $(this).dialog("destroy");
           }
         }
@@ -2049,8 +2022,7 @@ $(function () {
     self.setFormOptions();
     $('#download_token').val(token);
 
-    $('.ui-dialog-buttonpane').hide();
-    $('.download-dialog').hide();
+    $.each(['ui-dialog-buttonpane', 'download-dialog'], function () { $('.' + this).hide(); });
     $('.download-message').show();
 
     switch(filetype) {
@@ -2108,8 +2080,7 @@ $(function () {
 
   Mappr.finishDownload = function () {
     $('.download-message').hide();
-    $('.download-dialog').show();
-    $('.ui-dialog-buttonpane').show();
+    $.each(['download-dialog', 'ui-dialog-buttonpane'], function () { $('.'+this).show(); });
     window.clearInterval(this.vars.fileDownloadTimer);
     $.cookie('fileDownloadToken', null); //clears this cookie value
   };
@@ -2129,7 +2100,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function() {
+          "click" : function () {
             $(this).dialog("destroy");
           }
         }
@@ -2150,7 +2121,7 @@ $(function () {
         {
           "text"  : "OK",
           "class" : "positive",
-          "click" : function() {
+          "click" : function () {
             $(this).dialog("destroy");
           }
         }
@@ -2158,10 +2129,10 @@ $(function () {
     }).show();
 
     if($('#mapper-message-codes .mapper-loading-message').length > 0) {
-      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function(data) {
+      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function (data) {
         $('#mapper-message-codes').html(data).find('.filter-countries')
-          .keyup(function() { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
-          .keypress(function(event) { if (event.which === 13) { return false; }
+          .keyup(function () { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
+          .keypress(function (event) { if (event.which === 13) { return false; }
         });
       }, 'html');
     }
@@ -2232,7 +2203,7 @@ $(function () {
     var self = this;
     $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
       $('.overview', '#mapControls').append(self.mapCircleSlider());
-      $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+      $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function (element,index){
         index = null;
         if($('#initial-message').is(':hidden')) { self.performRotation(element); }
     }});
@@ -2241,14 +2212,14 @@ $(function () {
   Mappr.bindTabs = function () {
     var config = {
       cache : true,
-      load  : function(event, ui){
-        event = null;
+      load  : function (e, ui){
+        e = null;
         $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
       }
     };
     //odd tabs handling to fix IE issues
     $('#mapTools').tabs({selected: 0});
-    $("#tabs").tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+    $("#tabs").tabs(config).find(".ui-state-disabled").each(function () { $(this).removeClass("ui-state-disabled"); }).end().show();
   };
 
   Mappr.init = function () {
@@ -2259,9 +2230,9 @@ $(function () {
     this.bindTabs();
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
     $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
-    $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
-    $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
-    $('a.show-codes').click(function(e) { e.preventDefault(); self.showCodes(); });
+    $('a.login','#site-session').click(function (e) { e.preventDefault(); self.tabSelector(3); });
+    $('a.show-examples').click(function (e) { e.preventDefault(); self.showExamples(); });
+    $('a.show-codes').click(function (e) { e.preventDefault(); self.showCodes(); });
     $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
     $(".tooltip").tipsy({gravity : 's'});
     this.bindStorage();
@@ -2289,7 +2260,7 @@ $(function () {
       $("#tabs").tabs('select',4);
       this.loadUserList();
     }
-    $("input").keypress(function(event) { if (event.which === 13) { return false; } });
+    $("input").keypress(function (e) { if (e.which === 13) { return false; } });
   };
 
   Mappr.init();
