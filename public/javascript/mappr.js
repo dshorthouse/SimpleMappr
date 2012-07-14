@@ -534,7 +534,8 @@ $(function() {
         curr_data      = {},
         prev_key       = "",
         prev_data      = {},
-        prev_data_prep = {};
+        prev_data_prep = {},
+        showloader     = false;
 
     if(index.length === 1) { return; }
 
@@ -554,7 +555,8 @@ $(function() {
     if(prev_data.width !== curr_data.width) {
       Mappr.mapToggleSettings();
     } else {
-      Mappr.postData(decodeURIComponent($.param(prev_data)));
+      if(prev_data.layers.relief || prev_data.layers.reliefgrey || JSON.stringify(prev_data).length > 7000 || prev_data.projection !== "epsg:4326") { showloader = true; }
+      Mappr.postData(decodeURIComponent($.param(prev_data)), null, showloader);
     }
 
     Mappr.toggleRedo(true);
@@ -570,7 +572,8 @@ $(function() {
         do_index       = Mappr.storageType("do"),
         do_key         = "",
         do_data        = {},
-        token          = new Date().getTime();
+        token          = new Date().getTime(),
+        showloader     = false;
 
     if(undo_index.length === 0) { return; }
 
@@ -588,7 +591,8 @@ $(function() {
     if(undo_data.width !== do_data.width) {
       Mappr.mapToggleSettings();
     } else {
-      Mappr.postData(decodeURIComponent($.param(undo_data)));
+      if(undo_data.layers.relief || undo_data.layers.reliefgrey || JSON.stringify(undo_data).length > 7000 || undo_data.projection !== "epsg:4326") { showloader = true; }
+      Mappr.postData(decodeURIComponent($.param(undo_data)), null, showloader);
     }
 
     Mappr.toggleUndo(true);
