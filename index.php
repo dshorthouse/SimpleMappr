@@ -229,7 +229,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <p id="mapCropMessage" class="sprites-before"><?php echo _("map will be cropped"); ?></p>
 <div class="download-options">
 <?php echo partial_scales(); ?>
-<div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>')?></div>
+<div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>'); ?></div>
 </div>
 <input type="checkbox" id="border" />
 <label for="border"><?php echo _("include border"); ?></label>
@@ -242,34 +242,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 </div>
 <div class="download-message"><?php echo _("Building file for download..."); ?></div>
 </div>
-<input type="hidden" name="download" id="download"/>
-<input type="hidden" name="output" id="output" />
-<input type="hidden" name="download_token" id="download_token"/>
-<input type="hidden" name="bbox_map" id="bbox_map" />
-<input type="hidden" name="projection_map" id="projection_map" />
-<input type="hidden" name="bbox_rubberband" id="bbox_rubberband" />
-<input type="hidden" name="bbox_query" id="bbox_query" />
-<input type="hidden" name="pan" id="pan" />
-<input type="hidden" name="zoom_out" id="zoom_out" />
-<input type="hidden" name="crop" id="crop" />
-<input type="hidden" name="rotation" id="rotation" />
-<input type="hidden" name="save[title]" />
-<input type="hidden" name="file_name" />
-<input type="hidden" name="download_factor" />
-<input type="hidden" name="width" />
-<input type="hidden" name="height" />
-<input type="hidden" name="download_filetype" />
-<input type="hidden" name="grid_space" />
-<input type="hidden" name="options[border]" />
-<input type="hidden" name="options[legend]" />
-<input type="hidden" name="options[scalebar]" />
-<input type="hidden" name="border_thickness" id="border_thickness" />
-<input type="hidden" id="rendered_bbox" value="" />
-<input type="hidden" id="rendered_rotation" value="" />
-<input type="hidden" id="rendered_projection" value="" />
-<input type="hidden" id="legend_url" value="" />
-<input type="hidden" id="scalebar_url" value="" />
-<input type="hidden" id="bad_points" value="" />
+<?php echo partial_hidden_inputs(); ?>
 </form>
 
 </div>
@@ -456,5 +429,46 @@ function partial_filetypes() {
   }
 
   return $output;
+}
+
+function partial_hidden_inputs() {
+  $inputs = array(
+     1 => "download",
+     2 => "output",
+     3 => "download_token",
+     4 => "bbox_map",
+     5 => "projection_map",
+     6 => "bbox_rubberband",
+     7 => "bbox_query",
+     8 => "pan",
+     9 => "zoom_out",
+    10 => "crop",
+    11 => "rotation",
+    12 =>"save[title]",
+    13 => "file_name",
+    14 => "download_factor",
+    15 => "width",
+    16 => "height",
+    17 => "download_filetype",
+    18 => "grid_space",
+    19 => "options[border]",
+    20 => "options[legend]",
+    21 => "options[scalebar]",
+    22 => "border_thickness",
+    23 => "rendered_bbox",
+    24 => "rendered_rotation",
+    25 => "rendered_projection",
+    26 => "legend_url",
+    27 => "scalebar_url",
+    28 => "bad_points"
+  );
+
+  $output = array();
+  foreach($inputs as $key => $value) {
+    $val = ($key >= 23) ? ' value=""' : "";
+    $output[] = '<input type="hidden" name="'.$value.'" id="'.$value.'"'.$val.' />';
+  }
+
+  return implode('', $output) . "\n";
 }
 ?>
