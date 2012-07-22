@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require_once('../config/conf.php');
 require_once('../config/conf.db.php');
 require_once('db.class.php');
+require_once('mapprservice.usersession.class.php');
 
 class PLACES {
 
@@ -38,6 +39,7 @@ class PLACES {
   private $_db;
 
   function __construct() {
+    USERSESSION::select_locale();
     $this->set_header()
          ->execute();
   }
@@ -50,7 +52,6 @@ class PLACES {
     header("Expires: 0");
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
-    header("Content-Type: application/json");
     return $this;
   }
 
@@ -86,19 +87,63 @@ class PLACES {
   private function index_places() {
     $result = array();
     $term = isset($_REQUEST['term']) ? $_REQUEST['term'] : $this->_request[0];
+    $where = isset($_REQUEST['filter']) ? " WHERE LOWER(country) LIKE LOWER('%".$this->_db->escape($_REQUEST['filter'])."%')" : null;
+    $sql = "SELECT * FROM stateprovinces".$where." ORDER BY country, stateprovince";
 
-    $sql = "
-      SELECT DISTINCT
-        sp.country as label, sp.country as value
-      FROM
-        stateprovinces sp
-      WHERE sp.country LIKE '".$this->_db->escape($term)."%'
-      ORDER BY sp.country
-      LIMIT 5";
+    if($term) {
+      $sql = "
+        SELECT DISTINCT
+          sp.country as label, sp.country as value
+        FROM
+          stateprovinces sp
+        WHERE sp.country LIKE '".$this->_db->escape($term)."%'
+        ORDER BY sp.country
+        LIMIT 5";
+      $result = $this->_db->fetch_all_array($sql);
+      header("Content-Type: application/json");
+      echo json_encode($result);
+    } else {
+      $rows = $this->_db->query($sql);
+      header("Content-Type: text/html");
+      $this->produce_output($rows);
+    }
+  }
 
-   if($term) { $result = $this->_db->fetch_all_array($sql); }
-
-   echo json_encode($result);
+  private function produce_output($rows) {
+    $output  = "";
+    $output .= '<table class="countrycodes">';
+    $output .= '<thead>';
+    $output .= '<tr>';
+    $output .= '<td class="title">'._("Country");
+    $output .= '<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />';
+    $output .= '</td>';
+    $output .= '<td class="code">ISO</td>';
+    $output .= '<td class="title">'._("State/Province").'</td>';
+    $output .= '<td class="code">'._("Code").'</td>';
+    $output .= '<td class="example">'._("Example").'</td>';
+    $output .= '</tr>';
+    $output .= '</thead>';
+    $output .= '<tbody>';
+    if($this->_db->affected_rows > 0) {
+      $i = 0;
+      while ($record = $this->_db->fetch_array($rows)) {
+        $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+        $output .= "<tr ".$class.">";
+        $output .= "<td>" . $record['country'] . "</td>";
+        $output .= "<td>" . $record['country_iso'] . "</td>";
+        $output .= "<td>" . $record['stateprovince'] . "</td>";
+        $output .= "<td>" . $record['stateprovince_code'] . "</td>";
+        $example = ($record['stateprovince_code']) ? $record['country_iso'] . "[" . $record['stateprovince_code'] . "]" : "";
+        $output .= "<td>" . $example . "</td>";
+        $output .= "</tr>" . "\n";
+        $i++;
+      }
+    } else {
+     $output .= "<tr class=\"odd\"><td colspan=\"5\">"._("Nothing found")."</td></tr>";
+    }
+    $output .= '</tbody>';
+    $output .= '</table>';
+    echo $output;
   }
 
 }

@@ -47,7 +47,7 @@ $(function() {
   });
 
   Mappr.trackEvent = function(category, action) {
-    if (typeof _gaq !== "undefined") { _gaq.push(['_trackEvent', category, action]); }
+    if (_gaq !== undefined) { _gaq.push(['_trackEvent', category, action]); }
   };
 
   Mappr.getPageSize = function() {
@@ -851,9 +851,9 @@ $(function() {
     //Note: object reference must be Mappr.x for hotkeys to work
     var vars = Mappr.vars;
 
-    if(typeof vars.jzoomAPI !== "undefined") { vars.jzoomAPI.destroy(); }
-    if(typeof vars.jcropAPI !== "undefined") { vars.jcropAPI.destroy(); }
-    if(typeof vars.jqueryAPI !== "undefined") { vars.jqueryAPI.destroy(); }
+    if(vars.jzoomAPI !== undefined) { vars.jzoomAPI.destroy(); }
+    if(vars.jcropAPI !== undefined) { vars.jcropAPI.destroy(); }
+    if(vars.jqueryAPI !== undefined) { vars.jqueryAPI.destroy(); }
 
     $('#mapOutputImage').show();
     $('.jcrop-holder').remove();
@@ -1725,7 +1725,7 @@ $(function() {
               Mappr.setFormOptions();
               Mappr.showLoadingMessage($('#mapper-saving-message').text());
 
-              if(typeof Mappr.vars.jcropAPI === "undefined") { $('#bbox_rubberband').val(''); }
+              if(Mappr.vars.jcropAPI === undefined) { $('#bbox_rubberband').val(''); }
 
               $.ajax({
                 type        : 'POST',
@@ -2110,6 +2110,8 @@ $(function() {
   };
 
   Mappr.showCodes = function() {
+    var data  = (this.getParameterByName("locale")) ? { locale : this.getParameterByName("locale") } : {};
+
     $('#mapper-message-codes').dialog({
       height        : (450).toString(),
       width         : (850).toString(),
@@ -2130,13 +2132,39 @@ $(function() {
     }).show();
 
     if($('#mapper-message-codes .mapper-loading-message').length > 0) {
-      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + this.getLanguage(), function(data) {
-        $('#mapper-message-codes').html(data).find('.filter-countries')
-          .keyup(function() { $.uiTableFilter( $('#mapper-message-codes .countrycodes'), this.value ); })
-          .keypress(function(event) { if (event.which === 13) { return false; }
-        });
-      }, 'html');
+      this.loadCodes($('#mapper-message-codes'), data);
     }
+  };
+
+  Mappr.loadCodes = function(elem, data) {
+    var self = this,
+        filter = "";
+    elem.find("tbody tr td").text("\xa0");
+    elem.find("tbody tr td:first").text("\xa0\xa0\xa0").addClass("loading");
+    $.ajax({
+      type     : 'GET',
+      url      : self.settings.baseUrl + '/places/',
+      data     : data,
+      dataType : 'html',
+      success  : function(response) {
+        elem.html(response);
+        filter = elem.find('.filter-countries');
+        filter.val("");
+        if(data.filter !== undefined) { filter.val(data.filter); }
+        filter.keypress(function(e) {
+          var key = e.keyCode || e.which;
+          if(key === 13 || key === 9) {
+            e.preventDefault();
+            data.filter = filter.val();
+            self.loadCodes(elem, data);
+          }
+        });
+        filter.blur(function() {
+          data.filter = filter.val();
+          self.loadCodes(elem, data);
+        });
+      }
+    });
   };
 
   Mappr.performRotation = function(element) {

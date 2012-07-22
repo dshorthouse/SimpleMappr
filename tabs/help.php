@@ -19,15 +19,12 @@ USERSESSION::select_locale();
 $(function () {
   $('#country-codes').html($('#mapper-message-codes').html());
   $('#map-help').waypoint(function() {
+    var data = {},
+        elem = $('#country-codes').css("width", "100%");
+
+    if (Mappr.getParameterByName("locale")) { data.locale = Mappr.getParameterByName("locale"); }
     if($('#country-codes .mapper-loading-message').length > 0) {
-      $.get(Mappr.settings.baseUrl + '/tabs/codes.php' + Mappr.getLanguage(), function(data) {
-        $('#country-codes').css('width', '100%').html(data).find('.filter-countries')
-          .keyup(function() { $.uiTableFilter( $('#country-codes .countrycodes'), this.value ); })
-          .keypress(function(event) { if (event.which === 13) { return false; }
-        });
-      }, 'html');
-    } else {
-      $('#country-codes').css('width', '100%');
+      Mappr.loadCodes(elem, data);
     }
   });
 });

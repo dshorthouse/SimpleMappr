@@ -25,6 +25,7 @@ USERSESSION::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("July 22, 2012"); ?></dt><dd><?php echo _("Bug fixes: Region Code lists can be filtered without causing the browser to crash."); ?></dd>
 <dt class="update"><?php echo _("July 2, 2012"); ?></dt><dd><?php echo _("Improvements: Added svg as an embedded output format."); ?></dd>
 <dt class="update"><?php echo _("July 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added sort to columns in My Maps."); ?></dd>
 <dt class="update"><?php echo _("June 14, 2012"); ?></dt><dd><?php echo _("Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."); ?></dd>

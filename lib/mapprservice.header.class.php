@@ -50,7 +50,6 @@ class HEADER {
     'download'  => 'public/javascript/jquery.download.min.js',
     'clearform' => 'public/javascript/jquery.clearform.min.js',
     'tipsy'     => 'public/javascript/jquery.tipsy.min.js',
-    'filter'    => 'public/javascript/jquery.uitablefilter.min.js',
     'hotkeys'   => 'public/javascript/jquery.hotkeys.min.js',
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
     'jstorage'  => 'public/javascript/jstorage.min.js',
