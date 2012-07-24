@@ -30,37 +30,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class MAPPR {
 
   /* the base map object */
-  public $map_obj;
+  protected $map_obj;
 
   /* path to shapefiles */
-  public $shape_path;
+  protected $shape_path;
 
   /* path to the font file */
-  public $font_file;
+  protected $font_file;
 
   /* file system temp path to store files produced */ 
-  public $tmp_path = '/tmp';
+  protected $tmp_path = '/tmp';
 
   /* url temp path to retrieve files produced */
-  public $tmp_url = '/tmp';
+  protected $tmp_url = '/tmp';
 
   /* default extent when map first loaded */
-  public $max_extent = array(-180,-90,180,90);
+  protected $max_extent = array(-180,-90,180,90);
 
   /* default projection when map first loaded */
-  public $default_projection = 'epsg:4326';
+  protected $default_projection = 'epsg:4326';
 
-  public $image;
+  protected $image;
 
-  public $scale;
+  protected $scale;
 
-  public $legend;
+  protected $legend;
 
   /* shapes and their mapfile configurations */
-  public $shapes = array();
+  protected $shapes = array();
 
   /* Initial mapfile as string because outputformat cannot otherwise be set */
-  public $mapfile_string = "
+  protected $mapfile_string = "
       MAP
 
       OUTPUTFORMAT

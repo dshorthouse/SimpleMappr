@@ -47,7 +47,7 @@ $(function() {
   });
 
   Mappr.trackEvent = function(category, action) {
-    if (_gaq !== undefined) { _gaq.push(['_trackEvent', category, action]); }
+    if (window._gaq !== undefined) { _gaq.push(['_trackEvent', category, action]); }
   };
 
   Mappr.getPageSize = function() {
