@@ -4,7 +4,7 @@
 
 File: mapprservice.query.class.php
 
-Description: Extends the Base map class for SimpleMappr to shade regions 
+Description: Extends the Base map class for SimpleMappr to shade regions
 
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com

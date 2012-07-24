@@ -28,8 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **************************************************************************/
 
 require_once ('mapprservice.class.php');
-
-/** PHPPowerPoint */
 set_include_path(MAPPR_DIRECTORY . '/lib/PHPWord/');
 include_once 'PHPWord.php';
 include_once 'PHPWord/IOFactory.php';

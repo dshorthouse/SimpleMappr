@@ -4,7 +4,7 @@
 
 File: mapprservice.api.class.php
 
-Description: Extends the base map class for SimpleMappr. 
+Description: Extends MAPPR class and produces maps from API call.
 
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com

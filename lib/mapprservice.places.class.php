@@ -4,7 +4,7 @@
 
 File: mapprservice.places.class.php
 
-Description: Base map class for SimpleMappr. 
+Description: Queries the SimpleMappr database for Countries.
 
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com

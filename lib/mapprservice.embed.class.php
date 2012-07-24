@@ -4,7 +4,7 @@
 
 File: mapprservice.embed.class.php
 
-Description: Extends the base map class for SimpleMappr to support WFS. 
+Description: Extends the base map class for SimpleMappr to produce outputs using resourceful URLs
 
 Developer: David P. Shorthouse
 Email: davidpshorthouse@gmail.com
