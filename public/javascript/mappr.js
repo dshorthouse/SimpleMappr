@@ -1205,7 +1205,8 @@ $(function() {
 
     data = {
       locale : self.getParameterByName("locale"),
-      q      : (obj.q) ? encodeURIComponent(obj.q.toLowerCase()) : null
+      q      : (obj.q) ? encodeURIComponent(obj.q.toLowerCase()) : null,
+      uid    : obj.uid || null
     };
 
     if(obj.sort) {
@@ -1215,6 +1216,7 @@ $(function() {
 
     if(!data.locale) { delete data.locale; }
     if(!data.q) { delete data.q; }
+    if(!data.uid) { delete data.uid; }
 
     $.ajax({
       type     : 'GET',
@@ -1628,6 +1630,11 @@ $(function() {
           $('.user-delete').click(function(e) {
             e.preventDefault();
             self.deleteUserConfirmation(this);
+          });
+          $('.user-load').click(function(e) {
+            e.preventDefault();
+            $("#tabs").tabs('select',3);
+            self.loadMapList({ uid : $(this).attr("data-uid") });
           });
         }
       }

@@ -38,6 +38,8 @@ class USERMAPS {
 
   private $_request;
 
+  private $_uid_q;
+
   private $_db;
 
   function __construct() {
@@ -69,6 +71,7 @@ class USERMAPS {
     } else {
       $this->_uid = $_SESSION['simplemappr']['uid'];
       $this->_request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
+      $this->_uid_q = isset($_GET['uid']) ? $_GET['uid'] : null;
       $this->_db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
       $this->restful_action();
     }
@@ -141,10 +144,13 @@ class USERMAPS {
     if($this->_uid != 1) {
       $where['user'] =  "WHERE m.uid = ".$this->_db->escape($this->_uid);
     }
+    if($this->_uid_q) {
+      $where['user'] = "WHERE m.uid = ".$this->_db->escape($this->_uid_q);
+    }
 
     $sql = "
       SELECT
-        COUNT(m.mid) AS total
+        u.username AS username, COUNT(m.mid) AS total
       FROM
         maps m
       INNER JOIN
@@ -155,7 +161,7 @@ class USERMAPS {
 
     $b = "";
     if(isset($_GET['q'])) {
-      if($this->_uid == 1) { $b = "WHERE "; }
+      if($this->_uid == 1 && !$this->_uid_q) { $b = "WHERE "; }
       $where['where'] = $b."LOWER(m.title) LIKE '%".$this->_db->escape($_GET['q'])."%'";
       if($this->_uid == 1) {
         $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->_db->escape($_GET['q'])."%'";
@@ -173,7 +179,6 @@ class USERMAPS {
         m.title,
         m.created,
         m.updated,
-        u.email,
         u.uid,
         u.username 
       FROM 
@@ -189,7 +194,13 @@ class USERMAPS {
       $output .= '<table class="grid-usermaps">' . "\n";
       $output .= '<thead>' . "\n";
       $output .= '<tr>' . "\n";
-      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']).'</th>';
+      if($this->_uid_q) {
+        $header_count = sprintf(_("%d of %d for %s"), $this->_db->affected_rows, $total['total'], $total['username']);
+      } else {
+        $header_count = sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']);
+      }
+      $header_count = ($this->_uid_q) ? : 
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.$header_count.'</th>';
       $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$dir : "";
       if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
       $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
@@ -208,7 +219,7 @@ class USERMAPS {
         $class = ($i % 2) ? 'class="even"' : 'class="odd"';
         $output .= '<tr '.$class.'>';
         $output .= '<td class="title">';
-        $output .= ($this->_uid == 1) ? $record['username'] . ': ' : '';
+        $output .= ($this->_uid == 1 && !$this->_uid_q) ? $record['username'] . ': ' : '';
         $output .= stripslashes($record['title']);
         $output .= '</td>';
         $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
@@ -232,14 +243,15 @@ class USERMAPS {
       $output .= '<script type="text/javascript">
         function loadList(self) {
           var data = {};
+          data.uid = '.$this->_uid_q.';
           $.each($(".ui-icon-triangle-sort", ".grid-usermaps"), function() {
             if($(this).hasClass("asc")) {
-              data["sort"] = { item : $(this).attr("data-sort"), dir : "asc" };
+              data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
             } else if ($(this).hasClass("desc")) {
               data.sort = { item : $(this).attr("data-sort"), dir : "desc" };
             }
           });
-          if(self.value.length !== 0) { data["q"] = self.value; }
+          if(self.value.length !== 0) { data.q = self.value; }
           Mappr.loadMapList(data);
         }
         $(".toolsRefresh", ".grid-usermaps").click(function(e) {
@@ -248,7 +260,9 @@ class USERMAPS {
         });
         $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
           e.preventDefault();
-          var data = { sort : { item : $(this).attr("data-sort"), dir : "'.$dir.'" } };
+          var data = {};
+          data.uid = '.$this->_uid_q.';
+          data.sort = { item : $(this).attr("data-sort"), dir : "'.$dir.'" };
           if($("#filter-mymaps").val().length !== 0) {
             data.q = $("#filter-mymaps").val();
           }

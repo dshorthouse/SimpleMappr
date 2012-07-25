@@ -354,6 +354,10 @@ msgstr "Titre"
 msgid "%d of %d"
 msgstr "%d de %d"
 
+#: .lib/mapprservice.usermaps.class.php:200
+msgid "%d of %d for %s"
+msgstr "%d de %d pour %s"
+
 #: .lib/mapprservice.usermaps.class.php:164
 msgid "Created"
 msgstr "Crée"

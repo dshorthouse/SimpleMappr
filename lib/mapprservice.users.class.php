@@ -155,6 +155,7 @@ class USERS {
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
        if($record['uid'] != 1) {
+         $output .= '<a class="sprites-before user-load" data-uid="'.$record['uid'].'" href="#">'._("Load").'</a>';
          $output .= '<a class="sprites-before user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }
        $output .= '</td>';
