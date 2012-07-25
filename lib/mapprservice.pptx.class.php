@@ -71,7 +71,12 @@ class MAPPRPPTX extends MAPPR {
         $files[$image]['size'] = getimagesize($files[$image]['file']);
       }
 
-      $scale = ($files['image']['size'][0] > $width) ? $files['image']['size'][0]/$width : 1;
+      $scale = 1;
+      $scaled_w = $files['image']['size'][0];
+      $scaled_h = $files['image']['size'][1];
+      if($scaled_w > $width || $scaled_h > $height) {
+        $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
+      }
 
       foreach($files as $type => $value) {
         $size = getimagesize($value['file']);

@@ -68,7 +68,12 @@ class MAPPRDOCX extends MAPPR {
       }
 
       // Width is measured as 'dxa', which is 1/20 of a point
-      $scale = ($files['image']['size'][0]*20 > $width) ? $files['image']['size'][0]*20/$width : 1;
+      $scale = 1;
+      $scaled_w = $files['image']['size'][0]*20;
+      $scaled_h = $files['image']['size'][1]*20;
+      if($scaled_w > $width || $scaled_h > $height) {
+        $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
+      }
 
       foreach($files as $type => $values) {
         if($type == 'image') {
