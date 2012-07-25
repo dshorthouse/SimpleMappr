@@ -199,7 +199,6 @@ class USERMAPS {
       } else {
         $header_count = sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']);
       }
-      $header_count = ($this->_uid_q) ? : 
       $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.$header_count.'</th>';
       $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$dir : "";
       if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
