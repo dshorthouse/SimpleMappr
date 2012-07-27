@@ -154,8 +154,8 @@ class USERS {
        $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
+       $output .= '<a class="sprites-before user-load" data-uid="'.$record['uid'].'" href="#">'._("Load").'</a>';
        if($record['uid'] != 1) {
-         $output .= '<a class="sprites-before user-load" data-uid="'.$record['uid'].'" href="#">'._("Load").'</a>';
          $output .= '<a class="sprites-before user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }
        $output .= '</td>';
@@ -164,20 +164,6 @@ class USERS {
      }
      $output .= '</tbody>' . "\n";
      $output .= '</table>' . "\n";
-
-     $dir = ($dir == "desc") ? "asc" : "desc";
-
-     $output .= '<script type="text/javascript">
-       $(".toolsRefresh", ".grid-users").click(function (e) {
-         e.preventDefault();
-         Mappr.loadUserList();
-       });
-       $(".ui-icon-triangle-sort", ".grid-users").click(function (e) {
-         e.preventDefault();
-         var item = $(this).attr("data-sort");
-         Mappr.loadUserList({ sort : { item : item, dir: "'.$dir.'" }});
-       });
-       </script>';
    }
 
    header("Content-Type: text/html");

@@ -1223,12 +1223,34 @@ $(function() {
       url      : self.settings.baseUrl + "/usermaps/",
       data     : data,
       dataType : 'html',
-      success  : function(data) {
-        if(data.indexOf("session timeout") !== -1) {
+      success  : function(response) {
+        if(response.indexOf("session timeout") !== -1) {
           window.location.reload();
         } else {
-          $('#usermaps').find('.usermaps-loading').remove().end().html(data);
-          $('#filter-mymaps').val(obj.q);
+          $('#usermaps').find('.usermaps-loading').remove().end().html(response);
+          $(".toolsRefresh", ".grid-usermaps").click(function(e) { e.preventDefault(); self.loadMapList(); });
+          $('#filter-mymaps')
+            .val(obj.q)
+            .keypress(function(e) {
+              if (e.which === 13) {
+                e.preventDefault();
+                data.q = $(this).val();
+                self.loadMapList(data);
+                self.trackEvent('maplist', 'filter');
+              }
+            })
+            .blur(function(e) {
+              e.preventDefault();
+              self.loadMapList(data);
+              self.trackEvent('maplist', 'filter');
+          });
+          $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
+            e.preventDefault();
+            data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
+            if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
+            self.loadMapList(data);
+            self.trackEvent('maplist', 'sort');
+          });
           $('.map-load').click(function(e) {
             e.preventDefault();
             self.loadMap(this);
@@ -1622,11 +1644,21 @@ $(function() {
       url      : self.settings.baseUrl + '/users/',
       data     : data,
       dataType : 'html',
-      success  : function(data) {
-        if(data.indexOf("access denied") !== -1) {
+      success  : function(response) {
+        if(response.indexOf("access denied") !== -1) {
           window.location.reload();
         } else {
-          $('#userdata').find('.userdata-loading').remove().end().html(data);
+          $('#userdata').find('.userdata-loading').remove().end().html(response);
+          $(".toolsRefresh", ".grid-users").click(function(e) {
+            e.preventDefault();
+            self.loadUserList();
+          });
+          $(".ui-icon-triangle-sort", ".grid-users").click(function(e) {
+            e.preventDefault();
+            data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
+            if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
+            self.loadUserList(data);
+          });
           $('.user-delete').click(function(e) {
             e.preventDefault();
             self.deleteUserConfirmation(this);

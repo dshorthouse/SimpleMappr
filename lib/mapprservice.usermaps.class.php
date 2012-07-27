@@ -138,6 +138,7 @@ class USERMAPS {
   private function index_maps() {
     $where = array();
     $output = '';
+    $data_uid = "";
     $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
     $order = "m.created ".$dir;
 
@@ -163,7 +164,7 @@ class USERMAPS {
     if(isset($_GET['q'])) {
       if($this->_uid == 1 && !$this->_uid_q) { $b = "WHERE "; }
       $where['where'] = $b."LOWER(m.title) LIKE '%".$this->_db->escape($_GET['q'])."%'";
-      if($this->_uid == 1) {
+      if($this->_uid == 1 && !$this->_uid_q) {
         $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->_db->escape($_GET['q'])."%'";
       }
     }
@@ -196,10 +197,11 @@ class USERMAPS {
       $output .= '<tr>' . "\n";
       if($this->_uid_q) {
         $header_count = sprintf(_("%d of %d for %s"), $this->_db->affected_rows, $total['total'], $total['username']);
+        $data_uid = " data-uid=".$this->_uid_q;
       } else {
         $header_count = sprintf(_("%d of %d"), $this->_db->affected_rows, $total['total']);
       }
-      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap" /> '.$header_count.'</th>';
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"'.$data_uid.' /> '.$header_count.'</th>';
       $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$dir : "";
       if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
       $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
@@ -236,40 +238,6 @@ class USERMAPS {
       }
       $output .= '</tbody>' . "\n";
       $output .= '</table>' . "\n";
-
-      $dir = ($dir == "desc") ? "asc" : "desc";
-
-      $output .= '<script type="text/javascript">
-        function loadList(self) {
-          var data = {};
-          data.uid = '.$this->_uid_q.';
-          $.each($(".ui-icon-triangle-sort", ".grid-usermaps"), function() {
-            if($(this).hasClass("asc")) {
-              data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
-            } else if ($(this).hasClass("desc")) {
-              data.sort = { item : $(this).attr("data-sort"), dir : "desc" };
-            }
-          });
-          if(self.value.length !== 0) { data.q = self.value; }
-          Mappr.loadMapList(data);
-        }
-        $(".toolsRefresh", ".grid-usermaps").click(function(e) {
-          e.preventDefault();
-          Mappr.loadMapList();
-        });
-        $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
-          e.preventDefault();
-          var data = {};
-          data.uid = '.$this->_uid_q.';
-          data.sort = { item : $(this).attr("data-sort"), dir : "'.$dir.'" };
-          if($("#filter-mymaps").val().length !== 0) {
-            data.q = $("#filter-mymaps").val();
-          }
-          Mappr.loadMapList(data);
-        });
-        $("#filter-mymaps")
-          .keypress(function(e) { if (e.which === 13) { loadList(this); } })
-          .blur(function(e) { loadList(this); });</script>';
     } else {
       $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
     }
