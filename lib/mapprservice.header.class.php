@@ -42,7 +42,7 @@ class HEADER {
   */
   public static $local_js_files = array(
     'jquery'    => 'public/javascript/jquery-1.7.2.min.js',
-    'jquery-ui' => 'public/javascript/jquery-ui-1.8.21.min.js',
+    'jquery_ui' => 'public/javascript/jquery-ui-1.8.21.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
     'textarea'  => 'public/javascript/jquery.textarearesizer.compressed.js',
@@ -90,12 +90,12 @@ class HEADER {
   private function remote_js_files() {
     if(ENVIRONMENT == "production") {
       foreach(self::$local_js_files as $key => $value) {
-        if ($key == 'jquery' || $key == 'jquery-ui') {
+        if ($key == 'jquery' || $key == 'jquery_ui') {
           unset(self::$local_js_files[$key]);
         }
       }
       $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
-      $this->addJS("jquery-ui", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js");
+      $this->addJS("jquery_ui", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js");
     }
     return $this;
   }
@@ -204,14 +204,14 @@ class HEADER {
     $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $header .= "{\"" . $key . "\" : \"" . $file . "\"}";
-      if($counter < count($this->js_header)) { $header .= ","; }
+      $header .= "{" . $key . " : \"" . $file . "\"}";
+      if($counter < count($this->js_header)) { $header .= ", "; }
       $counter++;
     }
     $header .= ");" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $header .= "head.ready(\"".$namespace."\", function() { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
     $header .= "</script>" . "\n";
     echo $header;
   }
