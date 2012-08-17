@@ -606,7 +606,7 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
-msgid "July 22, 2012"
+msgid "August 22, 2012"
 msgstr "22 août, 2012"
 
 #: .tabs/about.php:11
