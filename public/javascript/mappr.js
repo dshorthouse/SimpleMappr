@@ -413,7 +413,7 @@ $(function() {
   Mappr.mapRefresh = function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     Mappr.resetAndBuild();
-    $("#tabs").tabs('select',0);
+    Mappr.tabSelector(0);
   };
 
   Mappr.mapRebuild = function() {
@@ -462,7 +462,8 @@ $(function() {
   };
 
   Mappr.mapList = function() {
-    $("#tabs").tabs('select',3);
+    //Note: method calls must be Mappr.x for hotkeys to work
+    Mappr.tabSelector(3);
   };
 
   Mappr.mapZoomIn = function() {
@@ -1375,8 +1376,7 @@ $(function() {
     var self     = this,
         id       = $(obj).attr("data-mid");
 
-    $("#tabs").tabs('select',0);
-
+    self.tabSelector(0);
     self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
@@ -1668,7 +1668,7 @@ $(function() {
           });
           $('.user-load').click(function(e) {
             e.preventDefault();
-            $("#tabs").tabs('select',3);
+            self.tabSelector(3);
             self.loadMapList({ uid : $(this).attr("data-uid") });
           });
         }
@@ -1857,7 +1857,7 @@ $(function() {
       } else {
         self.destroyRedo();
         self.showMap();
-        $("#tabs").tabs('select',0);
+        self.tabSelector(0);
       }
     });
   };
