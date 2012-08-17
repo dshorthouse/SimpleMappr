@@ -607,6 +607,10 @@ msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
 msgid "July 22, 2012"
+msgstr "22 août, 2012"
+
+#: .tabs/about.php:11
+msgid "July 22, 2012"
 msgstr "22 juillet, 2012"
 
 #: .tabs/about.php:11
@@ -628,6 +632,10 @@ msgstr "2 avril, 2012"
 #: .tabs/about.php:11
 msgid "February 8, 2012"
 msgstr "8 février, 2012"
+
+#: .tabs/about
+msgid "Improvements: Adjusted URLs with tab clicks to preserve use of back button."
+msgstr "Améliorations: URL ajusté avec des clics pour préserver l'utilisation du bouton retour."
 
 #: .tabs/about
 msgid "Bug fixes: Region Code lists can be filtered without causing the browser to crash."

@@ -294,7 +294,10 @@ $(function() {
   };
 
   Mappr.tabSelector = function(tab) {
+    var state = {};
     $("#tabs").tabs('select',tab);
+    state['tabs'] = tab;
+    $.bbq.pushState(state);
   };
 
   Mappr.RGBtoHex = function(R,G,B) {
@@ -2278,16 +2281,43 @@ $(function() {
   };
 
   Mappr.bindTabs = function() {
-    var config = {
-      cache : true,
-      load  : function(e, ui){
-        e = null;
-        $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
-      }
-    };
-    //odd tabs handling to fix IE issues
+    var tab = $('#tabs'),
+        id  = 'tabs',
+      tab_a_selector = 'ul.navigation a',
+      config = {
+        cache : true,
+        load  : function(e, ui){
+          e = null;
+          $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
+        },
+        event : 'change'
+      },
+      url = "";
+
     $('#mapTools').tabs({selected: 0});
-    $("#tabs").tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+    tab.tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+
+    tab.find(tab_a_selector).click(function(){
+      var state = {},
+        idx = $(this).parent().prevAll().length;
+
+      state[id] = idx;
+      $.bbq.pushState(state);
+      $.each($('#site-languages a'), function() {
+        var url = $(this).attr('href').split('#')[0];
+        $(this).attr('href', url + '#' + id + '=' + idx);
+      });
+    });
+
+    $(window).bind('hashchange', function(e) {
+      var idx = $.bbq.getState(id, true) || 0;
+      tab.find(tab_a_selector).eq(idx).triggerHandler('change');
+      $.each($('#site-languages a'), function() {
+        var url = $(this).attr('href').split('#')[0];
+        $(this).attr('href', url + '#' + id + '=' + idx);
+      });
+    });
+    $(window).trigger('hashchange');
   };
 
   Mappr.init = function() {
@@ -2320,14 +2350,8 @@ $(function() {
     $('.toolsUndoDisabled').click(false);
     $('.toolsRedoDisabled').click(false);
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
-    if($('#usermaps').length > 0) {
-      $("#tabs").tabs('select',3);
-      this.loadMapList();
-    }
-    if($('#userdata').length > 0) {
-      $("#tabs").tabs('select',4);
-      this.loadUserList();
-    }
+    if($('#usermaps').length > 0) { this.tabSelector(3); this.loadMapList(); }
+    if($('#userdata').length > 0) { this.tabSelector(4); this.loadUserList(); }
     $("input").keypress(function(e) { if (e.which === 13) { return false; } });
   };
 

@@ -26,7 +26,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <h1 id="site-title" class="sprites-after">SimpleMapp<span>r</span></h1>
 <div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
 <div id="site-languages">
-<ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
+<ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>

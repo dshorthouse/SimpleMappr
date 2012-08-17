@@ -54,6 +54,7 @@ class HEADER {
     'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
     'jstorage'  => 'public/javascript/jstorage.min.js',
     'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
+    'bbq'       => 'public/javascript/jquery.ba-bbq.min.js',
     'mappr'     => 'public/javascript/mappr.min.js'
   );
 
