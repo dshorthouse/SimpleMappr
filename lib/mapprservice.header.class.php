@@ -99,7 +99,7 @@ class HEADER {
       foreach(self::$local_js_files as $key => $value) {
         if ($key == 'jquery' || $key == 'jquery_ui') {
           unset(self::$local_js_files[$key]);
-          $this->addJS($key, self::$local_js_files[$key]);
+          $this->addJS($key, self::$remote_js_files[$key]);
         }
       }
     }
