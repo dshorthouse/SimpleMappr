@@ -60,7 +60,7 @@ class HEADER {
 
   public static $remote_js_files = array(
     'jquery'    => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js',
-    'jquery-ui' => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
+    'jquery_ui' => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
     'janrain'   => 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
 
