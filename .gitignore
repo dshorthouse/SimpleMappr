@@ -5,10 +5,13 @@ config/conf.db.php
 # Ignore contents of direcories
 public/javascript/cache/*
 !public/javascript/cache/README
+
 public/stylesheets/cache/*
 !public/stylesheets/cache/README
+
 tmp/*
-tmp/!README
+!tmp/README
+
 lib/mapserver/maps/**/*
 
 # Logs and databases #
