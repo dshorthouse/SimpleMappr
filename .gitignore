@@ -4,9 +4,9 @@ config/conf.db.php
 
 # Ignore contents of direcories
 public/javascript/cache/*
-public/javascript/cache/!README
+!public/javascript/cache/README
 public/stylesheets/cache/*
-public/stylesheets/cache/!README
+!public/stylesheets/cache/README
 tmp/*
 tmp/!README
 lib/mapserver/maps/**/*
