@@ -1242,12 +1242,7 @@ $(function() {
                 self.loadMapList(data);
                 self.trackEvent('maplist', 'filter');
               }
-            })
-            .blur(function(e) {
-              e.preventDefault();
-              self.loadMapList(data);
-              self.trackEvent('maplist', 'filter');
-          }).focus();
+            }).focus();
           $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
             e.preventDefault();
             data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
