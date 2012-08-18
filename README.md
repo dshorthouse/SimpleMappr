@@ -93,12 +93,12 @@ Internationalization
 
 See: [http://onlamp.com/pub/a/php/2002/06/13/php.html][7]
 
-Apache server requires php5_gettext.so extension for PHP5. The following two commands make a message.po file (by reading the index.php file) and a binary message.mo file. Both need to be moved to relevant i18n directory such as i18n/fr_FR.UTF-8/LC_MESSAGES. You'll need to translate the strings in message.po before making the binary of course.
+Apache server requires php5_gettext.so extension for PHP5. The following two commands make a messages.po file (by reading the index.php file) and a binary messages.mo file. Both need to be moved to relevant i18n directory such as i18n/fr_FR.UTF-8/LC_MESSAGES. You'll need to translate the strings in messages.po before making the binary of course.
 
     $ xgettext -n index.php
     $ msgfmt messages.po
 
-Or, use the ruby utility, crawler.rb from the /i18n directory to make a message.po file and move it to i18n/fr_FR.UTF-8/LC_MESSAGES.
+Or, use the ruby utility, crawler.rb from the /i18n directory to make a messages.po file and move it to i18n/fr_FR.UTF-8/LC_MESSAGES.
 
     $ cd i18n
     $ ruby crawler.rb ../
