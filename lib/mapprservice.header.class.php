@@ -41,8 +41,8 @@ class HEADER {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'jquery'    => 'public/javascript/jquery-1.7.2.min.js',
-    'jquery_ui' => 'public/javascript/jquery-ui-1.8.21.min.js',
+    'jquery'    => 'public/javascript/jquery-1.8.0.min.js',
+    'jquery_ui' => 'public/javascript/jquery-ui-1.8.23.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
     'textarea'  => 'public/javascript/jquery.textarearesizer.compressed.js',
@@ -56,6 +56,12 @@ class HEADER {
     'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
     'bbq'       => 'public/javascript/jquery.ba-bbq.min.js',
     'mappr'     => 'public/javascript/mappr.min.js'
+  );
+
+  public static $remote_js_files = array(
+    'jquery'    => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js',
+    'jquery-ui' => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
+    'janrain'   => 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
 
   /*
@@ -93,10 +99,9 @@ class HEADER {
       foreach(self::$local_js_files as $key => $value) {
         if ($key == 'jquery' || $key == 'jquery_ui') {
           unset(self::$local_js_files[$key]);
+          $this->addJS($key, self::$local_js_files[$key]);
         }
       }
-      $this->addJS("jquery", "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
-      $this->addJS("jquery_ui", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js");
     }
     return $this;
   }
@@ -132,7 +137,7 @@ class HEADER {
       }
     }
     if(!isset($_SESSION['simplemappr'])) {
-      $this->addJS("janrain", "http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js");
+      $this->addJS("janrain", self::$remote_js_files["janrain"]);
     }
     return $this;
   }
