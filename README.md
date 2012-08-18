@@ -91,7 +91,7 @@ Ubuntu Package
 Internationalization
 --------------------
 
-See: http://onlamp.com/pub/a/php/2002/06/13/php.html
+See: [http://onlamp.com/pub/a/php/2002/06/13/php.html][7]
 
 Apache server requires php5_gettext.so extension for PHP5. The following two commands make a message.po file (by reading the index.php file) and a binary message.mo file. Both need to be moved to relevant i18n directory such as i18n/fr_FR.UTF-8/LC_MESSAGES. You'll need to translate the strings in message.po before making the binary of course.
 
@@ -115,3 +115,4 @@ Copyright
 [4]: http://bit.ly/N76XfB
 [5]: http://rpxnow.com
 [6]: http://download.osgeo.org/mapserver/mapserver-5.6.7.tar.gz
+[7]: http://onlamp.com/pub/a/php/2002/06/13/php.html
