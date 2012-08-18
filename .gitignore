@@ -3,8 +3,8 @@ config/conf.php
 config/conf.db.php
 
 # Ignore contents of direcories
-public/javascript/cache/*
-public/stylesheets/cache/*
+public/javascript/cache/*.js
+public/stylesheets/cache/*.css
 tmp/*
 lib/mapserver/maps/**/*
 
