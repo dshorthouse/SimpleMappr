@@ -1685,7 +1685,7 @@ $(function() {
   Mappr.deleteUserConfirmation = function(obj) {
     var self    = this,
         id      = $(obj).attr("data-uid"),
-        message = '<em>' + $(obj).parent().parent().children("td:first").html() + '</em>';
+        message = '<em>' + $(obj).parent().parent().children("td:first").text() + '</em>';
 
     $('#mapper-message-delete').find("span").html(message).end().dialog({
       height        : (250).toString(),
