@@ -1134,6 +1134,7 @@ class MAPPR {
             $layer->set("labelitem", "Name1");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
@@ -1158,6 +1159,7 @@ class MAPPR {
             $layer->set("labelitem", "NAME");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
@@ -1174,6 +1176,7 @@ class MAPPR {
             $layer->set("labelitem", "NAMEASCII");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
@@ -1194,6 +1197,7 @@ class MAPPR {
             $layer->set("labelitem", "NAME_1");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
@@ -1210,6 +1214,7 @@ class MAPPR {
             $layer->set("labelitem", "Name");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
@@ -1226,6 +1231,7 @@ class MAPPR {
             $layer->set("labelitem", "Name");
 
             $class = ms_newClassObj($layer);
+            $class->label->set("encoding", "UTF-8");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
@@ -1253,6 +1259,7 @@ class MAPPR {
 
       $class = ms_newClassObj($layer);
       $class->settext("http://www.simplemappr.net");
+      $class->label->set("encoding", "UTF-8");
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
       $class->label->set("size", 8);
