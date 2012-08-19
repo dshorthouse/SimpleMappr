@@ -1259,7 +1259,7 @@ class MAPPR {
 
       $class = ms_newClassObj($layer);
       $class->settext("http://www.simplemappr.net");
-      $class->label->set("encoding", "UTF-8");
+      $class->label->set("encoding", "ISO-8859-1");
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
       $class->label->set("size", 8);
@@ -1292,6 +1292,7 @@ class MAPPR {
       $class = ms_newClassObj($layer);
 
       if($this->gridlabel != 0) {
+        $class->label->set("encoding", "ISO-8859-1");
         $class->label->set("font", "arial");
         $class->label->set("type", MS_TRUETYPE);
         $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
@@ -1388,6 +1389,7 @@ class MAPPR {
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
     $this->map_obj->scalebar->set("transparent", 1);
+    $this->map_obj->scalebar->label->set("encoding", "ISO-8859-1");
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
     $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);

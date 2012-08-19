@@ -109,6 +109,7 @@ class MAPPREMBED extends MAPPR {
 
       $class = ms_newClassObj($layer);
       if(isset($this->gridlabel) && $this->gridlabel == 1) {
+        $class->label->set("encoding", "ISO-8859-1");
         $class->label->set("font", "arial");
         $class->label->set("type", MS_TRUETYPE);
         $class->label->set("size", 10);
@@ -147,6 +148,7 @@ class MAPPREMBED extends MAPPR {
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
     $this->map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
+    $this->map_obj->scalebar->label->set("encoding", "ISO-8859-1");
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
     $this->map_obj->scalebar->label->set("size", 10);
