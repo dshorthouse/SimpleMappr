@@ -1586,7 +1586,7 @@ $(function() {
   Mappr.deleteMapConfirmation = function(obj) {
     var self    = this,
         id      = $(obj).attr("data-mid"),
-        message = '<em>' + $(obj).parent().parent().find(".title").html() + '</em>';
+        message = '<em>' + $(obj).parent().parent().find(".title").text() + '</em>';
 
     $('#mapper-message-delete').find('span').html(message).end().dialog({
       height        : (250).toString(),
