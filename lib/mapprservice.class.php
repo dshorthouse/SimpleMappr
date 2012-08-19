@@ -1134,9 +1134,9 @@ class MAPPR {
             $layer->set("labelitem", "Name1");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $class->label->set("position", MS_UR);
             $class->label->set("offsetx", 3);
@@ -1159,9 +1159,9 @@ class MAPPR {
             $layer->set("labelitem", "NAME");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
             $class->label->set("position", MS_CC);
             $class->label->set("offsetx", 3);
@@ -1176,9 +1176,9 @@ class MAPPR {
             $layer->set("labelitem", "NAMEASCII");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $class->label->set("position", MS_UR);
             $class->label->set("offsetx", 3);
@@ -1197,9 +1197,9 @@ class MAPPR {
             $layer->set("labelitem", "NAME_1");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
             $class->label->set("position", MS_CC);
             $class->label->set("offsetx", 3);
@@ -1214,9 +1214,9 @@ class MAPPR {
             $layer->set("labelitem", "Name");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $class->label->set("position", MS_UR);
             $class->label->set("offsetx", 3);
@@ -1231,9 +1231,9 @@ class MAPPR {
             $layer->set("labelitem", "Name");
 
             $class = ms_newClassObj($layer);
-            $class->label->set("encoding", "ISO-8859-1");
             $class->label->set("font", "arial");
             $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $class->label->set("position", MS_UR);
             $class->label->set("offsetx", 3);
@@ -1259,7 +1259,6 @@ class MAPPR {
 
       $class = ms_newClassObj($layer);
       $class->settext("http://www.simplemappr.net");
-      $class->label->set("encoding", "ISO-8859-1");
       $class->label->set("font", "arial");
       $class->label->set("type", MS_TRUETYPE);
       $class->label->set("size", 8);
@@ -1292,7 +1291,6 @@ class MAPPR {
       $class = ms_newClassObj($layer);
 
       if($this->gridlabel != 0) {
-        $class->label->set("encoding", "ISO-8859-1");
         $class->label->set("font", "arial");
         $class->label->set("type", MS_TRUETYPE);
         $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
@@ -1306,24 +1304,6 @@ class MAPPR {
       ms_newGridObj($layer);
       $minx = $this->map_obj->extent->minx;
       $maxx = $this->map_obj->extent->maxx;
-
-      //project the extent back to default such that we can work with proper tick marks
-      if($this->projection != $this->default_projection) {
-        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
-        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
-
-        $poPoint1 = ms_newPointObj();
-        $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
-
-        $poPoint2 = ms_newPointObj();
-        $poPoint2->setXY($this->map_obj->extent->maxx, $this->map_obj->extent->maxy);
-
-        @$poPoint1->project($origProjObj,$newProjObj);
-        @$poPoint2->project($origProjObj,$newProjObj);
-
-        $minx = $poPoint1->x;
-        $maxx = $poPoint2->x;
-      }
 
       $ticks = abs($maxx-$minx)/24;
 
@@ -1389,7 +1369,6 @@ class MAPPR {
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
     $this->map_obj->scalebar->set("transparent", 1);
-    $this->map_obj->scalebar->label->set("encoding", "ISO-8859-1");
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
     $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
