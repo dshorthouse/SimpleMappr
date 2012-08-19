@@ -148,13 +148,14 @@ class USERS {
      while ($record = $this->_db->fetch_array($rows)) {
        $class = ($i % 2) ? 'class="even"' : 'class="odd"';
        $output .= '<tr '.$class.'>';
-       $output .= '<td>'.stripslashes($record['username']).'</td>';
+       $output .= '<td><a class="user-load" data-uid="'.$record['uid'].'" href="#">';
+       $output .= stripslashes($record['username']);
+       $output .= '</a></td>';
        $output .= '<td>'.stripslashes($record['email']).'</td>';
        $output .= '<td class="usermaps-number">'.$record['num'].'</td>';
        $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
-       $output .= '<a class="sprites-before user-load" data-uid="'.$record['uid'].'" href="#">'._("Load").'</a>';
        if($record['uid'] != 1) {
          $output .= '<a class="sprites-before user-delete" data-uid="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }

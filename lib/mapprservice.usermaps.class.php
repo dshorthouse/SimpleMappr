@@ -221,14 +221,13 @@ class USERMAPS {
         $output .= '<tr '.$class.'>';
         $output .= '<td class="title">';
         $output .= ($this->_uid == 1 && !$this->_uid_q) ? $record['username'] . ': ' : '';
-        $output .= stripslashes($record['title']);
+        $output .= '<a class="map-load" data-mid="'.$record['mid'].'" href="#">' . stripslashes($record['title']) . '</a>';
         $output .= '</td>';
         $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
         $output .= '<td class="center-align">';
         $output .= ($record['updated']) ? gmdate("M d, Y", $record['updated']) : ' - ';
         $output .= '</td>';
         $output .= '<td class="actions">';
-        $output .= '<a class="sprites-before map-load" data-mid="'.$record['mid'].'" href="#">'._("Load").'</a>';
         if($this->_uid == $record['uid'] || $this->_uid == 1) {
           $output .= '<a class="sprites-before map-delete" data-mid="'.$record['mid'].'" href="#">'._("Delete").'</a>';
         }

@@ -183,12 +183,10 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-mymaps a.toolsRefresh:after{background-position:-240px -324px;margin:0 0 0 0.2em;}
 #map-mymaps tr{border:1px solid #aaa;}
 #map-mymaps .odd{background:none repeat scroll 0 0 #fff;}
-#map-mymaps .actions{width:250px;text-align:right;padding-right:10px;}
+#map-mymaps .actions{width:150px;text-align:right;padding-right:10px;}
 #map-mymaps a{display:inline-block;margin-left:10px;}
 #map-mymaps a.map-delete:before{background-position:-260px -284px;margin:0.2em;}
 #map-mymaps a.map-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
-#map-mymaps a.map-load:before{background-position:-200px -284px;margin:0.2em;}
-#map-mymaps a.map-load:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-mymaps input{vertical-align:top;}
 #map-users table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
 #map-users thead tr{height:1.75em;}
@@ -203,10 +201,8 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-users tr.odd{background:none repeat scroll 0 0 #fff;}
 #map-users .usermaps-number{text-align:center;}
 #map-users .usermaps-center{width:200px;text-align:center;}
-#map-users .actions{width:250px;text-align:right;padding-right:10px;}
+#map-users .actions{width:150px;text-align:right;padding-right:10px;}
 #map-users a{display:inline-block;margin-left:10px;}
-#map-users a.user-load:before{background-position:-200px -284px;margin:0.2em;}
-#map-users a.user-load:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-users a.user-delete:before{background-position:-260px -284px;margin-top:0.2em;}
 #map-users a.user-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 .countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
