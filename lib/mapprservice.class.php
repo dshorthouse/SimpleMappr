@@ -1305,6 +1305,24 @@ class MAPPR {
       $minx = $this->map_obj->extent->minx;
       $maxx = $this->map_obj->extent->maxx;
 
+      //project the extent back to default such that we can work with proper tick marks
+      if($this->projection != $this->default_projection && $this->projection == $this->projection_map) {
+        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
+        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+
+        $poPoint1 = ms_newPointObj();
+        $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
+
+        $poPoint2 = ms_newPointObj();
+        $poPoint2->setXY($this->map_obj->extent->maxx, $this->map_obj->extent->maxy);
+
+        @$poPoint1->project($origProjObj,$newProjObj);
+        @$poPoint2->project($origProjObj,$newProjObj);
+
+        $minx = $poPoint1->x;
+        $maxx = $poPoint2->x;
+      }
+
       $ticks = abs($maxx-$minx)/24;
 
       if($ticks >= 5) { $labelformat = "DD"; }
@@ -1315,6 +1333,7 @@ class MAPPR {
       $layer->grid->set("maxarcs", $ticks);
       $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
       $layer->grid->set("maxsubdivide", 2);
+
     }
   }
   
