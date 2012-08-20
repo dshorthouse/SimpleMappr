@@ -205,19 +205,23 @@ class HEADER {
   * Create the javascript header
   */
   public function getJSFooter() {
-    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+    $header  = "<script type=\"text/javascript\" src=\"public/javascript/LAB.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
-    $header .= "head.js(";
+    $header .= '$LAB';
+    $header .= ".script(\"" . $this->js_header['jquery']  . "\").wait()";
+    $header .= ".script(\"" . $this->js_header['jquery_ui'] . "\").wait()";
+    unset($this->js_header['jquery'], $this->js_header['jquery_ui']);
+    $header .= ".script([";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $header .= "{" . $key . " : \"" . $file . "\"}";
+      $header .= "\"" . $file . "\"";
       if($counter < count($this->js_header)) { $header .= ", "; }
       $counter++;
     }
-    $header .= ");" . "\n";
+    $header .= "])" . "\n";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $header .= ".wait(function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
     $header .= "</script>" . "\n";
     echo $header;
   }
