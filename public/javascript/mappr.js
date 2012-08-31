@@ -296,7 +296,7 @@ $(function() {
   Mappr.tabSelector = function(tab) {
     var state = {};
     $("#tabs").tabs('select',tab);
-    state['tabs'] = tab;
+    state.tabs = tab;
     $.bbq.pushState(state);
   };
 
@@ -2278,16 +2278,16 @@ $(function() {
   Mappr.bindTabs = function() {
     var tab = $('#tabs'),
         id  = 'tabs',
-      tab_a_selector = 'ul.navigation a',
-      config = {
-        cache : true,
-        load  : function(e, ui){
-          e = null;
-          $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
+        tab_a_selector = 'ul.navigation a',
+        config = {
+          cache : true,
+          load  : function(e, ui){
+            e = null;
+            $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
+          },
+          event : 'change'
         },
-        event : 'change'
-      },
-      url = "";
+        url = "";
 
     $('#mapTools').tabs({selected: 0});
     tab.tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
@@ -2299,16 +2299,18 @@ $(function() {
       state[id] = idx;
       $.bbq.pushState(state);
       $.each($('#site-languages a'), function() {
-        var url = $(this).attr('href').split('#')[0];
+        url = $(this).attr('href').split('#')[0];
         $(this).attr('href', url + '#' + id + '=' + idx);
       });
     });
 
     $(window).bind('hashchange', function(e) {
       var idx = $.bbq.getState(id, true) || 0;
+
+      e = null;
       tab.find(tab_a_selector).eq(idx).triggerHandler('change');
       $.each($('#site-languages a'), function() {
-        var url = $(this).attr('href').split('#')[0];
+        url = $(this).attr('href').split('#')[0];
         $(this).attr('href', url + '#' + id + '=' + idx);
       });
     });
