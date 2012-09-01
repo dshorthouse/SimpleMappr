@@ -59,9 +59,9 @@ class HEADER {
   );
 
   public static $remote_js_files = array(
-    'jquery'    => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js',
-    'jquery_ui' => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
-    'janrain'   => 'http://widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
+    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js',
+    'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
+    'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
 
   /*
@@ -129,7 +129,7 @@ class HEADER {
       } else {
         $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
       }
-      $this->addJS("ga", "http://google-analytics.com/ga.js");
+      $this->addJS("ga", "//google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
         if($key == "mappr") { $js_file = str_replace(".min", "",$js_file); }
@@ -217,7 +217,7 @@ class HEADER {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"//".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
     $header .= "</script>" . "\n";
     echo $header;
   }
@@ -241,7 +241,7 @@ class HEADER {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
 w.janrain.settings.language = '" . USERSESSION::$accepted_locales[$locale]['canonical'] . "';
-w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
+w.janrain.settings.tokenUrl = '//" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
