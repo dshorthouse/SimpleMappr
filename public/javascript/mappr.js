@@ -2374,11 +2374,18 @@ $(function() {
     this.bindDownload();
     this.bindSubmit();
     this.bindPanelToggle();
+
     $('.toolsUndoDisabled').click(false);
     $('.toolsRedoDisabled').click(false);
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
-    if($('#usermaps').length > 0) { this.tabSelector(3); this.loadMapList(); }
-    if($('#userdata').length > 0) { this.tabSelector(4); this.loadUserList(); }
+    if($('#usermaps').length > 0) {
+      this.tabSelector(3);
+      this.loadMapList();
+    }
+    if($('#userdata').length > 0) {
+      this.tabSelector(4);
+      this.loadUserList();
+    }
     $("input").keypress(function(e) { if (e.which === 13) { return false; } });
   };
 

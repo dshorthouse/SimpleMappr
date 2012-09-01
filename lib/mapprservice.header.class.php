@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require_once(dirname(dirname(__FILE__)).'/config/conf.php');
 require_once('mapprservice.usersession.class.php');
 require_once('cssmin.php');
+require_once('jsmin.php');
 
 class HEADER {
 
@@ -113,9 +114,17 @@ class HEADER {
       $cached_js = $this->files_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
       if (!$cached_js) {
+        $js_contents = '';
+        foreach(self::$local_js_files as $js_file) {
+          $js_contents .= file_get_contents($js_file) . ";\n";
+        }
+
+        $js_min = JSMin::minify($js_contents);
         $js_min_file = md5(microtime()) . ".js";
-        $js_input_files = implode(" --js " . MAPPR_DIRECTORY . "/", self::$local_js_files);
-        exec('java -jar ' . MAPPR_DIRECTORY . '/lib/compiler/compiler.jar ' . $js_input_files . ' --js_output_file ' . MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file);
+        $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
+        fwrite($handle, $js_min);
+        fclose($handle);
+
         $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
       } else {
         $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
@@ -123,6 +132,7 @@ class HEADER {
       $this->addJS("ga", "http://google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
+        if($key == "mappr") { $js_file = str_replace(".min", "",$js_file); }
         $this->addJS($key, $js_file);
       }
     }
@@ -197,17 +207,17 @@ class HEADER {
   public function getJSFooter() {
     $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
+    $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
+    $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
     $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
-      $header .= "{" . $key . " : \"" . $file . "\"}";
+      $header .= "{\"" . $key . "\" : \"" . $file . "\"}";
       if($counter < count($this->js_header)) { $header .= ", "; }
       $counter++;
     }
     $header .= ");" . "\n";
-    $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-    $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });" . "\n";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
     $header .= "</script>" . "\n";
     echo $header;
   }

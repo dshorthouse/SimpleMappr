@@ -402,6 +402,14 @@ msgstr "En train de construire le fichier..."
 msgid "Warning"
 msgstr "Attention"
 
+#: .index.php:258
+msgid "There was a problem loading your map."
+msgstr "Il y avait un problème avec votre carte."
+
+#: .index.php:259
+msgid "There was a problem saving your map."
+msgstr "Il y avait un problème enregistrée votre carte"
+
 #: .index.php:261
 msgid "Cancel"
 msgstr "Annuler"
