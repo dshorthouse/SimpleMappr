@@ -988,10 +988,11 @@ $(function() {
     self.showLoadingMessage($('#mapper-loading-message').text());
 
     $.ajax({
-      type : 'POST',
-      url  : self.settings.baseUrl + '/query/',
-      data : formData,
-      success: function(data) {
+      type    : 'POST',
+      url     : self.settings.baseUrl + '/query/',
+      data    : formData,
+      timeout : 10000,
+      success : function(data) {
         if(data.length > 0) {
           var regions       = "",
               num_fieldsets = $('.fieldset-regions').length;
@@ -1015,9 +1016,15 @@ $(function() {
             }
           }
 
-          $('#fieldSetsRegions').accordion("activate", i-1);
+          $('#fieldSetsRegions').accordion("activate", i);
           self.showMap();
         } else {
+          self.hideLoadingMessage();
+        }
+      },
+      error   : function(xhr, ajaxOptions, thrownError) {
+        xhr = thrownError = null;
+        if(ajaxOptions === 'timeout') {
           self.hideLoadingMessage();
         }
       }
