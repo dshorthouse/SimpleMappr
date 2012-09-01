@@ -255,6 +255,8 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <span class="delete"><?php echo _("Delete"); ?></span>
 </div>
 <div id="mapper-loading-message" class="hidden-message"><?php echo _("Building preview..."); ?></div>
+<div id="mapper-loading-error-message" class="hidden-message"><?php echo _("There was a problem loading your map."); ?></div>
+<div id="mapper-saving-error-message" class="hidden-message"><?php echo _("There was a problem saving your map."); ?></div>
 <div id="mapper-saving-message" class="hidden-message"><?php echo _("Saving..."); ?></div>
 <div id="mapper-missing-legend" class="hidden-message"><?php echo _("You are missing a legend for at least one of your Point Data or Regions layers."); ?></div>
 <div class="usermaps-loading hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Loading your maps..."); ?></span></div>

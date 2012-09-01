@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require_once(dirname(dirname(__FILE__)).'/config/conf.php');
 require_once('mapprservice.usersession.class.php');
-require_once('jsmin.php');
 require_once('cssmin.php');
 
 class HEADER {
@@ -55,7 +54,7 @@ class HEADER {
     'jstorage'  => 'public/javascript/jstorage.min.js',
     'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
     'bbq'       => 'public/javascript/jquery.ba-bbq.min.js',
-    'mappr'     => 'public/javascript/mappr.min.js'
+    'mappr'     => 'public/javascript/mappr.js'
   );
 
   public static $remote_js_files = array(
@@ -114,17 +113,9 @@ class HEADER {
       $cached_js = $this->files_cached(MAPPR_DIRECTORY . "/public/javascript/cache/");
 
       if (!$cached_js) {
-        $js_contents = '';
-        foreach(self::$local_js_files as $js_file) {
-          $js_contents .= file_get_contents($js_file) . ";\n";
-        }
-
-        $js_min = JSMin::minify($js_contents);
         $js_min_file = md5(microtime()) . ".js";
-        $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
-        fwrite($handle, $js_min);
-        fclose($handle);
-
+        $js_input_files = implode(" --js " . MAPPR_DIRECTORY . "/", self::$local_js_files);
+        exec('java -jar ' . MAPPR_DIRECTORY . '/lib/compiler/compiler.jar ' . $js_input_files . ' --js_output_file ' . MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file);
         $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
       } else {
         $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
@@ -132,7 +123,6 @@ class HEADER {
       $this->addJS("ga", "http://google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
-        if($key == "mappr") { $js_file = str_replace(".min", "",$js_file); }
         $this->addJS($key, $js_file);
       }
     }

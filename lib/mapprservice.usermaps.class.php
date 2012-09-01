@@ -259,10 +259,9 @@ class USERMAPS {
       WHERE
         mid="'.$this->_db->escape($this->_request[0]) . '"'.$where;
     $record = $this->_db->query_first($sql);
-
-    $data['status'] = 'ok';
     $data['mid'] = $record['mid'];
-    $data['map'] = unserialize($record['map']);
+    $data['map'] = @unserialize($record['map']);
+    $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
     header("Content-Type: application/json");
     echo json_encode($data);

@@ -1378,13 +1378,25 @@ $(function() {
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
+      timeout  : 10000,
       success  : function(data) {
-        self.loadInputs(data);
-        self.showMap(data);
-        self.bindStorage();
-        self.activateEmbed(id);
+        self.hideLoadingMessage();
+        if(data.status === 'ok') {
+          self.loadInputs(data);
+          self.showMap(data);
+          self.bindStorage();
+          self.activateEmbed(id);
+        } else {
+          self.showErrorMessage($('#mapper-loading-error-message').text());
+        }
         self.toggleUndo();
         self.toggleRedo();
+      },
+      error   : function(xhr, ajaxOptions, thrownError) {
+        xhr = thrownError = null;
+        if(ajaxOptions === 'timeout') {
+          self.showErrorMessage($('#mapper-loading-error-message').text());
+        }
       }
     });
   };
@@ -1940,11 +1952,22 @@ $(function() {
   Mappr.showLoadingMessage = function(content) {
     var message = '<span class="mapper-loading-message ui-corner-all ui-widget-content">' + content + '</span>';
 
+    this.hideErrorMessage();
     $('#mapOutput').append(message);
   };
 
   Mappr.hideLoadingMessage = function() {
     $('#mapOutput .mapper-loading-message').remove();
+  };
+
+  Mappr.showErrorMessage = function(content) {
+    var message = '<span class="mapper-message-error ui-corner-all ui-widget-content">' + content + '</span>';
+
+    $('#mapOutput').append(message);
+  };
+
+  Mappr.hideErrorMessage = function() {
+    $('#mapOutput .mapper-loading-message-error').remove();
   };
 
   Mappr.showMap = function(load_data) {
@@ -1977,6 +2000,7 @@ $(function() {
       url      : self.settings.baseUrl + '/application/',
       data     : formData,
       dataType : 'json',
+      timeout  : 10000,
       success  : function(data) {
         self.resetFormValues(data);
         self.resetJbbox();
@@ -1985,18 +2009,24 @@ $(function() {
         self.drawScalebar();
         self.showBadPoints();
         self.addBadRecordsViewer();
+      },
+      error    : function(xhr, ajaxOptions, thrownError) {
+        xhr = thrownError = null;
+        if(ajaxOptions === 'timeout') {
+          self.showErrorMessage($('#mapper-saving-error-message').text());
+        }
       }
     });
   };
 
   Mappr.resetFormValues = function(data) {
+    var ele = ["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"];
+
     $('#mapOutput input').each(function() { $(this).val(''); });
-    $.each(["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"], function() {
-      $('#' + this).val(data[this]);
-      if(this === 'rendered_bbox') { $('#bbox_map').val($('#' + this).val()); }
-      if(this === 'rendered_projection') { $('#projection_map').val($('#' + this).val()); }
-      if(this === 'rendered_rotation') { $('#rotation').val($('#' + this).val()); }
-    });
+    $.each(ele, function() { $('#' + this).val(data[this]); });
+    $('#bbox_map').val($('#rendered_bbox').val());
+    $('#projection_map').val($('#rendered_projection').val());
+    $('#rotation').val($('#rendered_rotation').val());
     $('#pan').val('');
   };
 
