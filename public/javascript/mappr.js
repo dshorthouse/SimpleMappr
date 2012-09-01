@@ -1967,7 +1967,7 @@ $(function() {
   };
 
   Mappr.hideErrorMessage = function() {
-    $('#mapOutput .mapper-loading-message-error').remove();
+    $('#mapOutput .mapper-message-error').remove();
   };
 
   Mappr.showMap = function(load_data) {
