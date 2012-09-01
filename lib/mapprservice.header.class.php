@@ -241,7 +241,7 @@ class HEADER {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
 w.janrain.settings.language = '" . USERSESSION::$accepted_locales[$locale]['canonical'] . "';
-w.janrain.settings.tokenUrl = '//" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
+w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
