@@ -1146,6 +1146,8 @@ $(function() {
 
       if(counter >= self.vars.maxTextareaCount-3) {
         button.attr("disabled","disabled");
+      } else {
+        button.removeAttr("disabled");
       }
 
     }
