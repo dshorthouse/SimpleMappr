@@ -55,7 +55,7 @@ class HEADER {
     'jstorage'  => 'public/javascript/jstorage.min.js',
     'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
     'bbq'       => 'public/javascript/jquery.ba-bbq.min.js',
-    'mappr'     => 'public/javascript/mappr.js'
+    'mappr'     => 'public/javascript/mappr.min.js'
   );
 
   public static $remote_js_files = array(

@@ -1078,7 +1078,6 @@ $(function() {
     if(button.attr("data-type") === data_type) {
 
       if(counter < self.vars.maxTextareaCount) {
-
         button.parent().prev().accordion("activate", false);
         clone = button.parent().prev().children("div:last").clone();
         num = parseInt(clone.find("h3 a").text().split(" ")[1],10);
@@ -1146,8 +1145,6 @@ $(function() {
 
       if(counter >= self.vars.maxTextareaCount-3) {
         button.attr("disabled","disabled");
-      } else {
-        button.removeAttr("disabled");
       }
 
     }
@@ -1369,6 +1366,7 @@ $(function() {
     self.removeExtraElements();
     $('#form-mapper').clearForm();
     $.each(['width', 'height'], function() { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
+    $('.addmore').removeAttr("disabled");
     $('#filter-mymaps').val(filter);
     self.loadCoordinates(data);
     self.loadRegions(data);
