@@ -107,16 +107,21 @@ class Kml {
     }
     
     foreach($this->get_all_placemarks() as $key => $placemarks) {
+      $this->_kml->startElement('Folder');
+      $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
+      $this->_kml->writeElement('name', $this->get_placemark($key, 0, 'name'));
       foreach($placemarks as $id => $placemark) {
         $this->_kml->startElement('Placemark');
         $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
         $this->_kml->writeElement('name', $this->get_placemark($key, $id, 'name'));
+        $this->_kml->writeElement('description', $this->get_placemark($key, $id, 'coordinate'));
         $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
         $this->_kml->startElement('Point');
         $this->_kml->writeElement('coordinates', $this->get_placemark($key, $id, 'coordinate') . ',0');
         $this->_kml->endElement(); //end Point
         $this->_kml->endElement(); //end Placemark
       }
+      $this->_kml->endElement();
     }
 
     $this->_kml->endElement(); //end Document
