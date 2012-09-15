@@ -42,7 +42,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <div id="wrapper">
 <div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
 <noscript>
-<div id="noscript"><?php echo _("Sorry, you must enable javascript to use this site."); ?></div>
+<div id="noscript"><?php echo _("Sorry, you must enable JavaScript to use this site."); ?></div>
 </noscript>
 <div id="tabs">
 <ul class="navigation">

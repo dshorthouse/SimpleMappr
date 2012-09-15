@@ -52,8 +52,8 @@ msgid "Building application..."
 msgstr "Construit l'application..."
 
 #: .index.php:35
-msgid "Sorry, you must enable javascript to use this site."
-msgstr "Désolé, vous devez activer javascript pour utiliser ce site."
+msgid "Sorry, you must enable JavaScript to use this site."
+msgstr "Désolé, vous devez activer JavaScript pour utiliser ce site."
 
 #: .index.php:36
 #: .index.php:60
