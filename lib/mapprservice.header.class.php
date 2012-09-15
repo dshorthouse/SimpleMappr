@@ -218,7 +218,7 @@ class HEADER {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"//".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
     $header .= "</script>" . "\n";
     echo $header;
   }
