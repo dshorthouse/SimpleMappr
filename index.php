@@ -11,12 +11,13 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
+<meta name="thumbnail" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <meta property="og:title" content="SimpleMappr" />
 <meta property="og:description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>">
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
-<meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo.png" />
+<meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <title>SimpleMappr</title>
 <?php $header[0]->getCSSHeader(); ?>
 </head>

@@ -77,7 +77,7 @@ class MAPPREMBED extends MAPPR {
     switch($this->output) {
       case 'pnga':
         header("Content-Type: image/png");
-        $im = imagecreatefrompng(MAPPR_DIRECTORY . "/public/images/not-found.png");
+        $im = imagecreatefrompng(MAPPR_DIRECTORY . "/public/images/logo.png");
         imagepng($im);
         imagedestroy($im);
       break;
