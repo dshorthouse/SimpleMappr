@@ -1,5 +1,7 @@
+/*
+ * jQuery Download
+ */
 /*global $, jQuery, unescape */
-
 (function() {
 
   "use strict";

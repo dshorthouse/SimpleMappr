@@ -1,5 +1,7 @@
+/*
+ * jQuery Tipsy
+ */
 /*global $, jQuery, document, setTimeout, window */
-
 (function() {
 
     "use strict";

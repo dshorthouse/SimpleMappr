@@ -1,5 +1,7 @@
-/*global $, jQuery, window, document, self, XMLHttpRequest, alert */
-
+/*
+ * jQuery Clearform
+ */
+/*global $, jQuery */
 (function () {
 
   "use strict";

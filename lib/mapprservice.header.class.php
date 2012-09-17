@@ -30,7 +30,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require_once(dirname(dirname(__FILE__)).'/config/conf.php');
 require_once('mapprservice.usersession.class.php');
 require_once('cssmin.php');
-require_once('jsmin.php');
 
 class HEADER {
 
@@ -41,7 +40,7 @@ class HEADER {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'jquery'    => 'public/javascript/jquery-1.8.0.min.js',
+    'jquery'    => 'public/javascript/jquery-1.8.1.min.js',
     'jquery_ui' => 'public/javascript/jquery-ui-1.8.23.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
@@ -59,7 +58,7 @@ class HEADER {
   );
 
   public static $remote_js_files = array(
-    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js',
+    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js',
     'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js',
     'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
@@ -116,13 +115,12 @@ class HEADER {
       if (!$cached_js) {
         $js_contents = '';
         foreach(self::$local_js_files as $js_file) {
-          $js_contents .= file_get_contents($js_file) . ";\n";
+          $js_contents .= file_get_contents($js_file) . "\n";
         }
 
-        $js_min = JSMin::minify($js_contents);
         $js_min_file = md5(microtime()) . ".js";
         $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
-        fwrite($handle, $js_min);
+        fwrite($handle, $js_contents);
         fclose($handle);
 
         $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);

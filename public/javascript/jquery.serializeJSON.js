@@ -1,5 +1,7 @@
+/*
+ * jQuery Serialize JSON
+ */
 /*global $, jQuery, unescape */
-
 (function() {
 
   "use strict";
