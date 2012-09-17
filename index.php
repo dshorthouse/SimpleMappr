@@ -11,7 +11,6 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
-<meta name="thumbnail" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <meta property="og:title" content="SimpleMappr" />
 <meta property="og:description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>">
@@ -23,9 +22,11 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 </head>
 <?php flush(); ?>
 <body>
-<div id="header" class="clearfix">
-<h1 id="site-title" class="sprites-after">SimpleMapp<span>r</span></h1>
-<div id="site-tagline"><?php echo _("point maps for publication and presentation"); ?></div>
+<div itemscope itemtype="http://schema.org/SoftwareApplication" id="header" class="clearfix">
+<h1 id="site-title" class="sprites-after" itemprop="name">SimpleMapp<span>r</span></h1>
+<div id="site-tagline" itemprop="description"><?php echo _("point maps for publication and presentation"); ?></div>
+<meta itemprop="url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
+<meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <div id="site-languages">
 <ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
