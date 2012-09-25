@@ -548,6 +548,12 @@ class MAPPR {
       'sort'  => 3
     );
 
+    $this->shapes['conservation'] = array(
+      'shape' => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 3
+    );
+
     //base map
     $this->shapes['base'] = array(
       'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
@@ -1125,6 +1131,14 @@ class MAPPR {
             $class = ms_newClassObj($layer);
             $style = ms_newStyleObj($class);
             $style->color->setRGB(120,120,120);
+          break;
+
+          case 'conservation':
+            $class = ms_newClassObj($layer);
+            $class->set("name","Conservation International 2011 Hotspots");
+            $style = ms_newStyleObj($class);
+            $style->color->setRGB(200,200,200);
+            $this->_legend_required = true;
           break;
 
           case 'rivernames':

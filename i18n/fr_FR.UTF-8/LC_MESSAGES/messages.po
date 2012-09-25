@@ -577,7 +577,7 @@ msgstr "Nom d'utilisateur"
 
 #: .lib/mapprservice.users.class.php:122
 msgid "Email"
-msgstr "Email"
+msgstr "Couriel"
 
 #: .lib/mapprservice.users.class.php:123
 msgid "Maps"
@@ -594,8 +594,8 @@ msgstr "Le code pour SimpleMappr peuvent être obtenus à %s"
 
 #: .tabs/about.php:40
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
-msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel de cartographie utilisé est MapServer, %s via PHP MapScript."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript. Biodiversity hotspot data were obtained from %s."
+msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel de cartographie utilisé est MapServer, %s via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %s."
 
 #: .tabs/about.php:7
 msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."

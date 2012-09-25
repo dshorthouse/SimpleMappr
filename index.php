@@ -147,6 +147,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <label for="rivers"><?php echo _("rivers"); ?></label></li>
 <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> <label for="relief"><?php echo _("relief"); ?></label></li>
 <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> <label for="reliefgrey"><?php echo _("relief (greyscale)"); ?></label></li>
+<li><input type="checkbox" id="conservation" class="layeropt" name="layers[conservation]" /> <label for="conservation"><?php echo _("biodiv. hotspots"); ?></label></li>
 </ul>
 <h2><?php echo _("Labels"); ?></h2>
 <ul class="columns ui-helper-clearfix">
