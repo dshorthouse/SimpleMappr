@@ -7,7 +7,7 @@ USERSESSION::select_locale();
 #map-help p{font-size:0.75em;}
 #map-help dl{font-size:0.75em;}
 #map-help dt{float:left;margin-right:5px;line-height:20px;}
-#map-help dl.toolbar dt:before{margin-top:0.2em !important;}
+#map-help dl.toolbar dt:before{margin-top:0.2em !important;float:left;}
 #map-help dt,#map-help dd{line-height:20px;}
 #example-data{height:220px;}
 #example-data img{vertical-align:middle;margin-right:20px;}
