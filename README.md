@@ -46,15 +46,11 @@ Configuration Instructions
 MacPorts
 --------
 
-    sudo port install php5-gd
-    sudo port install xpm
-    sudo port install proj
-    sudo port install geos
-    sudo port install gdal
-
-1. Download MapServer 5 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-5.6.7.tar.gz][6])
-2. Extract and cd into folder
-3. Execute from command line:
+1. Install [XQuartz 2.7.2+][8]
+2. Execute sudo port install php5-gd proj geos gdal
+3. Download MapServer 5 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-5.6.8.tar.gz][6])
+4. Extract and cd into folder
+5. Execute from command line:
 
 ### Configuring install
 
@@ -67,7 +63,8 @@ MacPorts
       --with-threads \
       --with-ogr \
       --with-freetype=/opt/local \
-      --with-xpm=/opt/local \
+      --with-xpm=/usr/X11 \
+      --with-libiconv=system \
       --with-gd=/opt/local \
       --with-wfs \
       --with-wcs \
@@ -79,9 +76,50 @@ MacPorts
       --with-php=/opt/local \
       --with-png=/opt/local
 
-4. Execute $ make
-5. Verify that mapserv is working $ ./mapserv -v
-6. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+6. Execute $ make
+7. Verify that mapserv is working $ ./mapserv -v
+8. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+9. Add extension=php_mapscript.so to php.ini and restart web server
+
+Homebrew
+--------
+
+1. Install [XQuartz 2.7.2+][8]
+2. Execute $ brew install autoconf freetype gd --with-freetype gdal geos gettext icu4c jpeg libpng proj
+3. Download MapServer 5 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-5.6.8.tar.gz][6])
+4. Extract and cd into folder
+5. Execute from command line:	
+
+### Configuring install
+
+	$ ./configure \
+	  --prefix=/usr \
+	  --with-agg \
+	  --with-proj=/usr/local \
+	  --with-geos=/usr/local/Cellar/geos/3.3.5/bin/geos-config \
+	  --with-gdal=/usr/local/Cellar/gdal/1.9.1/bin/gdal-config \
+	  --with-threads \
+	  --with-ogr \
+	  --with-freetype=/usr/local/Cellar/freetype/2.4.10 \
+	  --with-xpm=/usr/X11 \
+	  --with-libiconv=system \
+	  --with-gd=/usr/local/Cellar/gd/2.0.36RC1 \
+	  --with-wfs \
+	  --with-wcs \
+	  --with-wmsclient \
+	  --with-wfsclient \
+	  --with-sos \
+	  --with-fribidi-config \
+	  --with-php=/usr/include/php \
+	  --with-experimental-png \
+	  --with-png=/usr/local/Cellar/libpng/1.5.13
+
+6. Execute $ make
+7. Verify that mapserv is working $ ./mapserv -v
+8. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+9. Add extension=php_mapscript.so to php.ini and restart web server
+
+If using Mountain Lion and built-in Apache and PHP, the intl.so, gd.so and gettext.so extensions must be created and entries added to php.ini. This means compiling from source. See this [blog post][9].
 
 Ubuntu Package
 --------------
@@ -114,5 +152,7 @@ Copyright
 [3]: http://bit.ly/OHPoml
 [4]: http://bit.ly/N76XfB
 [5]: http://rpxnow.com
-[6]: http://download.osgeo.org/mapserver/mapserver-5.6.7.tar.gz
+[6]: http://download.osgeo.org/mapserver/mapserver-5.6.8.tar.gz
 [7]: http://onlamp.com/pub/a/php/2002/06/13/php.html
+[8]: http://xquartz.macosforge.org/trac/wiki/X112.7.2
+[9]: http://vanderveer.be/blog/2012/04/21/setting-up-my-perfect-developer-environment-on-osx-10-dot-8-mountain-lion-dp3-edition/
