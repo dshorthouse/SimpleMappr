@@ -61,7 +61,7 @@ class MAPPR {
 
   /* Initial mapfile as string because outputformat cannot otherwise be set */
   protected $mapfile_string = "
-      MAP
+    MAP
 
       OUTPUTFORMAT
         NAME png
@@ -161,7 +161,7 @@ class MAPPR {
         FORMATOPTION 'FULL_RESOLUTION=TRUE'
       END
 
-      END
+    END
   ";
 
   /* acceptable projections in PROJ format */
