@@ -12,6 +12,8 @@ USERSESSION::select_locale();
 #map-api dd{margin-bottom:1.5em;}
 #map-api span.api-example{color:green;display:block;}
 #map-api span.api-example a{color:green;}
+#map-api span.api-output{color:red;display:block;}
+#map-api span.api-output a{color:red;}
 </style>
 <div id="map-api">
   <div id="general-api" class="panel ui-corner-all">
@@ -26,7 +28,7 @@ USERSESSION::select_locale();
   </div>
 
   <div id="general-base" class="panel ui-corner-all">
-    <p>http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/?</p>
+    <p>http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/</p>
   </div>
 
   <div class="header">
@@ -35,7 +37,9 @@ USERSESSION::select_locale();
 
   <dl>
     <dt>ping</dt>
-    <dd><?php echo sprintf(_("if %s is included, a JSON response will be produced in place of an image as: %s"), "ping=true", "{\"status\" : \"ok\"}"); ?></dd>
+    <dd><?php echo _("if ping=true is included, a JSON response will be produced in place of an image."); ?>
+      <span class="api-output"><em>e.g.</em> {"status" : "ok"}</span>
+    </dd>
     
     <dt>url</dt>
     <dd><?php echo _("a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points."); ?>
@@ -49,7 +53,7 @@ USERSESSION::select_locale();
     <dd><?php echo sprintf(_("Note: requires a POST request to http://%s/api/ with an enctype set to multipart/form-data."), $_SERVER['HTTP_HOST']) ?><br />
         <?php echo _("tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server."); ?>
     <span class="api-example"><a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/demo.txt">Example file</a></span>
-    <span class="api-example"><em>e.g.</em> { "imageURL" : "http://<?php echo $_SERVER['HTTP_HOST'] ?>/tmp/50778960_464f_0.png", "expiry" : "<?php echo date('c', time() + (6 * 60 * 60)); ?>" }</span>
+    <span class="api-output"><em>e.g.</em> { "imageURL" : "http://<?php echo $_SERVER['HTTP_HOST'] ?>/tmp/50778960_464f_0.png", "expiry" : "<?php echo date('c', time() + (6 * 60 * 60)); ?>" }</span>
     </dd>
 
     <dt>point[x]</dt>
