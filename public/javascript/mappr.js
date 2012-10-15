@@ -993,7 +993,7 @@ $(function() {
       type    : 'POST',
       url     : self.settings.baseUrl + '/query/',
       data    : formData,
-      timeout : 10000,
+      timeout : 20000,
       success : function(data) {
         if(data.length > 0) {
           var regions       = "",
@@ -1387,7 +1387,7 @@ $(function() {
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
-      timeout  : 10000,
+      timeout  : 20000,
       success  : function(data) {
         self.hideLoadingMessage();
         if(data.status === 'ok') {
@@ -2009,7 +2009,7 @@ $(function() {
       url      : self.settings.baseUrl + '/application/',
       data     : formData,
       dataType : 'json',
-      timeout  : 10000,
+      timeout  : 20000,
       success  : function(data) {
         self.resetFormValues(data);
         self.resetJbbox();
