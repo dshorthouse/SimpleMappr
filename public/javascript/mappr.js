@@ -2399,4 +2399,5 @@ $(function() {
   };
 
   Mappr.init();
+
 });

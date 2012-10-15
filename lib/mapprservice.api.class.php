@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
+require_once('../config/conf.php');
 require_once ('mapprservice.class.php');
 require_once ('georss/rss_fetch.inc');
 
@@ -53,6 +54,8 @@ class MAPPRAPI extends MAPPR {
       exit();
     }
 
+    $this->method           = $_SERVER['REQUEST_METHOD'];
+
     $this->download         = true;
     $this->watermark        = true;
     $this->options          = array();
@@ -60,12 +63,26 @@ class MAPPRAPI extends MAPPR {
 
     $this->url              = false;
     $url                    = urldecode($this->load_param('url', false));
-    $file                   = urldecode($this->load_param('file', false));
+
+    if($this->method == "POST" && $_FILES) {
+      try {
+        $file = $this->moveFile();
+      } catch (Exception $e) {
+        $output = array(
+          'error' => "An error occurred:" . $e->getMessage()
+        );
+        echo json_encode($output);
+        exit();
+      }
+    } else {
+      $file = urldecode($this->load_param('file', false));
+    }
+
     $georss                 = urldecode($this->load_param('georss', false));
 
     if($georss) { $this->url = $georss; }
-    if($file)   { $this->url = $file; }
     if($url)    { $this->url = $url; }
+    if($file)   { $this->url = $file; }
 
     $this->points           = $this->load_param('point', array());
     $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
@@ -120,17 +137,20 @@ class MAPPRAPI extends MAPPR {
     if($this->url || $this->points) {
 
       if($this->url) {
-        $headers = get_headers($this->url, 1);
+        if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
+          $this->parseFile();
+        } else {
+          $headers = get_headers($this->url, 1);
 
-        if(array_key_exists('Location', $headers)) {
-          $this->url = array_pop($headers['Location']);
-          $headers['Content-Type'] = array_pop($headers['Content-Type']);
+          if(array_key_exists('Location', $headers)) {
+            $this->url = array_pop($headers['Location']);
+            $headers['Content-Type'] = array_pop($headers['Content-Type']);
+          }
+
+          if(strstr($headers['Content-Type'], 'text')) { $this->parseFile(); }
+          if(strstr($headers['Content-Type'], 'json')) { $this->parseGeoJSON(); }
+          if(strstr($headers['Content-Type'], 'xml'))  { $this->parseGeoRSS(); }
         }
-
-        if(strstr($headers['Content-Type'], 'text')) { $this->parseFile(); }
-        if(strstr($headers['Content-Type'], 'json')) { $this->parseGeoJSON(); }
-//TODO: what about proper RSS header?
-        if(strstr($headers['Content-Type'], 'xml'))  { $this->parseGeoRSS(); }
       }
 
       if($this->points) { $this->parsePoints(); }
@@ -318,31 +338,64 @@ class MAPPRAPI extends MAPPR {
   }
 
   public function get_output() {
-    switch($this->output) {
-      case 'tif':
-        header("Content-Type: image/tiff");
-        header("Content-Transfer-Encoding: binary");
-      break;
+    if($this->method == 'GET') {
+      switch($this->output) {
+        case 'tif':
+          header("Content-Type: image/tiff");
+          header("Content-Transfer-Encoding: binary");
+        break;
 
-      case 'svg':
-        header("Content-Type: image/svg+xml");
-      break;
+        case 'svg':
+          header("Content-Type: image/svg+xml");
+        break;
 
-      case 'jpg':
-      case 'jpga':
-        header("Content-Type: image/jpeg");
-      break;
+        case 'jpg':
+        case 'jpga':
+          header("Content-Type: image/jpeg");
+        break;
 
-      case 'png':
-      case 'pnga':
-        header("Content-Type: image/png");
-      break;
+        case 'png':
+        case 'pnga':
+          header("Content-Type: image/png");
+        break;
 
-      default:
-        header("Content-Type: image/png");
+        default:
+          header("Content-Type: image/png");
+      }
+      $this->image->saveImage("");
+    } else {
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
+        header("Content-Type: application/json");
+
+        try {
+          $output = array(
+            'imageURL' => "http://" . $_SERVER['HTTP_HOST'] . $this->image->saveWebImage(),
+            'expiry'   => date('c', time() + (6 * 60 * 60))
+          );
+        } catch(Exception $e) {
+          $output = array(
+            'error' => "An error occurred:" . $e->getMessage()
+          );
+        }
+
+        echo json_encode($output);
     }
+  }
 
-    $this->image->saveImage("");
+  private function moveFile() {
+    $uploadfile = MAPPR_UPLOAD_DIRECTORY . "/" . md5(time()) . '.txt';
+    if(move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+      if(mime_content_type($uploadfile) == "text/plain") {
+        return $uploadfile;
+      } else {
+        unlink($uploadfile);
+        throw new Exception('File is wrong mime-type');
+      }
+    }
+    return false;
   }
 
   /**

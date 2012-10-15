@@ -63,7 +63,6 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 </ul>
 <form id="form-mapper" accept-charset="UTF-8" action="application/" method="post" autocomplete="off">
 
-<!-- multipoint tab -->
 <div id="map-points">
 <div id="general-points" class="panel ui-corner-all">
 <p><?php echo _("Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
@@ -75,7 +74,6 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
-<!-- shaded regions tab -->
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
 <?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
@@ -88,7 +86,6 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
-<!-- map preview tab -->
 <div id="map-preview">
 <div id="mapWrapper">
 <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
@@ -191,7 +188,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 </div>
 </div>
 
-<!-- my maps tab -->
 <div id="map-mymaps">
 <?php if(!isset($_SESSION['simplemappr'])): ?>
 <div class="panel ui-corner-all">
@@ -203,7 +199,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <?php endif; ?>
 </div>
 
-<!-- users tab -->
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <div id="map-users">
 <div id="userdata"></div>

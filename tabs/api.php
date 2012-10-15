@@ -45,6 +45,12 @@ USERSESSION::select_locale();
       <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></span>
     </dd>
 
+    <dt>file</dt>
+    <dd><?php echo _("a tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. Your POST script must set the enctype to multipart/form-data. If a file is sent, the initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server."); ?>
+    <span class="api-example"><a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/demo.txt">Example file</a></span>
+    <span class="api-example"><em>e.g.</em> { "imageURL" : "http://"<?php echo $_SERVER['HTTP_HOST'] ?>/tmp/50778960_464f_0.png", "expiry" : "<?php echo date('c', time() + (6 * 60 * 60)); ?>" }</span>
+    </dd>
+
     <dt>point[x]</dt>
     <dd><?php echo _("single marker written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm"); ?> <span class="api-example"><em>e.g.</em> point[0]=45,-120 or point[0]=45°52'30"N,120W or point[0]=45°52.5N,120W</span></dd>
 

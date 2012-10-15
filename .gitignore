@@ -9,6 +9,9 @@ public/javascript/cache/*
 public/stylesheets/cache/*
 !public/stylesheets/cache/README
 
+public/uploads/*
+!public/uploads/README
+
 tmp/*
 !tmp/README
 
