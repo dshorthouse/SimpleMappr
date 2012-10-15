@@ -139,6 +139,7 @@ class MAPPRAPI extends MAPPR {
       if($this->url) {
         if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
           $this->parseFile();
+          unlink($this->url);
         } else {
           $headers = get_headers($this->url, 1);
 
