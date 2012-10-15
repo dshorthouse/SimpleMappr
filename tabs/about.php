@@ -25,6 +25,7 @@ USERSESSION::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("October 14 16, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the API to allow sending of tab-delimited files."); ?></dd>
 <dt class="update"><?php echo _("August 16, 2012"); ?></dt><dd><?php echo _("Improvements: Adjusted URLs with tab clicks to preserve use of back button."); ?></dd>
 <dt class="update"><?php echo _("July 22, 2012"); ?></dt><dd><?php echo _("Bug fixes: Region Code lists can be filtered without causing the browser to crash."); ?></dd>
 <dt class="update"><?php echo _("July 2, 2012"); ?></dt><dd><?php echo _("Improvements: Added svg as an embedded output format."); ?></dd>
