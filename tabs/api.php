@@ -56,8 +56,8 @@ USERSESSION::select_locale();
     <span class="api-output"><em>e.g.</em> { "imageURL" : "http://<?php echo $_SERVER['HTTP_HOST'] ?>/tmp/50778960_464f_0.png", "expiry" : "<?php echo date('c', time() + (6 * 60 * 60)); ?>" }</span>
     </dd>
 
-    <dt>point[x]</dt>
-    <dd><?php echo _("single marker written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm"); ?> <span class="api-example"><em>e.g.</em> point[0]=45,-120 or point[0]=45°52'30"N,120W or point[0]=45°52.5N,120W</span></dd>
+    <dt>points[x]</dt>
+    <dd><?php echo _("single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \\n and these are best used in a POST request."); ?> <span class="api-example"><em>e.g.</em> points[0]=45,-120 or points[0]=45°52'30"N,120W or points[0]=45°52.5N,120W, or points[0]=45,-120\n45,-110\n45,-125\n42,-100&amp;points[1]=44,-100</span></dd>
 
     <dt>shape[x]</dt>
     <dd><?php echo _("shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar"); ?> <span class="api-example"><em>e.g.</em> shape[0]=circle</span></dd>

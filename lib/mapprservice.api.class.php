@@ -84,7 +84,7 @@ class MAPPRAPI extends MAPPR {
     if($url)    { $this->url = $url; }
     if($file)   { $this->url = $file; }
 
-    $this->points           = $this->load_param('point', array());
+    $this->points           = $this->load_param('points', array());
     $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
     $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
     $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
@@ -441,12 +441,15 @@ class MAPPRAPI extends MAPPR {
    */
   private function parsePoints() {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-    foreach($this->points as $point) {
-      $coord = preg_split("/[,;]/", $point);
-      $this->legend[$num_cols] = "";
-      if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
-      if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
-      $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+    foreach($this->points as $rows) {
+      $row = explode("\\n",urldecode($this->remove_empty_lines($rows)));
+      foreach(str_replace("\\", "", $row) as $point) {
+        $coord = preg_split("/[,;]/", $point);
+        $this->legend[$num_cols] = "";
+        if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
+        if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
+        $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+      }
       $num_cols++;
     }
   }
