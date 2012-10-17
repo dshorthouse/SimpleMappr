@@ -614,6 +614,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "October 17, 2012"
+msgstr "17 octobre, 2012"
+
+#: .tabs/about.php:11
 msgid "October 14, 2012"
 msgstr "14 octobre, 2012"
 
@@ -646,8 +650,12 @@ msgid "February 8, 2012"
 msgstr "8 février, 2012"
 
 #: .tabs/about
+msgid "Improvements: Enhanced the API to allow POST of multiple points."
+msgstr "Améliorations: ajusté l'API pour permettre POST de coordonnées multiples."
+
+#: .tabs/about
 msgid "Improvements: Enhanced the API to allow sending of tab-delimited files."
-msgstr "Améliorations: amélioré l'API pour permettre l'envoi de fichiers."
+msgstr "Améliorations: ajusté l'API pour permettre l'envoi de fichiers."
 
 #: .tabs/about
 msgid "Improvements: Adjusted URLs with tab clicks to preserve use of back button."
