@@ -110,7 +110,7 @@ USERSESSION::select_locale();
     <dt>scalebar</dt>
     <dd><?php echo _("embed a scalebar in the lower right of the image"); ?> <span class="api-example"><em>e.g.</em> scalebar=true</span></dd>
 
-    <dt>legend</dt>
-    <dd><?php echo _("embed a legend in the upper right of the image"); ?> <span class="api-example"><em>e.g.</em> legend=true</span></dd>
+    <dt>legend[x]</dt>
+    <dd><?php echo _("URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead"); ?> <span class="api-example"><em>e.g.</em> legend[0]=Pardosa%20moesta or legend=true</span>
   </dl>
 </div>

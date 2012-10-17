@@ -59,7 +59,6 @@ class MAPPRAPI extends MAPPR {
     $this->download         = true;
     $this->watermark        = true;
     $this->options          = array();
-    $this->legend           = array();
 
     $this->url              = false;
     $url                    = urldecode($this->load_param('url', false));
@@ -85,6 +84,7 @@ class MAPPRAPI extends MAPPR {
     if($file)   { $this->url = $file; }
 
     $this->points           = $this->load_param('points', array());
+    $this->legend           = $this->load_param('legend', array());
     $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
     $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
     $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
@@ -149,7 +149,6 @@ class MAPPRAPI extends MAPPR {
           }
 
           if(strstr($headers['Content-Type'], 'text')) { $this->parseFile(); }
-          if(strstr($headers['Content-Type'], 'json')) { $this->parseGeoJSON(); }
           if(strstr($headers['Content-Type'], 'xml'))  { $this->parseGeoRSS(); }
         }
       }
@@ -159,7 +158,7 @@ class MAPPRAPI extends MAPPR {
       $col = 0;
       foreach($this->_coord_cols as $col => $coords) {
         $mlayer = ms_newLayerObj($this->map_obj);
-        $mlayer->set("name",$this->legend[$col]);
+        $mlayer->set("name",isset($this->legend[$col]) ? $this->legend[$col] : "");
         $mlayer->set("status",MS_ON);
         $mlayer->set("type",MS_LAYER_POINT);
         $mlayer->set("tolerance",5);
@@ -167,7 +166,7 @@ class MAPPRAPI extends MAPPR {
         $mlayer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
         $class = ms_newClassObj($mlayer);
-        $class->set("name",$this->legend[$col]);
+        $class->set("name",isset($this->legend[$col]) ? $this->legend[$col] : "");
 
         $style = ms_newStyleObj($class);
         $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
@@ -338,6 +337,24 @@ class MAPPRAPI extends MAPPR {
     }
   }
 
+  public function add_legend() {
+    $this->map_obj->legend->set("postlabelcache", 1);
+    $this->map_obj->legend->set("transparent", 0);
+    $this->map_obj->legend->label->set("font", "arial");
+    $this->map_obj->legend->label->set("type", MS_TRUETYPE);
+    $this->map_obj->legend->label->set("position", 1);
+    $this->map_obj->legend->label->set("size", ($this->width <= 500) ? 8 : 10);
+    $this->map_obj->legend->label->set("antialias", 50);
+    $this->map_obj->legend->label->color->setRGB(0,0,0);
+  
+    //svg format cannot do legends in MapServer
+    if($this->options['legend'] && $this->output != 'svg') {
+      $this->map_obj->legend->set("status", MS_EMBED);
+      $this->map_obj->legend->set("position", MS_UR);
+      $this->map_obj->drawLegend();
+    }
+  }
+
   public function get_output() {
     if($this->method == 'GET') {
       switch($this->output) {
@@ -445,7 +462,6 @@ class MAPPRAPI extends MAPPR {
       $row = explode("\\n",urldecode($this->remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
         $coord = preg_split("/[,;]/", $point);
-        $this->legend[$num_cols] = "";
         if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
         if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
         $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
@@ -504,13 +520,6 @@ class MAPPRAPI extends MAPPR {
         }
       }
     }
-  }
-
-  /**
-   * Parse GeoJSON into cleaned array of points
-   */
-  private function parseGeoJSON() {
-
   }
 
 }

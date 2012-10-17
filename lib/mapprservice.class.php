@@ -1354,7 +1354,7 @@ class MAPPR {
   /**
   * Create the legend file
   */
-  private function add_legend() {
+  public function add_legend() {
     if($this->_legend_required) {
       $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
       $this->map_obj->legend->set("keysizey", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
