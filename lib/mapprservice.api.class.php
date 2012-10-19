@@ -460,7 +460,7 @@ class MAPPRAPI extends MAPPR {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
     $coord_array = array();
     foreach($this->points as $rows) {
-      $row = explode("\\n",urldecode($this->remove_empty_lines($rows)));
+      $row = preg_split("/[\r\n]|(\\\[rn])/",urldecode($this->remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
         if(preg_match('/[NSEW]/i', $point) != 0) {
           $coord = preg_split("/[,;]/", $point);
