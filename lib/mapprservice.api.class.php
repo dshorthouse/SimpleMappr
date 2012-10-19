@@ -458,13 +458,18 @@ class MAPPRAPI extends MAPPR {
    */
   private function parsePoints() {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+    $coord_array = array();
     foreach($this->points as $rows) {
       $row = explode("\\n",urldecode($this->remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
-        $coord = preg_split("/[,;]/", $point);
-        if(preg_match('/[NSEW]/', $coord[0]) != 0) { $coord[0] = $this->dms_to_deg(trim($coord[0])); }
-        if(preg_match('/[NSEW]/', $coord[1]) != 0) { $coord[1] = $this->dms_to_deg(trim($coord[1])); }
-        $this->_coord_cols[$num_cols][] = array(trim($coord[0]), trim($coord[1]));
+        if(preg_match('/[NSEW]/i', $point) != 0) {
+          $coord = preg_split("/[,;]/", $point);
+          $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+          $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+        } else {
+          $coord_array = preg_split("/[\s,;]+/",$point); //split the coords by a space, comma, semicolon, or \t
+        }
+        $this->_coord_cols[$num_cols][] = $coord_array;
       }
       $num_cols++;
     }
