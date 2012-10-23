@@ -967,9 +967,9 @@ class MAPPR {
           foreach ($row as $loc) {
             $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
             $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $loc));
-            if(preg_match('/[NSEW]/i', $loc) != 0) {
+            if(preg_match('/[NSEW]/', $loc) != 0) {
               $coord = preg_split("/[,;]/", $loc);
-              $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+              $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
               $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
             } else {
               $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t

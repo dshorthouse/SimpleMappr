@@ -462,9 +462,11 @@ class MAPPRAPI extends MAPPR {
     foreach($this->points as $rows) {
       $row = preg_split("/[\r\n]|(\\\[rn])/",urldecode($this->remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
-        if(preg_match('/[NSEW]/i', $point) != 0) {
+        $point = preg_replace('/[\p{Z}\s]/u', ' ', $point);
+        $point = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $point));
+        if(preg_match('/[NSEW]/', $point) != 0) {
           $coord = preg_split("/[,;]/", $point);
-          $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+          $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
           $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
         } else {
           $coord_array = preg_split("/[\s,;]+/",$point); //split the coords by a space, comma, semicolon, or \t
@@ -490,9 +492,11 @@ class MAPPRAPI extends MAPPR {
           $cols = explode("\t", $row);
           for($i=0;$i<$num_cols;$i++) {
             if(array_key_exists($i, $cols)) {
+              $cols[$i] = preg_replace('/[\p{Z}\s]/u', ' ', $cols[$i]);
+              $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $cols[$i]));
               if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
                 $coord = preg_split("/[,;]/", $cols[$i]);
-                $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+                $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
                 $this->_coord_cols[$i][] = array(
                   $this->dms_to_deg(trim($coord[0])),
                   $this->dms_to_deg(trim($coord[1]))
