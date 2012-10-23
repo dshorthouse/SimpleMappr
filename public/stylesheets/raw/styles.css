@@ -339,7 +339,7 @@ input.ui-button{padding:.4em 1em;}
 .ui-slider-horizontal .ui-slider-range-max{right:0;}
 .ui-tabs{position:relative;padding:0;}
 .ui-tabs .ui-tabs-nav{margin:0;padding:0 0.3em 0;}
-.ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:2px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
+.ui-tabs .ui-tabs-nav li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-bottom:0 !important;padding:0;white-space:nowrap;}
 .ui-tabs .ui-tabs-nav li a{float:left;padding:0.25em 0.75em;text-decoration:none;}
 .ui-tabs .ui-tabs-nav li a.sprites-before{padding-left:0.5em;}
 .ui-tabs .ui-tabs-nav .ui-tabs-selected{margin-bottom:0;padding-bottom:1px;}
