@@ -57,7 +57,7 @@ USERSESSION::select_locale();
     </dd>
 
     <dt>points[x]</dt>
-    <dd><?php echo _("single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \\n and these are best used in a POST request."); ?> <span class="api-example"><em>e.g.</em> points[0]=45,-120 or points[0]=45°52'30"N,120W or points[0]=45°52.5N,120W, or points[0]=45,-120\n45,-110\n45,-125\n42,-100&amp;points[1]=44,-100</span></dd>
+    <dd><?php echo _("single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \\n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above."); ?> <span class="api-example"><em>e.g.</em> points[0]=45,-120 or points[0]=45°52'30"N,120W or points[0]=45°52.5N,120W, or points[0]=45,-120\n45,-110\n45,-125\n42,-100&amp;points[1]=44,-100</span></dd>
 
     <dt>shape[x]</dt>
     <dd><?php echo _("shape of marker for column x; options are circle, square, triangle, star, opencircle, opensquare, opentriangle, openstar"); ?> <span class="api-example"><em>e.g.</em> shape[0]=circle</span></dd>
