@@ -55,7 +55,8 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <?php endif; ?>
-<?php $qlocale = isset($_GET['locale']) ? "?locale=" . $_GET["locale"] : ""; ?>
+<?php $qlocale  = "?v=" . $header[0]->getHash(); ?>
+<?php $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : ""; ?>
 <li class="map-extras"><a href="tabs/help.php<?php echo $qlocale; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
 <li class="map-extras"><a href="tabs/about.php<?php echo $qlocale; ?>"><?php echo _("About"); ?></a></li>
 <li class="map-extras"><a href="tabs/feedback.php<?php echo $qlocale; ?>"><?php echo _("Feedback"); ?></a></li>
@@ -276,7 +277,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
 </div>
 <div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit"><?php echo _("Apply"); ?></div></div></div>
-<?php $header[0]->getJSVars();?>
+<?php $header[0]->getJSVars(); ?>
 <?php $header[0]->getJSFooter(); ?>
 </body>
 </html>

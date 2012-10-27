@@ -35,6 +35,7 @@ class HEADER {
 
   private $js_header = array();
   private $css_header = array();
+  private $hash = "";
 
   /*
   * An array of all javascript files to be minified
@@ -71,7 +72,8 @@ class HEADER {
   );
 
   function __construct() {
-    $this->remote_js_files()
+    $this->make_hash()
+         ->remote_js_files()
          ->local_js_files()
          ->local_css_files();
   }
@@ -88,6 +90,13 @@ class HEADER {
       if(($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) { $results[] = $file; }
     }
     return $results;
+  }
+
+  private function make_hash() {
+    if(ENVIRONMENT == "production") {
+      $this->hash = md5(microtime());
+    }
+    return $this;
   }
 
   /*
@@ -118,7 +127,7 @@ class HEADER {
           $js_contents .= file_get_contents($js_file) . "\n";
         }
 
-        $js_min_file = md5(microtime()) . ".js";
+        $js_min_file = $this->hash . ".js";
         $handle = fopen(MAPPR_DIRECTORY . "/public/javascript/cache/" . $js_min_file, 'x+');
         fwrite($handle, $js_contents);
         fclose($handle);
@@ -152,7 +161,7 @@ class HEADER {
         foreach(self::$local_css_files as $css_file) {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
         }
-        $css_min_file = md5(microtime()) . ".css";
+        $css_min_file = $this->hash . ".css";
         $handle = fopen(MAPPR_DIRECTORY . "/public/stylesheets/cache/" . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
@@ -191,6 +200,15 @@ class HEADER {
     $this->css_header[] = $css;
   }
 
+  public function getHash() {
+    $cache = $this->files_cached(MAPPR_DIRECTORY . "/public/stylesheets/cache/", "css");
+    if($cache) {
+      list($hash, $extension) = explode(".", $cache[0]);
+    } else {
+      $hash = "1";
+    }
+    return $hash;
+  }
 
   /*
   * Create the css header
@@ -216,7 +234,7 @@ class HEADER {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . "}); });";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); });";
     $header .= "</script>" . "\n";
     echo $header;
   }
