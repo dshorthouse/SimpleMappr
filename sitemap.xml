@@ -8,6 +8,24 @@
   <loc>http://www.simplemappr.net/</loc>
 </url>
 <url>
+  <loc>http://www.simplemappr.net/#tabs=4</loc>
+</url>
+<url>
+  <loc>http://www.simplemappr.net/#tabs=5</loc>
+</url>
+<url>
+  <loc>http://www.simplemappr.net/#tabs=7</loc>
+</url>
+<url>
   <loc>http://www.simplemappr.net/?lang=fr_FR</loc>
+</url>
+<url>
+  <loc>http://www.simplemappr.net/?lang=fr_FR#tabs=4</loc>
+</url>
+<url>
+  <loc>http://www.simplemappr.net/?lang=fr_FR#tabs=5</loc>
+</url>
+<url>
+  <loc>http://www.simplemappr.net/?lang=fr_FR#tabs=7</loc>
 </url>
 </urlset>
