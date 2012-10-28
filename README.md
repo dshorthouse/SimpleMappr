@@ -145,7 +145,7 @@ Copyright
 ---------
 
     Copyright (c) David P. Shorthouse
-    License: GPLv2
+    License: MIT (see included LICENSE file)
 
 [1]: http://www.naturalearthdata.com/
 [2]: http://bit.ly/NapVvW
