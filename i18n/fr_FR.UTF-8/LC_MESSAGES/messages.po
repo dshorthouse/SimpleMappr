@@ -588,6 +588,14 @@ msgid "Last Access"
 msgstr "Accédé"
 
 #: .tabs/about.php:36
+msgid "API Usage"
+msgstr "Utilisation de l'API"
+
+#: .tabs/about.php:36
+msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %s and The Encyclopedia of Life's %s as a custom %s module."
+msgstr "L'API est utilisée par %s de Le Missouri Botanical Garden et %s de Encyclopedia of Life comme un module %s."
+
+#: .tabs/about.php:36
 #, php-format
 msgid "The code behind SimpleMappr may be obtained at %s"
 msgstr "Le code pour SimpleMappr peuvent être obtenus à %s"
@@ -617,161 +625,73 @@ msgstr "Mises à jour direct"
 msgid "October 16, 2012"
 msgstr "16 octobre, 2012"
 
-#: .tabs/about.php:11
-msgid "October 14, 2012"
-msgstr "14 octobre, 2012"
-
-#: .tabs/about.php:11
-msgid "August 16, 2012"
-msgstr "16 août, 2012"
-
-#: .tabs/about.php:11
-msgid "July 22, 2012"
-msgstr "22 juillet, 2012"
-
-#: .tabs/about.php:11
-msgid "July 2, 2012"
-msgstr "2 juillet, 2012"
-
-#: .tabs/about.php:11
-msgid "July 1, 2012"
-msgstr "1 juillet, 2012"
-
-#: .tabs/about.php:11
-msgid "June 14, 2012"
-msgstr "14 juin, 2012"
-
-#: .tabs/about.php:11
-msgid "April 2, 2012"
-msgstr "2 avril, 2012"
-
-#: .tabs/about.php:11
-msgid "February 8, 2012"
-msgstr "8 février, 2012"
-
 #: .tabs/about
 msgid "Improvements: Enhanced the API to allow POST of multiple points."
 msgstr "Améliorations: ajusté l'API pour permettre POST de coordonnées multiples."
+
+#: .tabs/about.php:11
+msgid "October 14, 2012"
+msgstr "14 octobre, 2012"
 
 #: .tabs/about
 msgid "Improvements: Enhanced the API to allow sending of tab-delimited files."
 msgstr "Améliorations: ajusté l'API pour permettre l'envoi de fichiers."
 
+#: .tabs/about.php:11
+msgid "August 16, 2012"
+msgstr "16 août, 2012"
+
 #: .tabs/about
 msgid "Improvements: Adjusted URLs with tab clicks to preserve use of back button."
 msgstr "Améliorations: URL ajusté avec des clics pour préserver l'utilisation du bouton retour."
+
+#: .tabs/about.php:11
+msgid "July 22, 2012"
+msgstr "22 juillet, 2012"
 
 #: .tabs/about
 msgid "Bug fixes: Region Code lists can be filtered without causing the browser to crash."
 msgstr "Corrections: Listes de code de région peut être filtré de façon plus efficace."
 
+#: .tabs/about.php:11
+msgid "July 2, 2012"
+msgstr "2 juillet, 2012"
+
 #: .tabs/about
 msgid "Improvements: Added svg as an embedded output format."
 msgstr "Améliorations: Ajout format intégré svg."
+
+#: .tabs/about.php:11
+msgid "July 1, 2012"
+msgstr "1 juillet, 2012"
 
 #: .tabs/about.php
 msgid "Improvements: Added sort to columns in My Maps."
 msgstr "Améliorations: Ajout capacité de trier les colonnes dans Mes cartes"
 
+#: .tabs/about.php:11
+msgid "June 14, 2012"
+msgstr "14 juin, 2012"
+
 #: .tabs/about.php
 msgid "Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."
 msgstr "Corrections: lorsque la légende est sélectionnée en l'absence de régions ou des coordonnées, un téléchargement a entraîné une erreur."
+
+#: .tabs/about.php:11
+msgid "April 2, 2012"
+msgstr "2 avril, 2012"
 
 #: .tabs/about.php
 msgid "Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."
 msgstr "Corrections: coordonées en DDMMSS copiés/collés à partir d'Excel sont correctement interprétés."
 
+#: .tabs/about.php:11
+msgid "February 8, 2012"
+msgstr "8 février, 2012"
+
 #: .tabs/about.php
 msgid "Bug fixes: Map coordinates in DDMMSS now properly download."
 msgstr "Corrections: coordonées en DDMMSS permettent maintenant un téléchargement"
-
-#: .tabs/about.php:11
-msgid "January 2, 2012"
-msgstr "2 janvier, 2012"
-
-#: .tabs/about.php:11
-msgid "Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."
-msgstr "Améliorations: reconnaissance de coordonnées permettent maintenant degrés décimaux et DDMMSS."
-
-#: .tabs/about.php:11
-msgid "January 1, 2012"
-msgstr "1 janvier, 2012"
-
-#: .tabs/about.php:11
-msgid "Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."
-msgstr "Améliorations: Ajout défaire et refaire. Corrections: La liste des cartes enregistrées montre maintenant pour les utilisateurs d'Internet Explorer."
-
-#: .tabs/about.php:11
-msgid "December 21, 2011"
-msgstr "21 décembre, 2011"
-
-#: ./tabls/about.php:11
-msgid "Improvements: Settings panel may now be collapsed/expanded."
-msgstr "Améliorations: panneau paramètres peut maintenant être effondré/élargi."
-
-#: .tabs/about.php:11
-msgid "December 9, 2011"
-msgstr "9 décembre, 2011"
-
-#: .tabs/about.php:11
-msgid "Bug fixes: Zoom now executes when rectangle is drawn at edge of map (reported by GIS Unit Kew)."
-msgstr "Corrections: Fonction zoom s'exécute correctement quand rectangle est dessiné au bord de la carte (rapporté par GIS Unit Kew)."
-
-#: .tabs/about.php:11
-msgid "December 8, 2011"
-msgstr "8 décembre, 2011"
-
-#: .tabs/about.php:11
-msgid "Improvements: Added a border thickness slider."
-msgstr "Améliorations: Ajout un curseur pour régler épaisseur des bordures."
-
-#: .tabs/about.php:13
-msgid "November 23, 2011"
-msgstr "23 novembre, 2011"
-
-#: .tabs/about.php:13
-msgid "Improvements: Added download as Word (.docx)."
-msgstr "Améliorations: Ajout de téléchargement en tant que document Word (.docx)."
-
-#: .tabs/about.php:14
-msgid "November 22, 2011"
-msgstr "22 novembre, 2011"
-
-#: .tabs/about.php:14
-msgid "Improvements: Added download as PowerPoint (.pptx)."
-msgstr "Améliorations: Ajout de téléchargement en tant que présentation PowerPoint (.pptx)."
-
-#: .tabs/about.php:15
-msgid "November 18, 2011"
-msgstr "18 novembre, 2011"
-
-#: .tabs/about.php:15
-msgid "Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."
-msgstr "Améliorations: Ajout des indicateurs pour la recadrée et dimensions de téléchargement. Corrections: largeur et hauteur des images intégrées ne fonctionnent pas comme prévu."
-
-#: .tabs/about.php:16
-msgid "November 17, 2011"
-msgstr "17 novembre, 2011"
-
-#: .tabs/about.php:16
-msgid "Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."
-msgstr "Améliorations: Propre URL pour image intégrées; ajouter KML and GeoJSON"
-
-#: .tabs/about.php:17
-msgid "November 16, 2011"
-msgstr "16 novembre, 2011"
-
-#: .tabs/about.php:17
-msgid "Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."
-msgstr "Corrections: barre d'échelle a montré mesures exposants (rapporté par GIS Unit Kew)."
-
-#: .tabs/about.php:18
-msgid "November 15, 2011"
-msgstr "15 novembre, 2011"
-
-#: .tabs/about.php:18
-msgid "Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."
-msgstr "Améliorations: ajout d'un mécanisme d'autocomplétion des noms de pays dans l'onglet Régions. Corrections: Ajout de plus de punaises de Google Earth."
 
 #: .tabs/about.php:29
 msgid "In the Wild"

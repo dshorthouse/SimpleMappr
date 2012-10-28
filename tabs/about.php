@@ -33,16 +33,6 @@ USERSESSION::select_locale();
 <dt class="update"><?php echo _("July 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added sort to columns in My Maps."); ?></dd>
 <dt class="update"><?php echo _("June 14, 2012"); ?></dt><dd><?php echo _("Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."); ?></dd>
 <dt class="update"><?php echo _("April 2, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."); ?></dd>
-<dt class="update"><?php echo _("February 8, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS now properly download."); ?></dd>
-<dt class="update"><?php echo _("January 2, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the recognition of coordinates to include both decimal degrees and DDMMSS."); ?></dd>
-<dt class="update"><?php echo _("January 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added undo and redo. Bug fixes: The saved map list now shows for Internet Explorer users."); ?></dd>
-<dt class="update"><?php echo _("December 21, 2011"); ?></dt><dd><?php echo _("Improvements: Settings panel may now be collapsed/expanded."); ?></dd>
-<dt class="update"><?php echo _("December 9, 2011"); ?></dt><dd><?php echo _("Bug fixes: Zoom now executes when rectangle is drawn at edge of map (reported by GIS Unit Kew)."); ?></dd>
-<dt class="update"><?php echo _("December 8, 2011"); ?></dt><dd><?php echo _("Improvements: Added a border thickness slider."); ?></dd>
-<dt class="update"><?php echo _("November 23, 2011"); ?></dt><dd><?php echo _("Improvements: Added download as Word (.docx)."); ?></dd>
-<dt class="update"><?php echo _("November 22, 2011"); ?></dt><dd><?php echo _("Improvements: Added download as PowerPoint (.pptx)."); ?></dd>
-<dt class="update"><?php echo _("November 18, 2011"); ?></dt><dd><?php echo _("Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."); ?></dd>
-<dt class="update"><?php echo _("November 17, 2011"); ?></dt><dd><?php echo _("Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."); ?></dd>
 </dl>
 </div>
 <div id="live-updates">
@@ -66,9 +56,12 @@ USERSESSION::select_locale();
 <p class="citation">Scudder, G.G.E. and Michael D. Schwartz. 2012. Two new species of <em>Trigonotylus</em> (Hemiptera: Heteroptera: Miridae: Stenodemini) from western Canada and northwestern United States. <em>Zootaxa</em> 3174: 51-58. (<a href="http://www.mapress.com/zootaxa/2012/f/zt03174p058.pdf">PDF</a>, 1.4MB)</p>
 <p class="citation">Schuh, Randall T. 2012. Integrating specimen databases and revisionary systematics. <em>ZooKeys</em> 209: 255-267. doi:<a href="http://dx.doi.org/10.3897/zookeys.209.3288">10.3897/zookeys.209.3288</a>.</p>
 <p class="citation">Skevington, J.H. and F.C. Thompson. 2012. Review of New World <em>Sericomyia</em> (Diptera, Syrphidae), including description of a new species. <em>The Canadian Entomologist</em> 144: 216-247. doi:<a href="http://dx.doi.org/10.4039/tce.2012.24">10.4039/tce.2012.24</a>.</p>
+<p class="citation">Soto, Eduardo M. and Martín J. Ramírez. 2012. Revision and phylogenetic analysis of the spider genus <em>Philisca</em> Simon (Araneae: Anyphaenidae, Amaurobioidinae) <em>Zootaxa</em> 3443: 1–65. (<a href="http://www.mapress.com/zootaxa/list/2012/3443.html">issue</a>)
 <p class="citation">Wilkin, P., P. Suksathan, K. Keeratikiat, P. Van Welzen and J. Wiland-Szymańska. 2012. A new threatened endemic species from central and northeastern Thailand, <em>Dracaena jayniana</em> (Asparagaceae: tribe Nolinoideae). <em>Kew Bulletin</em> 67: 1-9. doi:<a href="http://dx.doi.org/10.1007/s12225-012-9412-2">10.1007/s12225-012-9412-2</a>.</p>
 <p class="citation">Wyniger, Denise. 2011. Revision of the Nearctic genus <em>Coquillettia</em> Uhler with a transfer to the tribe Phylini, the description of 14 new species, a new synonymy, and the description of two new Nearctic genera <em>Leutiola</em> and <em>Ticua</em> and two new species (Heteroptera: Miridae: Phylinae). <em>Entomologica Americana</em> 117(3 &amp; 4): 134-211. doi:<a href="http://dx.doi.org/10.1664/11-RA-012.1">10.1664/11-RA-012.1</a></p>
 <p class="citation">Zubov, Dmitry A. and Aaron P. Davis. 2012. <em>Galanthus panjutinii</em> sp. nov.: a new name for an invalidly published species of <em>Galanthus</em> (Amaryllidaceae) from the northern Colchis area of Western Transcaucasia. <em>Phytotaxa</em> 50: 55-63. (<a href="http://www.mapress.com/phytotaxa/content/2012/pt00050.htm">issue</a>)</p>
+<div class="header"><h2><?php echo _("API Usage"); ?></h2></div>
+<p><?php echo sprintf(_("The SimpleMappr API is used by The Missouri Botanical Garden's %s and The Encyclopedia of Life's %s as a custom %s module."), "<a href=\"http://www.tropicos.org/\">Tropicos</a>", "<a href=\"http://syrphidae.lifedesks.org/pages/24837\">LifeDesks</a>", "<a href=\"https://github.com/LifeDesks/LifeDesksExpert/tree/master/sites/all/modules/simplemappr\">Drupal</a>"); ?></p>
 <div class="header"><h2><?php echo _("Code"); ?></h2></div>
 <p><?php echo sprintf(_("The code behind SimpleMappr may be obtained at %s"), "<a href=\"https://github.com/dshorthouse/SimpleMappr\">https://github.com/dshorthouse/SimpleMappr</a>"); ?></p>
 <div class="header"><h2><?php echo _("History"); ?></h2></div>
