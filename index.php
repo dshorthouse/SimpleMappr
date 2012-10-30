@@ -8,11 +8,11 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <html lang="<?php echo $header[1][$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
+<meta name="description" content="<?php echo _("A point map web application for publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
 <meta property="og:title" content="SimpleMappr" />
-<meta property="og:description" content="<?php echo _("A point map application for publications and presentations."); ?>" />
+<meta property="og:description" content="<?php echo _("A point map web application for publications and presentations."); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>">
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
@@ -22,7 +22,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 </head>
 <?php flush(); ?>
 <body>
-<div itemscope itemtype="http://schema.org/SoftwareApplication" id="header" class="clearfix">
+<div itemscope itemtype="http://schema.org/WebApplication" id="header" class="clearfix">
 <h1 id="site-title" class="sprites-after" itemprop="name">SimpleMapp<span>r</span></h1>
 <div id="site-tagline" itemprop="description"><?php echo _("point maps for publication and presentation"); ?></div>
 <meta itemprop="url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />

@@ -29,7 +29,7 @@ msgstr "Région %d"
 
 #: .index.php:11
 msgid "A point map application for publications and presentations."
-msgstr "Une application pour produire des cartes de qualité pour vos publications et présentations."
+msgstr "Une application web pour produire des cartes de qualité pour vos publications et présentations."
 
 #: .index.php:12
 msgid "publication,presentation,map,georeference"
