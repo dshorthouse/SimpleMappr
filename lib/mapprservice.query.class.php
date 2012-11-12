@@ -97,11 +97,11 @@ class MAPPRQUERY extends MAPPR {
           $shape = $layer->getShape($res->tileindex, $res->shapeindex);
           
           if($this->queryLayer == 'stateprovinces_polygon') {
-            $hasc = explode(".",$shape->values['HASC_1']);
-            if(isset($shape->values['ISO']) && isset($hasc[1])) { $items[$shape->values['ISO']][$hasc[1]] = array(); }
+            $hasc = explode(".",$shape->values['code_hasc']);
+            if(isset($shape->values['sr_adm0_a3']) && isset($hasc[1])) { $items[$shape->values['sr_adm0_a3']][$hasc[1]] = array(); }
           }
           else {
-            $this->_data[] = $shape->values['NAME'];
+            $this->_data[] = $shape->values['admin'];
           }
         }
         if($this->queryLayer == 'stateprovinces_polygon') {

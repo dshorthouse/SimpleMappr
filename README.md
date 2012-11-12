@@ -14,7 +14,7 @@ Configuration Instructions
 1. Ensure /tmp, /public/javascript/cache, and /public/stylesheets/cache/ are readable & writable
 2. Download map data from Natural Earth Data, [http://www.naturalearthdata.com/][1]:
   [http://bit.ly/NapVvW][2], [http://bit.ly/OHPoml][3], [http://bit.ly/N76XfB][4]
-3. Extract each to /lib/mapserver/maps/. I created a greyscale shaded relief geotiff using ogr2ogr on the full color NaturalEarth HYP_HR_SR_W_DR.zip. If you wish to obtain a copy of this geotiff, please contact me directly at davidpshorthouse@gmail.com.
+3. Extract each to /lib/mapserver/maps/
 4. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles.
 5. Make contents of /lib/mapserver/fonts readable & executable
 6. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions. These set db (MySQL) connections and constants, respectively.

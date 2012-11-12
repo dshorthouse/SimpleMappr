@@ -522,28 +522,28 @@ class MAPPR {
   private function load_shapes() {
     //shaded relief
     $this->shapes['relief'] = array(
-      'shape' => $this->shape_path . "/HYP_HR_SR_W_DR/HYP_HR_SR_W_DR.tif",
+      'shape' => $this->shape_path . "/HYP_HR_SR_OB_DR/HYP_HR_SR_OB_DR.tif",
       'type'  => MS_LAYER_RASTER,
       'sort'  => 1
     );
 
     // Geotiff created by David P. Shorthouse using above file.
     $this->shapes['reliefgrey'] = array(
-      'shape' => $this->shape_path . "/HYP_HR_SR_W_DR2/HYP_HR_SR_W_DR2.tif",
+      'shape' => $this->shape_path . "/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif",
       'type'  => MS_LAYER_RASTER,
       'sort'  => 1
     );
 
     //lakes outline
     $this->shapes['lakesOutline'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_lakes",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_lakes",
       'type'  => MS_LAYER_LINE,
       'sort'  => 2
     );
 
     //lakes
     $this->shapes['lakes'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_lakes",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_lakes",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 3
     );
@@ -556,77 +556,77 @@ class MAPPR {
 
     //base map
     $this->shapes['base'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_0_map_units",
       'type'  => MS_LAYER_LINE,
       'sort'  => 4
     );
 
     //stateprovinces_polygon
     $this->shapes['stateprovinces_polygon'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_shp",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 5
     );
 
     //stateprovinces
     $this->shapes['stateprovinces'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_lines_shp",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp",
       'type'  => MS_LAYER_LINE,
       'sort'  => 6
     );
 
     //lake names
     $this->shapes['lakenames'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_lakes",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_lakes",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 7
     );
 
     //rivers
     $this->shapes['rivers'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_rivers_lake_centerlines",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_rivers_lake_centerlines",
       'type'  => MS_LAYER_LINE,
       'sort'  => 8
     );
 
     //rivers
     $this->shapes['rivernames'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_rivers_lake_centerlines",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_rivers_lake_centerlines",
       'type'  => MS_LAYER_LINE,
       'sort'  => 9
     );
 
     //placename
     $this->shapes['placenames'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_populated_places_simple",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_populated_places_simple",
       'type'  => MS_LAYER_POINT,
       'sort'  => 10
     );
 
     //State/Provincial labels
     $this->shapes['stateprovnames'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_1_states_provinces_shp",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_shp",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 11
     );
 
     //Country labels
     $this->shapes['countrynames'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_admin_0_map_units",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_0_map_units",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 12
     );
 
     //physicalLabels
     $this->shapes['physicalLabels'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_geography_regions_polys",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_geography_regions_polys",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 13
     );
 
     //marineLabels
     $this->shapes['marineLabels'] = array(
-      'shape' => $this->shape_path . "/10m_physical/10m_geography_marine_polys",
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_geography_marine_polys",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 14
     );
@@ -1037,14 +1037,14 @@ class MAPPR {
                   $states = preg_split("/[\s|]+/", $split[1]);
                   $statekey = array();
                   foreach($states as $state) {
-                    $statekey[] = "'[HASC_1]' =~ /".$state."$/";
+                    $statekey[] = "'[code_hasc]' =~ /\.".$state."$/";
                   }
-                  $qry['stateprovince'][] = "'[ISO]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
-                  $qry['country'][] = "'[ISO_A3]' = '".trim($split[0])."'";
+                  $qry['stateprovince'][] = "'[sr_adm0_a3]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+                  $qry['country'][] = "'[iso_a3]' = '".trim($split[0])."'";
                 } else {
                   $region = addslashes(trim($region));
-                  $qry['stateprovince'][] = "'[NAME_0]' =~ /".$region."$/ OR '[NAME_1]' =~ /".$region."$/ OR '[ADM0_A3]' =~ /".$region."$/";
-                  $qry['country'][] = "'[NAME]' =~ /".$region."$/ OR '[NAME_FORMA]' =~ /".$region."$/";
+                  $qry['stateprovince'][] = "'[name]' =~ /".$region."$/";
+                  $qry['country'][] = "'[name]' =~ /".$region."$/ OR '[name_long]' =~ /".$region."$/ OR '[formal_en]' =~ /".$region."$/";
                 }
               }
             }
@@ -1145,7 +1145,7 @@ class MAPPR {
           case 'lakenames':
             $layer->set("tolerance", 1);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "Name1");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
@@ -1170,7 +1170,7 @@ class MAPPR {
           case 'countrynames':
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "NAME");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
@@ -1187,7 +1187,7 @@ class MAPPR {
           case 'placenames':
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "NAMEASCII");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
@@ -1208,7 +1208,7 @@ class MAPPR {
           case 'stateprovnames':
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "NAME_1");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
@@ -1225,7 +1225,7 @@ class MAPPR {
           case 'physicalLabels':
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "Name");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
@@ -1242,7 +1242,7 @@ class MAPPR {
           case 'marineLabels':
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "Name");
+            $layer->set("labelitem", "name");
 
             $class = ms_newClassObj($layer);
             $class->label->set("font", "arial");
