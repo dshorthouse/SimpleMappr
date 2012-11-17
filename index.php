@@ -27,6 +27,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <div id="site-tagline" itemprop="description"><?php echo _("point maps for publication and presentation"); ?></div>
 <meta itemprop="url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
+<div id="map-loader"><span class="mapper-loading-spinner"></span></div>
 <div id="site-languages">
 <ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
@@ -42,7 +43,6 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 </div>
 </div>
 <div id="wrapper">
-<div id="initial-message" class="ui-corner-all ui-widget-content"><span><?php echo _("Building application..."); ?></span></div>
 <noscript>
 <div id="noscript"><?php echo _("Sorry, you must enable JavaScript to use this site."); ?></div>
 </noscript>
@@ -125,7 +125,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <div class="thumb ui-corner-all ui-widget-header"></div>
 </div>
 <div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords"><?php echo _("Records Out of Range"); ?></a></div>
-<div id="mapOutput"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Building preview..."); ?></span></div>
+<div id="mapOutput"></div>
 </div>
 <div id="mapScale"></div>
 <div id="mapToolsCollapse" class="mapTools-default ui-widget-header ui-corner-left"><a href="#" class="sprites tooltip" title="<?php echo _("expand/collapse ctrl+e"); ?>"></a></div>
@@ -258,8 +258,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <div id="mapper-saving-error-message" class="hidden-message"><?php echo _("There was a problem saving your map."); ?></div>
 <div id="mapper-saving-message" class="hidden-message"><?php echo _("Saving..."); ?></div>
 <div id="mapper-missing-legend" class="hidden-message"><?php echo _("You are missing a legend for at least one of your Point Data or Regions layers."); ?></div>
-<div class="usermaps-loading hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Loading your maps..."); ?></span></div>
-<div class="userdata-loading hidden-message"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Loading user list..."); ?></span></div>
 <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="<?php echo _("Delete"); ?>"><?php echo _("Are you sure you want to delete"); ?> <span></span>?</div>
 <div id="mapper-legend-message" class="hidden-message"><?php echo _("legend will appear here"); ?></div>
 <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="<?php echo _("Example Coordinates"); ?>"></div>

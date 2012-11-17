@@ -19,11 +19,12 @@ textarea{resize:none;padding:0;}
 #site-session{display:none;position:absolute;right:0.25em;}
 #site-session a.login:before{background-position:-200px -264px;}
 #site-session a.logout:before{background-position:-180px -264px;}
+#map-loader{position:absolute;right:55em;}
+.mapper-loading-spinner{background-repeat:no-repeat !important;background-position:5px 13px;background-image:url("../../images/ajax-loader.gif");padding:1em;}
 #site-languages{position:absolute;right:25em;}
 #site-languages ul{list-style:none;margin:0px;padding:0px;}
 #site-languages li{list-style:none;display:inline;margin:0px 5px;padding:0px;}
 #site-languages li a.selected{color:white;}
-#initial-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;margin:40px 20px;background-image:url("../../images/throbber.gif") !important;box-shadow:#aaa 0px 5px 5px;position:absolute;top:1.5em;left:0.5em;z-index:100;}
 #wrapper{position:absolute;width:100%;top:1.75em;}
 #tabs{min-height:500px;display:none;border:0px;}
 #error-message{margin:0;padding:1em;}
@@ -47,7 +48,6 @@ li.map-extras{float:right !important;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-delete:before{background-position:-260px -284px;}
 .ui-dialog-titlebar #ui-dialog-title-mapper-message-help:before, .ui-dialog-titlebar #ui-dialog-title-mapper-message-codes:before{background-position:-220px -264px;}
 #mapper-message{display:none;font-size:0.8em;}
-.mapper-loading-message{background-repeat:no-repeat !important;background-position:10px 12px !important;background-color:#fff;background-image:url("../../images/throbber.gif") !important;box-shadow:#aaa 0px 5px 5px;padding-left:35px !important;padding:.5em 1em .5em 35px;position:absolute;top:5px;right:5%;z-index:1000;}
 .mapper-message-error{background-repeat:no-repeat !important;background-position:10px 12px !important;background-color:#fff;box-shadow:#aaa 0px 5px 5px;padding:.5em 1em;position:absolute;top:5px;right:5%;z-index:1000;color:#ff0000 !important;}
 label{margin-right:0.2em;}
 fieldset{border:1px solid #e0e0e0;font-size:0.75em;margin-top:10px;padding:10px;}
@@ -142,7 +142,6 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #badRecordsWarning a.toolsBadRecords{text-decoration:none;color:#ff0000;}
 #badRecordsWarning a.toolsBadRecords:before{background-position:-240px -264px;}
 #badRecords{font-size:0.75em;}
-#mapOutput{position:relative;}
 #mapScale{text-align:right;}
 #mapTools{position:absolute;top:0px;left:820px;right:0px;min-height:410px;}
 #mapToolsCollapse{position:absolute;top:0;width:16px;z-index:10;padding:5px;}
@@ -167,7 +166,6 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapCropMessage{display:none;color:#ff0000;font-size:1em;}
 #mapCropMessage:before{background-position:-240px -264px;}
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;background-image:url("../../images/throbber.gif") !important;}
-.usermaps-loading,.userdata-loading{position:relative;}
 #janrainEngageEmbed {margin-top:10px;}
 #janrainEngageEmbed div{margin:0px;}
 #map-mymaps table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
