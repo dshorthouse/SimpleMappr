@@ -1776,7 +1776,7 @@ $(function() {
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
 
               Mappr.setFormOptions();
-              Mappr.showSavingMessage($('#mapper-saving-message').text());
+              Mappr.showSpinner();
 
               if(Mappr.vars.jcropAPI === undefined) { $('#bbox_rubberband').val(''); }
 
@@ -1791,7 +1791,7 @@ $(function() {
                   $('#file-name').val(map_title);
                   Mappr.activateEmbed(data.mid);
                   Mappr.loadMapList();
-                  Mappr.hideSavingMessage();
+                  Mappr.hideSpinner();
                   Mappr.trackEvent('map', 'save');
                 }
               });
@@ -1951,17 +1951,6 @@ $(function() {
       $('#badRecords').html(bad_points);
       $('#badRecordsWarning').show();
     }
-  };
-
-  Mappr.showSavingMessage = function(content) {
-    var message = '<span class="mapper-loading-message ui-corner-all ui-widget-content">' + content + '</span>';
-
-    this.hideErrorMessage();
-    $('#mapOutput').append(message);
-  };
-
-  Mappr.hideSavingMessage = function() {
-    $('#mapOutput .mapper-loading-message').remove();
   };
 
   Mappr.showSpinner = function() {
@@ -2208,9 +2197,7 @@ $(function() {
       ]
     }).show();
 
-    if($('#mapper-message-codes .mapper-loading-message').length > 0) {
-      this.loadCodes($('#mapper-message-codes'), data);
-    }
+    this.loadCodes($('#mapper-message-codes'), data);
   };
 
   Mappr.loadCodes = function(elem, data) {

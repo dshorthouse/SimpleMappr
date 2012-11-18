@@ -253,7 +253,6 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <span class="download"><?php echo _("Download"); ?></span>
   <span class="delete"><?php echo _("Delete"); ?></span>
 </div>
-<div id="mapper-loading-message" class="hidden-message"><?php echo _("Building preview..."); ?></div>
 <div id="mapper-loading-error-message" class="hidden-message"><?php echo _("There was a problem loading your map."); ?></div>
 <div id="mapper-saving-error-message" class="hidden-message"><?php echo _("There was a problem saving your map."); ?></div>
 <div id="mapper-saving-message" class="hidden-message"><?php echo _("Saving..."); ?></div>
@@ -261,7 +260,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="<?php echo _("Delete"); ?>"><?php echo _("Are you sure you want to delete"); ?> <span></span>?</div>
 <div id="mapper-legend-message" class="hidden-message"><?php echo _("legend will appear here"); ?></div>
 <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="<?php echo _("Example Coordinates"); ?>"></div>
-<div id="mapper-message-codes" class="ui-state-highlight hidden-message" title="<?php echo _("State/Province Codes"); ?>"><span class="mapper-loading-message ui-corner-all ui-widget-content"><?php echo _("Loading..."); ?></span></div>
+<div id="mapper-message-codes" class="ui-state-highlight hidden-message" title="<?php echo _("State/Province Codes"); ?>"></div>
 <div id="mapEmbed" class="ui-state-highlight hidden-message" title="<?php echo _("Embed"); ?>">
   <div class="header"><h2><?php echo _('Image'); ?></h2></div>
   <p><input id="embed-img" type="text" size="65" value="" /></p>
