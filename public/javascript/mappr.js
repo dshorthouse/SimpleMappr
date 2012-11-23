@@ -1045,18 +1045,22 @@ $(function() {
       case 'increase':
         switch(type) {
           case 'coords':
-            return (self.vars.newPointCount += 1);
+            self.vars.newPointCount += 1;
+            return self.vars.newPointCount;
           case 'regions':
-            return (self.vars.newRegionCount += 1);
+            self.vars.newRegionCount += 1;
+            return self.vars.newRegionCount;
         }
         break;
 
       case 'decrease':
         switch(type) {
           case 'coords':
-            return (self.vars.newPointCount -= 1);
+            self.vars.newPointCount -= 1;
+            return self.vars.newPointCount;
           case 'regions':
-            return (self.vars.newRegionCount -= 1);
+            self.vars.newRegionCount -= 1;
+            return self.vars.newRegionCount;
         }
         break;
     }
@@ -1679,8 +1683,8 @@ $(function() {
           });
           $('.user-load').click(function(e) {
             e.preventDefault();
-            self.tabSelector(3);
             self.loadMapList({ uid : $(this).attr("data-uid") });
+            self.tabSelector(3);
           });
         }
       }
@@ -2376,12 +2380,12 @@ $(function() {
     $('.toolsRedoDisabled').click(false);
     $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
     if($('#usermaps').length > 0) {
-      this.tabSelector(3);
       this.loadMapList();
+      this.tabSelector(3);
     }
     if($('#userdata').length > 0) {
-      this.tabSelector(4);
       this.loadUserList();
+      this.tabSelector(4);
     }
     $("input").keypress(function(e) { if (e.which === 13) { return false; } });
   };
