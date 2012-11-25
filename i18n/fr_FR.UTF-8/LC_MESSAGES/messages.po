@@ -276,6 +276,11 @@ msgstr "relief"
 msgid "relief (greyscale)"
 msgstr "relief (gris)"
 
+#: .index.php:134
+#: .tabs/help.php:86
+msgid "biodiv. hotspots"
+msgstr "hotspot de biodiv."
+
 #: .index.php:136
 #: .tabs/help.php:90
 msgid "Labels"
@@ -800,7 +805,7 @@ msgstr "rendre la présentation par défaut au plus bas de zoom et projection g�
 
 #: .tabs/help.php:72
 msgid "select this checkbox to draw all State and Province borders for all countries"
-msgstr "tirer toutes les frontières des États et provinces pour tous les pays"
+msgstr "rendre toutes les frontières des États et provinces pour tous les pays"
 
 #: .tabs/help.php:75
 msgid "select this checkbox to overlay lakes as black outlines"
@@ -816,11 +821,15 @@ msgstr "superposer les rivières sous forme de contours noirs"
 
 #: .tabs/help.php:84
 msgid "select this checkbox to render a color, shaded relief layer"
-msgstr "une couche relief ombré"
+msgstr "rendre une couche relief ombré"
 
 #: .tabs/help.php:87
 msgid "select this checkbox to render a greyscale, shaded relief layer"
-msgstr "une couche relief ombré de gris"
+msgstr "rendre une couche relief ombré de gris"
+
+#: .tabs/help.php:87
+msgid "select this checkbox to render biodiversity hotspots known to Conservation International"
+msgstr "rendre une couche pour les hotspots de biodiversité selon l'organisme Conservation International"
 
 #: .tabs/help.php:93
 msgid "label countries"

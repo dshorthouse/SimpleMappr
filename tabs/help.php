@@ -88,6 +88,9 @@ $(function () {
 
     <dt><?php echo _("relief (greyscale)"); ?>:</dt>
     <dd><?php echo _("select this checkbox to render a greyscale, shaded relief layer"); ?></dd>
+
+    <dt><?php echo _("biodiv. hotspots"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to render biodiversity hotspots known to Conservation International"); ?></dd>
   </dl>
 
   <h3><?php echo _("Labels"); ?></h3>

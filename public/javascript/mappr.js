@@ -712,9 +712,7 @@ $(function() {
     var scale      = "",
         rubberband = $('#bbox_rubberband').val().split(",");
 
-    if(!factor) {
-      factor = $('input[name="download-factor"]:checked').val();
-    }
+    if(!factor) { factor = $('input[name="download-factor"]:checked').val(); }
 
     if(this.vars.jCropType === 'crop') {
       scale = factor*(rubberband[2]-rubberband[0]) + " X " + factor*(rubberband[3]-rubberband[1]);
@@ -783,7 +781,6 @@ $(function() {
       } else {
         $(fieldsets).find('.colorPicker').val('150 150 150');
       }
-
       return false;
     });
 
@@ -1021,9 +1018,7 @@ $(function() {
       },
       error   : function(xhr, ajaxOptions, thrownError) {
         xhr = thrownError = null;
-        if(ajaxOptions === 'timeout') {
-          self.hideSpinner();
-        }
+        if(ajaxOptions === 'timeout') { self.hideSpinner(); }
       }
     });
 
@@ -1513,9 +1508,7 @@ $(function() {
         pattern     = /[?*{}\\]+/g;
 
     for(i = 0; i < coords.length; i += 1) {
-      if(i > 2) {
-        self.addAccordionPanel('coords');
-      }
+      if(i > 2) { self.addAccordionPanel('coords'); }
 
       coord_title = coords[i].title || "";
       coord_data  = coords[i].data.replace(pattern, "")  || "";
@@ -1540,9 +1533,7 @@ $(function() {
         region_color = "";
 
     for(i = 0; i < regions.length; i += 1) {
-      if(i > 2) {
-        self.addAccordionPanel('regions');
-      }
+      if(i > 2) { self.addAccordionPanel('regions'); }
 
       region_title = regions[i].title || "";
       region_data  = regions[i].data  || "";
@@ -1754,7 +1745,8 @@ $(function() {
     //Note: method calls must be Mappr.x for hotkeys to work
     var missingTitle = false,
         pattern      = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
-        map_title    = "";
+        map_title    = "",
+        self         = Mappr;
 
     $('#mapSave').dialog({
       autoOpen      : true,
@@ -1779,24 +1771,24 @@ $(function() {
               $.each(['factor', 'filetype'], function() { $('input[name="download_'+this+'"]').val($('input[name="download-'+this+'"]:checked').val()); });
               $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
 
-              Mappr.setFormOptions();
-              Mappr.showSpinner();
+              self.setFormOptions();
+              self.showSpinner();
 
-              if(Mappr.vars.jcropAPI === undefined) { $('#bbox_rubberband').val(''); }
+              if(self.vars.jcropAPI === undefined) { $('#bbox_rubberband').val(''); }
 
               $.ajax({
                 type        : 'POST',
-                url         : Mappr.settings.baseUrl + '/usermaps/',
+                url         : self.settings.baseUrl + '/usermaps/',
                 data        : $("form").serialize(),
                 dataType    : 'json',
                 success     : function(data) {
                   $('#mapTitle').text($('.m-mapSaveTitle').val());
                   map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
                   $('#file-name').val(map_title);
-                  Mappr.activateEmbed(data.mid);
-                  Mappr.loadMapList();
-                  Mappr.hideSpinner();
-                  Mappr.trackEvent('map', 'save');
+                  self.activateEmbed(data.mid);
+                  self.loadMapList();
+                  self.hideSpinner();
+                  self.trackEvent('map', 'save');
                 }
               });
 
@@ -1878,7 +1870,6 @@ $(function() {
   };
 
   Mappr.mapToggleSettings = function() {
-    //Note: method calls must be Mappr.x for hotkeys to work
     $('#mapToolsCollapse a').trigger('click');
   };
 
@@ -1935,12 +1926,12 @@ $(function() {
   };
 
   Mappr.drawLegend = function() {
-    var legend_url = $('#legend_url').val();
+    var legend_url = $('#legend_url').val(), legend = $('#mapLegend');
 
     if(legend_url) {
-      $('#mapLegend').html("<img src=\"" + legend_url + "\" />");
+      legend.html("<img src=\"" + legend_url + "\" />");
     } else {
-      $('#mapLegend').html('<p><em>' + $('#mapper-legend-message').text() + '</em></p>');
+      legend.html('<p><em>' + $('#mapper-legend-message').text() + '</em></p>');
     }
   };
 
@@ -2015,9 +2006,7 @@ $(function() {
       },
       error    : function(xhr, ajaxOptions, thrownError) {
         xhr = thrownError = null;
-        if(ajaxOptions === 'timeout') {
-          self.showErrorMessage($('#mapper-saving-error-message').text());
-        }
+        if(ajaxOptions === 'timeout') { self.showErrorMessage($('#mapper-saving-error-message').text()); }
       }
     });
   };
@@ -2307,18 +2296,18 @@ $(function() {
   };
 
   Mappr.bindTabs = function() {
-    var tab = $('#tabs'),
-        id  = 'tabs',
+    var tab            = $('#tabs'),
+        id             = 'tabs',
         tab_a_selector = 'ul.navigation a',
-        config = {
+        url            = "",
+        config         = {
           cache : true,
           load  : function(e, ui){
             e = null;
             $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
           },
           event : 'change'
-        },
-        url = "";
+        };
 
     $('#mapTools').tabs({selected: 0});
     tab.tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
