@@ -41,7 +41,7 @@ class HEADER {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'jquery'    => 'public/javascript/jquery-1.8.2.min.js',
+    'jquery'    => 'public/javascript/jquery-1.8.3.min.js',
     'jquery_ui' => 'public/javascript/jquery-ui-1.8.24.min.js',
     'color'     => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
@@ -59,7 +59,7 @@ class HEADER {
   );
 
   public static $remote_js_files = array(
-    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
+    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
     'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js',
     'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
