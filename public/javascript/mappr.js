@@ -1575,7 +1575,7 @@ $(function() {
       
       $('#mapEmbed').find("span.mid").text(mid).end()
                     .dialog({
-                      width         : (525).toString(),
+                      width         : '525',
                       autoOpen      : true,
                       modal         : true,
                       closeOnEscape : false,
@@ -1600,8 +1600,8 @@ $(function() {
         message = '<em>' + $(obj).parent().parent().find(".title").text() + '</em>';
 
     $('#mapper-message-delete').find('span').html(message).end().dialog({
-      height        : (250).toString(),
-      width         : (500).toString(),
+      height        : '250',
+      width         : '500',
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
@@ -1699,8 +1699,8 @@ $(function() {
         message = '<em>' + $(obj).parent().parent().children("td:first").text() + '</em>';
 
     $('#mapper-message-delete').find("span").html(message).end().dialog({
-      height        : (250).toString(),
-      width         : (500).toString(),
+      height        : '250',
+      width         : '500',
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
@@ -1750,8 +1750,8 @@ $(function() {
 
     $('#mapSave').dialog({
       autoOpen      : true,
-      height        : (175).toString(),
-      width         : (350).toString(),
+      height        : '175',
+      width         : '350',
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
@@ -1820,7 +1820,7 @@ $(function() {
 
     $('#mapExport').dialog({
       autoOpen      : true,
-      width         : (620).toString(),
+      width         : '620',
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
@@ -1907,8 +1907,8 @@ $(function() {
 
     $('#mapper-message').html(message).dialog({
       autoOpen      : true,
-      height        : (200).toString(),
-      width         : (400).toString(),
+      height        : '200',
+      width         : '400',
       modal         : true,
       closeOnEscape : false,
       draggable     : true,
@@ -2037,8 +2037,8 @@ $(function() {
 
     $('#badRecordsViewer').dialog({
       autoOpen      : false,
-      height        : (200).toString(),
-      width         : (500).toString(),
+      height        : '200',
+      width         : '500',
       position      : [200, 200],
       modal         : true,
       closeOnEscape : false,
@@ -2149,8 +2149,8 @@ $(function() {
     var message = '<img src="public/images/help-data.png" alt="" />';
 
     $('#mapper-message-help').html(message).dialog({
-      height        : (350).toString(),
-      width         : (525).toString(),
+      height        : '350',
+      width         : '525',
       autoOpen      : true,
       modal         : true,
       closeOnEscape : false,
@@ -2172,8 +2172,8 @@ $(function() {
     var data  = (this.getParameterByName("locale")) ? { locale : this.getParameterByName("locale") } : {};
 
     $('#mapper-message-codes').dialog({
-      height        : (450).toString(),
-      width         : (850).toString(),
+      height        : '450',
+      width         : '850',
       autoOpen      : true,
       modal         : true,
       closeOnEscape : false,

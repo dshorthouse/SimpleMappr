@@ -221,8 +221,7 @@ class HEADER {
   * Create the javascript header
   */
   public function getJSFooter() {
-    $header = "<script type=\"text/javascript\">document.getElementById('initial-message').style.display = \"block\";</script>" . "\n";
-    $header .= "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script type=\"text/javascript\">";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
