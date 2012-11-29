@@ -17,15 +17,12 @@ USERSESSION::select_locale();
 <script type="text/javascript" src="../public/javascript/jquery.waypoints.min.js"></script>
 <script type="text/javascript">
 $(function () {
-  $('#country-codes').html($('#mapper-message-codes').html());
   $('#map-help').waypoint(function() {
     var data = {},
         elem = $('#country-codes').css("width", "100%");
 
     if (Mappr.getParameterByName("locale")) { data.locale = Mappr.getParameterByName("locale"); }
-    if($('#country-codes .mapper-loading-message').length > 0) {
-      Mappr.loadCodes(elem, data);
-    }
+    if($('#country-codes').html().length === 0) { Mappr.loadCodes(elem, data); }
   });
 });
 </script>
