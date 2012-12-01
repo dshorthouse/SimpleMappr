@@ -1988,6 +1988,7 @@ $(function() {
   Mappr.postData = function(formData, load_data) {
     var self      = this;
 
+    self.hideErrorMessage();
     self.showSpinner();
     $.ajax({
       type     : 'POST',
