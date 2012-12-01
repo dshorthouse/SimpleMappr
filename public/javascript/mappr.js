@@ -985,7 +985,7 @@ $(function() {
       type    : 'POST',
       url     : self.settings.baseUrl + '/query/',
       data    : formData,
-      timeout : 20000,
+      timeout : 30000,
       success : function(data) {
         if(data.length > 0) {
           var regions       = "",
@@ -1381,7 +1381,7 @@ $(function() {
       type     : 'GET',
       url      : self.settings.baseUrl + "/usermaps/" + id,
       dataType : 'json',
-      timeout  : 20000,
+      timeout  : 30000,
       success  : function(data) {
         self.hideSpinner();
         if(data.status === 'ok') {
@@ -1994,7 +1994,7 @@ $(function() {
       url      : self.settings.baseUrl + '/application/',
       data     : formData,
       dataType : 'json',
-      timeout  : 20000,
+      timeout  : 30000,
       success  : function(data) {
         self.resetFormValues(data);
         self.resetJbbox();
@@ -2006,7 +2006,10 @@ $(function() {
       },
       error    : function(xhr, ajaxOptions, thrownError) {
         xhr = thrownError = null;
-        if(ajaxOptions === 'timeout') { self.showErrorMessage($('#mapper-saving-error-message').text()); }
+        if(ajaxOptions === 'timeout') {
+          self.showErrorMessage($('#mapper-loading-error-message').text());
+          self.hideSpinner();
+        }
       }
     });
   };
