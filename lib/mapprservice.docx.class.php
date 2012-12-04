@@ -63,8 +63,10 @@ class MAPPRDOCX extends MAPPR {
       $files = array();
       $images = array('image', 'scale', 'legend');
       foreach($images as $image) {
-        $files[$image]['file'] = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
-        $files[$image]['size'] = getimagesize($files[$image]['file']);
+        if($this->{$image}) {
+          $files[$image]['file'] = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
+          $files[$image]['size'] = getimagesize($files[$image]['file']);
+        }
       }
 
       // Width is measured as 'dxa', which is 1/20 of a point
