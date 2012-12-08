@@ -12,6 +12,9 @@ define("MAPPR_UPLOAD_DIRECTORY", "/var/www/simplemappr/public/uploads");
 // Domain from where images will be served served, without a trailing slash
 define("MAPPR_MAPS_URL", "/tmp");
 
+// Domain for setting cookies in sessions
+define("MAPPR_DOMAIN", "www.simplemappr.net");
+
 // Number of textarea boxes for user data entry
 define("NUMTEXTAREA", 3);
 
