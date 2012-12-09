@@ -29,7 +29,7 @@ textarea{resize:none;padding:0;}
 #tabs{min-height:500px;display:none;border:0px;}
 #error-message{margin:0;padding:1em;}
 ul.navigation{border-top:0px;border-left:0px;border-right:0px;border-radius:0px;}
-ul.navigation li.ui-state-default{margin-top:0.75em;border:1px solid transparent;}
+ul.navigation li.ui-state-default{line-height:1.25em;margin-top:0.75em;border:1px solid transparent;}
 ul.navigation li.ui-state-hover{border:1px solid #aaa;}
 ul.navigation a.map-mymaps:before{background-position:-200px -284px;}
 ul.navigation a.map-users:before{background-position:-160px -264px;}
