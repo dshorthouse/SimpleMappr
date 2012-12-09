@@ -1206,7 +1206,9 @@ $(function() {
         obj = object || {},
         data = {};
 
-    $('.mapper-loading-spinner').show();
+    $('#usermaps').html('');
+
+    self.showSpinner();
 
     data = {
       locale : self.getParameterByName("locale"),
@@ -1233,7 +1235,7 @@ $(function() {
           window.location.reload();
         } else {
           $('#usermaps').html(response);
-          $('.mapper-loading-spinner').hide();
+          self.hideSpinner();
           $(".toolsRefresh", ".grid-usermaps").click(function(e) { e.preventDefault(); self.loadMapList(); });
           $('#filter-mymaps')
             .val(obj.q)
@@ -1638,7 +1640,7 @@ $(function() {
         obj   = object || {},
         data  = { locale : this.getParameterByName("locale") };
 
-    $('.mapper-loading-spinner').show();
+    self.showSpinner();
 
     if(obj.sort) {
       data.sort = obj.sort.item;
@@ -1657,7 +1659,7 @@ $(function() {
           window.location.reload();
         } else {
           $('#userdata').html(response);
-          $('.mapper-loading-spinner').hide();
+          self.hideSpinner();
           $(".toolsRefresh", ".grid-users").click(function(e) {
             e.preventDefault();
             self.loadUserList();
@@ -2344,7 +2346,7 @@ $(function() {
   Mappr.init = function() {
     var self = this;
     this.bindRotateWheel();
-    $('.mapper-loading-spinner').hide();
+    this.hideSpinner();
     $('#header>div').show();
     this.bindTabs();
     $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();

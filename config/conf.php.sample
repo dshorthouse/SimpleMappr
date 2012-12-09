@@ -9,7 +9,7 @@ define("MAPPR_DIRECTORY", "/var/www/simplemappr");
 // Upload directory for API calls, without training slash
 define("MAPPR_UPLOAD_DIRECTORY", "/var/www/simplemappr/public/uploads");
 
-// Domain from where images will be served served, without a trailing slash
+// Domain and path from where images will be served served, without a trailing slash
 define("MAPPR_MAPS_URL", "/tmp");
 
 // Domain for setting cookies in sessions
