@@ -275,7 +275,7 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     if(ENVIRONMENT == "production") {
       $analytics  = "<script type=\"text/javascript\">" . "\n";
       $analytics .= "var _gaq = _gaq || [];" . "\n";
-      $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."'], ['_trackPageview']);" . "\n";
+      $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."'], ['_setDomainName', '".MAPPR_DOMAIN."'], ['_trackPageview']);" . "\n";
       $analytics .= "</script>" . "\n";
     }
     return $analytics;
