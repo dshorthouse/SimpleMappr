@@ -390,20 +390,21 @@ $(function() {
         ul_arr   = [],
         ul_point = {},
         lr_arr   = [],
-        lr_point = {};
+        lr_point = {},
+        self     = Mappr;
 
     if($.cookie("jcrop_coords")) {
       coords = $.parseJSON($.cookie("jcrop_coords"));
       ul_arr = coords.jcrop_coord_ul.split(",");
       lr_arr = coords.jcrop_coord_lr.split(",");
-      ul_point = Mappr.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
-      lr_point = Mappr.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
-      Mappr.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
+      ul_point = self.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
+      lr_point = self.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
+      self.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
     } else {
-      Mappr.initJcrop();
+      self.initJcrop();
     }
 
-    Mappr.vars.zoom = false;
+    self.vars.zoom = false;
   };
 
   Mappr.resetAndBuild = function() {
@@ -540,31 +541,33 @@ $(function() {
         curr_data      = {},
         prev_key       = "",
         prev_data      = {},
-        prev_data_prep = {};
+        prev_data_prep = {},
+        self           = Mappr;
 
     if(index.length === 1) { return; }
 
-    Mappr.destroyRedo();
+    self.destroyRedo();
 
     curr_key       = index[index.length-1];
     curr_data      = $.jStorage.get(curr_key);
     prev_key       = index[index.length-2];
     prev_data      = $.jStorage.get(prev_key);
-    prev_data_prep = Mappr.prepareInputs(prev_data);
+    prev_data_prep = self.prepareInputs(prev_data);
 
-    Mappr.loadInputs(prev_data_prep);
+    self.loadInputs(prev_data_prep);
 
     $.jStorage.deleteKey(curr_key);
     $.jStorage.set("un" + curr_key, curr_data);
 
     if(prev_data.width !== curr_data.width) {
-      Mappr.mapToggleSettings();
+      self.mapToggleSettings();
     } else {
-      Mappr.postData(decodeURIComponent($.param(prev_data)), null);
+      self.showSpinner();
+      self.postData(decodeURIComponent($.param(prev_data)), null);
     }
 
-    Mappr.toggleRedo(true);
-    if(index.length === 2) { Mappr.toggleUndo(); }
+    self.toggleRedo(true);
+    if(index.length === 2) { self.toggleUndo(); }
   };
 
   Mappr.mapRedo = function() {
@@ -576,28 +579,30 @@ $(function() {
         do_index       = Mappr.storageType("do"),
         do_key         = "",
         do_data        = {},
-        token          = new Date().getTime();
+        token          = new Date().getTime(),
+        self           = Mappr;
 
     if(undo_index.length === 0) { return; }
 
-    Mappr.toggleRedo();
+    self.toggleRedo();
     undo_key       = undo_index.pop();
     undo_data      = $.jStorage.get(undo_key);
     do_key         = do_index[do_index.length-1];
     do_data        = $.jStorage.get(do_key);
-    undo_data_prep = Mappr.prepareInputs(undo_data);
-    Mappr.loadInputs(undo_data_prep);
+    undo_data_prep = self.prepareInputs(undo_data);
+    self.loadInputs(undo_data_prep);
 
     $.jStorage.deleteKey(undo_key);
     $.jStorage.set("do-" + token.toString(), undo_data);
 
     if(undo_data.width !== do_data.width) {
-      Mappr.mapToggleSettings();
+      self.mapToggleSettings();
     } else {
-      Mappr.postData(decodeURIComponent($.param(undo_data)), null);
+      self.showSpinner();
+      self.postData(decodeURIComponent($.param(undo_data)), null);
     }
 
-    Mappr.toggleUndo(true);
+    self.toggleUndo(true);
   };
 
   Mappr.bindHotkeys = function() {
@@ -1980,6 +1985,8 @@ $(function() {
     $('#badRecordsWarning').hide();  // hide the bad records warning
     $('#download_token').val(token); // set a token to be used for cookie
 
+    self.showSpinner();
+
     formString = $("form").serialize();
     formObj    = $("form").serializeJSON();
     self.postData(formString, load_data);
@@ -1991,7 +1998,6 @@ $(function() {
     var self      = this;
 
     self.hideErrorMessage();
-    self.showSpinner();
     $.ajax({
       type     : 'POST',
       url      : self.settings.baseUrl + '/application/',
