@@ -979,16 +979,17 @@ class MAPPR {
             $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : null;
             //only add point when data are good & a title
             if($this->check_coord($coord) && $title != "") {
-              $points[$coord->x.$coord->y] = array($coord->x, $coord->y); //unique locations
+              if(!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
+                $new_point = ms_newPointObj();
+                $new_point->setXY($coord->x, $coord->y);
+                $new_line->add($new_point);
+                $points[$coord->x.$coord->y] = array();
+              }
             } else {
               $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $loc;
             }
           }
-          foreach($points as $point) {
-            $new_point = ms_newPointObj();
-            $new_point->setXY($point[0], $point[1]);
-            $new_line->add($new_point);
-          }
+          $points = array();
           $new_shape->add($new_line);
           $layer->addFeature($new_shape);
         }
