@@ -390,7 +390,7 @@ class MAPPRAPI extends MAPPR {
 
         try {
           $output = array(
-            'imageURL' => "http://" . $_SERVER['HTTP_HOST'] . $this->image->saveWebImage(),
+            'imageURL' => $this->image->saveWebImage(),
             'expiry'   => date('c', time() + (6 * 60 * 60))
           );
         } catch(Exception $e) {
