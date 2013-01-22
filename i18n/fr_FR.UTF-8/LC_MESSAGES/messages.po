@@ -618,6 +618,10 @@ msgstr "Créez des cartes point de niveaux de gris en copiant et collant les coo
 msgid "Citing"
 msgstr "Citer"
 
+#: .tabs/about.php:9
+msgid "All versions of SimpleMappr map data found on this website are in the Public Domain. You may use the maps in any manner, including modifying the content and design, electronic dissemination, and offset printing. The primary author, David P. Shorthouse renounces all financial claim to the maps and invites you to use them for personal, educational, and commercial purposes. No permission is needed to use SimpleMappr. Crediting the author is unnecessary. However, if you wish to cite the application, simply use the following."
+msgstr "Toutes les versions de données cartographiques SimpleMappr trouvés sur ce site sont dans le domaine public. Vous pouvez utiliser les cartes de toute manière, y compris la modification du contenu et de la conception, de la diffusion électronique et de l'impression. L'auteur principal, David P. Shorthouse renonce à toute réclamation financière aux cartes et vous invite à les utiliser à des fins personnelles, éducatives et commerciales. Aucune autorisation n'est nécessaire pour utiliser SimpleMappr. Créditant l'auteur n'est pas nécessaire. Toutefois, si vous voulez citer l'application, il suffit d'utiliser ce qui suit."
+
 #: .tabs/about.php:11
 msgid "Recent Updates"
 msgstr "Mises à jour"
