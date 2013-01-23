@@ -1164,7 +1164,14 @@ class MAPPR {
           case 'stateprovinces':
             $class = ms_newClassObj($layer);
             $style = ms_newStyleObj($class);
-            $style->set("width",isset($this->border_thickness) ? $this->border_thickness : 1.25);
+            $width = 1.25;
+            if(isset($this->border_thickness)) {
+              $width = $this->border_thickness;
+              if($this->is_resize() && $this->_download_factor > 1) {
+                $width = $this->border_thickness*$this->_download_factor;
+              }
+            }
+            $style->set("width",$width);
             $style->color->setRGB(10,10,10);
           break;
 
