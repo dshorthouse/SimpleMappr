@@ -631,6 +631,14 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "January 23, 2013"
+msgstr "23 janvier, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Made line thickness in download proportional to user selected dimensions of output. Requested by Kevin M. Pfeiffer."
+msgstr "Améliorations: épaisseur des lignes sont proportionnelle aux dimensions du téléchargement. Demandé par Kevin M. Pfeiffer."
+
+#: .tabs/about.php:11
 msgid "October 16, 2012"
 msgstr "16 octobre, 2012"
 
