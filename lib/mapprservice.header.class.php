@@ -218,6 +218,15 @@ class HEADER {
   }
 
   /*
+  * DNS Prefetching
+  */
+  public function getDNSPrefetch() {
+    $header  = "<link href=\"" . MAPPR_MAPS_URL . "\" rel=\"dns-prefetch\" />" . "\n";
+    $header .= "<link href=\"" . MAPPR_MAPS_URL . "\" rel=\"prefetch\" />" . "\n";
+    echo $header;
+  }
+
+  /*
   * Create the javascript header
   */
   public function getJSFooter() {

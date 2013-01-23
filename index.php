@@ -19,6 +19,7 @@ $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <title>SimpleMappr</title>
 <?php $header[0]->getCSSHeader(); ?>
+<?php $header[0]->getDNSPrefetch(); ?>
 </head>
 <?php flush(); ?>
 <body>
