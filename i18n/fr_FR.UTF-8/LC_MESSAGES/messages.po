@@ -636,7 +636,7 @@ msgstr "18 février, 2013"
 
 #: .tabs/about.php:11
 msgid "Improvements: Embedded map will appear cropped when saved as such. Requested by Steven Bachman."
-mgstr "Améliorations: Carte intégrée apparaît recadrée lorsqu'elle est enregistrée en tant que telle. Demandé par Steven Bachman."
+msgstr "Améliorations: Carte intégrée apparaît recadrée lorsqu'elle est enregistrée en tant que telle. Demandé par Steven Bachman."
 
 #: .tabs/about.php:11
 msgid "January 23, 2013"
