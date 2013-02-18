@@ -53,6 +53,7 @@ class MAPPREMBED extends MAPPR {
     }
 
     if(isset($this->border_thickness) && !$this->border_thickness) { $this->border_thickness = 1.25; }
+    if(isset($this->bbox_rubberband) && $this->bbox_rubberband) { $this->crop = true; }
 
     (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
     if(!isset($this->projection_map) || $this->projection_map == "") { $this->projection_map = 'epsg:4326'; }
@@ -233,6 +234,7 @@ class MAPPREMBED extends MAPPR {
         $this->image->saveImage("");
       break;
     }
+
   }
 
   private function add_header() {

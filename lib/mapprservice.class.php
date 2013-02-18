@@ -691,20 +691,14 @@ class MAPPR {
       $this->reproject_map($this->default_projection, $this->projection);
     }
 
-    //crop
-    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->is_resize()) {
-      $this->set_crop();
-    }
+    $this->set_crop();
 
-    //add shaded political regions
     $this->add_regions();
 
-    //add other layers as requested
     $this->add_layers();
 
     $this->add_graticules();
 
-    //add the coordinates
     $this->add_coordinates();
 
     $this->add_watermark();
@@ -881,31 +875,34 @@ class MAPPR {
   * Set a new extent in the event of a crop action
   */
   private function set_crop() {
-    $bbox_rubberband = explode(',',$this->bbox_rubberband);
+    if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->is_resize()) {
 
-    //lower-left coordinate
-    $ll_point = new stdClass();
-    $ll_point->x = $bbox_rubberband[0];
-    $ll_point->y = $bbox_rubberband[3];
-    $ll_coord = $this->pix2geo($ll_point);
+      $bbox_rubberband = explode(',',$this->bbox_rubberband);
 
-    //upper-right coordinate
-    $ur_point = new stdClass();
-    $ur_point->x = $bbox_rubberband[2];
-    $ur_point->y = $bbox_rubberband[1];
-    $ur_coord = $this->pix2geo($ur_point);
+      //lower-left coordinate
+      $ll_point = new stdClass();
+      $ll_point->x = $bbox_rubberband[0];
+      $ll_point->y = $bbox_rubberband[3];
+      $ll_coord = $this->pix2geo($ll_point);
 
-    //set the size as selected
-    $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
-    $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
+      //upper-right coordinate
+      $ur_point = new stdClass();
+      $ur_point->x = $bbox_rubberband[2];
+      $ur_point->y = $bbox_rubberband[1];
+      $ur_coord = $this->pix2geo($ur_point);
 
-    $this->map_obj->setSize($width,$height);
-    if($this->is_resize() && $this->_download_factor > 1) {
-      $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+      //set the size as selected
+      $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
+      $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
+
+      $this->map_obj->setSize($width,$height);
+      if($this->is_resize() && $this->_download_factor > 1) {
+        $this->map_obj->setSize($this->_download_factor*$width,$this->_download_factor*$height);
+      }
+
+      //set the extent to match that of the crop
+      $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
     }
-
-    //set the extent to match that of the crop
-    $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
   }
 
   /**
@@ -1168,7 +1165,7 @@ class MAPPR {
             if(isset($this->border_thickness)) {
               $width = $this->border_thickness;
               if($this->is_resize() && $this->_download_factor > 1) {
-                $width = $this->border_thickness*$this->_download_factor;
+                $width = $this->border_thickness*$this->_download_factor/2;
               }
             }
             $style->set("width",$width);
@@ -1185,6 +1182,23 @@ class MAPPR {
             $class->label->set("type", MS_TRUETYPE);
             $class->label->set("encoding", "CP1252");
             $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
+            $class->label->set("position", MS_CC);
+            $class->label->set("offsetx", 3);
+            $class->label->set("offsety", 3);
+            $class->label->set("partials", MS_FALSE);
+            $class->label->color->setRGB(10, 10, 10);
+          break;
+
+          case 'stateprovnames':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "name");
+
+            $class = ms_newClassObj($layer);
+            $class->label->set("font", "arial");
+            $class->label->set("type", MS_TRUETYPE);
+            $class->label->set("encoding", "CP1252");
+            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
             $class->label->set("position", MS_CC);
             $class->label->set("offsetx", 3);
             $class->label->set("offsety", 3);
@@ -1211,23 +1225,6 @@ class MAPPR {
             $style->set("symbolname","circle");
             $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
             $style->color->setRGB(100,100,100);
-          break;
-
-          case 'stateprovnames':
-            $layer->set("tolerance", 5);
-            $layer->set("toleranceunits", "pixels");
-            $layer->set("labelitem", "name");
-
-            $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-            $class->label->set("position", MS_CC);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
           break;
 
           case 'physicalLabels':
