@@ -6,7 +6,7 @@ SimpleMappr Installation and Configuration Instructions
 
 ### WARNING
 
-Although MapServer 6.0.x is currently available, this application uses PHP mapscript 5.6.7
+Although MapServer 6.0.x is currently available, this application uses PHP mapscript 5.6.8. Rasters are not properly rendered with polar projections because of a bug in MapServer. Before compiling as described below, apply the patch in /patches.
 
 Configuration Instructions
 --------------------------
@@ -125,6 +125,32 @@ Ubuntu Package
 --------------
 
     sudo apt-get install php5-mapscript
+
+Compiling on Ubuntu
+-------------------
+
+	./configure \
+	--prefix=/usr \
+	--with-agg \
+	--with-proj=/usr \
+	--with-geos=/usr/local/bin/geos-config \
+	--with-gdal=/usr/local/bin/gdal-config \
+	--with-threads \
+	--with-ogr \
+	--with-freetype=/usr/bin \
+	--with-xpm \
+	--with-libiconv=/usr \
+	--with-gd=/usr/local \
+	--with-wfs \
+	--with-wcs \
+	--with-wmsclient \
+	--with-wfsclient \
+	--with-sos \
+	--with-fribidi-config \
+	--with-php=/usr/include/php5 \
+	--with-experimental-png \
+	--with-png=/usr \
+	--with-jpeg
 
 Internationalization
 --------------------
