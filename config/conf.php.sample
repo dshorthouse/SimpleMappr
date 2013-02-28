@@ -6,7 +6,7 @@ define("ENVIRONMENT", "development");
 // System root directory to the SimpleMappr application without a trailing slash
 define("MAPPR_DIRECTORY", "/var/www/simplemappr");
 
-// Upload directory for API calls, without training slash
+// Upload directory for API calls, without trailing slash
 define("MAPPR_UPLOAD_DIRECTORY", "/var/www/simplemappr/public/uploads");
 
 // Domain and path from where images will be served served, without a trailing slash

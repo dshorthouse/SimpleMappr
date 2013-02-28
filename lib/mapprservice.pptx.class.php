@@ -68,7 +68,8 @@ class MAPPRPPTX extends MAPPR {
       $images = array('image', 'scale', 'legend');
       foreach($images as $image) {
         if($this->{$image}) {
-          $files[$image]['file'] = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
+          $image_filename = basename($this->{$image}->saveWebImage());
+          $files[$image]['file'] = $this->tmp_path . $image_filename;
           $files[$image]['size'] = getimagesize($files[$image]['file']);
         }
       }

@@ -64,18 +64,14 @@ class MAPPRDOCX extends MAPPR {
       $images = array('image', 'scale', 'legend');
       foreach($images as $image) {
         if($this->{$image}) {
-          $files[$image]['file'] = MAPPR_DIRECTORY . $this->{$image}->saveWebImage();
+          $image_filename = basename($this->{$image}->saveWebImage());
+          $files[$image]['file'] = $this->tmp_path . $image_filename;
           $files[$image]['size'] = getimagesize($files[$image]['file']);
         }
       }
 
       // Width is measured as 'dxa', which is 1/20 of a point
-      $scale = 1;
-      $scaled_w = $files['image']['size'][0]*20;
-      $scaled_h = $files['image']['size'][1]*20;
-      if($scaled_w > $width || $scaled_h > $height) {
-        $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
-      }
+      $scale = ($files['image']['size'][0]*20 > $width) ? $files['image']['size'][0]*20/$width : 1;
 
       foreach($files as $type => $values) {
         if($type == 'image') {
