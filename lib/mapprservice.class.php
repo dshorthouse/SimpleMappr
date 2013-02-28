@@ -668,41 +668,23 @@ class MAPPR {
       $this->map_obj->selectOutputFormat($output);
     }
 
-    // Set the map extent
     $this->set_map_extent();
-
-    // Adjust map size
     $this->set_map_size();
+    $this->zoom_in();
+    $this->zoom_out();
+    $this->set_pan();
+    $this->set_rotation();
 
-    //zoom in
-    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
-      $this->zoom_in();
-    }
-
-    //zoom out
-    if(isset($this->zoom_out) && $this->zoom_out) { $this->zoom_out(); }
-
-    //pan
-    if(isset($this->pan) && $this->pan) { $this->set_pan(); }
-
-    //rotation
-    if(isset($this->rotation) && $this->rotation != 0) { $this->map_obj->setRotation($this->rotation); }
     if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) {
       $this->reproject_map($this->default_projection, $this->projection);
     }
 
     $this->set_crop();
-
     $this->add_regions();
-
     $this->add_layers();
-
     $this->add_graticules();
-
     $this->add_coordinates();
-
     $this->add_watermark();
-
     $this->prepare_output();
 
     return $this;
@@ -787,16 +769,18 @@ class MAPPR {
   * Zoom In
   */
   private function zoom_in() {
-    $bbox_rubberband = explode(',',$this->bbox_rubberband);
-    if($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
-      $zoom_point = ms_newPointObj();
-      $zoom_point->setXY($bbox_rubberband[0],$bbox_rubberband[1]);
-      $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
-    } else {
-      $zoom_rect = ms_newRectObj();
-      $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
-      $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
-      $this->reset_zoom();
+    if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
+      $bbox_rubberband = explode(',',$this->bbox_rubberband);
+      if($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
+        $zoom_point = ms_newPointObj();
+        $zoom_point->setXY($bbox_rubberband[0],$bbox_rubberband[1]);
+        $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
+      } else {
+        $zoom_rect = ms_newRectObj();
+        $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
+        $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
+        $this->reset_zoom();
+      }
     }
   }
 
@@ -804,10 +788,12 @@ class MAPPR {
   * Zoom out
   */
   private function zoom_out() {
-    $zoom_point = ms_newPointObj();
-    $zoom_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
-    $max_extent = $this->get_max_extent();
-    $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+    if(isset($this->zoom_out) && $this->zoom_out) {
+      $zoom_point = ms_newPointObj();
+      $zoom_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
+      $max_extent = $this->get_max_extent();
+      $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+    }
   }
 
   /**
@@ -843,32 +829,43 @@ class MAPPR {
   * Set the pan direction
   */
   private function set_pan() {
-    switch ($this->pan) {
-      case 'up':
-        $x_offset = 1;
-        $y_offset = 0.9;
-      break;
+    if(isset($this->pan) && $this->pan) {
+      switch ($this->pan) {
+        case 'up':
+          $x_offset = 1;
+          $y_offset = 0.9;
+        break;
 
-      case 'right':
-        $x_offset = 1.1;
-        $y_offset = 1;
-      break;
+        case 'right':
+          $x_offset = 1.1;
+          $y_offset = 1;
+        break;
 
-      case 'down':
-        $x_offset = 1;
-        $y_offset = 1.1;
-      break;
+        case 'down':
+          $x_offset = 1;
+          $y_offset = 1.1;
+        break;
 
-      case 'left':
-        $x_offset = 0.9;
-        $y_offset = 1;
-      break;
+        case 'left':
+          $x_offset = 0.9;
+          $y_offset = 1;
+        break;
+      }
+
+      $new_point = ms_newPointObj();
+      $new_point->setXY($this->map_obj->width/2*$x_offset,$this->map_obj->height/2*$y_offset);
+      $max_extent = $this->get_max_extent();
+      $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
     }
+  }
 
-    $new_point = ms_newPointObj();
-    $new_point->setXY($this->map_obj->width/2*$x_offset,$this->map_obj->height/2*$y_offset);
-    $max_extent = $this->get_max_extent();
-    $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+  /**
+  * Set the rotation
+  */
+  private function set_rotation() {
+    if(isset($this->rotation) && $this->rotation != 0) {
+      $this->map_obj->setRotation($this->rotation);
+    }
   }
 
   /**

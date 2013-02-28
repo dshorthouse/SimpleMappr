@@ -299,19 +299,12 @@ function set_up() {
       header('Location: http://' . $_SERVER['HTTP_HOST'] . '/?locale=en_US');
       exit();
     }
-    $host = explode(".", $_SERVER['HTTP_HOST']);
-    if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-      header('Location: http://www.' . $_SERVER['HTTP_HOST'] . '/');
-      exit();
-    } else {
-      require_once('lib/mapprservice.usersession.class.php');
-      require_once('lib/mapprservice.header.class.php');
-      require_once('lib/mapprservice.class.php');
+    require_once('lib/mapprservice.usersession.class.php');
+    require_once('lib/mapprservice.header.class.php');
+    require_once('lib/mapprservice.class.php');
 
-      USERSESSION::update_activity();
-
-      return array(new HEADER, USERSESSION::$accepted_locales);
-    }
+    USERSESSION::update_activity();
+    return array(new HEADER, USERSESSION::$accepted_locales);
   }
 }
 
