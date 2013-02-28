@@ -27,6 +27,7 @@ USERSESSION::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("February 27, 2013"); ?></dt><dd><?php echo _("Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes."); ?></dd>
 <dt class="update"><?php echo _("February 18, 2013"); ?></dt><dd><?php echo _("Improvements: Embedded map will appear cropped when saved as such. Requested by Steven Bachman."); ?></dd>
 <dt class="update"><?php echo _("January 23, 2013"); ?></dt><dd><?php echo _("Improvements: Made line thickness in download proportional to user selected dimensions of output. Requested by Kevin M. Pfeiffer."); ?></dd>
 <dt class="update"><?php echo _("October 16, 2012"); ?></dt><dd><?php echo _("Improvements: Enhanced the API to allow POST of multiple points."); ?></dd>
@@ -36,7 +37,6 @@ USERSESSION::select_locale();
 <dt class="update"><?php echo _("July 2, 2012"); ?></dt><dd><?php echo _("Improvements: Added svg as an embedded output format."); ?></dd>
 <dt class="update"><?php echo _("July 1, 2012"); ?></dt><dd><?php echo _("Improvements: Added sort to columns in My Maps."); ?></dd>
 <dt class="update"><?php echo _("June 14, 2012"); ?></dt><dd><?php echo _("Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."); ?></dd>
-<dt class="update"><?php echo _("April 2, 2012"); ?></dt><dd><?php echo _("Bug fixes: Map coordinates in DDMMSS copied/pasted from Excel now correctly interpreted."); ?></dd>
 </dl>
 </div>
 <div id="live-updates">

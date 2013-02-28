@@ -631,6 +631,14 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "February 27, 2013"
+msgstr "27 février, 2013"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes."
+msgstr "Corrections: Couches en relief eu des artefacts dans les projections polaires. Rapporté par Derek Sikes."
+
+#: .tabs/about.php:11
 msgid "February 18, 2013"
 msgstr "18 février, 2013"
 
