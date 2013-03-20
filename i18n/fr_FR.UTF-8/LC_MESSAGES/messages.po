@@ -387,6 +387,10 @@ msgstr "type de fichier"
 msgid "include border"
 msgstr "inclus un cadre"
 
+#: .index.php:218
+msgid "make line thickness proportional to image scale"
+msgstr "faire épaisseur des lignes proportionnelle à l'échelle de l'image"
+
 #: .index.php:220
 msgid "embed legend"
 msgstr "inclus une légende"

@@ -304,7 +304,7 @@ class MAPPR {
 
     $this->crop             = $this->load_param('crop', false);
 
-    $this->options          = $this->load_param('options', array()); //scalebar, legend
+    $this->options          = $this->load_param('options', array()); //scalebar, legend, border, linethickness
 
     $this->border_thickness = (float)$this->load_param('border_thickness', 1.25);
 
@@ -1161,7 +1161,10 @@ class MAPPR {
             $width = 1.25;
             if(isset($this->border_thickness)) {
               $width = $this->border_thickness;
-              if($this->is_resize() && $this->_download_factor > 1) {
+              if($this->is_resize() 
+                   && $this->_download_factor > 1
+                   && array_key_exists('scalelinethickness', $this->options)
+                   && $this->options['scalelinethickness']) {
                 $width = $this->border_thickness*$this->_download_factor/2;
               }
             }

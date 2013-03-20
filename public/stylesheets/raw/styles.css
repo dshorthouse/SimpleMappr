@@ -53,6 +53,7 @@ label{margin-right:0.2em;}
 fieldset{border:1px solid #e0e0e0;font-size:0.75em;margin-top:10px;padding:10px;}
 fieldset legend{color:#222;}
 fieldset .download-options{margin-bottom:10px;}
+fieldset .options-row{display:block;}
 fieldset #scale-measure{display:none;margin:5px 0 0 5px;}
 .required{color:#ff0000;font-weight:bold;}
 button{background-color:transparent;color:#565656;border:1px solid #aaa;padding:5px 5px 5px 0;margin:0 0.2em;cursor:pointer;font-size:0.7em !important;}

@@ -231,12 +231,22 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <?php echo partial_scales(); ?>
 <div id="scale-measure"><?php echo sprintf(_("Dimensions: %s"), '<span></span>'); ?></div>
 </div>
+<div class="options-row">
 <input type="checkbox" id="border" />
 <label for="border"><?php echo _("include border"); ?></label>
+</div>
+<div class="options-row">
+<input type="checkbox" id="scalelinethickness" />
+<label for="scalelinethickness"><?php echo _("make line thickness proportional to image scale"); ?></label>
+</div>
+<div class="options-row">
 <input type="checkbox" id="legend" disabled="disabled" />
 <label for="legend"><?php echo _("embed legend"); ?></label>
+</div>
+<div class="options-row">
 <input type="checkbox" id="scalebar" disabled="disabled" />
 <label for="scalebar"><?php echo _("embed scalebar"); ?></label>
+</div>
 </fieldset>
 <p>*<?php echo _("does not include scalebar, legend, or relief layers"); ?></p>
 </div>
@@ -453,18 +463,19 @@ function partial_hidden_inputs() {
     19 => "options[border]",
     20 => "options[legend]",
     21 => "options[scalebar]",
-    22 => "border_thickness",
-    23 => "rendered_bbox",
-    24 => "rendered_rotation",
-    25 => "rendered_projection",
-    26 => "legend_url",
-    27 => "scalebar_url",
-    28 => "bad_points"
+    22 => "options[scalelinethickness]",
+    23 => "border_thickness",
+    24 => "rendered_bbox",
+    25 => "rendered_rotation",
+    26 => "rendered_projection",
+    27 => "legend_url",
+    28 => "scalebar_url",
+    29 => "bad_points"
   );
 
   $output = array();
   foreach($inputs as $key => $value) {
-    $val = ($key >= 23) ? ' value=""' : "";
+    $val = ($key >= 24) ? ' value=""' : "";
     $output[] = '<input type="hidden" name="'.$value.'" id="'.$value.'"'.$val.' />';
   }
 

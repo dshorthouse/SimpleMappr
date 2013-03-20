@@ -732,16 +732,17 @@ $(function() {
       $.each(["legend", "scalebar"], function() {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
-      $('#border').removeAttr("disabled");
+      $.each(["border", "scalelinethickness"], function() {
+        $('#'+this).removeAttr("disabled");
+      });
     } else if($(obj).attr("id") === 'download-kml') {
-      $.each(["legend", "scalebar", "border"], function() {
+      $.each(["legend", "scalebar", "border", "scalelinethickness"], function() {
         $('#'+this).attr("checked", false).attr("disabled", "disabled");
       });
     } else {
-      $.each(["border", "legend", "scalebar"], function() {
+      $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
         $('#'+this).removeAttr("disabled");
       });
-      $('#border').removeAttr("disabled");
     }
   };
 
@@ -1439,13 +1440,13 @@ $(function() {
     self.setRotation(data.map.rotation);
     self.resetJbbox();
 
-    $.each(["border", "legend", "scalebar"], function() {
+    $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
       $('#'+this).attr('checked', false);
       $('input[name="options['+this+']"]').val("");
     });
 
     if(data.map.options !== undefined) {
-      $.each(["border", "legend", "scalebar"], function() {
+      $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
         if(data.map.options[this] && data.map.options[this] !== undefined) {
           $('#'+this).attr('checked', true);
           $('input[name="options['+this+']"]').val(1);
@@ -2141,7 +2142,7 @@ $(function() {
   }; /** end Mappr.generateDownload **/
 
   Mappr.setFormOptions = function() {
-    $.each(["border", "legend", "scalebar"], function() {
+    $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
       if($('#'+this).prop('checked')) {
         $('input[name="options['+this+']"]').val(1);
       } else {
