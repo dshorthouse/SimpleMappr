@@ -152,6 +152,11 @@ Compiling on Ubuntu
 	--with-png=/usr \
 	--with-jpeg
 
+Database
+--------
+
+SimpleMappr uses MySQL and a sample schema is included in /db.
+
 Internationalization
 --------------------
 
