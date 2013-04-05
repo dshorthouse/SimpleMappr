@@ -403,10 +403,6 @@ class MAPPRAPI extends MAPPR {
     }
   }
 
-  public function log_usage() {
-
-  }
-
   private function moveFile() {
     $uploadfile = MAPPR_UPLOAD_DIRECTORY . "/" . md5(time()) . '.txt';
     if(move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
