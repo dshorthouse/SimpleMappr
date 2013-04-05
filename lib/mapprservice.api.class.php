@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **************************************************************************/
 
 require_once('../config/conf.php');
-require_once ('mapprservice.class.php');
+require_once('mapprservice.class.php');
 require_once ('georss/rss_fetch.inc');
 
 class MAPPRAPI extends MAPPR {
@@ -401,6 +401,10 @@ class MAPPRAPI extends MAPPR {
 
         echo json_encode($output);
     }
+  }
+
+  public function log_usage() {
+
   }
 
   private function moveFile() {
