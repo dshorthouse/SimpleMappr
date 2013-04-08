@@ -78,7 +78,7 @@ MacPorts
 
 6. Execute $ make
 7. Verify that mapserv is working $ ./mapserv -v
-8. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+8. Find php_mapscript.so in mapscript/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
 9. Add extension=php_mapscript.so to php.ini and restart web server
 
 Homebrew
@@ -116,7 +116,7 @@ Homebrew
 
 6. Execute $ make
 7. Verify that mapserv is working $ ./mapserv -v
-8. Find php_mapscript.so in mapscripts/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
+8. Find php_mapscript.so in mapscript/php3 and move to PHP extensions directory (usually /opt/local/lib/php/extensions/no-debug-non-zts-20090626/)
 9. Add extension=php_mapscript.so to php.ini and restart web server
 
 If using Mountain Lion and built-in Apache and PHP, the intl.so, gd.so and gettext.so extensions must be created and entries added to php.ini. This means compiling from source. See this [blog post][9].
