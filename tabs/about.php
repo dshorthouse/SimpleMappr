@@ -27,6 +27,7 @@ USERSESSION::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("April 12, 2013"); ?></dt><dd><?php echo _("Improvements: Added the ability to specify the longitude of natural origin in Lambert projections. Requested by Tim Dickinson."); ?></dd>
 <dt class="update"><?php echo _("February 27, 2013"); ?></dt><dd><?php echo _("Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes."); ?></dd>
 <dt class="update"><?php echo _("February 18, 2013"); ?></dt><dd><?php echo _("Improvements: Embedded map will appear cropped when saved as such. Requested by Steven Bachman."); ?></dd>
 <dt class="update"><?php echo _("January 23, 2013"); ?></dt><dd><?php echo _("Improvements: Made line thickness in download proportional to user selected dimensions of output. Requested by Kevin M. Pfeiffer."); ?></dd>
