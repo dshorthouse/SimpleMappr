@@ -690,7 +690,7 @@ $(function() {
 
       if($(this).val() !== "") {
         $('#origin').val(self.vars.origins[$(this).val()]);
-        if($("#projection").val() in self.vars.origins) { origin_sel.show(); } else { origin_sel.hide(); }
+        if(self.vars.origins.hasOwnProperty($("#projection").val())) { origin_sel.show(); } else { origin_sel.hide(); }
         $.cookie("jcrop_coords", null);
         self.hardResetShowMap();
       }
@@ -1449,9 +1449,9 @@ $(function() {
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
     $("#projection").val(data.map.projection);
-    if($("#projection").val() in self.vars.origins) { $('#origin-selector').show(); }
+    if(self.vars.origins.hasOwnProperty($("#projection").val())) { $('#origin-selector').show(); }
     $.each(['bbox_map', 'projection_map', 'rotation', 'origin'], function() { $('input[name="'+this+'"]').val(data.map[this]); });
-    if(!data.map['origin']) { $('#origin').val(self.vars.origins[$("#projection").val()]); }
+    if(!data.map.origin) { $('#origin').val(self.vars.origins[$("#projection").val()]); }
 
     $('input[name="border_thickness"]').val(1.25);
     $('#border-slider').slider({value:1.25});
