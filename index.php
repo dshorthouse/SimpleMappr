@@ -183,6 +183,9 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 ?>
 </select>
 </li>
+<li id="origin-selector">
+<label for="origin"><?php echo _("longitude of natural origin"); ?></label><input type="text" id="origin" name="origin" size="4" />
+</li>
 </ul>
 <p>*<?php echo _("zoom prior to setting projection"); ?></p>
 </div>

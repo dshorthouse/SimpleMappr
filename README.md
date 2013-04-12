@@ -12,14 +12,15 @@ Configuration Instructions
 --------------------------
 
 1. Ensure /tmp, /public/javascript/cache, and /public/stylesheets/cache/ are readable & writable
-2. Download map data from Natural Earth Data, [http://www.naturalearthdata.com/][1]:
+2. Create a logger.log file in /log and make it writeable
+3. Download map data from Natural Earth Data, [http://www.naturalearthdata.com/][1]:
   [http://bit.ly/NapVvW][2], [http://bit.ly/OHPoml][3], [http://bit.ly/N76XfB][4]
-3. Extract each to /lib/mapserver/maps/
-4. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles.
-5. Make contents of /lib/mapserver/fonts readable & executable
-6. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions. These set db (MySQL) connections and constants, respectively.
-7. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com][5] and replace the RPX_KEY in your /config/conf.db.php
-8. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
+4. Extract each to /lib/mapserver/maps/
+5. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles.
+6. Make contents of /lib/mapserver/fonts readable & executable
+7. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions. These set db (MySQL) connections and constants, respectively.
+8. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com][5] and replace the RPX_KEY in your /config/conf.db.php
+9. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
 
 ### Apache Configuration
 
@@ -176,7 +177,7 @@ Copyright
 ---------
 
     Copyright (c) David P. Shorthouse
-    License: MIT (see included LICENSE file)
+    License: MIT (see included LICENSE file) and comments in each class file
 
 [1]: http://www.naturalearthdata.com/
 [2]: http://bit.ly/NapVvW

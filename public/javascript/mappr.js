@@ -22,7 +22,14 @@ $(function() {
     fillColor          : "",
     jCropType          : "zoom",
     cropUpdated        : false,
-    undoSize           : 10
+    undoSize           : 10,
+    origins            : { "esri:102009" : -96, 
+                           "esri:102015" : -60, 
+                           "esri:102014" : 10, 
+                           "esri:102012" : 105, 
+                           "esri:102024" : 25,
+                           "epsg:3112" : 134
+                          }
   };
 
   $.ajaxSetup({
@@ -678,11 +685,23 @@ $(function() {
     });
 
     $('#projection').change(function() {
+      var origin_sel = $('#origin-selector'),
+          selected   = $('option:selected', this);
+
       if($(this).val() !== "") {
+        $('#origin').val(self.vars.origins[$(this).val()]);
+        if($("#projection").val() in self.vars.origins) { origin_sel.show(); } else { origin_sel.hide(); }
         $.cookie("jcrop_coords", null);
         self.hardResetShowMap();
       }
     });
+
+    $('#origin').blur(function() {
+      self.hardResetShowMap();
+    }).keydown(function(e) {
+	  var key = e.keyCode || e.which;
+	  if(key === 9 || key === 13 ) { this.blur(); }
+	});
 
     self.toggleFileFactor();
 
@@ -976,6 +995,7 @@ $(function() {
           bbox_query     : $('#bbox_query').val(),
           projection     : $('#projection').val(),
           projection_map : $('#projection_map').val(),
+          origin         : $('#origin').val(),
           qlayer         : ($('#stateprovince').prop('checked')) ? 'stateprovinces_polygon' : 'base',
           width          : $('input[name="width"]').val(),
           height         : $('input[name="height"]').val()
@@ -1372,6 +1392,7 @@ $(function() {
     $.each(['width', 'height'], function() { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
     $('.addmore').removeAttr("disabled");
     $('#filter-mymaps').val(filter);
+    $('#origin-selector').hide();
     self.loadCoordinates(data);
     self.loadRegions(data);
     self.loadLayers(data);
@@ -1428,7 +1449,9 @@ $(function() {
     map_title = map_title.replace(pattern, "_");
     $('#file-name').val(map_title);
     $("#projection").val(data.map.projection);
-    $.each(['bbox_map', 'projection_map', 'rotation'], function() { $('input[name="'+this+'"]').val(data.map[this]); });
+    if($("#projection").val() in self.vars.origins) { $('#origin-selector').show(); }
+    $.each(['bbox_map', 'projection_map', 'rotation', 'origin'], function() { $('input[name="'+this+'"]').val(data.map[this]); });
+    if(!data.map['origin']) { $('#origin').val(self.vars.origins[$("#projection").val()]); }
 
     $('input[name="border_thickness"]').val(1.25);
     $('#border-slider').slider({value:1.25});

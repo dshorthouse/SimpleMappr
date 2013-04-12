@@ -11,19 +11,11 @@ Email: davidpshorthouse@gmail.com
 
 Copyright (C) 2010  David P. Shorthouse
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 **************************************************************************/
 
@@ -283,6 +275,7 @@ class MAPPR {
 
     $this->projection       = $this->load_param('projection', 'epsg:4326');
     $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
+    $this->origin           = (int)$this->load_param('origin', false);
 
     $this->bbox_map         = $this->load_param('bbox_map', '-180,-90,180,90');
 
@@ -811,10 +804,16 @@ class MAPPR {
     return $max_extent;
   }
 
+  /**
+  * Assess if a provided projection is in the accepted list
+  */
   private function accetable_projection() {
-  return isset(self::$accepted_projections[$this->projection]['proj']) ? self::$accepted_projections[$this->projection]['proj'] : self::$accepted_projections[$this->default_projection]['proj'];
+    return isset(self::$accepted_projections[$this->projection]['proj']) ? self::$accepted_projections[$this->projection]['proj'] : self::$accepted_projections[$this->default_projection]['proj'];
   }
 
+  /**
+  * Reset the zoom if extent is beyond the acceptable bounds
+  */
   private function reset_zoom() {
     $extent = $this->map_obj->extent;
     $max_extent = $this->get_max_extent();
@@ -1267,6 +1266,9 @@ class MAPPR {
     }
   }
 
+  /**
+  * Add a watermark
+  */
   private function add_watermark() {
     if(isset($this->watermark) && $this->watermark) {
       $layer = ms_newLayerObj($this->map_obj);
@@ -1388,6 +1390,10 @@ class MAPPR {
     }
   }
 
+  /**
+  * Discover if the output ought to be resized
+  * @output true/false
+  */
   private function is_resize() {
     if($this->download || $this->output == 'pptx' || $this->output == 'docx') {
       return true;
@@ -1571,13 +1577,15 @@ class MAPPR {
   }
   
   /**
-   * Reproject a $map from one projection to another
-   * @param obj $map
-   * @param string $input_projection
-   * @param string $output_projection
-   */
+  * Reproject a $map from one projection to another
+  * @param obj $map
+  * @param string $input_projection
+  * @param string $output_projection
+  */
   private function reproject_map($input_projection,$output_projection) {
     if(!array_key_exists($output_projection, self::$accepted_projections)) { $output_projection = 'epsg:4326'; }
+
+    $this->adjust_origin($output_projection);
     
     $origProjObj = ms_newProjectionObj(self::$accepted_projections[$input_projection]['proj']);
     $newProjObj = ms_newProjectionObj(self::$accepted_projections[$output_projection]['proj']);
@@ -1589,6 +1597,18 @@ class MAPPR {
   }
 
   /**
+  * Change the longitude of the natural origin for Lambert projections
+  * @param $outout_projection
+  */
+  private function adjust_origin($output_projection) {
+	$lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
+	
+    if(in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
+      self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::$accepted_projections[$output_projection]['proj']);
+    }
+  }
+
+   /**
    * Convert image coordinates to map coordinates
    * @param obj $point, (x,y) coordinates in pixels
    * @return obj $newPoint reprojected point in map coordinates
@@ -1613,10 +1633,10 @@ class MAPPR {
   }
 
   /**
-   * Check a DD coordinate object and return true if it fits on globe, false if not
-   * @param obj $coord (x,y) coordinates
-   * @return true,false
-   */
+  * Check a DD coordinate object and return true if it fits on globe, false if not
+  * @param obj $coord (x,y) coordinates
+  * @return true,false
+  */
   public function check_coord($coord) {
     $output = false;
     if($coord->x && $coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
@@ -1624,10 +1644,10 @@ class MAPPR {
   }
 
   /**
-   * Convert a coordinate in dms to deg
-   * @param string $dms coordinate
-   * @return float
-   */
+  * Convert a coordinate in dms to deg
+  * @param string $dms coordinate
+  * @return float
+  */
   public function dms_to_deg($dms) {
     $dms = stripslashes($dms);
     $neg = (preg_match('/[SW]/i', $dms) == 0) ? 1 : -1;

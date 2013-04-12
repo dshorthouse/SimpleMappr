@@ -91,6 +91,9 @@ USERSESSION::select_locale();
 
     <dt>projection</dt>
     <dd><?php echo sprintf(_("the output projection in either EPSG or ESRI references. See %s for spatial references. Accepted projections are:"), "<a href=\"http://spatialreference.org/\">http://spatialreference.org/</a>"); ?> <?php foreach(MAPPR::$accepted_projections as $key => $value) { print $key . ' (=' . $value['name'] . '), '; } ?><span class="api-example"><em>e.g.</em> projection=esri:102009</span></dd>
+	
+	<dt>origin</dt>
+	<dd><?php echo _("longitude of natural origin used in Lambert projections"); ?> <span class="api-example"><em>e.g.</em> origin=-120</span></dd>
 
     <dt>graticules</dt>
     <dd><?php echo _("display the graticules"); ?> <span class="api-example"><em>e.g.</em> graticules=true</span></dd>

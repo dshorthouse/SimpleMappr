@@ -11,19 +11,11 @@ Email: davidpshorthouse@gmail.com
 
 Copyright (C) 2010  David P. Shorthouse
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 **************************************************************************/
 
@@ -102,6 +94,7 @@ class MAPPRAPI extends MAPPR {
     $this->output           = $this->load_param('output','pnga');
     $this->projection       = $this->load_param('projection', 'epsg:4326');
     $this->projection_map   = $this->projection;
+    $this->origin           = (int)$this->load_param('origin', false);
 
     $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
     $this->zoom             = (int)$this->load_param('zoom', false);
@@ -417,8 +410,8 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Set a zoom level
-   */
+  * Set a zoom level
+  */
   private function setZoom() {
     if($this->zoom == 0 || $this->zoom > 10) { return; }
     $midpoint = $this->getMidpoint($this->_coord_cols);
@@ -430,10 +423,10 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Find the geographic midpoint of a nested array of exploded dd coords
-   * @param array $array
-   * @return array(long,lat)
-   */
+  * Find the geographic midpoint of a nested array of exploded dd coords
+  * @param array $array
+  * @return array(long,lat)
+  */
   private function getMidpoint($array) {
     $x = $y = $z = array();
     foreach($array as $coords) {
@@ -454,8 +447,8 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Parse all POSTed data into cleaned array of points
-   */
+  * Parse all POSTed data into cleaned array of points
+  */
   private function parsePoints() {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
     $coord_array = array();
@@ -478,8 +471,8 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Parse text file into cleaned array of points
-   */
+  * Parse text file into cleaned array of points
+  */
   private function parseFile() {
     if(@$fp = fopen($this->url, 'r')) {
       while ($line = fread($fp, 1024)) {
@@ -512,8 +505,8 @@ class MAPPRAPI extends MAPPR {
   }
 
   /**
-   * Parse GeoRSS into cleaned array of points
-   */
+  * Parse GeoRSS into cleaned array of points
+  */
   private function parseGeoRSS() {
     $rss = fetch_rss($this->url);
     if(isset($rss->items)) {

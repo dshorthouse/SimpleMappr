@@ -162,6 +162,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapTools li{list-style-image:none;list-style-position:outside;list-style-type:none;font-size:0.75em;}
 .columns li{float:left;width:11em;;line-height:1.5em;}
 #projection{font-size:0.8em !important;}
+#origin-selector{display:none;}
 #mapTools p{font-size:0.5em;}
 #mapLegend p{margin:0px;padding:0px;font-size:0.65em;}
 #mapCropMessage{display:none;color:#ff0000;font-size:1em;}

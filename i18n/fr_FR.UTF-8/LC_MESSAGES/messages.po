@@ -338,6 +338,10 @@ msgstr "Epaisseur des lignes"
 msgid "Projection"
 msgstr "Projection"
 
+#: .index.php:160
+msgid "longitude of natural origin"
+msgstr "longitude d'origine naturelle"
+
 #: .index.php:169
 msgid "zoom prior to setting projection"
 msgstr "zoomer avant de fixer la projection"
