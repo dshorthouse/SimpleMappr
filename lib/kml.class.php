@@ -34,9 +34,9 @@ class Kml {
       'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
   );
 
-  private $_kml = '';
-  private $_metadata = array();
-  private $_placemark = array();
+  private $kml = '';
+  private $metadata = array();
+  private $placemark = array();
 
   public function __construct() {
     session_start();
@@ -65,7 +65,7 @@ class Kml {
 
     $this->add_coordinates();
     
-    $this->_kml = new XMLWriter();
+    $this->kml = new XMLWriter();
 
     header("Pragma: public");
     header("Expires: 0");       
@@ -73,53 +73,53 @@ class Kml {
     header("Cache-Control: private",false);
     header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
     header("Content-disposition: attachment; filename=" . $this->get_filename() . ".kml");
-    $this->_kml->openURI('php://output');
+    $this->kml->openURI('php://output');
     
-    $this->_kml->startDocument('1.0', 'UTF-8');
-    $this->_kml->setIndent(4);
-    $this->_kml->startElement('kml');
-    $this->_kml->writeAttribute('xmlns', 'http://www.opengis.net/kml/2.2');
-    $this->_kml->writeAttribute('xmlns:gx', 'http://www.google.com/kml/ext/2.2');
+    $this->kml->startDocument('1.0', 'UTF-8');
+    $this->kml->setIndent(4);
+    $this->kml->startElement('kml');
+    $this->kml->writeAttribute('xmlns', 'http://www.opengis.net/kml/2.2');
+    $this->kml->writeAttribute('xmlns:gx', 'http://www.google.com/kml/ext/2.2');
     
-    $this->_kml->startElement('Document');
-    $this->_kml->writeElement('name', $this->get_metadata('name'));
+    $this->kml->startElement('Document');
+    $this->kml->writeElement('name', $this->get_metadata('name'));
     
     //Style elements
     for($i=0; $i<=count($this->get_all_placemarks())-1; $i++) {
-      $this->_kml->startElement('Style');
-      $this->_kml->writeAttribute('id', 'pushpin'.$i);
-      $this->_kml->startElement('IconStyle');
-      $this->_kml->writeAttribute('id', 'simplemapprstyle'.$i);
-      $this->_kml->startElement('Icon');
-      $this->_kml->writeElement('href', self::$pushpins[$i]);
-      $this->_kml->writeElement('scale', '1.0');
-      $this->_kml->endElement(); //end Icon
-      $this->_kml->endElement(); //end IconStyle
-      $this->_kml->endElement(); //end Style
+      $this->kml->startElement('Style');
+      $this->kml->writeAttribute('id', 'pushpin'.$i);
+      $this->kml->startElement('IconStyle');
+      $this->kml->writeAttribute('id', 'simplemapprstyle'.$i);
+      $this->kml->startElement('Icon');
+      $this->kml->writeElement('href', self::$pushpins[$i]);
+      $this->kml->writeElement('scale', '1.0');
+      $this->kml->endElement(); //end Icon
+      $this->kml->endElement(); //end IconStyle
+      $this->kml->endElement(); //end Style
     }
     
     foreach($this->get_all_placemarks() as $key => $placemarks) {
-      $this->_kml->startElement('Folder');
-      $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
-      $this->_kml->writeElement('name', $this->get_placemark($key, 0, 'name'));
+      $this->kml->startElement('Folder');
+      $this->kml->writeAttribute('id', 'simplemapprfolder'.$key);
+      $this->kml->writeElement('name', $this->get_placemark($key, 0, 'name'));
       foreach($placemarks as $id => $placemark) {
-        $this->_kml->startElement('Placemark');
-        $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
-        $this->_kml->writeElement('name', $this->get_placemark($key, $id, 'name'));
-        $this->_kml->writeElement('description', $this->get_placemark($key, $id, 'coordinate'));
-        $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
-        $this->_kml->startElement('Point');
-        $this->_kml->writeElement('coordinates', $this->get_placemark($key, $id, 'coordinate') . ',0');
-        $this->_kml->endElement(); //end Point
-        $this->_kml->endElement(); //end Placemark
+        $this->kml->startElement('Placemark');
+        $this->kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
+        $this->kml->writeElement('name', $this->get_placemark($key, $id, 'name'));
+        $this->kml->writeElement('description', $this->get_placemark($key, $id, 'coordinate'));
+        $this->kml->writeElement('styleUrl', '#pushpin'.$key);
+        $this->kml->startElement('Point');
+        $this->kml->writeElement('coordinates', $this->get_placemark($key, $id, 'coordinate') . ',0');
+        $this->kml->endElement(); //end Point
+        $this->kml->endElement(); //end Placemark
       }
-      $this->_kml->endElement();
+      $this->kml->endElement();
     }
 
-    $this->_kml->endElement(); //end Document
-    $this->_kml->endElement(); //end kml
-    $this->_kml->endDocument();
-    $this->_kml->flush();
+    $this->kml->endElement(); //end Document
+    $this->kml->endElement(); //end kml
+    $this->kml->endDocument();
+    $this->kml->flush();
   }
 
   /**
@@ -128,7 +128,7 @@ class Kml {
   * @param string $value
   */
   public function set_metadata($name, $value) {
-    $this->_metadata[$name] = $value;
+    $this->metadata[$name] = $value;
   }
 
   /**
@@ -137,7 +137,7 @@ class Kml {
   * @return string value
   */
   public function get_metadata($name) {
-    return $this->_metadata[$name];
+    return $this->metadata[$name];
   }
 
   /**
@@ -148,7 +148,7 @@ class Kml {
   * @param string $value
   */
   public function set_placeMark($key=0, $mark=0, $name, $value) {
-    $this->_placemark[$key][$mark][$name] = $value;
+    $this->placemark[$key][$mark][$name] = $value;
   }
 
   /**
@@ -159,14 +159,14 @@ class Kml {
   * @return string $value
   */
   private function get_placemark($key=0, $mark=0, $name) {
-    return $this->_placemark[$key][$mark][$name];
+    return $this->placemark[$key][$mark][$name];
   }
 
   /**
   * Helper function to get all placemarks
   */
   private function get_all_placemarks() {
-    return $this->_placemark;
+    return $this->placemark;
   }
 
   /**

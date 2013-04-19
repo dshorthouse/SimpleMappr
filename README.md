@@ -30,11 +30,11 @@ Configuration Instructions
       ServerAdmin dshorthouse@mbl.edu
       DocumentRoot /path/to/your/root
       RewriteEngine on
-      RewriteRule ^/map/(.+)\.(kml|json)/?$ /path/to/your/root/index.php?map=$1&format=$2&%{QUERY_STRING}
-      RewriteRule ^/map/(.+)/?$ /path/to/your/root/index.php?map=$1&%{QUERY_STRING}
-      RewriteRule ^/users/(.*)$ /path/to/your/root/users/index.php/$1
-      RewriteRule ^/usermaps/(.*)$ /path/to/your/root/usermaps/index.php/$1
-      RewriteRule ^/places/(.*)$ /path/to/your/root/places/index.php/$1
+      RewriteBase /
+      RewriteRule ^(public|sitemap.xml|robots.txt)($|/) - [L]
+      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
+      RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
       <Directory "/path/to/your/root">
        Options -Indexes +FollowSymlinks
        AllowOverride None

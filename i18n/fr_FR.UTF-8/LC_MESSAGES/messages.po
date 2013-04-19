@@ -912,12 +912,20 @@ msgid "draw a graticule (grid) layer on the map using either fixed, 5, or 10 deg
 msgstr "dessiner un réticule sur la carte en utilisant soit fixe, 5, ou 10 degrés l'espacement"
 
 #: .tabs/help.php:122
+msgid "use the slider to increase or decrease line thickness of the base and State/Provinces layers"
+msgstr "utilisez le curseur pour augmenter ou diminuer l'épaisseur du trait des couches de la base et de l'Etat/Provinces"
+
+#: .tabs/help.php:122
 msgid "projection"
 msgstr "projection"
 
 #: .tabs/help.php:123
-msgid "Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
-msgstr "Choisissez parmi plusieurs projections. [Suggestion: pour obtenir les meilleurs effets, utilisez le zoom avant ajuster la projection]"
+msgid "choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
+msgstr "choisissez parmi plusieurs projections. [Suggestion: pour obtenir les meilleurs effets, utilisez le zoom avant ajuster la projection]"
+
+#: .tabs/help.php:160
+msgid "type the longitude for the central meridian"
+msgstr "tapper la longitude du méridien central"
 
 #: .tabs/help.php:128
 msgid "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."

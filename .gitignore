@@ -2,6 +2,11 @@
 config/conf.php
 config/conf.db.php
 
+# Ignore misc files
+robots.txt
+sitemap.xml
+googlea6eb060e8a251a1c.html
+
 # Ignore contents of direcories
 public/javascript/cache/*
 !public/javascript/cache/README
@@ -12,8 +17,8 @@ public/stylesheets/cache/*
 public/uploads/*
 !public/uploads/README
 
-tmp/*
-!tmp/README
+public/tmp/*
+!public/tmp/README
 
 lib/mapserver/maps/**/*
 

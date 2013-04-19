@@ -1238,8 +1238,8 @@ $(function() {
 
     data = {
       locale : self.getParameterByName("locale"),
-      q      : (obj.q) ? encodeURIComponent(obj.q.toLowerCase()) : null,
-      uid    : obj.uid || null
+      search : (obj.search) ? encodeURIComponent(obj.search.toLowerCase()) : null,
+      uid     : obj.uid || null
     };
 
     if(obj.sort) {
@@ -1248,12 +1248,12 @@ $(function() {
     }
 
     if(!data.locale) { delete data.locale; }
-    if(!data.q) { delete data.q; }
+    if(!data.search) { delete data.search; }
     if(!data.uid) { delete data.uid; }
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/",
+      url      : self.settings.baseUrl + "/usermap/",
       data     : data,
       dataType : 'html',
       success  : function(response) {
@@ -1264,11 +1264,11 @@ $(function() {
           self.hideSpinner();
           $(".toolsRefresh", ".grid-usermaps").click(function(e) { e.preventDefault(); self.loadMapList(); });
           $('#filter-mymaps')
-            .val(obj.q)
+            .val(obj.search)
             .keypress(function(e) {
               if (e.which === 13) {
                 e.preventDefault();
-                data.q = $(this).val();
+                data.search = $(this).val();
                 self.loadMapList(data);
                 self.trackEvent('maplist', 'filter');
               }
@@ -1321,7 +1321,7 @@ $(function() {
 
     inputs = {
       "status" : "ok",
-      "mid"    : $('.map-embed').attr("data-mid"),
+      "mid"    : $('.map-embed').attr("data-id"),
       "map"    : data
     };
 
@@ -1401,14 +1401,14 @@ $(function() {
 
   Mappr.loadMap = function(obj) {
     var self     = this,
-        id       = $(obj).attr("data-mid");
+        id       = $(obj).attr("data-id");
 
     self.tabSelector(0);
     self.showSpinner();
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + "/usermaps/" + id,
+      url      : self.settings.baseUrl + "/usermap/" + id,
       dataType : 'json',
       timeout  : 30000,
       success  : function(data) {
@@ -1594,7 +1594,7 @@ $(function() {
     var self    = this,
         types   = ['img','kml','svg','json'];
 
-    $('.map-embed').attr("data-mid", mid).css('display', 'block').click(function(e) {
+    $('.map-embed').attr("data-id", mid).css('display', 'block').click(function(e) {
       e.preventDefault();
       $.each(types, function() {
         if(this.toString() === 'img') {
@@ -1627,7 +1627,7 @@ $(function() {
 
   Mappr.deleteMapConfirmation = function(obj) {
     var self    = this,
-        id      = $(obj).attr("data-mid"),
+        id      = $(obj).attr("data-id"),
         message = '<em>' + $(obj).parent().parent().find(".title").text() + '</em>';
 
     $('#mapper-message-delete').find('span').html(message).end().dialog({
@@ -1644,7 +1644,7 @@ $(function() {
           "click" : function() {
             $.ajax({
               type    : 'DELETE',
-              url     :  self.settings.baseUrl + "/usermaps/" + id,
+              url     :  self.settings.baseUrl + "/usermap/" + id,
               success : function() {
                 self.loadMapList();
                 self.trackEvent('map', 'delete');
@@ -1680,7 +1680,7 @@ $(function() {
 
     $.ajax({
       type     : 'GET',
-      url      : self.settings.baseUrl + '/users/',
+      url      : self.settings.baseUrl + '/user/',
       data     : data,
       dataType : 'html',
       success  : function(response) {
@@ -1726,7 +1726,7 @@ $(function() {
 
   Mappr.deleteUserConfirmation = function(obj) {
     var self    = this,
-        id      = $(obj).attr("data-uid"),
+        id      = $(obj).attr("data-id"),
         message = '<em>' + $(obj).parent().parent().children("td:first").text() + '</em>';
 
     $('#mapper-message-delete').find("span").html(message).end().dialog({
@@ -1743,7 +1743,7 @@ $(function() {
           "click" : function() {
             $.ajax({
               type    : 'DELETE',
-              url     : self.settings.baseUrl + "/users/" + id,
+              url     : self.settings.baseUrl + "/user/" + id,
               success : function() {
                 self.loadUserList();
                 self.trackEvent('user', 'delete');
@@ -1809,7 +1809,7 @@ $(function() {
 
               $.ajax({
                 type        : 'POST',
-                url         : self.settings.baseUrl + '/usermaps/',
+                url         : self.settings.baseUrl + '/usermap/',
                 data        : $("form").serialize(),
                 dataType    : 'json',
                 success     : function(data) {
@@ -2126,7 +2126,7 @@ $(function() {
         $('#output').val('pptx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download("/application/pptx/" + self.getLanguage(), formData, 'post');
+        $('body').download("/pptx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
@@ -2134,13 +2134,13 @@ $(function() {
         $('#output').val('docx');
         if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
         formData = $("form").serialize();
-        $('body').download("/application/docx/" + self.getLanguage(), formData, 'post');
+        $('body').download("/docx/" + self.getLanguage(), formData, 'post');
         $('#output').val('pnga');
       break;
 
       case 'kml':
         formData = $("form").serialize();
-        $('body').download("/application/kml/", formData, 'post');
+        $('body').download("/kml/", formData, 'post');
       break;
 
       default:
