@@ -29,18 +29,18 @@ Configuration Instructions
       ServerAlias simplemappr.net
       ServerAdmin dshorthouse@mbl.edu
       DocumentRoot /path/to/your/root
-      RewriteEngine on
-      RewriteBase /
-      RewriteRule ^(public|sitemap.xml|robots.txt)($|/) - [L]
-      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
-      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
-      RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
       <Directory "/path/to/your/root">
        Options -Indexes +FollowSymlinks
        AllowOverride None
        Order allow,deny
        Allow from all
        DirectoryIndex index.php index.html
+       RewriteEngine on
+       RewriteBase /
+       RewriteRule ^(public|sitemap.xml|robots.txt)($|/) - [L]
+       RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+       RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
+       RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
       </Directory>
     </VirtualHost>
 
