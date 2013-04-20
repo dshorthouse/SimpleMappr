@@ -198,9 +198,9 @@ class Session {
   * Create a session and set a cookie
   */
   private function make_session() {
-    if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
+    if (isset($this->auth_info['stat']) && $this->auth_info['stat'] == 'ok') {
 
-      $profile = $this->_auth_info['profile'];
+      $profile = $this->auth_info['profile'];
 
       $identifier = $profile['identifier'];
       $username   = (isset($profile['preferredUsername'])) ? $profile['preferredUsername'] : '';
@@ -244,7 +244,7 @@ class Session {
 
       self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_locale_param($user['locale']));
     } else {
-      echo 'An error occured: ' . $this->_auth_info['err']['msg'];
+      echo 'An error occured: ' . $this->auth_info['err']['msg'];
       exit();
     }
   }
