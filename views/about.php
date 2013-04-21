@@ -12,7 +12,7 @@ Session::select_locale();
 #map-about dt.update{font-weight:bold;}
 #map-about dd{margin:0 0 10px 25px;}
 #recent-updates{float:left;width:65%;}
-#live-updates{margin-left:65%;width:300px;padding:0.5em;}
+#live-updates{margin-left:65%;width:350px;padding:0.5em;}
 #live-updates .header{width:85%;}
 #twitter_div{margin-top:1em;}
 .twtr-tweet-text{font-size:1.5em;}
@@ -44,7 +44,7 @@ Session::select_locale();
 </div>
 <div id="live-updates">
 <div class="header"><h2><?php echo _("Live Updates"); ?></h2></div>
-<div id="twitter_div"></div>
+<div id="twitter_div"><a class="twitter-timeline" href="https://twitter.com/SimpleMappr" data-widget-id="325778519898603520">Tweets by @SimpleMappr</a></div>
 </div>
 </div>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
@@ -87,35 +87,4 @@ Session::select_locale();
 <div class="header"><h2><?php echo _("Acknowledgments"); ?></h2></div>
 <p><?php echo sprintf(_("Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript. Biodiversity Hotspot data were obtained from %s."), "<a href=\"http://www.naturalearthdata.com/\" target=\"_blank\">http://www.naturalearthdata.com/</a>", "<a href=\"http://mapserver.org\" target=\"_blank\">http://mapserver.org</a>", "<a href=\"http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx\" target=\"_blank\">Conservation International</a>"); ?></p>
 </div>
-<script type="text/javascript">
-$(function() {
-  $.getScript('http://widgets.twimg.com/j/2/widget.js', function() {
-      twitter = new TWTR.Widget({
-          version: 2,
-             type: 'profile',
-              rpp: 4,
-         interval: 30000,
-            width: 250,
-           height: 300,
-               id: 'twitter_div',
-            theme: {
-              shell: {
-                background: '#e9e9e9',
-                     color: '#222222'
-              },
-              tweets: {
-                background: '#ffffff',
-                     color: '#222222',
-                     links: '#555555'
-                }
-              },
-              features: {
-                scrollbar: true,
-                     loop: false,
-                     live: true,
-                 behavior: 'all'
-              }
-      }).render().setUser('SimpleMappr').start();
-  });
-});
-</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
