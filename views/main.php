@@ -3,11 +3,11 @@
 <html lang="<?php echo $header[1][$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="<?php echo _("A point map web application for publications and presentations."); ?>" />
+<meta name="description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
 <meta property="og:title" content="SimpleMappr" />
-<meta property="og:description" content="<?php echo _("A point map web application for publications and presentations."); ?>" />
+<meta property="og:description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>">
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />

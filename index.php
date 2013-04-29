@@ -32,46 +32,46 @@ class Bootstrap {
   }
 
   private function get_route() {
-	parse_str($_SERVER['QUERY_STRING'], $query_string);
+    parse_str($_SERVER['QUERY_STRING'], $query_string);
     $route = preg_split("/[\/.]+/", $query_string['q']);
     $this->controller = $route[0];
     $this->id = isset($route[1]) ? $route[1] : NULL;
     $this->extension = isset($route[2]) ? $route[2] : NULL;
-	return $this;
+    return $this;
   }
 
   private function set_controller() {
-	switch ("/".$this->controller) {
-	  case "/":
-	    $header = $this->set_up();
-	    header('Content-Type: text/html; charset=utf-8');
+    switch ("/".$this->controller) {
+      case "/":
+        $header = $this->set_up();
+        header('Content-Type: text/html; charset=utf-8');
         include_once("views/main.php");
-	    break;
+        break;
 
       case "/about":
         include_once("views/about.php");
         break;
 
-	  case "/api":
-	    $klass = $this->klass("mappr.api", "MapprApi");
-	    $this->setup_map($klass)->execute()->get_output();
+      case "/api":
+        $klass = $this->klass("mappr.api", "MapprApi");
+        $this->setup_map($klass)->execute()->get_output();
         $this->log();
-	    break;
+        break;
 
       case "/apidoc":
         include_once("views/apidoc.php");
         break;
 
-	  case "/application":
-		$klass = $this->klass("mappr", "Mappr");
-	    $this->setup_map($klass)->execute()->get_output();
-	    break;
+      case "/application":
+        $klass = $this->klass("mappr", "Mappr");
+        $this->setup_map($klass)->execute()->get_output();
+        break;
 
-	  case "/docx":
+      case "/docx":
         $this->set_locale();
         $klass = $this->klass("mappr.docx", "MapprDocx");
-	    $this->setup_map($klass)->execute()->get_output();
-	    break;
+        $this->setup_map($klass)->execute()->get_output();
+        break;
 
       case "/feedback":
         include_once("views/feedback.php");
@@ -86,51 +86,51 @@ class Bootstrap {
         $kml->get_request()->generate_kml();
         break;
 
-	  case "/logout":
-	    $this->klass("session", "Session", false);
-	    break;
-
-	  case "/map":
-        $klass = $this->klass("mappr.map", "MapprMap", $this->id, $this->extension);
-	    $this->setup_map($klass)->execute()->get_output();
-	    break;
-
-	  case "/places":
-        $this->klass("places", "Places", $this->id);
-	    break;
-
-	  case "/pptx":
-        $this->set_locale();
-        $klass = $this->klass("mappr.pptx", "MapprPptx");
-	    $this->setup_map($klass)->execute()->get_output();
-	    break;
-	
-	  case "/query":
-		$klass = $this->klass("mappr.query", "MapprQuery");
-	    $this->setup_map($klass)->execute()->query_layer()->get_output();
-	    break;
-
-	  case "/session":
-	    $this->klass("session", "Session", true);
-	    break;
-
-	  case "/user":
-	    $this->klass("user", "User", $this->id);
-	    break;
-
-	  case "/usermap":
-        $this->klass("usermap", "Usermap", $this->id);
-	    break;
-	
-	  case "/wfs":
-	    $klass = $this->klass("mappr.wfs", "MapprWfs");
-	    $this->setup_map($klass)->make_service()->execute()->prepapre_output()->get_output();
+      case "/logout":
+        $this->klass("session", "Session", false);
         break;
 
-	  default:
-	    header("HTTP/1.0 404 Not Found");
-	    readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
-	    exit();
+      case "/map":
+        $klass = $this->klass("mappr.map", "MapprMap", $this->id, $this->extension);
+        $this->setup_map($klass)->execute()->get_output();
+        break;
+
+      case "/places":
+        $this->klass("places", "Places", $this->id);
+        break;
+
+      case "/pptx":
+        $this->set_locale();
+        $klass = $this->klass("mappr.pptx", "MapprPptx");
+        $this->setup_map($klass)->execute()->get_output();
+        break;
+    
+      case "/query":
+        $klass = $this->klass("mappr.query", "MapprQuery");
+        $this->setup_map($klass)->execute()->query_layer()->get_output();
+        break;
+
+      case "/session":
+        $this->klass("session", "Session", true);
+        break;
+
+      case "/user":
+        $this->klass("user", "User", $this->id);
+        break;
+
+      case "/usermap":
+        $this->klass("usermap", "Usermap", $this->id);
+        break;
+    
+      case "/wfs":
+        $klass = $this->klass("mappr.wfs", "MapprWfs");
+        $this->setup_map($klass)->make_service()->execute()->prepapre_output()->get_output();
+        break;
+
+      default:
+        header("HTTP/1.0 404 Not Found");
+        readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+        exit();
     }
   }
 
@@ -140,26 +140,26 @@ class Bootstrap {
   }
 
   private function setup_map($data) {
-	$data->set_shape_path("lib/mapserver/maps")
-	     ->set_font_file("lib/mapserver/fonts/fonts.list")
-	     ->set_tmp_path(dirname(__FILE__)."/public/tmp/")
-	     ->set_tmp_url(MAPPR_MAPS_URL)
-	     ->set_default_projection("epsg:4326")
-	     ->set_max_extent("-180,-90,180,90")
-	     ->get_request();
-	return $data;
+    $data->set_shape_path("lib/mapserver/maps")
+         ->set_font_file("lib/mapserver/fonts/fonts.list")
+         ->set_tmp_path(dirname(__FILE__)."/public/tmp/")
+         ->set_tmp_url(MAPPR_MAPS_URL)
+         ->set_default_projection("epsg:4326")
+         ->set_max_extent("-180,-90,180,90")
+         ->get_request();
+    return $data;
   }
 
   private function log() {
     require_once('lib/logger.class.php');
-	$logger = new LOGGER($_SERVER["DOCUMENT_ROOT"] . "/log/logger.log");
-	$message = date('Y-m-d H:i:s') . " - $_SERVER[REMOTE_ADDR]";
-	$logger->log($message);
+    $logger = new LOGGER($_SERVER["DOCUMENT_ROOT"] . "/log/logger.log");
+    $message = date('Y-m-d H:i:s') . " - $_SERVER[REMOTE_ADDR]";
+    $logger->log($message);
   }
 
   private function set_locale() {
     require_once('lib/session.class.php');
-	Session::select_locale();
+    Session::select_locale();
   }
 
   private function set_up() {
