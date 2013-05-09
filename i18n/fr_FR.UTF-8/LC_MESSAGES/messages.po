@@ -639,6 +639,14 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "May 9, 2013"
+msgstr "9 mai, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler."
+msgstr "Améliorations: ajouté l'option de spécifié 1 degré pour l'espacement des réticules. Demandé par Michael Tessler."
+
+#: .tabs/about.php:11
 msgid "April 12, 2013"
 msgstr "12 avril, 2013"
 
