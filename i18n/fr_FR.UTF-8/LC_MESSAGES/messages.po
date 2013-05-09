@@ -916,8 +916,8 @@ msgid "graticules"
 msgstr "réticules"
 
 #: .tabs/help.php:117
-msgid "draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"
-msgstr "dessiner un réticule sur la carte en utilisant soit fixe, 5, ou 10 degrés l'espacement"
+msgid "draw a graticule (grid) layer on the map using either fixed, 1, 5, or 10 degree spacing"
+msgstr "dessiner un réticule sur la carte en utilisant soit fixe, 1, 5, ou 10 degrés l'espacement"
 
 #: .tabs/help.php:122
 msgid "use the slider to increase or decrease line thickness of the base and State/Provinces layers"

@@ -118,7 +118,7 @@ $(function () {
   <h3><?php echo _("Options"); ?></h3>
   <dl class="ui-helper-clearfix">
     <dt><?php echo _("graticules"); ?>:</dt>
-    <dd><?php echo _("draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"); ?></dd>
+    <dd><?php echo _("draw a graticule (grid) layer on the map using either fixed, 1, 5, or 10 degree spacing"); ?></dd>
 
     <dt><?php echo _("Line Thickness"); ?>:</dt>
     <dd><?php echo _("use the slider to increase or decrease line thickness of the base and State/Provinces layers")?>
