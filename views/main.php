@@ -158,6 +158,7 @@
 <li><input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> <label for="graticules"><?php echo _("graticules (grid)"); ?></label>
 <div id="graticules-selection">
 <input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> <label for="gridspace"><?php echo _("fixed"); ?></label>
+<input type="radio" id="gridspace-1" class="gridopt" name="gridspace" value="1" /> <label for="gridspace-1">1<sup>o</sup></label>
 <input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> <label for="gridspace-5">5<sup>o</sup></label>
 <input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> <label for="gridspace-10">10<sup>o</sup></label>
 <input type="checkbox" id="gridlabel" name="gridlabel" /> <label for="gridlabel"><?php echo _("hide labels"); ?></label>
