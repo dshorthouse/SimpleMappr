@@ -454,16 +454,7 @@ class MapprApi extends Mappr {
     foreach($this->points as $rows) {
       $row = preg_split("/[\r\n]|(\\\[rn])/",urldecode($this->remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
-        $point = preg_replace('/[\p{Z}\s]/u', ' ', $point);
-        $point = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $point));
-        if(preg_match('/[NSEW]/', $point) != 0) {
-          $coord = preg_split("/[,;]/", $point);
-          $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-          $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
-        } else {
-          $coord_array = preg_split("/[\s,;]+/",$point); //split the coords by a space, comma, semicolon, or \t
-        }
-        $this->coord_cols[$num_cols][] = $coord_array;
+        $this->coord_cols[$num_cols][] = $this->coord_array($point);
       }
       $num_cols++;
     }

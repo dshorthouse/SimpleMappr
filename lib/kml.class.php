@@ -214,9 +214,9 @@ class Kml {
         foreach ($row as $loc) {
           $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
           $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
-          if(preg_match('/[NSEW]/', $loc) != 0) {
+          if(preg_match('/[NSEWO]/', $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc);
-            $coord = (preg_match('/[EW]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
+            $coord = (preg_match('/[EWO]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
             $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
           } else {
             $coord_array = preg_split("/[\s,;]+/",$loc);
@@ -265,8 +265,8 @@ class Kml {
    */
   private function dms_to_deg($dms) {
     $dms = stripslashes($dms);
-    $neg = (preg_match('/[SW]/', $dms) == 0) ? 1 : -1;
-    $dms = preg_replace('/(^\s?-)|(\s?[NSEW]\s?)/i','', $dms);
+    $neg = (preg_match('/[SWO]/', $dms) == 0) ? 1 : -1;
+    $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
     $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
     if (!$parts) { return; }
     // parts: 0 = degree, 1 = minutes, 2 = seconds

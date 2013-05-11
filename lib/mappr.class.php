@@ -958,15 +958,7 @@ class Mappr {
           $points = array(); //create an array to hold unique locations
 
           foreach ($row as $loc) {
-            $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
-            $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $loc));
-            if(preg_match('/[NSEW]/', $loc) != 0) {
-              $coord = preg_split("/[,;]/", $loc);
-              $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-              $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
-            } else {
-              $coord_array = preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
-            }
+            $coord_array = $this->coord_array($loc);
             $coord = new stdClass();
             $coord->x = array_key_exists(1, $coord_array) ? $this->clean_coord($coord_array[1]) : null;
             $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : null;
@@ -987,6 +979,22 @@ class Mappr {
           $layer->addFeature($new_shape);
         }
       }
+    }
+  }
+
+  /**
+  * Split coord into an array
+  */
+  public function coord_array($point) {
+    $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
+    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $loc));
+    if(preg_match('/[NSEWO]/', $loc) != 0) {
+      $coord = preg_split("/[,;]/", $loc);
+      if (!array_key_exists(1, $coord)) { return array(null, null); }
+      $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
+      return array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
+    } else {
+      return preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
     }
   }
 
@@ -1650,8 +1658,8 @@ class Mappr {
   */
   public function dms_to_deg($dms) {
     $dms = stripslashes($dms);
-    $neg = (preg_match('/[SW]/i', $dms) == 0) ? 1 : -1;
-    $dms = preg_replace('/(^\s?-)|(\s?[NSEW]\s?)/i','', $dms);
+    $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
+    $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
     $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); //TODO: check this for minutes or seconds wih decimals
     if (!$parts) { return; }
     // parts: 0 = degree, 1 = minutes, 2 = seconds
