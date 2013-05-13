@@ -202,6 +202,103 @@ class Mappr {
     'triangle'
   );
 
+  /**
+  * Remove empty lines from a string
+  * @param $string
+  * @return string cleansed string with empty lines removed
+  */
+  public static function remove_empty_lines($string) {
+    return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
+  }
+
+  /**
+  * Add slashes to either a string or an array
+  * @param string/array $arr_r
+  * @return string/array
+  */
+  public static function add_slashes_extended(&$arr_r) {
+    if(is_array($arr_r)) {
+      foreach ($arr_r as &$val) {
+        is_array($val) ? self::add_slashes_extended($val) : $val = addslashes($val);
+      }
+      unset($val);
+    } else {
+      $arr_r = addslashes($arr_r);
+    }
+    return $arr_r;
+  }
+
+  /**
+  * Get a user-defined file name, cleaned of illegal characters
+  * @return string
+  */
+  public static function clean_filename($file_name, $extension = "") {
+    $clean_filename = preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $file_name);
+    if($extension) {
+      return $clean_filename . "." . $extension;
+    }
+    return $clean_filename;
+  }
+
+  /**
+  * Clean extraneous materials in coordinate that should (in theory) be DD
+  */
+  public static function clean_coord($coord) {
+    return preg_replace('/[^\d.-]/i', '', $coord);
+  }
+
+  /**
+  * Check a DD coordinate object and return true if it fits on globe, false if not
+  * @param obj $coord (x,y) coordinates
+  * @return true,false
+  */
+  public static function check_coord($coord) {
+    $output = false;
+    if($coord->x && $coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
+    return $output;
+  }
+
+  /**
+  * Split DDMMSS or DD coordinate pair string into an array
+  * param string $point
+  * return array(latitude, longitude) in DD
+  */
+  public static function make_coordinates($point) {
+    $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
+    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $loc));
+    if(preg_match('/[NSEWO]/', $loc) != 0) {
+      $coord = preg_split("/[,;]/", $loc);
+      if (!array_key_exists(1, $coord)) { return array(null, null); }
+      $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
+      return array(self::dms_to_deg(trim($coord[0])),self::dms_to_deg(trim($coord[1])));
+    } else {
+      return preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon
+    }
+  }
+
+  /**
+  * Convert a coordinate in dms to deg
+  * @param string $dms coordinate
+  * @return float
+  */
+  public static function dms_to_deg($dms) {
+    $dms = stripslashes($dms);
+    $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
+    $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
+    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); //TODO: check this for minutes or seconds wih decimals
+    if (!$parts) { return; }
+    // parts: 0 = degree, 1 = minutes, 2 = seconds
+    $d = isset($parts[0]) ? (float)$parts[0] : 0;
+    $m = isset($parts[1]) ? (float)$parts[1] : 0;
+    if(strpos($dms, ".") > 1 && isset($parts[2])) {
+      $m = (float)($parts[1] . '.' . $parts[2]);
+      unset($parts[2]);
+    }
+    $s = isset($parts[2]) ? (float)$parts[2] : 0;
+    $dec = ($d + ($m/60) + ($s/3600))*$neg; 
+    return $dec;
+  }
+
   /* placeholder for presence of anything that might need a legend */
   private $_legend_required = false;
 
@@ -323,25 +420,8 @@ class Mappr {
   public function load_param($name, $default = ''){
     if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) { return $default; }
     $value = $_REQUEST[$name];
-    if(get_magic_quotes_gpc() != 1) { $value = $this->add_slashes_extended($value); }
+    if(get_magic_quotes_gpc() != 1) { $value = self::add_slashes_extended($value); }
     return $value;
-  }
-
-  /**
-  * Add slashes to either a string or an array
-  * @param string/array $arr_r
-  * @return string/array
-  */
-  private function add_slashes_extended(&$arr_r) {
-    if(is_array($arr_r)) {
-      foreach ($arr_r as &$val) {
-        is_array($val) ? $this->add_slashes_extended($val) : $val = addslashes($val);
-      }
-      unset($val);
-    } else {
-      $arr_r = addslashes($arr_r);
-    }
-    return $arr_r;
   }
 
   /**
@@ -954,16 +1034,16 @@ class Mappr {
           $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
           $new_line = ms_newLineObj();
 
-          $row = explode("\n",$this->remove_empty_lines($data));  //split the lines that have data
+          $row = explode("\n",self::remove_empty_lines($data));  //split the lines that have data
           $points = array(); //create an array to hold unique locations
 
           foreach ($row as $loc) {
-            $coord_array = $this->coord_array($loc);
+            $coord_array = self::make_coordinates($loc);
             $coord = new stdClass();
-            $coord->x = array_key_exists(1, $coord_array) ? $this->clean_coord($coord_array[1]) : null;
-            $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : null;
+            $coord->x = array_key_exists(1, $coord_array) ? self::clean_coord($coord_array[1]) : null;
+            $coord->y = array_key_exists(0, $coord_array) ? self::clean_coord($coord_array[0]) : null;
             //only add point when data are good & a title
-            if($this->check_coord($coord) && $title != "") {
+            if(self::check_coord($coord) && $title != "") {
               if(!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
                 $new_point = ms_newPointObj();
                 $new_point->setXY($coord->x, $coord->y);
@@ -980,29 +1060,6 @@ class Mappr {
         }
       }
     }
-  }
-
-  /**
-  * Split coord into an array
-  */
-  public function coord_array($point) {
-    $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
-    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $loc));
-    if(preg_match('/[NSEWO]/', $loc) != 0) {
-      $coord = preg_split("/[,;]/", $loc);
-      if (!array_key_exists(1, $coord)) { return array(null, null); }
-      $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-      return array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
-    } else {
-      return preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon, or \t
-    }
-  }
-
-  /**
-  * Clean extraneous materials in coordinate that should (in theory) be DD
-  */
-  public function clean_coord($coord) {
-    return preg_replace('/[^\d.-]/i', '', $coord);
   }
 
   /**
@@ -1026,7 +1083,7 @@ class Mappr {
           $this->_legend_required = true;
           $baselayer = true;
           //grab the textarea for regions & split
-          $rows = explode("\n",$this->remove_empty_lines($data));
+          $rows = explode("\n",self::remove_empty_lines($data));
           $qry = array();
           foreach($rows as $row) {
             $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -1499,14 +1556,6 @@ class Mappr {
   private function get_bad_points() {
     return implode('<br />', $this->_bad_points);
   }
-
-  /**
-  * Get a user-defined file name, cleaned of illegal characters
-  * @return string
-  */
-  public function get_file_name() {
-    return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name) . "." . $this->output;
-  }
   
   /**
   * Produce the  final output
@@ -1522,7 +1571,7 @@ class Mappr {
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false); 
         header("Content-Type: image/tiff");
-        header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         header("Content-Transfer-Encoding: binary");
         header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
@@ -1540,7 +1589,7 @@ class Mappr {
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false); 
         header("Content-Type: image/png");
-        header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         header("Content-Transfer-Encoding: binary");
         header("Content-Length: ".filesize($this->tmp_path.$image_filename));
         ob_clean();
@@ -1555,7 +1604,7 @@ class Mappr {
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private",false); 
         header("Content-Type: image/svg+xml");
-        header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . "\";" );
+        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         $this->image->saveImage("");
         exit();
       break;
@@ -1630,49 +1679,6 @@ class Mappr {
      $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
      return $newPoint;
    }
-
-  /**
-  * Remove empty lines from a string
-  * @param $string
-  * @return string cleansed string with empty lines removed
-  */
-  public function remove_empty_lines($string) {
-    return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
-  }
-
-  /**
-  * Check a DD coordinate object and return true if it fits on globe, false if not
-  * @param obj $coord (x,y) coordinates
-  * @return true,false
-  */
-  public function check_coord($coord) {
-    $output = false;
-    if($coord->x && $coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
-    return $output;
-  }
-
-  /**
-  * Convert a coordinate in dms to deg
-  * @param string $dms coordinate
-  * @return float
-  */
-  public function dms_to_deg($dms) {
-    $dms = stripslashes($dms);
-    $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
-    $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
-    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); //TODO: check this for minutes or seconds wih decimals
-    if (!$parts) { return; }
-    // parts: 0 = degree, 1 = minutes, 2 = seconds
-    $d = isset($parts[0]) ? (float)$parts[0] : 0;
-    $m = isset($parts[1]) ? (float)$parts[1] : 0;
-    if(strpos($dms, ".") > 1 && isset($parts[2])) {
-      $m = (float)($parts[1] . '.' . $parts[2]);
-      unset($parts[2]);
-    }
-    $s = isset($parts[2]) ? (float)$parts[2] : 0;
-    $dec = ($d + ($m/60) + ($s/3600))*$neg; 
-    return $dec;
-  }
   
   /**
   * Test if has errors

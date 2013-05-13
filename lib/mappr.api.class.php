@@ -191,9 +191,9 @@ class MapprApi extends Mappr {
         foreach ($coords as $coord) {
           if(is_array($coord) && array_key_exists(0, $coord) && array_key_exists(1, $coord)) {
             $_coord = new stdClass;
-            $_coord->y = $this->clean_coord($coord[0]);
-            $_coord->x = $this->clean_coord($coord[1]);
-            if($this->check_coord($_coord)) {
+            $_coord->y = parent::clean_coord($coord[0]);
+            $_coord->x = parent::clean_coord($coord[1]);
+            if(parent::check_coord($_coord)) {
               $mcoord_point = ms_newPointObj();
               $mcoord_point->setXY($_coord->x, $_coord->y);
               $mcoord_line->add($mcoord_point);
@@ -225,7 +225,7 @@ class MapprApi extends Mappr {
 
       //grab the data for regions & split
       $whole = trim($this->regions['data']);
-      $rows = explode("\n",$this->remove_empty_lines($whole));
+      $rows = explode("\n",parent::remove_empty_lines($whole));
       $qry = array();
       foreach($rows as $row) {
         $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -452,9 +452,9 @@ class MapprApi extends Mappr {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
     $coord_array = array();
     foreach($this->points as $rows) {
-      $row = preg_split("/[\r\n]|(\\\[rn])/",urldecode($this->remove_empty_lines($rows)));
+      $row = preg_split("/[\r\n]|(\\\[rn])/",urldecode(parent::remove_empty_lines($rows)));
       foreach(str_replace("\\", "", $row) as $point) {
-        $this->coord_cols[$num_cols][] = $this->coord_array($point);
+        $this->coord_cols[$num_cols][] = parent::make_coordinates($point);
       }
       $num_cols++;
     }
@@ -476,13 +476,13 @@ class MapprApi extends Mappr {
           for($i=0;$i<$num_cols;$i++) {
             if(array_key_exists($i, $cols)) {
               $cols[$i] = preg_replace('/[\p{Z}\s]/u', ' ', $cols[$i]);
-              $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEW°dms\'"]/i', '', $cols[$i]));
-              if(preg_match('/[NSEW]/', $cols[$i]) != 0) {
+              $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $cols[$i]));
+              if(preg_match('/[NSEWO]/', $cols[$i]) != 0) {
                 $coord = preg_split("/[,;]/", $cols[$i]);
-                $coord = (preg_match('/[EW]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
+                $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
                 $this->coord_cols[$i][] = array(
-                  $this->dms_to_deg(trim($coord[0])),
-                  $this->dms_to_deg(trim($coord[1]))
+                  parent::dms_to_deg(trim($coord[0])),
+                  parent::dms_to_deg(trim($coord[1]))
                 );
               } else {
                 $this->coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);

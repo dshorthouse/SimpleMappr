@@ -26,24 +26,18 @@ include_once 'PHPWord/IOFactory.php';
 
 class MapprDocx extends Mappr {
 
-  /**
-  * Get a user-defined file name, cleaned of illegal characters
-  * @return string
-  */
-  public function get_file_name() {
-    return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name);
-  }
-
   public function get_output() {
       $objPHPWord = new PHPWord();
+
+      $clean_filename = parent::clean_filename($this->file_name);
 
       // Set properties
       $objPHPWord->getProperties()->setCreator("SimpleMappr");
       $objPHPWord->getProperties()->setLastModifiedBy("SimpleMappr");
-      $objPHPWord->getProperties()->setTitle($this->get_file_name());
-      $objPHPWord->getProperties()->setSubject($this->get_file_name() . " point map");
-      $objPHPWord->getProperties()->setDescription($this->get_file_name() . ", generated on SimpleMappr, http://www.simplemappr.net");
-      $objPHPWord->getProperties()->setKeywords($this->get_file_name() . " SimpleMappr");
+      $objPHPWord->getProperties()->setTitle($clean_filename);
+      $objPHPWord->getProperties()->setSubject($clean_filename . " point map");
+      $objPHPWord->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+      $objPHPWord->getProperties()->setKeywords($clean_filename . " SimpleMappr");
 
       // Create section
       $section = $objPHPWord->createSection();
@@ -77,7 +71,7 @@ class MapprDocx extends Mappr {
       header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
       header("Cache-Control: private",false);
       header("Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-      header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . ".docx\";" );
+      header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";" );
       header("Content-Transfer-Encoding: binary");
       $objWriter = PHPWord_IOFactory::createWriter($objPHPWord, 'Word2007');
       $objWriter->save('php://output');

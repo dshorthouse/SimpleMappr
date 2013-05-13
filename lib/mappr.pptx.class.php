@@ -30,24 +30,18 @@ class MapprPptx extends Mappr {
 
   private $slidepadding = 25;
 
-  /**
-  * Get a user-defined file name, cleaned of illegal characters
-  * @return string
-  */
-  public function get_file_name() {
-    return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name);
-  }
-
   public function get_output() {
       $objPHPPowerPoint = new PHPPowerPoint();
+
+      $clean_filename = parent::clean_filename($this->file_name);
 
       // Set properties
       $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
       $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
-      $objPHPPowerPoint->getProperties()->setTitle($this->get_file_name());
-      $objPHPPowerPoint->getProperties()->setSubject($this->get_file_name() . " point map");
-      $objPHPPowerPoint->getProperties()->setDescription($this->get_file_name() . ", generated on SimpleMappr, http://www.simplemappr.net");
-      $objPHPPowerPoint->getProperties()->setKeywords($this->get_file_name() . " SimpleMappr");
+      $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
+      $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
+      $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+      $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
 
       // Create slide
       $currentSlide = $objPHPPowerPoint->getActiveSlide();
@@ -76,8 +70,8 @@ class MapprPptx extends Mappr {
       foreach($files as $type => $value) {
         $size = getimagesize($value['file']);
         $shape = $currentSlide->createDrawingShape();
-        $shape->setName('SimpleMappr ' . $this->get_file_name());
-        $shape->setDescription('SimpleMappr ' . $this->get_file_name());
+        $shape->setName('SimpleMappr ' . $clean_filename);
+        $shape->setDescription('SimpleMappr ' . $clean_filename);
         $shape->setPath($value['file']);
         $shape->setWidth(round($value['size'][0]/$scale));
         $shape->setHeight(round($value['size'][1]/$scale));
@@ -115,7 +109,7 @@ class MapprPptx extends Mappr {
       header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
       header("Cache-Control: private",false);
       header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation");
-      header("Content-Disposition: attachment; filename=\"" . $this->get_file_name() . ".pptx\";" );
+      header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
       header("Content-Transfer-Encoding: binary");
       $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
       $objWriter->save('php://output');

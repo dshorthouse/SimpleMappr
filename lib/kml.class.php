@@ -19,6 +19,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **************************************************************************/
 
+require_once('mappr.class.php');
+
 class Kml {
 
   public static $pushpins = array(
@@ -61,7 +63,9 @@ class Kml {
   */
   public function generate_kml() {
 
-    $this->set_metadata("name", "SimpleMappr: " . $this->get_filename());
+    $clean_filename = Mappr::clean_filename($this->file_name);
+
+    $this->set_metadata("name", "SimpleMappr: " . $clean_filename);
 
     $this->add_coordinates();
     
@@ -72,7 +76,7 @@ class Kml {
     header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
     header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
-    header("Content-disposition: attachment; filename=" . $this->get_filename() . ".kml");
+    header("Content-disposition: attachment; filename=" . $clean_filename . ".kml");
     $this->kml->openURI('php://output');
     
     $this->kml->startDocument('1.0', 'UTF-8');
@@ -147,7 +151,7 @@ class Kml {
   * @param string $name
   * @param string $value
   */
-  public function set_placeMark($key=0, $mark=0, $name, $value) {
+  public function set_placemark($key=0, $mark=0, $name, $value) {
     $this->placemark[$key][$mark][$name] = $value;
   }
 
@@ -178,25 +182,8 @@ class Kml {
   private function load_param($name, $default = ''){
     if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) return $default;
     $value = $_REQUEST[$name];
-    if(get_magic_quotes_gpc() != 1) $value = $this->add_slashes_extended($value);
+    if(get_magic_quotes_gpc() != 1) $value = Mappr::add_slashes_extended($value);
     return $value;
-  }
-
-  /**
-  * Add slashes to either a string or an array
-  * @param string/array $arr_r
-  * @return string/array
-  */
-  private function add_slashes_extended(&$arr_r) {
-    if(is_array($arr_r)) {
-      foreach ($arr_r as &$val) {
-        is_array($val) ? $this->add_slashes_extended($val) : $val = addslashes($val);
-      }
-      unset($val);
-    } else {
-      $arr_r = addslashes($arr_r);
-    }
-    return $arr_r;
   }
 
   /**
@@ -208,23 +195,15 @@ class Kml {
 
       if(trim($this->coords[$j]['data'])) {
         $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-        $row = explode("\n",$this->remove_empty_lines($whole));  //split the lines that have data
+        $row = explode("\n",Mappr::remove_empty_lines($whole));  //split the lines that have data
 
         $point_key = 0;
         foreach ($row as $loc) {
-          $loc = preg_replace('/[\p{Z}\s]/u', ' ', $loc);
-          $loc = trim(preg_replace('/[^\d\s,;.\-NSEW°dm\'"]/i', '', $loc));
-          if(preg_match('/[NSEWO]/', $loc) != 0) {
-            $coord = preg_split("/[,;]/", $loc);
-            $coord = (preg_match('/[EWO]/i', $coord[1]) != 0) ? $coord : array_reverse($coord);
-            $coord_array = array($this->dms_to_deg(trim($coord[0])),$this->dms_to_deg(trim($coord[1])));
-          } else {
-            $coord_array = preg_split("/[\s,;]+/",$loc);
-          }
+          $coord_array = Mappr::make_coordinates($loc);
           $coord = new stdClass();
-          $coord->x = array_key_exists(1, $coord_array) ? $this->clean_coord($coord_array[1]) : "nil";
-          $coord->y = array_key_exists(0, $coord_array) ? $this->clean_coord($coord_array[0]) : "nil";
-          if($this->check_coord($coord) && $title != "") {  //only add point when data are good & a title
+          $coord->x = array_key_exists(1, $coord_array) ? Mappr::clean_coord($coord_array[1]) : "nil";
+          $coord->y = array_key_exists(0, $coord_array) ? Mappr::clean_coord($coord_array[0]) : "nil";
+          if(Mappr::check_coord($coord) && $title != "") {  //only add point when data are good & a title
             $this->set_placemark($j, $point_key, "name", $title);
             $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
             $point_key++;
@@ -232,57 +211,6 @@ class Kml {
         }
       }
     }
-  }
-
-  private function clean_coord($coord) {
-    return preg_replace('/[^\d.-]/i', '', $coord);
-  }
-
-  /**
-  * Remove empty lines from a string
-  * @param $string
-  * @return string cleansed string with empty lines removed
-  */
-  private function remove_empty_lines($string) {
-    return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
-  }
-
-  /**
-  * Check a DD coordinate object and return true if it fits on globe, false if not
-  * @param obj $coord (x,y) coordinates
-  * @return true,false
-  */
-  private function check_coord($coord) {
-    $output = false;
-    if((float)$coord->x && (float)$coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
-    return $output;
-  }
-
-  /**
-   * Convert a coordinate in dms to deg
-   * @param string $dms coordinate
-   * @return float
-   */
-  private function dms_to_deg($dms) {
-    $dms = stripslashes($dms);
-    $neg = (preg_match('/[SWO]/', $dms) == 0) ? 1 : -1;
-    $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
-    $parts = preg_split('/(\d{1,3})[,°d ]?(\d{0,2})(?:[,°d ])[.,\'m ]?(\d{0,2})(?:[.,\'m ])[,"s ]?(\d{0,})(?:[,"s ])?/i', $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-    if (!$parts) { return; }
-    // parts: 0 = degree, 1 = minutes, 2 = seconds
-    $d = isset($parts[0]) ? (float)$parts[0] : 0;
-    $m = isset($parts[1]) ? (float)$parts[1] : 0;
-    if(strpos($dms, ".") > 1 && isset($parts[2])) {
-      $m = (float)($parts[1] . '.' . $parts[2]);
-      unset($parts[2]);
-    }
-    $s = isset($parts[2]) ? (float)$parts[2] : 0;
-    $dec = ($d + ($m/60) + ($s/3600))*$neg; 
-    return $dec;
-  }
-
-  private function get_filename() {
-    return preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $this->file_name);
   }
 
 }
