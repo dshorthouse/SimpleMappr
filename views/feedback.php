@@ -22,7 +22,7 @@ $tweet = ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 <!-- Disqus BEGIN -->
 <div id="disqus_thread"></div>
 <div id="fb-root"></div>
-<script type="text/javascript">
+<script async>
   var disqus_shortname = 'simplemappr',
   disqus_config = function() { this.language = "<?php echo $locale['canonical']; ?>"; };
   window.___gcfg = {lang: '<?php echo $locale['canonical']; ?>'};

@@ -223,8 +223,8 @@ class Header {
   * Create the javascript header
   */
   public function getJSFooter() {
-    $header  = "<script type=\"text/javascript\" src=\"public/javascript/head.load.min.js\"></script>" . "\n";
-    $header .= "<script type=\"text/javascript\">";
+    $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+    $header .= "<script>";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
     $header .= "head.js(";
@@ -254,7 +254,7 @@ class Header {
   private function getJanrain() {
     $locale = $this->getLocale();
     $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
-    $janrain  = "<script type=\"text/javascript\">" . "\n";
+    $janrain  = "<script async>" . "\n";
     $janrain .= "(function(w,d) {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};

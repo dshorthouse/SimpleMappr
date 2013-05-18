@@ -15,8 +15,8 @@ Session::select_locale();
 #country-codes{position:relative;width:200px;}
 #country-codes .mapper-loading-message{left:5%;}
 </style>
-<script type="text/javascript" src="../public/javascript/jquery.waypoints.min.js"></script>
-<script type="text/javascript">
+<script async src="../public/javascript/jquery.waypoints.min.js"></script>
+<script>
 $(function () {
   $('#map-help').waypoint(function() {
     var data = {},

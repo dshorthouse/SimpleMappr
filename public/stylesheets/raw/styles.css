@@ -112,7 +112,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #actionsBar a.map-save:before, #map-help dt.map-save:before{background-position:-240px -284px;}
 #actionsBar a.map-embed{display:none;}
 #actionsBar a.map-embed:before, #map-help dt.map-embed:before{background-position:-220px -284px;}
-#actionsBar #mapTitle{margin:0 0 0 20px;padding:0;font-style:italic;font-size:1em;display:inline;height:1.3em;line-height:1.3em;}
+#actionsBar #mapTitle{margin:0 0 0 10px;padding:0;font-style:italic;font-size:1em;display:inline;height:1.3em;line-height:1.3em;}
 #actionsBar #map-saveDialog{display:inline;position:absolute;right:0px;}
 .customJzoom .jcrop-vline, .customJzoom .jcrop-hline{background-color:#ff0000;}
 .jcrop-coord{position:absolute;border:1px solid #aaa;background-color:#e0e0e0;opacity:0.6;padding:3px;z-index:500;border-radius:4px;width:100px;font-size:0.7em !important;}
