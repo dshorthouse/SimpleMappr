@@ -501,6 +501,10 @@ msgstr "plus"
 msgid "cross"
 msgstr "croix"
 
+#: .index.php:335
+msgid "asterisk"
+msgstr "astérisque"
+
 #: .index.php:336
 msgid "solid"
 msgstr "plein"
