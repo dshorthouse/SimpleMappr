@@ -1203,6 +1203,7 @@ class Mappr {
             $class = ms_newClassObj($layer);
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200,200,200);
+          break;
 
           case 'conservation':
             $class = ms_newClassObj($layer);
