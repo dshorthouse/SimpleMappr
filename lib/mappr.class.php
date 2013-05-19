@@ -1202,7 +1202,7 @@ class Mappr {
           case 'oceans':
             $class = ms_newClassObj($layer);
             $style = ms_newStyleObj($class);
-            $style->color->setRGB(200,200,200);
+            $style->color->setRGB(220,220,220);
           break;
 
           case 'conservation':
