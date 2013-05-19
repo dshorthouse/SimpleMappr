@@ -88,7 +88,7 @@ Session::select_locale();
     <dd><?php echo _("comma-separated RGB fill colors for shaded places"); ?> <span class="api-example"><em>e.g.</em> shade[color]=150,150,150</span></dd>
 
     <dt>layers</dt>
-    <dd><?php echo _("comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, placenames"); ?> <span class="api-example"><em>e.g.</em> layers=lakes,stateprovinces</span></dd>
+    <dd><?php echo _("comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames"); ?> <span class="api-example"><em>e.g.</em> layers=lakes,stateprovinces</span></dd>
 
     <dt>projection</dt>
     <dd><?php echo sprintf(_("the output projection in either EPSG or ESRI references. See %s for spatial references. Accepted projections are:"), "<a href=\"http://spatialreference.org/\">http://spatialreference.org/</a>"); ?> <?php foreach(MAPPR::$accepted_projections as $key => $value) { print $key . ' (=' . $value['name'] . '), '; } ?><span class="api-example"><em>e.g.</em> projection=esri:102009</span></dd>
