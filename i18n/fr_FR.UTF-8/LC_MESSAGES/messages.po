@@ -259,6 +259,11 @@ msgstr "lacs (contour)"
 msgid "lakes (greyscale)"
 msgstr "lacs (plein)"
 
+#: .index.php:131
+#: .tabs/help.php:77
+msgid "oceans (greyscale)"
+msgstr "océans (plein)"
+
 #: .index.php:132
 #: .index.php:141
 #: .tabs/help.php:80
@@ -643,6 +648,14 @@ msgid "May 9, 2013"
 msgstr "9 mai, 2013"
 
 #: .tabs/about.php:11
+msgid "Improvements: Added an option for a greyscale ocean layer."
+msgstr "Améliorations: ajouté une option pour une couche océan gris."
+
+#: .tabs/about.php:11
+msgid "May 19, 2013"
+msgstr "19 mai, 2013"
+
+#: .tabs/about.php:11
 msgid "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler."
 msgstr "Améliorations: ajouté l'option de spécifié 1 degré pour l'espacement des réticules. Demandé par Michael Tessler."
 
@@ -870,6 +883,10 @@ msgstr "superposer les lacs en polygones gris"
 #: .tabs/help.php:81
 msgid "select this checkbox to overlay rivers as black outlines"
 msgstr "superposer les rivières sous forme de contours noirs"
+
+#: .tabs/help.php:78
+msgid "select this checkbox to overlay oceans as greyscale polygons"
+msgstr "superposer les océans en polygones gris"
 
 #: .tabs/help.php:84
 msgid "select this checkbox to render a color, shaded relief layer"

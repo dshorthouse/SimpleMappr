@@ -621,6 +621,13 @@ class Mappr {
       'sort'  => 3
     );
 
+    //lakes
+    $this->shapes['oceans'] = array(
+      'shape' => $this->shape_path . "/10m_physical/ne_10m_ocean",
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 3
+    );
+
     $this->shapes['conservation'] = array(
       'shape' => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
       'type'  => MS_LAYER_POLYGON,
@@ -1191,6 +1198,11 @@ class Mappr {
             $style = ms_newStyleObj($class);
             $style->color->setRGB(120,120,120);
           break;
+
+          case 'oceans':
+            $class = ms_newClassObj($layer);
+            $style = ms_newStyleObj($class);
+            $style->color->setRGB(200,200,200);
 
           case 'conservation':
             $class = ms_newClassObj($layer);

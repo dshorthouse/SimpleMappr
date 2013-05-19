@@ -81,6 +81,9 @@ $(function () {
     <dt><?php echo _("rivers"); ?>:</dt>
     <dd><?php echo _("select this checkbox to overlay rivers as black outlines"); ?></dd>
 
+    <dt><?php echo _("oceans (greyscale)"); ?>:</dt>
+    <dd><?php echo _("select this checkbox to overlay oceans as greyscale polygons"); ?></dd>
+
     <dt><?php echo _("relief"); ?>:</dt>
     <dd><?php echo _("select this checkbox to render a color, shaded relief layer"); ?></dd>
 

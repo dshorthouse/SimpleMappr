@@ -65,7 +65,7 @@
 <p><?php echo _("Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
 </div>
 <div id="fieldSetsPoints" class="fieldSets">
-<?php $this->partial("layers"); ?>
+<?php $this->partial("point_layers"); ?>
 </div>
 <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
 <div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
@@ -139,6 +139,7 @@
 <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> <label for="lakesOutline"><?php echo _("lakes (outline)"); ?></label></li>
 <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> <label for="lakes"><?php echo _("lakes (greyscale)"); ?></label></li>
 <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <label for="rivers"><?php echo _("rivers"); ?></label></li>
+<li><input type="checkbox" id="oceans" class="layeropt" name="layers[oceans]" /> <label for="oceans"><?php echo _("oceans (greyscale)"); ?></label></li>
 <li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> <label for="relief"><?php echo _("relief"); ?></label></li>
 <li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> <label for="reliefgrey"><?php echo _("relief (greyscale)"); ?></label></li>
 <li><input type="checkbox" id="conservation" class="layeropt" name="layers[conservation]" /> <label for="conservation"><?php echo _("biodiv. hotspots"); ?></label></li>
