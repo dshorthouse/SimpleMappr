@@ -192,6 +192,7 @@ class Mappr {
   public static $accepted_shapes = array(
     'plus',
     'cross',
+    'asterisk',
     'opencircle',
     'openstar',
     'opensquare',
@@ -561,6 +562,27 @@ class Mappr {
           -99, -99,
           0, 1,
           1, 0
+      );
+      $symbol->setpoints($spoints);
+
+      //asterisk
+      $nId = ms_newSymbolObj($this->map_obj, "asterisk");
+      $symbol = $this->map_obj->getSymbolObjectById($nId);
+      $symbol->set("type", MS_SYMBOL_VECTOR);
+      $symbol->set("filled", MS_FALSE);
+      $symbol->set("inmapfile", MS_TRUE);
+      $spoints = array(
+          0, 0,
+          1, 1,
+          -99, -99,
+          0, 1,
+          1, 0,
+          -99, -99,
+          0.5, 0,
+          0.5, 1,
+          -99, -99,
+          0, 0.5,
+          1, 0.5
       );
       $symbol->setpoints($spoints);
 

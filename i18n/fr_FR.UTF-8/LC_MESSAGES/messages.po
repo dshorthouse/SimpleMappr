@@ -648,8 +648,8 @@ msgid "May 9, 2013"
 msgstr "9 mai, 2013"
 
 #: .tabs/about.php:11
-msgid "Improvements: Added an option for a greyscale ocean layer."
-msgstr "Améliorations: ajouté une option pour une couche océan gris."
+msgid "Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option."
+msgstr "Améliorations: ajouté une option pour une couche océan gris et une astérisque pour les points de données."
 
 #: .tabs/about.php:11
 msgid "May 19, 2013"

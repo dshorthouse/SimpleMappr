@@ -13,6 +13,7 @@ function point_layers() {
   $marker_shape  = '<option value="">'._("--select--").'</option>';
   $marker_shape .= '<option value="plus">'._("plus").'</option>';
   $marker_shape .= '<option value="cross">'._("cross").'</option>';
+  $marker_shape .= '<option value="asterisk">'._("asterisk").'</option>';
   $marker_shape .= '<optgroup label="'._("solid").'">';
   $marker_shape .= '<option value="circle" selected="selected">'._("circle (s)").'</option>';
   $marker_shape .= '<option value="star">'._("star (s)").'</option>';
