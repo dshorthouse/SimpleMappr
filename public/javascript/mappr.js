@@ -1,7 +1,7 @@
 /*
  * jQuery SimpleMappr
  */
-/*global $, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
+/*global $, Mappr, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
 var Mappr = Mappr || { 'settings': {} };
 
 $(function() {
