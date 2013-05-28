@@ -685,8 +685,7 @@ $(function() {
     });
 
     $('#projection').change(function() {
-      var origin_sel = $('#origin-selector'),
-          selected   = $('option:selected', this);
+      var origin_sel = $('#origin-selector');
 
       if($(this).val() !== "") {
         $('#origin').val(self.vars.origins[$(this).val()]);
