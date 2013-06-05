@@ -22,8 +22,8 @@ $(function () {
     var data = {},
         elem = $('#country-codes').css("width", "100%");
 
-    if (Mappr.getParameterByName("locale")) { data.locale = Mappr.getParameterByName("locale"); }
-    if($('#country-codes').html().length === 0) { Mappr.loadCodes(elem, data); }
+    if (SimpleMappr.getParameterByName("locale")) { data.locale = SimpleMappr.getParameterByName("locale"); }
+    if($('#country-codes').html().length === 0) { SimpleMappr.loadCodes(elem, data); }
   });
 });
 </script>

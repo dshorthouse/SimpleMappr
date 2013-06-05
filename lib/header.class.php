@@ -34,26 +34,27 @@ class Header {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'jquery'    => 'public/javascript/jquery-1.8.3.min.js',
-    'jquery_ui' => 'public/javascript/jquery-ui-1.8.24.min.js',
-    'color'     => 'public/javascript/jquery.colorpicker.min.js',
-    'jcrop'     => 'public/javascript/jquery.Jcrop.min.js',
-    'textarea'  => 'public/javascript/jquery.textarearesizer.compressed.js',
-    'cookie'    => 'public/javascript/jquery.cookie.min.js',
-    'download'  => 'public/javascript/jquery.download.min.js',
-    'clearform' => 'public/javascript/jquery.clearform.min.js',
-    'tipsy'     => 'public/javascript/jquery.tipsy.min.js',
-    'hotkeys'   => 'public/javascript/jquery.hotkeys.min.js',
-    'slider'    => 'public/javascript/jquery.tinycircleslider.min.js',
-    'jstorage'  => 'public/javascript/jstorage.min.js',
-    'serialize' => 'public/javascript/jquery.serializeJSON.min.js',
-    'bbq'       => 'public/javascript/jquery.ba-bbq.min.js',
-    'mappr'     => 'public/javascript/mappr.min.js'
+    'jquery'      => 'public/javascript/jquery-1.10.0.min.js',
+    'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.min.js',
+    'color'       => 'public/javascript/jquery.colorpicker.min.js',
+    'jcrop'       => 'public/javascript/jquery.Jcrop.min.js',
+    'textarea'    => 'public/javascript/jquery.textarearesizer.compressed.js',
+    'cookie'      => 'public/javascript/jquery.cookie.min.js',
+    'download'    => 'public/javascript/jquery.download.min.js',
+    'clearform'   => 'public/javascript/jquery.clearform.min.js',
+    'tipsy'       => 'public/javascript/jquery.tipsy.min.js',
+    'hotkeys'     => 'public/javascript/jquery.hotkeys.min.js',
+    'slider'      => 'public/javascript/jquery.tinycircleslider.min.js',
+    'jstorage'    => 'public/javascript/jstorage.min.js',
+    'serialize'   => 'public/javascript/jquery.serializeJSON.min.js',
+    'bbq'         => 'public/javascript/jquery.ba-bbq.min.js',
+     'toggle'     => 'public/javascript/jquery.toggleClick.min.js',
+    'simplemappr' => 'public/javascript/simplemappr.min.js'
   );
 
   public static $remote_js_files = array(
-    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
-    'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js',
+    'jquery'    => '//code.jquery.com/jquery-1.10.0.min.js',
+    'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js',
     'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
 
@@ -132,7 +133,7 @@ class Header {
       $this->addJS("ga", "//google-analytics.com/ga.js");
     } else {
       foreach(self::$local_js_files as $key => $js_file) {
-        if($key == "mappr") { $js_file = str_replace(".min", "",$js_file); }
+        if($key == "simplemappr") { $js_file = str_replace(".min", "",$js_file); }
         $this->addJS($key, $js_file);
       }
     }
@@ -226,7 +227,7 @@ class Header {
     $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script>";
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-    $namespace = (ENVIRONMENT == "production") ? "compiled" : "mappr";
+    $namespace = (ENVIRONMENT == "production") ? "compiled" : "simplemappr";
     $header .= "head.js(";
     $counter = 1;
     foreach($this->js_header as $key => $file) {
@@ -235,7 +236,7 @@ class Header {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(Mappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); });";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(SimpleMappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); });";
     $header .= "</script>" . "\n";
     echo $header;
   }

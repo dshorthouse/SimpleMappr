@@ -141,10 +141,10 @@ $(function() {
 
           $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
-          $('.jcrop-coord').live("blur", function() {
+          $('.jcrop-coord').blur(function() {
             if(!self.vars.cropUpdated) { self.vars.cropUpdated = self.updateCropCoordinates(); }
           })
-          .live("keypress", function(e) {
+          .keypress(function(e) {
             var key = e.keyCode || e.which;
             if(key === 13 || key === 9) {
               e.preventDefault();
@@ -153,10 +153,10 @@ $(function() {
             }
           });
 
-          $('.jcrop-dimension').live("blur", function() {
+          $('.jcrop-dimension').blur(function() {
             if(!self.vars.cropUpdated) { self.vars.cropUpdated = self.updateCropDimensions(); }
           })
-          .live("keypress", function(e) {
+          .keypress(function(e) {
             var key = e.keyCode || e.which;
             if(key === 13 || key === 9) {
               e.preventDefault();
@@ -617,12 +617,12 @@ $(function() {
       });
 
       $('.gridopt').click(function() {
-        if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
+        if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         self.hardResetShowMap();
       });
 
       $('#gridlabel').click(function() {
-        if(!$('#graticules').prop('checked')) { $('#graticules').attr('checked', true); }
+        if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         if($(this).prop('checked')) { $(this).val('false'); }
         self.hardResetShowMap();
       });
@@ -691,18 +691,18 @@ $(function() {
     toggleFileType: function(obj) {
       if($(obj).attr("id") === 'download-svg' || $(obj).attr("id") === 'download-pptx' || $(obj).attr("id") === 'download-docx') {
         $.each(["legend", "scalebar"], function() {
-          $('#'+this).attr("checked", false).attr("disabled", "disabled");
+          $('#'+this).prop("checked", true).prop("disabled", true);
         });
         $.each(["border", "scalelinethickness"], function() {
-          $('#'+this).removeAttr("disabled");
+          $('#'+this).prop("disabled", false);
         });
       } else if($(obj).attr("id") === 'download-kml') {
         $.each(["legend", "scalebar", "border", "scalelinethickness"], function() {
-          $('#'+this).attr("checked", false).attr("disabled", "disabled");
+          $('#'+this).prop("checked", true).prop("disabled", true);
         });
       } else {
         $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
-          $('#'+this).removeAttr("disabled");
+          $('#'+this).prop("disabled", false);
         });
       }
     },
@@ -866,9 +866,6 @@ $(function() {
 
       vars.jzoomAPI = $.Jcrop('#mapOutputImage', {
         addClass      : "customJzoom",
-        sideHandles   : false,
-        cornerHandles : false,
-        dragEdges     : false,
         bgOpacity     : 1,
         bgColor       : "white",
         onChange      : self.bindCallback(self, self.showCoords),
@@ -888,9 +885,6 @@ $(function() {
 
       vars.jqueryAPI = $.Jcrop('#mapOutputImage', {
         addClass      : "customJzoom",
-        sideHandles   : false,
-        cornerHandles : false,
-        dragEdges     : false,
         bgOpacity     : 1,
         bgColor       :'white',
         onChange      : self.bindCallback(self, self.showCoords),
@@ -962,7 +956,7 @@ $(function() {
                 num_fieldsets = $('.fieldset-regions').length;
 
             $.each($('.fieldset-regions'), function(i) {
-              if(i === (num_fieldsets-1) && !$('button[data-type="regions"]').is(':disabled')) {
+              if(i === (num_fieldsets-1) && !$('button[data-type="regions"]').prop('disabled')) {
                 self.addAccordionPanel('regions');
                 num_fieldsets += 1;
               }
@@ -1102,7 +1096,7 @@ $(function() {
         }
 
         if(counter >= self.settings.maxTextareaCount-3) {
-          button.attr("disabled","disabled");
+          button.prop("disabled", true);
         }
 
       }
@@ -1121,7 +1115,7 @@ $(function() {
         $(this).find("input.colorPicker").attr("name", data_type + "["+(num-2).toString()+"][color]");
       });
       clone.remove();
-      button.removeAttr("disabled");
+      button.prop("disabled", false);
     },
 
     addGrippies: function(obj) {
@@ -1319,7 +1313,7 @@ $(function() {
       this.removeExtraElements();
       $('#form-mapper').clearForm();
       $.each(['width', 'height'], function() { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
-      $('.addmore').removeAttr("disabled");
+      $('.addmore').prop("disabled", false);
       $('#filter-mymaps').val(filter);
       $('#origin-selector').hide();
       this.loadCoordinates(data);
@@ -1393,14 +1387,14 @@ $(function() {
       self.resetJbbox();
 
       $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
-        $('#'+this).attr('checked', false);
+        $('#'+this).prop('checked', false);
         $('input[name="options['+this+']"]').val("");
       });
 
       if(data.map.options !== undefined) {
         $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
           if(data.map.options[this] && data.map.options[this] !== undefined) {
-            $('#'+this).attr('checked', true);
+            $('#'+this).prop('checked', true);
             $('input[name="options['+this+']"]').val(1);
           }
         });
@@ -1408,30 +1402,30 @@ $(function() {
 
       if(data.map.download_factor !== undefined && data.map.download_factor) {
         $('input[name="download_factor"]').val(data.map.download_factor);
-        $('#download-factor-' + data.map.download_factor).attr('checked', true);
+        $('#download-factor-' + data.map.download_factor).prop('checked', true);
       } else {
-        $('#download-factor-3').attr('checked', true);
+        $('#download-factor-3').prop('checked', true);
       }
 
       if(data.map.download_filetype !== undefined && data.map.download_filetype) {
         $('input[name="download_filetype"]').val(data.map.download_filetype);
-        download_filetype = $('#download-' + data.map.download_filetype).attr('checked', true);
+        download_filetype = $('#download-' + data.map.download_filetype).prop('checked', true);
         self.toggleFileType(download_filetype);
       } else {
-        $('#download-svg').attr('checked', true);
+        $('#download-svg').prop('checked', true);
       }
 
       if(data.map.grid_space !== undefined && data.map.grid_space) {
-        $('input[name="gridspace"]').attr('checked', false);
-        $('#gridspace-' + data.map.grid_space).attr('checked', true);
+        $('input[name="gridspace"]').prop('checked', true);
+        $('#gridspace-' + data.map.grid_space).prop('checked', true);
       } else {
-        $('#gridspace').attr('checked', true);
+        $('#gridspace').prop('checked', true);
       }
 
       if(data.map.gridlabel !== undefined && data.map.gridlabel) {
-        $('input[name="gridlabel"]').attr('checked', true).val('false');
+        $('input[name="gridlabel"]').prop('checked', true).val('false');
       } else {
-        $('#gridlabel').attr('checked', false);
+        $('#gridlabel').prop('checked', true);
       }
     },
 
@@ -1504,7 +1498,8 @@ $(function() {
     loadLayers: function(data) {
       if(data.map.layers) {
         $.each(data.map.layers, function(k,v) {
-          $('input[name="layers['+k+']"]').attr('checked', true);
+          console.log(k);
+          $('input[name="layers['+k+']"]').prop('checked', true);
         });
       }
     },
@@ -1526,6 +1521,7 @@ $(function() {
         $('#mapEmbed').find("span.mid").text(mid).end()
                       .dialog({
                         width         : '525',
+                        dialogClass   : 'ui-dialog-title-mapEmbed',
                         autoOpen      : true,
                         modal         : true,
                         closeOnEscape : false,
@@ -1552,6 +1548,7 @@ $(function() {
       $('#mapper-message-delete').find('span').html(message).end().dialog({
         height        : '250',
         width         : '500',
+        dialogClass   : 'ui-dialog-title-mapper-message-delete',
         modal         : true,
         closeOnEscape : false,
         draggable     : true,
@@ -1648,6 +1645,7 @@ $(function() {
       $('#mapper-message-delete').find("span").html(message).end().dialog({
         height        : '250',
         width         : '500',
+        dialogClass   : 'ui-dialog-title-mapper-message-delete',
         modal         : true,
         closeOnEscape : false,
         draggable     : true,
@@ -1697,6 +1695,7 @@ $(function() {
         autoOpen      : true,
         height        : '175',
         width         : '350',
+        dialogClass   : 'ui-dialog-title-mapSave',
         modal         : true,
         closeOnEscape : false,
         draggable     : true,
@@ -1766,6 +1765,7 @@ $(function() {
       $('#mapExport').dialog({
         autoOpen      : true,
         width         : '620',
+        dialogClass   : 'ui-dialog-title-mapExport',
         modal         : true,
         closeOnEscape : false,
         draggable     : true,
@@ -1820,7 +1820,7 @@ $(function() {
 
     bindPanelToggle: function() {
       var self = this;
-      $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggle(function(e) {
+      $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggleClick(function(e) {
         e.preventDefault();
         $('#mapOutputImage').attr("width", 0).attr("height", 0);
         $('#mapOutputScale').hide();
@@ -1854,6 +1854,7 @@ $(function() {
         autoOpen      : true,
         height        : '200',
         width         : '400',
+        dialogClass   : 'ui-dialog-title-mapper-message',
         modal         : true,
         closeOnEscape : false,
         draggable     : true,
@@ -1989,6 +1990,7 @@ $(function() {
         autoOpen      : false,
         height        : '200',
         width         : '500',
+        dialogClass   : 'ui-dialog-title-badRecordsViewer',
         position      : [200, 200],
         modal         : true,
         closeOnEscape : false,
@@ -2099,8 +2101,9 @@ $(function() {
       var message = '<img src="public/images/help-data.png" alt="" />';
 
       $('#mapper-message-help').html(message).dialog({
-        height        : '350',
+        height        : '355',
         width         : '525',
+        dialogClass   : 'ui-dialog-title-mapper-message-help',
         autoOpen      : true,
         modal         : true,
         closeOnEscape : false,
@@ -2124,6 +2127,7 @@ $(function() {
       $('#mapper-message-codes').dialog({
         height        : '450',
         width         : '850',
+        dialogClass   : 'ui-dialog-title-mapper-message-codes',
         autoOpen      : true,
         modal         : true,
         closeOnEscape : false,
@@ -2241,7 +2245,7 @@ $(function() {
         $('.overview', '#mapControls').append(self.mapCircleSlider());
         $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
           index = null;
-          if($('.mapper-loading-spinner').is(':hidden')) { self.performRotation(element); }
+          if($('.mapper-loading-spinner').prop('hidden')) { self.performRotation(element); }
       }});
     },
 
