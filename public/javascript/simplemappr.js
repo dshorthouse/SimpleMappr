@@ -2360,6 +2360,9 @@ var SimpleMappr = (function($, window, document) {
     init: function(args) {
       $.extend(_private.settings, args);
       _private.init();
+    },
+    getParameterByName: function(param) {
+      _private.getParameterByName(param);
     }
   };
 
