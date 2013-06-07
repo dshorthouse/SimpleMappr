@@ -1,16 +1,16 @@
 /*
  * jQuery SimpleMappr
  */
-/*global window, document, jQuery, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
-;(function(sm, $, window, document) {
+/*global jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
+var SimpleMappr = (function($, window, document) {
 
   "use strict";
 
-  sm = {
+  var _private = {
 
     settings: {
-      baseUrl: sm.settings.baseUrl || '',
-      active: sm.settings.active || false,
+      baseUrl: '',
+      active: false,
       maxTextareaCount: 10,
       undoSize: 10
     },
@@ -2356,8 +2356,11 @@
 
   };
 
-  $(function() {
-    sm.init();
-  });
+  return {
+    init: function(args) {
+      $.extend(_private.settings, args);
+      _private.init();
+    }
+  };
 
-}(window.SimpleMappr = window.SimpleMappr || { 'settings' : {} }, jQuery, window, document));
+}(jQuery, window, document));
