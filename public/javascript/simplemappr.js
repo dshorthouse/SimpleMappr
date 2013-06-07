@@ -2363,6 +2363,9 @@ var SimpleMappr = (function($, window, document) {
     },
     getParameterByName: function(param) {
       _private.getParameterByName(param);
+    },
+    loadCodes: function(elem,data) {
+      _private.loadCodes(elem,data);
     }
   };
 
