@@ -2242,7 +2242,7 @@ var SimpleMappr = (function($, window, document) {
         $('.overview', '#mapControls').append(self.mapCircleSlider());
         $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
           index = null;
-          if($('.mapper-loading-spinner').prop('hidden')) { self.performRotation(element); }
+          if($('.mapper-loading-spinner').is(':hidden')) { self.performRotation(element); }
       }});
     },
 
