@@ -236,7 +236,7 @@ class Header {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { $.extend(SimpleMappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); });";
+    $header .= "head.ready(\"".$namespace."\", function () { $.extend(true, SimpleMappr.settings, { \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); });";
     $header .= "</script>" . "\n";
     echo $header;
   }

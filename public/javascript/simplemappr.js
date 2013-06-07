@@ -1,18 +1,16 @@
 /*
  * jQuery SimpleMappr
  */
-/*global $, SimpleMappr, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
-var SimpleMappr = SimpleMappr || { 'settings': {} };
-
-$(function() {
+/*global window, document, jQuery, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
+;(function(sm, $, window, document) {
 
   "use strict";
 
-  SimpleMappr = {
+  sm = {
 
     settings: {
-      baseUrl: '',
-      active: false,
+      baseUrl: sm.settings.baseUrl || '',
+      active: sm.settings.active || false,
       maxTextareaCount: 10,
       undoSize: 10
     },
@@ -1498,7 +1496,6 @@ $(function() {
     loadLayers: function(data) {
       if(data.map.layers) {
         $.each(data.map.layers, function(k,v) {
-          console.log(k);
           $('input[name="layers['+k+']"]').prop('checked', true);
         });
       }
@@ -2358,5 +2355,9 @@ $(function() {
     }
 
   };
-  SimpleMappr.init();
-});
+
+  $(function() {
+    sm.init();
+  });
+
+}(window.SimpleMappr = window.SimpleMappr || { 'settings' : {} }, jQuery, window, document));

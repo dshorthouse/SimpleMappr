@@ -50,6 +50,7 @@ Session::select_locale();
 </div>
 </div>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
+<p class="citation">Andrianasolo, D.N., A.P. Davis, N.J. Razafinarivo, S. Hamon, J.-J. Rakotomalala, S.-A. Sabatier, and P. Hamon. 2013. High genetic diversity of in situ and ex situ populations of Madagascan coffee species: further implications for the management of coffee genetic resources. <em>Tree Genetics &amp; Genomes</em> doi:<a href="http://dx.doi.org/10.1007/s11295-013-0638-4">10.1007/s11295-013-0638-4</a>.</p>
 <p class="citation">Alves, V.R., R.A. de Freitas, F.L. Santos, A.F.J. de Oliveira, T.V. Barrett, and P.H.F. Shimabukuro. 2012. Sand flies (Diptera, Psychodidae, Phlebotominae) from Central Amazonia and four new records for the Amazonas state, Brazil. Revista Brasileira de Entomologia, (ahead), 0-0. doi:<a href="http://dx.doi.org/10.1590/S0085-56262012005000020">10.1590/S0085-56262012005000020</a>.</p>
 <p class="citation">Bergamino, Leandro, Julio Gómez, Francisco R. Barboza and Diego Lercari. 2013. Major food web properties of two sandy beaches with contrasting morphodynamics, and effects on the stability. <em>Aquatic Ecology</em> doi:<a href="http://dx.doi.org/10.1007/s10452-013-9440-5">10.1007/s10452-013-9440-5</a>.</p>
 <p class="citation">Borkent, Christopher J. and Terry A. Wheeler. 2012. Systematics and phylogeny of <em>Leptomorphus</em> Curtis (Diptera: Mycetophilidae). <em>Zootaxa</em> 3549: 1–117. <a href="http://www.mapress.com/zootaxa/list/2012/3549.html">permalink</a>.</p>
