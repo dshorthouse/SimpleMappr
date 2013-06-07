@@ -48,7 +48,8 @@ class Header {
     'jstorage'    => 'public/javascript/jstorage.min.js',
     'serialize'   => 'public/javascript/jquery.serializeJSON.min.js',
     'bbq'         => 'public/javascript/jquery.ba-bbq.min.js',
-     'toggle'     => 'public/javascript/jquery.toggleClick.min.js',
+    'hashchange'  => 'public/javascript/jquery.ba-hashchange.min.js',
+    'toggle'      => 'public/javascript/jquery.toggleClick.min.js',
     'simplemappr' => 'public/javascript/simplemappr.min.js'
   );
 

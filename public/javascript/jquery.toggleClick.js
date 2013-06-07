@@ -1,3 +1,6 @@
+/*
+ * jQuery Toggle Click
+ */
 $.fn.toggleClick = function(){
   var methods = arguments, // store the passed arguments for future reference
       count = methods.length; // cache the number of methods 
