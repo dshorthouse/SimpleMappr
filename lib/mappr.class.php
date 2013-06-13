@@ -266,7 +266,7 @@ class Mappr {
   */
   public static function make_coordinates($point) {
     $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
-    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $loc));
+    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°ºdms\'"]/i', '', $loc));
     if(preg_match('/[NSEWO]/', $loc) != 0) {
       $coord = preg_split("/[,;]/", $loc);
       if (!array_key_exists(1, $coord)) { return array(null, null); }
@@ -286,7 +286,7 @@ class Mappr {
     $dms = stripslashes($dms);
     $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
     $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i','', $dms);
-    $pattern = "/(\\d*\\.?\\d+)(?:[°d: ]+)(\\d*\\.?\\d+)*(?:['m′: ])*(\\d*\\.?\\d+)*[\"s″ ]?/i";
+    $pattern = "/(\\d*\\.?\\d+)(?:[°ºd: ]+)(\\d*\\.?\\d+)*(?:['m′: ])*(\\d*\\.?\\d+)*[\"s″ ]?/i";
     $parts = preg_split($pattern, $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
     if (!$parts) { return; }
     // parts: 0 = degree, 1 = minutes, 2 = seconds
