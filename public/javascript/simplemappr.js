@@ -1837,7 +1837,7 @@ var SimpleMappr = (function($, window, document) {
         $(this).parent().removeClass("mapTools-collapsed");
         $('#mapTools').show("slide", { direction : "right" }, 250, function() {
           $('#actionsBar').animate({ width : "810px" }, 250);
-          $('#map').animate({ width : "800px" }, function() {
+          $('#map').animate({ width : "800px" }, 250, function() {
              $('input[name="width"]').val(800);
              self.mapRefresh();
           });
@@ -1973,7 +1973,12 @@ var SimpleMappr = (function($, window, document) {
     drawMap: function(data, load_data) {
       var self = this;
 
-      $('#mapOutputImage').attr("width", data.size[0]).attr("height", data.size[1]).attr("src", data.mapOutputImage).one('load', function() {
+      $('#mapOutputImage')
+        .attr("width", data.size[0])
+        .attr("height", data.size[1])
+        .attr("src", data.mapOutputImage)
+        .css({'width':data.size[0]+'px', 'height':data.size[1]+'px'})
+        .one('load', function() {
         if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
         self.loadCropSettings(load_data);
         self.hideSpinner();
