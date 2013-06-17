@@ -116,13 +116,13 @@ var SimpleMappr = (function($, window, document) {
 
       switch(this.vars.jCropType) {
         case 'crop':
-          $('.jcrop-holder div:first').css('backgroundColor', 'white');
+          $('.jcrop-holder div:first').css({backgroundColor:'white'});
           $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
 
           if($('#projection option:selected').val() === 'epsg:4326') {
-            $('.jcrop-coord').css("width", "100px");
+            $('.jcrop-coord').css({width: "100px"});
           } else {
-            $('.jcrop-coord').css("width", "175px");
+            $('.jcrop-coord').css({width: "175px"});
           }
 
           if($('#jcrop-coord-ul').length === 0 && $('#jcrop-coord-lr').length === 0) {
@@ -135,7 +135,7 @@ var SimpleMappr = (function($, window, document) {
           $('#jcrop-coord-lr').val(lr_coord.x + ', ' + lr_coord.y);
           $('#jcrop-dimension-w').val(w);
           $('#jcrop-dimension-h').val(h);
-          $('#jcrop-dimension-wrapper').css({'left' : w/2-$('#jcrop-dimension-wrapper').width()/2, 'top' : h/2-$('#jcrop-dimension-wrapper').height()/2});
+          $('#jcrop-dimension-wrapper').css({left : w/2-$('#jcrop-dimension-wrapper').width()/2, top : h/2-$('#jcrop-dimension-wrapper').height()/2});
 
           $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
@@ -167,7 +167,7 @@ var SimpleMappr = (function($, window, document) {
         break;
 
         case 'zoom':
-          $('.jcrop-holder div:first').css('backgroundColor', 'white');
+          $('.jcrop-holder div:first').css({backgroundColor: 'white'});
           $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
         break;
 
@@ -1127,12 +1127,12 @@ var SimpleMappr = (function($, window, document) {
 
       function endDrag() {
         $(document).unbind("mousemove", performDrag).unbind("mouseup", endDrag);
-        textarea.css("opacity", 1);
+        textarea.css({opacity: 1});
       }
 
       function startDrag(e) {
         staticOffset = textarea.height() - e.pageY;
-        textarea.css("opacity", 0.25);
+        textarea.css({opacity: 0.25});
         $(document).bind('mousemove', performDrag).bind('mouseup', endDrag);
         return false;
       }
@@ -1505,7 +1505,7 @@ var SimpleMappr = (function($, window, document) {
       var self    = this,
           types   = ['img','kml','svg','json'];
 
-      $('.map-embed').attr("data-id", mid).css('display', 'block').click(function(e) {
+      $('.map-embed').attr("data-id", mid).css({display: 'block'}).click(function(e) {
         e.preventDefault();
         $.each(types, function() {
           if(this.toString() === 'img') {
@@ -1819,7 +1819,7 @@ var SimpleMappr = (function($, window, document) {
       var self = this;
       $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggleClick(function(e) {
         e.preventDefault();
-        $('#mapOutputImage').attr("width", 0).attr("height", 0);
+        $('#mapOutputImage').attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
         $('#mapOutputScale').hide();
         $(this).parent().addClass("mapTools-collapsed");
         $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
@@ -1832,7 +1832,7 @@ var SimpleMappr = (function($, window, document) {
         });
       }, function(e) {
         e.preventDefault();
-        $('#mapOutputImage').attr("width", 0).attr("height", 0);
+        $('#mapOutputImage').attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
         $('#mapOutputScale').hide();
         $(this).parent().removeClass("mapTools-collapsed");
         $('#mapTools').show("slide", { direction : "right" }, 250, function() {
@@ -1976,8 +1976,8 @@ var SimpleMappr = (function($, window, document) {
       $('#mapOutputImage')
         .attr("width", data.size[0])
         .attr("height", data.size[1])
+        .css({width:data.size[0]+'px', height:data.size[1]+'px'})
         .attr("src", data.mapOutputImage)
-        .css({'width':data.size[0]+'px', 'height':data.size[1]+'px'})
         .one('load', function() {
         if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
         self.loadCropSettings(load_data);
@@ -2201,10 +2201,10 @@ var SimpleMappr = (function($, window, document) {
       angle = parseFloat(angle) < 0 ? parseFloat(angle) +360 : parseFloat(angle);
       rads = angle * (Math.PI/180);
 
-      $('.overview', control).css("left", -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px');  
+      $('.overview', control).css({left: -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px'});  
       top = Math.round(-Math.cos(rads) * 28 + (control.outerHeight() /2 - thumb.outerHeight() /2)) + 'px';
       left = Math.round(Math.sin(rads) * 28 + (control.outerWidth() /2 - thumb.outerWidth() /2)) + 'px';
-      $('.thumb', control).css('top',top).css('left',left);
+      $('.thumb', control).css({top:top,left:left});
     },
 
     getParameterByName: function(name) {
@@ -2243,7 +2243,7 @@ var SimpleMappr = (function($, window, document) {
 
     bindRotateWheel: function() {
       var self = this;
-      $('.overlay','#mapControls').css('background-image', 'url("public/images/bg-rotatescroll.png")');
+      $('.overlay','#mapControls').css({backgroundImage: 'url("public/images/bg-rotatescroll.png")'});
         $('.overview', '#mapControls').append(self.mapCircleSlider());
         $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
           index = null;
