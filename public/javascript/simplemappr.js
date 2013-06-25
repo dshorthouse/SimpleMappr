@@ -1224,18 +1224,15 @@ var SimpleMappr = (function($, window, document) {
       var self = this;
 
       $.each($('.fieldset-points'), function(i) {
-        if(i > 2) {
-          $('#fieldSetsPoints div.fieldset-points:eq('+i.toString()+')').remove();
-          self.vars.newPointCount = 0;
-        }
+        if(i > 2) { $(this).remove(); }
       });
 
       $.each($('.fieldset-regions'), function(i) {
-        if(i > 2) {
-          $('#fieldSetsRegions div.fieldset-regions:eq('+i.toString()+')').remove();
-          self.vars.newRegionCount = 0;
-        }
+        if(i > 2) { $(this).remove(); }
       });
+      
+      self.vars.newPointCount = 0;
+      self.vars.newRegionCount = 0;
     },
 
     prepareInputs: function(data) {
