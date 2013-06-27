@@ -652,7 +652,7 @@ msgid "June 25, 2013"
 msgstr "25 juin, 2013"
 
 #: .tabs/about:11
-msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables"
+msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables."
 msgstr "Corrections: Les couches de données Point incorrectement chargés quand il ya des couches blanches suivies par des couches avec des données. Rapporté par Chandra Venables."
 
 #: .tabs/about.php:11
