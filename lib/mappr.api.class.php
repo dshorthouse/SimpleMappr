@@ -158,7 +158,7 @@ class MapprApi extends Mappr {
         $mlayer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
 
         $class = ms_newClassObj($mlayer);
-        $class->set("name",isset($this->legend[$col]) ? $this->legend[$col] : "");
+        $class->set("name",isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
 
         $style = ms_newStyleObj($class);
         $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
@@ -248,7 +248,7 @@ class MapprApi extends Mappr {
 
       $layer->setFilter("(".implode(" OR ", $qry).")");
       $class = ms_newClassObj($layer);
-      $class->set("name", $this->regions['title']);
+      $class->set("name", stripslashes($this->regions['title']));
 
       $style = ms_newStyleObj($class);
       $color = ($this->regions['color']) ? explode(' ', $this->regions['color']) : explode(" ", "0 0 0");

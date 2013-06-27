@@ -167,7 +167,7 @@ class MapprMap extends Mappr {
   private function get_coordinates() {
     $output = array();
     for($j=0; $j<=count($this->coords)-1; $j++) {
-      $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : '';
+      $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : '';
 
       if(trim($this->coords[$j]['data'])) {
         $whole = trim($this->coords[$j]['data']);
@@ -230,7 +230,7 @@ class MapprMap extends Mappr {
       break;
 
       default:
-		$this->set_not_found();
+        $this->set_not_found();
     }
   }
 

@@ -1024,7 +1024,7 @@ class Mappr {
         $shape = '';
         $color = '';
 
-        $title = ($this->coords[$j]['title']) ? $this->coords[$j]['title'] : '';
+        $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : '';
         $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
         if($this->is_resize() && $this->_download_factor > 1) {
           $size = $this->_download_factor*$size;
@@ -1081,7 +1081,7 @@ class Mappr {
                 $points[$coord->x.$coord->y] = array();
               }
             } else {
-              $this->_bad_points[] = $this->coords[$j]['title'] . ' : ' . $loc;
+              $this->_bad_points[] = stripslashes($this->coords[$j]['title'] . ' : ' . $loc);
             }
           }
           $points = array();
@@ -1101,7 +1101,7 @@ class Mappr {
 
         //clear out previous loop's selection
         $color = '';
-        $title = ($this->regions[$j]['title']) ? $this->regions[$j]['title'] : '';
+        $title = ($this->regions[$j]['title']) ? stripslashes($this->regions[$j]['title']) : '';
         $color = ($this->regions[$j]['color']) ? explode(" ",$this->regions[$j]['color']) : explode(" ","0 0 0");
         if(!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
             $color = array(0,0,0);
