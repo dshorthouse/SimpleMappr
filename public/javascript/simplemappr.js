@@ -113,7 +113,7 @@ var SimpleMappr = (function($, window, document) {
           lr_point  = { 'x' : x2, 'y' : y2 },
           ul_coord  = {},
           lr_coord  = {},
-          factor    = $('input[name="download-factor"]:checked').val(),
+          factor    = $('#mapExport').find('input[name="download-factor"]:checked').val(),
           mapOutput = $('#mapOutput');
 
       switch(this.vars.jCropType) {
@@ -398,7 +398,7 @@ var SimpleMappr = (function($, window, document) {
     bindArrows: function() {
       var self = this;
 
-      $('#wheel-overlay').on('click', 'a', function(e) {
+      $('#wheel-overlay').on('click', 'a.arrows', function(e) {
         e.preventDefault();
         $('#pan').val($(this).attr("data-pan"));
         self.resetJbbox();
