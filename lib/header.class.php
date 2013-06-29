@@ -227,14 +227,13 @@ class Header {
     $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
     $namespace = (ENVIRONMENT == "production") ? "compiled" : "simplemappr";
     $header .= "head.js(";
-    $counter = 1;
+    $headjs = array();
     foreach($this->js_header as $key => $file) {
-      $header .= "{\"" . $key . "\" : \"" . $file . "\"}";
-      if($counter < count($this->js_header)) { $header .= ", "; }
-      $counter++;
+      $headjs[] = "{".$key." : \"".$file."\"}";
     }
+    $header .= join(",", $headjs);
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : " . $session . ", seed : \"".$this->getHash()."\" }); } );";
+    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session." }); } );";
     $header .= "</script>" . "\n";
     echo $header;
   }
