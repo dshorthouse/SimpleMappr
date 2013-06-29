@@ -67,6 +67,17 @@ $(function () {
     <dd><?php echo _("re-render the default presentation at lowest zoom and geographic projection"); ?></dd>
   </dl>
 
+  <dl class="toolbar ui-helper-clearfix">
+    <dt class="sprites-before toolsSave"><?php echo _("Save"); ?>:</dt>
+    <dd><?php echo _("while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."); ?></dd>
+
+    <dt class="sprites-before toolsEmbed"><?php echo _("Embed"); ?>:</dt>
+    <dd><?php echo _("once a map is saved, click this icon to obtain a URL for embedding on other websites."); ?></dd>
+
+    <dt class="sprites-before toolsDownload"><?php echo _("Download"); ?>:</dt>
+    <dd><?php echo _("choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."); ?></dd>
+  </dl>
+
   <h3><?php echo _("Layers"); ?></h3>
   <dl class="ui-helper-clearfix">
     <dt><?php echo _("State/Provinces"); ?>:</dt>
@@ -135,17 +146,6 @@ $(function () {
     <dt><?php echo _("longitude of natural origin"); ?>:</dt>
     <dd><?php echo _("type the longitude for the central meridian"); ?></dd>
   </dl>
-    
-    <dl class="toolbar ui-helper-clearfix">
-      <dt class="sprites-before map-save"><?php echo _("Save"); ?>:</dt>
-      <dd><?php echo _("while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."); ?></dd>
-
-      <dt class="sprites-before map-embed"><?php echo _("Embed"); ?>:</dt>
-      <dd><?php echo _("once a map is saved, click this icon to obtain a URL for embedding on other websites."); ?></dd>
-
-      <dt class="sprites-before map-download"><?php echo _("Download"); ?>:</dt>
-      <dd><?php echo _("choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."); ?></dd>
-    </dl>
 
     <div class="header">
       <h2><?php echo _("Point Data"); ?></h2>

@@ -68,7 +68,7 @@
 <?php $this->partial("point_layers"); ?>
 </div>
 <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="coords"><?php echo _("Add a layer"); ?></button></div>
-<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearLayers negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
+<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button id="clearLayers" class="sprites-before clear negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
 <div id="map-regions">
@@ -80,7 +80,7 @@
 <?php $this->partial("regions"); ?>
 </div>
 <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="regions"><?php echo _("Add a region"); ?></button></div>
-<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button class="sprites-before clear clearRegions negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
+<div class="submit"><button class="sprites-before submitForm positive ui-corner-all"><?php echo _("Preview"); ?></button><button id="clearRegions" class="sprites-before clear negative ui-corner-all"><?php echo _("Clear all"); ?></button></div>
 </div>
 
 <div id="map-preview">
@@ -99,10 +99,10 @@
 <h3 id="mapTitle"></h3>
 <ul id="map-saveDialog">
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<li><a class="sprites-before tooltip map-saveItem map-save" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
-<li><a class="sprites-before tooltip map-saveItem map-embed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem toolsSave" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem toolsEmbed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
 <?php endif; ?>
-<li><a class="sprites-before tooltip map-saveItem map-download" href="#" title="<?php echo _("download ctrl+d"); ?>"><?php echo _("Download"); ?></a></li>
+<li><a class="sprites-before tooltip map-saveItem toolsDownload" href="#" title="<?php echo _("download ctrl+d"); ?>"><?php echo _("Download"); ?></a></li>
 </ul>
 </div>
 <div id="map">
@@ -112,7 +112,7 @@
 <ul class="overview"></ul>
 </div>
 <div class="dot"></div>
-<div class="overlay">
+<div id="wheel-overlay">
 <a href="#" class="sprites tooltip controls arrows up" data-pan="up" title="<?php echo _("pan up"); ?>"></a>
 <a href="#" class="sprites tooltip controls arrows right" data-pan="right" title="<?php echo _("pan right"); ?>"></a>
 <a href="#" class="sprites tooltip controls arrows down" data-pan="down" title="<?php echo _("pan down"); ?>"></a>

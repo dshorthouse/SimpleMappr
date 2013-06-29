@@ -23,13 +23,14 @@ var SimpleMappr = (function($, window, document) {
       fillColor          : "",
       jCropType          : "zoom",
       cropUpdated        : false,
-      origins            : { "esri:102009" : -96, 
-                           "esri:102015" : -60, 
-                           "esri:102014" : 10, 
-                           "esri:102012" : 105, 
+      origins            : { "esri:102009" : -96,
+                           "esri:102015" : -60,
+                           "esri:102014" : 10,
+                           "esri:102012" : 105,
                            "esri:102024" : 25,
                            "epsg:3112" : 134
-                          }
+                           },
+      spinner            : $('#map-loader').find('span.mapper-loading-spinner')
     },
 
     trackEvent: function(category, action) {
@@ -112,21 +113,22 @@ var SimpleMappr = (function($, window, document) {
           lr_point  = { 'x' : x2, 'y' : y2 },
           ul_coord  = {},
           lr_coord  = {},
-          factor    = $('input[name="download-factor"]:checked').val();
+          factor    = $('input[name="download-factor"]:checked').val(),
+          mapOutput = $('#mapOutput');
 
       switch(this.vars.jCropType) {
         case 'crop':
-          $('.jcrop-holder div:first').css({backgroundColor:'white'});
+          mapOutput.find('div.jcrop-holder div:first').css({backgroundColor:'white'});
           $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
 
           if($('#projection option:selected').val() === 'epsg:4326') {
-            $('.jcrop-coord').css({width: "100px"});
+            mapOutput.find('input.jcrop-coord').css({width: "100px"});
           } else {
-            $('.jcrop-coord').css({width: "175px"});
+            mapOutput.find('input.jcrop-coord').css({width: "175px"});
           }
 
           if($('#jcrop-coord-ul').length === 0 && $('#jcrop-coord-lr').length === 0) {
-            $('.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder).after(d_holder);
+            mapOutput.find('div.jcrop-tracker').eq(0).after(ul_holder).after(lr_holder).after(d_holder);
           }
 
           ul_coord = self.pix2geo(ul_point);
@@ -139,22 +141,20 @@ var SimpleMappr = (function($, window, document) {
 
           $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
 
-          $('.jcrop-coord').blur(function() {
+          mapOutput.on('blur', 'input.jcrop-coord', function() {
             if(!self.vars.cropUpdated) { self.vars.cropUpdated = self.updateCropCoordinates(); }
           })
-          .keypress(function(e) {
+          .on('keypress', 'input.jcrop-coord', function(e) {
             var key = e.keyCode || e.which;
             if(key === 13 || key === 9) {
               e.preventDefault();
               self.vars.cropUpdated = false;
               this.blur();
             }
-          });
-
-          $('.jcrop-dimension').blur(function() {
+          }).on('blur', 'input.jcrop-dimension', function() {
             if(!self.vars.cropUpdated) { self.vars.cropUpdated = self.updateCropDimensions(); }
           })
-          .keypress(function(e) {
+          .on('keypress', 'input.jcrop-dimension', function(e) {
             var key = e.keyCode || e.which;
             if(key === 13 || key === 9) {
               e.preventDefault();
@@ -163,11 +163,11 @@ var SimpleMappr = (function($, window, document) {
             }
           });
 
-          $('span', '#scale-measure').text(factor*w + ' X ' + factor*h).parent().show();
+          $('#scale-measure').find('span').text(factor*w + ' X ' + factor*h).parent().show();
         break;
 
         case 'zoom':
-          $('.jcrop-holder div:first').css({backgroundColor: 'white'});
+          mapOutput.find('div.jcrop-holder div:first').css({backgroundColor: 'white'});
           $('#bbox_rubberband').val(x+','+y+','+x2+','+y2);
         break;
 
@@ -211,19 +211,14 @@ var SimpleMappr = (function($, window, document) {
     },
 
     updateCropCoordinates: function() {
-      var ul_arr   = [],
-          ul_point = {},
-          lr_arr   = [],
-          lr_point = {};
+      var ul_val   = $('#jcrop-coord-ul').val(),
+          ul_arr   = ul_val.split(","),
+          ul_point = this.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) }),
+          lr_val   = $('#jcrop-coord-lr').val(),
+          lr_arr   = lr_val.split(","),
+          lr_point = this.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
 
-      ul_arr = $('#jcrop-coord-ul').val().split(",");
-      ul_point = this.geo2pix({ 'x' : $.trim(ul_arr[0]), 'y' : $.trim(ul_arr[1]) });
-
-      lr_arr = $('#jcrop-coord-lr').val().split(",");
-      lr_point = this.geo2pix({ 'x' : $.trim(lr_arr[0]), 'y' : $.trim(lr_arr[1]) });
-
-      $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + $('#jcrop-coord-ul').val() + "\", \"jcrop_coord_lr\" : \"" + $('#jcrop-coord-lr').val() + "\" }" );
-
+      $.cookie("jcrop_coords", "{ \"jcrop_coord_ul\" : \"" + ul_val + "\", \"jcrop_coord_lr\" : \"" + lr_val + "\" }" );
       this.loadCropSettings({ 'map' : { 'bbox_rubberband' : lr_point.x + "," + lr_point.y + "," + ul_point.x + "," + ul_point.y } });
       return true;
     },
@@ -296,33 +291,11 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindToolbar: function() {
-      var self = this;
+      var self = this, action = "";
 
-      $("#actionsBar ul li").hover(function() {
-        $(this).addClass("ui-state-hover");
-      }, function() {
-        $(this).removeClass("ui-state-hover");
-      });
-
-      $('.toolsZoomIn').click(function(e) {
-        e.preventDefault();
-        self.mapZoom("in");
-        self.trackEvent('toolbar', 'zoomin');
-      });
-
-      $('.toolsZoomOut').click(function(e) {
-        e.preventDefault();
-        self.mapZoom("out");
-        self.trackEvent('toolbar', 'zoomout');
-      });
-
-      $('.toolsCrop').click(function(e) {
-        e.preventDefault();
-        self.mapCrop();
-        self.trackEvent('toolbar', 'crop');
-      });
-
-      $('.toolsQuery').ColorPicker({
+      $("#actionsBar").find("li").hover(function() {
+        $(this).toggleClass("ui-state-hover");
+      }).end().find("a.toolsQuery").ColorPicker({
         onBeforeShow: function() {
           $(this).ColorPickerSetColor(self.RGBtoHex(150, 150, 150));
         },
@@ -336,29 +309,49 @@ var SimpleMappr = (function($, window, document) {
           return false;
         },
         onSubmit: function(hsb, hex, rgb, el) {
-          hsb = null;
-          hex = null;
+          self.unusedVariables(hsb, hex);
           $(el).ColorPickerHide();
           self.vars.fillColor = rgb;
           self.initJquery();
           self.vars.zoom = false;
-          self.trackEvent('toolbar', 'query');
         }
-      }).click(function(e) {
+      }).end().on('click', 'a', function(e) {
         e.preventDefault();
-        self.resetJbbox();
-      });
-
-      $('.toolsRefresh').click(function(e) {
-        e.preventDefault();
-        self.mapRefresh();
-        self.trackEvent('toolbar', 'refresh');
-      });
-
-      $('.toolsRebuild').click(function(e) {
-        e.preventDefault();
-        self.mapRebuild();
-        self.trackEvent('toolbar', 'rebuild');
+        action = $(this).attr("class").match(/tools([\w\W]+)/)[1].toLowerCase();
+        switch(action) {
+          case 'zoomin':
+            self.mapZoom("in");
+          break;
+          
+          case 'zoomout':
+            self.mapZoom("out");
+          break;
+          
+          case 'crop':
+            self.mapCrop();
+          break;
+          
+          case 'query':
+            self.resetJbbox();
+          break;
+          
+          case 'refresh':
+            self.mapRefresh();
+          break;
+          
+          case 'rebuild':
+            self.mapRebuild();
+          break;
+          
+          case 'save':
+            self.mapSave();
+          break;
+          
+          case 'download':
+            self.mapDownload();
+          break;
+        }
+        self.trackEvent('toolbar', action);
       });
     },
 
@@ -380,7 +373,7 @@ var SimpleMappr = (function($, window, document) {
         this.initJcrop();
       }
 
-      self.vars.zoom = false;
+      this.vars.zoom = false;
     },
 
     resetAndBuild: function() {
@@ -405,7 +398,7 @@ var SimpleMappr = (function($, window, document) {
     bindArrows: function() {
       var self = this;
 
-      $('.arrows').click(function(e) {
+      $('#wheel-overlay').on('click', 'a', function(e) {
         e.preventDefault();
         $('#pan').val($(this).attr("data-pan"));
         self.resetJbbox();
@@ -437,10 +430,10 @@ var SimpleMappr = (function($, window, document) {
     },
 
     storageType: function(type) {
-      var index = 0;
+      var index = 0, self = this;
 
       index = $.grep($.jStorage.index(), function(value, i) {
-        i = null;
+        self.unusedVariables(i);
         return (value.substring(0, type.length) === type);
       });
 
@@ -449,13 +442,14 @@ var SimpleMappr = (function($, window, document) {
 
     toggleUndo: function(activate) {
       var self  = this,
-          index = this.storageType("do");
+          index = this.storageType("do"),
+          actionsBar = $('#actionsBar');
 
-      $('.toolsUndo').addClass('toolsUndoDisabled').removeClass('toolsUndo').unbind("click");
+      actionsBar.find('a.toolsUndo').removeClass('toolsUndo').addClass('toolsUndoDisabled').off("click");
 
       if(activate && index.length > 1) {
         if(index.length > self.settings.undoSize) { $.jStorage.deleteKey(index.shift()); }
-        $('.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').bind("click", function(e) {
+        actionsBar.find('a.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').on("click", function(e) {
           e.preventDefault();
           self.mapUndo();
           self.trackEvent('edit', 'undo');
@@ -464,12 +458,13 @@ var SimpleMappr = (function($, window, document) {
     },
 
     toggleRedo: function(activate) {
-      var self = this;
+      var self = this,
+          actionsBar = $('#actionsBar');
 
-      $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+      actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off("click");
 
       if(activate) {
-        $('.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').bind("click", function(e) {
+        actionsBar.find('a.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').on("click", function(e) {
           e.preventDefault();
           self.mapRedo();
           self.trackEvent('edit', 'redo');
@@ -478,10 +473,11 @@ var SimpleMappr = (function($, window, document) {
     },
 
     destroyRedo: function() {
-      var index = this.storageType("undo");
+      var index = this.storageType("undo"),
+          actionsBar = $('#actionsBar');
 
       if(index.length > 0) {
-        $('.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').unbind("click");
+        actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off("click");
         $.jStorage.deleteKey(index.pop());
       }
     },
@@ -581,22 +577,22 @@ var SimpleMappr = (function($, window, document) {
       if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
 
       $.each(keys, function(key, value) {
-        $(document).bind('keydown', key, value);
+        $(document).on('keydown', null, key, value);
       });
 
       $('#mapOutput').hover(
         function() {
           $.each(arrows, function(key, value) {
-            $(document).bind('keydown', key, value);
+            $(document).on('keydown', null, key, value);
           });
-          $('#mapOutputImage').dblclick(function(e) { self.dblclickZoom(this, e); });
+          $('#mapOutputImage').on('dblclick', function(e) { self.dblclickZoom(this, e); });
         },
         function() {
           $.each(arrows, function(key, value) {
-            key = null;
-            $(document).unbind('keydown', value);
+            self.unusedVariables(key);
+            $(document).off('keydown', value);
           });
-          $('#mapOutputImage').unbind('dblclick');
+          $('#mapOutputImage').off('dblclick');
         }
       );
     },
@@ -609,23 +605,19 @@ var SimpleMappr = (function($, window, document) {
 
     bindSettings: function() {
       var self = this;
-
-      $('.layeropt').click(function() {
+      
+      $('#mapOptions').on("click", ".layeropt", function() {
         self.hardResetShowMap();
-      });
-
-      $('.gridopt').click(function() {
+      }).on("click", ".gridopt", function() {
         if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         self.hardResetShowMap();
-      });
-
-      $('#gridlabel').click(function() {
+      }).on("click", "#gridlabel", function() {
         if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         if($(this).prop('checked')) { $(this).val('false'); }
         self.hardResetShowMap();
       });
 
-      $('#projection').change(function() {
+      $('#projection').on('change', function() {
         var origin_sel = $('#origin-selector');
 
         if($(this).val() !== "") {
@@ -636,20 +628,18 @@ var SimpleMappr = (function($, window, document) {
         }
       });
 
-      $('#origin').blur(function() {
+      $('#origin').on('blur', function() {
         self.hardResetShowMap();
-      }).keydown(function(e) {
+      }).on('keydown', function(e) {
         var key = e.keyCode || e.which;
         if(key === 9 || key === 13 ) { this.blur(); }
       });
 
       self.toggleFileFactor();
 
-      $('.download-factor').change(function() {
+      $('#mapExport').find('input.download-factor').on('change', function() {
         self.toggleFileFactor($(this).val());
-      });
-
-      $('.download-filetype').change(function() {
+      }).end().find('.download-filetype').on('change', function() {
         self.toggleFileType(this);
       });
     },
@@ -663,8 +653,8 @@ var SimpleMappr = (function($, window, document) {
         max   : 2,
         step  : 0.25,
         slide: function(e, ui) {
-          e = null;
-          $('input[name="border_thickness"]').val(ui.value);
+          self.unusedVariables(e);
+          $('#border_thickness').val(ui.value);
           self.destroyRedo();
           self.showMap();
           self.trackEvent('slider', ui.value);
@@ -676,14 +666,14 @@ var SimpleMappr = (function($, window, document) {
       var scale      = "",
           rubberband = $('#bbox_rubberband').val().split(",");
 
-      if(!factor) { factor = $('input[name="download-factor"]:checked').val(); }
+      if(!factor) { factor = $('#mapExport').find('input[name="download-factor"]:checked').val(); }
 
       if(this.vars.jCropType === 'crop') {
         scale = factor*(rubberband[2]-rubberband[0]) + " X " + factor*(rubberband[3]-rubberband[1]);
       } else {
         scale = factor*($('#mapOutputImage').width()) + " X " + factor*($('#mapOutputImage').height());
       }
-      $('span', '#scale-measure').text(scale).parent().show();
+      $('#scale-measure').find('span').text(scale).parent().show();
     },
 
     toggleFileType: function(obj) {
@@ -708,7 +698,7 @@ var SimpleMappr = (function($, window, document) {
     bindColorPickers: function() {
       var self = this;
 
-      $('.colorPicker').ColorPicker({
+      $('#fieldSetsPoints,#fieldSetsRegions').find('input.colorPicker').ColorPicker({
         element : $(this),
         onBeforeShow: function() {
           var color = $(this).val().split(" ");
@@ -719,12 +709,11 @@ var SimpleMappr = (function($, window, document) {
           return false;
         },
         onSubmit: function(hsb, hex, rgb, el) {
-          hsb = null;
-          hex = null;
+          self.unusedVariables(hsb,hex);
           $(el).val(rgb.r + ' ' + rgb.g + ' ' + rgb.b);
           $(el).ColorPickerHide();
         }
-      }).bind('keyup', function() {
+      }).on('keyup', function() {
         var color = $(this).val().split(" ");
         $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
       });
@@ -733,31 +722,38 @@ var SimpleMappr = (function($, window, document) {
     bindClearButtons: function() {
       var self = this;
 
-      $('.clearLayers, .clearRegions').click(function(e) {
-        var fieldsets = $(this).parent().prev().prev().children();
-
+      $('#clearLayers, #clearRegions').on('click', function(e) {
         e.preventDefault();
-        $.each(['.m-mapTitle', 'textarea'], function() { $(fieldsets).find(this).val(''); });
-        if($(fieldsets).find('.m-mapShape').length > 0) { $(fieldsets).find('.m-mapShape')[0].selectedIndex = 4; }
-        if($(fieldsets).find('.m-mapSize').length > 0) { $(fieldsets).find('.m-mapSize')[0].selectedIndex = 3; }
-        if($(this).hasClass("clearLayers")) {
-          $(fieldsets).find('.colorPicker').val('0 0 0');
-        } else {
-          $(fieldsets).find('.colorPicker').val('150 150 150');
-        }
-        return false;
+        self.clearZone($(this).parent().prev().prev().children());
       });
-
-      $('.clearself').click(function(e) {
+      
+      $('#fieldSetsPoints,#fieldSetsRegions').on('click', 'button.clearself', function(e) {
         e.preventDefault();
-        self.clearSelf($(this));
+        self.clearZone($(this).parent().parent());
+      });
+    },
+
+    clearZone: function(zone) {
+      var shape_picker = zone.find('select.m-mapShape'),
+          size_picker = zone.find('select.m-mapSize'),
+          color_picker = zone.find('input.colorPicker');
+
+      $.each(['input.m-mapTitle', 'textarea'], function() { zone.find(this).val(''); });
+      if(shape_picker.length > 0) { shape_picker[0].selectedIndex = 4; }
+      if(size_picker.length > 0) { size_picker[0].selectedIndex = 3; }
+      $.each(zone, function() {
+        if($(this).hasClass("fieldset-points")) {
+          color_picker.val('0 0 0');
+        } else {
+          color_picker.val('150 150 150');
+        }
       });
     },
 
     bindAutocomplete: function() {
       var self = this, term = "", terms = [];
 
-      $('textarea', '.fieldset-regions').bind("keydown", function(e) {
+      $('#fieldSetsRegions').find('textarea').on('keydown', function(e) {
         if (e.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { e.preventDefault(); }
       }).autocomplete({
         source: function(request, response) {
@@ -769,7 +765,7 @@ var SimpleMappr = (function($, window, document) {
         },
         focus: function() { return false; },
         select: function(e, ui) {
-          e = null;
+          self.unusedVariables(e);
           terms = self.split(this.value);
           terms.pop();
           terms.push(ui.item.value);
@@ -794,20 +790,6 @@ var SimpleMappr = (function($, window, document) {
       return this.split(term).pop();
     },
 
-    clearSelf: function(el) {
-      var box = $(el).parent(),
-          color_picker = $(box).find('.colorPicker');
-
-      $.each(['.m-mapTitle', 'textarea'], function() { $(box).find(this).val(''); });
-      if($(box).find('.m-mapShape').length > 0) { $(box).find('.m-mapShape')[0].selectedIndex = 4; }
-      if($(box).find('.m-mapSize').length > 0) { $(box).find('.m-mapSize')[0].selectedIndex = 3; }
-      if($(box).parent().hasClass("fieldset-points")) {
-        color_picker.val('0 0 0');
-      } else {
-        color_picker.val('150 150 150');
-      }
-    },
-
     destroyJcrop: function() {
       var vars = this.vars;
 
@@ -816,7 +798,7 @@ var SimpleMappr = (function($, window, document) {
       if(vars.jqueryAPI !== undefined) { vars.jqueryAPI.destroy(); }
 
       $('#mapOutputImage').show();
-      $('.jcrop-holder').remove();
+      $('#mapOutput').find('div.jcrop-holder').remove();
       $('#mapCropMessage').hide();
 
       this.toggleFileFactor();
@@ -933,8 +915,8 @@ var SimpleMappr = (function($, window, document) {
             projection_map : $('#projection_map').val(),
             origin         : $('#origin').val(),
             qlayer         : ($('#stateprovince').prop('checked')) ? 'stateprovinces_polygon' : 'base',
-            width          : $('input[name="width"]').val(),
-            height         : $('input[name="height"]').val()
+            width          : $('#width').val(),
+            height         : $('#height').val()
           };
 
       $(document).unbind("mouseup", self.aQuery);
@@ -951,17 +933,19 @@ var SimpleMappr = (function($, window, document) {
         success : function(data) {
           if(data.length > 0) {
             var regions = data.map(function(e) { return e; }).join(", "),
-                num_fieldsets = $('.fieldset-regions').length;
+                fieldsetRegion = $('#fieldSetsRegions'),
+                fieldsets = fieldsetRegion.find('div.fieldset-regions'),
+                num_fieldsets = fieldsets.length;
 
-            $.each($('.fieldset-regions'), function(i) {
-              if(i === (num_fieldsets-1) && !$('button[data-type="regions"]').prop('disabled')) {
+            $.each(fieldsets, function(i) {
+              if(i === (num_fieldsets-1) && !fieldsetRegion.find('button[data-type="regions"]').prop('disabled')) {
                 self.addAccordionPanel('regions');
                 num_fieldsets += 1;
               }
-              if($('input[name="regions['+i+'][title]"]').val() === "" || $('textarea[name="regions['+i+'][data]"]').val() === "") {
-                $('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
-                $('input[name="regions['+i+'][color]"]').val(fillColor);
-                $('textarea[name="regions['+i+'][data]"]').val(regions);
+              if(fieldsetRegion.find('input[name="regions['+i+'][title]"]').val() === "" || fieldsetRegion.find('textarea[name="regions['+i+'][data]"]').val() === "") {
+                fieldsetRegion.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
+                fieldsetRegion.find('input[name="regions['+i+'][color]"]').val(fillColor);
+                fieldsetRegion.find('textarea[name="regions['+i+'][data]"]').val(regions);
                 if(i > 0) { $('#fieldSetsRegions').accordion("activate", i); }
                 return false;
               }
@@ -973,7 +957,7 @@ var SimpleMappr = (function($, window, document) {
           }
         },
         error   : function(xhr, ajaxOptions, thrownError) {
-          xhr = thrownError = null;
+          self.unusedVariables(xhr,thrownError);
           if(ajaxOptions === 'timeout') { self.hideSpinner(); }
         }
       });
@@ -1019,7 +1003,7 @@ var SimpleMappr = (function($, window, document) {
     addAccordionPanel: function(data_type) {
       var self     = this,
           counter  = self.textareaCounter(data_type, 'get'),
-          button   = $(".addmore[data-type='" + data_type + "']"),
+          button   = $("button.addmore[data-type='" + data_type + "']"),
           clone    = {},
           color    = (data_type === 'coords') ? "0 0 0" : "150 150 150",
           num      = 0,
@@ -1054,12 +1038,11 @@ var SimpleMappr = (function($, window, document) {
               return false;
             },
             onSubmit: function(hsb, hex, rgb, el) {
-              hsb = null;
-              hex = null;
+              self.unusedVariables(hsb,hex);
               $(el).val(rgb.r + " " + rgb.g + " " + rgb.b);
               $(el).ColorPickerHide();
             }
-          }).bind('keyup', function() {
+          }).on('keyup', function() {
             var color = $(this).val().split(" ");
             $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
           });
@@ -1067,7 +1050,7 @@ var SimpleMappr = (function($, window, document) {
           children = button.parent().prev().append(clone).children("div");
 
           children.each(function(i, val) {
-            val = null;
+            self.unusedVariables(val);
             if (i === children.length-1) {
               $(this).find("button.removemore").show().click(function(e) {
                 e.preventDefault();
@@ -1101,7 +1084,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     removeAccordionPanel: function(clone, data_type) {
-      var button = $(".addmore[data-type='" + data_type + "']");
+      var button = $("button.addmore[data-type='" + data_type + "']");
 
       clone.nextAll().each(function() {
         var num = parseInt($(this).find("h3 a").text().split(" ")[1],10);
@@ -1143,7 +1126,7 @@ var SimpleMappr = (function($, window, document) {
     bindAddButtons: function() {
       var self = this;
 
-      $('.addmore').click(function(e) {
+      $('#map-points, #map-regions').on('click', 'button.addmore', function(e) {
         var data_type = $(this).attr("data-type"), fieldsets = 0;
         e.preventDefault();
         self.addAccordionPanel(data_type);
@@ -1186,35 +1169,36 @@ var SimpleMappr = (function($, window, document) {
           if(response.indexOf("session timeout") !== -1) {
             window.location.reload();
           } else {
-            $('#usermaps').html(response);
-            self.hideSpinner();
-            $(".toolsRefresh", ".grid-usermaps").click(function(e) { e.preventDefault(); self.loadMapList(); });
+            $('#usermaps').html(response)
+              .on('click', 'a.toolsRefresh', function(e) { e.preventDefault(); self.loadMapList(); })
+              .on('click', 'a.ui-icon-triangle-sort', function(e) {
+                e.preventDefault();
+                data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
+                if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
+                self.loadMapList(data);
+                self.trackEvent('maplist', 'sort');
+              })
+              .on('click', 'a.map-load', function(e) {
+                e.preventDefault();
+                self.loadMap(this);
+                self.trackEvent('map', 'load');
+              })
+              .on('click', 'a.map-delete', function(e) {
+                e.preventDefault();
+                self.deleteMapConfirmation(this);
+            });
             $('#filter-mymaps')
               .val(obj.search)
-              .keypress(function(e) {
-                if (e.which === 13) {
+              .on('keypress', function(e) {
+                var key = e.keyCode || e.which;
+                if(key === 13 || key === 9) {
                   e.preventDefault();
                   data.search = $(this).val();
                   self.loadMapList(data);
                   self.trackEvent('maplist', 'filter');
                 }
               }).focus();
-            $(".ui-icon-triangle-sort", ".grid-usermaps").click(function(e) {
-              e.preventDefault();
-              data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
-              if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
-              self.loadMapList(data);
-              self.trackEvent('maplist', 'sort');
-            });
-            $('.map-load').click(function(e) {
-              e.preventDefault();
-              self.loadMap(this);
-              self.trackEvent('map', 'load');
-            });
-            $('.map-delete').click(function(e) {
-              e.preventDefault();
-              self.deleteMapConfirmation(this);
-            });
+            self.hideSpinner();
           }
         }
       });
@@ -1223,11 +1207,11 @@ var SimpleMappr = (function($, window, document) {
     removeExtraElements: function() {
       var self = this;
 
-      $.each($('.fieldset-points'), function(i) {
+      $.each($('#fieldSetsPoints').find('.fieldset-points'), function(i) {
         if(i > 2) { $(this).remove(); }
       });
 
-      $.each($('.fieldset-regions'), function(i) {
+      $.each($('#fieldSetsRegions').find('.fieldset-regions'), function(i) {
         if(i > 2) { $(this).remove(); }
       });
       
@@ -1240,7 +1224,7 @@ var SimpleMappr = (function($, window, document) {
 
       inputs = {
         "status" : "ok",
-        "mid"    : $('.map-embed').attr("data-id"),
+        "mid"    : $('#actionsBar').find('a.map-embed').attr("data-id"),
         "map"    : data
       };
 
@@ -1307,8 +1291,8 @@ var SimpleMappr = (function($, window, document) {
 
       this.removeExtraElements();
       $('#form-mapper').clearForm();
-      $.each(['width', 'height'], function() { $('input[name="'+this+'"]').val($('input[name="'+this+'"]').val()); });
-      $('.addmore').prop("disabled", false);
+      $.each(['width', 'height'], function() { $('#'+this).val($('#'+this).val()); });
+      $('#map-points, #map-regions').find('button.addmore').prop("disabled", false);
       $('#filter-mymaps').val(filter);
       $('#origin-selector').hide();
       this.loadCoordinates(data);
@@ -1343,7 +1327,7 @@ var SimpleMappr = (function($, window, document) {
           self.toggleRedo();
         },
         error   : function(xhr, ajaxOptions, thrownError) {
-          xhr = thrownError = null;
+          self.unusedVariables(xhr,thrownError);
           if(ajaxOptions === 'timeout') {
             self.showErrorMessage($('#mapper-loading-error-message').text());
           }
@@ -1359,8 +1343,8 @@ var SimpleMappr = (function($, window, document) {
 
       map_title = data.map.save.title;
 
-      $('input[name="save[title]"]').val(map_title);
-      $('.m-mapSaveTitle').val(map_title);
+      $('#save[title]').val(map_title);
+      $('#m-mapSaveTitle').val(map_title);
 
       $('#mapTitle').text(map_title);
 
@@ -1368,13 +1352,13 @@ var SimpleMappr = (function($, window, document) {
       $('#file-name').val(map_title);
       $("#projection").val(data.map.projection);
       if(self.vars.origins.hasOwnProperty($("#projection").val())) { $('#origin-selector').show(); }
-      $.each(['bbox_map', 'projection_map', 'rotation', 'origin'], function() { $('input[name="'+this+'"]').val(data.map[this]); });
+      $.each(['bbox_map', 'projection_map', 'rotation', 'origin'], function() { $('#'+this).val(data.map[this]); });
       if(!data.map.origin) { $('#origin').val(self.vars.origins[$("#projection").val()]); }
 
-      $('input[name="border_thickness"]').val(1.25);
+      $('#border_thickness').val(1.25);
       $('#border-slider').slider({value:1.25});
       if(data.map.border_thickness !== undefined && data.map.border_thickness) {
-        $('input[name="border_thickness"]').val(data.map.border_thickness);
+        $('#border_thickness').val(data.map.border_thickness);
         $('#border-slider').slider({value:data.map.border_thickness});
       }
 
@@ -1383,27 +1367,27 @@ var SimpleMappr = (function($, window, document) {
 
       $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
         $('#'+this).prop('checked', false);
-        $('input[name="options['+this+']"]').val("");
+        $('#options['+this+']').val("");
       });
 
       if(data.map.options !== undefined) {
         $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
           if(data.map.options[this] && data.map.options[this] !== undefined) {
             $('#'+this).prop('checked', true);
-            $('input[name="options['+this+']"]').val(1);
+            $('#options['+this+']').val(1);
           }
         });
       }
 
       if(data.map.download_factor !== undefined && data.map.download_factor) {
-        $('input[name="download_factor"]').val(data.map.download_factor);
+        $('#download_factor').val(data.map.download_factor);
         $('#download-factor-' + data.map.download_factor).prop('checked', true);
       } else {
         $('#download-factor-3').prop('checked', true);
       }
 
       if(data.map.download_filetype !== undefined && data.map.download_filetype) {
-        $('input[name="download_filetype"]').val(data.map.download_filetype);
+        $('#download_filetype').val(data.map.download_filetype);
         download_filetype = $('#download-' + data.map.download_filetype).prop('checked', true);
         self.toggleFileType(download_filetype);
       } else {
@@ -1411,16 +1395,15 @@ var SimpleMappr = (function($, window, document) {
       }
 
       if(data.map.grid_space !== undefined && data.map.grid_space) {
-        $('input[name="gridspace"]').prop('checked', true);
         $('#gridspace-' + data.map.grid_space).prop('checked', true);
       } else {
         $('#gridspace').prop('checked', true);
       }
 
       if(data.map.gridlabel !== undefined && data.map.gridlabel) {
-        $('input[name="gridlabel"]').prop('checked', true).val('false');
-      } else {
         $('#gridlabel').prop('checked', true);
+      } else {
+        $('#gridlabel').prop('checked', false);
       }
     },
 
@@ -1439,15 +1422,16 @@ var SimpleMappr = (function($, window, document) {
     loadShapeSize: function(i, coords) {
       $.each(['shape', 'size'], function() {
         if(coords[i][this].toString() === "") {
-          $('select[name="coords['+i.toString()+']['+this+']"]')[0].selectedIndex = 3;
+          $('#fieldSetsPoints').find('select[name="coords['+i.toString()+']['+this+']"]')[0].selectedIndex = 3;
         } else {
-          $('select[name="coords['+i.toString()+']['+this+']"]').val(coords[i][this]);
+          $('#fieldSetsPoints').find('select[name="coords['+i.toString()+']['+this+']"]').val(coords[i][this]);
         }
       });
     },
 
     loadCoordinates: function(data) {
       var self        = this,
+          fieldSet    = $('#fieldSetsPoints'),
           coords      = data.map.coords || [],
           coord_title = "",
           coord_data  = "",
@@ -1461,17 +1445,16 @@ var SimpleMappr = (function($, window, document) {
         coord_data  = coords[i].data.replace(pattern, "")  || "";
         coord_color = coords[i].color || "0 0 0";
 
-        $('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
-        $('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
-
+        fieldSet.find('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
+        fieldSet.find('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
         self.loadShapeSize(i, coords);
-
-        $('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
+        fieldSet.find('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
       });
     },
 
     loadRegions: function(data) {
       var self         = this,
+          fieldSet    = $('#fieldSetsRegions'),
           regions      = data.map.regions || [],
           region_title = "",
           region_data  = "",
@@ -1484,16 +1467,18 @@ var SimpleMappr = (function($, window, document) {
         region_data  = regions[i].data  || "";
         region_color = regions[i].color || "150 150 150";
 
-        $('input[name="regions['+i.toString()+'][title]"]').val(region_title);
-        $('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
-        $('input[name="regions['+i.toString()+'][color]"]').val(region_color);
+        fieldSet.find('input[name="regions['+i.toString()+'][title]"]').val(region_title);
+        fieldSet.find('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
+        fieldSet.find('input[name="regions['+i.toString()+'][color]"]').val(region_color);
       });
     },
 
     loadLayers: function(data) {
+      var self = this;
       if(data.map.layers) {
         $.each(data.map.layers, function(k,v) {
-          $('input[name="layers['+k+']"]').prop('checked', true);
+          self.unusedVariables(v);
+          $('#'+k).prop('checked', true);
         });
       }
     },
@@ -1502,13 +1487,13 @@ var SimpleMappr = (function($, window, document) {
       var self    = this,
           types   = ['img','kml','svg','json'];
 
-      $('.map-embed').attr("data-id", mid).css({display: 'block'}).click(function(e) {
+      $('#actionsBar').find('a.map-embed').attr("data-id", mid).css({display: 'block'}).on('click', function(e) {
         e.preventDefault();
         $.each(types, function() {
           if(this.toString() === 'img') {
-            $('#embed-'+this, '#mapEmbed').val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
+            $('#embed-'+this).val("<img src=\"" + self.settings.baseUrl + "/map/" + mid + "\" alt=\"\" />");
           } else {
-            $('#embed-'+this, '#mapEmbed').val(self.settings.baseUrl + "/map/" + mid + "." + this);
+            $('#embed-'+this).val(self.settings.baseUrl + "/map/" + mid + "." + this);
           }
         });
 
@@ -1537,7 +1522,7 @@ var SimpleMappr = (function($, window, document) {
     deleteMapConfirmation: function(obj) {
       var self    = this,
           id      = $(obj).attr("data-id"),
-          message = '<em>' + $(obj).parent().parent().find(".title").text() + '</em>';
+          message = '<em>' + $(obj).parent().parent().find("td.title").text() + '</em>';
 
       $('#mapper-message-delete').find('span').html(message).end().dialog({
         height        : '250',
@@ -1549,7 +1534,7 @@ var SimpleMappr = (function($, window, document) {
         resizable     : false,
         buttons       : [
           {
-            "text"  : $('#button-titles span.delete').text(),
+            "text"  : $('#button-titles').find('span.delete').text(),
             "class" : "negative",
             "click" : function() {
               $.ajax({
@@ -1564,7 +1549,7 @@ var SimpleMappr = (function($, window, document) {
             }
           },
           {
-            "text"  : $('#button-titles span.cancel').text(),
+            "text"  : $('#button-titles').find('span.cancel').text(),
             "class" : "ui-button-cancel",
             "click" : function() {
               $(this).dialog("destroy");
@@ -1596,27 +1581,27 @@ var SimpleMappr = (function($, window, document) {
           if(response.indexOf("access denied") !== -1) {
             window.location.reload();
           } else {
-            $('#userdata').html(response);
+            $('#userdata').html(response)
+              .on('click', 'a.toolsRefresh', function(e) {
+                e.preventDefault();
+                self.loadUserList();
+              })
+              .on('click', 'a.ui-icon-triangle-sort', function(e) {
+                e.preventDefault();
+                data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
+                if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
+                self.loadUserList(data);
+              })
+              .on('click', 'a.user-delete', function(e) {
+                e.preventDefault();
+                self.deleteUserConfirmation(this);
+              })
+              .on('click', 'a.user-load', function(e) {
+                e.preventDefault();
+                self.loadMapList({ uid : $(this).attr("data-uid") });
+                self.tabSelector(3);
+            });
             self.hideSpinner();
-            $(".toolsRefresh", ".grid-users").click(function(e) {
-              e.preventDefault();
-              self.loadUserList();
-            });
-            $(".ui-icon-triangle-sort", ".grid-users").click(function(e) {
-              e.preventDefault();
-              data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
-              if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
-              self.loadUserList(data);
-            });
-            $('.user-delete').click(function(e) {
-              e.preventDefault();
-              self.deleteUserConfirmation(this);
-            });
-            $('.user-load').click(function(e) {
-              e.preventDefault();
-              self.loadMapList({ uid : $(this).attr("data-uid") });
-              self.tabSelector(3);
-            });
           }
         }
       });
@@ -1646,7 +1631,7 @@ var SimpleMappr = (function($, window, document) {
         resizable     : false,
         buttons       : [
           {
-            "text"  : $('#button-titles span.delete').text(),
+            "text"  : $('#button-titles').find('span.delete').text(),
             "class" : "negative",
             "click" : function() {
               $.ajax({
@@ -1661,7 +1646,7 @@ var SimpleMappr = (function($, window, document) {
             }
           },
           {
-            "text"  : $('#button-titles span.cancel').text(),
+            "text"  : $('#button-titles').find('span.cancel').text(),
             "class" : "ui-button-cancel",
             "click" : function() {
               $(this).dialog("destroy");
@@ -1670,19 +1655,10 @@ var SimpleMappr = (function($, window, document) {
       }).show();
     },
 
-    bindSave: function() {
-      var self = this;
-
-      $(".map-save").click(function(e) {
-        e.preventDefault();
-        self.mapSave();
-      });
-    },
-
     mapSave: function() {
       var missingTitle = false,
           pattern      = /[?*:;{}\\ "'\/@#!%\^()<>.]+/g,
-          map_title    = "",
+          map_title    = $('#m-mapSaveTitle'),
           self         = this;
 
       $('#mapSave').dialog({
@@ -1699,15 +1675,15 @@ var SimpleMappr = (function($, window, document) {
             "text"  : $('#button-titles span.save').text(),
             "class" : "positive",
             "click" : function() {
-              if($.trim($('.m-mapSaveTitle').val()) === '') { missingTitle = true; }
+              if($.trim(map_title.val()) === '') { missingTitle = true; }
               if(missingTitle) {
-                $('.m-mapSaveTitle').addClass('ui-state-error').keyup(function() {
+                map_title.addClass('ui-state-error').on('keyup', function() {
                   $(this).removeClass('ui-state-error');
                 });
               } else {
-                $('input[name="save[title]"]').val($('.m-mapSaveTitle').val());
-                $.each(['factor', 'filetype'], function() { $('input[name="download_'+this+'"]').val($('input[name="download-'+this+'"]:checked').val()); });
-                $('input[name="grid_space"]').val($('input[name="gridspace"]:checked').val());
+                $('#save[title]').val(map_title.val());
+                $.each(['factor', 'filetype'], function() { $('#download_'+this).val($('#mapExport').find('input[name="download-'+this+'"]:checked').val()); });
+                $('#grid_space').val($('#graticules-selection').find('input[name="gridspace"]:checked').val());
 
                 self.setFormOptions();
                 self.showSpinner();
@@ -1720,9 +1696,8 @@ var SimpleMappr = (function($, window, document) {
                   data        : $("form").serialize(),
                   dataType    : 'json',
                   success     : function(data) {
-                    $('#mapTitle').text($('.m-mapSaveTitle').val());
-                    map_title = $('.m-mapSaveTitle').val().replace(pattern, "_");
-                    $('#file-name').val(map_title);
+                    $('#mapTitle').text(map_title.val());
+                    $('#file-name').val(map_title.val().replace(pattern, "_"));
                     self.activateEmbed(data.mid);
                     self.loadMapList();
                     self.hideSpinner();
@@ -1735,21 +1710,12 @@ var SimpleMappr = (function($, window, document) {
             }
         },
         {
-          "text"  : $('#button-titles span.cancel').text(),
+          "text"  : $('#button-titles').find('span.cancel').text(),
           "class" : "ui-button-cancel",
           "click" : function() {
             $(this).dialog("destroy");
           }
         }]
-      });
-    },
-
-    bindDownload: function() {
-      var self = this;
-
-      $(".map-download").click(function(e) {
-        e.preventDefault();
-        self.mapDownload();
       });
     },
 
@@ -1766,14 +1732,14 @@ var SimpleMappr = (function($, window, document) {
         resizable     : false,
         buttons       : [
           {
-            "text"  : $('#button-titles span.download').text(),
+            "text"  : $('#button-titles').find('span.download').text(),
             "class" : "positive",
             "click" : function() {
               self.generateDownload();
             }
           },
           {
-            "text"  : $('#button-titles span.cancel').text(),
+            "text"  : $('#button-titles').find('span.cancel').text(),
             "class" : "ui-button-cancel",
             "click" : function() {
               $(this).dialog("destroy");
@@ -1785,17 +1751,18 @@ var SimpleMappr = (function($, window, document) {
     bindSubmit: function() {
       var self = this, title = "", missingTitle = false;
 
-      $(".submitForm").click(function(e) {
+      $('#map-points, #map-regions').find('button.submitForm').on('click', function(e) {
         e.preventDefault();
         missingTitle = false;
-        $('.m-mapCoord').each(function() {
-          title = $(this).parents('.ui-accordion-content').find('.m-mapTitle').keyup(function() {
+        $.each($(this).parent().parent().find('div.fieldSets').children(), function() {
+          title = $(this).find('input.m-mapTitle').on('keyup', function() {
             missingTitle = false;
             $(this).removeClass('ui-state-error');
           });
-          if($(this).val() && $(title).val() === '') {
+          if($(this).find('textarea.m-mapCoord').val() && title.val() === '') {
             missingTitle = true;
-            $(title).addClass('ui-state-error');
+            title.addClass('ui-state-error');
+            return false;
           }
         });
         if(missingTitle) {
@@ -1809,12 +1776,12 @@ var SimpleMappr = (function($, window, document) {
     },
 
     mapToggleSettings: function() {
-      $('#mapToolsCollapse a').trigger('click');
+      $('#mapToolsCollapse').find('a').trigger('click');
     },
 
     bindPanelToggle: function() {
       var self = this;
-      $('#mapToolsCollapse a').tipsy({ gravity : 'e' }).toggleClick(function(e) {
+      $('#mapToolsCollapse').find('a').tipsy({ gravity : 'e' }).toggleClick(function(e) {
         e.preventDefault();
         $('#mapOutputImage').attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
         $('#mapOutputScale').hide();
@@ -1823,7 +1790,7 @@ var SimpleMappr = (function($, window, document) {
           var new_width = $(window).width()*0.98;
           $('#actionsBar').animate({ width : new_width }, 250);
           $('#map').animate({ width : new_width }, 250, function() {
-            $('input[name="width"]').val(new_width);
+            $('#width').val(new_width);
             self.mapRefresh();
           });
         });
@@ -1835,7 +1802,7 @@ var SimpleMappr = (function($, window, document) {
         $('#mapTools').show("slide", { direction : "right" }, 250, function() {
           $('#actionsBar').animate({ width : "810px" }, 250);
           $('#map').animate({ width : "800px" }, 250, function() {
-             $('input[name="width"]').val(800);
+             $('#width').val(800);
              self.mapRefresh();
           });
         });
@@ -1876,7 +1843,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     drawScalebar: function() {
-      $('#mapScale img').attr('src', $('#scalebar_url').val()).show();
+      $('#mapScale').find('img').attr('src', $('#scalebar_url').val()).show();
     },
 
     showBadPoints: function() {
@@ -1889,11 +1856,11 @@ var SimpleMappr = (function($, window, document) {
     },
 
     showSpinner: function() {
-      $('.mapper-loading-spinner').show();
+      this.vars.spinner.show();
     },
 
     hideSpinner: function() {
-      $('.mapper-loading-spinner').hide();
+      this.vars.spinner.hide();
     },
 
     showErrorMessage: function(content) {
@@ -1903,7 +1870,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     hideErrorMessage: function() {
-      $('#mapOutput .mapper-message-error').remove();
+      $('#mapOutput').find('.mapper-message-error').remove();
     },
 
     showMap: function(load_data) {
@@ -1947,7 +1914,7 @@ var SimpleMappr = (function($, window, document) {
           self.addBadRecordsViewer();
         },
         error    : function(xhr, ajaxOptions, thrownError) {
-          xhr = thrownError = null;
+          self.unusedVariables(xhr,thrownError);
           if(ajaxOptions === 'timeout') {
             self.showErrorMessage($('#mapper-loading-error-message').text());
             self.hideSpinner();
@@ -1959,7 +1926,7 @@ var SimpleMappr = (function($, window, document) {
     resetFormValues: function(data) {
       var ele = ["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"];
 
-      $('#mapOutput input').each(function() { $(this).val(''); });
+      $.each($('#mapOutput').find('input'), function() { $(this).val(''); });
       $.each(ele, function() { $('#' + this).val(data[this]); });
       $('#bbox_map').val($('#rendered_bbox').val());
       $('#projection_map').val($('#rendered_projection').val());
@@ -2006,7 +1973,7 @@ var SimpleMappr = (function($, window, document) {
         ]
       });
 
-      $('.toolsBadRecords').click(function(e) {
+      $('#badRecordsWarning').find('a.toolsBadRecords').on('click', function(e) {
         e.preventDefault();
         self.addBadRecordsViewer();
         $('#badRecordsViewer').dialog("open");
@@ -2024,17 +1991,16 @@ var SimpleMappr = (function($, window, document) {
 
       map_title = map_title.replace(pattern, "_");
       $('#file-name').val(map_title);
-      $('input[name="file_name"]').val(map_title);
+      $('#file_name').val(map_title);
 
-      $('input[name="download_factor"]').val($('input[name="download-factor"]:checked').val());
+      $('#download_factor').val($('#mapExport').find('input[name="download-factor"]:checked').val());
 
-      filetype = $("input[name='download-filetype']:checked").val();
+      filetype = $('#mapExport').find('input[name="download-filetype"]:checked').val();
 
       self.setFormOptions();
       $('#download_token').val(token);
 
-      $.each(['ui-dialog-buttonpane', 'download-dialog'], function() { $('.' + this).hide(); });
-      $('.download-message').show();
+      $('#mapExport').find('div.download-dialog').hide().end().next().hide().end().find('div.download-message').show();
 
       switch(filetype) {
         case 'pptx':
@@ -2081,17 +2047,15 @@ var SimpleMappr = (function($, window, document) {
 
     setFormOptions: function() {
       $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
+        $('#options['+this+']').val("");
         if($('#'+this).prop('checked')) {
-          $('input[name="options['+this+']"]').val(1);
-        } else {
-          $('input[name="options['+this+']"]').val("");
+          $('#options['+this+']').val(1);
         }
       });
     },
 
     finishDownload: function() {
-      $('.download-message').hide();
-      $.each(['download-dialog', 'ui-dialog-buttonpane'], function() { $('.'+this).show(); });
+      $('#mapExport').find('div.download-message').hide().end().next().show().end().find('div.download-dialog').show();
       window.clearInterval(this.vars.fileDownloadTimer);
       $.cookie('fileDownloadToken', null); //clears this cookie value
     },
@@ -2158,7 +2122,7 @@ var SimpleMappr = (function($, window, document) {
         dataType : 'html',
         success  : function(response) {
           elem.html(response);
-          filter = elem.find('.filter-countries');
+          filter = elem.find('input.filter-countries');
           filter.val("");
           if(data.filter !== undefined) { filter.val(data.filter); }
           filter.keypress(function(e) {
@@ -2169,7 +2133,7 @@ var SimpleMappr = (function($, window, document) {
               self.loadCodes(elem, data);
             }
           });
-          filter.blur(function() {
+          filter.on('blur', function() {
             data.filter = filter.val();
             self.loadCodes(elem, data);
           });
@@ -2186,22 +2150,23 @@ var SimpleMappr = (function($, window, document) {
     },
 
     setRotation: function(angle) {
-      var control = $('#mapControls'),
-          thumb   = $('.thumb', control),
-          dots    = $('.overview', control).children(),
-          rads    = 0,
-          left    = 0,
-          top     = 0;
+      var control  = $('#mapControls'),
+          thumb    = control.find('div.thumb'),
+          overview = control.find('ul.overview'),
+          dots     = overview.find("li"),
+          rads     = 0,
+          left     = 0,
+          top      = 0;
 
       if(!angle) { angle = 0; }
 
       angle = parseFloat(angle) < 0 ? parseFloat(angle) +360 : parseFloat(angle);
       rads = angle * (Math.PI/180);
 
-      $('.overview', control).css({left: -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px'});  
+      overview.css({left: -(angle / 360 * ((dots.outerWidth(true) * (dots.length)))) + 'px'});  
       top = Math.round(-Math.cos(rads) * 28 + (control.outerHeight() /2 - thumb.outerHeight() /2)) + 'px';
       left = Math.round(Math.sin(rads) * 28 + (control.outerWidth() /2 - thumb.outerWidth() /2)) + 'px';
-      $('.thumb', control).css({top:top,left:left});
+      thumb.css({top:top,left:left});
     },
 
     getParameterByName: function(name) {
@@ -2240,54 +2205,56 @@ var SimpleMappr = (function($, window, document) {
 
     bindRotateWheel: function() {
       var self = this;
-      $('.overlay','#mapControls').css({backgroundImage: 'url("public/images/bg-rotatescroll.png")'});
-        $('.overview', '#mapControls').append(self.mapCircleSlider());
-        $('#mapControls').tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
-          index = null;
-          if($('.mapper-loading-spinner').is(':hidden')) { self.performRotation(element); }
-      }});
+      $('#wheel-overlay').css({backgroundImage: 'url("public/images/bg-rotatescroll.png")'});
+        $('#mapControls').find('ul.overview').append(self.mapCircleSlider())
+          .end()
+          .tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
+            self.unusedVariables(index);
+            if($('#map-loader').find('span.mapper-loading-spinner').is(':hidden')) { self.performRotation(element); }
+        }});
     },
 
     bindTabs: function() {
-      var tab            = $('#tabs'),
+      var self           = this,
+          tab            = $('#tabs'),
           id             = 'tabs',
           tab_a_selector = 'ul.navigation a',
-          url            = "",
           config         = {
             cache : true,
             load  : function(e, ui){
-              e = null;
+              self.unusedVariables(e);
               $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
             },
             event : 'change'
           };
 
       $('#mapTools').tabs({selected: 0});
-      tab.tabs(config).find(".ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
+      tab.tabs(config).find("div.ui-state-disabled").each(function() { $(this).removeClass("ui-state-disabled"); }).end().show();
 
-      tab.find(tab_a_selector).click(function(){
+      tab.find(tab_a_selector).on('click', function(){
         var state = {},
           idx = $(this).parent().prevAll().length;
 
         state[id] = idx;
         $.bbq.pushState(state);
-        $.each($('#site-languages a'), function() {
-          url = $(this).attr('href').split('#')[0];
-          $(this).attr('href', url + '#' + id + '=' + idx);
-        });
+        self.adjustLanguageLinks(id, idx);
       });
 
-      $(window).bind('hashchange', function(e) {
+      $(window).bind('hashchange', function() {
         var idx = $.bbq.getState(id, true) || 0;
 
-        e = null;
         tab.find(tab_a_selector).eq(idx).triggerHandler('change');
-        $.each($('#site-languages a'), function() {
-          url = $(this).attr('href').split('#')[0];
-          $(this).attr('href', url + '#' + id + '=' + idx);
-        });
+        self.adjustLanguageLinks(id, idx);
       });
       $(window).trigger('hashchange');
+    },
+    
+    adjustLanguageLinks: function(id, idx) {
+      var url = "";
+      $.each($('#site-languages').find('a'), function() {
+        url = $(this).attr('href').split('#')[0];
+        $(this).attr('href', url + '#' + id + '=' + idx);
+      });
     },
 
     screenSizeListener: function() {
@@ -2312,21 +2279,25 @@ var SimpleMappr = (function($, window, document) {
         });
       });
     },
+    
+    unusedVariables: function() {
+      return;
+    },
 
     init: function() {
       var self = this;
       this.screenSizeListener();
       this.bindRotateWheel();
       this.hideSpinner();
-      $('#header>div').show();
+      $('#header').find('div').show();
       this.bindTabs();
-      $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />').find("span.mapper-loading-message").remove();
+      $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />');
       $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
-      $('a.login','#site-session').click(function(e) { e.preventDefault(); self.tabSelector(3); });
-      $('a.show-examples').click(function(e) { e.preventDefault(); self.showExamples(); });
-      $('a.show-codes').click(function(e) { e.preventDefault(); self.showCodes(); });
-      $('.fieldSets').accordion({header : 'h3', collapsible : true, autoHeight : false});
-      $(".tooltip").tipsy({gravity : 's'});
+      $('#site-session').find('a.login').on('click', function(e) { e.preventDefault(); self.tabSelector(3); });
+      $('#general-points').find('a.show-examples').on('click', function(e) { e.preventDefault(); self.showExamples(); });
+      $('#regions-introduction').find('a.show-codes').on('click', function(e) { e.preventDefault(); self.showCodes(); });
+      $('#fieldSetsPoints, #fieldSetsRegions').accordion({header : 'h3', collapsible : true, autoHeight : false});
+      $('#mapWrapper').find('a.tooltip').tipsy({gravity : 's'});
       this.bindStorage();
       this.bindHotkeys();
       this.bindToolbar();
@@ -2337,14 +2308,13 @@ var SimpleMappr = (function($, window, document) {
       this.bindAddButtons();
       this.bindClearButtons();
       this.bindAutocomplete();
-      this.bindSave();
-      this.bindDownload();
       this.bindSubmit();
       this.bindPanelToggle();
 
-      $('.toolsUndoDisabled').click(false);
-      $('.toolsRedoDisabled').click(false);
-      $('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
+      $('#actionsBar')
+        .find('a.toolsUndoDisabled').click(false).end()
+        .find('a.toolsRedoDisabled').click(false);
+      $('#fieldSetsPoints, #fieldSetsRegions').find('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
       if($('#usermaps').length > 0) {
         this.loadMapList();
         this.tabSelector(3);
@@ -2353,7 +2323,10 @@ var SimpleMappr = (function($, window, document) {
         this.loadUserList();
         this.tabSelector(4);
       }
-      $("input").keypress(function(e) { if (e.which === 13) { return false; } });
+      $("input").on('keypress', function(e) {
+        var key = e.keyCode || e.which;
+        if(key === 13 || key === 9) { return false; }
+      });
     }
 
   };
