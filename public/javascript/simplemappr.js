@@ -445,11 +445,11 @@ var SimpleMappr = (function($, window, document) {
           index = this.storageType("do"),
           actionsBar = $('#actionsBar');
 
-      actionsBar.find('a.toolsUndo').removeClass('toolsUndo').addClass('toolsUndoDisabled').off("click");
+      actionsBar.find('a.toolsUndo').removeClass('toolsUndo').addClass('toolsUndoDisabled').off('click');
 
       if(activate && index.length > 1) {
         if(index.length > self.settings.undoSize) { $.jStorage.deleteKey(index.shift()); }
-        actionsBar.find('a.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').on("click", function(e) {
+        actionsBar.find('a.toolsUndoDisabled').addClass('toolsUndo').removeClass('toolsUndoDisabled').on('click', function(e) {
           e.preventDefault();
           self.mapUndo();
           self.trackEvent('edit', 'undo');
@@ -461,10 +461,10 @@ var SimpleMappr = (function($, window, document) {
       var self = this,
           actionsBar = $('#actionsBar');
 
-      actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off("click");
+      actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off('click');
 
       if(activate) {
-        actionsBar.find('a.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').on("click", function(e) {
+        actionsBar.find('a.toolsRedoDisabled').addClass('toolsRedo').removeClass('toolsRedoDisabled').on('click', function(e) {
           e.preventDefault();
           self.mapRedo();
           self.trackEvent('edit', 'redo');
@@ -477,7 +477,7 @@ var SimpleMappr = (function($, window, document) {
           actionsBar = $('#actionsBar');
 
       if(index.length > 0) {
-        actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off("click");
+        actionsBar.find('a.toolsRedo').addClass('toolsRedoDisabled').removeClass('toolsRedo').off('click');
         $.jStorage.deleteKey(index.pop());
       }
     },
@@ -606,12 +606,12 @@ var SimpleMappr = (function($, window, document) {
     bindSettings: function() {
       var self = this;
       
-      $('#mapOptions').on("click", ".layeropt", function() {
+      $('#mapOptions').on('click', '.layeropt', function() {
         self.hardResetShowMap();
-      }).on("click", ".gridopt", function() {
+      }).on('click', '.gridopt', function() {
         if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         self.hardResetShowMap();
-      }).on("click", "#gridlabel", function() {
+      }).on('click', '#gridlabel', function() {
         if(!$('#graticules').prop('checked')) { $('#graticules').prop('checked', true); }
         if($(this).prop('checked')) { $(this).val('false'); }
         self.hardResetShowMap();
@@ -1052,12 +1052,12 @@ var SimpleMappr = (function($, window, document) {
           children.each(function(i, val) {
             self.unusedVariables(val);
             if (i === children.length-1) {
-              $(this).find("button.removemore").show().click(function(e) {
+              $(this).find("button.removemore").show().on('click', function(e) {
                 e.preventDefault();
                 self.removeAccordionPanel(clone, data_type);
                 counter = self.textareaCounter(data_type, 'decrease');
               }).parent()
-              .find("button.clearself").click(function(e) {
+              .find("button.clearself").on('click', function(e) {
                 e.preventDefault();
                 self.clearSelf($(this));
               }).parent().parent()
@@ -1343,7 +1343,7 @@ var SimpleMappr = (function($, window, document) {
 
       map_title = data.map.save.title;
 
-      $('#save[title]').val(map_title);
+      $('#save\\[title\\]').val(map_title);
       $('#m-mapSaveTitle').val(map_title);
 
       $('#mapTitle').text(map_title);
@@ -1367,14 +1367,14 @@ var SimpleMappr = (function($, window, document) {
 
       $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
         $('#'+this).prop('checked', false);
-        $('#options['+this+']').val("");
+        $('#options\\['+this+'\\]').val("");
       });
 
       if(data.map.options !== undefined) {
         $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
           if(data.map.options[this] && data.map.options[this] !== undefined) {
             $('#'+this).prop('checked', true);
-            $('#options['+this+']').val(1);
+            $('#options\\['+this+'\\]').val(1);
           }
         });
       }
@@ -1487,7 +1487,7 @@ var SimpleMappr = (function($, window, document) {
       var self    = this,
           types   = ['img','kml','svg','json'];
 
-      $('#actionsBar').find('a.map-embed').attr("data-id", mid).css({display: 'block'}).on('click', function(e) {
+      $('#actionsBar').find('a.toolsEmbed').attr("data-id", mid).css({display: 'block'}).on('click', function(e) {
         e.preventDefault();
         $.each(types, function() {
           if(this.toString() === 'img') {
@@ -1515,7 +1515,7 @@ var SimpleMappr = (function($, window, document) {
                             }
                           }
                         ]
-                      }).show();
+                      });
       });
     },
 
@@ -1555,7 +1555,7 @@ var SimpleMappr = (function($, window, document) {
               $(this).dialog("destroy");
             }
           }]
-      }).show();
+      });
     },
 
     loadUserList: function(object) {
@@ -1672,7 +1672,7 @@ var SimpleMappr = (function($, window, document) {
         resizable     : false,
         buttons       : [
           {
-            "text"  : $('#button-titles span.save').text(),
+            "text"  : $('#button-titles').find('span.save').text(),
             "class" : "positive",
             "click" : function() {
               if($.trim(map_title.val()) === '') { missingTitle = true; }
@@ -1681,7 +1681,7 @@ var SimpleMappr = (function($, window, document) {
                   $(this).removeClass('ui-state-error');
                 });
               } else {
-                $('#save[title]').val(map_title.val());
+                $('#save\\[title\\]').val(map_title.val());
                 $.each(['factor', 'filetype'], function() { $('#download_'+this).val($('#mapExport').find('input[name="download-'+this+'"]:checked').val()); });
                 $('#grid_space').val($('#graticules-selection').find('input[name="gridspace"]:checked').val());
 
@@ -2047,9 +2047,9 @@ var SimpleMappr = (function($, window, document) {
 
     setFormOptions: function() {
       $.each(["border", "legend", "scalebar", "scalelinethickness"], function() {
-        $('#options['+this+']').val("");
+        $('#options\\['+this+'\\]').val("");
         if($('#'+this).prop('checked')) {
-          $('#options['+this+']').val(1);
+          $('#options\\['+this+'\\]').val(1);
         }
       });
     },
@@ -2057,7 +2057,7 @@ var SimpleMappr = (function($, window, document) {
     finishDownload: function() {
       $('#mapExport').find('div.download-message').hide().end().next().show().end().find('div.download-dialog').show();
       window.clearInterval(this.vars.fileDownloadTimer);
-      $.cookie('fileDownloadToken', null); //clears this cookie value
+      $.cookie('fileDownloadToken', null);
     },
 
     showExamples: function() {
@@ -2101,11 +2101,12 @@ var SimpleMappr = (function($, window, document) {
             "text"  : "OK",
             "class" : "positive",
             "click" : function() {
+              $('#mapper-message-codes').find('table').remove();
               $(this).dialog("destroy");
             }
           }
         ]
-      }).show();
+      });
 
       this.loadCodes($('#mapper-message-codes'), data);
     },
@@ -2125,15 +2126,14 @@ var SimpleMappr = (function($, window, document) {
           filter = elem.find('input.filter-countries');
           filter.val("");
           if(data.filter !== undefined) { filter.val(data.filter); }
-          filter.keypress(function(e) {
+          filter.on('keypress', function(e) {
             var key = e.keyCode || e.which;
             if(key === 13 || key === 9) {
               e.preventDefault();
               data.filter = filter.val();
               self.loadCodes(elem, data);
             }
-          });
-          filter.on('blur', function() {
+          }).on('blur', function() {
             data.filter = filter.val();
             self.loadCodes(elem, data);
           });
@@ -2312,8 +2312,8 @@ var SimpleMappr = (function($, window, document) {
       this.bindPanelToggle();
 
       $('#actionsBar')
-        .find('a.toolsUndoDisabled').click(false).end()
-        .find('a.toolsRedoDisabled').click(false);
+        .find('a.toolsUndoDisabled').off('click').end()
+        .find('a.toolsRedoDisabled').off('click');
       $('#fieldSetsPoints, #fieldSetsRegions').find('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
       if($('#usermaps').length > 0) {
         this.loadMapList();
