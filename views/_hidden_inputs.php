@@ -13,7 +13,7 @@ function hidden_inputs() {
      9 => "zoom_out",
     10 => "crop",
     11 => "rotation",
-    12 =>"save[title]",
+    12 => "save[title]",
     13 => "file_name",
     14 => "download_factor",
     15 => "width",

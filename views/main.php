@@ -135,7 +135,7 @@
 <div id="mapOptions">
 <h2><?php echo _("Layers"); ?></h2>
 <ul class="columns ui-helper-clearfix">
-<li><input type="checkbox" id="stateprovince" class="layeropt" name="layers[stateprovinces]" /> <label for="stateprovince"><?php echo _("State/Provinces"); ?></label></li>
+<li><input type="checkbox" id="stateprovinces" class="layeropt" name="layers[stateprovinces]" /> <label for="stateprovince"><?php echo _("State/Provinces"); ?></label></li>
 <li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> <label for="lakesOutline"><?php echo _("lakes (outline)"); ?></label></li>
 <li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> <label for="lakes"><?php echo _("lakes (greyscale)"); ?></label></li>
 <li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <label for="rivers"><?php echo _("rivers"); ?></label></li>
