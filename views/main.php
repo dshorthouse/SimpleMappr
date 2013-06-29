@@ -6,12 +6,12 @@
 <meta name="description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
-<meta property="og:title" content="SimpleMappr" />
-<meta property="og:description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
-<meta property="og:locale" content="<?php echo $locale; ?>">
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
-<meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
+<meta name="og:title" property="og:title" content="SimpleMappr" />
+<meta name="og:description" property="og:description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
+<meta name="og:locale" property="og:locale" content="<?php echo $locale; ?>">
+<meta name="og:type" property="og:type" content="website" />
+<meta name="og:url" property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
+<meta name="og:image" property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <title>SimpleMappr</title>
 <?php $header[0]->getCSSHeader(); ?>
 <?php $header[0]->getDNSPrefetch(); ?>

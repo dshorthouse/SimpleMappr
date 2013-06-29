@@ -253,7 +253,7 @@ class Header {
   private function getJanrain() {
     $locale = $this->getLocale();
     $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
-    $janrain  = "<script async>" . "\n";
+    $janrain  = "<script>" . "\n";
     $janrain .= "(function(w,d) {
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
