@@ -1,7 +1,7 @@
 <?php
 $root = $_SERVER['DOCUMENT_ROOT'];
 require_once($root.'/lib/session.class.php');
-Session::select_locale();
+$locale = Session::select_locale();
 ?>
 <style type="text/css">
 #map-help h3{font-size:0.75em;}
@@ -15,17 +15,12 @@ Session::select_locale();
 #country-codes{position:relative;width:200px;}
 #country-codes .mapper-loading-message{left:5%;}
 </style>
-<script async src="../public/javascript/jquery.waypoints.min.js"></script>
+<script src="../public/javascript/jquery.waypoints.min.js"></script>
 <script>
-$(function () {
   $('#map-help').waypoint(function() {
-    var data = {},
-        elem = $('#country-codes').css("width", "100%");
-
-    if (SimpleMappr.getParameterByName("locale")) { data.locale = SimpleMappr.getParameterByName("locale"); }
-    if($('#country-codes').html().length === 0) { SimpleMappr.loadCodes(elem, data); }
+    var elem = $('#country-codes').css("width", "100%");
+    if($('#country-codes').html().length === 0) { SimpleMappr.loadCodes(elem, { locale : "<?php echo $locale['locale']; ?>" }); }
   });
-});
 </script>
 <!-- help tab -->
 <div id="map-help">

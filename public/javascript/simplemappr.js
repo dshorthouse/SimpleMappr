@@ -2338,9 +2338,6 @@ var SimpleMappr = (function($, window, document) {
       $.extend(_private.settings, args);
       _private.init();
     },
-    getParameterByName: function(param) {
-      _private.getParameterByName(param);
-    },
     loadCodes: function(elem,data) {
       _private.loadCodes(elem,data);
     }
