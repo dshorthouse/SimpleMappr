@@ -164,10 +164,7 @@ class Header {
         $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
       } else {
         foreach($cached_css as $css) {
-          if(substr($css, -10) !== "-print.css") {
-            $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
-            break;
-          }
+          $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
         }
       }
 
@@ -237,7 +234,7 @@ class Header {
       $counter++;
     }
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ \"baseUrl\" : \"http://".$_SERVER['HTTP_HOST']."\", \"active\" : " . $session . " }); } );";
+    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : " . $session . ", seed : \"".$this->getHash()."\" }); } );";
     $header .= "</script>" . "\n";
     echo $header;
   }

@@ -11,6 +11,7 @@ var SimpleMappr = (function($, window, document) {
     settings: {
       baseUrl: '',
       active: false,
+      seed: '',
       maxTextareaCount: 10,
       undoSize: 10
     },
@@ -388,9 +389,10 @@ var SimpleMappr = (function($, window, document) {
     },
 
     mapRebuild: function() {
-      $.each(['bbox_map', 'projection_map', 'bbox_rubberband', 'rotation', 'projection', 'pan'], function() {
+      $.each(['bbox_map', 'projection_map', 'bbox_rubberband', 'rotation', 'pan'], function() {
         $('#' + this).val('');
       });
+      $('#projection')[0].selectedIndex = 0;
       this.destroyRedo();
       this.showMap();
     },
@@ -1800,9 +1802,9 @@ var SimpleMappr = (function($, window, document) {
         $('#mapOutputScale').hide();
         $(this).parent().removeClass("mapTools-collapsed");
         $('#mapTools').show("slide", { direction : "right" }, 250, function() {
-          $('#actionsBar').animate({ width : "810px" }, 250);
-          $('#map').animate({ width : "800px" }, 250, function() {
-             $('#width').val(800);
+          $('#actionsBar').animate({ width : "910px" }, 250);
+          $('#map').animate({ width : "900px" }, 250, function() {
+             $('#width').val(900);
              self.mapRefresh();
           });
         });
@@ -2061,7 +2063,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     showExamples: function() {
-      var message = '<img src="public/images/help-data.png" alt="" />';
+      var message = '<img src="public/images/help-data.png?seed='+this.settings.seed+'" alt="" />';
 
       $('#mapper-message-help').html(message).dialog({
         height        : '355',
@@ -2081,7 +2083,7 @@ var SimpleMappr = (function($, window, document) {
             }
           }
         ]
-      }).show();
+      });
     },
 
     showCodes: function() {
@@ -2291,8 +2293,8 @@ var SimpleMappr = (function($, window, document) {
       this.hideSpinner();
       $('#header').find('div').show();
       this.bindTabs();
-      $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="800" height="400" />');
-      $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
+      $('#mapOutput').append('<img id="mapOutputImage" src="public/images/basemap.png?seed='+this.settings.seed+'" alt="" width="900" height="450" />');
+      $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png?seed='+this.settings.seed+'" width="200" height="27" />');
       $('#site-session').find('a.login').on('click', function(e) { e.preventDefault(); self.tabSelector(3); });
       $('#general-points').find('a.show-examples').on('click', function(e) { e.preventDefault(); self.showExamples(); });
       $('#regions-introduction').find('a.show-codes').on('click', function(e) { e.preventDefault(); self.showCodes(); });
