@@ -1169,7 +1169,7 @@ var SimpleMappr = (function($, window, document) {
           if(response.indexOf("session timeout") !== -1) {
             window.location.reload();
           } else {
-            $('#usermaps').html(response)
+            $('#usermaps').off().html(response)
               .on('click', 'a.toolsRefresh', function(e) { e.preventDefault(); self.loadMapList(); })
               .on('click', 'a.ui-icon-triangle-sort', function(e) {
                 e.preventDefault();
@@ -1581,7 +1581,7 @@ var SimpleMappr = (function($, window, document) {
           if(response.indexOf("access denied") !== -1) {
             window.location.reload();
           } else {
-            $('#userdata').html(response)
+            $('#userdata').off().html(response)
               .on('click', 'a.toolsRefresh', function(e) {
                 e.preventDefault();
                 self.loadUserList();
