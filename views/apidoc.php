@@ -53,7 +53,7 @@ Session::select_locale();
     <dt>file</dt>
     <dd><?php echo sprintf(_("Note: requires a POST request to http://%s/api/ with an enctype set to multipart/form-data."), $_SERVER['HTTP_HOST']) ?><br />
         <?php echo _("tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server."); ?>
-    <span class="api-example"><a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/api/demo.txt">Example file</a></span>
+    <span class="api-example"><a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/files/demo.txt">Example file</a></span>
     <span class="api-output"><em>e.g.</em> { "imageURL" : "<?php echo MAPPR_MAPS_URL; ?>/50778960_464f_0.png", "expiry" : "<?php echo date('c', time() + (6 * 60 * 60)); ?>" }</span>
     </dd>
 
