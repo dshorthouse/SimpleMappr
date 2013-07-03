@@ -1,6 +1,8 @@
 SimpleMappr Installation and Configuration Instructions
 =======================================================
 
+This is the code for [SimpleMappr](http://wwww.simplemappr.net), a tool to produce publication-quality geographic maps.
+
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
 
