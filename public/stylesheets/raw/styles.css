@@ -205,6 +205,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-users a{display:inline-block;margin-left:10px;}
 #map-users a.user-delete:before{background-position:-260px -284px;margin-top:0.2em;}
 #map-users a.user-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
+#map-about h3{font-size:0.8em;}
 .filter-countries{margin-left:1em;}
 .countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
 .countrycodes thead tr{height:1.75em;}

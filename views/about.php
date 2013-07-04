@@ -89,6 +89,12 @@ Session::select_locale();
 <p class="citation">Wilkin, P., P. Suksathan, K. Keeratikiat, P. Van Welzen and J. Wiland-Szymańska. 2012. A new threatened endemic species from central and northeastern Thailand, <em>Dracaena jayniana</em> (Asparagaceae: tribe Nolinoideae). <em>Kew Bulletin</em> 67: 1-9. doi:<a href="http://dx.doi.org/10.1007/s12225-012-9412-2">10.1007/s12225-012-9412-2</a>.</p>
 <p class="citation">Wyniger, Denise. 2011. Revision of the Nearctic genus <em>Coquillettia</em> Uhler with a transfer to the tribe Phylini, the description of 14 new species, a new synonymy, and the description of two new Nearctic genera <em>Leutiola</em> and <em>Ticua</em> and two new species (Heteroptera: Miridae: Phylinae). <em>Entomologica Americana</em> 117(3 &amp; 4): 134-211. doi:<a href="http://dx.doi.org/10.1664/11-RA-012.1">10.1664/11-RA-012.1</a></p>
 <p class="citation">Zubov, Dmitry A. and Aaron P. Davis. 2012. <em>Galanthus panjutinii</em> sp. nov.: a new name for an invalidly published species of <em>Galanthus</em> (Amaryllidaceae) from the northern Colchis area of Western Transcaucasia. <em>Phytotaxa</em> 50: 55-63. (<a href="http://www.mapress.com/phytotaxa/content/2012/pt00050.htm">issue</a>)</p>
+<div class="header"><h2><?php echo _("Applications"); ?></h2></div>
+<h3>Microsoft Excel</h3>
+<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of
+taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. doi: <a href="http://dx.doi.org/10.11646/zootaxa.3683.3.8">10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
+<h3>Ruby 1.9.3</h3>
+<p class="citation">SimpleMappr <a href="https://github.com/dshorthouse/SimpleMappr/wiki/Client-Example:-Ruby-1.9.3">wiki</a>.</p>
 <div class="header"><h2><?php echo _("API Usage"); ?></h2></div>
 <p><?php echo sprintf(_("The SimpleMappr API is used by The Missouri Botanical Garden's %s and The Encyclopedia of Life's %s as a custom %s module."), "<a href=\"http://www.tropicos.org/\">Tropicos</a>", "<a href=\"http://syrphidae.lifedesks.org/pages/24837\">LifeDesks</a>", "<a href=\"https://github.com/LifeDesks/LifeDesksExpert/tree/master/sites/all/modules/simplemappr\">Drupal</a>"); ?></p>
 <div class="header"><h2><?php echo _("Code"); ?></h2></div>

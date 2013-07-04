@@ -609,6 +609,10 @@ msgstr "Cartes"
 msgid "Last Access"
 msgstr "Accédé"
 
+#: .tab/about.php:36
+msgid "Applications"
+msgstr "Applications"
+
 #: .tabs/about.php:36
 msgid "API Usage"
 msgstr "Utilisation de l'API"
