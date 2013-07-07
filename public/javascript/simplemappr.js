@@ -2340,7 +2340,6 @@ var SimpleMappr = (function($, window, document) {
 
     init: function() {
       var self = this;
-      console.time("init");
       this.disableDefaultButtons();
       this.screenSizeListener();
       this.bindRotateWheel();
@@ -2365,7 +2364,6 @@ var SimpleMappr = (function($, window, document) {
       this.bindPanelToggle();
       this.bindTextAreaResizers();
       this.getUserData();
-      console.timeEnd("init");
     }
 
   };
