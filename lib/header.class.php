@@ -29,6 +29,7 @@ class Header {
   private $js_header = array();
   private $css_header = array();
   private $hash = "";
+  private $redis = "";
 
   /*
   * An array of all javascript files to be minified
@@ -65,12 +66,59 @@ class Header {
   public static $local_css_files = array(
     'public/stylesheets/raw/styles.css'
   );
+  
+  public static function flush_cache() {
+    $cached_files = array();
+    $css_files = array_diff(@scandir($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/"), array(".", "..", ".DS_Store"));
+    foreach($css_files as $file) {
+      if(preg_match('/\.css$/i', $file)) { $cached_files[] = $_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/" . $file; }
+    }
+    $js_files = array_diff(@scandir($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/"), array(".", "..", ".DS_Store"));
+    foreach($js_files as $file) {
+      if(preg_match('/\.js$/i', $file)) { $cached_files[] = $_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/" . $file; }
+    }
+    foreach($cached_files as $file) {
+      unlink($file);
+    }
+    if(extension_loaded("redis")) {
+      $redis = new Redis();
+      $redis->connect('127.0.0.1');
+      $redis->delete("simplemappr_hash");
+    }
+    echo "Caches were flushed";
+  }
 
   function __construct() {
-    $this->make_hash()
+    $this->redis()
+         ->make_hash()
          ->remote_js_files()
          ->local_js_files()
-         ->local_css_files();
+         ->local_css_files()
+         ->set_redis();
+  }
+
+  private function redis_installed() {
+    if(extension_loaded("redis")) {
+      return true;
+    }
+    return false;
+  }
+
+  private function redis() {
+    if($this->redis_installed()) {
+      $this->redis = new Redis();
+      $this->redis->pconnect('127.0.0.1');
+    }
+    return $this;
+  }
+  
+  private function set_redis() {
+    if($this->redis_installed()) {
+      if(!$this->redis->exists("simplemappr_hash")) {
+        $this->redis->set('simplemappr_hash', $this->hash);
+      }
+    }
+    return $this;
   }
 
   /*
@@ -114,7 +162,11 @@ class Header {
   */
   private function local_js_files() {
     if(ENVIRONMENT == "production") {
-      $cached_js = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/");
+      if($this->redis_installed()) {
+        $cached_js = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".js") : array();
+      } else {
+        $cached_js = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/");
+      }
 
       if (!$cached_js) {
         $js_contents = '';
@@ -129,7 +181,9 @@ class Header {
 
         $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
       } else {
-        $this->addJS("compiled", "public/javascript/cache/" . $cached_js[0]);
+        foreach($cached_js as $js) {
+          $this->addJS("compiled", "public/javascript/cache/" . $js);
+        }
       }
       $this->addJS("ga", "//google-analytics.com/ga.js");
     } else {
@@ -149,7 +203,11 @@ class Header {
   */
   private function local_css_files() {
     if(ENVIRONMENT == "production") {
-      $cached_css = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/", "css");
+      if($this->redis_installed()) {
+        $cached_css = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".css") : array();
+      } else {
+        $cached_css = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/", "css");
+      }
 
       if(!$cached_css) {
         $css_min = '';
@@ -160,6 +218,10 @@ class Header {
         $handle = fopen($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/" . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
+
+        if($this->redis_installed()) {
+          $this->redis->set('simplemappr_hash', $this->hash);
+        }
 
         $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
       } else {

@@ -76,6 +76,18 @@ class Bootstrap {
       case "/feedback":
         include_once("views/feedback.php");
         break;
+      
+      case "/flush_cache":
+        require_once('lib/header.class.php');
+        require_once('lib/session.class.php');
+        Session::set_session();
+        if(!isset($_SESSION["simplemappr"]) || (int)$_SESSION["simplemappr"]["uid"] !== 1) {
+          header("HTTP/1.0 404 Not Found");
+          readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+          exit();
+        }
+        Header::flush_cache();
+        break;
 
       case "/help":
         include_once("views/help.php");
