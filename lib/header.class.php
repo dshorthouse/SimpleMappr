@@ -85,8 +85,43 @@ class Header {
       $redis->connect(REDIS_SERVER);
       $redis->delete("simplemappr_hash");
     }
+    $status = (self::flush_cloudflare()) ? "ok" : "failed";
     header("Content-Type: application/json");
-    echo '{"status":"ok"}';
+    echo '{"status":"'.$status.'"}';
+  }
+  
+  public static function flush_cloudflare() {
+    $URL = "https://www.cloudflare.com/api_json.html";
+
+    $data = array(
+                 "a" => "fpurge_ts",
+                 "z" => CLOUDFLARE_DOMAIN,
+                 "email" => CLOUDFLARE_EMAIL,
+                 "tkn" => CLOUDFLARE_KEY,
+                 "v" => 1
+                 );
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_VERBOSE, 0);
+    curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
+    curl_setopt($ch, CURLOPT_URL, $URL);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data );
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    $http_result = curl_exec($ch);
+    $error = curl_error($ch);
+
+    $http_code = curl_getinfo($ch ,CURLINFO_HTTP_CODE);
+
+    curl_close($ch);
+
+    if ($http_code == 200) {
+      return true;
+    }
+    return false;
   }
 
   function __construct() {

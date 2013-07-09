@@ -24,6 +24,13 @@ define("GOOGLE_ANALYTICS", "UA-XXXXXX-XX");
 // Private RPX_KEY for OpenID client login that can be obtained at https://rpxnow.com/
 DEFINE('RPX_KEY', "f6b88eebc964d52809027b3a9###############");
 
+// Cloudflare
+DEFINE('CLOUDFLARE_KEY', "2620f3461364a4216780e3de#############");
+
+DEFINE('CLOUDFLARE_DOMAIN', "simplemappr.net");
+
+DEFINE('CLOUDFLARE_EMAIL', "xxx@gmail.com");
+
 //set the default timezone
 date_default_timezone_set('America/New_York');
 
