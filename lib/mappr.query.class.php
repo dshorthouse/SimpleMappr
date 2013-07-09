@@ -32,7 +32,7 @@ class MapprQuery extends Mappr {
     $this->download         = false;
     $this->options          = array();
     $this->border_thickness = 1.25;
-    $this->width            = (float)$this->load_param('width', 800);
+    $this->width            = (float)$this->load_param('width', 900);
     $this->height           = (float)$this->load_param('height', $this->width/2);
     $this->image_size       = array($this->width, $this->height);
     $this->output           = $this->load_param('output','pnga');

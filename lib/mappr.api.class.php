@@ -114,9 +114,9 @@ class MapprApi extends Mappr {
     if($this->load_param('scalebar', false)) { $this->options['scalebar'] = true; }
 
     //set the image size from width & height to array(width, height)
-    $this->width            = (float)$this->load_param('width', 800);
-    $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
-    if($this->width == 0 || $this->height == 0) { $this->width = 800; $this->height = 400; }
+    $this->width            = (float)$this->load_param('width', 900);
+    $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 450);
+    if($this->width == 0 || $this->height == 0) { $this->width = 900; $this->height = 450; }
     $this->image_size       = array($this->width, $this->height);
 
     return $this;

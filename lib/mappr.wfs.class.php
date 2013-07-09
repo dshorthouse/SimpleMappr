@@ -72,7 +72,7 @@ class MapprWfs extends Mappr {
     $this->bbox_map   = $this->load_param('bbox', '-180,-90,180,90');
     $this->download   = false;
     $this->output     = false;
-    $this->image_size = array(800,400);
+    $this->image_size = array(900,450);
 
     return $this;
   }
