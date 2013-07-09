@@ -21,6 +21,9 @@ define("NUMTEXTAREA", 3);
 // Google Analytics UA-XXXXXX-XX key
 define("GOOGLE_ANALYTICS", "UA-XXXXXX-XX");
 
+// Private RPX_KEY for OpenID client login that can be obtained at https://rpxnow.com/
+DEFINE('RPX_KEY', "f6b88eebc964d52809027b3a9###############");
+
 //set the default timezone
 date_default_timezone_set('America/New_York');
 

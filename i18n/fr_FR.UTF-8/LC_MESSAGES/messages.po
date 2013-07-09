@@ -84,6 +84,10 @@ msgstr "Mes cartes"
 msgid "Users"
 msgstr "Usagers"
 
+#: .index.php:41
+msgid "Administration"
+msgstr "Administration"
+
 #: .index.php:44
 msgid "Help"
 msgstr "Aide"
@@ -592,6 +596,10 @@ msgstr "Commencez par ajouter des données sur le Point de Données ou des Régi
 #: .lib/mapprservice.usermaps.class.php:197
 msgid "Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade."
 msgstr "Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données"
+
+#: views/main.php:100
+msgid "Flush caches"
+msgstr "Vider les caches"
 
 #: .lib/mapprservice.users.class.php:121
 msgid "Username"

@@ -50,6 +50,7 @@
 <li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
+<li><a href="#map-admin"><?php echo _("Administration"); ?></a></li>
 <?php endif; ?>
 <?php $qlocale  = "?v=" . $header[0]->getHash(); ?>
 <?php $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : ""; ?>
@@ -204,6 +205,11 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
 <div id="map-users">
 <div id="userdata"></div>
+</div>
+<div id="map-admin">
+  <ul>
+    <li><a href="#" id="flush-caches"><?php echo _("Flush caches"); ?></a></li>
+  </ul>
 </div>
 <?php endif; ?>
 

@@ -82,10 +82,11 @@ class Header {
     }
     if(extension_loaded("redis")) {
       $redis = new Redis();
-      $redis->connect('127.0.0.1');
+      $redis->connect(REDIS_SERVER);
       $redis->delete("simplemappr_hash");
     }
-    echo "Caches were flushed";
+    header("Content-Type: application/json");
+    echo '{"status":"ok"}';
   }
 
   function __construct() {
@@ -107,7 +108,7 @@ class Header {
   private function redis() {
     if($this->redis_installed()) {
       $this->redis = new Redis();
-      $this->redis->pconnect('127.0.0.1');
+      $this->redis->pconnect(REDIS_SERVER);
     }
     return $this;
   }

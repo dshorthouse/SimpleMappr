@@ -2332,9 +2332,38 @@ var SimpleMappr = (function($, window, document) {
         this.loadMapList();
         this.tabSelector(3);
       }
+    },
+
+    bindAdmin: function() {
+      var self = this;
+
       if($('#userdata').length > 0) {
         this.loadUserList();
         this.tabSelector(4);
+      }
+      if($('#map-admin').length > 0) {
+        $('#map-admin').on('click', 'a', function(e) {
+          e.preventDefault();
+          self.showSpinner();
+          if($(this).has('#flush-caches')) {
+            $.ajax({
+              type     : 'GET',
+              url      : self.settings.baseUrl + "/flush_cache/",
+              dataType : 'json',
+              success  : function(response) {
+                if(response.status === "ok") {
+                  alert("Caches flushed");
+                  self.hideSpinner();
+                  window.location.reload();
+                }
+              },
+              error    : function(xhr, ajaxOptions, thrownError) {
+                self.unusedVariables(xhr,ajaxOptions, thrownError);
+                alert("Error flushing caches");
+              }
+            });
+          }
+        });
       }
     },
 
@@ -2364,6 +2393,7 @@ var SimpleMappr = (function($, window, document) {
       this.bindPanelToggle();
       this.bindTextAreaResizers();
       this.getUserData();
+      this.bindAdmin();
     }
 
   };
