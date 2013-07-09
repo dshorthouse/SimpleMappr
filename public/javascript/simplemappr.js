@@ -938,18 +938,18 @@ var SimpleMappr = (function($, window, document) {
         success : function(data) {
           if(data.length > 0) {
             var regions = data.map(function(e) { return e; }).join(", "),
-                fieldsets = self.vars.fieldsetsRegions.find('div.fieldset-regions'),
+                fieldsets = self.vars.fieldSetsRegions.find('div.fieldset-regions'),
                 num_fieldsets = fieldsets.length;
 
             $.each(fieldsets, function(i) {
-              if(i === (num_fieldsets-1) && !self.vars.fieldsetsRegions.find('button[data-type="regions"]').prop('disabled')) {
+              if(i === (num_fieldsets-1) && !self.vars.fieldSetsRegions.find('button[data-type="regions"]').prop('disabled')) {
                 self.addAccordionPanel('regions');
                 num_fieldsets += 1;
               }
-              if(self.vars.fieldsetsRegions.find('input[name="regions['+i+'][title]"]').val() === "" || self.vars.fieldsetsRegions.find('textarea[name="regions['+i+'][data]"]').val() === "") {
-                self.vars.fieldsetsRegions.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
-                self.vars.fieldsetsRegions.find('input[name="regions['+i+'][color]"]').val(fillColor);
-                self.vars.fieldsetsRegions.find('textarea[name="regions['+i+'][data]"]').val(regions);
+              if(self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val() === "" || self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val() === "") {
+                self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
+                self.vars.fieldSetsRegions.find('input[name="regions['+i+'][color]"]').val(fillColor);
+                self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val(regions);
                 if(i > 0) { self.vars.fieldSetsRegions.accordion("activate", i); }
                 return false;
               }
