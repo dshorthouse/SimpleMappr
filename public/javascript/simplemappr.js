@@ -919,7 +919,7 @@ var SimpleMappr = (function($, window, document) {
             projection     : $('#projection').val(),
             projection_map : $('#projection_map').val(),
             origin         : $('#origin').val(),
-            qlayer         : ($('#stateprovince').prop('checked')) ? 'stateprovinces_polygon' : 'base',
+            qlayer         : ($('#stateprovinces').prop('checked')) ? 'stateprovinces_polygon' : 'base',
             width          : $('#width').val(),
             height         : $('#height').val()
           };
