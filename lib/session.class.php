@@ -78,12 +78,6 @@ class Session {
 
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
-    //handle legacy parameter in cookie
-    if (isset($cookie["lang"])) {
-      $cookie["locale"] = $cookie["lang"];
-      unset($cookie["lang"]);
-    }
-
     if(!isset($_GET["locale"]) && $cookie["locale"] != "en_US") {
       self::redirect("http://".$_SERVER["SERVER_NAME"].self::make_locale_param($cookie["locale"]));
     } elseif (isset($_GET["locale"]) && $_GET["locale"] == "en_US") {
@@ -141,11 +135,11 @@ class Session {
   }
 
   function __construct($new_session) {
-	if($new_session) {
-	  $this->execute();
-	} else {
-	  self::destroy();
-	}
+    if($new_session) {
+      $this->execute();
+    } else {
+      self::destroy();
+    }
   }
 
   private function execute() {
@@ -225,7 +219,8 @@ class Session {
         u.email,
         u.username,
         u.givenname,
-        u.surname
+        u.surname,
+        u.role
       FROM 
         users u 
       WHERE  
@@ -234,6 +229,7 @@ class Session {
       $record = $db->query_first($sql);
       $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
       $user['locale'] = $this->locale;
+      $user['role'] = (!$record['role']) ? 1 : $record['role'];
 
       self::set_session();
       $_SESSION['simplemappr'] = $user;

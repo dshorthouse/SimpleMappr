@@ -1,6 +1,11 @@
-<?php $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US'; ?>
+<?php
+  $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
+  $header_class = $header[0];
+  $accepted_locales = $header[1];
+  $roles = $header[2];
+?>
 <!DOCTYPE html>
-<html lang="<?php echo $header[1][$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
+<html lang="<?php echo $accepted_locales[$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
@@ -13,8 +18,8 @@
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <title>SimpleMappr</title>
-<?php $header[0]->getCSSHeader(); ?>
-<?php $header[0]->getDNSPrefetch(); ?>
+<?php $header_class->getCSSHeader(); ?>
+<?php $header_class->getDNSPrefetch(); ?>
 </head>
 <?php flush(); ?>
 <body>
@@ -25,7 +30,7 @@
 <meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <div id="map-loader"><span class="mapper-loading-spinner"></span></div>
 <div id="site-languages">
-<ul><?php foreach($header[1] as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
+<ul><?php foreach($accepted_locales as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
 <div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>
@@ -47,12 +52,12 @@
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
 <li><a href="#map-points"><?php echo _("Point Data"); ?></a></li>
 <li><a href="#map-regions"><?php echo _("Regions"); ?></a></li>
-<li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
-<?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
+<li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
+<?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <li><a href="#map-admin"><?php echo _("Administration"); ?></a></li>
 <?php endif; ?>
-<?php $qlocale  = "?v=" . $header[0]->getHash(); ?>
+<?php $qlocale  = "?v=" . $header_class->getHash(); ?>
 <?php $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : ""; ?>
 <li class="map-extras"><a href="help<?php echo $qlocale; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
 <li class="map-extras"><a href="about<?php echo $qlocale; ?>"><?php echo _("About"); ?></a></li>
@@ -74,7 +79,7 @@
 
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
-<?php $tabIndex = (isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1) ? 5 : 4; ?>
+<?php $tabIndex = (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['uid']] == 'administrator') ? 5 : 4; ?>
 <p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" data-tab="<?php echo $tabIndex; ?>" class="sprites-before help show-codes"><?php echo _("codes"); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">
@@ -202,14 +207,14 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <?php endif; ?>
 </div>
 
-<?php if(isset($_SESSION['simplemappr']) && $_SESSION['simplemappr']['uid'] == 1): ?>
+<?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <div id="map-users">
 <div id="userdata"></div>
 </div>
 <div id="map-admin">
-  <ul>
-    <li><a href="#" id="flush-caches"><?php echo _("Flush caches"); ?></a></li>
-  </ul>
+  <?php $this->partial("admin_tools"); ?>
+  <?php $this->partial("admin_citations"); ?>
+  <div id="admin-citations-list"></div>
 </div>
 <?php endif; ?>
 
@@ -291,7 +296,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
 </div>
 <div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit"><?php echo _("Apply"); ?></div></div></div>
-<?php $header[0]->getJSVars(); ?>
-<?php $header[0]->getJSFooter(); ?>
+<?php $header_class->getJSVars(); ?>
+<?php $header_class->getJSFooter(); ?>
 </body>
 </html>

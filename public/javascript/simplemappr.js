@@ -1561,55 +1561,6 @@ var SimpleMappr = (function($, window, document) {
       });
     },
 
-    loadUserList: function(object) {
-      var self  = this,
-          obj   = object || {},
-          data  = { locale : this.getParameterByName("locale") };
-
-      self.showSpinner();
-
-      if(obj.sort) {
-        data.sort = obj.sort.item;
-        data.dir = obj.sort.dir;
-      }
-
-      if(!data.locale) { delete data.locale; }
-
-      $.ajax({
-        type     : 'GET',
-        url      : self.settings.baseUrl + '/user/',
-        data     : data,
-        dataType : 'html',
-        success  : function(response) {
-          if(response.indexOf("access denied") !== -1) {
-            window.location.reload();
-          } else {
-            $('#userdata').off().html(response)
-              .on('click', 'a.toolsRefresh', function(e) {
-                e.preventDefault();
-                self.loadUserList();
-              })
-              .on('click', 'a.ui-icon-triangle-sort', function(e) {
-                e.preventDefault();
-                data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
-                if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
-                self.loadUserList(data);
-              })
-              .on('click', 'a.user-delete', function(e) {
-                e.preventDefault();
-                self.deleteUserConfirmation(this);
-              })
-              .on('click', 'a.user-load', function(e) {
-                e.preventDefault();
-                self.loadMapList({ uid : $(this).attr("data-uid") });
-                self.tabSelector(3);
-            });
-            self.hideSpinner();
-          }
-        }
-      });
-    },
-
     getLanguage: function() {
       var param = "", locale = this.getParameterByName("locale");
 
@@ -1617,45 +1568,6 @@ var SimpleMappr = (function($, window, document) {
         param = "?locale=" + locale;
       }
       return param;
-    },
-
-    deleteUserConfirmation: function(obj) {
-      var self    = this,
-          id      = $(obj).attr("data-id"),
-          message = '<em>' + $(obj).parent().parent().children("td:first").text() + '</em>';
-
-      $('#mapper-message-delete').find("span").html(message).end().dialog({
-        height        : '250',
-        width         : '500',
-        dialogClass   : 'ui-dialog-title-mapper-message-delete',
-        modal         : true,
-        closeOnEscape : false,
-        draggable     : true,
-        resizable     : false,
-        buttons       : [
-          {
-            "text"  : $('#button-titles').find('span.delete').text(),
-            "class" : "negative",
-            "click" : function() {
-              $.ajax({
-                type    : 'DELETE',
-                url     : self.settings.baseUrl + "/user/" + id,
-                success : function() {
-                  self.loadUserList();
-                  self.trackEvent('user', 'delete');
-                }
-              });
-              $(this).dialog("destroy");
-            }
-          },
-          {
-            "text"  : $('#button-titles').find('span.cancel').text(),
-            "class" : "ui-button-cancel",
-            "click" : function() {
-              $(this).dialog("destroy");
-            }
-          }]
-      }).show();
     },
 
     mapSave: function() {
@@ -2301,7 +2213,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindTextAreaResizers: function() {
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function() {
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, '#map-admin'], function() {
         $(this).find('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
       });
     },
@@ -2334,41 +2246,7 @@ var SimpleMappr = (function($, window, document) {
       }
     },
 
-    bindAdmin: function() {
-      var self = this;
-
-      if($('#userdata').length > 0) {
-        this.loadUserList();
-        this.tabSelector(4);
-      }
-      if($('#map-admin').length > 0) {
-        $('#map-admin').on('click', 'a', function(e) {
-          e.preventDefault();
-          self.showSpinner();
-          if($(this).has('#flush-caches')) {
-            $.ajax({
-              type     : 'GET',
-              url      : self.settings.baseUrl + "/flush_cache/",
-              dataType : 'json',
-              success  : function(response) {
-                if(response.status === "ok") {
-                  alert("Caches flushed");
-                  self.hideSpinner();
-                  window.location.reload();
-                }
-              },
-              error    : function(xhr, ajaxOptions, thrownError) {
-                self.unusedVariables(xhr,ajaxOptions, thrownError);
-                alert("Error flushing caches");
-              }
-            });
-          }
-        });
-      }
-    },
-
     init: function() {
-      var self = this;
       this.disableDefaultButtons();
       this.screenSizeListener();
       this.bindRotateWheel();
@@ -2393,7 +2271,6 @@ var SimpleMappr = (function($, window, document) {
       this.bindPanelToggle();
       this.bindTextAreaResizers();
       this.getUserData();
-      this.bindAdmin();
     }
 
   };
@@ -2403,9 +2280,28 @@ var SimpleMappr = (function($, window, document) {
       $.extend(_private.settings, args);
       _private.init();
     },
+    getParameterByName: function(name) {
+      _private.getParameterByName(name);
+    },
+    showSpinner: function() {
+      _private.showSpinner();
+    },
+    hideSpinner: function() {
+      _private.hideSpinner();
+    },
+    trackEvent: function(category, action) {
+      _private.trackEvent(category, action);
+    },
+    tabSelector: function(tab) {
+      _private.tabSelector(tab);
+    },
     loadCodes: function(elem,data) {
       _private.loadCodes(elem,data);
-    }
+    },
+    loadMapList: function(obj) {
+      _private.loadMapList(obj);
+    },
+    settings: _private.settings
   };
 
 }(jQuery, window, document));

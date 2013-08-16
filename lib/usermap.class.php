@@ -23,24 +23,27 @@ $config_dir = dirname(dirname(__FILE__)).'/config/';
 require_once($config_dir.'conf.php');
 require_once($config_dir.'/conf.db.php');
 require_once('db.class.php');
+require_once('user.class.php');
 require_once('session.class.php');
 
 class Usermap {
 
   private $id;
   private $uid;
+  private $role;
   private $db;
   private $uid_q;
 
   function __construct($id) {
-	session_start();
-	if(!isset($_SESSION['simplemappr'])) {
-	  $this->access_denied();
-	}
+    session_start();
+    if(!isset($_SESSION['simplemappr'])) {
+      $this->access_denied();
+    }
     Session::select_locale();
     $this->id = (int)$id;
-	$this->uid = (int)$_SESSION['simplemappr']['uid'];
-	$this->uid_q = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
+    $this->uid = (int)$_SESSION['simplemappr']['uid'];
+    $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
+    $this->uid_q = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
     $this->set_header()->execute();
   }
 
@@ -128,7 +131,7 @@ class Usermap {
     $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
     $order = "m.created ".$dir;
 
-    if($this->uid != 1) {
+    if(User::$roles[$this->role] !== 'administrator') {
       $where['user'] =  "WHERE m.uid = ".$this->db->escape($this->uid);
     }
     if($this->uid_q) {
@@ -148,9 +151,9 @@ class Usermap {
 
     $b = "";
     if(isset($_GET['search'])) {
-      if($this->uid == 1 && !$this->uid_q) { $b = "WHERE "; }
+      if(User::$roles[$this->role] == 'administrator' && !$this->uid_q) { $b = "WHERE "; }
       $where['where'] = $b."LOWER(m.title) LIKE '%".$this->db->escape($_GET['search'])."%'";
-      if($this->uid == 1 && !$this->uid_q) {
+      if(User::$roles[$this->role] == 'administrator' && !$this->uid_q) {
         $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->db->escape($_GET['search'])."%'";
       }
     }
@@ -194,7 +197,7 @@ class Usermap {
       $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "updated" && isset($_GET['dir'])) ? " ".$dir : "";
       $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="updated" href="#">'._("Updated").'</th>';
       $output .= '<th class="actions">'._("Actions");
-      if($this->uid == 1) {
+      if(User::$roles[$this->role] == 'administrator') {
         $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
       }
       $output .= '</th>';
@@ -206,7 +209,7 @@ class Usermap {
         $class = ($i % 2) ? 'class="even"' : 'class="odd"';
         $output .= '<tr '.$class.'>';
         $output .= '<td class="title">';
-        $output .= ($this->uid == 1 && !$this->uid_q) ? $record['username'] . ': ' : '';
+        $output .= (User::$roles[$this->role] == 'administrator' && !$this->uid_q) ? $record['username'] . ': ' : '';
         $output .= '<a class="map-load" data-id="'.$record['mid'].'" href="#">' . stripslashes($record['title']) . '</a>';
         $output .= '</td>';
         $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
@@ -214,7 +217,7 @@ class Usermap {
         $output .= ($record['updated']) ? gmdate("M d, Y", $record['updated']) : ' - ';
         $output .= '</td>';
         $output .= '<td class="actions">';
-        if($this->uid == $record['uid'] || $this->uid == 1) {
+        if($this->uid == $record['uid'] || User::$roles[$this->role] == 'administrator') {
           $output .= '<a class="sprites-before map-delete" data-id="'.$record['mid'].'" href="#">'._("Delete").'</a>';
         }
         $output .= '</td>';
@@ -236,7 +239,7 @@ class Usermap {
   */
   private function show_map() {
     $where = '';
-    if(!$this->uid == 1) { $where = ' AND uid = "'.$this->db->escape($this->uid).'"'; }
+    if(User::$roles[$this->role] !== 'administrator') { $where = ' AND uid = "'.$this->db->escape($this->uid).'"'; }
     $sql = '
       SELECT
         mid, map
@@ -258,7 +261,7 @@ class Usermap {
   */
   private function destroy_map() {
     $where = 'mid='.$this->db->escape($this->id);
-    if($this->uid != 1) {
+    if(User::$roles[$this->role] !== 'administrator') {
       $where .= ' AND uid = '.$this->db->escape($this->uid);
     }
     $sql = '
@@ -274,7 +277,7 @@ class Usermap {
   }
 
   private function access_denied() {
-	header("Content-Type: application/json");
+    header("Content-Type: application/json");
     echo '{ "error" : "access denied" }';
     exit();
   }

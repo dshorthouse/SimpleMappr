@@ -22,6 +22,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 $config_dir = dirname(dirname(__FILE__)).'/config/';
 require_once($config_dir.'conf.php');
 require_once('session.class.php');
+require_once('user.class.php');
 require_once('cssmin.php');
 
 class Header {
@@ -52,6 +53,10 @@ class Header {
     'hashchange'  => 'public/javascript/jquery.ba-hashchange.min.js',
     'toggle'      => 'public/javascript/jquery.toggleClick.min.js',
     'simplemappr' => 'public/javascript/simplemappr.min.js'
+  );
+  
+  public static $admin_js_files = array(
+    'admin' => 'public/javascript/simplemappr.admin.min.js'
   );
 
   public static $remote_js_files = array(
@@ -231,6 +236,15 @@ class Header {
     if(!isset($_SESSION['simplemappr'])) {
       $this->addJS("janrain", self::$remote_js_files["janrain"]);
     }
+    if($this->isAdministrator()) {
+      foreach(self::$admin_js_files as $key => $js_file) {
+        if(ENVIRONMENT == "production") {
+          $this->addJS($key, $js_file);
+        } else {
+          $this->addJS($key, str_replace(".min", "",$js_file));
+        }
+      }
+    }
     return $this;
   }
 
@@ -331,7 +345,10 @@ class Header {
     }
     $header .= join(",", $headjs);
     $header .= ");" . "\n";
-    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session." }); } );";
+    $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session." }); });" . "\n";
+    if($this->isAdministrator()) {
+      $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
+    }
     $header .= "</script>" . "\n";
     echo $header;
   }
@@ -342,6 +359,13 @@ class Header {
       $foot .= $this->getJanrain();
     }
     echo $foot;
+  }
+  
+  private function isAdministrator() {
+    if(isset($_SESSION['simplemappr']) && User::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
+      return true;
+    }
+    return false;
   }
 
   /*

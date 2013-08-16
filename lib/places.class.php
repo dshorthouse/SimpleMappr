@@ -31,7 +31,7 @@ class Places {
   private $db;
 
   function __construct($id) {
-	$this->id = $id;
+    $this->id = $id;
     Session::select_locale();
     $this->set_header()
          ->execute();

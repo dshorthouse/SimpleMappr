@@ -67,6 +67,11 @@ class Bootstrap {
         $this->setup_map($klass)->execute()->get_output();
         break;
 
+      case "/citation":
+        $citation = $this->klass("citation", "Citation", $this->id);
+        $citation->execute();
+        break;
+
       case "/docx":
         $this->set_locale();
         $klass = $this->klass("mappr.docx", "MapprDocx");
@@ -79,9 +84,10 @@ class Bootstrap {
       
       case "/flush_cache":
         require_once('lib/header.class.php');
+        require_once('lib/user.class.php');
         require_once('lib/session.class.php');
         Session::set_session();
-        if(!isset($_SESSION["simplemappr"]) || (int)$_SESSION["simplemappr"]["uid"] !== 1) {
+        if(!isset($_SESSION["simplemappr"]) || User::$roles[$_SESSION["simplemappr"]["role"]] !== 'administrator') {
           header("HTTP/1.0 404 Not Found");
           readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
           exit();
@@ -180,13 +186,14 @@ class Bootstrap {
       header('Location: http://www.' . $_SERVER['HTTP_HOST'] . '/');
       exit();
     } else {
+      require_once('lib/user.class.php');
       require_once('lib/session.class.php');
       require_once('lib/header.class.php');
       require_once('lib/mappr.class.php');
 
       Session::update_activity();
 
-      return array(new Header, Session::$accepted_locales);
+      return array(new Header, Session::$accepted_locales, User::$roles);
     }
   }
 

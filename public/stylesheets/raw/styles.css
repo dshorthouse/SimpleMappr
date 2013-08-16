@@ -58,12 +58,12 @@ fieldset #scale-measure{display:none;margin:5px 0 0 5px;}
 .required{color:#ff0000;font-weight:bold;}
 button{background-color:transparent;color:#565656;border:1px solid #aaa;padding:5px 5px 5px 0;margin:0 0.2em;cursor:pointer;font-size:0.7em !important;}
 button:hover{color:#c7c7c7;background-color:#4f4f4f;border:1px solid #585858;}
-button:active{color:#CCC !important;}
+button:active{color:#ccc !important;}
 button.positive{color:#4c8318 !important;}
-button.positive:hover{background-color:#a9bea3 !important;}
+button.positive:hover{background-color:#a9bea3 !important;color:#fff !important;}
 button.positive:active{background-color:#3d5b40 !important;}
 button.negative{color:#d12f19 !important;}
-button.negative:hover{background-color:#eca8a8 !important;}
+button.negative:hover{background-color:#eca8a8 !important;color:#fff !important;}
 button.negative:active{background-color:#782c21 !important;}
 .submitForm:before{background-position:-260px -304px;}
 .clear:before{background-position:-260px -264px;}
@@ -207,6 +207,11 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-users a.user-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-admin ul, #map-admin li{list-style:none;margin:0px;padding:0px;}
 #map-admin li{display:inline;margin:0px 5px;}
+#map-admin label, #map-admin input, #map-admin textarea {display:block;}
+#map-admin .resizable-textarea {width:600px;}
+#map-admin p.citation{text-indent:-2em;padding-left:2em;font-size:0.75em;}
+#map-admin a.citation-delete:before{background-position:-260px -284px;margin-top:0.2em;}
+#map-admin a.citation-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-about h3{font-size:0.8em;}
 .filter-countries{margin-left:1em;}
 .countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}

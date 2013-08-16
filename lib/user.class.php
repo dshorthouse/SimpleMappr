@@ -28,17 +28,22 @@ require_once('session.class.php');
 class User {
 
   private $id;
-  private $uid;
+  private $role;
   private $db;
+  
+  public static $roles = array(
+    1 => 'user',
+    2 => 'administrator'
+  );
 
   function __construct($id) {
     session_start();
-	if(!isset($_SESSION['simplemappr'])) {
-	  $this->access_denied();
-	}
+    if(!isset($_SESSION['simplemappr'])) {
+      $this->access_denied();
+    }
     Session::select_locale();
     $this->id = (int)$id;
-    $this->uid = (int)$_SESSION['simplemappr']['uid'];
+    $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
     $this->set_header()->execute();
   }
 
@@ -57,7 +62,7 @@ class User {
   * Utility method
   */
   private function execute() {
-    if($this->uid !== 1) {
+    if(self::$roles[$this->role] !== 'administrator') {
       $this->access_denied();
     } else {
       $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -106,7 +111,7 @@ class User {
 
     $sql = "
       SELECT
-        u.uid, u.username, u.email, u.access, count(m.mid) as num
+        u.uid, u.username, u.email, u.access, u.role, count(m.mid) as num
       FROM
         users u
       LEFT JOIN
@@ -147,7 +152,7 @@ class User {
        $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
        $output .= '<td class="usermaps-center">'.$access.'</td>';
        $output .= '<td class="actions">';
-       if($record['uid'] != 1) {
+       if(!$record['role'] || self::$roles[$record['role']] !== 'administrator') {
          $output .= '<a class="sprites-before user-delete" data-id="'.$record['uid'].'" href="#">'._("Delete").'</a>';
        }
        $output .= '</td>';
@@ -182,7 +187,7 @@ class User {
   }
 
   private function access_denied() {
-	header("Content-Type: application/json");
+    header("Content-Type: application/json");
     echo '{ "error" : "access denied" }';
     exit();
   }

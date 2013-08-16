@@ -3,6 +3,7 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require_once($root.'/config/conf.php');
 require_once($root.'/lib/mappr.class.php');
 require_once($root.'/lib/session.class.php');
+require_once($root.'/lib/citation.class.php');
 Session::select_locale();
 ?>
 <!-- about tab -->
@@ -51,20 +52,16 @@ Session::select_locale();
 </div>
 </div>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
-<p class="citation">Andrianasolo, D.N., A.P. Davis, N.J. Razafinarivo, S. Hamon, J.-J. Rakotomalala, S.-A. Sabatier, and P. Hamon. 2013. High genetic diversity of in situ and ex situ populations of Madagascan coffee species: further implications for the management of coffee genetic resources. <em>Tree Genetics &amp; Genomes</em> doi:<a href="http://dx.doi.org/10.1007/s11295-013-0638-4">10.1007/s11295-013-0638-4</a>.</p>
-<p class="citation">Alves, V.R., R.A. de Freitas, F.L. Santos, A.F.J. de Oliveira, T.V. Barrett, and P.H.F. Shimabukuro. 2012. Sand flies (Diptera, Psychodidae, Phlebotominae) from Central Amazonia and four new records for the Amazonas state, Brazil. Revista Brasileira de Entomologia, (ahead), 0-0. doi:<a href="http://dx.doi.org/10.1590/S0085-56262012005000020">10.1590/S0085-56262012005000020</a>.</p>
-<p class="citation">Bergamino, Leandro, Julio Gómez, Francisco R. Barboza and Diego Lercari. 2013. Major food web properties of two sandy beaches with contrasting morphodynamics, and effects on the stability. <em>Aquatic Ecology</em> doi:<a href="http://dx.doi.org/10.1007/s10452-013-9440-5">10.1007/s10452-013-9440-5</a>.</p>
-<p class="citation">Borkent, Christopher J. and Terry A. Wheeler. 2012. Systematics and phylogeny of <em>Leptomorphus</em> Curtis (Diptera: Mycetophilidae). <em>Zootaxa</em> 3549: 1–117. (<a href="http://www.mapress.com/zootaxa/list/2012/3549.html">permalink</a>)</p>
-<p class="citation">Borrero, Francisco J. and Abraham S.H. Breure. 2011. The Amphibulimidae (Mollusca: Gastropoda: Orthalicoidea) from Colombia and adjacent areas. <em>Zootaxa</em> 3054: 1-59. (<a href="http://www.mapress.com/zootaxa/list/2011/3054.html">permalink</a>)</p>
-<p class="citation">Breure, Abraham and Corey Whisson. 2012. Annotated type catalogue of <em>Bothriembryon</em> (Mollusca, Gastropoda, Orthalicoidea) in Australian museums, with a compilation of types in other museums. <em>ZooKeys</em> 194: 41-80. doi:<a href="http://dx.doi.org/10.3897/zookeys.194.2721">10.3897/zookeys.194.2721</a>.</p>
-<p class="citation">Brothers, Denis J. 2012. The new genus <em>Ancistrotilla</em> n. gen., with new species from Vanuatu and New Caledonia (Hymenoptera, Mutillidae). <em>Zoosystema</em> 34(2): 223-251. doi:<a href="http://dx.doi.org/10.5252/z2012n2a2">10.5252/z2012n2a2</a>.</p>
-<p class="citation">Caners, Richard T. 2013. Disjunct occurrence of <em>Harpanthus drummondii</em> (Taylor) Grolle (Geocalycaceae, Jungermanniopsida) in the boreal forest of West-Central Canada <em>Evansia</em> 30(1):24-30. doi:<a href="http://dx.doi.org/10.1639/079.030.0104">10.1639/079.030.0104</a>.</p>
-<p class="citation">Carr, Christina May. 2011. Polychaete diversity and distribution patterns in Canadian marine waters. <em>Marine Biodiversity</em> Online first, doi:<a href="http://dx.doi.org/10.1007/s12526-011-0095-y">10.1007/s12526-011-0095-y</a>.</p>
-<p class="citation">Carr, C.M., Hardy, S.M., Brown, T.M., Macdonald, T.A., Hebert, P.D.N. 2011. A Tri-Oceanic Perspective: DNA Barcoding Reveals Geographic Structure and Cryptic Diversity in Canadian Polychaetes. <em>PLoS ONE</em> 6(7): e22232. doi:<a href="http://dx.doi.org/10.1371/journal.pone.0022232">10.1371/journal.pone.0022232</a></p>
-<p class="citation">Cuzepan, Gabriela. 2011. Diving beetles (Coleoptera: Dytiscidae) from the Transylvanian Society collection of The Natural History Museum of Sibiu (Romania). <em>Travaux du Muséum National d’Histoire Naturelle</em> 54(1): 69-87. doi:<a href="http://dx.doi.org/10.2478/v10191-011-0005-3">10.2478/v10191-011-0005-3</a>.</p>
-<p class="citation">Fernández-Triana, José L., Sophie Cardinal, James B. Whitfield, Winnie Hallwachs, M. Alex Smith, and Daniel H. Janzen. 2013. A review of the New World species of the parasitoid wasp <em>Iconella</em> (Hymenoptera, Braconidae, Microgastrinae). <em>ZooKeys</em> 321: 65-87. doi:<a href="http://dx.doi.org/10.3897/zookeys.321.5160">10.3897/zookeys.321.5160</a>.</p>
-<p class="citation">Floden, A. 2012. Notes on two rare <em>Solidago</em> (Asteraceae) in Tennessee: <em>S. arenicola</em> and <em>S. simplex</em>. <em>Phytoneuron</em> 2012-63: 1–4. (<a href="http://www.phytoneuron.net/PhytoN-Solidagoarenicola.pdf">PDF</a>, 52kb)</p>
-<p class="citation">Gilligan, Todd M. and Donald J. Wright. 2013. The type species of <em>Eucosma</em> Hübner (Lepidoptera: Tortricidae: Eucosmini) <em>Zootaxa</em> 3630(3): 489–504. doi:<a href="http://dx.doi.org/10.11646/zootaxa.3630.3.5">10.11646/zootaxa.3630.3.5</a>.</p>
+<?php
+$citations = new Citation();
+foreach($citations->get_citations() as $citation) {
+  $doi = ($citation['doi']) ? ' doi:<a href="http://doi.org/' . $citation['doi'] . '">' . $citation['doi'] . '</a>.' : "";
+  $link = ($citation['link']) ? ' (<a href="' . $citation['link'] . '">link</a>)' : "";
+  echo '<p class="citation">' . $citation['reference'] . $link . $doi .'</p>';
+}
+?>
+<!--
+
 <p class="citation">Haddad, Charles R. 2013. Taxonomic notes on the spider genus <em>Messapus</em> Simon, 1898 (Araneae, Corinnidae), with the description of the new genera <em>Copuetta</em> and <em>Wasaka</em> and the first cladistic analysis of Afrotropical Castianeirinae. <em>Zootaxa</em> 3688 (1): 001–079. doi:<a href="http://dx.doi.org/10.11646/zootaxa.3688.1.1">10.11646/zootaxa.3688.1.1</a>.</p>
 <p class="citation">Haddad, Charles R. 2013. A revision of the ant-like sac spider genus <em>Apochinomma</em> Pavesi 1881 (Araneae: Corinnidae) in the Afrotropical Region. <em>Journal of Natural History</em> doi:<a href="http://dx.doi.org/10.1080/00222933.2013.791933">10.1080/00222933.2013.791933</a>.</p>
 <p class="citation">Haddad, Charles R. 2013. A revision of the continental species of <em>Copa</em> Simon, 1885 (Araneae, Corinnidae) in the Afrotropical Region. <em>Zookeys</em> 276: 1-37. doi:<a href="http://dx.doi.org/10.3897/zookeys.276.4233">10.3897/zookeys.276.4233</a>.</p>
@@ -88,14 +85,13 @@ Session::select_locale();
 <p class="citation">Scudder, G.G.E. and Michael D. Schwartz. 2012. Two new species of <em>Trigonotylus</em> (Hemiptera: Heteroptera: Miridae: Stenodemini) from western Canada and northwestern United States. <em>Zootaxa</em> 3174: 51-58. (<a href="http://www.mapress.com/zootaxa/2012/f/zt03174p058.pdf">PDF</a>, 1.4MB)</p>
 <p class="citation">Sikes, Derek S. and Tonya Mousseau. 2013. Description of <em>Nicrophorus efferens</em>, new species, from Bougainville Island (Coleoptera, Silphidae, Nicrophorinae). <em>ZooKeys</em> 311: 83-93. doi:<a href="http://dx.doi.org/10.3897/zookeys.311.5141">10.3897/zookeys.311.5141</a>.</p>
 <p class="citation">Skevington, J.H. and F.C. Thompson. 2012. Review of New World <em>Sericomyia</em> (Diptera, Syrphidae), including description of a new species. <em>The Canadian Entomologist</em> 144: 216-247. doi:<a href="http://dx.doi.org/10.4039/tce.2012.24">10.4039/tce.2012.24</a>.</p>
-<p class="citation">Soto, Eduardo M. and Martín J. Ramírez. 2012. Revision and phylogenetic analysis of the spider genus <em>Philisca</em> Simon (Araneae: Anyphaenidae, Amaurobioidinae) <em>Zootaxa</em> 3443: 1–65. (<a href="http://www.mapress.com/zootaxa/list/2012/3443.html">issue</a>)</p>
 <p class="citation">Tessler, M. 2012. A monograph of <em>Hymenodon</em> (Orthodontiaceae). <em>The Bryologist</em> 115(4): 493-517. doi:<a href="http://dx.doi.org/10.1639/0007-2745-115.4.493">10.1639/0007-2745-115.4.493</a>.</p>
 <p class="citation">Uhlig, Manfred and Jiří Janák. 2013. <em>Erichsonius (Sectophilonthus) dorsumsuis</em> sp. nov. from Eastern Cape and KwaZulu-Natal Provinces, South Africa (Coleoptera: Staphylinidae, Staphylininae). <em>Acta Entomologica Musei Nationalis Prague</em> 53(1): 209-218. (<a href="http://www.aemnp.eu/PDF/53_1/53_1_209.pdf">PDF</a>, 0.6MB)</p>
 <p class="citation">Wesołowska, W. &amp; C.R. Haddad. 2013. New data on the jumping spiders of South Africa (Araneae: Salticidae). <em>African Invertebrates</em> 54(1): 177–240. (<a href="http://africaninvertebrates.org/ojs/index.php/AI/article/view/265">link</a>)</p>
 <p class="citation">Wilkin, P., P. Suksathan, K. Keeratikiat, P. Van Welzen and J. Wiland-Szymańska. 2012. A new threatened endemic species from central and northeastern Thailand, <em>Dracaena jayniana</em> (Asparagaceae: tribe Nolinoideae). <em>Kew Bulletin</em> 67: 1-9. doi:<a href="http://dx.doi.org/10.1007/s12225-012-9412-2">10.1007/s12225-012-9412-2</a>.</p>
 <p class="citation">Wyniger, Denise. 2011. Revision of the Nearctic genus <em>Coquillettia</em> Uhler with a transfer to the tribe Phylini, the description of 14 new species, a new synonymy, and the description of two new Nearctic genera <em>Leutiola</em> and <em>Ticua</em> and two new species (Heteroptera: Miridae: Phylinae). <em>Entomologica Americana</em> 117(3 &amp; 4): 134-211. doi:<a href="http://dx.doi.org/10.1664/11-RA-012.1">10.1664/11-RA-012.1</a>.</p>
 <p class="citation">Zubov, Dmitry A. and Aaron P. Davis. 2012. <em>Galanthus panjutinii</em> sp. nov.: a new name for an invalidly published species of <em>Galanthus</em> (Amaryllidaceae) from the northern Colchis area of Western Transcaucasia. <em>Phytotaxa</em> 50: 55-63. (<a href="http://www.mapress.com/phytotaxa/content/2012/pt00050.htm">issue</a>)</p>
-<p class="citation">Zhang, Yuanmeng Miles. 2013. An integrative approach to distinguishing taxonomically challenging microhymenoptera: Eurytomidae (Hymenoptera: Chalcidoidea) associated with cynipid galls on rose. Master of Science (M.Sc.), Laurentian University, Sudbury, Ontario. (<a href="https://zone.biblio.laurentian.ca/dspace/handle/10219/2030">permalink</a>)</p>
+-->
 <div class="header"><h2><?php echo _("Applications"); ?></h2></div>
 <h3>Microsoft Excel</h3>
 <p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of

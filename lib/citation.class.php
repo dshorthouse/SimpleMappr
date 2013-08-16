@@ -1,0 +1,181 @@
+<?php
+
+/**************************************************************************
+
+File: citation.class.php
+
+Description: Manages references that cite SimpleMappr
+
+Developer: David P. Shorthouse
+Email: davidpshorthouse@gmail.com
+
+Copyright (C) 2013  David P. Shorthouse
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+**************************************************************************/
+
+$config_dir = dirname(dirname(__FILE__)).'/config/';
+require_once($config_dir.'conf.db.php');
+require_once('db.class.php');
+require_once('user.class.php');
+require_once('session.class.php');
+
+class Citation {
+
+  private $db;
+  private $id;
+  private $citations;
+
+  function __construct($id = NULL) {
+    $this->id = $id;
+    $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+  }
+  
+  public function get_citations() {
+    $this->index_citations();
+    return $this->citations;
+  }
+
+  public function execute() {
+    $this->set_header()->restful_action()->response();
+  }
+
+  /*
+  * Detect type of request and perform appropriate method
+  */
+  private function restful_action() {
+    $method = $_SERVER['REQUEST_METHOD'];
+    
+    if($method == 'POST' || $method == 'DELETE') {
+      $this->check_permission();
+    }
+
+    switch($method) {
+      case 'GET':
+        $this->index_citations();
+      break;
+
+      case 'POST':
+        $this->create_citation();
+      break;
+
+      case 'DELETE':
+        $this->destroy_citation();
+      break;
+
+      default:
+      break;
+    }
+
+    return $this;
+  }
+
+  /*
+  * Index method to produce array of citations
+  */
+  private function index_citations() {
+    $sql = "
+      SELECT
+        *
+      FROM
+        citations c
+      ORDER BY c.reference ASC, c.year DESC";
+
+    $this->citations = $this->db->fetch_all_array($sql);
+    return $this;
+  }
+
+  /*
+  * Create method to make a new citation
+  */
+  private function create_citation() {
+    $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : NULL;
+    $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : NULL;
+    $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : NULL;
+    $doi = isset($_POST['citation']['doi']) ? $_POST['citation']['doi'] : NULL;
+    $link = isset($_POST['citation']['link']) ? $_POST['citation']['link'] : NULL;
+
+    if(empty($year) || empty($reference) || empty($author)) {
+      $this->response('error');
+      exit();
+    }
+
+    $data = array(
+      'year' => $year,
+      'reference' => $reference,
+      'doi' => $doi,
+      'link' => $link,
+      'first_author_surname' => $author
+    );
+
+    $data['id'] = $this->db->query_insert('citations', $data);
+    $this->citations = $data;
+    return $this;
+  }
+
+  /*
+  * Destroy method to delete a citation
+  */
+  private function destroy_citation() {
+    $sql = "
+        DELETE
+          c
+        FROM
+          citations c
+        WHERE 
+          c.id=".$this->db->escape($this->id);
+    $this->db->query($sql);
+    return $this;
+  }
+
+  private function check_permission(){
+    session_start();
+    if(!isset($_SESSION['simplemappr']) || User::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
+      $this->access_denied();
+    }
+  }
+  
+  private function response($type = NULL) {
+    header("Content-Type: application/json");
+    switch($type) {
+      case 'error':
+        $output = array(
+          "status" => "error"
+        );
+        break;
+      
+      default:
+        $output = array(
+          "status"    => "ok",
+          "citations" => $this->citations
+        );
+        break;
+    }
+    echo json_encode($output);
+  }
+
+  /*
+  * Set header to prevent caching
+  */
+  private function set_header() {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
+    return $this;
+  }
+
+  private function access_denied() {
+    header("Content-Type: application/json");
+    echo '{ "error" : "access denied" }';
+    exit();
+  }
+
+}
+
+?>
