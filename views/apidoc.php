@@ -47,7 +47,7 @@ Session::select_locale();
       <span class="api-example"><em>e.g.</em> url=<a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/files/demo.txt"><?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/public/files/demo.txt'); ?></a></span>
       <br>
       <?php echo _("a URL-encoded, remote GeoRSS feed."); ?> 
-      <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml"><?php echo urlencode('http://earthquake.usgs.gov/eqcenter/recenteqsww/catalogs/eqs7day-M5.xml'); ?></a></span>
+      <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom"><?php echo urlencode('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom'); ?></a></span>
     </dd>
 
     <dt>file</dt>
