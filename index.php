@@ -49,6 +49,11 @@ class Bootstrap {
         break;
 
       case "/about":
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
+        header('Content-Type: text/html; charset=utf-8');
         include_once("views/about.php");
         break;
 

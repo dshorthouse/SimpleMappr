@@ -39,7 +39,7 @@ class MapprMap extends Mappr {
    * Override the method in the parent class
    */
   public function get_request() {
-	if(!$this->id) { $this->set_not_found(); exit(); }
+    if(!$this->id) { $this->set_not_found(); exit(); }
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
     $sql = "SELECT map FROM maps WHERE mid=" . $db->escape($this->id);
     $record = $db->query_first($sql);
@@ -87,7 +87,7 @@ class MapprMap extends Mappr {
       break;
 
       default:
-		readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+        readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
     }
   }
 

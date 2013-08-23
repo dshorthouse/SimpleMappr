@@ -60,7 +60,7 @@
 <?php $qlocale  = "?v=" . $header_class->getHash(); ?>
 <?php $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : ""; ?>
 <li class="map-extras"><a href="help<?php echo $qlocale; ?>" class="sprites-before map-myhelp"><?php echo _("Help"); ?></a></li>
-<li class="map-extras"><a href="about<?php echo $qlocale; ?>"><?php echo _("About"); ?></a></li>
+<li class="map-extras"><a href="about"><?php echo _("About"); ?></a></li>
 <li class="map-extras"><a href="feedback<?php echo $qlocale; ?>"><?php echo _("Feedback"); ?></a></li>
 <li class="map-extras"><a href="apidoc<?php echo $qlocale; ?>"><?php echo _("API"); ?></a></li>
 </ul>
