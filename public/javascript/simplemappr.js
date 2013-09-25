@@ -849,7 +849,6 @@ var SimpleMappr = (function($, window, document) {
       this.destroyJcrop();
       this.resetJbbox();
       this.vars.jCropType = "zoom";
-
       this.vars.jzoomAPI = $.Jcrop('#' + self.vars.mapOutputImage.attr("id"), {
         addClass      : "customJzoom",
         bgOpacity     : 1,

@@ -1,12 +1,14 @@
 /*
  * jQuery SimpleMapprAdmin
  */
-/*global jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
+/*global SimpleMappr, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
 var SimpleMapprAdmin = (function($, window, document) {
 
   "use strict";
 
   var _private = {
+    
+    citations_list: $('#admin-citations-list'),
     
     init: function() {
       this.loadUserList();
@@ -74,7 +76,7 @@ var SimpleMapprAdmin = (function($, window, document) {
         if($(this).has('#flush-caches')) {
           self.flushCaches();
         }
-      })
+      });
     },
     
     flushCaches: function() {
@@ -112,7 +114,7 @@ var SimpleMapprAdmin = (function($, window, document) {
               link = (this.link) ? ' (<a href="' + this.link + '">link</a>)' : "";
               citations += '<p class="citation">' + this.reference + link + doi + '<a class="sprites-before citation-delete" data-id="' + this.id + '" href="#">Delete</a></p>';
             });
-            $('#admin-citations-list').html(citations);
+            self.citations_list.html(citations);
             self.bindDeleteCitations();
             SimpleMappr.hideSpinner();
           }
@@ -125,22 +127,21 @@ var SimpleMapprAdmin = (function($, window, document) {
     },
     
     bindDeleteCitations: function() {
-      var self = this, id = "";
+      var self = this;
 
-      $('#admin-citations-list').on('click', 'a.citation-delete', function(e) {
+      this.citations_list.on('click', 'a.citation-delete', function(e) {
         e.preventDefault();
         self.deleteCitationConfirmation(this);
       });
     },
     
     bindCreateCitation: function() {
-      var self = this, citations_list = $('#admin-citations-list');
+      var self = this;
 
       $('#map-admin').on('click', 'button.addmore', function(e) {
         e.preventDefault();
-        if($('#citation-reference').val() != "" && $('#citation-surname').val() != "" && $('#citation-year').val() != "") {
+        if($('#citation-reference').val() !== "" && $('#citation-surname').val() !== "" && $('#citation-year').val() !== "") {
           SimpleMappr.showSpinner();
-          citations_list.addClass("ui-widget-overlay");
           $.ajax({
             type        : 'POST',
             url         : SimpleMappr.settings.baseUrl + '/citation/',
@@ -153,7 +154,6 @@ var SimpleMapprAdmin = (function($, window, document) {
                   $('#citation-'+this).removeClass('ui-state-error');
                 });
                 self.loadCitationList();
-                citations_list.removeClass("ui-widget-overlay");
                 SimpleMappr.hideSpinner();
               }
             }
@@ -245,8 +245,8 @@ var SimpleMapprAdmin = (function($, window, document) {
             }
           }]
       }).show();
-    },
-    
+    }
+
   };
 
   return {
