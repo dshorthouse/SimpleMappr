@@ -99,23 +99,23 @@ Homebrew
 	  --prefix=/usr \
 	  --with-agg \
 	  --with-proj=/usr/local \
-	  --with-geos=/usr/local/Cellar/geos/3.3.5/bin/geos-config \
-	  --with-gdal=/usr/local/Cellar/gdal/1.9.1/bin/gdal-config \
+	  --with-geos=/usr/local/Cellar/geos/3.4.2/bin/geos-config \
+	  --with-gdal=/usr/local/Cellar/gdal/1.10.1/bin/gdal-config \
 	  --with-threads \
 	  --with-ogr \
-	  --with-freetype=/usr/local/Cellar/freetype/2.4.10 \
+	  --with-freetype=/usr/local/Cellar/freetype/2.5.0.1 \
 	  --with-xpm=/usr/X11 \
 	  --with-libiconv=system \
-	  --with-gd=/usr/local/Cellar/gd/2.0.36RC1 \
+	  --with-gd=/usr/local/Cellar/gd/2.1.0 \
 	  --with-wfs \
 	  --with-wcs \
 	  --with-wmsclient \
 	  --with-wfsclient \
 	  --with-sos \
 	  --with-fribidi-config \
-	  --with-php=/usr/include/php \
+	  --with-php=/usr/local/include/php \
 	  --with-experimental-png \
-	  --with-png=/usr/local/Cellar/libpng/1.5.13
+	  --with-png=/usr/local/Cellar/libpng/1.5.14
 
 6. Execute $ make
 7. Verify that mapserv is working $ ./mapserv -v
