@@ -273,12 +273,14 @@ class MapprApi extends Mappr {
       $class = ms_newClassObj($layer);
 
       if($this->gridlabel == "true") {
-        $class->label->set("encoding", "ISO-8859-1");
-        $class->label->set("font", "arial");
-        $class->label->set("type", MS_TRUETYPE);
-        $class->label->set("size", 10);
-        $class->label->set("position", MS_UC);
-        $class->label->color->setRGB(30, 30, 30);
+        $label = new labelObj();
+        $label->set("encoding", "ISO-8859-1");
+        $label->set("font", "arial");
+        $label->set("type", MS_TRUETYPE);
+        $label->set("size", 10);
+        $label->set("position", MS_UC);
+        $label->color->setRGB(30, 30, 30);
+        $class->addLabel($label);
       }
 
       $style = ms_newStyleObj($class);
@@ -313,7 +315,6 @@ class MapprApi extends Mappr {
     $this->map_obj->scalebar->backgroundcolor->setRGB(255,255,255);
     $this->map_obj->scalebar->outlinecolor->setRGB(0,0,0);
     $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-    $this->map_obj->scalebar->set("transparent", 1); // 1 true, 0 false
     $this->map_obj->scalebar->label->set("encoding", "ISO-8859-1");
     $this->map_obj->scalebar->label->set("font", "arial");
     $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
@@ -331,7 +332,6 @@ class MapprApi extends Mappr {
 
   public function add_legend() {
     $this->map_obj->legend->set("postlabelcache", 1);
-    $this->map_obj->legend->set("transparent", 0);
     $this->map_obj->legend->label->set("font", "arial");
     $this->map_obj->legend->label->set("type", MS_TRUETYPE);
     $this->map_obj->legend->label->set("position", 1);

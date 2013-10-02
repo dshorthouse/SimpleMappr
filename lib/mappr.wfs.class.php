@@ -101,7 +101,7 @@ class MapprWfs extends Mappr {
 
     $this->map_obj->setMetaData("wfs_srs", $srs_projections);
     $this->map_obj->setMetaData("wfs_abstract", "SimpleMappr Web Feature Service");
-        
+    $this->map_obj->setMetaData("wfs_enable_request", "*");
     $this->map_obj->setMetaData("wfs_connectiontimeout", "60");
 
     $this->make_request();
