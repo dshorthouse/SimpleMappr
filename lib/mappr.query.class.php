@@ -42,14 +42,13 @@ class MapprQuery extends Mappr {
     $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
     $this->layers           = $this->load_param('layers',array());
     $this->graticules       = $this->load_param('graticules', false);
-
     $this->bbox_query       = $this->load_param('bbox_query', '0,0,0,0');
     $this->queryLayer       = $this->load_param('qlayer', 'base');
 
     return $this;
   }
 
-    
+
   /**
   * Query a layer
   */
@@ -80,7 +79,7 @@ class MapprQuery extends Mappr {
     $rect = ms_newRectObj();
     $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
 
-    $return = @$layer->queryByRect($rect);
+    $return = $layer->queryByRect($rect);
 
     if($return == MS_SUCCESS) {
       if($layer->getNumResults() > 0) {
@@ -89,7 +88,7 @@ class MapprQuery extends Mappr {
         for($i = 0; $i < $layer->getNumResults(); $i++) {
           $res = $layer->getResult($i);
           $shape = $layer->getShape($res->tileindex, $res->shapeindex);
-          
+
           if($this->queryLayer == 'stateprovinces_polygon') {
             $hasc = explode(".",$shape->values['code_hasc']);
             if(isset($shape->values['sr_adm0_a3']) && isset($hasc[1])) { $items[$shape->values['sr_adm0_a3']][$hasc[1]] = array(); }
@@ -103,14 +102,13 @@ class MapprQuery extends Mappr {
             $this->data[] = $key . "[" . implode(" ", array_keys($value)) . "]";
           }
         }
-        
         $layer->close();
       }
     }
 
     return $this;
   }
-    
+
   public function get_output() {
     header("Content-Type: application/json");
     echo json_encode($this->data);

@@ -149,8 +149,8 @@ class Mappr {
         DRIVER CAIRO/SVG
         MIMETYPE 'image/svg+xml'
         EXTENSION 'svg'
-        #FORMATOPTION 'COMPRESSED_OUTPUT=FALSE'
-        #FORMATOPTION 'FULL_RESOLUTION=TRUE'
+        FORMATOPTION 'COMPRESSED_OUTPUT=FALSE'
+        FORMATOPTION 'FULL_RESOLUTION=TRUE'
       END
 
     END
@@ -185,7 +185,7 @@ class Mappr {
       'proj' => 'proj=laea,lat_0=90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
     'epsg:102019' => array(
       'name' => 'South Pole Azimuthal',
-      'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
+      'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs')
   );
 
   /* acceptable shapes */ 
@@ -328,14 +328,12 @@ class Mappr {
   function __construct() {
     if (!extension_loaded("MapScript")) {
       $this->set_error("php_mapscript.so extension is not loaded");
-      exit;
+      exit();
     }
     $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
   }
 
   function __destruct() {
-    $this->map_obj->free();
-    unset($this->map_obj);
   }
 
   public function __call($name, $arguments) {
@@ -739,29 +737,73 @@ class Mappr {
   }
 
   /**
-  * Execute the process. This is the main worker process that calls other req'd and optional methods.
+  * Execute the process. This is the main method that calls other req'd and optional methods.
   */
   public function execute() {
     $this->load_shapes();
     $this->load_symbols();
 
+    $this->set_web_config();
+    $this->set_resolution();
+    $this->set_units();
+    $this->set_map_color();
+    $this->set_output_format();
+    $this->set_map_extent();
+    $this->set_map_size();
+    $this->set_zoom();
+    $this->set_pan();
+    $this->set_rotation();
+    $this->set_crop();
+    $this->add_regions();
+    $this->add_layers();
+    $this->add_graticules();
+    $this->add_coordinates();
+    $this->add_watermark();
+    $this->prepare_output();
+
+    return $this;
+  }
+
+  /**
+  * Set config for web config, storage of tmp files
+  */
+  private function set_web_config() {
     $this->map_obj->set("name","simplemappr");
     $this->map_obj->setFontSet($this->font_file);
     $this->map_obj->web->set("template","template.html");
     $this->map_obj->web->set("imagepath",$this->tmp_path);
     $this->map_obj->web->set("imageurl",$this->tmp_url);
+  }
 
+  /**
+  * Set resolution
+  */
+  private function set_resolution() {
     if($this->output == 'tif') {
       $this->map_obj->set("defresolution", 300);
       $this->map_obj->set("resolution", 300);
     }
+  }
 
+  /**
+  * Set units
+  */
+  private function set_units() {
     $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
     $this->map_obj->set("units",$units);
+  }
 
+  /**
+  * Set map color
+  */
+  private function set_map_color() {
     $this->map_obj->imagecolor->setRGB(255,255,255);
+  }
 
-    // Set the output format and size
+  /**
+  * Set output format
+  */
+  private function set_output_format() {
     if(isset($this->output) && $this->output) {
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
       if($output == 'pptx' || $output == 'docx') {
@@ -772,27 +814,6 @@ class Mappr {
       }
       $this->map_obj->selectOutputFormat($output);
     }
-
-    $this->set_map_extent();
-    $this->set_map_size();
-    $this->zoom_in();
-    $this->zoom_out();
-    $this->set_pan();
-    $this->set_rotation();
-
-    if(isset($this->rotation) && $this->rotation != 0 && $this->projection == $this->default_projection) {
-      $this->reproject_map($this->default_projection, $this->projection);
-    }
-
-    $this->set_crop();
-    $this->add_regions();
-    $this->add_layers();
-    $this->add_graticules();
-    $this->add_coordinates();
-    $this->add_watermark();
-    $this->prepare_output();
-
-    return $this;
   }
 
   /**
@@ -812,13 +833,23 @@ class Mappr {
   }
 
   /**
+  * Get projection
+  * @param string $projection
+  * @return string
+  */
+  private function get_projection($projection) {
+    if(!array_key_exists($projection, self::$accepted_projections)) { $projection = 'epsg:4326'; }
+    return self::$accepted_projections[$projection]['proj'];
+  }
+
+  /**
   * Set the map extent
   */
   private function set_map_extent() {
     $ext = explode(',',$this->bbox_map);
     if(isset($this->projection) && $this->projection != $this->projection_map) {
-      $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection_map]['proj']);
-      $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+      $origProjObj = ms_newProjectionObj($this->get_projection($this->projection_map));
+      $newProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
 
       $poPoint1 = ms_newPointObj();
       $poPoint1->setXY($ext[0], $ext[1]);
@@ -866,76 +897,36 @@ class Mappr {
   private function set_map_size() {
     $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
     if($this->is_resize()) {
-      $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);   
+      $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
     }
   }
 
   /**
   * Zoom In
   */
-  private function zoom_in() {
+  private function set_zoom() {
+    //Zoom in
     if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
       $bbox_rubberband = explode(',',$this->bbox_rubberband);
       if($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
         $zoom_point = ms_newPointObj();
         $zoom_point->setXY($bbox_rubberband[0],$bbox_rubberband[1]);
-        $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
+        $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
       } else {
         $zoom_rect = ms_newRectObj();
         $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
         $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
-        $this->reset_zoom();
       }
     }
-  }
-
-  /**
-  * Zoom out
-  */
-  private function zoom_out() {
+    
+    //Zoom out
     if(isset($this->zoom_out) && $this->zoom_out) {
       $zoom_point = ms_newPointObj();
       $zoom_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
-      $max_extent = $this->get_max_extent();
-      $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+      $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
     }
   }
 
-  /**
-  * Determine max extent possible
-  * @return obj
-  */
-  public function get_max_extent() {
-    $max_extent = ms_newRectObj();
-    $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
-    if($this->projection != $this->default_projection) {
-      $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
-      $newProjObj = ms_newProjectionObj($this->accetable_projection());
-      $max_extent->project($origProjObj,$newProjObj);   
-    }
-    return $max_extent;
-  }
-
-  /**
-  * Assess if a provided projection is in the accepted list
-  */
-  private function accetable_projection() {
-    return isset(self::$accepted_projections[$this->projection]['proj']) ? self::$accepted_projections[$this->projection]['proj'] : self::$accepted_projections[$this->default_projection]['proj'];
-  }
-
-  /**
-  * Reset the zoom if extent is beyond the acceptable bounds
-  */
-  private function reset_zoom() {
-    $extent = $this->map_obj->extent;
-    $max_extent = $this->get_max_extent();
-    if($extent->minx < $max_extent->minx || $extent->miny < $max_extent->miny || $extent->maxx > $max_extent->maxx || $extent->maxy > $max_extent->maxy) {
-      $new_point = ms_newPointObj();
-      $new_point->setXY($this->map_obj->width/2,$this->map_obj->height/2);
-      $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
-    }
-  }
-  
   /**
   * Set the pan direction
   */
@@ -965,8 +956,7 @@ class Mappr {
 
       $new_point = ms_newPointObj();
       $new_point->setXY($this->map_obj->width/2*$x_offset,$this->map_obj->height/2*$y_offset);
-      $max_extent = $this->get_max_extent();
-      $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $max_extent);
+      $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
     }
   }
 
@@ -976,6 +966,9 @@ class Mappr {
   private function set_rotation() {
     if(isset($this->rotation) && $this->rotation != 0) {
       $this->map_obj->setRotation($this->rotation);
+      if($this->projection == $this->default_projection) {
+        $this->reproject($this->default_projection, $this->projection);
+      }
     }
   }
 
@@ -1014,6 +1007,21 @@ class Mappr {
   }
 
   /**
+  * Determine max extent possible
+  * @return obj
+  */
+  public function get_max_extent() {
+    $max_extent = ms_newRectObj();
+    $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
+    if($this->projection != $this->default_projection) {
+      $origProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
+      $newProjObj = ms_newProjectionObj($this->get_projection($this->projection));
+      $max_extent->project($origProjObj,$newProjObj);   
+    }
+    return $max_extent;
+  }
+
+  /**
   * Add all coordinates to the map
   */
   public function add_coordinates() {
@@ -1047,7 +1055,7 @@ class Mappr {
           $layer->set("type",MS_LAYER_POINT);
           $layer->set("tolerance",5);
           $layer->set("toleranceunits",6);
-          $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+          $layer->setProjection($this->get_projection($this->default_projection));
 
           $class = ms_newClassObj($layer);
           if($title != "") { $class->set("name",$title); }
@@ -1153,7 +1161,7 @@ class Mappr {
           }
 
           $layer->set("template", "template.html");
-          $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+          $layer->setProjection($this->get_projection($this->default_projection));
 
           $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
 
@@ -1207,7 +1215,7 @@ class Mappr {
         $layer->set("status",MS_ON);
         $layer->setConnectionType(MS_SHAPEFILE);
         $layer->set("data", $this->shapes[$name]['shape']);
-        $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+        $layer->setProjection($this->get_projection($this->default_projection));
         $layer->set("template", "template.html");
         $layer->set("dump", true);
 
@@ -1244,16 +1252,19 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $label->set("position", MS_UR);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-            $class->label->set("position", MS_UR);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
           break;
           
           case 'base':
@@ -1279,16 +1290,19 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
+            $label->set("position", MS_CC);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
-            $class->label->set("position", MS_CC);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
           break;
 
           case 'stateprovnames':
@@ -1296,16 +1310,19 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+            $label->set("position", MS_CC);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-            $class->label->set("position", MS_CC);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
           break;
 
           case 'placenames':
@@ -1313,16 +1330,20 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $label->set("position", MS_UR);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-            $class->label->set("position", MS_UR);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
+
             $style = ms_newStyleObj($class);
             $style->set("symbolname","circle");
             $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
@@ -1334,16 +1355,19 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $label->set("position", MS_UR);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-            $class->label->set("position", MS_UR);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
           break;
           
           case 'marineLabels':
@@ -1351,16 +1375,19 @@ class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $label->set("position", MS_UR);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
             $class = ms_newClassObj($layer);
-            $class->label->set("font", "arial");
-            $class->label->set("type", MS_TRUETYPE);
-            $class->label->set("encoding", "CP1252");
-            $class->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-            $class->label->set("position", MS_UR);
-            $class->label->set("offsetx", 3);
-            $class->label->set("offsety", 3);
-            $class->label->set("partials", MS_FALSE);
-            $class->label->color->setRGB(10, 10, 10);
+            $class->addLabel($label);
           break;
 
           default:
@@ -1413,7 +1440,7 @@ class Mappr {
       $layer->set("name", 'grid');
       $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
-      $layer->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+      $layer->setProjection($this->get_projection($this->default_projection));
 
       $class = ms_newClassObj($layer);
 
@@ -1436,8 +1463,8 @@ class Mappr {
 
       //project the extent back to default such that we can work with proper tick marks
       if($this->projection != $this->default_projection && $this->projection == $this->projection_map) {
-        $origProjObj = ms_newProjectionObj(self::$accepted_projections[$this->projection]['proj']);
-        $newProjObj = ms_newProjectionObj(self::$accepted_projections[$this->default_projection]['proj']);
+        $origProjObj = ms_newProjectionObj($this->get_projection($this->projection));
+        $newProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
 
         $poPoint1 = ms_newPointObj();
         $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
@@ -1577,16 +1604,10 @@ class Mappr {
   */
   private function prepare_output() {
     if(isset($this->projection)) {
-      if($this->projection != $this->default_projection) {
-        $this->reproject_map($this->default_projection, $this->projection);
-        $this->add_legend_scalebar();
-        $this->add_border();
-        $this->image = $this->map_obj->drawQuery();
-      } else {
-        $this->add_legend_scalebar();
-        $this->add_border();
-        $this->image = $this->map_obj->draw();
-      }
+      $this->reproject($this->projection_map, $this->projection);
+      $this->add_legend_scalebar();
+      $this->add_border();
+      $this->image = $this->map_obj->drawQuery();
     }
   }
   
@@ -1687,30 +1708,28 @@ class Mappr {
   * @param string $input_projection
   * @param string $output_projection
   */
-  private function reproject_map($input_projection,$output_projection) {
-    if(!array_key_exists($output_projection, self::$accepted_projections)) { $output_projection = 'epsg:4326'; }
+  private function reproject($input_projection,$output_projection) {
+    $this->set_origin($output_projection);
 
-    $this->adjust_origin($output_projection);
-
-    $origProjObj = ms_newProjectionObj(self::$accepted_projections[$input_projection]['proj']);
-    $newProjObj = ms_newProjectionObj(self::$accepted_projections[$output_projection]['proj']);
+    $origProjObj = ms_newProjectionObj($this->get_projection($input_projection));
+    $newProjObj = ms_newProjectionObj($this->get_projection($output_projection));
 
     $oRect = $this->map_obj->extent;
     $oRect->project($origProjObj,$newProjObj);
 
     $this->map_obj->setExtent($oRect->minx,$oRect->miny,$oRect->maxx,$oRect->maxy);
-    $this->map_obj->setProjection(self::$accepted_projections[$output_projection]['proj']);
+    $this->map_obj->setProjection($this->get_projection($output_projection));
   }
 
   /**
   * Change the longitude of the natural origin for Lambert projections
-  * @param $outout_projection
+  * @param $output_projection
   */
-  private function adjust_origin($output_projection) {
+  private function set_origin($output_projection) {
     $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
 
     if(in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
-      self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::$accepted_projections[$output_projection]['proj']);
+      self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', $this->get_projection($output_projection));
     }
   }
 
