@@ -1007,21 +1007,6 @@ class Mappr {
   }
 
   /**
-  * Determine max extent possible
-  * @return obj
-  */
-  public function get_max_extent() {
-    $max_extent = ms_newRectObj();
-    $max_extent->setExtent($this->max_extent[0], $this->max_extent[1], $this->max_extent[2], $this->max_extent[3]);
-    if($this->projection != $this->default_projection) {
-      $origProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
-      $newProjObj = ms_newProjectionObj($this->get_projection($this->projection));
-      $max_extent->project($origProjObj,$newProjObj);   
-    }
-    return $max_extent;
-  }
-
-  /**
   * Add all coordinates to the map
   */
   public function add_coordinates() {
@@ -1198,7 +1183,7 @@ class Mappr {
     array_multisort($sort, SORT_ASC, $this->layers);
 
     $srs_projections = implode(array_keys(self::$accepted_projections), " ");
-                       
+
     foreach($this->layers as $name => $status) {
       //make the layer
       if(array_key_exists($name, $this->shapes)) {
@@ -1266,7 +1251,7 @@ class Mappr {
             $class = ms_newClassObj($layer);
             $class->addLabel($label);
           break;
-          
+
           case 'base':
           case 'stateprovinces':
             $class = ms_newClassObj($layer);
@@ -1509,7 +1494,7 @@ class Mappr {
       $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
       $this->map_obj->legend->label->set("antialias", 50);
       $this->map_obj->legend->label->color->setRGB(0,0,0);
-    
+
       //svg format cannot do legends in MapServer
       if($this->download && $this->options['legend'] && $this->output != 'svg') {
         $this->map_obj->legend->set("status", MS_EMBED);
@@ -1534,7 +1519,7 @@ class Mappr {
     }
     return false;
   }
-  
+
   /**
   * Create a scalebar image
   */
@@ -1551,7 +1536,7 @@ class Mappr {
     $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
     $this->map_obj->scalebar->label->set("antialias", 50);
     $this->map_obj->scalebar->label->color->setRGB(0,0,0);
-    
+
     //svg format cannot do scalebar in MapServer
     if($this->download && $this->options['scalebar'] && $this->output != 'svg') {
       $this->map_obj->scalebar->set("status", MS_EMBED);
@@ -1610,7 +1595,7 @@ class Mappr {
       $this->image = $this->map_obj->drawQuery();
     }
   }
-  
+
   /**
   * Get all the coordinates that fall outside Earth's geographic extent in dd
   * @return string
@@ -1618,7 +1603,7 @@ class Mappr {
   private function get_bad_points() {
     return implode('<br />', $this->_bad_points);
   }
-  
+
   /**
   * Produce the  final output
   */
@@ -1742,12 +1727,12 @@ class Mappr {
      $newPoint = new stdClass();
      $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
      $deltaY = abs($this->map_obj->extent->maxy - $this->map_obj->extent->miny);
-  
+
      $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
      $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
      return $newPoint;
    }
-  
+
   /**
   * Test if has errors
   * @return boolean
@@ -1764,7 +1749,7 @@ class Mappr {
   private function set_error($message, $layer = 'Error'){
     $this->_errors[$layer][] = $message;
   }
-  
+
   /**
   * Print all errors thrown
   */

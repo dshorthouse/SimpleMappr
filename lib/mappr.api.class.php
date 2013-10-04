@@ -418,7 +418,7 @@ class MapprApi extends Mappr {
     $y = $this->map_obj->height*((90 - $midpoint[1])/180);
     $zoom_point = ms_newPointObj();
     $zoom_point->setXY($x,$y);
-    $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent, $this->get_max_extent());
+    $this->map_obj->zoompoint($this->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
   }
 
   /**
