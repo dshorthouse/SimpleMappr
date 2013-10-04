@@ -12,7 +12,7 @@ class MapprTest extends DatabaseTest {
 
     public function testMappr() {
       $mappr = new Mappr();
-      $this->assertEquals('foo', 'foo');
+      $this->assertEquals('foobar', 'foobar');
     }
 
 }
