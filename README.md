@@ -3,6 +3,8 @@ SimpleMappr Installation and Configuration Instructions
 
 This is the code for [SimpleMappr](http://www.simplemappr.net), an application to produce publication-quality geographic maps.
 
+[![Build Status](https://secure.travis-ci.org/dshorthouse/SimpleMappr.png?branch=mapserver6.4)](http://travis-ci.org/dshorthouse/SimpleMappr)
+
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
 
