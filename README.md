@@ -1,7 +1,7 @@
 SimpleMappr Installation and Configuration Instructions
 =======================================================
 
-This is the code for [SimpleMappr](http://www.simplemappr.net), a tool to produce publication-quality geographic maps.
+This is the code for [SimpleMappr](http://www.simplemappr.net), an application to produce publication-quality geographic maps.
 
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
@@ -16,7 +16,7 @@ Configuration Instructions
 1. Ensure /public/tmp, /public/javascript/cache, and /public/stylesheets/cache/ are readable & writable
 2. Create a logger.log file in /log and make it writeable
 3. Download map data from Natural Earth Data, [http://www.naturalearthdata.com/](http://www.naturalearthdata.com/)
-4. Extract each to /lib/mapserver/maps/
+4. Extract Natural Earth shapefiles to /lib/mapserver/maps/
 5. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles
 6. Make contents of /lib/mapserver/fonts readable & executable
 7. Adjust /config/conf.db.php.sample and /config/conf.php.sample and remove .sample extensions. These set db (MySQL) connections and constants, respectively.
@@ -91,7 +91,7 @@ The following two commands make a messages.po file (by reading the index.php fil
     $ xgettext -n index.php
     $ msgfmt messages.po
 
-Or, use the ruby utility, crawler.rb from the /i18n directory to make a messages.po file and move it to i18n/fr\_FR.UTF-8/LC\_MESSAGES.
+Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory to make a messages.po file and move it to i18n/fr\_FR.UTF-8/LC\_MESSAGES.
 
     $ cd i18n
     $ ruby crawler.rb ../
@@ -100,4 +100,4 @@ Copyright
 ---------
 
     Copyright (c) David P. Shorthouse
-    License: MIT (see included LICENSE file) and comments in each class file
+    License: MIT (see included LICENSE file) and comments in each class in /lib and js file in /public/javascript

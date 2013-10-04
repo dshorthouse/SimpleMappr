@@ -210,7 +210,7 @@ class MapprApi extends Mappr {
       if($this->zoom) { $this->setZoom(); }
     }
   }
-  
+
   /**
   * Override method in the parent class
   */
@@ -338,7 +338,7 @@ class MapprApi extends Mappr {
     $this->map_obj->legend->label->set("size", ($this->width <= 500) ? 8 : 10);
     $this->map_obj->legend->label->set("antialias", 50);
     $this->map_obj->legend->label->color->setRGB(0,0,0);
-  
+
     //svg format cannot do legends in MapServer
     if($this->options['legend'] && $this->output != 'svg') {
       $this->map_obj->legend->set("status", MS_EMBED);

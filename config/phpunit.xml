@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="../Tests/bootstrap.php" colors="true">
+    <php>
+        <var name="db_server" value="localhost"/>
+        <var name="db_database" value="simplemappr_test"/>
+        <var name="db_username" value="root"/>
+        <var name="db_password" value=""/>
+    </php>
+
+    <testsuites>
+        <testsuite name="SimpleMappr Test Suite">
+            <directory>../Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>../</directory>
+            <exclude>
+                <file>../Tests/DatabaseTest.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
