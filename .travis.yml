@@ -9,11 +9,10 @@ env:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get upgrade
   - sudo apt-get install apache2
   - sudo apt-get install libapache2-mod-php5
   - sudo apt-get install autoconf
-  - sudo apt-get install libjpeg libjpeg-dev libpng-dev freetype*
+  - sudo apt-get install libjpeg-dev libjpeg-dev libpng12-dev freetype*
   - sudo apt-get install libgdal-dev libproj-dev libxml2-dev libgeos-dev
   - sudo apt-get install libcairo2-dev libfribidi-dev
   - sudo apt-get install cmake
