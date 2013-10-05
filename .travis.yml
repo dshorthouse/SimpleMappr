@@ -7,7 +7,7 @@ php:
 env:
   - DB=mysql
 
-before_install
+before_install:
   sudo apt-get update
   sudo apt-get upgrade
   sudo apt-get install apache2
@@ -21,7 +21,6 @@ before_install
   tar -zxvf mapserver-6.4.0.tar.gz
   cmake -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0 -DWITH_SVGCAIRO=1
   make && make install
-  
 
 before_script:
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS simplemappr_test;" -uroot; fi
