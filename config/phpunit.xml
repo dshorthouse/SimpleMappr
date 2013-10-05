@@ -16,9 +16,9 @@
 
     <filter>
         <whitelist>
-            <directory>../</directory>
+            <directory>./</directory>
             <exclude>
-                <file>../Tests/DatabaseTest.php</file>
+                <file>./Tests/DatabaseTest.php</file>
             </exclude>
         </whitelist>
     </filter>

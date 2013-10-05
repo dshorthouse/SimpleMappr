@@ -1,7 +1,7 @@
 <?php
 
 function loader() {
-  $files = glob('/Users/dshorthouse/Sites/SimpleMappr/lib/*.php');
+  $files = glob(dirname(dirname(__FILE__)) . '/lib/*.php');
   foreach ($files as $file) {
       require_once($file);
   }
