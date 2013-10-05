@@ -8,8 +8,6 @@ env:
   - DB=mysql
 
 before_script:
-  - composer selfupdate
-  - composer install
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS simplemappr_test;" -uroot; fi
 
 script: phpunit --configuration config/phpunit.xml --coverage-text
