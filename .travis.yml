@@ -18,6 +18,7 @@ before_install:
   - sudo apt-get install cmake
   - wget http://download.osgeo.org/mapserver/mapserver-6.4.0.tar.gz
   - tar -zxvf mapserver-6.4.0.tar.gz
+  - cd mapserver-6.4.0
   - cmake -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0 -DWITH_SVGCAIRO=1
   - make && make install
 
