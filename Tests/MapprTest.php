@@ -9,10 +9,12 @@ class MapprTest extends DatabaseTest {
 
     public function tearDown() {
     }
-
-    public function testMappr() {
-      $mappr = new Mappr();
-      $this->assertEquals('foobar', 'foobar');
+    
+    public function test_make_coordinates() {
+      $coord = '52° 32\' 25" N, 89° 40\' 31" W';
+      $dd = Mappr::make_coordinates($coord);
+      $this->assertEquals($dd[0], 52.540277777778);
+      $this->assertEquals($dd[1], 0);
     }
 
 }
