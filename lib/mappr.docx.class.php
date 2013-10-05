@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **************************************************************************/
 
-require_once ('mappr.class.php');
+require_once('mappr.class.php');
 set_include_path(dirname(__FILE__) . '/PHPWord/');
 include_once 'PHPWord.php';
 include_once 'PHPWord/IOFactory.php';

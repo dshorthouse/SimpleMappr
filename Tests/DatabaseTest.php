@@ -3,7 +3,7 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
   protected static $db;
 
   public static function setUpBeforeClass() {
-    self::$db = new Database($GLOBALS['db_server'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_database']);
+    self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 
     $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
       `mid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,

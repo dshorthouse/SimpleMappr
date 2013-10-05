@@ -2,10 +2,12 @@
 
 <phpunit bootstrap="../Tests/bootstrap.php" colors="true">
     <php>
-        <var name="db_server" value="localhost"/>
-        <var name="db_database" value="simplemappr_test"/>
-        <var name="db_username" value="root"/>
-        <var name="db_password" value=""/>
+        <const name="TRAVIS_CI" value="true"/>
+        <const name="DB_SERVER" value="localhost"/>
+        <const name="DB_DATABASE" value="simplemappr_test"/>
+        <const name="DB_USER" value="root"/>
+        <const name="DB_PASS" value=""/>
+        <const name="REDIS_SERVER" value="localhost"/>
     </php>
 
     <testsuites>

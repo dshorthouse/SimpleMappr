@@ -19,10 +19,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **************************************************************************/
 
-$config_dir = dirname(dirname(__FILE__)).'/config/';
-require_once($config_dir.'conf.php');
+if(!defined('TRAVIS_CI')) {
+  $config_dir = dirname(dirname(__FILE__)).'/config/';
+  require_once($config_dir.'conf.php');
+}
 require_once('mappr.class.php');
-require_once ('georss/rss_fetch.inc');
+require_once('georss/rss_fetch.inc');
 
 class MapprApi extends Mappr {
 
