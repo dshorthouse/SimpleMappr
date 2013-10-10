@@ -1737,7 +1737,7 @@ class Mappr {
   * Test if has errors
   * @return boolean
   */
-  private function has_error(){
+  public function has_error(){
     return count($this->_errors) > 0;
   }
 

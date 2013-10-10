@@ -8,6 +8,7 @@
         <const name="DB_USER" value="root"/>
         <const name="DB_PASS" value=""/>
         <const name="REDIS_SERVER" value="localhost"/>
+        <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
     </php>
 
     <testsuites>

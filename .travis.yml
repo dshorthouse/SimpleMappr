@@ -25,4 +25,4 @@ before_install:
 before_script:
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS simplemappr_test;" -uroot; fi
 
-script: phpunit --configuration config/phpunit.xml --coverage-text
+script: phpunit --configuration config/phpunit.xml --stderr
