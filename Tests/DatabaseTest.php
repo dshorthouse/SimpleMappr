@@ -1,6 +1,7 @@
 <?php
 abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
-  protected static $db;
+
+  private static $db;
 
   public static function setUpBeforeClass() {
     self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -58,11 +59,6 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
     self::$db->query("DROP TABLE maps");
     self::$db->query("DROP TABLE users");
     self::$db = NULL;
-  }
-
-  public function testContent() {
-    $map = self::$db->query_first("SELECT * FROM maps WHERE uid = 1");
-    $this->assertEquals($map['title'], 'Sample Map');
   }
 
 }

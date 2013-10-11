@@ -4,21 +4,33 @@ require_once('DatabaseTest.php');
 
 class MapprTest extends DatabaseTest {
 
-   protected $mappr;
+   private static $mappr;
+   private $output;
 
-   protected function setUp() {
-     $root = dirname(dirname(__FILE__));
-     $this->mappr = new Mappr();
-     $this->mappr->set_shape_path($root."/lib/mapserver/maps")
-          ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
-          ->set_tmp_path($root."/public/tmp/")
-          ->set_tmp_url(MAPPR_MAPS_URL)
-          ->set_default_projection("epsg:4326")
-          ->set_max_extent("-180,-90,180,90")
-          ->get_request();
+   public static function setUpBeforeClass() {
+      $root = dirname(dirname(__FILE__));
+      $mappr = new Mappr();
+      $mappr->set_shape_path($root."/lib/mapserver/maps")
+           ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
+           ->set_tmp_path($root."/public/tmp/")
+           ->set_tmp_url(MAPPR_MAPS_URL)
+           ->set_default_projection("epsg:4326")
+           ->set_max_extent("-180,-90,180,90")
+           ->get_request();
+     self::$mappr = $mappr->execute();
    }
-   
-   public function tearDown() {
+
+   public static function tearDownAfterClass() {
+     $root = dirname(dirname(__FILE__));
+     $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+     foreach ($tmpfiles as $file) {
+       unlink($file);
+     }
+   }
+
+   public function setUp() {
+     self::$mappr->get_output();
+     $this->output = json_decode(ob_get_contents(), TRUE);
    }
 
     public function test_remove_empty_lines() {
@@ -40,13 +52,44 @@ class MapprTest extends DatabaseTest {
     }
 
     public function test_mapserver_enabled() {
-      $this->assertFalse($this->mappr->has_error());
+      $this->assertFalse(self::$mappr->has_error());
     }
 
     public function test_mapserver_output_is_json() {
-      $output = $this->mappr->execute()->get_output();
-      json_decode($output);
+      
       $this->assertTrue(json_last_error() == JSON_ERROR_NONE);
+    }
+
+    public function test_mapserver_output_contains_all_keys() {
+      $this->assertArrayHasKey("mapOutputImage", $this->output);
+      $this->assertArrayHasKey("size", $this->output);
+      $this->assertArrayHasKey("rendered_bbox", $this->output);
+      $this->assertArrayHasKey("rendered_rotation", $this->output);
+      $this->assertArrayHasKey("rendered_projection", $this->output);
+      $this->assertArrayHasKey("legend_url", $this->output);
+      $this->assertArrayHasKey("scalebar_url", $this->output);
+      $this->assertArrayHasKey("bad_points", $this->output);
+    }
+
+    public function test_mapserver_default_output_size() {
+      $diff = array_diff($this->output["size"], [900, 450]);
+      $this->assertEmpty($diff);
+    }
+
+    public function test_mapserver_default_rendered_bbox() {
+      $this->assertEquals($this->output["rendered_bbox"], "-180.0000000000,-90.0000000000,180.0000000000,90.0000000000");
+    }
+
+    public function test_mapserver_default_rotation() {
+      $this->assertEquals($this->output["rendered_rotation"], 0);
+    }
+
+    public function test_mapserver_rendered_projection() {
+      $this->assertEquals($this->output["rendered_projection"], "epsg:4326");
+    }
+
+    public function test_mapserver_default_bad_points() {
+      $this->assertEquals($this->output["bad_points"], "");
     }
 
 }
