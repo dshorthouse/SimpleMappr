@@ -98,6 +98,13 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
     $ cd i18n
     $ ruby crawler.rb ../
 
+Tests
+-----
+
+Execute from the command line:
+
+    $ phpunit --configuration config/phpunit.xml --stderr
+
 Copyright
 ---------
 

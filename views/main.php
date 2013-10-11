@@ -159,6 +159,7 @@
 <li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> <label for="placenames"><?php echo _("places"); ?></label></li>
 <li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> <label for="physicalLabels"><?php echo _("physical"); ?></label></li>
 <li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> <label for="marineLabels"><?php echo _("marine"); ?></label></li>
+<li><input type="checkbox" id="hotspotLabels" class="layeropt" name="layers[hotspotLabels]" /> <label for="hotspotLabels"><?php echo _("biodiv. hotspots"); ?></label></li>
 </ul>
 <h2><?php echo _("Options"); ?></h2>
 <ul>

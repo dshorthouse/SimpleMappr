@@ -734,6 +734,13 @@ class Mappr {
       'sort'  => 14
     );
 
+    //hotspotLabels
+    $this->shapes['hotspotLabels'] = array(
+      'shape' => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
+      'type'  => MS_LAYER_POLYGON,
+      'sort'  => 14
+    );
+
   }
 
   /**
@@ -1224,10 +1231,12 @@ class Mappr {
           break;
 
           case 'conservation':
+            $layer->set("opacity", 75);
             $class = ms_newClassObj($layer);
             $class->set("name","Conservation International 2011 Hotspots");
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200,200,200);
+            $style->outlinecolor->setRGB(30,30,30);
             $this->_legend_required = true;
           break;
 
@@ -1359,6 +1368,26 @@ class Mappr {
             $layer->set("tolerance", 5);
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
+
+            $label = new labelObj();
+            $label->set("font", "arial");
+            $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "CP1252");
+            $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+            $label->set("position", MS_UR);
+            $label->set("offsetx", 3);
+            $label->set("offsety", 3);
+            $label->set("partials", MS_FALSE);
+            $label->color->setRGB(10, 10, 10);
+
+            $class = ms_newClassObj($layer);
+            $class->addLabel($label);
+          break;
+
+          case 'hotspotLabels':
+            $layer->set("tolerance", 5);
+            $layer->set("toleranceunits", "pixels");
+            $layer->set("labelitem", "NAME");
 
             $label = new labelObj();
             $label->set("font", "arial");
