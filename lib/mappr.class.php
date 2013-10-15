@@ -340,11 +340,13 @@ class Mappr {
     // set a property
     if (substr($name,0,4) == 'set_') {
       $property = substr($name,4);
-      $this->$property = $arguments[0];
+      $this->{$property} = $arguments[0];
     // add to an array property
     } else if (substr($name,0,4) == 'add_') {
       $property = substr($name,4);
       array_push($this->$property, $arguments[0]);
+    } else if (substr($name,0,4) == 'get_') {
+      return $this->{substr($name,4)};
     }
     return $this;
   }
