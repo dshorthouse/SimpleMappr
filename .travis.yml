@@ -5,35 +5,23 @@ php:
   - 5.4
 
 env:
-  - DB=mysql
+  - HOST=simplemappr.local
+  - WEB=www.simplemappr.local
+  - DB=simplemappr_test
 
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install apache2
-  - sudo apt-get install libapache2-mod-php5
+  # Install dependencies
+  - sh -e .travis/scripts/apt-get/sh
 
   # Apache web server config
-  - export HOST="simplemappr.local"
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
-  - sudo a2enmod rewrite
-  - sudo a2enmod expires
-  - sudo service apache2 restart
 
-  # MapServer and dependencies
-  - sudo apt-get install autoconf
-  - sudo apt-get install libjpeg-dev libjpeg-dev libpng12-dev freetype*
-  - sudo apt-get install libgdal-dev libproj-dev libxml2-dev libgeos-dev
-  - sudo apt-get install libcairo2-dev libghc-svgcairo-dev libfribidi-dev
-  - sudo apt-get install cmake
-  - wget http://download.osgeo.org/mapserver/mapserver-6.4.0.tar.gz
-  - tar -zxvf mapserver-6.4.0.tar.gz
-  - cmake mapserver-6.4.0 -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0
-  - make
-  - sudo make install
-  - sudo service apache2 restart
+  # MapServer installation
+  - sh -e .travis/scripts/mapserver.sh
 
 before_script:
   - composer self-update
-  - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS simplemappr_test;" -uroot; fi
+  - composer install --dev --no-interaction --prefer-source
+  - mysql -e "CREATE database IF NOT EXISTS $DB;" -uroot
 
 script: phpunit --configuration config/phpunit.xml --stderr
