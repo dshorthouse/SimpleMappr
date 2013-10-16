@@ -4,9 +4,7 @@
  * Unit tests for static methods and default set-up of Mappr class
  */
 
-require_once('DatabaseTest.php');
-
-class DefaultMapprTest extends DatabaseTest {
+class DefaultMapprTest extends PHPUnit_Framework_TestCase {
 
    private static $mappr;
    private static $output;
