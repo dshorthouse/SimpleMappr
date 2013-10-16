@@ -11,6 +11,15 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install apache2
   - sudo apt-get install libapache2-mod-php5
+
+  # Apache web server config
+  - export HOST="simplemappr.local"
+  - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
+  - sudo a2enmod rewrite
+  - sudo a2enmod expires
+  - sudo service apache2 restart
+
+  # MapServer and dependencies
   - sudo apt-get install autoconf
   - sudo apt-get install libjpeg-dev libjpeg-dev libpng12-dev freetype*
   - sudo apt-get install libgdal-dev libproj-dev libxml2-dev libgeos-dev
@@ -21,8 +30,10 @@ before_install:
   - cmake mapserver-6.4.0 -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0
   - make
   - sudo make install
+  - sudo service apache2 restart
 
 before_script:
+  - composer self-update
   - if [[ "$DB" == "mysql" ]]; then mysql -e "create database IF NOT EXISTS simplemappr_test;" -uroot; fi
 
 script: phpunit --configuration config/phpunit.xml --stderr

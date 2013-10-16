@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Unit tests for static methods and default set-up of Mappr class
+ */
+
 require_once('DatabaseTest.php');
 
-class MapprTest extends DatabaseTest {
+class DefaultMapprTest extends DatabaseTest {
 
    private static $mappr;
    private static $output;
@@ -30,9 +34,6 @@ class MapprTest extends DatabaseTest {
      foreach ($tmpfiles as $file) {
        unlink($file);
      }
-   }
-
-   public function setUp() {
    }
 
     public function test_remove_empty_lines() {
@@ -183,6 +184,11 @@ class MapprTest extends DatabaseTest {
       $this->assertArrayHasKey("legend_url", self::$output);
       $this->assertArrayHasKey("scalebar_url", self::$output);
       $this->assertArrayHasKey("bad_points", self::$output);
+    }
+
+    public function test_file_exists() {
+      $root = dirname(dirname(__FILE__));
+      $this->assertFileExists($root . self::$output["mapOutputImage"]);
     }
 
     public function test_mapserver_default_size() {

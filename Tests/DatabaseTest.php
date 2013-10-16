@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Set-up of Database class for use in other tests
+ */
+
 abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
 
   private static $db;
