@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Unit tests for static methods and default set-up of Mappr class
+ * Unit tests for Mappr class
+ * REQUIREMENTS: 
  */
 
 require_once('DatabaseTest.php');
@@ -29,9 +30,9 @@ class MapprTest extends DatabaseTest {
     }
   }
 
-  public function test_refresh() {
-    
-  }
+//
+//  public function test_refresh() {
+//  }
 }
 
 ?>
