@@ -7,7 +7,7 @@
         <const name="DB_DATABASE" value="simplemappr_test"/>
         <const name="DB_USER" value="root"/>
         <const name="DB_PASS" value=""/>
-        <const name="WEB_SERVER" value="http://www.simplemappr.local"/>
+        <const name="WEB_SERVER" value="http://simplemappr.local"/>
         <const name="REDIS_SERVER" value="localhost"/>
         <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
     </php>
