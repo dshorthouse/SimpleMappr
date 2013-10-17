@@ -5,9 +5,10 @@ php:
   - 5.4
 
 env:
-  - HOST=www.simplemappr.local
-  - ALIAS=simplemappr.net
-  - DBNAME=simplemappr_test
+  global:
+    - HOST=www.simplemappr.local
+    - ALIAS=simplemappr.net
+    - DBNAME=simplemappr_test
 
 before_install:
   # Install dependencies
