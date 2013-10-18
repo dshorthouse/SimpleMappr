@@ -26,7 +26,8 @@ class MapprTest extends WebTestCase {
 
   public function test_response() {
     echo "----> Testing GET on " . $this->app_url . "\n";
-    $this->get($this->app_url);
+    echo "Response:" . "\n";
+    echo $this->get($this->app_url) . "\n";
     $this->assertResponse(200);
   }
 
