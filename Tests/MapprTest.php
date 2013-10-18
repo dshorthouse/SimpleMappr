@@ -24,10 +24,6 @@ class MapprTest extends WebTestCase {
     }
   }
 
-  public function test_google() {
-    echo $this->get("http://www.google.com");
-  }
-
   public function test_response() {
     echo "----> Testing GET on " . $this->app_url . "\n";
     echo "Response:" . "\n";

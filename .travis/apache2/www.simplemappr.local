@@ -12,7 +12,6 @@
    Order allow,deny
    Allow from all
    DirectoryIndex index.php
-   FileETag MTime Size
    RewriteEngine on
    RewriteBase /
    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f

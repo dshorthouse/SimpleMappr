@@ -7,7 +7,6 @@ php:
 env:
   global:
     - HOST=www.simplemappr.local
-    - ALIAS=simplemappr.local
     - DBNAME=simplemappr_test
 
 before_install:
@@ -15,7 +14,7 @@ before_install:
   - sh -e .travis/scripts/apt-get.sh
 
   # Apache web server config for vhost
-  - sh -e .travis/scripts/apache2-vhost.sh "$HOST" "$ALIAS"
+  - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   
   # Apache config
   - sh -e .travis/scripts/apache2-configure.sh "$HOST"
@@ -25,5 +24,9 @@ before_install:
 
   # MySQL
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
+  
+  # Create empty config files
+  - touch config/conf.php
+  - touch config/conf.db.php
 
 script: phpunit --configuration config/phpunit.xml --stderr

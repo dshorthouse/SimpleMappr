@@ -2,8 +2,6 @@
 
 <phpunit bootstrap="../Tests/bootstrap.php" colors="true">
     <php>
-        <const name="TRAVIS_CI" value="true"/>
-
         <const name="ENVIRONMENT" value="test"/>
         <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
         <const name="MAPPR_DOMAIN" value="www.simplemappr.local"/>
