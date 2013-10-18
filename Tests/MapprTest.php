@@ -5,6 +5,8 @@
  * REQUIREMENTS: web server running as specified in phpunit.xml
  */
 
+error_reporting( E_ALL );
+
 require_once('simpletest/autorun.php');
 require_once('simpletest/web_tester.php');
  
