@@ -7,15 +7,18 @@ php:
 env:
   global:
     - HOST=www.simplemappr.local
-    - ALIAS=simplemappr.net
+    - ALIAS=simplemappr.local
     - DBNAME=simplemappr_test
 
 before_install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
-  # Apache web server config
+  # Apache web server config for vhost
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST" "$ALIAS"
+  
+  # Apache config
+  - sh -e .travis/scripts/apache2-configure.sh "$HOST"
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh

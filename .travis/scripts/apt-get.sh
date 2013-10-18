@@ -2,7 +2,24 @@
 
 echo $FOO
 
-EXTRA_PACKETS="apache2 libapache2-mod-php5 php5-mysql autoconf libjpeg-dev libjpeg-dev libpng12-dev freetype* libgdal-dev libproj-dev libxml2-dev libgeos-dev libcairo2-dev libghc-svgcairo-dev libfribidi-dev cmake"
+EXTRA_PACKETS="
+apache2 \
+libapache2-mod-php5 \
+php5-mysql \
+autoconf \
+libjpeg-dev \
+libjpeg-dev \
+libpng12-dev \
+freetype* \
+libgdal-dev \
+libproj-dev \
+libxml2-dev \
+libgeos-dev \
+libcairo2-dev \
+libghc-svgcairo-dev \
+libfribidi-dev \
+cmake"
+
 if [ "$1" ]
 then
     EXTRA_PACKETS="$EXTRA_PACKETS $1"

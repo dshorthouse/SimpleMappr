@@ -22,7 +22,7 @@ then
     DOCROOT="$3"
 fi
 
-CONFIGFILE="$BASEDIR/apache2/virtualhost.local-dist"
+CONFIGFILE="$BASEDIR/apache2/$VHOSTNAME"
 if [ "$4" ]
 then
     CONFIGFILE="$4"
@@ -39,10 +39,3 @@ sudo mv $VHOSTNAME /etc/apache2/sites-available/$VHOSTNAME
 
 echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"
 echo "127.0.0.1    $VHOSTNAME" | sudo tee -a /etc/hosts
-
-echo "--> Installing Apache modules"
-sudo a2enmod rewrite
-sudo a2enmod expires
-
-echo "--> Restarting Apache"
-sudo service apache2 restart
