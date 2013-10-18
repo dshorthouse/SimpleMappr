@@ -1,5 +1,9 @@
 <?php
 
+date_default_timezone_set('America/New_York');
+
+define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60));
+
 session_start();
 
 function loader() {

@@ -17,5 +17,4 @@ echo "--> Creating site $VHOSTNAME"
 sudo a2ensite $VHOSTNAME
 
 echo "---> Restarting $(tput bold ; tput setaf 2)apache2$(tput sgr0)"
-
 sudo service apache2 restart

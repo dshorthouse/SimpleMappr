@@ -3,13 +3,19 @@
 <phpunit bootstrap="../Tests/bootstrap.php" colors="true">
     <php>
         <const name="TRAVIS_CI" value="true"/>
+
+        <const name="ENVIRONMENT" value="test"/>
+        <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
+        <const name="MAPPR_DOMAIN" value="www.simplemappr.local"/>
+        <const name="NUMTEXTAREA" value="3"/>
+        <const name="GOOGLE_ANALYTICS" value=""/>
+        <const name="RPX_KEY" value=""/>
+
         <const name="DB_SERVER" value="localhost"/>
         <const name="DB_DATABASE" value="simplemappr_test"/>
         <const name="DB_USER" value="root"/>
         <const name="DB_PASS" value=""/>
-        <const name="WEB_SERVER" value="http://www.simplemappr.local"/>
-        <const name="REDIS_SERVER" value="localhost"/>
-        <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
+        <const name="REDIS_SERVER" value="127.0.0.1"/>
     </php>
 
     <testsuites>

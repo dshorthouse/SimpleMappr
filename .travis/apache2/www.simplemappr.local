@@ -1,25 +1,32 @@
 <VirtualHost *:80>
-    ServerName %hostname%
-    ServerAlias %alias%
-    ServerAdmin davidpshorthouse@gmail.com
-    AddDefaultCharset UTF-8
-    DocumentRoot %basedir%
-    <Directory %basedir%>
-        DirectoryIndex index.php
-        Options -Indexes FollowSymLinks SymLinksifOwnerMatch
-        AllowOverride None
-        Allow from all
-        ExpiresActive off
-        RewriteEngine on
-        RewriteBase /
-        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
-        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
-        RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-        <IfModule mod_expires.c>
-          <FilesMatch "\.(jpe?g|png|gif|js|css|ico)$">
-            ExpiresActive On
-            ExpiresDefault "access plus 1 week"
-          </FilesMatch>
-        </IfModule>
-    </Directory>
+   ServerName %hostname%
+   ServerAdmin davidpshorthouse@gmail.com
+   AddDefaultCharset UTF-8
+   DocumentRoot %basedir%
+   ErrorDocument 401 /error/401.html
+   ErrorDocument 404 /error/404.html
+   ErrorDocument 403 /error/404.html
+<Directory "%basedir%">
+   Options -Indexes +FollowSymlinks +ExecCGI
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+   DirectoryIndex index.php
+   FileETag MTime Size
+   RewriteEngine on
+   RewriteBase /
+   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
+   RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+   <IfModule mod_expires.c>
+    <FilesMatch "\.(jpe?g|png|gif|js|css|ico|php|htm|html)$">
+      ExpiresActive On
+      ExpiresDefault "access plus 1 week"
+    </FilesMatch>
+   </IfModule>
+</Directory>
+<Directory "%basedir%/config">
+  Order deny,allow
+  Deny from all
+</Directory>
 </VirtualHost>
