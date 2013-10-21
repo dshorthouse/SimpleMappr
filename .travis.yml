@@ -20,6 +20,9 @@ before_install:
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
+  
+  # Translations
+  - sh -e .travis/scripts/translations.sh
 
   # MySQL
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
