@@ -22,7 +22,7 @@ class MapprTest extends WebTestCase {
     $this->assertResponse(200);
     $this->assertTitle("SimpleMappr");
   }
-  
+
   public function test_translation() {
     echo "----> Testing GET on " . $this->url . " for translation" . "\n";
     $this->get($this->url);

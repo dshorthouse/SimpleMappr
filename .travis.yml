@@ -30,5 +30,8 @@ before_install:
   # Create empty config files
   - touch config/conf.php
   - touch config/conf.db.php
+  
+  # Show PHP configuration
+  - php -i
 
 script: phpunit --configuration config/phpunit.xml --stderr
