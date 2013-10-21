@@ -208,5 +208,6 @@ class Bootstrap {
   }
 }
 
-$init = new Bootstrap;
+//$init = new Bootstrap;
+phpinfo();
 ?>

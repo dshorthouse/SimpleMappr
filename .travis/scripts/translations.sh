@@ -1,4 +1,5 @@
 #!/bin/sh
+
 BASEDIR=$(dirname $0)
 BASEDIR=$(readlink -f "$BASEDIR/..")
 ROOTDIR=$(readlink -f "$BASEDIR/..")

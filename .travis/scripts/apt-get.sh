@@ -6,6 +6,8 @@ EXTRA_PACKETS="
 apache2 \
 libapache2-mod-php5 \
 php5-mysql \
+locales \
+gettext \
 autoconf \
 libjpeg-dev \
 libjpeg-dev \
