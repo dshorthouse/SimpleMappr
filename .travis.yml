@@ -23,15 +23,15 @@ before_install:
   
   # Translations
   - sh -e .travis/scripts/translations.sh
-  
-  # Additional PHP config
-  - phpenv config-add .travis/travis.php.ini
 
   # MySQL
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
   
   # Redis
   - sh -e .travis/scripts/redis.sh
+
+  # Additional PHP config
+  - phpenv config-add .travis/travis.php.ini
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
@@ -42,9 +42,5 @@ before_install:
   
   # Restart Apache
   - sudo service apache2 restart
-  
-  # Rebuild caches
-  - echo "---> Rebuilding local caches on http://$HOST"
-  - wget -q -O /dev/null "http://$HOST"
 
 script: phpunit --configuration config/phpunit.xml --stderr
