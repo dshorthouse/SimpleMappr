@@ -32,6 +32,9 @@ before_install:
   
   # Redis
   - sh -e .travis/scripts/redis.sh
+
+  # Selenium
+  - sh -e .travis/scripts/selenium.sh
   
   # Create empty config files
   - touch config/conf.php
@@ -40,7 +43,8 @@ before_install:
   # Restart Apache
   - sudo service apache2 restart
   
-  # Show PHP config
-  - php -i
+  # Rebuild caches
+  - echo "---> Rebuilding local caches on http://$HOST"
+  - wget -q -O /dev/null "http://$HOST"
 
 script: phpunit --configuration config/phpunit.xml --stderr

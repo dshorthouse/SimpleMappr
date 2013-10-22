@@ -21,6 +21,7 @@ libcairo2-dev \
 libghc-svgcairo-dev \
 libfribidi-dev \
 redis-server \
+php-pear \
 cmake"
 
 if [ "$1" ]
