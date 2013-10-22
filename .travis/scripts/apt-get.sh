@@ -20,6 +20,7 @@ libgeos-dev \
 libcairo2-dev \
 libghc-svgcairo-dev \
 libfribidi-dev \
+redis-server \
 cmake"
 
 if [ "$1" ]

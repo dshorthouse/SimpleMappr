@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for Mappr class
+ * Unit tests for Mappr Application class
  * REQUIREMENTS: web server running as specified in phpunit.xml
  */
 
