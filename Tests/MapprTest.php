@@ -24,9 +24,8 @@ class MapprTest extends WebTestCase {
   }
 
   public function test_translation() {
-    echo "----> Testing GET on " . $this->url . " for translation" . "\n";
-    $this->get($this->url);
-    $this->clickLink("Français");
+    echo "----> Testing GET on " . $this->url . "?locale=fr_FR for translation" . "\n";
+    $this->get($this->url . "?locale=fr_FR");
     $this->assertText("cartes point pour la publication et présentation");
   }
 
