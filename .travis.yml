@@ -23,6 +23,9 @@ before_install:
   
   # Translations
   - sh -e .travis/scripts/translations.sh
+  
+  # Additional PHP config
+  - phpenv config-add .travis/travis.php.ini
 
   # MySQL
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
@@ -31,7 +34,7 @@ before_install:
   - touch config/conf.php
   - touch config/conf.db.php
   
-  # Show PHP configuration
-  - php -i
+  # Restart Apache
+  - sudo service apache2 restart
 
 script: phpunit --configuration config/phpunit.xml --stderr
