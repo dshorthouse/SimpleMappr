@@ -27,14 +27,14 @@ class MapprApplicationTest extends WebTestCase {
   public function test_get_json_response() {
     echo "----> Testing GET on " . $this->app_url . "\n";
     echo "Response:" . "\n";
-    echo $this->get($this->app_url) . "\n";
+    echo $this->get($this->app_url) . "\n\n";
     $this->assertMime("application/json");
   }
 
   public function test_post_json_response() {
     echo "----> Testing POST on " . $this->app_url . "\n";
     echo "Response:" . "\n";
-    echo $this->post($this->app_url, array()) . "\n";
+    echo $this->post($this->app_url, array()) . "\n\n";
     $this->assertMime("application/json");
   }
 
