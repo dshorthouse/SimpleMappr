@@ -22,6 +22,7 @@ libghc-svgcairo-dev \
 libfribidi-dev \
 redis-server \
 php-pear \
+gtk2-engines-pixbuf \
 xvfb \
 cmake"
 
