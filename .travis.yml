@@ -32,9 +32,6 @@ before_install:
 
   # Additional PHP config
   - phpenv config-add .travis/travis.php.ini
-
-  # Selenium
-  - sh -e .travis/scripts/selenium.sh
   
   # Create empty config files
   - touch config/conf.php
@@ -42,5 +39,9 @@ before_install:
   
   # Restart Apache
   - sudo service apache2 restart
+
+before_script:
+  # Start Selenium
+  - sh -e .travis/scripts/selenium.sh
 
 script: phpunit --configuration config/phpunit.xml --stderr
