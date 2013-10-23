@@ -12,11 +12,6 @@ before_install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
-  # Selenium
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sh -e .travis/scripts/selenium.sh
-
   # Apache web server config for vhost
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   
@@ -44,5 +39,10 @@ before_install:
   
   # Restart Apache
   - sudo service apache2 restart
+
+  # Selenium
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sh -e .travis/scripts/selenium.sh
 
 script: phpunit --configuration config/phpunit.xml --stderr
