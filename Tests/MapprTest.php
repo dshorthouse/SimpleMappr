@@ -19,6 +19,14 @@ class MapprTest extends PHPUnit_Extensions_Selenium2TestCase {
     $this->url($this->app_url);
     $this->assertEquals('SimpleMappr', $this->title());
   }
+  
+  public function testTranslation() {
+    $this->url($this->app_url);
+    $link = $this->byLinkText('Français');
+    $link->click();
+    $tagline = $this->byId('site-tagline');
+    $this->assertEquals('cartes point pour la publication et présentation', $tagline->text());
+  }
 
 }
 
