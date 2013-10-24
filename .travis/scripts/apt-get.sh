@@ -23,6 +23,7 @@ libfribidi-dev \
 redis-server \
 php-pear \
 gtk2-engines-pixbuf \
+libgtk2.0-0 \
 xvfb \
 cmake"
 
