@@ -41,8 +41,11 @@ before_install:
   - sudo service apache2 restart
 
   # Selenium
-  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.9.0.jar
-  - sh -e DISPLAY=:99.0 xvfb-run +extension RANDR java -jar selenium-server-standalone-2.9.0.jar
   - sh -e .travis/scripts/selenium.sh
+  - sh -e /etc/init.d/xvfb start
+  - export DISPLAY=:99.0
+  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.14.0.jar
+  - java -jar selenium-server-standalone-2.14.0.jar > /dev/null 2>&1 &
+  - sleep 30
 
 script: phpunit --configuration config/phpunit.xml --stderr
