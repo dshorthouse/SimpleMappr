@@ -4,7 +4,7 @@
  * Set-up of Database class for use in other tests
  */
 
-abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
+abstract class DatabaseTest extends PHPUnit_Extensions_Selenium2TestCase {
 
   private static $db;
 

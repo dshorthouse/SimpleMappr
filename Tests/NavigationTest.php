@@ -5,7 +5,7 @@
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
  
-class NavigationTest extends PHPUnit_Extensions_Selenium2TestCase {
+class NavigationTest extends DatabaseTest {
 
   protected $app_url;
 
