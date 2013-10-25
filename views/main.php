@@ -13,7 +13,7 @@
 <meta name="author" content="David P. Shorthouse" />
 <meta property="og:title" content="SimpleMappr" />
 <meta property="og:description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
-<meta property="og:locale" content="<?php echo $locale; ?>">
+<meta property="og:locale" content="<?php echo $locale; ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />

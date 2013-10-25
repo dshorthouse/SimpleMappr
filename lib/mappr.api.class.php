@@ -34,16 +34,8 @@ class MapprApi extends Mappr {
   public function get_request() {
     //ping API to return JSON
     $this->ping             = $this->load_param('ping', false);
-    if($this->ping) {
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false);
-      header("Content-Type: application/json");
-      $output = array("status" => "ok");
-      echo json_encode($output);
-      exit();
-    }
+
+    if($this->ping) { $this->ping_response(); }
 
     $this->method           = $_SERVER['REQUEST_METHOD'];
 
@@ -121,7 +113,17 @@ class MapprApi extends Mappr {
 
     return $this;
   }
-  
+
+  private function ping_response() {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
+    header("Content-Type: application/json");
+    echo json_encode(array("status" => "ok"));
+    exit();
+  }
+
   /**
   * Override method in parent class
   */ 
