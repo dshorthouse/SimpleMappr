@@ -58,10 +58,10 @@ class NavigationTest extends PHPUnit_Extensions_Selenium2TestCase {
   }
   
   public function testSessionPage() {
-    $cookie = $this->setCookie('davidpshorthouse', 1, 'fr_FR');
+    $cookie = $this->setCookie('user', 'fr_FR');
     $this->url($this->app_url);
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
-    $this->assertEquals($this->byId('site-user')->text(), 'davidpshorthouse');
+    $this->assertEquals($this->byId('site-user')->text(), 'user');
     $this->assertEquals($this->byId('site-session')->text(), 'Déconnectez');
     $link = $this->byLinkText('Mes cartes');
     $link->click();
@@ -70,8 +70,12 @@ class NavigationTest extends PHPUnit_Extensions_Selenium2TestCase {
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
 
-  private function setCookie($username, $role, $locale) {
-    $cookie = urlencode('{"identifier":"none","username":"' . $username . '","email":"' . $username .  '@gmail.com","locale":"' . $locale . '","role":"' . $role . '"}');
+  private function setCookie($role, $locale = 'en_US') {
+    if($role == 'admin') {
+      $cookie = urlencode('{"identifier":"admin","username":"admin","email":"nowhere@example.com","locale":"'.$locale.'","role":"2","uid":"1"}');
+    } else {
+      $cookie = urlencode('{"identifier":"user","username":"user","email":"nowhere@example.com","locale":"'.$locale.'","role":"1","uid":"2"}');
+    }
     $cookies = $this->cookie();
     $cookies->add('simplemappr', $cookie)
             ->path('/')

@@ -43,18 +43,29 @@ abstract class DatabaseTest extends PHPUnit_Framework_TestCase {
 
     self::$db->query($maps_table);
     self::$db->query($users_table);
-    
-    $user = self::$db->query_insert('users', array(
-      'identifier' => 1,
+
+    $user1 = self::$db->query_insert('users', array(
+      'uid' => 1,
+      'identifier' => 'admin',
       'username' => 'admin',
       'givenname' => 'Joe',
       'surname' => 'Smith',
       'email' => 'nowhere@example.com',
       'role' => 2
     ));
-    
+
+    $user2 = self::$db->query_insert('users', array(
+      'uid' => 2,
+      'identifier' => 'user',
+      'username' => 'user',
+      'givenname' => 'Jack',
+      'surname' => 'Johnson',
+      'email' => 'nowhere@example.com',
+      'role' => 1
+    ));
+
     self::$db->query_insert('maps', array(
-      'uid' => $user,
+      'uid' => $user1,
       'title' => 'Sample Map',
       'map' => '{}'
     ));
