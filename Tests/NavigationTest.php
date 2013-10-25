@@ -71,7 +71,7 @@ class NavigationTest extends PHPUnit_Extensions_Selenium2TestCase {
   }
 
   private function setCookie($username, $role, $locale) {
-    $cookie = urlencode('{"identifier":"none","username":"' . $username . '","email":"davidpshorthouse@gmail.com","uid":"2","locale":"' . $locale . '","role":"' . $role . '"}');
+    $cookie = urlencode('{"identifier":"none","username":"' . $username . '","email":"' . $username .  '@gmail.com","locale":"' . $locale . '","role":"' . $role . '"}');
     $cookies = $this->cookie();
     $cookies->add('simplemappr', $cookie)
             ->path('/')
