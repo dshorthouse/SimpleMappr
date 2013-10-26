@@ -107,12 +107,13 @@ abstract class DatabaseTest extends PHPUnit_Extensions_Selenium2TestCase {
   
   private static function editConf($restore = false) {
     $conf = dirname(dirname(__FILE__)) . '/config/conf.db.php';
-    if(file_exists($conf)) {
-      $str = implode("\n", file($conf));
-      $fp = fopen($conf,'w');
-      $str = (!$restore) ? str_replace("simplemappr", "simplemappr_test", $str) : str_replace("simplemappr_test", "simplemappr", $str);
-      fwrite($fp, $str, strlen($str));
-      fclose($fp);
+    if(file_exists($conf)) { 
+      $fhandle = fopen($conf,"r"); 
+      $content = fread($fhandle,filesize($conf)); 
+      $content = (!$restore) ? str_replace("simplemappr", "simplemappr_test", $content) : str_replace("simplemappr_test", "simplemappr", $content); 
+      $fhandle = fopen($conf, "w"); 
+      fwrite($fhandle,$content); 
+      fclose($fhandle);
     }
   }
 

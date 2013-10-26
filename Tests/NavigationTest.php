@@ -59,25 +59,23 @@ class NavigationTest extends DatabaseTest {
   
   public function testUserPage() {
     $cookie = $this->setCookie('user', 'fr_FR');
-    $this->url($this->app_url);
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
+    $this->url($this->app_url);
     $this->assertEquals($this->byId('site-user')->text(), 'user');
     $this->assertEquals($this->byId('site-session')->text(), 'Déconnectez');
     $link = $this->byLinkText('Mes cartes');
     $link->click();
-    sleep(1);
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
 
   public function testAdminPage() {
     $cookie = $this->setCookie('admin');
-    $this->url($this->app_url);
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
-    $this->assertEquals($this->byId('site-user')->text(), 'admin');
+    $this->url($this->app_url);
     $link = $this->byLinkText('Users');
     $link->click();
-    sleep(1);
+    $this->assertEquals($this->byId('site-user')->text(), 'admin');
     $matcher = array(
       'tag' => 'tbody',
       'parent' => array('attributes' => array('class' => 'grid-users')),
