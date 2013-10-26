@@ -57,7 +57,7 @@ class NavigationTest extends DatabaseTest {
     $this->assertContains('This application makes heavy use of JavaScript.', $content->text());
   }
   
-  public function testSessionPage() {
+  public function testUserPage() {
     $cookie = $this->setCookie('user', 'fr_FR');
     $this->url($this->app_url);
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
@@ -68,6 +68,33 @@ class NavigationTest extends DatabaseTest {
     sleep(1);
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
+  }
+
+  public function testAdminPage() {
+    $cookie = $this->setCookie('admin');
+    $this->url($this->app_url);
+    $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
+    $this->assertEquals($this->byId('site-user')->text(), 'admin');
+    $link = $this->byLinkText('Users');
+    $link->click();
+    sleep(1);
+    $matcher = array(
+      'tag' => 'tbody',
+      'parent' => array('attributes' => array('class' => 'grid-users')),
+      'ancestor' => array('id' => 'userdata'),
+      'children' => array('count' => 2)
+    );
+    $this->assertTag($matcher, $this->source());
+
+    $link = $this->byLinkText('Administration');
+    $link->click();
+    sleep(1);
+    $matcher = array(
+      'tag' => 'textarea',
+      'id' => 'citation-reference',
+      'ancestor' => array('id' => 'map-admin')
+    );
+    $this->assertTag($matcher, $this->source());
   }
 
   private function setCookie($role, $locale = 'en_US') {
