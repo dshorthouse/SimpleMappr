@@ -127,7 +127,7 @@ class Bootstrap {
         $klass = $this->klass("mappr.pptx", "MapprPptx");
         $this->setup_map($klass)->execute()->get_output();
         break;
-    
+
       case "/query":
         $klass = $this->klass("mappr.query", "MapprQuery");
         $this->setup_map($klass)->execute()->query_layer()->get_output();

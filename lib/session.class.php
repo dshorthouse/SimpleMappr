@@ -51,6 +51,14 @@ class Session {
   */
   public static function set_session() {
     session_start();
+    session_regenerate_id();
+  }
+
+  /*
+  * Close writing to user's session
+  */
+  public static function close_session() {
+    session_write_close();
   }
 
   /*
@@ -96,6 +104,8 @@ class Session {
 
     self::set_session();
     $_SESSION["simplemappr"] = $cookie;
+    self::close_session();
+
     setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -103,11 +113,12 @@ class Session {
   }
 
   public static function redirect($url) {
-    header("Pragma: public");
+    header("Pragma: no-cache");
     header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
     header("Location: " . $url);
+    exit();
   }
 
   public static function make_locale_param($locale = "") {
@@ -157,7 +168,7 @@ class Session {
 
   private function get_token() {
     $this->token = $this->load_param('token', null);
-    if($this->token) { return $this; } else { exit(); }
+    if($this->token) { return $this; } else { self::redirect("http://".$_SERVER["SERVER_NAME"]); }
   }
 
   /*
@@ -233,6 +244,7 @@ class Session {
 
       self::set_session();
       $_SESSION['simplemappr'] = $user;
+      self::close_session();
 
       setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
 
