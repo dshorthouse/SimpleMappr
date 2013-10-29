@@ -50,6 +50,7 @@ class Session {
   * Create a user's session
   */
   public static function set_session() {
+    session_cache_limiter('nocache');
     session_start();
     session_regenerate_id();
   }

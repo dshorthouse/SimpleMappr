@@ -86,9 +86,7 @@ class MapprQuery extends Mappr {
         $layer->open();
         $items = array();
         for($i = 0; $i < $layer->getNumResults(); $i++) {
-          $res = $layer->getResult($i);
-          $shape = $layer->getShape($res->tileindex, $res->shapeindex);
-
+          $shape = $layer->getShape($layer->getResult($i));
           if($this->queryLayer == 'stateprovinces_polygon') {
             $hasc = explode(".",$shape->values['code_hasc']);
             if(isset($shape->values['sr_adm0_a3']) && isset($hasc[1])) { $items[$shape->values['sr_adm0_a3']][$hasc[1]] = array(); }

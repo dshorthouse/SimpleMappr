@@ -10,7 +10,6 @@ locales \
 gettext \
 autoconf \
 libjpeg-dev \
-libjpeg-dev \
 libpng12-dev \
 freetype* \
 libgdal-dev \

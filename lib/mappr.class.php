@@ -63,23 +63,13 @@ class Mappr {
         EXTENSION 'png'
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'COMPRESSION=9'
-        FORMATOPTION 'QUANTIZE_FORCE=ON'
-        FORMATOPTION 'QUANTIZE_DITHER=OFF'
-        FORMATOPTION 'QUANTIZE_COLORS=256'
+        #FORMATOPTION 'QUANTIZE_FORCE=ON'
+        #FORMATOPTION 'QUANTIZE_DITHER=OFF'
+        #FORMATOPTION 'QUANTIZE_COLORS=256'
       END
 
       OUTPUTFORMAT
         NAME png_download
-        DRIVER AGG/PNG
-        IMAGEMODE RGB
-        MIMETYPE 'image/png'
-        EXTENSION 'png'
-        FORMATOPTION 'INTERLACE=OFF'
-        FORMATOPTION 'COMPRESSION=9'
-      END
-
-      OUTPUTFORMAT
-        NAME pnga_download
         DRIVER AGG/PNG
         IMAGEMODE RGB
         MIMETYPE 'image/png'
@@ -96,9 +86,6 @@ class Mappr {
         EXTENSION 'png'
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'COMPRESSION=9'
-        FORMATOPTION 'QUANTIZE_FORCE=ON'
-        FORMATOPTION 'QUANTIZE_DITHER=OFF'
-        FORMATOPTION 'QUANTIZE_COLORS=256'
       END
 
       OUTPUTFORMAT
@@ -110,9 +97,6 @@ class Mappr {
         TRANSPARENT ON
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'COMPRESSION=9'
-        FORMATOPTION 'QUANTIZE_FORCE=ON'
-        FORMATOPTION 'QUANTIZE_DITHER=OFF'
-        FORMATOPTION 'QUANTIZE_COLORS=256'
       END
 
       OUTPUTFORMAT
@@ -818,7 +802,7 @@ class Mappr {
       if($output == 'pptx' || $output == 'docx') {
         $output = 'pnga_transparent';
         if(isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) {
-          $output = 'pnga_download'; //produces opaque legend, but point colours more faithfully preserved
+          $output = 'png_download'; //produces opaque legend, but point colours more faithfully preserved
         }
       }
       $this->map_obj->selectOutputFormat($output);
