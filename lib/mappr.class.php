@@ -89,6 +89,16 @@ class Mappr {
       END
 
       OUTPUTFORMAT
+        NAME pnga_download
+        DRIVER AGG/PNG
+        IMAGEMODE RGB
+        MIMETYPE 'image/png'
+        EXTENSION 'png'
+        FORMATOPTION 'INTERLACE=OFF'
+        FORMATOPTION 'COMPRESSION=9'
+      END
+
+      OUTPUTFORMAT
         NAME pnga_transparent
         DRIVER AGG/PNG
         IMAGEMODE RGBA
