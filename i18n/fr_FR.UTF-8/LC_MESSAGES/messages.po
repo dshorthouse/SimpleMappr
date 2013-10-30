@@ -660,8 +660,16 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "October 29, 2013"
+msgstr "29 octobre, 2013"
+
+#: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about:11
+msgid "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."
+msgstr "Améliorations: Logiciel mis à jour. Bordures ajouté autour couche de hotspot de biodiversité et l'option pour les étiquettes. Demandé par Torsten Dikow."
 
 #: .tabs/about:11
 msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables."

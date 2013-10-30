@@ -238,12 +238,12 @@ class MapprApi extends Mappr {
             $states = preg_split("/[\s|]+/", $split[1]);
             $statekey = array();
             foreach($states as $state) {
-              $statekey[] = "'[code_hasc]' =~ /\.".$state."$/";
+              $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
             }
-            $qry[] = "'[sr_adm0_a3]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+            $qry[] = "'[sr_adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
           } else {
             $region = addslashes(ucwords(strtolower(trim($region))));
-            $qry[] = "'[name]' =~ /".$region."$/ OR '[admin]' =~ /".$region."$/";
+            $qry[] = "'[name]' ~* '".$region."$' || '[admin]' ~* '".$region."$'";
           }
         }
       }

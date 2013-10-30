@@ -1114,14 +1114,14 @@ class Mappr {
                   $states = preg_split("/[\s|]+/", $split[1]);
                   $statekey = array();
                   foreach($states as $state) {
-                    $statekey[] = "'[code_hasc]' =~ /\.".$state."$/";
+                    $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
                   }
-                  $qry['stateprovince'][] = "'[sr_adm0_a3]' = '".trim($split[0])."' AND (".implode(" OR ", $statekey).")";
+                  $qry['stateprovince'][] = "'[sr_adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
                   $qry['country'][] = "'[iso_a3]' = '".trim($split[0])."'";
                 } else {
                   $region = addslashes(trim($region));
-                  $qry['stateprovince'][] = "'[name]' =~ /".$region."$/";
-                  $qry['country'][] = "'[name]' =~ /".$region."$/ OR '[name_long]' =~ /".$region."$/ OR '[formal_en]' =~ /".$region."$/";
+                  $qry['stateprovince'][] = "'[name]' ~* '".$region."$'";
+                  $qry['country'][] = "'[name]' ~* '".$region."$' || '[name_long]' ~* '".$region."$' || '[formal_en]' ~* '".$region."$'";
                 }
               }
             }
@@ -1143,7 +1143,8 @@ class Mappr {
 
           $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
 
-          $layer->setFilter("(".implode(" OR ", $query).")");
+          $layer->setFilter("(".implode(" || ", $query).")");
+
           $class = ms_newClassObj($layer);
           $class->set("name", $title);
 
