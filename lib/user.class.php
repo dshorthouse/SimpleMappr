@@ -117,7 +117,7 @@ class User {
       LEFT JOIN
         maps m ON (u.uid = m.uid)
       GROUP BY
-        u.username
+        u.uid
       ORDER BY ".$order;
 
    $rows = $this->db->query($sql);

@@ -248,7 +248,7 @@ class MapprApi extends Mappr {
         }
       }
 
-      $layer->setFilter("(".implode(" OR ", $qry).")");
+      $layer->setFilter("(".implode(" || ", $qry).")");
       $class = ms_newClassObj($layer);
       $class->set("name", stripslashes($this->regions['title']));
 
