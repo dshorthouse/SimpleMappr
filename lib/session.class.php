@@ -243,10 +243,6 @@ class Session {
       $user['locale'] = $this->locale;
       $user['role'] = (!$record['role']) ? 1 : $record['role'];
 
-      self::set_session();
-      $_SESSION['simplemappr'] = $user;
-      self::close_session();
-
       setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
 
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
