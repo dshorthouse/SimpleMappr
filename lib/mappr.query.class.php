@@ -74,7 +74,7 @@ class MapprQuery extends Mappr {
     $layer->set("data",$this->shapes[$this->queryLayer]['shape']);
     $layer->set("type",$this->shapes[$this->queryLayer]['type']);
     $layer->set("template", "template.html");
-    $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
+    $layer->setProjection(parent::get_projection($this->default_projection));
 
     $rect = ms_newRectObj();
     $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);

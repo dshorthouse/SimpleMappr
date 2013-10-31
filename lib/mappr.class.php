@@ -295,6 +295,16 @@ class Mappr {
     return $dec;
   }
 
+  /**
+  * Get projection
+  * @param string $projection
+  * @return string
+  */
+  public static function get_projection($projection) {
+    if(!array_key_exists($projection, self::$accepted_projections)) { $projection = 'epsg:4326'; }
+    return self::$accepted_projections[$projection]['proj'];
+  }
+
   /* placeholder for presence of anything that might need a legend */
   private $_legend_required = false;
 
@@ -332,15 +342,16 @@ class Mappr {
 
   public function __call($name, $arguments) {
     // set a property
-    if (substr($name,0,4) == 'set_') {
-      $property = substr($name,4);
+    $property_prefix = substr($name,0,4);
+    $property = substr($name,4);
+    if ($property_prefix == 'set_') {
       $this->{$property} = $arguments[0];
     // add to an array property
-    } else if (substr($name,0,4) == 'add_') {
-      $property = substr($name,4);
-      array_push($this->$property, $arguments[0]);
-    } else if (substr($name,0,4) == 'get_') {
-      return $this->{substr($name,4)};
+    } else if ($property_prefix == 'add_') {
+      array_push($this->{$property}, $arguments[0]);
+    //get a property
+    } else if ($property_prefix == 'get_') {
+      return $this->{$property};
     }
     return $this;
   }
@@ -836,23 +847,13 @@ class Mappr {
   }
 
   /**
-  * Get projection
-  * @param string $projection
-  * @return string
-  */
-  private function get_projection($projection) {
-    if(!array_key_exists($projection, self::$accepted_projections)) { $projection = 'epsg:4326'; }
-    return self::$accepted_projections[$projection]['proj'];
-  }
-
-  /**
   * Set the map extent
   */
   private function set_map_extent() {
     $ext = explode(',',$this->bbox_map);
     if(isset($this->projection) && $this->projection != $this->projection_map) {
-      $origProjObj = ms_newProjectionObj($this->get_projection($this->projection_map));
-      $newProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
+      $origProjObj = ms_newProjectionObj(self::get_projection($this->projection_map));
+      $newProjObj = ms_newProjectionObj(self::get_projection($this->default_projection));
 
       $poPoint1 = ms_newPointObj();
       $poPoint1->setXY($ext[0], $ext[1]);
@@ -1043,7 +1044,7 @@ class Mappr {
           $layer->set("type",MS_LAYER_POINT);
           $layer->set("tolerance",5);
           $layer->set("toleranceunits",6);
-          $layer->setProjection($this->get_projection($this->default_projection));
+          $layer->setProjection(self::get_projection($this->default_projection));
 
           $class = ms_newClassObj($layer);
           if($title != "") { $class->set("name",$title); }
@@ -1149,7 +1150,7 @@ class Mappr {
           }
 
           $layer->set("template", "template.html");
-          $layer->setProjection($this->get_projection($this->default_projection));
+          $layer->setProjection(self::get_projection($this->default_projection));
 
           $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
 
@@ -1204,7 +1205,7 @@ class Mappr {
         $layer->set("status",MS_ON);
         $layer->setConnectionType(MS_SHAPEFILE);
         $layer->set("data", $this->shapes[$name]['shape']);
-        $layer->setProjection($this->get_projection($this->default_projection));
+        $layer->setProjection(self::get_projection($this->default_projection));
         $layer->set("template", "template.html");
         $layer->set("dump", true);
 
@@ -1451,7 +1452,7 @@ class Mappr {
       $layer->set("name", 'grid');
       $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
-      $layer->setProjection($this->get_projection($this->default_projection));
+      $layer->setProjection(self::get_projection($this->default_projection));
 
       $class = ms_newClassObj($layer);
 
@@ -1474,8 +1475,8 @@ class Mappr {
 
       //project the extent back to default such that we can work with proper tick marks
       if($this->projection != $this->default_projection && $this->projection == $this->projection_map) {
-        $origProjObj = ms_newProjectionObj($this->get_projection($this->projection));
-        $newProjObj = ms_newProjectionObj($this->get_projection($this->default_projection));
+        $origProjObj = ms_newProjectionObj(self::get_projection($this->projection));
+        $newProjObj = ms_newProjectionObj(self::get_projection($this->default_projection));
 
         $poPoint1 = ms_newPointObj();
         $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
@@ -1722,14 +1723,14 @@ class Mappr {
   private function reproject($input_projection,$output_projection) {
     $this->set_origin($output_projection);
 
-    $origProjObj = ms_newProjectionObj($this->get_projection($input_projection));
-    $newProjObj = ms_newProjectionObj($this->get_projection($output_projection));
+    $origProjObj = ms_newProjectionObj(self::get_projection($input_projection));
+    $newProjObj = ms_newProjectionObj(self::get_projection($output_projection));
 
     $oRect = $this->map_obj->extent;
     $oRect->project($origProjObj,$newProjObj);
 
     $this->map_obj->setExtent($oRect->minx,$oRect->miny,$oRect->maxx,$oRect->maxy);
-    $this->map_obj->setProjection($this->get_projection($output_projection));
+    $this->map_obj->setProjection(self::get_projection($output_projection));
   }
 
   /**
@@ -1740,7 +1741,7 @@ class Mappr {
     $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
 
     if(in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
-      self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', $this->get_projection($output_projection));
+      self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::get_projection($output_projection));
     }
   }
 

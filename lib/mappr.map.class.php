@@ -109,7 +109,7 @@ class MapprMap extends Mappr {
       $layer->set("name", 'grid');
       $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
-      $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
+      $layer->setProjection(parent::get_projection($this->default_projection));
 
       $class = ms_newClassObj($layer);
       if(isset($this->gridlabel) && $this->gridlabel == 1) {

@@ -84,7 +84,7 @@ class MapprApi extends Mappr {
 
     $this->output           = $this->load_param('output','pnga');
     $this->projection       = $this->load_param('projection', 'epsg:4326');
-    $this->projection_map   = $this->projection;
+    $this->projection_map   = 'epsg:4326';
     $this->origin           = (int)$this->load_param('origin', false);
 
     $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
@@ -157,7 +157,7 @@ class MapprApi extends Mappr {
         $mlayer->set("type",MS_LAYER_POINT);
         $mlayer->set("tolerance",5);
         $mlayer->set("toleranceunits",6);
-        $mlayer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
+        $mlayer->setProjection(parent::get_projection($this->default_projection));
 
         $class = ms_newClassObj($mlayer);
         $class->set("name",isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
@@ -223,7 +223,7 @@ class MapprApi extends Mappr {
       $layer->set("data",$this->shapes['stateprovinces_polygon']['shape']);
       $layer->set("type",$this->shapes['stateprovinces_polygon']['type']);
       $layer->set("template", "template.html");
-      $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
+      $layer->setProjection(parent::get_projection($this->default_projection));
 
       //grab the data for regions & split
       $whole = trim($this->regions['data']);
@@ -270,7 +270,7 @@ class MapprApi extends Mappr {
       $layer->set("name", 'grid');
       $layer->set("type", MS_LAYER_LINE);
       $layer->set("status",MS_ON);
-      $layer->setProjection(parent::$accepted_projections[$this->default_projection]['proj']);
+      $layer->setProjection(parent::get_projection($this->default_projection));
 
       $class = ms_newClassObj($layer);
 
