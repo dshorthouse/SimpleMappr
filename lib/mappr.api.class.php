@@ -35,8 +35,6 @@ class MapprApi extends Mappr {
     //ping API to return JSON
     $this->ping             = $this->load_param('ping', false);
 
-    if($this->ping) { $this->ping_response(); }
-
     $this->method           = $_SERVER['REQUEST_METHOD'];
 
     $this->download         = true;
@@ -107,21 +105,11 @@ class MapprApi extends Mappr {
 
     //set the image size from width & height to array(width, height)
     $this->width            = (float)$this->load_param('width', 900);
-    $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 450);
+    $this->height           = (float)$this->load_param('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
     if($this->width == 0 || $this->height == 0) { $this->width = 900; $this->height = 450; }
     $this->image_size       = array($this->width, $this->height);
 
     return $this;
-  }
-
-  private function ping_response() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    header("Content-Type: application/json");
-    echo json_encode(array("status" => "ok"));
-    exit();
   }
 
   /**
@@ -350,50 +338,60 @@ class MapprApi extends Mappr {
   }
 
   public function get_output() {
-    if($this->method == 'GET') {
-      switch($this->output) {
-        case 'tif':
-          header("Content-Type: image/tiff");
-          header("Content-Transfer-Encoding: binary");
-        break;
 
-        case 'svg':
-          header("Content-Type: image/svg+xml");
-        break;
-
-        case 'jpg':
-        case 'jpga':
-          header("Content-Type: image/jpeg");
-        break;
-
-        case 'png':
-        case 'pnga':
-          header("Content-Type: image/png");
-        break;
-
-        default:
-          header("Content-Type: image/png");
-      }
-      $this->image->saveImage("");
+    if($this->ping) {
+      header("Pragma: public");
+      header("Expires: 0");
+      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+      header("Cache-Control: private",false);
+      header("Content-Type: application/json");
+      echo json_encode(array("status" => "ok"));
     } else {
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
-        header("Content-Type: application/json");
+      if($this->method == 'GET') {
+        switch($this->output) {
+          case 'tif':
+            header("Content-Type: image/tiff");
+            header("Content-Transfer-Encoding: binary");
+          break;
 
-        try {
-          $output = array(
-            'imageURL' => $this->image->saveWebImage(),
-            'expiry'   => date('c', time() + (6 * 60 * 60))
-          );
-        } catch(Exception $e) {
-          $output = array(
-            'error' => "An error occurred:" . $e->getMessage()
-          );
+          case 'svg':
+            header("Content-Type: image/svg+xml");
+          break;
+
+          case 'jpg':
+          case 'jpga':
+            header("Content-Type: image/jpeg");
+          break;
+
+          case 'png':
+          case 'pnga':
+            header("Content-Type: image/png");
+          break;
+
+          default:
+            header("Content-Type: image/png");
         }
+        $this->image->saveImage("");
+      } else {
+          header("Pragma: public");
+          header("Expires: 0");
+          header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+          header("Cache-Control: private",false);
+          header("Content-Type: application/json");
 
-        echo json_encode($output);
+          try {
+            $output = array(
+              'imageURL' => $this->image->saveWebImage(),
+              'expiry'   => date('c', time() + (6 * 60 * 60))
+            );
+          } catch(Exception $e) {
+            $output = array(
+              'error' => "An error occurred:" . $e->getMessage()
+            );
+          }
+
+          echo json_encode($output);
+      }
     }
   }
 

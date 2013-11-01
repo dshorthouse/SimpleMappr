@@ -79,7 +79,7 @@
 
 <div id="map-regions">
 <div id="regions-introduction" class="panel ui-corner-all">
-<?php $tabIndex = (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['uid']] == 'administrator') ? 5 : 4; ?>
+<?php $tabIndex = (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator') ? 5 : 4; ?>
 <p><?php echo _("Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."); ?> <a href="#" data-tab="<?php echo $tabIndex; ?>" class="sprites-before help show-codes"><?php echo _("codes"); ?></a></p>
 </div>
 <div id="fieldSetsRegions" class="fieldSets">

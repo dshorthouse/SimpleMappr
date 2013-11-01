@@ -28,7 +28,17 @@ class ApiTest extends PHPUnit_Framework_TestCase {
       unlink($file);
     }
   }
-  
+
+  public function test_api_ping() {
+    $_REQUEST = array('ping' => true);
+    $mappr_api = $this->mappr_api->get_request()->execute();
+    ob_start();
+    $mappr_api->get_output();
+    $output = json_decode(ob_get_contents(), TRUE);
+    ob_end_clean();
+    $this->assertArrayHasKey("status", $output);
+  }
+
   public function test_apioutput_post() {
     $_SERVER['REQUEST_METHOD'] = 'POST';
     $mappr_api = $this->mappr_api->get_request()->execute();
@@ -40,7 +50,6 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $this->assertArrayHasKey("expiry", $output);
   }
 
-
   public function test_apioutput_get() {
     $mappr_api = $this->mappr_api->get_request()->execute();
     ob_start();
@@ -49,6 +58,24 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     ob_end_clean();
     $image = imagecreatefromstring($output);
     $this->assertEquals(imagesx($image), 900);
+    $this->assertEquals(imagesy($image), 450);
+  }
+
+  public function test_apioutput_get_params() {
+    $_REQUEST = array(
+      'bbox' => '-130,40,-60,50',
+      'projection' => 'esri:102009',
+      'width' => 600,
+      'graticules' => true
+    );
+    $mappr_api = $this->mappr_api->get_request()->execute();
+    ob_start();
+    $mappr_api->get_output();
+    $output = ob_get_contents();
+    ob_end_clean();
+    $image = imagecreatefromstring($output);
+    $this->assertEquals(imagesx($image), 600);
+    $this->assertEquals(imagesy($image), 300);
   }
 
 }
