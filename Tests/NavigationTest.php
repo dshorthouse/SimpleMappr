@@ -61,10 +61,12 @@ class NavigationTest extends DatabaseTest {
     $cookie = $this->setCookie('user', 'fr_FR');
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
     $this->url($this->app_url);
+    sleep(1);
     $this->assertEquals($this->byId('site-user')->text(), 'user');
     $this->assertEquals($this->byId('site-session')->text(), 'Déconnectez');
     $link = $this->byLinkText('Mes cartes');
     $link->click();
+    sleep(1);
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
@@ -75,6 +77,7 @@ class NavigationTest extends DatabaseTest {
     $this->url($this->app_url);
     $link = $this->byLinkText('Users');
     $link->click();
+    sleep(1);
     $this->assertEquals($this->byId('site-user')->text(), 'admin');
     $matcher = array(
       'tag' => 'tbody',
