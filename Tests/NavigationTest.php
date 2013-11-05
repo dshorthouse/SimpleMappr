@@ -69,7 +69,7 @@ class NavigationTest extends DatabaseTest {
     $this->assertEquals($this->byId('site-session')->text(), 'Déconnectez');
     $link = $this->byLinkText('Mes cartes');
     $link->click();
-    sleep(1);
+    sleep(2);
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
@@ -81,7 +81,7 @@ class NavigationTest extends DatabaseTest {
     $this->url($this->app_url);
     $link = $this->byLinkText('Users');
     $link->click();
-    sleep(1);
+    sleep(2);
     $this->assertEquals($this->byId('site-user')->text(), 'admin');
     $matcher = array(
       'tag' => 'tbody',
@@ -92,7 +92,7 @@ class NavigationTest extends DatabaseTest {
     $this->assertTag($matcher, $this->source());
     $link = $this->byLinkText('Administration');
     $link->click();
-    sleep(1);
+    sleep(2);
     $matcher = array(
       'tag' => 'textarea',
       'id' => 'citation-reference',
