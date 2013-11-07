@@ -77,6 +77,32 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals(imagesx($image), 600);
     $this->assertEquals(imagesy($image), 300);
   }
+  
+  public function test_apioutput_no_coords() {
+    $_REQUEST = array(
+      'points[0]' => ''
+    );
+    $mappr_api = $this->mappr_api->get_request()->execute();
+    ob_start();
+    $mappr_api->get_output();
+    $output = ob_get_contents();
+    ob_end_clean();
+    $image = imagecreatefromstring($output);
+    $this->assertEquals(imagesx($image), 900);
+  }
+
+  public function test_apioutput_coords() {
+    $_REQUEST = array(
+      'points[0]' => '45, -120\n52, -100'
+    );
+    $mappr_api = $this->mappr_api->get_request()->execute();
+    ob_start();
+    $mappr_api->get_output();
+    $output = ob_get_contents();
+    ob_end_clean();
+    $image = imagecreatefromstring($output);
+    $this->assertEquals(imagesx($image), 900);
+  }
 
 }
 

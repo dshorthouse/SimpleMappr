@@ -26,7 +26,7 @@ require_once('georss/rss_fetch.inc');
 
 class MapprApi extends Mappr {
 
-  private $coord_cols;
+  private $coord_cols = array();
 
   /**
   * Override method in parent class

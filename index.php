@@ -186,6 +186,8 @@ class Bootstrap {
   }
 
   private function set_up() {
+    if(!isset($_SERVER['HTTP_HOST'])) { exit(); }
+
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
       header('Location: http://www.' . $_SERVER['HTTP_HOST'] . '/');

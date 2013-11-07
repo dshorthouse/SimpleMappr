@@ -3,7 +3,7 @@
 <phpunit bootstrap="../Tests/bootstrap.php" colors="true">
     <php>
         <const name="ENVIRONMENT" value="production"/>
-        <const name="MAPPR_MAPS_URL" value="/public/tmp"/>
+        <const name="MAPPR_MAPS_URL" value="http://img.simplemappr.local"/>
         <const name="MAPPR_DOMAIN" value="www.simplemappr.local"/>
         <const name="NUMTEXTAREA" value="3"/>
         <const name="GOOGLE_ANALYTICS" value=""/>

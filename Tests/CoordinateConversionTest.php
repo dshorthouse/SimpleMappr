@@ -90,6 +90,13 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase {
     $dd = Mappr::dms_to_deg($dms);
     $this->assertEquals($dd, -45.890277777778);
   }
+  
+  public function test_dirty_deg() {
+    $coord = "52.5g\t-89.0r";
+    $dd = Mappr::make_coordinates($coord);
+    $this->assertEquals($dd[0], 52.5);
+    $this->assertEquals($dd[1], -89.0);
+  }
 
 }
 ?>

@@ -6,6 +6,7 @@ php:
 env:
   global:
     - HOST=www.simplemappr.local
+    - IMG_HOST=img.simplemappr.local
     - DBNAME=simplemappr_test
 
 before_install:
@@ -13,10 +14,10 @@ before_install:
   - sh -e .travis/scripts/apt-get.sh
 
   # Apache web server config for vhost
-  - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
+  - sh -e .travis/scripts/apache2-vhost.sh "$HOST" "$IMG_HOST"
   
   # Apache config
-  - sh -e .travis/scripts/apache2-configure.sh "$HOST"
+  - sh -e .travis/scripts/apache2-configure.sh "$HOST" "$IMG_HOST"
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh

@@ -185,8 +185,8 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_file_exists() {
-      $root = dirname(dirname(__FILE__));
-      $this->assertFileExists($root . self::$output["mapOutputImage"]);
+      $img = self::$mappr->get_tmp_path() . basename(self::$output["mapOutputImage"]);
+      $this->assertFileExists($img);
     }
 
     public function test_mapserver_default_size() {

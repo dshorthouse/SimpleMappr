@@ -77,10 +77,9 @@ class MapprQuery extends Mappr {
     $layer->setProjection(parent::get_projection($this->default_projection));
 
     $rect = ms_newRectObj();
-    $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
+    $extent = $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
 
-    $return = $layer->queryByRect($rect);
-
+    $return = @$layer->queryByRect($rect); //suppress error in event extent is invalid
     if($return == MS_SUCCESS) {
       if($layer->getNumResults() > 0) {
         $layer->open();
