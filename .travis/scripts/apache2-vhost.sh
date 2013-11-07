@@ -30,6 +30,7 @@ fi
 
 echo "---> Starting $(tput bold ; tput setaf 2)virtual host creation$(tput sgr0)"
 echo "---> Virtualhost name : $(tput bold ; tput setaf 3)$VHOSTNAME$(tput sgr0)"
+echo "---> Image Virtualhost name : $(tput bold ; tput setaf 3)$IMGHOSTNAME$(tput sgr0)"
 echo "---> Document root : $(tput bold ; tput setaf 3)$DOCROOT$(tput sgr0)"
 echo "---> Configuration file : $(tput bold ; tput setaf 3)$CONFIGFILE$(tput sgr0)"
 
