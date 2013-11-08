@@ -15,6 +15,7 @@ fi
 
 echo "---> Applying $(tput bold ; tput setaf 2)apache2 configuration$(tput sgr0)"
 echo "---> Enabling virtual host $(tput setaf 2)$VHOSTNAME$(tput sgr0)"
+echo "---> Enabling virtual host $(tput setaf 2)$IMGHOSTNAME$(tput sgr0)"
 
 echo "---> Installing Apache modules"
 sudo a2enmod rewrite

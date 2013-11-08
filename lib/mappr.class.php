@@ -262,12 +262,14 @@ class Mappr {
     $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
     $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°ºdms\'"]/i', '', $loc));
     if(preg_match('/[NSEWO]/', $loc) != 0) {
-      $coord = preg_split("/[,;]/", $loc);
-      if (!array_key_exists(1, $coord)) { return array(null, null); }
+      $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
+      if (!array_key_exists(1, $coord) || empty($coord[1])) { return array(null, null); }
       $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
       return array(self::dms_to_deg(trim($coord[0])),self::dms_to_deg(trim($coord[1])));
     } else {
-      return preg_split("/[\s,;]+/",$loc); //split the coords by a space, comma, semicolon
+      $coord = preg_split("/[\s,;]+/",$loc); //split by space, comma, or semicolon
+      if (!array_key_exists(1, $coord) || empty($coord[1])) { return array(null, null); }
+      return $coord;
     }
   }
 

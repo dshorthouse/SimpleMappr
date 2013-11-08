@@ -39,3 +39,6 @@ sudo mv $VHOSTNAME /etc/apache2/sites-available/$VHOSTNAME
 
 echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"
 echo "127.0.0.1    $VHOSTNAME" | sudo tee -a /etc/hosts
+
+echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"
+echo "127.0.0.1    $IMGHOSTNAME" | sudo tee -a /etc/hosts

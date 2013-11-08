@@ -67,7 +67,7 @@ class Session {
   */
   public static function destroy() {
     self::set_session();
-    $locale = $_SESSION['simplemappr']['locale'];
+    $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
     session_unset();
     session_destroy();
     setcookie("simplemappr", "", time() - 3600, "/", MAPPR_DOMAIN);

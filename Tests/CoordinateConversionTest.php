@@ -28,21 +28,42 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue($checked);
   }
 
+  public function test_make_coordinates_0() {
+    $coord = "52° 32' 25\" N,";
+    $dd = Mappr::make_coordinates($coord);
+    $this->assertEquals($dd[0], null);
+    $this->assertEquals($dd[1], null);
+  }
+
   public function test_make_coordinates_1() {
+    $coord = "-120";
+    $dd = Mappr::make_coordinates($coord);
+    $this->assertEquals($dd[0], null);
+    $this->assertEquals($dd[1], null);
+  }
+
+  public function test_make_coordinates_2() {
+    $coord = "-120,";
+    $dd = Mappr::make_coordinates($coord);
+    $this->assertEquals($dd[0], null);
+    $this->assertEquals($dd[1], null);
+  }
+
+  public function test_make_coordinates_3() {
     $coord = "52° 32' 25\" N, 89° 40' 31\" W";
     $dd = Mappr::make_coordinates($coord);
     $this->assertEquals($dd[0], 52.540277777778);
     $this->assertEquals($dd[1], -89.675277777778);
   }
 
-  public function test_make_coordinates_2() {
+  public function test_make_coordinates_4() {
     $coord = "52° 32' 25\" N; 89° 40' 31\" W";
     $dd = Mappr::make_coordinates($coord);
     $this->assertEquals($dd[0], 52.540277777778);
     $this->assertEquals($dd[1], -89.675277777778);
   }
 
-  public function test_make_coordinates_3() {
+  public function test_make_coordinates_5() {
     $coord = "52.5\t-89.0";
     $dd = Mappr::make_coordinates($coord);
     $this->assertEquals($dd[0], 52.5);
