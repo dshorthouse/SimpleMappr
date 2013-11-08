@@ -13,11 +13,12 @@ before_install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
-  # Apache web server config for vhost
-  - sh -e .travis/scripts/apache2-vhost.sh "$HOST" "$IMGHOST"
-  
   # Apache config
-  - sh -e .travis/scripts/apache2-configure.sh "$HOST" "$IMGHOST"
+  - sh -e .travis/scripts/apache2-configure.sh
+
+  # Apache web server config for vhosts
+  - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
+  - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh

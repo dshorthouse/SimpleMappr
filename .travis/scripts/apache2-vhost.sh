@@ -10,35 +10,19 @@ then
     VHOSTNAME="$1"
 fi
 
-IMGHOSTNAME="img.simplemappr.local"
-if [ "$2" ]
-then
-    IMGHOSTNAME="$2"
-fi
-
 DOCROOT="$ROOTDIR"
-if [ "$3" ]
-then
-    DOCROOT="$3"
-fi
-
 CONFIGFILE="$BASEDIR/apache2/$VHOSTNAME"
-if [ "$4" ]
-then
-    CONFIGFILE="$4"
-fi
 
 echo "---> Starting $(tput bold ; tput setaf 2)virtual host creation$(tput sgr0)"
 echo "---> Virtualhost name : $(tput bold ; tput setaf 3)$VHOSTNAME$(tput sgr0)"
-echo "---> Image Virtualhost name : $(tput bold ; tput setaf 3)$IMGHOSTNAME$(tput sgr0)"
 echo "---> Document root : $(tput bold ; tput setaf 3)$DOCROOT$(tput sgr0)"
 echo "---> Configuration file : $(tput bold ; tput setaf 3)$CONFIGFILE$(tput sgr0)"
 
-sed s?%basedir%?$DOCROOT? "$CONFIGFILE" | sed s/%hostname%/$VHOSTNAME/ | sed s/%imghostname%/$IMGHOSTNAME/ > $VHOSTNAME
-sudo mv $VHOSTNAME /etc/apache2/sites-available/$VHOSTNAME
+sed s?%basedir%?$DOCROOT? "$CONFIGFILE" | sed s/%hostname%/$VHOSTNAME/ > $VHOSTNAME
+sudo mv $VHOSTNAME /etc/apache2/sites-available/$VHOSTNAME.conf
 
 echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"
 echo "127.0.0.1    $VHOSTNAME" | sudo tee -a /etc/hosts
 
-echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"
-echo "127.0.0.1    $IMGHOSTNAME" | sudo tee -a /etc/hosts
+echo "---> Creating site $VHOSTNAME"
+sudo a2ensite $VHOSTNAME
