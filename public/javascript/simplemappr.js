@@ -2136,9 +2136,13 @@ var SimpleMappr = (function($, window, document) {
           tab_a_selector = 'ul.navigation a',
           config         = {
             cache : true,
+            beforeLoad: function() {
+              self.showSpinner();
+            },
             load  : function(e, ui){
               self.unusedVariables(e);
               $(ui.tab).data("cache.tabs",($(ui.panel).html() === "") ? false : true);
+              self.hideSpinner();
             },
             event : 'change'
           };
@@ -2249,8 +2253,6 @@ var SimpleMappr = (function($, window, document) {
       this.disableDefaultButtons();
       this.screenSizeListener();
       this.bindRotateWheel();
-      $('#header').find('div').show();
-      this.hideSpinner();
       this.bindTooltips();
       this.bindTabs();
       this.appendImages();
@@ -2270,6 +2272,7 @@ var SimpleMappr = (function($, window, document) {
       this.bindPanelToggle();
       this.bindTextAreaResizers();
       this.getUserData();
+      this.hideSpinner();
     }
 
   };

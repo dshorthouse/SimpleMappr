@@ -25,10 +25,6 @@ class NavigationTest extends DatabaseTest {
     }
   }
 
-  public function waitOnTab($tab) {
-    sleep(2);
-  }
-
   public function testTranslation() {
     $link = $this->byLinkText('Français');
     $link->click();
@@ -39,7 +35,7 @@ class NavigationTest extends DatabaseTest {
   public function testSignInPage() {
     $link = $this->byLinkText('Sign In');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $tagline = $this->byId('map-mymaps');
     $this->assertContains('Save and reload your map data or create a generic template.', $tagline->text());
   }
@@ -47,7 +43,7 @@ class NavigationTest extends DatabaseTest {
   public function testAPIPage() {
     $link = $this->byLinkText('API');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $content = $this->byId('general-api');
     $this->assertContains('A simple, restful API may be used with Internet accessible', $content->text());
   }
@@ -55,7 +51,7 @@ class NavigationTest extends DatabaseTest {
   public function testAboutPage() {
     $link = $this->byLinkText('About');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $content = $this->byId('general-about');
     $this->assertContains('Create greyscale point maps suitable for reproduction on print media', $content->text());
   }
@@ -63,7 +59,7 @@ class NavigationTest extends DatabaseTest {
   public function testHelpPage() {
     $link = $this->byLinkText('Help');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $content = $this->byId('map-help');
     $this->assertContains('This application makes heavy use of JavaScript.', $content->text());
   }
@@ -78,7 +74,7 @@ class NavigationTest extends DatabaseTest {
 
     $link = $this->byLinkText('Mes cartes');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
@@ -90,7 +86,7 @@ class NavigationTest extends DatabaseTest {
     $this->refresh();
     $link = $this->byLinkText('Users');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $this->assertEquals($this->byId('site-user')->text(), 'admin');
 
     $matcher = array(
@@ -103,7 +99,7 @@ class NavigationTest extends DatabaseTest {
 
     $link = $this->byLinkText('Administration');
     $link->click();
-    $this->waitOnTab($link);
+    $this->waitOnSpinner();
     $matcher = array(
       'tag' => 'textarea',
       'id' => 'citation-reference',
