@@ -118,6 +118,7 @@ class Session {
     header("Expires: 0");
     header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
+    header("HTTP/1.1 303 See Other");
     header("Location: " . $url);
     exit();
   }

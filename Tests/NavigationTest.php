@@ -25,7 +25,6 @@ class NavigationTest extends DatabaseTest {
     }
   }
 
-  //TODO: get parent node of $tab and verify that css class ui-tabs-loading is not present
   public function waitOnTab($tab) {
     sleep(2);
   }
