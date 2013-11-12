@@ -190,7 +190,7 @@ class Bootstrap {
 
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-      header('Location: http://www.' . $_SERVER['HTTP_HOST'] . '/');
+      header('Location: http://' .  MAPPR_DOMAIN);
       exit();
     } else {
       require_once('lib/user.class.php');

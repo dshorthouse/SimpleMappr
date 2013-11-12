@@ -38,7 +38,6 @@ class Session {
          'native' => 'Français',
          'code'   => 'fr_FR.UTF-8'),
   );
-
   public static $domain = "messages";
 
   private $token;
@@ -71,7 +70,7 @@ class Session {
     session_unset();
     session_destroy();
     setcookie("simplemappr", "", time() - 3600, "/", MAPPR_DOMAIN);
-    self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_locale_param($locale));
+    self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($locale));
   }
 
   /*
@@ -88,13 +87,13 @@ class Session {
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
     if(!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
-      self::redirect("http://".$_SERVER["SERVER_NAME"].self::make_locale_param($cookie["locale"]));
+      self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($cookie["locale"]));
     } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
       if(isset($_COOKIE["simplemappr"])) {
         $cookie["locale"] = "en_US";
         setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
       }
-      self::redirect("http://".$_SERVER["SERVER_NAME"]);
+      self::redirect("http://" . MAPPR_DOMAIN);
     } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
       $cookie["locale"] = $_REQUEST["locale"];
     }
@@ -103,11 +102,7 @@ class Session {
 
     if(!isset($_COOKIE["simplemappr"])) { return; }
 
-    self::set_session();
-    $_SESSION["simplemappr"] = $cookie;
-    self::close_session();
-
-    setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
+    self::write_session($cookie);
 
     $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
     $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
@@ -115,7 +110,7 @@ class Session {
 
   public static function redirect($url) {
     header("Pragma: no-cache");
-    header("Expires: 0");
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
     header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
     header("Cache-Control: private",false);
     header("HTTP/1.1 303 See Other");
@@ -147,6 +142,13 @@ class Session {
     }
   }
 
+  public static function write_session($data) {
+    self::set_session();
+    $_SESSION["simplemappr"] = $data;
+    self::close_session();
+    setcookie("simplemappr", json_encode($data), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
+  }
+
   function __construct($new_session) {
     if($new_session) {
       $this->execute();
@@ -170,7 +172,7 @@ class Session {
 
   private function get_token() {
     $this->token = $this->load_param('token', null);
-    if($this->token) { return $this; } else { self::redirect("http://".$_SERVER["SERVER_NAME"]); }
+    if($this->token) { return $this; } else { self::redirect("http://" . MAPPR_DOMAIN); }
   }
 
   /*
@@ -244,11 +246,11 @@ class Session {
       $user['locale'] = $this->locale;
       $user['role'] = (!$record['role']) ? 1 : $record['role'];
 
-      setcookie("simplemappr", json_encode($user), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
-
       $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
 
-      self::redirect('http://' . $_SERVER['SERVER_NAME'] . self::make_locale_param($user['locale']));
+      self::write_session($user);
+      self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($user['locale']));
+
     } else {
       echo 'An error occured: ' . $this->auth_info['err']['msg'];
       exit();
