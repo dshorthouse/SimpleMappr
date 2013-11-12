@@ -2249,8 +2249,8 @@ var SimpleMappr = (function($, window, document) {
       this.disableDefaultButtons();
       this.screenSizeListener();
       this.bindRotateWheel();
-      this.hideSpinner();
       $('#header').find('div').show();
+      this.hideSpinner();
       this.bindTooltips();
       this.bindTabs();
       this.appendImages();

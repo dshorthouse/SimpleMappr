@@ -9,7 +9,7 @@ class NavigationTest extends DatabaseTest {
 
   protected $app_url;
 
-  public function setUp() {
+  protected function setUp() {
     $this->setBrowser('firefox');
     $this->setBrowserUrl("http://" . MAPPR_DOMAIN . "/");
   }
