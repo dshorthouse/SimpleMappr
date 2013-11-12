@@ -16,6 +16,18 @@ class NavigationTest extends DatabaseTest {
 
   public function setUpPage() {
     $this->url("/");
+    $this->waitOnSpinner();
+  }
+
+  public function waitOnSpinner() {
+    while($this->byId('map-loader')->displayed()) {
+      sleep(1);
+    }
+  }
+
+  //TODO: get parent node of $tab and verify that css class ui-tabs-loading is not present
+  public function waitOnTab($tab) {
+    sleep(2);
   }
 
   public function testTranslation() {
@@ -28,6 +40,7 @@ class NavigationTest extends DatabaseTest {
   public function testSignInPage() {
     $link = $this->byLinkText('Sign In');
     $link->click();
+    $this->waitOnTab($link);
     $tagline = $this->byId('map-mymaps');
     $this->assertContains('Save and reload your map data or create a generic template.', $tagline->text());
   }
@@ -35,7 +48,7 @@ class NavigationTest extends DatabaseTest {
   public function testAPIPage() {
     $link = $this->byLinkText('API');
     $link->click();
-    sleep(1); //wait for AJAX content
+    $this->waitOnTab($link);
     $content = $this->byId('general-api');
     $this->assertContains('A simple, restful API may be used with Internet accessible', $content->text());
   }
@@ -43,7 +56,7 @@ class NavigationTest extends DatabaseTest {
   public function testAboutPage() {
     $link = $this->byLinkText('About');
     $link->click();
-    sleep(1); //wait for AJAX content
+    $this->waitOnTab($link);
     $content = $this->byId('general-about');
     $this->assertContains('Create greyscale point maps suitable for reproduction on print media', $content->text());
   }
@@ -51,12 +64,13 @@ class NavigationTest extends DatabaseTest {
   public function testHelpPage() {
     $link = $this->byLinkText('Help');
     $link->click();
-    sleep(1); //wait for AJAX content
+    $this->waitOnTab($link);
     $content = $this->byId('map-help');
     $this->assertContains('This application makes heavy use of JavaScript.', $content->text());
   }
   
   public function testUserPage() {
+    $this->prepareSession();
     $cookie = $this->setCookie('user', 'fr_FR');
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
     $this->refresh();
@@ -65,16 +79,19 @@ class NavigationTest extends DatabaseTest {
 
     $link = $this->byLinkText('Mes cartes');
     $link->click();
+    $this->waitOnTab($link);
     $content = $this->byId('mymaps');
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->text());
   }
 
   public function testAdminPage() {
+    $this->prepareSession();
     $cookie = $this->setCookie('admin');
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
     $this->refresh();
     $link = $this->byLinkText('Users');
     $link->click();
+    $this->waitOnTab($link);
     $this->assertEquals($this->byId('site-user')->text(), 'admin');
 
     $matcher = array(
@@ -87,6 +104,7 @@ class NavigationTest extends DatabaseTest {
 
     $link = $this->byLinkText('Administration');
     $link->click();
+    $this->waitOnTab($link);
     $matcher = array(
       'tag' => 'textarea',
       'id' => 'citation-reference',

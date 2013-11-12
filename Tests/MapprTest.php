@@ -25,19 +25,20 @@ class MapprTest extends PHPUnit_Extensions_Selenium2TestCase {
 
   public function setUpPage() {
     $this->url("/");
+    $this->waitOnSpinner();
   }
 
-  public function spinner() {
-    return $this->byId('map-loader')->displayed();
+  public function waitOnSpinner() {
+    while ($this->byId('map-loader')->displayed()) {
+      sleep(1);
+    }
   }
 
   public function testRefresh() {
     $class = "toolsRefresh";
     $link = $this->byClassName($class);
     $link->click();
-    while ($this->spinner()) {
-      sleep(1);
-    }
+    $this->waitOnSpinner();
     $img_url = $this->byId('mapOutputImage')->attribute('src');
     $this->assertContains(MAPPR_MAPS_URL, $img_url);
   }

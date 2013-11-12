@@ -179,15 +179,14 @@ class MapprApi extends Mappr {
 
         //add all the points
         foreach ($coords as $coord) {
-          if(is_array($coord) && array_key_exists(0, $coord) && array_key_exists(1, $coord)) {
-            $_coord = new stdClass;
-            $_coord->y = parent::clean_coord($coord[0]);
-            $_coord->x = parent::clean_coord($coord[1]);
-            if(parent::check_coord($_coord)) {
-              $mcoord_point = ms_newPointObj();
-              $mcoord_point->setXY($_coord->x, $_coord->y);
-              $mcoord_line->add($mcoord_point);
-            }
+          $_coord = new stdClass();
+          $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
+          $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
+          //only add point when data are good
+          if(parent::check_coord($_coord)) {
+            $mcoord_point = ms_newPointObj();
+            $mcoord_point->setXY($_coord->x, $_coord->y);
+            $mcoord_line->add($mcoord_point);
           }
         }
 

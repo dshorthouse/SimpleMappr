@@ -79,7 +79,7 @@ class Session {
   * @param int $uid
   */
   public static function update_activity() {
-    if(isset($_GET["locale"]) && !array_key_exists($_GET["locale"], self::$accepted_locales)) {
+    if(isset($_REQUEST["locale"]) && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
       header('HTTP/1.0 404 Not Found');
       readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
       exit();
@@ -87,16 +87,16 @@ class Session {
 
     $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
-    if(!isset($_GET["locale"]) && $cookie["locale"] != "en_US") {
+    if(!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
       self::redirect("http://".$_SERVER["SERVER_NAME"].self::make_locale_param($cookie["locale"]));
-    } elseif (isset($_GET["locale"]) && $_GET["locale"] == "en_US") {
+    } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
       if(isset($_COOKIE["simplemappr"])) {
         $cookie["locale"] = "en_US";
         setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
       }
       self::redirect("http://".$_SERVER["SERVER_NAME"]);
-    } elseif (isset($_GET["locale"]) && $_GET["locale"] != "en_US") {
-      $cookie["locale"] = $_GET["locale"];
+    } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
+      $cookie["locale"] = $_REQUEST["locale"];
     }
 
     self::select_locale();
