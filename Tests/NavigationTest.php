@@ -13,6 +13,10 @@ class NavigationTest extends DatabaseTest {
     $this->setBrowser('firefox');
     $this->setBrowserUrl("http://" . MAPPR_DOMAIN . "/");
   }
+  
+  protected function tearDown() {
+    Header::flush_cache(false);
+  }
 
   public function setUpPage() {
     $this->url("/");
@@ -63,10 +67,9 @@ class NavigationTest extends DatabaseTest {
     $content = $this->byId('map-help');
     $this->assertContains('This application makes heavy use of JavaScript.', $content->text());
   }
-  
+
   public function testUserPage() {
-    $this->prepareSession();
-    $cookie = $this->setCookie('user', 'fr_FR');
+    $cookie = $this->setSession('user', 'fr_FR');
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
     $this->refresh();
     $this->assertEquals($this->byId('site-user')->text(), 'user');
@@ -80,14 +83,13 @@ class NavigationTest extends DatabaseTest {
   }
 
   public function testAdminPage() {
-    $this->prepareSession();
-    $cookie = $this->setCookie('admin');
+    $cookie = $this->setSession('administrator');
     $this->assertEquals($cookie, $this->cookie()->get('simplemappr'));
     $this->refresh();
     $link = $this->byLinkText('Users');
     $link->click();
     $this->waitOnSpinner();
-    $this->assertEquals($this->byId('site-user')->text(), 'admin');
+    $this->assertEquals($this->byId('site-user')->text(), 'administrator');
 
     $matcher = array(
       'tag' => 'tbody',
@@ -108,17 +110,37 @@ class NavigationTest extends DatabaseTest {
     $this->assertTag($matcher, $this->source());
   }
 
-  private function setCookie($role, $locale = 'en_US') {
-    if($role == 'admin') {
-      $cookie = urlencode('{"identifier":"admin","username":"admin","email":"nowhere@example.com","locale":"'.$locale.'","role":"2","uid":"1"}');
-    } else {
-      $cookie = urlencode('{"identifier":"user","username":"user","email":"nowhere@example.com","locale":"'.$locale.'","role":"1","uid":"2"}');
-    }
+  public function testFlushCache() {
+    $this->setSession('administrator');
+    $this->refresh();
+    $link = $this->byLinkText('Administration');
+    $link->click();
+    $this->waitOnSpinner();
+    $link = $this->byLinkText('Flush caches');
+    $link->click();
+    $this->assertEquals('Caches flushed', $this->alertText());
+  }
+
+  private function setSession($username = "user", $locale = 'en_US') {
+    $user = array(
+      "identifier" => $username,
+      "username" => $username,
+      "email" => "nowhere@example.com",
+      "locale" => $locale
+    );
+    $role = ($username == 'administrator') ? array("role" => "2", "uid" => "1") : array("role" => "1", "uid" => "2");
+    $user = array_merge($user, $role);
+    $cookie = urlencode(json_encode($user));
     $cookies = $this->cookie();
     $cookies->add('simplemappr', $cookie)
             ->path('/')
             ->domain(MAPPR_DOMAIN)
             ->set();
+    session_cache_limiter('nocache');
+    session_start();
+    session_regenerate_id();
+    $_SESSION["simplemappr"] = $user;
+    session_write_close();
     return $cookie;
   }
 }

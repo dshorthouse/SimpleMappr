@@ -85,15 +85,15 @@ var SimpleMapprAdmin = (function($, window, document) {
         url      : SimpleMappr.settings.baseUrl + "/flush_cache/",
         dataType : 'json',
         success  : function(response) {
-          if(response.status === "ok") {
-            alert("Caches flushed");
+          if(response.files === true) {
             SimpleMappr.hideSpinner();
+            alert("Caches flushed");
             window.location.reload();
           }
         },
         error    : function() {
-          alert("Error flushing caches");
           SimpleMappr.hideSpinner();
+          alert("Error flushing caches");
         }
       });
     },

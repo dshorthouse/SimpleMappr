@@ -21,6 +21,7 @@ class MapprTest extends PHPUnit_Extensions_Selenium2TestCase {
     foreach ($tmpfiles as $file) {
       unlink($file);
     }
+    Header::flush_cache(false);
   }
 
   public function setUpPage() {

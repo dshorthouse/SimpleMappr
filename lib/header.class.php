@@ -32,6 +32,9 @@ class Header {
   private $hash = "";
   private $redis = "";
 
+  private static $css_cache_path = "/public/stylesheets/cache/";
+  private static $js_cache_path = "/public/javascript/cache/";
+
   /*
   * An array of all javascript files to be minified
   */
@@ -71,28 +74,53 @@ class Header {
   public static $local_css_files = array(
     'public/stylesheets/raw/styles.css'
   );
-  
-  public static function flush_cache() {
+
+  public static function flush_cache($output = true) {
     $cached_files = array();
-    $css_files = array_diff(@scandir($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/"), array(".", "..", ".DS_Store"));
+
+    $css_files = array_diff(@scandir(dirname(dirname(__FILE__)) . self::$css_cache_path), array(".", "..", ".DS_Store"));
     foreach($css_files as $file) {
-      if(preg_match('/\.css$/i', $file)) { $cached_files[] = $_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/" . $file; }
+      if(preg_match('/\.css$/i', $file)) { $cached_files[] = dirname(dirname(__FILE__)) . self::$css_cache_path . $file; }
     }
-    $js_files = array_diff(@scandir($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/"), array(".", "..", ".DS_Store"));
+    $js_files = array_diff(@scandir(dirname(dirname(__FILE__)) . self::$js_cache_path), array(".", "..", ".DS_Store"));
     foreach($js_files as $file) {
-      if(preg_match('/\.js$/i', $file)) { $cached_files[] = $_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/" . $file; }
+      if(preg_match('/\.js$/i', $file)) { $cached_files[] = dirname(dirname(__FILE__)) . self::$js_cache_path . $file; }
     }
     foreach($cached_files as $file) {
       unlink($file);
     }
-    if(extension_loaded("redis")) {
-      $redis = new Redis();
-      $redis->connect(REDIS_SERVER);
-      $redis->delete("simplemappr_hash");
+    
+    $redis_flush = "n/a";
+    try {
+      if(extension_loaded("redis") && defined('REDIS_SERVER')) {
+        $redis = new Redis();
+        $redis->connect(REDIS_SERVER);
+        $redis->delete("simplemappr_hash");
+        $redis_flush = true;
+      }
+    } catch(Exception $e) {
+      $redis_flush = false;
     }
-    $status = (self::flush_cloudflare()) ? "ok" : "failed";
-    header("Content-Type: application/json");
-    echo '{"status":"'.$status.'"}';
+
+    $cloudflare_flush = "n/a";
+    if (self::cloudflare_enabled()) {
+     $cloudflare_flush = (self::flush_cloudflare()) ? true : false;
+    }
+
+    if($output) {
+      header("Pragma: no-cache");
+      header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+      header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+      header("Cache-Control: private",false);
+      header("Content-Type: application/json");
+      $response = array(
+        "files" => true,
+        "redis" => $redis_flush,
+        "cloudflare" => $cloudflare_flush
+      );
+      echo json_encode($response);
+    }
+
   }
   
   public static function flush_cloudflare() {
@@ -127,6 +155,11 @@ class Header {
       return true;
     }
     return false;
+  }
+  
+  public static function cloudflare_enabled() {
+    if(defined('CLOUDFLARE_KEY') && !empty(CLOUDFLARE_KEY)) { return true; }
+    else { return false; }
   }
 
   function __construct() {
@@ -206,7 +239,7 @@ class Header {
       if($this->redis_installed()) {
         $cached_js = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".js") : array();
       } else {
-        $cached_js = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/");
+        $cached_js = $this->files_cached(dirname(dirname(__FILE__)) . self::$js_cache_path);
       }
 
       if (!$cached_js) {
@@ -216,14 +249,14 @@ class Header {
         }
 
         $js_min_file = $this->hash . ".js";
-        $handle = fopen($_SERVER["DOCUMENT_ROOT"] . "/public/javascript/cache/" . $js_min_file, 'x+');
+        $handle = fopen(dirname(dirname(__FILE__)) . self::$js_cache_path . $js_min_file, 'x+');
         fwrite($handle, $js_contents);
         fclose($handle);
 
-        $this->addJS("compiled", "public/javascript/cache/" . $js_min_file);
+        $this->addJS("compiled", self::$js_cache_path . $js_min_file);
       } else {
         foreach($cached_js as $js) {
-          $this->addJS("compiled", "public/javascript/cache/" . $js);
+          $this->addJS("compiled", self::$js_cache_path . $js);
         }
       }
       $this->addJS("ga", "//google-analytics.com/ga.js");
@@ -256,7 +289,7 @@ class Header {
       if($this->redis_installed()) {
         $cached_css = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".css") : array();
       } else {
-        $cached_css = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/", "css");
+        $cached_css = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
       }
 
       if(!$cached_css) {
@@ -265,7 +298,7 @@ class Header {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
         }
         $css_min_file = $this->hash . ".css";
-        $handle = fopen($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/" . $css_min_file, 'x+');
+        $handle = fopen(dirname(dirname(__FILE__)) . self::$css_cache_path . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
 
@@ -305,7 +338,7 @@ class Header {
   }
 
   public function getHash() {
-    $cache = $this->files_cached($_SERVER["DOCUMENT_ROOT"] . "/public/stylesheets/cache/", "css");
+    $cache = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
     if($cache) {
       list($hash, $extension) = explode(".", $cache[0]);
     } else {

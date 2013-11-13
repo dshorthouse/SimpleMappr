@@ -14,7 +14,11 @@ class SourceTest extends PHPUnit_Extensions_Selenium2TestCase {
     $this->setBrowser('firefox');
     $this->setBrowserUrl($this->app_url);
   }
-  
+
+  protected function tearDown() {
+    Header::flush_cache(false);
+  }
+
   public function setUpPage() {
     $this->url($this->app_url);
   }

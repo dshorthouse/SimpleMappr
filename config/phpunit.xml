@@ -8,6 +8,7 @@
         <const name="NUMTEXTAREA" value="3"/>
         <const name="GOOGLE_ANALYTICS" value=""/>
         <const name="RPX_KEY" value=""/>
+        <const name="CLOUDFLARE_KEY" value=""/>
         <const name="COOKIE_TIMEOUT" value="9999999999" />
 
         <const name="DB_SERVER" value="localhost"/>
