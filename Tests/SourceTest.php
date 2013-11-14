@@ -20,6 +20,7 @@ class SourceTest extends PHPUnit_Extensions_Selenium2TestCase {
   }
 
   public function setUpPage() {
+    new Header;
     $this->url($this->app_url);
   }
 

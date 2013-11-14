@@ -19,6 +19,7 @@ class NavigationTest extends DatabaseTest {
   }
 
   public function setUpPage() {
+    new Header;
     $this->url("/");
     $this->waitOnSpinner();
   }

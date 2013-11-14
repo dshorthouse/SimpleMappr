@@ -10,6 +10,9 @@ env:
     - DBNAME=simplemappr_test
 
 before_install:
+  # Directory permissions
+  - sh -e .travis/scripts/perms.sh
+  
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 

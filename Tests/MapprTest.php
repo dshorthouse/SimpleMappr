@@ -25,6 +25,7 @@ class MapprTest extends PHPUnit_Extensions_Selenium2TestCase {
   }
 
   public function setUpPage() {
+    new Header;
     $this->url("/");
     $this->waitOnSpinner();
   }
