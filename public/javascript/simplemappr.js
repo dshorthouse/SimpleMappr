@@ -2135,12 +2135,10 @@ var SimpleMappr = (function($, window, document) {
           id             = 'tabs',
           tab_a_selector = 'ul.navigation a',
           config         = {
-            cache : false,
-            ajaxOptions : {
-              cache : false
-            },
-            beforeLoad: function() {
-              self.showSpinner();
+            cache : true,
+            beforeLoad: function(e, ui) {
+              self.unusedVariables(e);
+              if(!$(ui.tab).data("cache.tabs")) { self.showSpinner(); }
             },
             load  : function(e, ui){
               self.unusedVariables(e);
