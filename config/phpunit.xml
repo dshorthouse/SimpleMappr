@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="../Tests/bootstrap.php" colors="true">
-  <php>
-    <const name="ENVIRONMENT" value="production"/>
-    <const name="MAPPR_MAPS_URL" value="http://img.simplemappr.local"/>
-    <const name="MAPPR_DOMAIN" value="www.simplemappr.local"/>
-    <const name="NUMTEXTAREA" value="3"/>
-    <const name="GOOGLE_ANALYTICS" value=""/>
-    <const name="RPX_KEY" value=""/>
-    <const name="CLOUDFLARE_KEY" value=""/>
-    <const name="COOKIE_TIMEOUT" value="9999999999" />
-
-    <const name="DB_SERVER" value="localhost"/>
-    <const name="DB_DATABASE" value="simplemappr_test"/>
-    <const name="DB_USER" value="root"/>
-    <const name="DB_PASS" value=""/>
-    <const name="REDIS_SERVER" value="127.0.0.1"/>
-  </php>
   <testsuites>
     <testsuite name="SimpleMappr Test Suite">
       <directory>../Tests/</directory>
@@ -29,4 +13,24 @@
       </exclude>
     </whitelist>
   </filter>
+  <php>
+    <server name="HTTP_HOST" value="www.simplemappr.local"/>
+    <server name="REMOTE_ADDR" value="000.000.000"/>
+    <const name="ENVIRONMENT" value="production"/>
+    <const name="MAPPR_UPLOAD_DIRECTORY" value="../public/uploads/"/>
+    <const name="MAPPR_MAPS_URL" value="http://img.simplemappr.local"/>
+    <const name="MAPPR_DOMAIN" value="www.simplemappr.local"/>
+    <const name="NUMTEXTAREA" value="3"/>
+    <const name="GOOGLE_ANALYTICS" value=""/>
+    <const name="RPX_KEY" value=""/>
+    <const name="CLOUDFLARE_KEY" value=""/>
+    <const name="CLOUDFLARE_DOMAIN" value=""/>
+    <const name="CLOUDFLARE_EMAIL" value=""/>
+    <const name="COOKIE_TIMEOUT" value="9999999999" />
+    <const name="DB_SERVER" value="localhost"/>
+    <const name="DB_DATABASE" value="simplemappr_test"/>
+    <const name="DB_USER" value="root"/>
+    <const name="DB_PASS" value=""/>
+    <const name="REDIS_SERVER" value="127.0.0.1"/>
+  </php>
 </phpunit>

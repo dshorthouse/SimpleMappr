@@ -94,7 +94,7 @@ class Bootstrap {
         Session::set_session();
         if(!isset($_SESSION["simplemappr"]) || User::$roles[$_SESSION["simplemappr"]["role"]] !== 'administrator') {
           header("HTTP/1.0 404 Not Found");
-          readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+          readfile(dirname(dirname(__FILE__)).'/error/404.html');
           exit();
         }
         Header::flush_cache();
@@ -152,7 +152,7 @@ class Bootstrap {
 
       default:
         header("HTTP/1.0 404 Not Found");
-        readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+        readfile(dirname(dirname(__FILE__)).'/error/404.html');
         exit();
     }
   }
@@ -175,7 +175,7 @@ class Bootstrap {
 
   private function log() {
     require_once('lib/logger.class.php');
-    $logger = new LOGGER($_SERVER["DOCUMENT_ROOT"] . "/log/logger.log");
+    $logger = new LOGGER(dirname(dirname(__FILE__)) . "/log/logger.log");
     $message = date('Y-m-d H:i:s') . " - $_SERVER[REMOTE_ADDR]";
     $logger->log($message);
   }
