@@ -1,16 +1,18 @@
 <?php
+
 // MySQL server
-DEFINE('DB_SERVER', "127.0.0.1");
+defined("DB_SERVER") || define("DB_SERVER", "127.0.0.1");
 
 // MySQL login name
-DEFINE('DB_USER', "root");
+defined("DB_USER") || define("DB_USER", "root");
 
 // MySQLlogin password
-DEFINE('DB_PASS', "");
+defined("DB_PASS") || define("DB_PASS", "");
 
 // MySQL database name
-DEFINE('DB_DATABASE', "simplemappr");
+defined("DB_DATABASE") || define("DB_DATABASE", "simplemappr");
 
 // Redis server
-DEFINE('REDIS_SERVER', "127.0.0.1");
+defined("REDIS_SERVER") || define("REDIS_SERVER", "127.0.0.1");
+
 ?>

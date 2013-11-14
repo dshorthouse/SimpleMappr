@@ -1,38 +1,36 @@
 <?php
 
 // define the environment as 'development' or 'production'
-define("ENVIRONMENT", "development");
-
-// System root directory to the SimpleMappr application without a trailing slash
-define("MAPPR_DIRECTORY", "/var/www/simplemappr");
+defined("ENVIRONMENT") || define("ENVIRONMENT", "development");
 
 // Upload directory for API calls, without trailing slash
-define("MAPPR_UPLOAD_DIRECTORY", "/var/www/simplemappr/public/uploads");
+defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "/var/www/uploads");
 
-// Domain and path from where images will be served served, without a trailing slash
-define("MAPPR_MAPS_URL", "/tmp");
+// Domain from where images will be served served, without a trailing slash
+defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.local");
 
 // Domain for setting cookies in sessions
-define("MAPPR_DOMAIN", "www.simplemappr.net");
+defined("MAPPR_DOMAIN") || define("MAPPR_DOMAIN", "www.simplemappr.local");
 
 // Number of textarea boxes for user data entry
-define("NUMTEXTAREA", 3);
+defined("NUMTEXTAREA") || define("NUMTEXTAREA", 3);
 
 // Google Analytics UA-XXXXXX-XX key
-define("GOOGLE_ANALYTICS", "UA-XXXXXX-XX");
+defined("GOOGLE_ANALYTICS") || define("GOOGLE_ANALYTICS", "UA-XXXXXX-10");
 
 // Private RPX_KEY for OpenID client login that can be obtained at https://rpxnow.com/
-DEFINE('RPX_KEY', "f6b88eebc964d52809027b3a9###############");
+defined("RPX_KEY") || define("RPX_KEY", "");
 
 // Cloudflare
-DEFINE('CLOUDFLARE_KEY', "2620f3461364a4216780e3de#############");
+defined("CLOUDFLARE_KEY") || define("CLOUDFLARE_KEY", "");
 
-DEFINE('CLOUDFLARE_DOMAIN', "simplemappr.net");
+defined("CLOUDFLARE_DOMAIN") || define("CLOUDFLARE_DOMAIN", "");
 
-DEFINE('CLOUDFLARE_EMAIL', "xxx@gmail.com");
+defined("CLOUDFLARE_EMAIL") || define("CLOUDFLARE_EMAIL", "");
 
 //set the default timezone
-date_default_timezone_set('America/New_York');
+date_default_timezone_set("America/New_York");
 
-define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60)); //two week cookie lifetime
+defined("COOKIE_TIMEOUT") || define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60)); //two week cookie lifetime
+
 ?>
