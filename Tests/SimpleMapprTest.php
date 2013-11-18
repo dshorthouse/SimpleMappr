@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Set-up of Database class for use in other tests
+ * Set-up of database & switching config files for use in tests
  */
 
-abstract class DatabaseTest extends PHPUnit_Extensions_Selenium2TestCase {
+abstract class SimpleMapprTest extends PHPUnit_Extensions_Selenium2TestCase {
 
   private static $db;
 
   public static function setUpBeforeClass() {
 
-    self::editConf();
     self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 
     $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
@@ -102,21 +101,21 @@ abstract class DatabaseTest extends PHPUnit_Extensions_Selenium2TestCase {
     self::$db->query("DROP TABLE citations");
     self::$db->query("DROP TABLE stateprovinces");
     self::$db = NULL;
-    self::editConf('restore');
-  }
-  
-  private static function editConf($restore = false) {
-    $conf = dirname(dirname(__FILE__)) . '/config/conf.db.php';
-    if(file_exists($conf) && filesize($conf) > 0) {
-      $fhandle = fopen($conf,"r"); 
-      $content = fread($fhandle,filesize($conf));
-      $content = (!$restore) ? str_replace("simplemappr", "simplemappr_test", $content) : str_replace("simplemappr_test", "simplemappr", $content); 
-      $fhandle = fopen($conf, "w"); 
-      fwrite($fhandle,$content); 
-      fclose($fhandle);
-    }
   }
 
+  public function setUp() {
+    $this->setBrowser('firefox');
+    $this->setBrowserUrl("http://" . MAPPR_DOMAIN . "/");
+  }
+
+  public function tearDown() {
+    $root = dirname(dirname(__FILE__));
+    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+    foreach ($tmpfiles as $file) {
+      unlink($file);
+    }
+    Header::flush_cache(false);
+  }
 
 }
 ?>

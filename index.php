@@ -32,9 +32,8 @@ class Bootstrap {
   }
 
   private function get_route() {
-    parse_str($_SERVER['QUERY_STRING'], $query_string);
-    $route = preg_split("/[\/.]+/", $query_string['q']);
-    $this->controller = $route[0];
+    $route = preg_split("/[\/.]+/", $_REQUEST['q']);
+    $this->controller = isset($route[0]) ? $route[0] : NULL;
     $this->id = isset($route[1]) ? $route[1] : NULL;
     $this->extension = isset($route[2]) ? $route[2] : NULL;
     return $this;

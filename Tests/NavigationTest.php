@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Unit tests for Mappr class
+ * Unit tests for navigation/routes
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
- 
-class NavigationTest extends DatabaseTest {
 
-  protected $app_url;
+require_once("SimpleMapprTest.php");
 
-  protected function setUp() {
-    $this->setBrowser('firefox');
-    $this->setBrowserUrl("http://" . MAPPR_DOMAIN . "/");
+class NavigationTest extends SimpleMapprTest {
+
+  public function setUp() {
+    parent::setUp();
   }
   
-  protected function tearDown() {
-    Header::flush_cache(false);
+  public function tearDown() {
+    parent::tearDown();
   }
 
   public function setUpPage() {

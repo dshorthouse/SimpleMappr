@@ -1,6 +1,32 @@
 <?php
 
+function switchConf($restore = false) {
+  $config_dir = dirname(dirname(__FILE__)) . '/config/';
+
+  $conf = array(
+    'prod' => $config_dir . 'conf.php',
+    'test' => $config_dir . 'conf.test.php'
+  );
+  $db = array(
+    'prod' => $config_dir . 'conf.db.php',
+    'test' => $config_dir . 'conf.db.test.php'
+  );
+
+  if(!$restore) {
+    copy($conf['prod'], $conf['prod'] . ".old");
+    copy($db['prod'], $db['prod'] . ".old");
+    copy($conf['test'], $conf['prod']);
+    copy($db['test'], $db['prod']);
+  } else {
+    rename($conf['prod'] . ".old", $conf['prod']);
+    rename($db['prod'] . ".old", $db['prod']);
+  }
+
+}
+
 function loader() {
+  switchConf();
+
   $files = glob(dirname(dirname(__FILE__)) . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);
@@ -13,3 +39,7 @@ function loader() {
 }
 
 spl_autoload_register('loader');
+
+register_shutdown_function(function(){
+   switchConf('restore');
+});

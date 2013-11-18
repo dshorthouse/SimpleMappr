@@ -1,6 +1,8 @@
 # Ignore configuration files
 config/conf.php
 config/conf.db.php
+config/conf.php.old
+config/conf.db.php.old
 
 # Ignore misc files
 robots.txt

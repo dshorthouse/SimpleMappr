@@ -12,7 +12,7 @@ env:
 before_install:
   # Directory permissions
   - sh -e .travis/scripts/perms.sh
-  
+
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
@@ -53,4 +53,4 @@ before_install:
   - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
   - sleep 30
 
-script: phpunit --configuration config/phpunit.xml --stderr
+script: phpunit --configuration Tests/phpunit.xml --stderr

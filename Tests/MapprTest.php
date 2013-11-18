@@ -4,24 +4,17 @@
  * Unit tests for Mappr class
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
- 
-class MapprTest extends PHPUnit_Extensions_Selenium2TestCase {
 
-  protected $app_url;
+require_once("SimpleMapprTest.php");
 
-  protected function setUp() {
-    $this->app_url = "http://" . MAPPR_DOMAIN . "/";
-    $this->setBrowser('firefox');
-    $this->setBrowserUrl($this->app_url);
+class MapprTest extends SimpleMapprTest {
+
+  public function setUp() {
+    parent::setUp();
   }
 
-  protected function tearDown() {
-    $root = dirname(dirname(__FILE__));
-    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
-    foreach ($tmpfiles as $file) {
-      unlink($file);
-    }
-    Header::flush_cache(false);
+  public function tearDown() {
+    parent::tearDown();
   }
 
   public function setUpPage() {
