@@ -38,10 +38,6 @@ before_install:
   # Additional PHP config
   - phpenv config-add .travis/travis.php.ini
   
-  # Create empty config files
-  - touch config/conf.php
-  - touch config/conf.db.php
-  
   # Restart Apache
   - sudo service apache2 restart
 
