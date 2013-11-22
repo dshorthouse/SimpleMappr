@@ -4,13 +4,19 @@
  * Set-up of database & switching config files for use in tests
  */
 
-abstract class SimpleMapprTest extends PHPUnit_Extensions_Selenium2TestCase {
+abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
 
   private static $db;
+
+  protected $webDriver;
+
+  protected $url;
 
   public static function setUpBeforeClass() {
 
     self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    
+    self::dropTables();
 
     $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
       `mid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -96,16 +102,22 @@ abstract class SimpleMapprTest extends PHPUnit_Extensions_Selenium2TestCase {
   }
 
   public static function tearDownAfterClass() {
-    self::$db->query("DROP TABLE maps");
-    self::$db->query("DROP TABLE users");
-    self::$db->query("DROP TABLE citations");
-    self::$db->query("DROP TABLE stateprovinces");
+    self::dropTables();
     self::$db = NULL;
   }
 
+  public static function dropTables() {
+    self::$db->query("DROP TABLE IF EXISTS maps");
+    self::$db->query("DROP TABLE IF EXISTS users");
+    self::$db->query("DROP TABLE IF EXISTS citations");
+    self::$db->query("DROP TABLE IF EXISTS stateprovinces");
+  }
+
   public function setUp() {
-    $this->setBrowser('firefox');
-    $this->setBrowserUrl("http://" . MAPPR_DOMAIN . "/");
+    $this->url = "http://" . MAPPR_DOMAIN . "/";
+    $host = 'http://localhost:4444/wd/hub';
+    $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => 'firefox');
+    $this->webDriver = RemoteWebDriver::create($host, $capabilities, 5000);
   }
 
   public function tearDown() {
@@ -115,6 +127,21 @@ abstract class SimpleMapprTest extends PHPUnit_Extensions_Selenium2TestCase {
       unlink($file);
     }
     Header::flush_cache(false);
+    $this->webDriver->close();
+  }
+
+  public function setUpPage() {
+    new Header;
+    $this->webDriver->get($this->url);
+    $this->waitOnSpinner();
+  }
+
+  public function waitOnSpinner() {
+    $this->webDriver->wait(10)->until(
+        WebDriverExpectedCondition::invisibilityOfElementLocated(
+          WebDriverBy::id('map-loader')
+        )
+    );
   }
 
 }

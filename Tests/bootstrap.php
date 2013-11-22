@@ -32,6 +32,9 @@ function loader() {
     require_once($file);
   }
 
+  require_once(__DIR__.'/SimpleMapprTest.php');
+  require_once(__DIR__.'/php-webdriver/lib/__init__.php');
+
   Header::flush_cache(false);
   new Header;
 

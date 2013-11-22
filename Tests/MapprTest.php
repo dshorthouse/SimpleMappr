@@ -5,8 +5,6 @@
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
 
-require_once("SimpleMapprTest.php");
-
 class MapprTest extends SimpleMapprTest {
 
   public function setUp() {
@@ -17,26 +15,15 @@ class MapprTest extends SimpleMapprTest {
     parent::tearDown();
   }
 
-  public function setUpPage() {
-    new Header;
-    $this->url("/");
-    $this->waitOnSpinner();
-  }
-
-  public function waitOnSpinner() {
-    while ($this->byId('map-loader')->displayed()) {
-      sleep(1);
-    }
-  }
-
   public function testRefresh() {
-    $class = "toolsRefresh";
-    $link = $this->byClassName($class);
+    parent::setUpPage();
+    $link = $this->webDriver->findElement(WebDriverBy::className('toolsRefresh'));
     $link->click();
-    $this->waitOnSpinner();
-    $img_url = $this->byId('mapOutputImage')->attribute('src');
+    parent::waitOnSpinner();
+    $img_url = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
     $this->assertContains(MAPPR_MAPS_URL, $img_url);
   }
+
 }
 
 ?>
