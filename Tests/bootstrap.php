@@ -13,13 +13,13 @@ function switchConf($restore = false) {
   );
 
   if(!$restore) {
-    copy($conf['prod'], $conf['prod'] . ".old");
-    copy($db['prod'], $db['prod'] . ".old");
+    if(file_exists($conf['prod'])) { copy($conf['prod'], $conf['prod'] . ".old"); }
     copy($conf['test'], $conf['prod']);
+    if(file_exists($db['prod'])) { copy($db['prod'], $db['prod'] . ".old"); }
     copy($db['test'], $db['prod']);
   } else {
-    rename($conf['prod'] . ".old", $conf['prod']);
-    rename($db['prod'] . ".old", $db['prod']);
+    if(file_exists($conf['prod'] . ".old")) { rename($conf['prod'] . ".old", $conf['prod']); }
+    if(file_exists($db['prod'] . ".old")) { rename($db['prod'] . ".old", $db['prod']); }
   }
 
 }
