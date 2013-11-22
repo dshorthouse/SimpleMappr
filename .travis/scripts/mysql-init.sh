@@ -6,7 +6,7 @@ then
     DBNAME="$1"
 fi
 
-USERNAME="root"
+USERNAME="travis"
 if [ "$2" ]
 then
     USERNAME="$2"

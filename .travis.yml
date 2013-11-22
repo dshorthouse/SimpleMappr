@@ -9,6 +9,9 @@ env:
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_test
 
+services:
+  - redis-server
+      
 before_install:
   # Directory permissions
   - sh -e .travis/scripts/perms.sh
