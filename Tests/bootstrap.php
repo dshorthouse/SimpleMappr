@@ -26,14 +26,16 @@ function switchConf($restore = false) {
 
 function loader() {
   switchConf();
+  
+  $root = dirname(dirname(__FILE__));
 
-  $files = glob(dirname(dirname(__FILE__)) . '/lib/*.php');
+  $files = glob($root . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);
   }
 
-  require_once(__DIR__.'/SimpleMapprTest.php');
-  require_once(__DIR__.'/php-webdriver/lib/__init__.php');
+  require_once($root . '/Tests/SimpleMapprTest.php');
+  require_once($root . '/Tests/php-webdriver/lib/__init__.php');
 
   Header::flush_cache(false);
   new Header;
