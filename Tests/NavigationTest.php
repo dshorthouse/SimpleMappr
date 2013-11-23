@@ -107,8 +107,8 @@ class NavigationTest extends SimpleMapprTest {
     $this->assertTag($matcher, $this->webDriver->getPageSource());
   }
 
-  public function testFlushCache() {
 /*
+  public function testFlushCache() {
     parent::setUpPage();
     $this->setSession('administrator');
     $this->webDriver->navigate()->refresh();
@@ -119,8 +119,8 @@ class NavigationTest extends SimpleMapprTest {
     $link->click();
     $this->webDriver->wait(10)->until(WebDriverExpectedCondition::alertIsPresent());
     $this->assertEquals('Caches flushed', $this->webDriver->switchTo()->alert());
-*/
   }
+*/
 
   private function setSession($username = "user", $locale = 'en_US') {
     $user = array(
