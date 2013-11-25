@@ -47,8 +47,9 @@ before_install:
   # Selenium
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
-  - java -jar selenium-server-standalone-2.37.0.jar > /dev/null 2>&1 &
+  - curl http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar > selenium.jar
+  - sudo ln -s /usr/lib/firefox/firefox /usr/lib/firefox/firefox-bin
+  - PATH=$PATH:/usr/lib/firefox java -Dwebdriver.chrome.driver=/usr/bin/firefox -jar selenium.jar > /dev/null &
   - sleep 15
 
 script: phpunit --configuration Tests/phpunit.xml --stderr
