@@ -15,7 +15,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   public static function setUpBeforeClass() {
 
     self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    
+
     self::dropTables();
 
     $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
@@ -117,7 +117,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
     $this->url = "http://" . MAPPR_DOMAIN . "/";
     $host = 'http://localhost:4444/wd/hub';
     $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => 'firefox');
-    $this->webDriver = RemoteWebDriver::create($host, $capabilities, 5000);
+    $this->webDriver = RemoteWebDriver::create($host, $capabilities);
   }
 
   public function tearDown() {
