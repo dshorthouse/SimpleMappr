@@ -15,6 +15,11 @@ class NavigationTest extends SimpleMapprTest {
     parent::tearDown();
   }
 
+  public function testGoogle() {
+    $this->webDriver->get("http://www.google.com");
+    $this->assertEquals('Google', $this->webDriver->getTitle());
+  }
+
   public function testTagline() {
     parent::setUpPage();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
@@ -68,7 +73,6 @@ class NavigationTest extends SimpleMapprTest {
   public function testUserPage() {
     parent::setUpPage();
     $this->setSession('user', 'fr_FR');
-    $this->webDriver->navigate()->refresh();
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'user');
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnectez');
 
@@ -77,12 +81,12 @@ class NavigationTest extends SimpleMapprTest {
     parent::waitOnSpinner();
     $content = $this->webDriver->findElement(WebDriverBy::id('mymaps'));
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->getText());
+    $this->assertCount(0, $this->webDriver->findElements(WebDriverBy::linkText('Administration')));
   }
 
   public function testAdminPage() {
     parent::setUpPage();
     $this->setSession('administrator');
-    $this->webDriver->navigate()->refresh();
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
     $link->click();
     parent::waitOnSpinner();
@@ -110,7 +114,6 @@ class NavigationTest extends SimpleMapprTest {
   public function testFlushCache() {
     parent::setUpPage();
     $this->setSession('administrator');
-    $this->webDriver->navigate()->refresh();
     $this->webDriver->findElement(WebDriverBy::linkText('Administration'))->click();
     parent::waitOnSpinner();
     $this->webDriver->findElement(WebDriverBy::linkText('Flush caches'))->click();
@@ -140,6 +143,7 @@ class NavigationTest extends SimpleMapprTest {
     session_regenerate_id();
     $_SESSION["simplemappr"] = $user;
     session_write_close();
+    $this->webDriver->navigate()->refresh();
   }
 
 }

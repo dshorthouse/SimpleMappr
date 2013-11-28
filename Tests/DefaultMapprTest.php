@@ -6,10 +6,10 @@
 
 class DefaultMapprTest extends PHPUnit_Framework_TestCase {
 
-   private static $mappr;
-   private static $output;
+   protected $mappr;
+   protected $output;
 
-   public static function setUpBeforeClass() {
+   protected function setUp() {
       $root = dirname(dirname(__FILE__));
       $mappr = new Mappr();
       $mappr->set_shape_path($root."/lib/mapserver/maps")
@@ -19,14 +19,14 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
            ->set_default_projection("epsg:4326")
            ->set_max_extent("-180,-90,180,90")
            ->get_request();
-     self::$mappr = $mappr->execute();
+     $this->mappr = $mappr->execute();
      ob_start();
-     self::$mappr->get_output();
-     self::$output = json_decode(ob_get_contents(), TRUE);
+     $this->mappr->get_output();
+     $this->output = json_decode(ob_get_contents(), TRUE);
      ob_end_clean();
    }
 
-   public static function tearDownAfterClass() {
+   protected function tearDown() {
      $root = dirname(dirname(__FILE__));
      $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
      foreach ($tmpfiles as $file) {
@@ -53,120 +53,120 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_mapserver_enabled() {
-      $this->assertFalse(self::$mappr->has_error());
+      $this->assertFalse($this->mappr->has_error());
     }
 
     public function test_shape_path() {
       $root = dirname(dirname(__FILE__));
-      $this->assertEquals(self::$mappr->get_shape_path(), $root."/lib/mapserver/maps");
+      $this->assertEquals($this->mappr->get_shape_path(), $root."/lib/mapserver/maps");
     }
 
     public function test_font_file() {
       $root = dirname(dirname(__FILE__));
-      $this->assertEquals(self::$mappr->get_font_file(), $root."/lib/mapserver/fonts/fonts.list");
+      $this->assertEquals($this->mappr->get_font_file(), $root."/lib/mapserver/fonts/fonts.list");
     }
 
     public function test_tmp_path() {
       $root = dirname(dirname(__FILE__));
-      $this->assertEquals(self::$mappr->get_tmp_path(), $root."/public/tmp/");
+      $this->assertEquals($this->mappr->get_tmp_path(), $root."/public/tmp/");
     }
 
     public function test_tmp_url() {
-      $this->assertEquals(self::$mappr->get_tmp_url(), MAPPR_MAPS_URL);
+      $this->assertEquals($this->mappr->get_tmp_url(), MAPPR_MAPS_URL);
     }
 
     public function test_max_extent() {
-      $diff = array_diff(self::$mappr->get_max_extent(), [-180, -90, 180, 90]);
+      $diff = array_diff($this->mappr->get_max_extent(), [-180, -90, 180, 90]);
       $this->assertEmpty($diff);
     }
 
     public function test_default_projection() {
-      $this->assertEquals(self::$mappr->get_default_projection(), "epsg:4326");
+      $this->assertEquals($this->mappr->get_default_projection(), "epsg:4326");
     }
 
     public function test_default_coords() {
-      $this->assertEmpty(self::$mappr->coords);
+      $this->assertEmpty($this->mappr->coords);
     }
 
     public function test_default_regions() {
-      $this->assertEmpty(self::$mappr->regions);
+      $this->assertEmpty($this->mappr->regions);
     }
 
     public function test_default_output() {
-      $this->assertEquals(self::$mappr->output, "pnga");
+      $this->assertEquals($this->mappr->output, "pnga");
     }
 
     public function test_default_width() {
-      $this->assertEquals(self::$mappr->width, 900);
+      $this->assertEquals($this->mappr->width, 900);
     }
 
     public function test_default_height() {
-      $this->assertEquals(self::$mappr->height, 450);
+      $this->assertEquals($this->mappr->height, 450);
     }
 
     public function test_default_projection_map() {
-      $this->assertEquals(self::$mappr->projection_map, "epsg:4326");
+      $this->assertEquals($this->mappr->projection_map, "epsg:4326");
     }
 
     public function test_default_origin() {
-      $this->assertEquals(self::$mappr->origin, 0);
+      $this->assertEquals($this->mappr->origin, 0);
     }
 
     public function test_default_bbox_rubberband() {
-      $this->assertEmpty(self::$mappr->bbox_rubberband);
+      $this->assertEmpty($this->mappr->bbox_rubberband);
     }
 
     public function test_default_pan() {
-      $this->assertEquals(self::$mappr->pan, "");
+      $this->assertEquals($this->mappr->pan, "");
     }
 
     public function test_default_layers() {
-      $layers = self::$mappr->layers;
+      $layers = $this->mappr->layers;
       $this->assertEmpty(array_diff($layers, array('base' => 'on')));
     }
 
     public function test_default_graticules() {
-      $this->assertEquals(self::$mappr->graticules, "");
+      $this->assertEquals($this->mappr->graticules, "");
     }
 
     public function test_default_watermark() {
-      $this->assertEquals(self::$mappr->watermark, "");
+      $this->assertEquals($this->mappr->watermark, "");
     }
 
     public function test_default_gridspace() {
-      $this->assertEquals(self::$mappr->gridspace, "");
+      $this->assertEquals($this->mappr->gridspace, "");
     }
 
     public function test_default_gridlabel() {
-      $this->assertEquals(self::$mappr->gridlabel, 1);
+      $this->assertEquals($this->mappr->gridlabel, 1);
     }
 
     public function test_default_download() {
-      $this->assertEquals(self::$mappr->download, "");
+      $this->assertEquals($this->mappr->download, "");
     }
 
     public function test_default_crop() {
-      $this->assertEquals(self::$mappr->crop, "");
+      $this->assertEquals($this->mappr->crop, "");
     }
 
     public function test_default_options() {
-      $this->assertEmpty(self::$mappr->options);
+      $this->assertEmpty($this->mappr->options);
     }
 
     public function test_default_border_thickness() {
-      $this->assertEquals(self::$mappr->border_thickness, 1.25);
+      $this->assertEquals($this->mappr->border_thickness, 1.25);
     }
 
     public function test_default_rotation() {
-      $this->assertEquals(self::$mappr->rotation, 0);
+      $this->assertEquals($this->mappr->rotation, 0);
     }
 
     public function test_default_zoom_out() {
-      $this->assertEquals(self::$mappr->zoom_out, "");
+      $this->assertEquals($this->mappr->zoom_out, "");
     }
 
     public function test_default_image_url() {
-      $this->assertStringEndsWith(".png", self::$mappr->image_url);
+      $this->assertStringEndsWith(".png", $this->mappr->image_url);
     }
 
     public function test_mapserver_output_is_json() {
@@ -174,40 +174,40 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_mapserver_output_contains_all_keys() {
-      $this->assertArrayHasKey("mapOutputImage", self::$output);
-      $this->assertArrayHasKey("size", self::$output);
-      $this->assertArrayHasKey("rendered_bbox", self::$output);
-      $this->assertArrayHasKey("rendered_rotation", self::$output);
-      $this->assertArrayHasKey("rendered_projection", self::$output);
-      $this->assertArrayHasKey("legend_url", self::$output);
-      $this->assertArrayHasKey("scalebar_url", self::$output);
-      $this->assertArrayHasKey("bad_points", self::$output);
+      $this->assertArrayHasKey("mapOutputImage", $this->output);
+      $this->assertArrayHasKey("size", $this->output);
+      $this->assertArrayHasKey("rendered_bbox", $this->output);
+      $this->assertArrayHasKey("rendered_rotation", $this->output);
+      $this->assertArrayHasKey("rendered_projection", $this->output);
+      $this->assertArrayHasKey("legend_url", $this->output);
+      $this->assertArrayHasKey("scalebar_url", $this->output);
+      $this->assertArrayHasKey("bad_points", $this->output);
     }
 
     public function test_file_exists() {
-      $img = self::$mappr->get_tmp_path() . basename(self::$output["mapOutputImage"]);
+      $img = $this->mappr->get_tmp_path() . basename($this->output["mapOutputImage"]);
       $this->assertFileExists($img);
     }
 
     public function test_mapserver_default_size() {
-      $diff = array_diff(self::$output["size"], [900, 450]);
+      $diff = array_diff($this->output["size"], [900, 450]);
       $this->assertEmpty($diff);
     }
 
     public function test_mapserver_default_rendered_bbox() {
-      $this->assertEquals(self::$output["rendered_bbox"], "-180.0000000000,-90.0000000000,180.0000000000,90.0000000000");
+      $this->assertEquals($this->output["rendered_bbox"], "-180.0000000000,-90.0000000000,180.0000000000,90.0000000000");
     }
 
     public function test_mapserver_default_rendered_rotation() {
-      $this->assertEquals(self::$output["rendered_rotation"], 0);
+      $this->assertEquals($this->output["rendered_rotation"], 0);
     }
 
     public function test_mapserver_rendered_projection() {
-      $this->assertEquals(self::$output["rendered_projection"], "epsg:4326");
+      $this->assertEquals($this->output["rendered_projection"], "epsg:4326");
     }
 
     public function test_mapserver_default_bad_points() {
-      $this->assertEquals(self::$output["bad_points"], "");
+      $this->assertEquals($this->output["bad_points"], "");
     }
 
 }

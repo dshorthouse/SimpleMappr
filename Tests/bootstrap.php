@@ -26,7 +26,7 @@ function switchConf($restore = false) {
 
 function loader() {
   switchConf();
-  
+
   $root = dirname(dirname(__FILE__));
 
   $files = glob($root . '/lib/*.php');
