@@ -17,5 +17,5 @@ sudo locale-gen fr_FR.UTF-8
 sudo update-locale
 sudo dpkg-reconfigure locales
 
-echo "---> Translating $(tput bold ; tput setaf 3)$DOCROOT$/i18n/fr_FR.UTF-8/LC_MESSAGES/messages.po(tput sgr0)"
+echo "---> Translating $(tput bold ; tput setaf 3)$DOCROOT/i18n/fr_FR.UTF-8/LC_MESSAGES/messages.po$(tput sgr0)"
 msgfmt -o $DOCROOT/i18n/fr_FR.UTF-8/LC_MESSAGES/messages.mo $DOCROOT/i18n/fr_FR.UTF-8/LC_MESSAGES/messages.po

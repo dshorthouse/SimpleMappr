@@ -15,6 +15,16 @@ class NavigationTest extends SimpleMapprTest {
     parent::tearDown();
   }
 
+  public function testGoogle() {
+    $this->webDriver->get("http://www.google.com");
+    echo mb_substr($this->webDriver->getPageSource(), 0, 500) . "\n\n\n";
+    $this->assertEquals('Google', $this->webDriver->getTitle());
+  }
+
+  public function testGlobals() {
+    $this->assertEquals('www.simplemappr.local', $_SERVER['HTTP_HOST']);
+  }
+
   public function testTagline() {
     parent::setUpPage();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
