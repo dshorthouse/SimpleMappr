@@ -93,7 +93,7 @@ class Bootstrap {
         Session::set_session();
         if(!isset($_SESSION["simplemappr"]) || User::$roles[$_SESSION["simplemappr"]["role"]] !== 'administrator') {
           header("HTTP/1.0 404 Not Found");
-          readfile(dirname(dirname(__FILE__)).'/error/404.html');
+          readfile(dirname(__FILE__).'/error/404.html');
           exit();
         }
         Header::flush_cache();
