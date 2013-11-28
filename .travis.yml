@@ -50,7 +50,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.37.0.jar
   - java -jar selenium-server-standalone-2.37.0.jar > /dev/null &
-  - sleep 15
+  - sleep 10
 
 script:
   - phpunit -c Tests/phpunit.xml --stderr

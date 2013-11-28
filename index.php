@@ -151,7 +151,7 @@ class Bootstrap {
 
       default:
         header("HTTP/1.0 404 Not Found");
-        readfile(dirname(dirname(__FILE__)).'/error/404.html');
+        readfile(dirname(__FILE__).'/error/404.html');
         exit();
     }
   }
