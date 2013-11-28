@@ -28,4 +28,4 @@ echo "---> Creating site $VHOSTNAME"
 sudo a2ensite $VHOSTNAME
 sudo service apache2 reload
 
-cat /etc/apache2/sites-enables/$VHOSTNAME
+cat /etc/apache2/sites-enabled/$VHOSTNAME
