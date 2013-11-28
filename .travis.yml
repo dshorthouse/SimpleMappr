@@ -44,6 +44,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 restart
+  - curl http://www.simplemappr.local
 
   # Selenium
   - export DISPLAY=:99.0

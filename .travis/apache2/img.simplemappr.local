@@ -3,8 +3,6 @@
   ServerAdmin davidpshorthouse@gmail.com
   DocumentRoot %basedir%/public/tmp
   Options -Indexes +FollowSymlinks
-  ErrorDocument 404 "/error/404.html"
-  ErrorDocument 403 "/error/403.html"
 <Directory "%basedir%/public/tmp">
   AllowOverride None
   Order allow,deny
@@ -15,6 +13,6 @@
     Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
     Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
-</IfModule>
+  </IfModule>
 </Directory>
 </VirtualHost>
