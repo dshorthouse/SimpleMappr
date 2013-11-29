@@ -29,7 +29,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
     }
   }
 
-  public function testResponse() {
+  public function testCountry() {
     $_REQUEST['bbox_query'] = '176,83,176,83';
     $this->mappr_query->get_request()->execute()->query_layer();
     ob_start();
@@ -37,6 +37,28 @@ class QueryTest extends PHPUnit_Framework_TestCase {
     $output = json_decode(ob_get_contents(), TRUE);
     ob_end_clean();
     $this->assertEquals('Canada', $output[0]);
+  }
+
+  public function testManyCountries() {
+    $_REQUEST['bbox_query'] = '786,272,900,358';
+    $this->mappr_query->get_request()->execute()->query_layer();
+    ob_start();
+    $this->mappr_query->get_output();
+    $output = json_decode(ob_get_contents(), TRUE);
+    ob_end_clean();
+    $this->assertTrue(in_array("Australia",$output));
+    $this->assertTrue(in_array("New Zealand",$output));
+  }
+
+  public function testStateProvince() {
+    $_REQUEST['bbox_query'] = '176,83,176,83';
+    $_REQUEST['qlayer'] = 'stateprovinces_polygon';
+    $this->mappr_query->get_request()->execute()->query_layer();
+    ob_start();
+    $this->mappr_query->get_output();
+    $output = json_decode(ob_get_contents(), TRUE);
+    ob_end_clean();
+    $this->assertEquals('CAN[SK]', $output[0]);
   }
 }
 

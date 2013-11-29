@@ -55,7 +55,9 @@ class MapprQuery extends Mappr {
   public function query_layer() {
     $bbox_query = explode(',',$this->bbox_query);
 
-    if(!array_key_exists($this->queryLayer, $this->shapes)) return;
+    if(!array_key_exists($this->queryLayer, $this->shapes)) {
+      $this->queryLayer = 'base';
+    }
 
     //lower-left coordinate
     $ll_point = new stdClass();
