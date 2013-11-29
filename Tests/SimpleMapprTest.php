@@ -120,12 +120,6 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   }
 
   public function tearDown() {
-    $root = dirname(dirname(__FILE__));
-    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
-    foreach ($tmpfiles as $file) {
-      unlink($file);
-    }
-    Header::flush_cache(false);
     $this->webDriver->close();
   }
 

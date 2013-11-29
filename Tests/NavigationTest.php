@@ -109,13 +109,18 @@ class NavigationTest extends SimpleMapprTest {
   public function testFlushCache() {
     parent::setUpPage();
     $this->setSession('administrator');
+    $orig_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
     $this->webDriver->findElement(WebDriverBy::linkText('Administration'))->click();
     parent::waitOnSpinner();
     $this->webDriver->findElement(WebDriverBy::linkText('Flush caches'))->click();
-    $this->webDriver->wait()->until(WebDriverExpectedCondition::alertIsPresent());
+    $this->webDriver->wait(10)->until(WebDriverExpectedCondition::alertIsPresent());
     $dialog = $this->webDriver->switchTo()->alert();
     $this->assertEquals('Caches flushed', $dialog->getText());
     $dialog->accept();
+    $this->webDriver->wait(10)->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::alertIsPresent()));
+    $this->webDriver->navigate()->refresh();
+    $new_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
+    $this->assertNotEquals($orig_css, $new_css);
   }
 
   private function setSession($username = "user", $locale = 'en_US') {

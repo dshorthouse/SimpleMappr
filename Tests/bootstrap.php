@@ -1,5 +1,5 @@
 <?php
-
+  
 function switchConf($restore = false) {
   $config_dir = dirname(dirname(__FILE__)) . '/config/';
 
@@ -13,10 +13,12 @@ function switchConf($restore = false) {
   );
 
   if(!$restore) {
-    if(file_exists($conf['prod'])) { copy($conf['prod'], $conf['prod'] . ".old"); }
-    copy($conf['test'], $conf['prod']);
-    if(file_exists($db['prod'])) { copy($db['prod'], $db['prod'] . ".old"); }
-    copy($db['test'], $db['prod']);
+    if(!file_exists($conf['prod'] . ".old")) {
+      if(file_exists($conf['prod'])) { copy($conf['prod'], $conf['prod'] . ".old"); }
+      copy($conf['test'], $conf['prod']);
+      if(file_exists($db['prod'])) { copy($db['prod'], $db['prod'] . ".old"); }
+      copy($db['test'], $db['prod']);
+    }
   } else {
     if(file_exists($conf['prod'] . ".old")) { rename($conf['prod'] . ".old", $conf['prod']); }
     if(file_exists($db['prod'] . ".old")) { rename($db['prod'] . ".old", $db['prod']); }
@@ -24,11 +26,8 @@ function switchConf($restore = false) {
 
 }
 
-function loader() {
-  switchConf();
-
+function requireFiles() {
   $root = dirname(dirname(__FILE__));
-
   $files = glob($root . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);
@@ -36,15 +35,37 @@ function loader() {
 
   require_once($root . '/Tests/SimpleMapprTest.php');
   require_once($root . '/Tests/php-webdriver/lib/__init__.php');
+}
 
+function trashCachedFiles() {
+  $root = dirname(dirname(__FILE__));
+  $cssFiles = glob($root . "/public/stylesheets/cache/*.{css}", GLOB_BRACE);
+  foreach ($cssFiles as $file) {
+    unlink($file);
+  }
+  $jsFiles = glob($root . "/public/javascript/cache/*.{js}", GLOB_BRACE);
+  foreach ($jsFiles as $file) {
+    unlink($file);
+  }
+  $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+  foreach ($tmpfiles as $file) {
+    unlink($file);
+  }
+}
+
+function loader() {
+  date_default_timezone_set("America/New_York");
+  switchConf();
+  requireFiles();
   Header::flush_cache(false);
   new Header;
+}
 
-  date_default_timezone_set("America/New_York");
+function unloader() {
+  switchConf('restore');
+  trashCachedFiles();
+  Header::flush_cache(false);
 }
 
 spl_autoload_register('loader');
-
-register_shutdown_function(function(){
-   switchConf('restore');
-});
+register_shutdown_function('unloader');

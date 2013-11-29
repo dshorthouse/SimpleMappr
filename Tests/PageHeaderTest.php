@@ -15,9 +15,23 @@ class PageHeaderTest extends SimpleMapprTest {
     parent::tearDown();
   }
 
-  public function testTitle() {
+  public function testPageTitle() {
     parent::setUpPage();
-    $this->assertEquals('SimpleMappr', $this->webDriver->getTitle());
+    $title = $this->webDriver->getTitle();
+    $this->assertEquals('SimpleMappr', $title);
+  }
+
+  public function testLanguageEnglish() {
+    parent::setUpPage();
+    $lang = $this->webDriver->findElement(WebDriverBy::xpath("//html"))->getAttribute('lang');
+    $this->assertEquals('en', $lang);
+  }
+
+  public function testLanguageFrancais() {
+    $this->webDriver->get($this->url . "/?locale=fr_FR");
+    $this->waitOnSpinner();
+    $lang = $this->webDriver->findElement(WebDriverBy::xpath("//html"))->getAttribute('lang');
+    $this->assertEquals('fr', $lang);
   }
 
   public function testDescription() {
