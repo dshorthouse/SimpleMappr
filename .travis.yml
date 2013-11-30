@@ -51,7 +51,6 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 restart
-  - curl http://www.simplemappr.local
   
   # Chrome and chromedriver
   # Travis does not (yet) support chromedriver via xvfb
