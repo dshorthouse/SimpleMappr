@@ -3,6 +3,7 @@
   <php>
     <server name="HTTP_HOST" value="www.simplemappr.local"/>
     <server name="REMOTE_ADDR" value="000.000.000"/>
+    <const name="BROWSER" value="chrome"/>
   </php>
   <testsuites>
     <testsuite name="SimpleMappr Test Suite">

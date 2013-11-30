@@ -8,6 +8,7 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_test
+    - BROWSER=firefox
 
 services:
   - redis-server
@@ -59,4 +60,5 @@ before_script:
   - sleep 10
 
 script:
-  - phpunit -c Tests/phpunit.xml --stderr
+  # - phpunit -c Tests/chrome.phpunit.xml --stderr
+  - phpunit -c Tests/$BROWSER.phpunit.xml --stderr

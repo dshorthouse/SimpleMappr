@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php" colors="true">
+  <php>
+    <server name="HTTP_HOST" value="www.simplemappr.local"/>
+    <server name="REMOTE_ADDR" value="000.000.000"/>
+    <const name="BROWSER" value="firefox"/>
+  </php>
+  <testsuites>
+    <testsuite name="SimpleMappr Test Suite">
+      <directory>../</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist>
+      <directory>./</directory>
+      <exclude>
+        <file>SimpleMapprTest.php</file>
+      </exclude>
+    </whitelist>
+  </filter>
+</phpunit>
