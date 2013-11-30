@@ -2,3 +2,4 @@
 
 chmod -R 777 public/javascript/cache/
 chmod -R 777 public/stylesheets/cache/
+chmod -R 777 config/
