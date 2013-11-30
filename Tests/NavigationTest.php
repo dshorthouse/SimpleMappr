@@ -106,8 +106,8 @@ class NavigationTest extends SimpleMapprTest {
     $this->assertTag($matcher, $this->webDriver->getPageSource());
   }
 
-  public function testCitations() {
-    $this->webDriver->get($this->url . 'citation');
+  public function testSource() {
+    $this->webDriver->get($this->url);
     echo "\n" . $this->webDriver->getPageSource() . "\n";
   }
 
