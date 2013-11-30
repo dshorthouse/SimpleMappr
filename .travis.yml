@@ -31,7 +31,11 @@ before_script:
   - sh -e .travis/scripts/perms.sh
 
   # Apache config
+  # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sh -e .travis/scripts/apache2-configure.sh
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
@@ -47,8 +51,8 @@ before_script:
   - sudo service apache2 restart
   - curl http://www.simplemappr.local
   
-  # Chrome and Chromediver
-  # Travis does not support chromedriver via xvfb
+  # Chrome and chromedriver
+  # Travis does not (yet) support chromedriver via xvfb
   # - sh -e .travis/scripts/chrome.sh
 
   # Selenium
