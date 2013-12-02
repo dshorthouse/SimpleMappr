@@ -6,8 +6,7 @@
 
 abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
 
-  private static $db;
-
+  protected static $db;
   protected $webDriver;
   protected $url;
 

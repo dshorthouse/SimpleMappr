@@ -118,6 +118,7 @@ class NavigationTest extends SimpleMapprTest {
     $this->assertEquals('Caches flushed', $dialog->getText());
     $dialog->accept();
     $this->webDriver->wait()->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::alertIsPresent()));
+    sleep(2);
     $this->webDriver->navigate()->refresh();
     $new_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
     $this->assertNotEquals($orig_css, $new_css);

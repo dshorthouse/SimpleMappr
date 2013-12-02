@@ -210,7 +210,7 @@ var SimpleMapprAdmin = (function($, window, document) {
     deleteCitationConfirmation: function(obj) {
       var self    = this,
           id      = $(obj).attr("data-id"),
-          message = ':<br><br>' + $(obj).parent().text().replace("Delete", "");
+          message = '<p class="citation">' + $(obj).parent().text().replace("Delete", "") + '</p>';
 
       $('#mapper-message-delete').find("span").html(message).end().dialog({
         height        : '250',
