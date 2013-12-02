@@ -98,6 +98,13 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'title' => 'Sample Map',
       'map' => '{}'
     ));
+
+    self::$db->query_insert('citations', array(
+      'year' => 2010,
+      'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
+      'doi' => '10.XXXX/XXXXXX',
+      'first_author_surname' => 'Shorthouse'
+    ));
   }
 
   public static function tearDownAfterClass() {
@@ -135,6 +142,29 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
           WebDriverBy::id('map-loader')
         )
     );
+  }
+
+  public function setSession($username = "user", $locale = 'en_US') {
+    $user = array(
+      "identifier" => $username,
+      "username" => $username,
+      "email" => "nowhere@example.com",
+      "locale" => $locale
+    );
+    $role = ($username == 'administrator') ? array("role" => "2", "uid" => "1") : array("role" => "1", "uid" => "2");
+    $user = array_merge($user, $role);
+    $cookie = array(
+      'name' => 'simplemappr',
+      'value' => urlencode(json_encode($user)),
+      'path' => '/'
+    );
+    $this->webDriver->manage()->addCookie($cookie);
+    session_cache_limiter('nocache');
+    session_start();
+    session_regenerate_id();
+    $_SESSION["simplemappr"] = $user;
+    session_write_close();
+    $this->webDriver->navigate()->refresh();
   }
 
 }

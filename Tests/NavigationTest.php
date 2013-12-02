@@ -67,7 +67,7 @@ class NavigationTest extends SimpleMapprTest {
 
   public function testUserPage() {
     parent::setUpPage();
-    $this->setSession('user', 'fr_FR');
+    parent::setSession('user', 'fr_FR');
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'user');
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnectez');
 
@@ -81,7 +81,7 @@ class NavigationTest extends SimpleMapprTest {
 
   public function testAdminPage() {
     parent::setUpPage();
-    $this->setSession('administrator');
+    parent::setSession('administrator');
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
     $link->click();
     parent::waitOnSpinner();
@@ -106,51 +106,21 @@ class NavigationTest extends SimpleMapprTest {
     $this->assertTag($matcher, $this->webDriver->getPageSource());
   }
 
-  public function testSource() {
-    $this->webDriver->get($this->url);
-    echo "\n" . $this->webDriver->getPageSource() . "\n";
-  }
-
   public function testFlushCache() {
     parent::setUpPage();
-    $this->setSession('administrator');
+    parent::setSession('administrator');
     $orig_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
     $this->webDriver->findElement(WebDriverBy::linkText('Administration'))->click();
     parent::waitOnSpinner();
     $this->webDriver->findElement(WebDriverBy::linkText('Flush caches'))->click();
-    $this->webDriver->wait(10)->until(WebDriverExpectedCondition::alertIsPresent());
+    $this->webDriver->wait()->until(WebDriverExpectedCondition::alertIsPresent());
     $dialog = $this->webDriver->switchTo()->alert();
     $this->assertEquals('Caches flushed', $dialog->getText());
     $dialog->accept();
-/*
-    $this->webDriver->wait(10)->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::alertIsPresent()));
+    $this->webDriver->wait()->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::alertIsPresent()));
     $this->webDriver->navigate()->refresh();
     $new_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
     $this->assertNotEquals($orig_css, $new_css);
-*/
-  }
-
-  private function setSession($username = "user", $locale = 'en_US') {
-    $user = array(
-      "identifier" => $username,
-      "username" => $username,
-      "email" => "nowhere@example.com",
-      "locale" => $locale
-    );
-    $role = ($username == 'administrator') ? array("role" => "2", "uid" => "1") : array("role" => "1", "uid" => "2");
-    $user = array_merge($user, $role);
-    $cookie = array(
-      'name' => 'simplemappr',
-      'value' => urlencode(json_encode($user)),
-      'path' => '/'
-    );
-    $this->webDriver->manage()->addCookie($cookie);
-    session_cache_limiter('nocache');
-    session_start();
-    session_regenerate_id();
-    $_SESSION["simplemappr"] = $user;
-    session_write_close();
-    $this->webDriver->navigate()->refresh();
   }
 
 }

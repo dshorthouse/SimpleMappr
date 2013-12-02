@@ -35,7 +35,7 @@ class Citation {
     $this->id = $id;
     $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
   }
-  
+
   public function get_citations() {
     $this->index_citations();
     return $this->citations;
@@ -50,7 +50,7 @@ class Citation {
   */
   private function restful_action() {
     $method = $_SERVER['REQUEST_METHOD'];
-    
+
     if($method == 'POST' || $method == 'DELETE') {
       $this->check_permission();
     }
@@ -139,7 +139,7 @@ class Citation {
       $this->access_denied();
     }
   }
-  
+
   private function response($type = NULL) {
     header("Content-Type: application/json");
     switch($type) {
@@ -148,7 +148,7 @@ class Citation {
           "status" => "error"
         );
         break;
-      
+
       default:
         $output = array(
           "status"    => "ok",
