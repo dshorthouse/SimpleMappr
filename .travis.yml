@@ -28,12 +28,10 @@ install:
 
 before_script:
   # Directory permissions
-  - sudo chmod -R 777 public/javascript/cache/
-  - sudo chmod -R 777 public/stylesheets/cache/
-  - sudo chmod -R 777 config/
+  - sh -e .travis/scripts/permissions.sh
 
   # Apache config
-  # enable php-fpm
+  # enable php-fpm because Travis doesn't do libapache2-mod-php5
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sh -e .travis/scripts/apache2-configure.sh
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini

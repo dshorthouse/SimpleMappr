@@ -66,7 +66,6 @@ class CitationTest extends SimpleMapprTest {
     $citations_list = $this->webDriver->findElements(WebDriverBy::cssSelector('div#admin-citations-list p.citation'));
     $citation_count = parent::$db->query_first("SELECT COUNT(*) as cnt FROM citations")['cnt'];
     $this->assertEquals($citation_count, count($citations_list));
-
   }
 
 }
