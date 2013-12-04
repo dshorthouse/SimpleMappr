@@ -44,7 +44,6 @@ class ToolbarTest extends SimpleMapprTest {
     $link->click();
     $this->assertTrue($this->webDriver->findElement(WebDriverBy::id('mapExport'))->isDisplayed());
   }
-*/
 
   public function testFill() {
     parent::setUpPage();
@@ -52,8 +51,9 @@ class ToolbarTest extends SimpleMapprTest {
     $link->click();
     $color_picker = WebDriverBy::className('colorpicker');
     $this->webDriver->wait(10)->until(WebDriverExpectedCondition::visibilityOfElementLocated($color_picker));
-    $this->webDriver->findElement(WebDriverBy::cssSelector())
+    $this->webDriver->findElement(WebDriverBy::cssSelector('div.colorpicker div.colorpicker_submit'))->click();
   }
+*/
 
   public function testZoomOut() {
     parent::setUpPage();
