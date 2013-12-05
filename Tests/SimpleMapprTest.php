@@ -132,7 +132,6 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   public function setUpPage() {
     new Header;
     $this->webDriver->get($this->url);
-    echo "\n" . $this->webDriver->getPageSource() . "\n";
     $this->waitOnSpinner();
   }
 

@@ -1,7 +1,7 @@
-SimpleMappr Installation and Configuration Instructions
-=======================================================
+SimpleMappr Installation and Configuration
+==========================================
 
-This is the code for [SimpleMappr](http://www.simplemappr.net), an application to produce publication-quality geographic maps.
+SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based application that produces publication-quality geographic maps. This source code is released under MIT license.
 
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
@@ -101,12 +101,38 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
 Tests
 -----
 
-Execute from the command line:
+Selenium is used for integration tests and php-unit for unit tests. Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) is included. Get selenium at [https://code.google.com/p/selenium/downloads/list](https://code.google.com/p/selenium/downloads/list) then execute:
 
-    $ phpunit --configuration Tests/phpunit.xml --stderr
+    $ java -jar selenium-server-standalone-2.37.0.jar
+    $ phpunit -c Tests/firefox.phpunit.xml --stderr
+
+If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
+
+    $ java -jar selenium-server-standaline-2.37.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+    $ phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Copyright
 ---------
 
-    Copyright (c) David P. Shorthouse
-    License: MIT (see included LICENSE file) and comments in each class in /lib and js file in /public/javascript
+    Copyright (c) 2010 David P. Shorthouse
+
+    Released under MIT License
+
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

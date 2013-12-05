@@ -1,23 +1,38 @@
 <?php
 
-/**************************************************************************
+/********************************************************************
 
-File: header.class.php
+header.class.php released under MIT License
+Configure HTML headers for SimpleMappr
 
-Description: Config HTML header class for SimpleMappr. 
+Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+http://github.com/dshorthouse/SimpleMappr
+Copyright (C) 2010 David P. Shorthouse {{{
 
-Developer: David P. Shorthouse
-Email: davidpshorthouse@gmail.com
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
 
-Copyright (C) 2010  David P. Shorthouse
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+}}}
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-**************************************************************************/
+********************************************************************/
 
 $config_dir = dirname(dirname(__FILE__)).'/config/';
 require_once($config_dir.'conf.php');
@@ -39,7 +54,7 @@ class Header {
   * An array of all javascript files to be minified
   */
   public static $local_js_files = array(
-    'jquery'      => 'public/javascript/jquery-1.10.1.min.js',
+    'jquery'      => 'public/javascript/jquery-1.10.2.min.js',
     'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.min.js',
     'color'       => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'       => 'public/javascript/jquery.Jcrop.min.js',
@@ -63,7 +78,7 @@ class Header {
   );
 
   public static $remote_js_files = array(
-    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
+    'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
     'jquery_ui' => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js',
     'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
