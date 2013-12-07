@@ -58,7 +58,7 @@ class Header {
     'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.min.js',
     'color'       => 'public/javascript/jquery.colorpicker.min.js',
     'jcrop'       => 'public/javascript/jquery.Jcrop.min.js',
-    'textarea'    => 'public/javascript/jquery.textarearesizer.compressed.js',
+    'textarea'    => 'public/javascript/jquery.textarearesizer.min.js',
     'cookie'      => 'public/javascript/jquery.cookie.min.js',
     'download'    => 'public/javascript/jquery.download.min.js',
     'clearform'   => 'public/javascript/jquery.clearform.min.js',

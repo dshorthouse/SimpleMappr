@@ -17,7 +17,7 @@ $locale = Session::select_locale();
 </style>
 <script src="../public/javascript/jquery.waypoints.min.js"></script>
 <script>
-  $('#map-help').waypoint(function() {
+  $('#map-help h3:eq(1)').waypoint(function() {
     var elem = $('#country-codes').css("width", "100%");
     if($('#country-codes').html().length === 0) { SimpleMappr.loadCodes(elem, { locale : "<?php echo $locale['locale']; ?>" }); }
   });
@@ -168,5 +168,4 @@ $locale = Session::select_locale();
     <p><?php echo _("Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."); ?></p>
 
     <div id="country-codes"></div>
-
 </div>
