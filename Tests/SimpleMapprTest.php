@@ -138,7 +138,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   public function waitOnSpinner() {
     $this->webDriver->wait(10)->until(
         WebDriverExpectedCondition::invisibilityOfElementLocated(
-          WebDriverBy::id('map-loader')
+          WebDriverBy::cssSelector('#map-loader span.mapper-loading-spinner')
         )
     );
   }
