@@ -174,7 +174,7 @@ class Bootstrap {
 
   private function log() {
     require_once('lib/logger.class.php');
-    $logger = new LOGGER(dirname(dirname(__FILE__)) . "/log/logger.log");
+    $logger = new LOGGER(dirname(__FILE__) . "/log/logger.log");
     $message = date('Y-m-d H:i:s') . " - $_SERVER[REMOTE_ADDR]";
     $logger->log($message);
   }
