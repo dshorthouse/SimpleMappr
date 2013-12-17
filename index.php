@@ -150,9 +150,7 @@ class Bootstrap {
         break;
 
       default:
-        header("HTTP/1.0 404 Not Found");
-        readfile(dirname(__FILE__).'/error/404.html');
-        exit();
+        $this->render_404();
     }
   }
 
@@ -185,7 +183,7 @@ class Bootstrap {
   }
 
   private function set_up() {
-    if(!isset($_SERVER['HTTP_HOST'])) { exit(); }
+    if(!isset($_SERVER['HTTP_HOST'])) { $this->render_404(); }
 
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
@@ -206,6 +204,12 @@ class Bootstrap {
   private function partial($partial) {
     include_once("views/_".$partial.".php");
     call_user_func($partial);
+  }
+
+  private function render_404() {
+    header("HTTP/1.0 404 Not Found");
+    readfile(dirname(__FILE__).'/error/404.html');
+    exit();
   }
 }
 

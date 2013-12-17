@@ -235,10 +235,8 @@ class Header {
   */
   private function add_remote_js() {
     if(ENVIRONMENT == "production") {
-      unset(self::$local_js_combined['jquery']);
       $this->addJS('jquery', self::$remote_js['jquery']);
       $this->addJS('jquery_ui', self::$local_js_combined['jquery_ui']);
-      unset(self::$local_js_combined['jquery_ui']);
     }
     return $this;
   }
@@ -255,6 +253,7 @@ class Header {
       }
 
       if (!$cached_js) {
+        unset(self::$local_js_combined['jquery'], self::$local_js_combined['jquery_ui']);
         $js_contents = '';
         foreach(self::$local_js_combined as $js_file) {
           $js_contents .= file_get_contents($js_file) . "\n";
