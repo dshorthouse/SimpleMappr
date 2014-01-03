@@ -146,7 +146,7 @@ class Bootstrap {
     
       case "/wfs":
         $klass = $this->klass("mappr.wfs", "MapprWfs");
-        $this->setup_map($klass)->make_service()->execute()->prepapre_output()->get_output();
+        $this->setup_map($klass)->make_service()->execute()->get_output();
         break;
 
       default:

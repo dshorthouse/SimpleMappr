@@ -46,6 +46,25 @@ class MapprWfs extends Mappr {
 
   /* columns to filter on */ 
   private $filter_columns = array();
+  
+  /* layers */
+  private $wfs_layers = array(
+    'lakesOutline' => 'on',
+    'lakes' => 'on',
+    'lakenames' => 'on',
+    'rivers' => 'on',
+    'rivernames' => 'on',
+    'placenames' => 'on',
+    'stateprovnames' => 'on',
+    'countrynames' => 'on',
+    'physicalLabels' => 'on',
+    'marineLabels' => 'on',
+    'oceans' => 'on',
+    'conservation' => 'on',
+    'hotspotLabels' => 'on',
+    'stateprovinces_polygon' => 'on',
+    'rivernames' => 'on'
+  );
 
   /**
   * Override the method in the MAPPR class
@@ -83,7 +102,7 @@ class MapprWfs extends Mappr {
       }
     }
 
-    $this->layers     = array('stateprovinces_polygon' => 'on');
+    $this->layers     = $this->wfs_layers;
     $this->bbox_map   = $this->load_param('bbox', '-180,-90,180,90');
     $this->download   = false;
     $this->output     = false;
@@ -130,7 +149,7 @@ class MapprWfs extends Mappr {
     $this->req->setParameter("VERSION", $this->params['VERSION']);
     $this->req->setParameter("REQUEST", $this->params['REQUEST']);
 
-    $this->req->setParameter('TYPENAME', 'stateprovinces_polygon');
+    $this->req->setParameter('TYPENAME', $this->params['TYPENAME']);
     $this->req->setParameter('MAXFEATURES', $this->params['MAXFEATURES']);
     if($this->params['REQUEST'] != 'DescribeFeatureType') { $this->req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']); }
     if($this->params['FILTER']) { $this->req->setParameter('FILTER', $this->params['FILTER']); }

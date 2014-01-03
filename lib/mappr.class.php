@@ -668,13 +668,14 @@ class Mappr {
       'sort'  => 3
     );
 
-    //lakes
+    //oceans
     $this->shapes['oceans'] = array(
       'shape' => $this->shape_path . "/10m_physical/ne_10m_ocean",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 3
     );
 
+    //conservation
     $this->shapes['conservation'] = array(
       'shape' => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
       'type'  => MS_LAYER_POLYGON,
@@ -1025,6 +1026,10 @@ class Mappr {
       //set the extent to match that of the crop
       $this->map_obj->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
     }
+  }
+  
+  public function get_shapes() {
+    return $this->shapes;
   }
 
   /**

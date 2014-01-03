@@ -53,7 +53,7 @@ class Header {
   /*
   * An array of all javascript files to be minified
   */
-  public static $local_js_combined = array(
+  public $local_js_combined = array(
     'jquery'      => 'public/javascript/jquery-1.10.2.min.js',
     'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
     'color'       => 'public/javascript/jquery.colorpicker.min.js',
@@ -72,12 +72,12 @@ class Header {
     'toggle'      => 'public/javascript/jquery.toggleClick.min.js',
     'simplemappr' => 'public/javascript/simplemappr.min.js'
   );
-  
-  public static $admin_js = array(
+
+  public $admin_js = array(
     'admin' => 'public/javascript/simplemappr.admin.min.js'
   );
 
-  public static $remote_js = array(
+  public $remote_js = array(
     'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
     'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
   );
@@ -85,7 +85,7 @@ class Header {
   /*
   * An array of all css files to be minified
   */
-  public static $local_css = array(
+  public $local_css = array(
     'public/stylesheets/raw/styles.css'
   );
 
@@ -103,7 +103,7 @@ class Header {
     foreach($cached_files as $file) {
       unlink($file);
     }
-    
+
     $redis_flush = "n/a";
     try {
       if(extension_loaded("redis") && defined('REDIS_SERVER')) {
@@ -136,7 +136,7 @@ class Header {
     }
 
   }
-  
+
   public static function flush_cloudflare() {
     $URL = "https://www.cloudflare.com/api_json.html";
 
@@ -170,7 +170,7 @@ class Header {
     }
     return false;
   }
-  
+
   public static function cloudflare_enabled() {
     if(defined('CLOUDFLARE_KEY') && !empty(CLOUDFLARE_KEY)) { return true; }
     else { return false; }
@@ -199,7 +199,7 @@ class Header {
     }
     return $this;
   }
-  
+
   private function set_redis() {
     if($this->redis_installed()) {
       if(!$this->redis->exists("simplemappr_hash")) {
@@ -235,8 +235,8 @@ class Header {
   */
   private function add_remote_js() {
     if(ENVIRONMENT == "production") {
-      $this->addJS('jquery', self::$remote_js['jquery']);
-      $this->addJS('jquery_ui', self::$local_js_combined['jquery_ui']);
+      $this->addJS('jquery', $this->remote_js['jquery']);
+      $this->addJS('jquery_ui', $this->local_js_combined['jquery_ui']);
     }
     return $this;
   }
@@ -252,10 +252,10 @@ class Header {
         $cached_js = $this->files_cached(dirname(dirname(__FILE__)) . self::$js_cache_path);
       }
 
-      if (!$cached_js) {
-        unset(self::$local_js_combined['jquery'], self::$local_js_combined['jquery_ui']);
+      if(!$cached_js) {
+        unset($this->local_js_combined['jquery'], $this->local_js_combined['jquery_ui']);
         $js_contents = '';
-        foreach(self::$local_js_combined as $js_file) {
+        foreach($this->local_js_combined as $js_file) {
           $js_contents .= file_get_contents($js_file) . "\n";
         }
 
@@ -272,16 +272,16 @@ class Header {
       }
       $this->addJS("ga", "//google-analytics.com/ga.js");
     } else {
-      foreach(self::$local_js_combined as $key => $js_file) {
+      foreach($this->local_js_combined as $key => $js_file) {
         if($key == "simplemappr") { $js_file = str_replace(".min", "",$js_file); }
         $this->addJS($key, $js_file);
       }
     }
     if(!isset($_SESSION['simplemappr'])) {
-      $this->addJS("janrain", self::$remote_js["janrain"]);
+      $this->addJS("janrain", $this->remote_js["janrain"]);
     }
     if($this->isAdministrator()) {
-      foreach(self::$admin_js as $key => $js_file) {
+      foreach($this->admin_js as $key => $js_file) {
         if(ENVIRONMENT == "production") {
           $this->addJS($key, $js_file);
         } else {
@@ -305,17 +305,13 @@ class Header {
 
       if(!$cached_css) {
         $css_min = '';
-        foreach(self::$local_css as $css_file) {
+        foreach($this->local_css as $css_file) {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
         }
         $css_min_file = $this->hash . ".css";
         $handle = fopen(dirname(dirname(__FILE__)) . self::$css_cache_path . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
-
-        if($this->redis_installed()) {
-          $this->redis->set('simplemappr_hash', $this->hash);
-        }
 
         $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
       } else {
@@ -325,7 +321,7 @@ class Header {
       }
 
     } else {
-      foreach(self::$local_css as $css_file) {
+      foreach($this->local_css as $css_file) {
         $this->addCSS('<link type="text/css" href="' . $css_file . '" rel="stylesheet" media="screen,print" />');
       }
     }
