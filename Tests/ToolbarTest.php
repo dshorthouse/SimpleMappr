@@ -37,24 +37,6 @@ class ToolbarTest extends SimpleMapprTest {
     $this->assertNotEquals($default_img, $new_img);
   }
 
-/*
-  public function testDownloadDialog() {
-    parent::setUpPage();
-    $link = $this->webDriver->findElement(WebDriverBy::className('toolsDownload'));
-    $link->click();
-    $this->assertTrue($this->webDriver->findElement(WebDriverBy::id('mapExport'))->isDisplayed());
-  }
-
-  public function testFill() {
-    parent::setUpPage();
-    $link = $this->webDriver->findElement(WebDriverBy::className('toolsQuery'));
-    $link->click();
-    $color_picker = WebDriverBy::className('colorpicker');
-    $this->webDriver->wait(10)->until(WebDriverExpectedCondition::visibilityOfElementLocated($color_picker));
-    $this->webDriver->findElement(WebDriverBy::cssSelector('div.colorpicker div.colorpicker_submit'))->click();
-  }
-*/
-
   public function testZoomOut() {
     parent::setUpPage();
     $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
