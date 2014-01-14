@@ -180,7 +180,7 @@ class Bootstrap {
   private function log($type = "API") {
     require_once('lib/logger.class.php');
     $logger = new LOGGER(dirname(__FILE__) . "/log/logger.log");
-    $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["CF-Connecting-IP"] : $_SERVER["REMOTE_ADDR"];
+    $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
     $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
     $logger->log($message);
   }
