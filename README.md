@@ -103,12 +103,12 @@ Tests
 
 Selenium is used for integration tests and php-unit for unit tests. Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) is included. Get selenium at [https://code.google.com/p/selenium/downloads/list](https://code.google.com/p/selenium/downloads/list) then execute:
 
-    $ java -jar selenium-server-standalone-2.37.0.jar
+    $ java -jar selenium-server-standalone-2.39.0.jar
     $ phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
-    $ java -jar selenium-server-standalone-2.37.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+    $ java -jar selenium-server-standalone-2.39.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Copyright

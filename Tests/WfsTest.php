@@ -10,11 +10,11 @@ class WfsTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $root = dirname(dirname(__FILE__));
+    $this->root = dirname(dirname(__FILE__));
     $this->mappr_wfs = new MapprWfs();
-    $this->mappr_wfs->set_shape_path($root."/lib/mapserver/maps")
-        ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
-        ->set_tmp_path($root."/public/tmp/")
+    $this->mappr_wfs->set_shape_path($this->root."/lib/mapserver/maps")
+        ->set_font_file($this->root."/lib/mapserver/fonts/fonts.list")
+        ->set_tmp_path($this->root."/public/tmp/")
         ->set_tmp_url(MAPPR_MAPS_URL)
         ->set_default_projection("epsg:4326")
         ->set_max_extent("-180,-90,180,90");

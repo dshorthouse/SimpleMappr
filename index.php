@@ -59,7 +59,7 @@ class Bootstrap {
       case "/api":
         $klass = $this->klass("mappr.api", "MapprApi");
         $this->setup_map($klass)->execute()->get_output();
-        $this->log();
+        $this->log("API");
         break;
 
       case "/apidoc":
@@ -147,11 +147,13 @@ class Bootstrap {
       case "/wfs":
         $klass = $this->klass("mappr.wfs", "MapprWfs");
         $this->setup_map($klass)->make_service()->execute()->get_output();
+        $this->log("WFS");
         break;
 
       case "/wms":
         $klass = $this->klass("mappr.wms", "MapprWms");
         $this->setup_map($klass)->make_service()->execute()->get_output();
+        $this->log("WMS");
         break;
 
       default:
@@ -175,10 +177,11 @@ class Bootstrap {
     return $data;
   }
 
-  private function log() {
+  private function log($type = "API") {
     require_once('lib/logger.class.php');
     $logger = new LOGGER(dirname(__FILE__) . "/log/logger.log");
-    $message = date('Y-m-d H:i:s') . " - $_SERVER[REMOTE_ADDR]";
+    $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["CF-Connecting-IP"] : $_SERVER["REMOTE_ADDR"];
+    $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
     $logger->log($message);
   }
 
