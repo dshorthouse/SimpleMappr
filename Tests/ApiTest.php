@@ -80,7 +80,7 @@ class ApiTest extends PHPUnit_Framework_TestCase {
   
   public function test_apioutput_no_coords() {
     $_REQUEST = array(
-      'points[0]' => ''
+      'points' => array()
     );
     $mappr_api = $this->mappr_api->get_request()->execute();
     ob_start();
@@ -93,7 +93,7 @@ class ApiTest extends PHPUnit_Framework_TestCase {
 
   public function test_apioutput_coords() {
     $_REQUEST = array(
-      'points[0]' => '45, -120\n52, -100'
+      'points' => array('45, -120\n52, -100')
     );
     $mappr_api = $this->mappr_api->get_request()->execute();
     ob_start();

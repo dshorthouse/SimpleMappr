@@ -30,7 +30,8 @@ Session::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
-  <dt class="update"><?php echo _("October 29, 2013"); ?></dt><dd><?php echo _("Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."); ?></dd>
+<dt class="update"><?php echo _("January 13, 2014"); ?></dt><dd><?php echo _("Improvements: Created a Web Map Service (WMS), which can be used by client applications like QGIS."); ?></dd>
+<dt class="update"><?php echo _("October 29, 2013"); ?></dt><dd><?php echo _("Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."); ?></dd>
 <dt class="update"><?php echo _("June 25, 2013"); ?></dt><dd><?php echo _("Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables."); ?></dd>
 <dt class="update"><?php echo _("May 19, 2013"); ?></dt><dd><?php echo _("Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option."); ?></dd>
 <dt class="update"><?php echo _("May 9, 2013"); ?></dt><dd><?php echo _("Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler."); ?></dd>

@@ -183,6 +183,14 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
       $this->assertArrayHasKey("scalebar_url", $this->output);
       $this->assertArrayHasKey("bad_points", $this->output);
     }
+    
+    public function test_scalebar_url_exists() {
+      $this->assertNotEmpty($this->output["scalebar_url"]);
+    }
+    
+    public function test_legend_url_empty() {
+      $this->assertEmpty($this->output["legend_url"]);
+    }
 
     public function test_file_exists() {
       $img = $this->mappr->get_tmp_path() . basename($this->output["mapOutputImage"]);

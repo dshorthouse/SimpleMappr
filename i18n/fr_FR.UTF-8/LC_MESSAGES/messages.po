@@ -660,6 +660,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "January 13, 2014"
+msgstr "13 janvier, 2014"
+
+#: .tabs/about.php:11
 msgid "October 29, 2013"
 msgstr "29 octobre, 2013"
 
@@ -667,11 +671,15 @@ msgstr "29 octobre, 2013"
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
 
-#: .tabs/about:11
+#: .tabs/about.php:11
 msgid "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."
 msgstr "Améliorations: Logiciel mis à jour. Bordures ajouté autour couche de hotspot de biodiversité et l'option pour les étiquettes. Demandé par Torsten Dikow."
 
-#: .tabs/about:11
+#: .tabs/about.php:11
+msgid "Improvements: Created a Web Map Service (WMS), which can be used by client applications like QGIS."
+msgstr "Améliorations: Création d'un Web Map Service (WMS), qui peut être utilisée par les applications clientes comme QGIS."
+
+#: .tabs/about.php:11
 msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables."
 msgstr "Corrections: Les couches de données Point incorrectement chargés quand il ya des couches blanches suivies par des couches avec des données. Rapporté par Chandra Venables."
 

@@ -2,8 +2,8 @@
 
 /********************************************************************
 
-mappr.wfs.class.php released under MIT License
-Extends Mappr class & enables WFS endpoint on SimpleMappr
+mappr.wms.class.php released under MIT License
+Extends Mappr class & enables WMS endpoint on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>
 http://github.com/dshorthouse/SimpleMappr
@@ -36,7 +36,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 require_once('mappr.class.php');
 
-class MapprWfs extends Mappr {
+class MapprWms extends Mappr {
 
   /* the request object for WFS and WMS */ 
   private $req = "";
@@ -48,24 +48,32 @@ class MapprWfs extends Mappr {
   private $filter_columns = array();
   
   /* layers */
-  private $wfs_layers = array(
+  private $wms_layers = array(
     'lakes' => 'on',
     'rivers' => 'on',
     'oceans' => 'on',
     'conservation' => 'on',
     'stateprovinces_polygon' => 'on',
+    'relief' => 'on',
+    'reliefgrey' => 'on'
   );
 
   /**
   * Override the method in the MAPPR class
   */
   public function get_request() {
-    $this->params['VERSION']      = $this->load_param('VERSION', '1.0.0');
+    $this->params['VERSION']      = $this->load_param('VERSION', '1.1.1');
     $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
-    $this->params['TYPENAME']     = $this->load_param('TYPENAME', '');
+    $this->params['LAYERS']       = $this->load_param('LAYERS', '');
     $this->params['MAXFEATURES']  = $this->load_param('MAXFEATURES', $this->get_max_features());
-    $this->params['OUTPUTFORMAT'] = $this->load_param('OUTPUTFORMAT', 'gml2');
+    $this->params['FORMAT']       = $this->load_param('FORMAT', 'image/png');
     $this->params['FILTER']       = $this->load_param('FILTER', null);
+    $this->params['SRS']          = $this->load_param('SRS', 'epsg:4326');
+    $this->params['CRS']          = $this->load_param('CRS', 'CRS:84');
+    $this->params['BBOX']         = $this->load_param('BBOX', '-180,-90,180,90');
+    $this->params['WIDTH']        = $this->load_param('WIDTH', '200');
+    $this->params['HEIGHT']       = $this->load_param('HEIGHT', '100');
+    $this->params['TRANSPARENT']  = $this->load_param('TRANSPARENT', TRUE);
 
     $input = file_get_contents("php://input");
     if($input) {
@@ -73,13 +81,13 @@ class MapprWfs extends Mappr {
       $xml2 = new XMLReader();
       $xml->XML($input);
       while($xml->read()) {
-        if($xml->name == 'wfs:Query') {
-          $this->params['REQUEST'] = 'GetFeature';
-          $this->params['TYPENAME'] = str_replace("feature:", "",    $xml->getAttribute('typeName'));
+        if($xml->name == 'wms:Query') {
+          $this->params['REQUEST'] = 'GetMap';
+          $this->params['LAYERS'] = str_replace("feature:", "",    $xml->getAttribute('typeName'));
         }
         if($xml->name == 'ogc:Filter') {
           $filter = $xml->readOuterXML();
-          $this->params['REQUEST'] = 'GetFeature';
+          $this->params['REQUEST'] = 'GetMap';
           $this->params['FILTER'] = $filter;
           $xml2->XML($filter);
           while($xml2->read()) {
@@ -92,7 +100,7 @@ class MapprWfs extends Mappr {
       }
     }
 
-    $this->layers     = $this->wfs_layers;
+    $this->layers     = $this->wms_layers;
     $this->bbox_map   = $this->load_param('bbox', '-180,-90,180,90');
     $this->download   = false;
     $this->output     = false;
@@ -117,31 +125,34 @@ class MapprWfs extends Mappr {
   * Construct metadata for WFS
   */
   public function make_service() {
-    $this->map_obj->setMetaData("name", "SimpleMappr Web Feature Service");
-    $this->map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
-    $this->map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
+    $this->map_obj->setMetaData("name", "SimpleMappr Web Map Service");
+    $this->map_obj->setMetaData("wms_title", "SimpleMappr Web Map Service");
+    $this->map_obj->setMetaData("wms_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wms/?");
 
     $srs_projections = implode(array_keys(Mappr::$accepted_projections), " ");
 
-    $this->map_obj->setMetaData("wfs_srs", $srs_projections);
-    $this->map_obj->setMetaData("wfs_abstract", "SimpleMappr Web Feature Service");
-    $this->map_obj->setMetaData("wfs_enable_request", "*");
-    $this->map_obj->setMetaData("wfs_connectiontimeout", "60");
+    $this->map_obj->setMetaData("wms_srs", $srs_projections);
+    $this->map_obj->setMetaData("wms_abstract", "SimpleMappr Web Map Service");
+    $this->map_obj->setMetaData("wms_enable_request", "*");
+    $this->map_obj->setMetaData("wms_connectiontimeout", "60");
 
     $this->make_request();
-
     return $this;
   }
 
   private function make_request() {
     $this->req = ms_newOwsRequestObj();
-    $this->req->setParameter("SERVICE", "wfs");
+    $this->req->setParameter("SERVICE", "wms");
     $this->req->setParameter("VERSION", $this->params['VERSION']);
     $this->req->setParameter("REQUEST", $this->params['REQUEST']);
-    $this->req->setParameter("TYPENAME", $this->params['TYPENAME']);
-    $this->req->setParameter("MAXFEATURES", $this->params['MAXFEATURES']);
+    $this->req->setParameter("BBOX", $this->params['BBOX']);
+    $this->req->setParameter("LAYERS", $this->params['LAYERS']);
+    $this->req->setParameter("SRS", $this->params['SRS']);
+    $this->req->setParameter("WIDTH", $this->params['WIDTH']);
+    $this->req->setParameter("HEIGHT", $this->params['HEIGHT']);
+    $this->req->setParameter("TRANSPARENT", $this->params['TRANSPARENT']);
 
-    if($this->params["REQUEST"] != 'DescribeFeatureType') { $this->req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']); }
+    if($this->params["REQUEST"] != 'DescribeFeatureType') { $this->req->setParameter('FORMAT', $this->params['FORMAT']); }
     if($this->params["FILTER"]) { $this->req->setParameter('FILTER', $this->params['FILTER']); }
 
     return $this;
@@ -154,8 +165,13 @@ class MapprWfs extends Mappr {
     ms_ioinstallstdouttobuffer();
     $this->map_obj->owsDispatch($this->req);
     $contenttype = ms_iostripstdoutbuffercontenttype();
-    header('Content-type: application/xml');
-    echo ms_iogetstdoutbufferstring();
+    if (strtolower($this->params['REQUEST']) == 'getcapabilities') {
+      header('Content-type: application/xml');
+      echo ms_iogetstdoutbufferstring();
+    } else if (strtolower($this->params['REQUEST']) == 'getmap' || strtolower($this->params['REQUEST']) == 'getlegendgraphic') {
+      header('Content-type: ' . $contenttype);
+      ms_iogetstdoutbufferbytes();
+    }
     ms_ioresethandlers();
   }
 

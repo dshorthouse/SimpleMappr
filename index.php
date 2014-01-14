@@ -149,6 +149,11 @@ class Bootstrap {
         $this->setup_map($klass)->make_service()->execute()->get_output();
         break;
 
+      case "/wms":
+        $klass = $this->klass("mappr.wms", "MapprWms");
+        $this->setup_map($klass)->make_service()->execute()->get_output();
+        break;
+
       default:
         $this->render_404();
     }

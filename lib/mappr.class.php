@@ -70,6 +70,10 @@ class Mappr {
   protected $mapfile_string = "
     MAP
 
+      PROJECTION
+        'init=epsg:4326'
+      END
+      
       OUTPUTFORMAT
         NAME png
         DRIVER AGG/PNG
@@ -78,9 +82,6 @@ class Mappr {
         EXTENSION 'png'
         FORMATOPTION 'INTERLACE=OFF'
         FORMATOPTION 'COMPRESSION=9'
-        #FORMATOPTION 'QUANTIZE_FORCE=ON'
-        #FORMATOPTION 'QUANTIZE_DITHER=OFF'
-        #FORMATOPTION 'QUANTIZE_COLORS=256'
       END
 
       OUTPUTFORMAT
@@ -438,16 +439,28 @@ class Mappr {
   }
 
   /**
-  * Get a request parameter
+  * Get a case insensitive request parameter
   * @param string $name
   * @param string $default parameter optional
   * @return string the parameter value or empty string if null
   */
-  public function load_param($name, $default = ''){
-    if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) { return $default; }
-    $value = $_REQUEST[$name];
+  public function load_param($name, $default = '') {
+    $grep_key = $this->preg_grep_keys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
+    if(!$grep_key || !array_values($grep_key)[0]) { return $default; }
+    $value = array_values($grep_key)[0];
     if(get_magic_quotes_gpc() != 1) { $value = self::add_slashes_extended($value); }
     return $value;
+  }
+
+  /**
+  * Grep on array keys
+  * @param string $pattern
+  * @param string $input
+  * @param int $flags
+  * @return array of matched keys
+  */
+  private function preg_grep_keys($pattern, $input, $flags = 0) {
+    return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
   }
 
   /**
@@ -1221,6 +1234,8 @@ class Mappr {
         $layer->setMetaData("wfs_srs", $srs_projections);
         $layer->setMetaData("wfs_extent", "-180 -90 180 90");
         $layer->setMetaData("wfs_encoding", "UTF-8");
+        $layer->setMetaData("wms_title", $name);
+        $layer->setMetaData("wms_srs", $srs_projections);
         $layer->setMetaData("gml_include_items", "all");
         $layer->setMetaData("gml_featureid", "OBJECTID");
         $layer->set("type", $this->shapes[$name]['type']);

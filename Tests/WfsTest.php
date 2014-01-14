@@ -32,7 +32,7 @@ class WfsTest extends PHPUnit_Framework_TestCase {
     ob_end_clean();
     $xml = simplexml_load_string($output);
     $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
-    $this->assertEquals(15, count($xml->FeatureTypeList->FeatureType));
+    $this->assertEquals(6, count($xml->FeatureTypeList->FeatureType));
   }
 
   public function test_GetFeature() {

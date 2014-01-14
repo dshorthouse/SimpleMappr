@@ -15,6 +15,7 @@ Session::select_locale();
 #map-api span.api-example a{color:green;}
 #map-api span.api-output{color:red;display:block;}
 #map-api span.api-output a{color:red;}
+#map-api div.general-base-ws{min-width:700px;}
 </style>
 <div id="map-api">
   <div id="general-api" class="panel ui-corner-all">
@@ -121,7 +122,13 @@ Session::select_locale();
 
   <h3>Web Feature Service (WFS)</h3>
 
-  <div id="general-base-wfs" class="panel ui-corner-all">
+  <div class="panel ui-corner-all general-base-ws">
     <p>http://<?php echo $_SERVER['HTTP_HOST']; ?>/wfs/?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetCapabilities</p>
+  </div>
+
+  <h3>Web Map Service (WMS)</h3>
+
+  <div class="panel ui-corner-all general-base-ws">
+    <p>http://<?php echo $_SERVER['HTTP_HOST']; ?>/wms/?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities</p>
   </div>
 </div>
