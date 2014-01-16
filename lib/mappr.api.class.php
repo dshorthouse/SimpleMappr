@@ -386,6 +386,8 @@ class MapprApi extends Mappr {
             header("Content-Type: image/png");
         }
         $this->image->saveImage("");
+      } else if ($this->method == 'OPTIONS') { //For CORS requests
+          header("HTTP/1.0 204 No Content");
       } else {
           header("Pragma: public");
           header("Expires: 0");
