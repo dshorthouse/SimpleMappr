@@ -44,7 +44,7 @@ class MapprApi extends Mappr {
 
   private $coord_cols = array();
   
-  private $accepted_output = array('png', 'jpg', 'tif', 'svg');
+  private $accepted_output = array('png', 'jpg', 'svg');
 
   /**
   * Override method in parent class

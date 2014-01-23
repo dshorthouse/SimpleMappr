@@ -94,9 +94,9 @@ Session::select_locale();
 
     <dt>projection</dt>
     <dd><?php echo sprintf(_("the output projection in either EPSG or ESRI references. See %s for spatial references. Accepted projections are:"), "<a href=\"http://spatialreference.org/\">http://spatialreference.org/</a>"); ?> <?php foreach(MAPPR::$accepted_projections as $key => $value) { print $key . ' (=' . $value['name'] . '), '; } ?><span class="api-example"><em>e.g.</em> projection=esri:102009</span></dd>
-	
-	<dt>origin</dt>
-	<dd><?php echo _("longitude of natural origin used in Lambert projections"); ?> <span class="api-example"><em>e.g.</em> origin=-120</span></dd>
+
+    <dt>origin</dt>
+    <dd><?php echo _("longitude of natural origin used in Lambert projections"); ?> <span class="api-example"><em>e.g.</em> origin=-120</span></dd>
 
     <dt>graticules</dt>
     <dd><?php echo _("display the graticules"); ?> <span class="api-example"><em>e.g.</em> graticules=true</span></dd>
@@ -111,7 +111,7 @@ Session::select_locale();
     <dd><?php echo _("integer-based output height in pixels; if height is not provided, it will be half the width"); ?> <span class="api-example"><em>e.g.</em> height=400</span></dd>
 
     <dt>output</dt>
-    <dd><?php echo _("file format of the image or vector produced; options are png, jpg, tif, svg"); ?> <span class="api-example"><em>e.g.</em> output=png</span></dd>
+    <dd><?php echo _("file format of the image or vector produced; options are png, jpg, svg"); ?> <span class="api-example"><em>e.g.</em> output=png</span></dd>
 
     <dt>scalebar</dt>
     <dd><?php echo _("embed a scalebar in the lower right of the image"); ?> <span class="api-example"><em>e.g.</em> scalebar=true</span></dd>

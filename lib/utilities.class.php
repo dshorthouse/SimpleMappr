@@ -82,6 +82,7 @@ class Utilities {
         break;
 
       case 'tif':
+      case 'tiff':
         header("Content-Type: image/tiff");
         header("Content-Transfer-Encoding: binary");
         break;
