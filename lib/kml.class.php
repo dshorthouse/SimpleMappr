@@ -35,6 +35,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ********************************************************************/
 
 require_once('mappr.class.php');
+require_once('utilities.class.php');
 
 class Kml {
 
@@ -86,11 +87,7 @@ class Kml {
     
     $this->kml = new XMLWriter();
 
-    header("Pragma: public");
-    header("Expires: 0");       
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
+    Utilities::set_header("kml");
     header("Content-disposition: attachment; filename=" . $clean_filename . ".kml");
     $this->kml->openURI('php://output');
     

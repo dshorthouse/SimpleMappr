@@ -82,13 +82,8 @@ class MapprDocx extends Mappr {
       }
 
       // Output Word 2007 file
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false);
-      header("Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+      Utilities::set_header("docx");
       header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";" );
-      header("Content-Transfer-Encoding: binary");
       $objWriter = PHPWord_IOFactory::createWriter($objPHPWord, 'Word2007');
       $objWriter->save('php://output');
       exit();

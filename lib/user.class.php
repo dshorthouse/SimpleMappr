@@ -39,6 +39,7 @@ require_once($config_dir.'conf.php');
 require_once($config_dir.'conf.db.php');
 require_once('db.class.php');
 require_once('session.class.php');
+require_once('utilities.class.php');
 
 class User {
 
@@ -54,23 +55,13 @@ class User {
   function __construct($id) {
     session_start();
     if(!isset($_SESSION['simplemappr'])) {
-      $this->access_denied();
+      Utilities::access_denied();
     }
     Session::select_locale();
     $this->id = (int)$id;
     $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-    $this->set_header()->execute();
-  }
-
-  /*
-  * Set header to prevent caching
-  */
-  private function set_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    return $this;
+    Utilities::set_header();
+    $this->execute();
   }
 
   /*
@@ -78,7 +69,7 @@ class User {
   */
   private function execute() {
     if(self::$roles[$this->role] !== 'administrator') {
-      $this->access_denied();
+      Utilities::access_denied();
     } else {
       $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
       $this->restful_action();
@@ -160,9 +151,9 @@ class User {
        $class = ($i % 2) ? 'class="even"' : 'class="odd"';
        $output .= '<tr '.$class.'>';
        $output .= '<td><a class="user-load" data-uid="'.$record['uid'].'" href="#">';
-       $output .= stripslashes($record['username']);
+       $output .= Utilities::check_plain(stripslashes($record['username']));
        $output .= '</a></td>';
-       $output .= '<td>'.stripslashes($record['email']).'</td>';
+       $output .= '<td>'.Utilities::check_plain(stripslashes($record['email'])).'</td>';
        $output .= '<td class="usermaps-number">'.$record['num'].'</td>';
        $access = ($record['access']) ? gmdate("M d, Y", $record['access']) : '-';
        $output .= '<td class="usermaps-center">'.$access.'</td>';
@@ -199,12 +190,6 @@ class User {
 
     header("Content-Type: application/json");
     echo '{"status":"ok"}';
-  }
-
-  private function access_denied() {
-    header("Content-Type: application/json");
-    echo '{ "error" : "access denied" }';
-    exit();
   }
 
 }

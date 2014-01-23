@@ -34,8 +34,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
       `identifier` varchar(255) NOT NULL,
       `username` varchar(50) DEFAULT NULL,
-      `givenname` varchar(50) DEFAULT NULL,
-      `surname` varchar(100) DEFAULT NULL,
+      `displayname` varchar(125) DEFAULT NULL,
       `email` varchar(50) DEFAULT NULL,
       `role` int(11) DEFAULT 1,
       `created` int(11) DEFAULT NULL,
@@ -49,9 +48,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
     $citations_table = 'CREATE TABLE IF NOT EXISTS `citations` (
       `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
       `year` int(11) NOT NULL,
-      `reference` text COLLATE utf8_unicode_ci NOT NULL,
-      `doi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-      `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `reference` text COLLATE utf8_unicode_ci DEFAULT NULL,
+      `doi` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+      `link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
       `first_author_surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
       PRIMARY KEY (`id`),
       KEY `year` (`year`,`first_author_surname`)
@@ -76,8 +75,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'uid' => 1,
       'identifier' => 'administrator',
       'username' => 'administrator',
-      'givenname' => 'Joe',
-      'surname' => 'Smith',
+      'displayname' => 'John Smith',
       'email' => 'nowhere@example.com',
       'role' => 2
     ));
@@ -86,8 +84,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'uid' => 2,
       'identifier' => 'user',
       'username' => 'user',
-      'givenname' => 'Jack',
-      'surname' => 'Johnson',
+      'displayname' => 'Jack Johnson',
       'email' => 'nowhere@example.com',
       'role' => 1
     ));
@@ -95,7 +92,8 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
     self::$db->query_insert('maps', array(
       'uid' => $user1,
       'title' => 'Sample Map',
-      'map' => '{}'
+      'map' => '{}',
+      'created' => time()
     ));
 
     self::$db->query_insert('citations', array(
@@ -150,7 +148,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       "email" => "nowhere@example.com",
       "locale" => $locale
     );
-    $role = ($username == 'administrator') ? array("role" => "2", "uid" => "1") : array("role" => "1", "uid" => "2");
+    $role = ($username == 'administrator') ? array("role" => "2", "uid" => "1", "displayname" => "John Smith") : array("role" => "1", "uid" => "2", "displayname" => "Jack Johnson");
     $user = array_merge($user, $role);
     $cookie = array(
       'name' => 'simplemappr',

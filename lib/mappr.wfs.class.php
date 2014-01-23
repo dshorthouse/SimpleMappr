@@ -35,6 +35,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ********************************************************************/
 
 require_once('mappr.class.php');
+require_once('utilities.class.php');
 
 class MapprWfs extends Mappr {
 
@@ -154,7 +155,7 @@ class MapprWfs extends Mappr {
     ms_ioinstallstdouttobuffer();
     $this->map_obj->owsDispatch($this->req);
     $contenttype = ms_iostripstdoutbuffercontenttype();
-    header('Content-type: application/xml');
+    Utilities::set_header("xml");
     echo ms_iogetstdoutbufferstring();
     ms_ioresethandlers();
   }

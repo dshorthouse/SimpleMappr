@@ -38,10 +38,13 @@ $config_dir = dirname(dirname(__FILE__)).'/config/';
 require_once($config_dir.'conf.php');
 require_once('mappr.class.php');
 require_once('georss/rss_fetch.inc');
+require_once('utilities.class.php');
 
 class MapprApi extends Mappr {
 
   private $coord_cols = array();
+  
+  private $accepted_output = array('png', 'jpg', 'tif', 'svg');
 
   /**
   * Override method in parent class
@@ -123,6 +126,10 @@ class MapprApi extends Mappr {
     $this->height           = (float)$this->load_param('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
     if($this->width == 0 || $this->height == 0) { $this->width = 900; $this->height = 450; }
     $this->image_size       = array($this->width, $this->height);
+
+    if(!in_array($this->output, $this->accepted_output)) {
+      $this->output = 'png';
+    }
 
     return $this;
   }
@@ -354,47 +361,16 @@ class MapprApi extends Mappr {
   public function get_output() {
 
     if($this->ping) {
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false);
-      header("Content-Type: application/json");
+      Utilities::set_header("json");
       echo json_encode(array("status" => "ok"));
     } else {
       if($this->method == 'GET') {
-        switch($this->output) {
-          case 'tif':
-            header("Content-Type: image/tiff");
-            header("Content-Transfer-Encoding: binary");
-          break;
-
-          case 'svg':
-            header("Content-Type: image/svg+xml");
-          break;
-
-          case 'jpg':
-          case 'jpga':
-            header("Content-Type: image/jpeg");
-          break;
-
-          case 'png':
-          case 'pnga':
-            header("Content-Type: image/png");
-          break;
-
-          default:
-            header("Content-Type: image/png");
-        }
+        Utilities::set_header($this->output);
         $this->image->saveImage("");
       } else if ($this->method == 'OPTIONS') { //For CORS requests
           header("HTTP/1.0 204 No Content");
       } else {
-          header("Pragma: public");
-          header("Expires: 0");
-          header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-          header("Cache-Control: private",false);
-          header("Content-Type: application/json");
-
+          Utilities::set_header("json");
           try {
             $output = array(
               'imageURL' => $this->image->saveWebImage(),
@@ -405,7 +381,6 @@ class MapprApi extends Mappr {
               'error' => "An error occurred:" . $e->getMessage()
             );
           }
-
           echo json_encode($output);
       }
     }

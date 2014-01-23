@@ -120,13 +120,8 @@ class MapprPptx extends Mappr {
       $textRun->getFont()->setSize(12);
 
       // Output PowerPoint 2007 file
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false);
-      header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation");
+      Utilities::set_header("pptx");
       header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
-      header("Content-Transfer-Encoding: binary");
       $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
       $objWriter->save('php://output');
       exit();

@@ -166,9 +166,10 @@ class MapprWms extends Mappr {
     $this->map_obj->owsDispatch($this->req);
     $contenttype = ms_iostripstdoutbuffercontenttype();
     if (strtolower($this->params['REQUEST']) == 'getcapabilities') {
-      header('Content-type: application/xml');
+      Utilities::set_header("xml");
       echo ms_iogetstdoutbufferstring();
     } else if (strtolower($this->params['REQUEST']) == 'getmap' || strtolower($this->params['REQUEST']) == 'getlegendgraphic') {
+      Utilities::set_header();
       header('Content-type: ' . $contenttype);
       ms_iogetstdoutbufferbytes();
     }

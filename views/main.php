@@ -33,7 +33,13 @@
 <ul><?php foreach($accepted_locales as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
 <?php if(isset($_SESSION['simplemappr'])): ?>
-<div id="site-user"><?php echo $_SESSION['simplemappr']['username']; ?></div>
+<div id="site-user">
+  <?php if(!empty($_SESSION['simplemappr']['displayname'])): ?>
+    <?php echo $_SESSION['simplemappr']['displayname']; ?>
+  <?php else: ?>
+    <?php echo $_SESSION['simplemappr']['email']; ?>
+  <?php endif; ?>
+</div>
 <?php endif; ?>
 <div id="site-session">
 <?php if(isset($_SESSION['simplemappr'])): ?>

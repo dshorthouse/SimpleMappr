@@ -40,6 +40,7 @@ require_once($config_dir.'/conf.db.php');
 require_once('db.class.php');
 require_once('user.class.php');
 require_once('session.class.php');
+require_once('utilities.class.php');
 
 class Usermap {
 
@@ -52,25 +53,15 @@ class Usermap {
   function __construct($id) {
     session_start();
     if(!isset($_SESSION['simplemappr'])) {
-      $this->access_denied();
+      Utilities::access_denied();
     }
     Session::select_locale();
     $this->id = (int)$id;
     $this->uid = (int)$_SESSION['simplemappr']['uid'];
     $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
     $this->uid_q = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
-    $this->set_header()->execute();
-  }
-
-  /*
-  * Set header to prevent caching
-  */
-  private function set_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    return $this;
+    Utilities::set_header();
+    $this->execute();
   }
 
   /*
@@ -225,7 +216,7 @@ class Usermap {
         $output .= '<tr '.$class.'>';
         $output .= '<td class="title">';
         $output .= (User::$roles[$this->role] == 'administrator' && !$this->uid_q) ? $record['username'] . ': ' : '';
-        $output .= '<a class="map-load" data-id="'.$record['mid'].'" href="#">' . stripslashes($record['title']) . '</a>';
+        $output .= '<a class="map-load" data-id="'.$record['mid'].'" href="#">' . Utilities::check_plain(stripslashes($record['title'])) . '</a>';
         $output .= '</td>';
         $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
         $output .= '<td class="center-align">';
@@ -289,12 +280,6 @@ class Usermap {
 
     header("Content-Type: application/json");
     echo '{"status":"ok"}';
-  }
-
-  private function access_denied() {
-    header("Content-Type: application/json");
-    echo '{ "error" : "access denied" }';
-    exit();
   }
 
 }

@@ -39,6 +39,7 @@ require_once($config_dir.'conf.db.php');
 require_once('db.class.php');
 require_once('user.class.php');
 require_once('session.class.php');
+require_once('utilities.class.php');
 
 class Citation {
 
@@ -57,7 +58,8 @@ class Citation {
   }
 
   public function execute() {
-    $this->set_header()->restful_action()->response();
+    Utilities::set_header("json");
+    $this->restful_action()->response();
   }
 
   /*
@@ -151,12 +153,11 @@ class Citation {
   private function check_permission(){
     session_start();
     if(!isset($_SESSION['simplemappr']) || User::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
-      $this->access_denied();
+      Utilities::access_denied();
     }
   }
 
   private function response($type = NULL) {
-    header("Content-Type: application/json");
     switch($type) {
       case 'error':
         $output = array(
@@ -172,23 +173,6 @@ class Citation {
         break;
     }
     echo json_encode($output);
-  }
-
-  /*
-  * Set header to prevent caching
-  */
-  private function set_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    return $this;
-  }
-
-  private function access_denied() {
-    header("Content-Type: application/json");
-    echo '{ "error" : "access denied" }';
-    exit();
   }
 
 }

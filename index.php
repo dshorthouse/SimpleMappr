@@ -202,6 +202,7 @@ class Bootstrap {
       require_once('lib/session.class.php');
       require_once('lib/header.class.php');
       require_once('lib/mappr.class.php');
+      require_once('lib/utilities.class.php');
 
       Session::update_activity();
 

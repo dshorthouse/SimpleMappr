@@ -39,6 +39,7 @@ require_once($config_dir.'conf.php');
 require_once('session.class.php');
 require_once('user.class.php');
 require_once('cssmin.php');
+require_once('utilities.class.php');
 
 class Header {
 
@@ -122,11 +123,7 @@ class Header {
     }
 
     if($output) {
-      header("Pragma: no-cache");
-      header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-      header("Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
-      header("Cache-Control: private",false);
-      header("Content-Type: application/json");
+      Utilities::set_header("json");
       $response = array(
         "files" => true,
         "redis" => $redis_flush,

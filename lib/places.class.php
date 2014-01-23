@@ -39,6 +39,7 @@ require_once($config_dir.'conf.php');
 require_once($config_dir.'conf.db.php');
 require_once('db.class.php');
 require_once('session.class.php');
+require_once('utilities.class.php');
 
 class Places {
 
@@ -48,19 +49,7 @@ class Places {
   function __construct($id) {
     $this->id = $id;
     Session::select_locale();
-    $this->set_header()
-         ->execute();
-  }
-
-  /*
-  * Set header to prevent caching
-  */
-  private function set_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
-    return $this;
+    $this->execute();
   }
 
   /*
@@ -107,11 +96,11 @@ class Places {
         ORDER BY sp.country
         LIMIT 5";
       $result = $this->db->fetch_all_array($sql);
-      header("Content-Type: application/json");
+      Utilities::set_header("json");
       echo json_encode($result);
     } else {
       $rows = $this->db->query($sql);
-      header("Content-Type: text/html");
+      Utilities::set_header("html");
       $this->produce_output($rows);
     }
   }

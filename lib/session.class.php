@@ -38,6 +38,7 @@ $config_dir = dirname(dirname(__FILE__)).'/config/';
 require_once($config_dir.'conf.php');
 require_once($config_dir.'conf.db.php');
 require_once('db.class.php');
+require_once('utilities.class.php');
 
 class Session {
 
@@ -226,18 +227,16 @@ class Session {
 
       $profile = $this->auth_info['profile'];
 
-      $identifier = $profile['identifier'];
-      $username   = (isset($profile['preferredUsername'])) ? $profile['preferredUsername'] : '';
-      $email      = (isset($profile['email'])) ? $profile['email'] : '';
-      $givenname  = (isset($profile['givenName'])) ? $profile['givenName'] : '';
-      $surname    = (isset($profile['familyName'])) ? $profile['familyName'] : '';
+      $identifier  = $profile['identifier'];
+      $email       = (isset($profile['email'])) ? Utilities::check_plain($profile['email']) : '';
+      $username    = (isset($profile['preferredUsername'])) ? Utilities::check_plain($profile['preferredUsername']) : $email;
+      $displayname = (isset($profile['displayName'])) ? Utilities::check_plain($profile['displayName']) : '';
 
       $user = array(
-        'identifier' => $identifier,
-        'username'   => $username,
-        'givenname'  => $givenname,
-        'surname'    => $surname,
-        'email'      => $email
+        'identifier'  => $identifier,
+        'username'    => $username,
+        'displayname' => $displayname,
+        'email'       => $email
       );
 
       $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
@@ -248,8 +247,7 @@ class Session {
         u.identifier,
         u.email,
         u.username,
-        u.givenname,
-        u.surname,
+        u.displayname,
         u.role
       FROM 
         users u 
@@ -261,7 +259,7 @@ class Session {
       $user['locale'] = $this->locale;
       $user['role'] = (!$record['role']) ? 1 : $record['role'];
 
-      $db->query_update('users', array('access' => time()), 'uid='.$db->escape($user['uid']));
+      $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), 'uid='.$db->escape($user['uid']));
 
       self::write_session($user);
       self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($user['locale']));

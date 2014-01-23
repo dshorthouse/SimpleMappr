@@ -3,7 +3,7 @@
 defined("ENVIRONMENT") || define("ENVIRONMENT", "production");
 
 // Upload directory for API calls, without trailing slash
-defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "");
+defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "/Users/dshorthouse/Sites/SimpleMappr/public/uploads");
 
 // Domain from where images will be served served, without a trailing slash
 defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.local");

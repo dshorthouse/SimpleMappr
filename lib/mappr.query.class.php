@@ -35,6 +35,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ********************************************************************/
 
 require_once('mappr.class.php');
+require_once('utilities.class.php');
 
 class MapprQuery extends Mappr {
 
@@ -124,7 +125,7 @@ class MapprQuery extends Mappr {
   }
 
   public function get_output() {
-    header("Content-Type: application/json");
+    Utilities::set_header("json");
     echo json_encode($this->data);
   }
 

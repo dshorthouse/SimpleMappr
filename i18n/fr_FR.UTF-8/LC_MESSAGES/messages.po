@@ -825,8 +825,8 @@ msgid "Acknowledgments"
 msgstr "Remerciements"
 
 #: .tabs/api.php:7
-msgid "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) is also available for vector-based layers."
-msgstr "Un API peut être utilisé avec des fichiers texte séparés par des tabulations, une collection de coordonnées, our par envoyé des fichiers avec des paramètres supplémentaires décrites ci-dessous. Un Web Feature Service (WFS) est également disponible pour les couches vectorielles."
+msgid "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively."
+msgstr "Un API peut être utilisé avec des fichiers texte séparés par des tabulations, une collection de coordonnées, our par envoyé des fichiers avec des paramètres supplémentaires décrites ci-dessous. Un Web Feature Service (WFS) et un Web Map Service (WMS) sont également disponible pour les couches vectorielles et raster, respectivement."
 
 #: .tabs/feedback.php:3
 msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."

@@ -68,7 +68,7 @@ class NavigationTest extends SimpleMapprTest {
   public function testUserPage() {
     parent::setUpPage();
     parent::setSession('user', 'fr_FR');
-    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'user');
+    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'Jack Johnson');
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnectez');
 
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Mes cartes'));
@@ -85,7 +85,7 @@ class NavigationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
     $link->click();
     parent::waitOnSpinner();
-    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'administrator');
+    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'John Smith');
 
     $matcher = array(
       'tag' => 'tbody',
