@@ -20,6 +20,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 **************************************************************************/
 
 require_once(dirname(__FILE__) . '/config/conf.php');
+require_once(dirname(__FILE__) . '/lib/utilities.class.php');
 
 class Bootstrap {
 
@@ -48,11 +49,7 @@ class Bootstrap {
         break;
 
       case "/about":
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
-        header('Content-Type: text/html; charset=utf-8');
+        Utilities::set_header("html");
         include_once("views/about.php");
         break;
 

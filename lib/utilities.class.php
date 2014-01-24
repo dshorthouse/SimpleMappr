@@ -60,7 +60,7 @@ class Utilities {
         break;
 
       case 'html':
-        header("Content-Type: text/html");
+        header("Content-Type: text/html; charset=utf-8");
         break;
 
       case 'xml':

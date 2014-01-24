@@ -46,7 +46,6 @@ class Header {
   private $js_header = array();
   private $css_header = array();
   private $hash = "";
-  private $redis = "";
 
   private static $css_cache_path = "/public/stylesheets/cache/";
   private static $js_cache_path = "/public/javascript/cache/";
@@ -105,18 +104,6 @@ class Header {
       unlink($file);
     }
 
-    $redis_flush = "n/a";
-    try {
-      if(extension_loaded("redis") && defined('REDIS_SERVER')) {
-        $redis = new Redis();
-        $redis->connect(REDIS_SERVER);
-        $redis->delete("simplemappr_hash");
-        $redis_flush = true;
-      }
-    } catch(Exception $e) {
-      $redis_flush = false;
-    }
-
     $cloudflare_flush = "n/a";
     if (self::cloudflare_enabled()) {
      $cloudflare_flush = (self::flush_cloudflare()) ? true : false;
@@ -126,7 +113,6 @@ class Header {
       Utilities::set_header("json");
       $response = array(
         "files" => true,
-        "redis" => $redis_flush,
         "cloudflare" => $cloudflare_flush
       );
       echo json_encode($response);
@@ -174,36 +160,10 @@ class Header {
   }
 
   function __construct() {
-    $this->redis()
-         ->make_hash()
+    $this->make_hash()
          ->add_remote_js()
          ->combine_local_js()
-         ->combine_local_css()
-         ->set_redis();
-  }
-
-  private function redis_installed() {
-    if(extension_loaded("redis")) {
-      return true;
-    }
-    return false;
-  }
-
-  private function redis() {
-    if($this->redis_installed()) {
-      $this->redis = new Redis();
-      $this->redis->pconnect(REDIS_SERVER);
-    }
-    return $this;
-  }
-
-  private function set_redis() {
-    if($this->redis_installed()) {
-      if(!$this->redis->exists("simplemappr_hash")) {
-        $this->redis->set('simplemappr_hash', $this->hash);
-      }
-    }
-    return $this;
+         ->combine_local_css();
   }
 
   /*
@@ -243,11 +203,7 @@ class Header {
   */
   private function combine_local_js() {
     if(ENVIRONMENT == "production") {
-      if($this->redis_installed()) {
-        $cached_js = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".js") : array();
-      } else {
-        $cached_js = $this->files_cached(dirname(dirname(__FILE__)) . self::$js_cache_path);
-      }
+      $cached_js = $this->files_cached(dirname(dirname(__FILE__)) . self::$js_cache_path);
 
       if(!$cached_js) {
         unset($this->local_js_combined['jquery'], $this->local_js_combined['jquery_ui']);
@@ -294,11 +250,7 @@ class Header {
   */
   private function combine_local_css() {
     if(ENVIRONMENT == "production") {
-      if($this->redis_installed()) {
-        $cached_css = ($this->redis->exists('simplemappr_hash')) ? array($this->redis->get('simplemappr_hash') . ".css") : array();
-      } else {
-        $cached_css = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
-      }
+      $cached_css = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
 
       if(!$cached_css) {
         $css_min = '';
