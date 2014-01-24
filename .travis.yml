@@ -10,9 +10,6 @@ env:
     - DBNAME=simplemappr_test
     - BROWSER=firefox
 
-services:
-  - redis-server
-
 before_install:
   # Chrome and chromedriver
   # Travis does not (yet) support chromedriver via xvfb
@@ -35,9 +32,6 @@ install:
 
   # Translations
   - sh -e .travis/scripts/locales.sh
-  
-  # Redis
-  - sh -e .travis/scripts/php-redis.sh
 
 before_script:
   # Directory permissions
