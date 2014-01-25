@@ -11,9 +11,6 @@ env:
     - BROWSER=firefox
 
 before_install:
-  # Chrome and chromedriver
-  # Travis does not (yet) support chromedriver via xvfb
-  # - sh -e .travis/scripts/chrome.sh
 
   # Selenium
   - "export DISPLAY=:99.0"
