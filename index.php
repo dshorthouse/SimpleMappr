@@ -208,7 +208,7 @@ class Bootstrap {
   }
 
   private function partial($partial) {
-    include_once("views/_".$partial.".php");
+    include_once("views/_$partial.php");
     call_user_func($partial);
   }
 

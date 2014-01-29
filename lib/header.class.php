@@ -182,7 +182,7 @@ class Header {
 
   private function make_hash() {
     if(ENVIRONMENT == "production") {
-      $this->hash = md5(microtime());
+      $this->hash = substr(md5(microtime()), 0, 8);
     }
     return $this;
   }
