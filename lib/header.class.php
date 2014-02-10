@@ -223,7 +223,6 @@ class Header {
           $this->addJS("compiled", self::$js_cache_path . $js);
         }
       }
-      $this->addJS("ga", "//google-analytics.com/ga.js");
     } else {
       foreach($this->local_js_combined as $key => $js_file) {
         if($key == "simplemappr") { $js_file = str_replace(".min", "",$js_file); }
@@ -385,8 +384,12 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     $analytics = "";
     if(ENVIRONMENT == "production") {
       $analytics  = "<script>" . "\n";
-      $analytics .= "var _gaq = _gaq || [];" . "\n";
-      $analytics .= "_gaq.push(['_setAccount', '".GOOGLE_ANALYTICS."'], ['_setDomainName', '".MAPPR_DOMAIN."'], ['_trackPageview']);" . "\n";
+      $analytics .= "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');" . "\n";
+      $analytics .= "ga('create', '".GOOGLE_ANALYTICS."', '".MAPPR_DOMAIN."');" . "\n";
+      $analytics .= "ga('send', 'pageview');" . "\n";
       $analytics .= "</script>" . "\n";
     }
     return $analytics;

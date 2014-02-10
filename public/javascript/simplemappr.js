@@ -27,7 +27,7 @@
  *
  * }}}
  */
-/*global jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
+/*global jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, ga */
 var SimpleMappr = (function($, window, document) {
 
   "use strict";
@@ -64,7 +64,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     trackEvent: function(category, action) {
-      if (window._gaq !== undefined) { _gaq.push(['_trackEvent', category, action]); }
+      if (typeof ga === 'function') { ga('send', 'event', category, action); }
     },
 
     getPageSize: function() {
@@ -1059,7 +1059,7 @@ var SimpleMappr = (function($, window, document) {
           clone.find("select.m-mapSize").attr("name", data_type + "["+num.toString()+"][size]").val("10");
           clone.find("input.colorPicker").attr("name", data_type + "["+num.toString()+"][color]").val(color).ColorPicker({
             onBeforeShow: function() {
-              var color = $(this).val().split(" ");
+              color = $(this).val().split(" ");
               $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
             },
             onHide: function(colpkr) {
@@ -1072,7 +1072,7 @@ var SimpleMappr = (function($, window, document) {
               $(el).ColorPickerHide();
             }
           }).on('keyup', function() {
-            var color = $(this).val().split(" ");
+            color = $(this).val().split(" ");
             $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
           });
 
