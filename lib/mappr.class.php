@@ -207,10 +207,12 @@ class Mappr {
     'openstar',
     'opensquare',
     'opentriangle',
+    'openhexagon',
     'circle',
     'star',
     'square',
-    'triangle'
+    'triangle',
+    'hexagon'
   );
 
   /**
@@ -644,6 +646,40 @@ class Mappr {
       $symbol->set("inmapfile", MS_TRUE);
       $spoints = array(
           1, 1
+      );
+      $symbol->setpoints($spoints);
+
+      //hexagon
+      $nId = ms_newSymbolObj($this->map_obj, "hexagon");
+      $symbol = $this->map_obj->getSymbolObjectById($nId);
+      $symbol->set("type", MS_SYMBOL_VECTOR);
+      $symbol->set("filled", MS_TRUE);
+      $symbol->set("inmapfile", MS_TRUE);
+      $spoints = array(
+          0.23, 0,
+          0, 0.5,
+          0.23, 1,
+          0.77, 1,
+          1, 0.5,
+          0.77, 0,
+          0.23, 0
+      );
+      $symbol->setpoints($spoints);
+
+      //openhexagon
+      $nId = ms_newSymbolObj($this->map_obj, "openhexagon");
+      $symbol = $this->map_obj->getSymbolObjectById($nId);
+      $symbol->set("type", MS_SYMBOL_VECTOR);
+      $symbol->set("filled", MS_FALSE);
+      $symbol->set("inmapfile", MS_TRUE);
+      $spoints = array(
+          0.23, 0,
+          0, 0.5,
+          0.23, 1,
+          0.77, 1,
+          1, 0.5,
+          0.77, 0,
+          0.23, 0
       );
       $symbol->setpoints($spoints);
     }

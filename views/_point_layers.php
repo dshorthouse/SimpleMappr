@@ -19,12 +19,14 @@ function point_layers() {
   $marker_shape .= '<option value="star">'._("star (s)").'</option>';
   $marker_shape .= '<option value="square">'._("square (s)").'</option>';
   $marker_shape .= '<option value="triangle">'._("triangle (s)").'</option>';
+  $marker_shape .= '<option value="hexagon">'._("hexagon (s)").'</option>';
   $marker_shape .= '</optgroup>';
   $marker_shape .= '<optgroup label="'._("open").'">';
   $marker_shape .= '<option value="opencircle">'._("circle (o)").'</option>';
   $marker_shape .= '<option value="openstar">'._("star (o)").'</option>';
   $marker_shape .= '<option value="opensquare">'._("square (o)").'</option>';
   $marker_shape .= '<option value="opentriangle">'._("triangle (o)").'</option>';
+  $marker_shape .= '<option value="openhexagon">'._("hexagon (o)").'</option>';
   $marker_shape .= '</optgroup>';
 
   $output = '';

@@ -529,6 +529,10 @@ msgstr "carrés (p)"
 msgid "triangle (s)"
 msgstr "triangles (p)"
 
+#: .index.php:340
+msgid "hexagon (s)"
+msgstr "hexagone (p)"
+
 #: .index.php:342
 msgid "open"
 msgstr "ouvert"
@@ -548,6 +552,10 @@ msgstr "carrés (o)"
 #: .index.php:346
 msgid "triangle (o)"
 msgstr "triangles (o)"
+
+#: .index.php:346
+msgid "hexagon (o)"
+msgstr "hexagone (o)"
 
 #: .index.php:355
 #: .index.php:385
