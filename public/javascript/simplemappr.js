@@ -346,41 +346,43 @@ var SimpleMappr = (function($, window, document) {
         }
       }).end().on('click', 'a', function(e) {
         e.preventDefault();
-        action = $(this).attr("class").match(/tools([\w\W]+)/)[1].toLowerCase();
-        switch(action) {
-          case 'zoomin':
-            self.mapZoom("in");
-          break;
-          
-          case 'zoomout':
-            self.mapZoom("out");
-          break;
-          
-          case 'crop':
-            self.mapCrop();
-          break;
-          
-          case 'query':
-            self.resetJbbox();
-          break;
-          
-          case 'refresh':
-            self.mapRefresh();
-          break;
-          
-          case 'rebuild':
-            self.mapRebuild();
-          break;
-          
-          case 'save':
-            self.mapSave();
-          break;
-          
-          case 'download':
-            self.mapDownload();
-          break;
+        if(!self.missingFieldSetTitle()) {
+          action = $(this).attr("class").match(/tools([\w\W]+)/)[1].toLowerCase();
+          switch(action) {
+            case 'zoomin':
+              self.mapZoom("in");
+            break;
+
+            case 'zoomout':
+              self.mapZoom("out");
+            break;
+
+            case 'crop':
+              self.mapCrop();
+            break;
+
+            case 'query':
+              self.resetJbbox();
+            break;
+
+            case 'refresh':
+              self.mapRefresh();
+            break;
+
+            case 'rebuild':
+              self.mapRebuild();
+            break;
+
+            case 'save':
+              self.mapSave();
+            break;
+
+            case 'download':
+              self.mapDownload();
+            break;
+          }
+          self.trackEvent('toolbar', action);
         }
-        self.trackEvent('toolbar', action);
       });
     },
 
@@ -617,7 +619,11 @@ var SimpleMappr = (function($, window, document) {
           $.each(arrows, function(key, value) {
             $(document).on('keydown', null, key, value);
           });
-          self.vars.mapOutputImage.on('dblclick', function(e) { self.dblclickZoom(this, e); });
+          self.vars.mapOutputImage.on('dblclick', function(e) {
+            if(!self.missingFieldSetTitle()) {
+              self.dblclickZoom(this, e);
+            }
+          });
         },
         function() {
           $.each(arrows, function(key, value) {
@@ -629,39 +635,44 @@ var SimpleMappr = (function($, window, document) {
       );
     },
 
-    hardResetShowMap: function() {
-      this.resetJbbox();
-      this.destroyRedo();
-      this.showMap();
+    hardResetShowMap: function(e) {
+      if(this.missingFieldSetTitle()) {
+        e.preventDefault();
+        e.stopPropagation();
+      } else {
+        this.resetJbbox();
+        this.destroyRedo();
+        this.showMap();
+      }
     },
 
     bindSettings: function() {
       var self = this, graticules = $('#graticules');
-      
-      $('#mapOptions').on('click', '.layeropt', function() {
-        self.hardResetShowMap();
-      }).on('click', '.gridopt', function() {
+
+      $('#mapOptions').on('click', '.layeropt', function(e) {
+        self.hardResetShowMap(e);
+      }).on('click', '.gridopt', function(e) {
         if(!graticules.prop('checked')) { graticules.prop('checked', true); }
-        self.hardResetShowMap();
-      }).on('click', '#gridlabel', function() {
+        self.hardResetShowMap(e);
+      }).on('click', '#gridlabel', function(e) {
         if(!graticules.prop('checked')) { graticules.prop('checked', true); }
         if($(this).prop('checked')) { $(this).val('false'); }
-        self.hardResetShowMap();
+        self.hardResetShowMap(e);
       });
 
-      $('#projection').on('change', function() {
+      $('#projection').on('change', function(e) {
         var origin_sel = $('#origin-selector');
 
         if($(this).val() !== "") {
           $('#origin').val(self.vars.origins[$(this).val()]);
           if(self.vars.origins.hasOwnProperty($("#projection").val())) { origin_sel.show(); } else { origin_sel.hide(); }
           $.cookie("jcrop_coords", null);
-          self.hardResetShowMap();
+          self.hardResetShowMap(e);
         }
       });
 
-      $('#origin').on('blur', function() {
-        self.hardResetShowMap();
+      $('#origin').on('blur', function(e) {
+        self.hardResetShowMap(e);
       }).on('keydown', function(e) {
         var key = e.keyCode || e.which;
         if(key === 9 || key === 13 ) { this.blur(); }
@@ -686,10 +697,14 @@ var SimpleMappr = (function($, window, document) {
         step  : 0.25,
         slide: function(e, ui) {
           self.unusedVariables(e);
-          $('#border_thickness').val(ui.value);
-          self.destroyRedo();
-          self.showMap();
-          self.trackEvent('slider', ui.value);
+          if(!self.missingFieldSetTitle()) {
+            $('#border_thickness').val(ui.value);
+            self.destroyRedo();
+            self.showMap();
+            self.trackEvent('slider', ui.value);
+          } else {
+            return false;
+          }
         }
       });
     },
@@ -1689,30 +1704,41 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindSubmit: function() {
-      var self = this, title = "", missingTitle = false;
+      var self = this;
 
       $('#map-points, #map-regions').find('button.submitForm').on('click', function(e) {
         e.preventDefault();
-        missingTitle = false;
-        $.each($(this).parent().parent().find('div.fieldSets').children(), function() {
-          title = $(this).find('input.m-mapTitle').on('keyup', function() {
-            missingTitle = false;
-            $(this).removeClass('ui-state-error');
-          });
-          if($(this).find('textarea.m-mapCoord').val() && title.val() === '') {
-            missingTitle = true;
-            title.addClass('ui-state-error');
-            return false;
-          }
-        });
-        if(missingTitle) {
-          self.showMessage($('#mapper-missing-legend').text());
-        } else {
+        if(!self.missingFieldSetTitle()) {
           self.destroyRedo();
           self.showMap();
           self.tabSelector(0);
         }
       });
+    },
+
+    missingFieldSetTitle: function() {
+      var self = this,
+          fieldsets = $.makeArray(this.vars.fieldSetsPoints.children(), this.vars.fieldSetsRegions.children()),
+          title = "",
+          missingTitle = false,
+          fieldset = "",
+          tab = 1;
+
+      $.each(fieldsets, function() {
+        fieldset = $(this);
+        title = fieldset.find('input.m-mapTitle').on('keyup', function() {
+          $(this).removeClass('ui-state-error');
+        });
+        if(fieldset.find('textarea.m-mapCoord').val() && title.val() === '') {
+          missingTitle = true;
+          title.addClass('ui-state-error');
+          if(fieldset.parent().attr("id") === self.vars.fieldSetsRegions.attr("id")) { tab = 2; }
+          self.tabSelector(tab);
+          self.showMessage($('#mapper-missing-legend').text());
+          return false;
+        }
+      });
+      return missingTitle;
     },
 
     mapToggleSettings: function() {
@@ -1723,29 +1749,33 @@ var SimpleMappr = (function($, window, document) {
       var self = this;
       $('#mapToolsCollapse').find('a').tipsy({ gravity : 'e' }).toggleClick(function(e) {
         e.preventDefault();
-        self.vars.mapOutputImage.attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
-        $('#mapOutputScale').hide();
-        $(this).parent().addClass("mapTools-collapsed");
-        $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
-          var new_width = $(window).width()*0.98;
-          $('#actionsBar').animate({ width : new_width }, 250);
-          $('#map').animate({ width : new_width }, 250, function() {
-            $('#width').val(new_width);
-            self.mapRefresh();
+        if(!self.missingFieldSetTitle()) {
+          self.vars.mapOutputImage.attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
+          $('#mapOutputScale').hide();
+          $(this).parent().addClass("mapTools-collapsed");
+          $('#mapTools').hide("slide", { direction : "right" }, 250, function() {
+            var new_width = $(window).width()*0.98;
+            $('#actionsBar').animate({ width : new_width }, 250);
+            $('#map').animate({ width : new_width }, 250, function() {
+              $('#width').val(new_width);
+              self.mapRefresh();
+            });
           });
-        });
+        }
       }, function(e) {
         e.preventDefault();
-        self.vars.mapOutputImage.attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
-        $('#mapOutputScale').hide();
-        $(this).parent().removeClass("mapTools-collapsed");
-        $('#mapTools').show("slide", { direction : "right" }, 250, function() {
-          $('#actionsBar').animate({ width : "910px" }, 250);
-          $('#map').animate({ width : "900px" }, 250, function() {
-             $('#width').val(900);
-             self.mapRefresh();
+        if(!self.missingFieldSetTitle()) {
+          self.vars.mapOutputImage.attr("width", 0).attr("height", 0).css({width:'0px', height:'0px'});
+          $('#mapOutputScale').hide();
+          $(this).parent().removeClass("mapTools-collapsed");
+          $('#mapTools').show("slide", { direction : "right" }, 250, function() {
+            $('#actionsBar').animate({ width : "910px" }, 250);
+            $('#map').animate({ width : "900px" }, 250, function() {
+               $('#width').val(900);
+               self.mapRefresh();
+            });
           });
-        });
+        }
       });
     },
 
