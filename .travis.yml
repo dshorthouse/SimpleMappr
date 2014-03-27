@@ -15,9 +15,9 @@ before_install:
   # Selenium
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.39.0.jar"
-  # - "java -jar selenium-server-standalone-2.39.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &"
-  - "java -jar selenium-server-standalone-2.39.0.jar > /dev/null &"
+  - "wget http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar"
+  # - "java -jar selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &"
+  - "java -jar selenium-server-standalone-2.40.0.jar > /dev/null &"
   - sleep 10
 
 install:

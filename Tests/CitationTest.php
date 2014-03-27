@@ -49,8 +49,8 @@ class CitationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('About'));
     $link->click();
     parent::waitOnSpinner();
-    $citations = $this->webDriver->findElements(WebDriverBy::className('citation'));
-    $this->assertEquals($citation, $citations[0]->getText());
+    $about_page = $this->webDriver->findElement(WebDriverBy::id('map-about'))->getText();
+    $this->assertContains($citation, $about_page);
   }
 
   public function testDeleteCitation() {
