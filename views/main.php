@@ -294,7 +294,7 @@ foreach(MAPPR::$accepted_projections as $key => $value) {
 <div id="mapEmbed" class="ui-state-highlight hidden-message" title="<?php echo _("Embed"); ?>">
   <div class="header"><h2><?php echo _('Image'); ?></h2></div>
   <p><input id="embed-img" type="text" size="65" value="" /></p>
-  <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height"); ?> (<em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150)</span></p>
+  <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("width, height, legend"); ?> <br><em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150&amp;legend=true</span></p>
   <div class="header"><h2><?php echo _('KML'); ?></h2></div>
   <p><input id="embed-kml" type="text" size="65" value="" /></p>
   <div class="header"><h2><?php echo _('SVG'); ?></h2></div>

@@ -481,8 +481,8 @@ msgid "Additional parameters"
 msgstr "Paramètres supplémentaires"
 
 #: .index.php:276
-msgid "width, height"
-msgstr "largeur, hauteur"
+msgid "width, height, legend"
+msgstr "largeur, hauteur, légende"
 
 #: .index.php:281
 msgid "callback"

@@ -81,6 +81,8 @@ class MapprMap extends Mappr {
     $this->width            = (float)$this->load_param('width', 800);
     $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
     if($this->width == 0 || $this->height == 0) { $this->width = 800; $this->height = 400; }
+    if($this->load_param('legend', false)) { $this->options['legend'] = true; }
+
     $this->image_size       = array($this->width, $this->height);
     $this->callback         = $this->load_param('callback', null);
     $this->output           = $this->extension; //overwrite the output
