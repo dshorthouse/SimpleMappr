@@ -130,19 +130,12 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   public function setUpPage() {
     new Header;
     $this->webDriver->get($this->url);
-    $this->waitOnLoad();
-  }
-
-  public function waitOnLoad() {
-    $this->webDriver->wait(10,250)->until(
-      WebDriverExpectedCondition::visibilityOf(
-        $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))
-      )
-    );
+    echo $this->webDriver->getPageSource() . "\n";
+    $this->waitOnSpinner();
   }
 
   public function waitOnSpinner() {
-    $this->webDriver->wait(5,25)->until(
+    $this->webDriver->wait(10,100)->until(
       WebDriverExpectedCondition::invisibilityOfElementLocated(
         WebDriverBy::cssSelector('#map-loader span.mapper-loading-spinner')
       )
