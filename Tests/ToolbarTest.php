@@ -4,7 +4,6 @@
  * Integration tests for toolbar
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
-
 class ToolbarTest extends SimpleMapprTest {
 
   public function setUp() {

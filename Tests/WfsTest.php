@@ -3,7 +3,6 @@
 /**
  * Unit tests for static methods and set-up of MapprWfs class
  */
-
 class WfsTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_wfs;
@@ -27,10 +26,9 @@ class WfsTest extends PHPUnit_Framework_TestCase {
   public function test_GetCapabilities() {
     $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
     ob_start();
-    $mappr_wfs->get_output();
-    $output = ob_get_contents();
+    $mappr_wfs->create_output();
+    $xml = simplexml_load_string(ob_get_contents());
     ob_end_clean();
-    $xml = simplexml_load_string($output);
     $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
     $this->assertEquals(6, count($xml->FeatureTypeList->FeatureType));
   }
@@ -43,10 +41,9 @@ class WfsTest extends PHPUnit_Framework_TestCase {
     );
     $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
     ob_start();
-    $mappr_wfs->get_output();
-    $output = ob_get_contents();
+    $mappr_wfs->create_output();
+    $xml = simplexml_load_string(ob_get_contents());
     ob_end_clean();
-    $xml = simplexml_load_string($output);
     $ns = $xml->getNamespaces(true);
     $this->assertEquals(10, count($xml->children($ns['gml'])->featureMember));
   }

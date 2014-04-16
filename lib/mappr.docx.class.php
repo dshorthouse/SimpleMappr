@@ -42,7 +42,7 @@ include_once 'PHPWord/IOFactory.php';
 
 class MapprDocx extends Mappr {
 
-  public function get_output() {
+  public function create_output() {
       $objPHPWord = new PHPWord();
 
       $clean_filename = parent::clean_filename($this->file_name);

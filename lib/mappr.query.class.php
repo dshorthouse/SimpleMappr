@@ -124,7 +124,7 @@ class MapprQuery extends Mappr {
     return $this;
   }
 
-  public function get_output() {
+  public function create_output() {
     Utilities::set_header("json");
     echo json_encode($this->data);
   }

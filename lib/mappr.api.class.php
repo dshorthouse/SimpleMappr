@@ -358,7 +358,7 @@ class MapprApi extends Mappr {
     }
   }
 
-  public function get_output() {
+  public function create_output() {
 
     if($this->ping) {
       Utilities::set_header("json");

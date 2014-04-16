@@ -3,7 +3,6 @@
 /**
  * Unit tests for static methods and set-up of MapprWms class
  */
-
 class WmsTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_wms;
@@ -27,10 +26,9 @@ class WmsTest extends PHPUnit_Framework_TestCase {
   public function test_GetCapabilities() {
     $mappr_wms = $this->mappr_wms->get_request()->make_service()->execute();
     ob_start();
-    $mappr_wms->get_output();
-    $output = ob_get_contents();
+    $mappr_wms->create_output();
+    $xml = simplexml_load_string(ob_get_contents());
     ob_end_clean();
-    $xml = simplexml_load_string($output);
     $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
     $this->assertEquals(8, count($xml->Capability->Layer->Layer));
   }
@@ -46,10 +44,9 @@ class WmsTest extends PHPUnit_Framework_TestCase {
     );
     $mappr_wms = $this->mappr_wms->get_request()->make_service()->execute();
     ob_start();
-    $mappr_wms->get_output();
-    $output = ob_get_contents();
+    $mappr_wms->create_output();
+    $image = imagecreatefromstring(ob_get_contents());
     ob_end_clean();
-    $image = imagecreatefromstring($output);
     $this->assertEquals(imagesx($image), 400);
     $this->assertEquals(imagesy($image), 200);
   }

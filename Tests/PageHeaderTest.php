@@ -4,7 +4,6 @@
  * Unit tests for Mappr class
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
-
 class PageHeaderTest extends SimpleMapprTest {
 
   public function setUp() {

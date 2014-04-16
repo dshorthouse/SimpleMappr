@@ -3,7 +3,6 @@
 /**
  * Unit tests for converting coordinates using static methods in Mappr class
  */
-
 class CoordinateConversionTest extends PHPUnit_Framework_TestCase {
 
   public function test_clean_coord() {

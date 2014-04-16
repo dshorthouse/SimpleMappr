@@ -3,15 +3,14 @@
 /**
  * Unit tests for static methods and default set-up of Mappr class
  */
-
-class DefaultMapprTest extends PHPUnit_Framework_TestCase {
+class ApplicationMapprTest extends PHPUnit_Framework_TestCase {
 
    protected $mappr;
    protected $output;
 
    protected function setUp() {
       $root = dirname(dirname(__FILE__));
-      $mappr = new Mappr();
+      $mappr = new MapprApplication();
       $mappr->set_shape_path($root."/lib/mapserver/maps")
            ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
            ->set_tmp_path($root."/public/tmp/")
@@ -21,7 +20,7 @@ class DefaultMapprTest extends PHPUnit_Framework_TestCase {
            ->get_request();
      $this->mappr = $mappr->execute();
      ob_start();
-     $this->mappr->get_output();
+     $this->mappr->create_output();
      $this->output = json_decode(ob_get_contents(), TRUE);
      ob_end_clean();
    }

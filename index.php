@@ -55,7 +55,7 @@ class Bootstrap {
 
       case "/api":
         $klass = $this->klass("mappr.api", "MapprApi");
-        $this->setup_map($klass)->execute()->get_output();
+        $this->setup_map($klass)->execute()->create_output();
         $this->log("API");
         break;
 
@@ -64,8 +64,8 @@ class Bootstrap {
         break;
 
       case "/application":
-        $klass = $this->klass("mappr", "Mappr");
-        $this->setup_map($klass)->execute()->get_output();
+        $klass = $this->klass("mappr.application", "MapprApplication");
+        $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/citation":
@@ -76,7 +76,7 @@ class Bootstrap {
       case "/docx":
         $this->set_locale();
         $klass = $this->klass("mappr.docx", "MapprDocx");
-        $this->setup_map($klass)->execute()->get_output();
+        $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/feedback":
@@ -111,7 +111,7 @@ class Bootstrap {
 
       case "/map":
         $klass = $this->klass("mappr.map", "MapprMap", $this->id, $this->extension);
-        $this->setup_map($klass)->execute()->get_output();
+        $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/places":
@@ -121,12 +121,12 @@ class Bootstrap {
       case "/pptx":
         $this->set_locale();
         $klass = $this->klass("mappr.pptx", "MapprPptx");
-        $this->setup_map($klass)->execute()->get_output();
+        $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/query":
         $klass = $this->klass("mappr.query", "MapprQuery");
-        $this->setup_map($klass)->execute()->query_layer()->get_output();
+        $this->setup_map($klass)->execute()->query_layer()->create_output();
         break;
 
       case "/session":
@@ -140,16 +140,16 @@ class Bootstrap {
       case "/usermap":
         $this->klass("usermap", "Usermap", $this->id);
         break;
-    
+
       case "/wfs":
         $klass = $this->klass("mappr.wfs", "MapprWfs");
-        $this->setup_map($klass)->make_service()->execute()->get_output();
+        $this->setup_map($klass)->make_service()->execute()->create_output();
         $this->log("WFS");
         break;
 
       case "/wms":
         $klass = $this->klass("mappr.wms", "MapprWms");
-        $this->setup_map($klass)->make_service()->execute()->get_output();
+        $this->setup_map($klass)->make_service()->execute()->create_output();
         $this->log("WMS");
         break;
 

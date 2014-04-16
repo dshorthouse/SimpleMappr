@@ -34,8 +34,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-class Mappr {
+abstract class Mappr {
 
+  abstract function create_output();
+  
   /* the base map object */
   protected $map_obj;
 
@@ -65,6 +67,21 @@ class Mappr {
 
   /* shapes and their mapfile configurations */
   protected $shapes = array();
+
+  /* post-draw padding for longitude extent to be used as a correction factor on front-end */
+  protected $ox_pad = 0;
+
+  /* post-draw padding for latitude extent to be used as a correction factor on front-end */
+  protected $oy_pad = 0;
+
+  /* url for legend image if produced */
+  protected $legend_url;
+
+  /* url for scalebar image if produced */
+  protected $scalebar_url;
+
+  /* holding bin for any geographic coordinates that fall outside extent of Earth */
+  protected $bad_points = array();
 
   /* Initial mapfile as string because outputformat cannot otherwise be set */
   protected $mapfile_string = "
@@ -331,23 +348,8 @@ class Mappr {
   /* base download factor to rescale the resultant image */
   private $_download_factor = 1;
 
-  /* url for legend image if produced */
-  private $_legend_url;
-
-  /* url for scalebar image if produced */
-  private $_scalebar_url;
-
   /* holding bin for any errors thrown */
   private $_errors = array();
-
-  /* holding bin for any geographic coordinates that fall outside extent of Earth */
-  private $_bad_points = array();
-
-  /* post-draw padding for longitude extent to be used as a correction factor on front-end */
-  private $_ox_pad = 0;
-
-  /* post-draw padding for latitude extent to be used as a correction factor on front-end */
-  private $_oy_pad = 0;
 
   function __construct() {
     if (!extension_loaded("MapScript")) {
@@ -955,8 +957,8 @@ class Mappr {
     if($cellsize > 0) {
       $ox = max((($this->image_size[0]-1) - ($ext2 - $ext0)/$cellsize)/2,0);
       $oy = max((($this->image_size[1]-1) - ($ext3 - $ext1)/$cellsize)/2,0);
-      $this->_ox_pad = $ox*$cellsize;
-      $this->_oy_pad = $oy*$cellsize;
+      $this->ox_pad = $ox*$cellsize;
+      $this->oy_pad = $oy*$cellsize;
     }
 
     $this->map_obj->setExtent($ext0, $ext1, $ext2, $ext3);
@@ -1151,7 +1153,7 @@ class Mappr {
                 $points[$coord->x.$coord->y] = array();
               }
             } else {
-              $this->_bad_points[] = stripslashes($this->coords[$j]['title'] . ' : ' . $loc);
+              $this->bad_points[] = stripslashes($this->coords[$j]['title'] . ' : ' . $loc);
             }
           }
           $points = array();
@@ -1604,7 +1606,7 @@ class Mappr {
       if(!$this->download) {
         $this->map_obj->legend->set("status", MS_DEFAULT);
         $this->legend = $this->map_obj->drawLegend();
-        $this->_legend_url = $this->legend->saveWebImage();
+        $this->legend_url = $this->legend->saveWebImage();
       }
     }
   }
@@ -1646,8 +1648,16 @@ class Mappr {
     if(!$this->download) {
       $this->map_obj->scalebar->set("status", MS_DEFAULT);
       $this->scale = $this->map_obj->drawScalebar();
-      $this->_scalebar_url = $this->scale->saveWebImage();
+      $this->scalebar_url = $this->scale->saveWebImage();
     }
+  }
+
+  /**
+  * Get all the coordinates that fall outside Earth's geographic extent in dd
+  * @return string
+  */
+  public function get_bad_points() {
+    return implode('<br />', $this->bad_points);
   }
 
   /**
@@ -1693,97 +1703,6 @@ class Mappr {
       $this->add_legend_scalebar();
       $this->add_border();
       $this->image = $this->map_obj->drawQuery();
-    }
-  }
-
-  /**
-  * Get all the coordinates that fall outside Earth's geographic extent in dd
-  * @return string
-  */
-  private function get_bad_points() {
-    return implode('<br />', $this->_bad_points);
-  }
-
-  /**
-  * Produce the  final output
-  */
-  public function get_output() {
-    switch($this->output) {
-      case 'tif':
-        error_reporting(0);
-        $this->image_url = $this->image->saveWebImage();
-        $image_filename = basename($this->image_url);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
-        header("Content-Type: image/tiff");
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-        ob_clean();
-        flush();
-        readfile($this->tmp_path.$image_filename);
-        exit();
-      break;
-
-      case 'png':
-        error_reporting(0);
-        $this->image_url = $this->image->saveWebImage();
-        $image_filename = basename($this->image_url);
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
-        header("Content-Type: image/png");
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-        ob_clean();
-        flush();
-        readfile($this->tmp_path.$image_filename);
-        exit();
-      break;
-
-      case 'svg':
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false); 
-        header("Content-Type: image/svg+xml");
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        $this->image->saveImage("");
-        exit();
-      break;
-
-      default:
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: private",false);
-        header("Content-Type: application/json");
-
-        $this->image_url = $this->image->saveWebImage();
-
-        $bbox = array(
-          sprintf('%.10f', $this->map_obj->extent->minx + $this->_ox_pad),
-          sprintf('%.10f', $this->map_obj->extent->miny + $this->_oy_pad),
-          sprintf('%.10f', $this->map_obj->extent->maxx - $this->_ox_pad),
-          sprintf('%.10f', $this->map_obj->extent->maxy - $this->_oy_pad)
-        );
-
-        $output = array(
-          'mapOutputImage'      => $this->image_url,
-          'size'                => $this->image_size,
-          'rendered_bbox'       => implode(",", $bbox),
-          'rendered_rotation'   => $this->rotation,
-          'rendered_projection' => $this->projection,
-          'legend_url'          => $this->_legend_url,
-          'scalebar_url'        => $this->_scalebar_url,
-          'bad_points'          => $this->get_bad_points(),
-        );
-
-        echo json_encode($output);
     }
   }
   

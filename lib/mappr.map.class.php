@@ -212,7 +212,7 @@ class MapprMap extends Mappr {
     return $output;
   }
 
-  public function get_output() {
+  public function create_output() {
     switch($this->extension) {
       case 'png':
       case 'pnga':

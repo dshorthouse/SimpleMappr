@@ -46,7 +46,7 @@ class MapprPptx extends Mappr {
 
   private $slidepadding = 25;
 
-  public function get_output() {
+  public function create_output() {
       $objPHPPowerPoint = new PHPPowerPoint();
 
       $clean_filename = parent::clean_filename($this->file_name);

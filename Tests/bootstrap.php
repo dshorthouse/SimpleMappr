@@ -58,6 +58,7 @@ function loader() {
   switchConf();
   requireFiles();
   Header::flush_cache(false);
+  ob_start();
   new Header;
 }
 
@@ -65,6 +66,7 @@ function unloader() {
   switchConf('restore');
   trashCachedFiles();
   Header::flush_cache(false);
+  ob_end_clean();
 }
 
 spl_autoload_register('loader');

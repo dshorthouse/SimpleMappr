@@ -151,7 +151,7 @@ class MapprWfs extends Mappr {
   /**
   * Produce the  final output
   */
-  public function get_output() {
+  public function create_output() {
     ms_ioinstallstdouttobuffer();
     $this->map_obj->owsDispatch($this->req);
     $contenttype = ms_iostripstdoutbuffercontenttype();

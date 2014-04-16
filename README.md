@@ -48,25 +48,26 @@ Configuration Instructions
 
 Homebrew on Mac OSX
 -------------------
-1. Install PHP5.5. See [https://github.com/josegonzalez/homebrew-php](https://github.com/josegonzalez/homebrew-php)
+1. Install PHP5.5. See [https://github.com/homebrew/homebrew-php](https://github.com/homebrew/homebrew-php)
 2. Execute from command line:
 
         $ brew install \
           autoconf \
           freetype \
-          gd --with-freetype \
+          jpeg \
+          libpng \
+          gd --with-freetype --with-png --with-jpeg --with-tiff \
           gdal \
           geos \
           gettext \
           icu4c \
-          jpeg \
-          libpng \
           proj \
           cairo \
           libsvg-cairo \
-          fribidi
+          fribidi \
+          phpunit
 
-3. Download MapServer 6.4.0 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-6.4.0.tar.gz](http://download.osgeo.org/mapserver/mapserver-6.4.0.tar.gz))
+3. Download MapServer 6.4.1 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz))
 4. Extract and cd into folder
 5. Execute from command line:
 
@@ -78,7 +79,7 @@ Homebrew on Mac OSX
 
 6. Execute $ make && make install
 7. Verify that mapserv is working $ mapserv -v
-8. Add extension=php_mapscript.so to php.ini and restart web server [You may also need to restart server]
+8. Add extension=php_mapscript.so to php.ini and restart web server
 
 Database
 --------
@@ -108,7 +109,7 @@ Selenium is used for integration tests and php-unit for unit tests. Facebook's [
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
-    $ java -jar selenium-server-standalone-2.40.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+    $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Copyright

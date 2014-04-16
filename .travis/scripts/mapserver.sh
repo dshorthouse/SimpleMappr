@@ -1,14 +1,15 @@
 #!/bin/sh
 
-echo $FOO
+echo "---> Starting MapServer 6.4.1 installation"
 
-echo "---> Starting MapServer 6.4.0 installation"
-
-wget http://download.osgeo.org/mapserver/mapserver-6.4.0.tar.gz
-tar -zxvf mapserver-6.4.0.tar.gz
-cmake mapserver-6.4.0 -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0
-make
-sudo make install
+wget http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz
+tar -zxvf mapserver-6.4.1.tar.gz
+cd mapserver-6.4.1
+mkdir build
+cd build
+cmake -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0 ..
+make && make install
+cd ../../
 
 echo "---> Download map files from Natural Earth"
 mkdir -p lib/mapserver/maps/10m_cultural/10m_cultural/
