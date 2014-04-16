@@ -29,7 +29,7 @@ interface WebDriver extends WebDriverSearchContext {
    * Find the first WebDriverElement using the given mechanism.
    *
    * @param WebDriverBy $locator
-   * @return WebDriverElement NoSuchElementWebDriverError is thrown in
+   * @return WebDriverElement NoSuchElementException is thrown in
    *    HttpCommandExecutor if no element is found.
    * @see WebDriverBy
    */
@@ -40,8 +40,8 @@ interface WebDriver extends WebDriverSearchContext {
    * mechanism.
    *
    * @param WebDriverBy $locator
-   * @return array A list of all WebDriverElements, or an empty array if
-   *    nothing matches
+   * @return array<WebDriverElement> A list of all WebDriverElements,
+   *    or an empty array if nothing matches
    * @see WebDriverBy
    */
   public function findElements(WebDriverBy $locator);
@@ -95,17 +95,6 @@ interface WebDriver extends WebDriverSearchContext {
    * @return void
    */
   public function quit();
-
-  /**
-   * Inject a snippet of JavaScript into the page for execution in the context
-   * of the currently selected frame. The executed script is assumed to be
-   * synchronous and the result of evaluating the script will be returned.
-   *
-   * @param string $script The script to inject.
-   * @param array $arguments The arguments of the script.
-   * @return mixed The return value of the script.
-   */
-  public function executeScript($script, array $arguments = array());
 
   /**
    * Take a screenshot of the current page.

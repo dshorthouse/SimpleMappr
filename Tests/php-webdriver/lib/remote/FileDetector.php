@@ -13,30 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Base class for all keyboard-related actions.
- */
-abstract class WebDriverKeysRelatedAction {
-
-  protected $keyboard;
-  protected $mouse;
-  protected $locationProvider;
-
-  public function __construct(
-      WebDriverKeyboard $keyboard,
-      WebDriverMouse $mouse,
-      WebDriverLocatable $location_provider = null) {
-    $this->keyboard = $keyboard;
-    $this->mouse = $mouse;
-    $this->locationProvider = $location_provider;
-  }
+interface FileDetector {
 
   /**
-   * @return void
+   * Try to detect whether the given $file is a file or not. Return the path
+   * of the file. Otherwise, return null.
+   *
+   * @return ?string The path of the file.
    */
-  protected function focusOnElement() {
-    if ($this->locationProvider) {
-      $this->mouse->click($this->locationProvider->getCoordinates());
-    }
-  }
+  public function getLocalFile($file);
 }

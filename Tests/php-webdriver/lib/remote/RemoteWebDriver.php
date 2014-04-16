@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-class RemoteWebDriver implements WebDriver {
+class RemoteWebDriver implements WebDriver, JavaScriptExecutor {
 
   protected $executor;
   protected $mouse;
@@ -41,18 +41,11 @@ class RemoteWebDriver implements WebDriver {
       'name' => 'newSession',
       'parameters' => array('desiredCapabilities' => $desired_capabilities),
     );
-    $response = HttpCommandExecutor::remoteExecute(
-      $command,
-      array(
-        CURLOPT_CONNECTTIMEOUT_MS => $timeout_in_ms,
-      )
-    );
 
-    $driver = new RemoteWebDriver();
-    $executor = new HttpCommandExecutor(
-      $url,
-      $response['sessionId']
-    );
+    $response = static::remoteExecuteHttpCommand($timeout_in_ms, $command);
+    $driver = new static();
+    $executor = static::createHttpCommandExecutor($url, $response['sessionId']);
+
     return $driver->setCommandExecutor($executor);
   }
 
@@ -71,9 +64,37 @@ class RemoteWebDriver implements WebDriver {
     $session_id,
     $url = 'http://localhost:4444/wd/hub'
   ) {
-    $driver = new RemoteWebDriver();
+    $driver = new static();
     $driver->setCommandExecutor(new HttpCommandExecutor($url, $session_id));
     return $driver;
+  }
+
+  /**
+   * @param string $url
+   * @param string $session_id
+   * @return HttpCommandExecutor
+   */
+  public static function createHttpCommandExecutor($url, $session_id) {
+    $executor = new HttpCommandExecutor(
+      $url,
+      $session_id
+    );
+    return $executor;
+  }
+
+  /**
+   * @param int   $timeout_in_ms
+   * @param array $command
+   * @return array
+   */
+  public static function remoteExecuteHttpCommand($timeout_in_ms, $command) {
+    $response = HttpCommandExecutor::remoteExecute(
+      $command,
+      array(
+        CURLOPT_CONNECTTIMEOUT_MS => $timeout_in_ms,
+      )
+    );
+    return $response;
   }
 
   /**
@@ -91,7 +112,7 @@ class RemoteWebDriver implements WebDriver {
    * Find the first WebDriverElement using the given mechanism.
    *
    * @param WebDriverBy $by
-   * @return WebDriverElement NoSuchElementWebDriverError is thrown in
+   * @return WebDriverElement NoSuchElementException is thrown in
    *    HttpCommandExecutor if no element is found.
    * @see WebDriverBy
    */
@@ -198,14 +219,14 @@ class RemoteWebDriver implements WebDriver {
    */
   private function prepareScriptArguments(array $arguments) {
     $args = array();
-    foreach ($arguments as $arg) {
-      if ($arg instanceof WebDriverElement) {
-        array_push($args, array('ELEMENT' => $arg->getID()));
+    foreach ($arguments as $key => $value) {
+      if ($value instanceof WebDriverElement) {
+        $args[$key] = array('ELEMENT'=>$value->getID());
       } else {
-        if (is_array($arg)) {
-          $arg = $this->prepareScriptArguments($arg);
+        if (is_array($value)) {
+          $value = $this->prepareScriptArguments($value);
         }
-        array_push($args, $arg);
+        $args[$key] = $value;
       }
     }
     return $args;
@@ -225,14 +246,34 @@ class RemoteWebDriver implements WebDriver {
       'script' => $script,
       'args' => $this->prepareScriptArguments($arguments),
     );
-    $response = $this->executor->execute('executeScript', $params);
-    return $response;
+    return $this->executor->execute('executeScript', $params);
+  }
+
+  /**
+   * Inject a snippet of JavaScript into the page for asynchronous execution in
+   * the context of the currently selected frame.
+   *
+   * The driver will pass a callback as the last argument to the snippet, and
+   * block until the callback is invoked.
+   *
+   * @see WebDriverExecuteAsyncScriptTestCase
+   *
+   * @param string $script The script to inject.
+   * @param array $arguments The arguments of the script.
+   * @return mixed The value passed by the script to the callback.
+   */
+  public function executeAsyncScript($script, array $arguments = array()) {
+    $params = array(
+      'script' => $script,
+      'args' => $this->prepareScriptArguments($arguments),
+    );
+    return $this->executor->execute('executeAsyncScript', $params);
   }
 
   /**
    * Take a screenshot of the current page.
    *
-   * @param $save_as The path of the screenshot to be saved.
+   * @param string $save_as The path of the screenshot to be saved.
    * @return string The screenshot in PNG format.
    */
   public function takeScreenshot($save_as = null) {
@@ -372,8 +413,26 @@ class RemoteWebDriver implements WebDriver {
   public function getCommandExecutor() {
     return $this->executor;
   }
+
+  /**
+   * Set the session id of the RemoteWebDriver.
+   *
+   * @param string $session_id
+   * @return WebDriver
+   */
+  public function setSessionID($session_id) {
+    $this->setCommandExecutor(
+      new HttpCommandExecutor(
+        $this->executor->getAddressOfRemoteServer(),
+        $session_id
+      )
+    );
+    return $this;
+  }
+
   /**
    * Get current selenium sessionID
+   *
    * @return sessionID
    */
   public function getSessionID() {

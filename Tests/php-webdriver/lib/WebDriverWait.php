@@ -40,7 +40,7 @@ class WebDriverWait {
    * value is not falsey.
    *
    * @param (closure|WebDriverExpectedCondition)
-   * @return mixed The return value of $func_or_ec
+   * return mixed The return value of $func_or_ec
    */
   public function until($func_or_ec, $message = "") {
     $end = time() + $this->timeout;
@@ -56,7 +56,7 @@ class WebDriverWait {
         if ($ret_val) {
           return $ret_val;
         }
-      } catch (NoSuchElementWebDriverError $e) {
+      } catch (NoSuchElementException $e) {
         $last_exception = $e;
       }
       usleep($this->interval * 1000);
@@ -65,6 +65,6 @@ class WebDriverWait {
     if ($last_exception) {
       throw $last_exception;
     }
-    throw new TimeOutWebDriverError($message);
+    throw new TimeOutException($message);
   }
 }

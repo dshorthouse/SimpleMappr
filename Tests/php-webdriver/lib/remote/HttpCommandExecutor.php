@@ -35,6 +35,7 @@ class HttpCommandExecutor implements WebDriverCommandExecutor {
     'elementFindElement' =>     array('method' => 'POST', 'url' => '/session/:sessionId/element/:id/element'),
     'elementFindElements' =>    array('method' => 'POST', 'url' => '/session/:sessionId/element/:id/elements'),
     'executeScript' =>          array('method' => 'POST', 'url' => '/session/:sessionId/execute'),
+    'executeAsyncScript' =>     array('method' => 'POST', 'url' => '/session/:sessionId/execute_async'),
     'findElement' =>            array('method' => 'POST', 'url' => '/session/:sessionId/element'),
     'findElements' =>           array('method' => 'POST', 'url' => '/session/:sessionId/elements'),
     'focusFrame' =>             array('method' => 'POST',  'url' => '/session/:sessionId/frame'),
@@ -160,6 +161,7 @@ class HttpCommandExecutor implements WebDriverCommandExecutor {
    * @param suffix       What to append to the base URL.
    * @param command      The Command object, modelled as a hash.
    * @param extra_opts   key => value pairs of curl options for curl_setopt()
+   * @return array
    */
   protected static function curl(
     $http_method,
@@ -254,6 +256,16 @@ class HttpCommandExecutor implements WebDriverCommandExecutor {
     return array('value' => $value, 'info' => $info, 'sessionId' => $sessionId);
   }
 
+  /**
+   * @return string
+   */
+  public function getAddressOfRemoteServer() {
+    return $this->url;
+  }
+
+  /**
+   * @return string
+   */
   public function getSessionID() {
     return $this->sessionID;
   }

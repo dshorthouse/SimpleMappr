@@ -15,11 +15,13 @@
 
 // interface
 require_once('WebDriverSearchContext.php');
+require_once('JavaScriptExecutor.php');
 require_once('WebDriver.php');
 require_once('WebDriverElement.php');
 require_once('WebDriverCommandExecutor.php');
 require_once('WebDriverAction.php');
 require_once('WebDriverEventListener.php');
+require_once('remote/FileDetector.php');
 
 // abstract class
 require_once('interactions/internal/WebDriverKeysRelatedAction.php');
@@ -55,6 +57,8 @@ require_once('interactions/internal/WebDriverDoubleClickAction.php');
 require_once('interactions/internal/WebDriverMouseMoveAction.php');
 require_once('interactions/internal/WebDriverMoveToOffsetAction.php');
 require_once('internal/WebDriverLocatable.php');
+require_once('remote/LocalFileDetector.php');
+require_once('remote/UselessFileDetector.php');
 require_once('remote/RemoteMouse.php');
 require_once('remote/RemoteKeyboard.php');
 require_once('remote/RemoteWebDriver.php');

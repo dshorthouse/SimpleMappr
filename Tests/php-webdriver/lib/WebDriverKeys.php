@@ -87,8 +87,14 @@ class WebDriverKeys {
   /**
    * Encode input of `sendKeys()`.
    * @params string|array $keys
+   * @return array
    */
   public static function encode($keys) {
+
+    if (is_numeric($keys)) {
+      $keys = '' . $keys;
+    }
+
     if (is_string($keys)) {
       $keys = array($keys);
     }

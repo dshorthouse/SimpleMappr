@@ -26,6 +26,9 @@ class WebDriverExpectedCondition {
    */
   private $apply;
 
+  /**
+   * @return (function():T) a closure function to be executed by WebDriverWait
+   */
   public function getApply() {
     return $this->apply;
   }
@@ -38,7 +41,8 @@ class WebDriverExpectedCondition {
    * An expectation for checking the title of a page.
    *
    * @param string title The expected title, which must be an exact match.
-   * @return bool True when the title matches, false otherwise.
+   * @return WebDriverExpectedCondition<bool> True when the title matches,
+   *         false otherwise.
    */
   public static function titleIs($title) {
     return new WebDriverExpectedCondition(
@@ -52,7 +56,8 @@ class WebDriverExpectedCondition {
    * An expectation for checking substring of a page Title.
    *
    * @param string title The expected substring of Title.
-   * @return bool True when in title, false otherwise.
+   * @return WebDriverExpectedCondition<bool> True when in title,
+   *         false otherwise.
    */
   public static function titleContains($title) {
     return new WebDriverExpectedCondition(
@@ -67,7 +72,8 @@ class WebDriverExpectedCondition {
    * page. This does not necessarily mean that the element is visible.
    *
    * @param WebDriverBy $by The locator used to find the element.
-   * @return WebDriverElement The element which is located.
+   * @return WebDriverExpectedCondition<WebDriverElement> The element which
+   *         is located.
    */
   public static function presenceOfElementLocated(WebDriverBy $by) {
     return new WebDriverExpectedCondition(
@@ -83,7 +89,8 @@ class WebDriverExpectedCondition {
    * also has a height and width that is greater than 0.
    *
    * @param WebDriverBy $by The locator used to find the element.
-   * @return WebDriverElement The element which is located and visible.
+   * @return WebDriverExpectedCondition<WebDriverElement> The element which is
+   *         located and visible.
    */
   public static function visibilityOfElementLocated(WebDriverBy $by) {
     return new WebDriverExpectedCondition(
@@ -91,7 +98,7 @@ class WebDriverExpectedCondition {
         try {
           $element = $driver->findElement($by);
           return $element->isDisplayed() ? $element : null;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return null;
         }
       }
@@ -104,7 +111,8 @@ class WebDriverExpectedCondition {
    * displayed but also has a height and width that is greater than 0.
    *
    * @param WebDriverElement $element The element to be checked.
-   * @return WebDriverElement The same WebDriverElement once it is visible.
+   * @return WebDriverExpectedCondition<WebDriverElement> The same
+   *         WebDriverElement once it is visible.
    */
   public static function visibilityOf(WebDriverElement $element) {
     return new WebDriverExpectedCondition(
@@ -119,7 +127,8 @@ class WebDriverExpectedCondition {
    * web page.
    *
    * @param WebDriverBy $by The locator used to find the element.
-   * @return array An array of WebDriverElements once they are located.
+   * @return WebDriverExpectedCondition<array> An array of WebDriverElements
+   *         once they are located.
    */
   public static function presenceOfAllElementsLocatedBy(WebDriverBy $by) {
     return new WebDriverExpectedCondition(
@@ -136,7 +145,7 @@ class WebDriverExpectedCondition {
    *
    * @param WebDriverBy $by The locator used to find the element.
    * @param string $text The text to be presented in the element.
-   * @return bool Whether the text is presented.
+   * @return WebDriverExpectedCondition<bool> Whether the text is presented.
    */
   public static function textToBePresentInElement(
       WebDriverBy $by, $text) {
@@ -145,7 +154,7 @@ class WebDriverExpectedCondition {
         try {
           $element_text = $driver->findElement($by)->getText();
           return strpos($element_text, $text) !== false;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return null;
         }
       }
@@ -158,7 +167,7 @@ class WebDriverExpectedCondition {
    *
    * @param WebDriverBy $by The locator used to find the element.
    * @param string $text The text to be presented in the element value.
-   * @return bool Whether the text is presented.
+   * @return WebDriverExpectedCondition<bool> Whether the text is presented.
    */
   public static function textToBePresentInElementValue(
       WebDriverBy $by, $text) {
@@ -167,7 +176,7 @@ class WebDriverExpectedCondition {
         try {
           $element_text = $driver->findElement($by)->getAttribute('value');
           return strpos($element_text, $text) !== false;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return null;
         }
       }
@@ -180,16 +189,15 @@ class WebDriverExpectedCondition {
    *
    * @param string frame_locator The locator used to find the iFrame
    *   expected to be either the id or name value of the i/frame
-   * @return WebDriver object focused on new frame when frame is found
-   *   bool false otherwise
-  */
-  public static function frameToBeAvailableAndSwitchToIt(
-      string $frame_locator) {
+   * @return WebDriverExpectedCondition<WebDriver> object focused on new frame
+   *         when frame is found bool false otherwise
+   */
+  public static function frameToBeAvailableAndSwitchToIt($frame_locator) {
     return new WebDriverExpectedCondition(
       function ($driver) use ($frame_locator) {
         try {
           return $driver->switchTo()->frame($frame_locator);
-        } catch (NoSuchFrameWebDriverError $e) {
+        } catch (NoSuchFrameException $e) {
           return false;
         }
       }
@@ -201,16 +209,17 @@ class WebDriverExpectedCondition {
    * present on the DOM.
    *
    * @param WebDriverBy $by The locator used to find the element.
-   * @return bool Whether there is no element located.
+   * @return WebDriverExpectedCondition<bool> Whether there is no element
+   *         located.
    */
   public static function invisibilityOfElementLocated(WebDriverBy $by) {
     return new WebDriverExpectedCondition(
       function ($driver) use ($by) {
         try {
           return !($driver->findElement($by)->isDisplayed());
-        } catch (NoSuchElementWebDriverError $e) {
+        } catch (NoSuchElementException $e) {
           return true;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return true;
         }
       }
@@ -223,7 +232,8 @@ class WebDriverExpectedCondition {
    *
    * @param WebdriverBy $by The locator used to find the element.
    * @param string $text The text of the element.
-   * @return bool Whether the text is found in the element located.
+   * @return WebDriverExpectedCondition<bool> Whether the text is found in the
+   *         element located.
    */
   public static function invisibilityOfElementWithText(
       WebDriverBy $by, $text) {
@@ -231,9 +241,9 @@ class WebDriverExpectedCondition {
       function ($driver) use ($by, $text) {
         try {
           return !($driver->findElement($by)->getText() === $text);
-        } catch (NoSuchElementWebDriverError $e) {
+        } catch (NoSuchElementException $e) {
           return true;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return true;
         }
       }
@@ -245,8 +255,8 @@ class WebDriverExpectedCondition {
    * can click it.
    *
    * @param WebDriverBy $by The locator used to find the element
-   * @return WebDriverElement The WebDriverElement once it is located, visible
-   *                          and clickable
+   * @return WebDriverExpectedCondition<WebDriverElement> The WebDriverElement
+   *         once it is located, visible and clickable
    */
   public static function elementToBeClickable(WebDriverBy $by) {
     $visibility_of_element_located =
@@ -263,7 +273,7 @@ class WebDriverExpectedCondition {
           } else {
             return null;
           }
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return null;
         }
       }
@@ -274,8 +284,8 @@ class WebDriverExpectedCondition {
    * Wait until an element is no longer attached to the DOM.
    *
    * @param WebDriverElement $element The element to wait for.
-   * @return bool false if the element is still attached to the DOM, true
-   *              otherwise.
+   * @return WebDriverExpectedCondition<bool> false if the element is still
+   *         attached to the DOM, true otherwise.
    */
   public static function stalenessOf(WebDriverElement $element) {
     return new WebDriverExpectedCondition(
@@ -283,7 +293,7 @@ class WebDriverExpectedCondition {
         try {
           $element->isEnabled();
           return false;
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return true;
         }
       }
@@ -296,18 +306,19 @@ class WebDriverExpectedCondition {
    * This works around the problem of conditions which have two parts: find an
    * element and then check for some condition on it. For these conditions it is
    * possible that an element is located and then subsequently it is redrawn on
-   * the client. When this happens a ObsoleteElementWebDriverError is thrown
+   * the client. When this happens a StaleElementReferenceException is thrown
    * when the second part of the condition is checked.
    *
    * @param WebDriverExpectedCondition $condition The condition wrapped.
-   * @return mixed The return value of the getApply() of the given condition.
+   * @return WebDriverExpectedCondition<mixed> The return value of the
+   *         getApply() of the given condition.
    */
   public static function refreshed(WebDriverExpectedCondition $condition) {
     return new WebDriverExpectedCondition(
       function ($driver) use ($condition) {
         try {
           return call_user_func($condition->getApply(), $driver);
-        } catch (ObsoleteElementWebDriverError $e) {
+        } catch (StaleElementReferenceException $e) {
           return null;
         }
       }
@@ -318,7 +329,7 @@ class WebDriverExpectedCondition {
    * An expectation for checking if the given element is selected.
    *
    * @param mixed element_or_by Either the element or the locator.
-   * @return bool whether the element is selected.
+   * @return WebDriverExpectedCondition<bool> whether the element is selected.
    */
   public static function elementToBeSelected($element_or_by) {
     return WebDriverExpectedCondition::elementSelectionStateToBe(
@@ -332,14 +343,16 @@ class WebDriverExpectedCondition {
    *
    * @param mixed $element_or_by Either the element or the locator.
    * @param bool $selected The required state.
-   * @return bool Whether the element is selected.
+   * @return WebDriverExpectedCondition<bool> Whether the element is selected.
    */
   public static function elementSelectionStateToBe(
-      $element_or_by, bool $selected) {
+      $element_or_by,
+      $selected
+  ) {
     if ($element_or_by instanceof WebDriverElement) {
       return new WebDriverExpectedCondition(
         function ($driver) use ($element_or_by, $selected) {
-          return $element_or_by->isSelected === $selected;
+          return $element_or_by->isSelected() === $selected;
         }
       );
     } else if ($element_or_by instanceof WebDriverBy) {
@@ -347,8 +360,8 @@ class WebDriverExpectedCondition {
         function ($driver) use ($element_or_by, $selected) {
           try {
             $element = $driver->findElement($element_or_by);
-            return $element->isSelected === $selected;
-          } catch (ObsoleteElementWebDriverError $e) {
+            return $element->isSelected() === $selected;
+          } catch (StaleElementReferenceException $e) {
             return null;
           }
         }
@@ -359,7 +372,8 @@ class WebDriverExpectedCondition {
   /**
    * An expectation for whether an alert() box is present.
    *
-   * @return WebDriverAlert if alert() is present, null otherwise.
+   * @return WebDriverExpectedCondition<?WebDriverAlert> if alert() is present,
+   *         null otherwise.
    */
   public static function alertIsPresent() {
     return new WebDriverExpectedCondition(
@@ -371,7 +385,7 @@ class WebDriverExpectedCondition {
           $alert = $driver->switchTo()->alert();
           $alert->getText();
           return $alert;
-        } catch (NoAlertOpenWebDriverError $e) {
+        } catch (NoAlertOpenException $e) {
           return null;
         }
       }
