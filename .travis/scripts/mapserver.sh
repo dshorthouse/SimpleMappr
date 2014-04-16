@@ -8,7 +8,8 @@ cd mapserver-6.4.1
 mkdir build
 cd build
 cmake -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0 ..
-make && make install
+make
+sudo make install
 cd ../../
 
 echo "---> Download map files from Natural Earth"
