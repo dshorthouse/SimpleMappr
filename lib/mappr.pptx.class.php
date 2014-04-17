@@ -35,8 +35,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once ('mappr.class.php');
-
 /** PHPPowerPoint */
 set_include_path(dirname(__FILE__) . '/PHPPowerPoint/');
 include_once 'PHPPowerPoint.php';
@@ -128,4 +126,3 @@ class MapprPptx extends Mappr {
   }
 
 }
-?>

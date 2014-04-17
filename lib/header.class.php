@@ -34,12 +34,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-$config_dir = dirname(dirname(__FILE__)).'/config/';
-require_once($config_dir.'conf.php');
-require_once('session.class.php');
-require_once('user.class.php');
 require_once('cssmin.php');
-require_once('utilities.class.php');
 
 class Header {
 
@@ -400,4 +395,3 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
   }
 
 }
-?>

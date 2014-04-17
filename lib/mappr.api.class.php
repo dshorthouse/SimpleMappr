@@ -34,12 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-$config_dir = dirname(dirname(__FILE__)).'/config/';
-require_once($config_dir.'conf.php');
-require_once('mappr.class.php');
-require_once('georss/rss_fetch.inc');
-require_once('utilities.class.php');
-
 class MapprApi extends Mappr {
 
   private $coord_cols = array();
@@ -506,4 +500,3 @@ class MapprApi extends Mappr {
   }
 
 }
-?>

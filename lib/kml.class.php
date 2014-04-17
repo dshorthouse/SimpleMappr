@@ -34,9 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('mappr.class.php');
-require_once('utilities.class.php');
-
 class Kml {
 
   public static $pushpins = array(

@@ -1777,4 +1777,3 @@ abstract class Mappr {
   }
 
 }
-?>

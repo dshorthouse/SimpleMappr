@@ -34,8 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('mappr.class.php');
-
 class MapprApplication extends Mappr {
 
   public function create_output() {
@@ -114,5 +112,3 @@ class MapprApplication extends Mappr {
   }
 
 }
-
-?>

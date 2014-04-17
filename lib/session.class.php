@@ -34,12 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-$config_dir = dirname(dirname(__FILE__)).'/config/';
-require_once($config_dir.'conf.php');
-require_once($config_dir.'conf.db.php');
-require_once('db.class.php');
-require_once('utilities.class.php');
-
 class Session {
 
   public static $accepted_locales = array(
@@ -298,4 +292,3 @@ class Session {
   }
 
 }
-?>

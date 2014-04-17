@@ -34,13 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-if(!defined('TRAVIS_CI')) {
-  $config_dir = dirname(dirname(__FILE__)).'/config/';
-  require_once($config_dir.'conf.db.php');
-}
-require_once('db.class.php');
-require_once('mappr.class.php');
-
 class MapprMap extends Mappr {
 
   private $id;
@@ -262,4 +255,3 @@ class MapprMap extends Mappr {
   }
 
 }
-?>

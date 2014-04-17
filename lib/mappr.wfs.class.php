@@ -34,9 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('mappr.class.php');
-require_once('utilities.class.php');
-
 class MapprWfs extends Mappr {
 
   /* the request object for WFS and WMS */ 
@@ -161,4 +158,3 @@ class MapprWfs extends Mappr {
   }
 
 }
-?>

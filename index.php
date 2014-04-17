@@ -19,8 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **************************************************************************/
 
-require_once(dirname(__FILE__) . '/config/conf.php');
-require_once(dirname(__FILE__) . '/lib/utilities.class.php');
+require_once(dirname(__FILE__) . '/lib/__init__.php');
 
 class Bootstrap {
 
@@ -54,7 +53,7 @@ class Bootstrap {
         break;
 
       case "/api":
-        $klass = $this->klass("mappr.api", "MapprApi");
+        $klass = $this->klass("MapprApi");
         $this->setup_map($klass)->execute()->create_output();
         $this->log("API");
         break;
@@ -64,18 +63,18 @@ class Bootstrap {
         break;
 
       case "/application":
-        $klass = $this->klass("mappr.application", "MapprApplication");
+        $klass = $this->klass("MapprApplication");
         $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/citation":
-        $citation = $this->klass("citation", "Citation", $this->id);
+        $citation = $this->klass("Citation", $this->id);
         $citation->execute();
         break;
 
       case "/docx":
         $this->set_locale();
-        $klass = $this->klass("mappr.docx", "MapprDocx");
+        $klass = $this->klass("MapprDocx");
         $this->setup_map($klass)->execute()->create_output();
         break;
 
@@ -84,9 +83,6 @@ class Bootstrap {
         break;
       
       case "/flush_cache":
-        require_once('lib/header.class.php');
-        require_once('lib/user.class.php');
-        require_once('lib/session.class.php');
         Session::set_session();
         if(!isset($_SESSION["simplemappr"]) || User::$roles[$_SESSION["simplemappr"]["role"]] !== 'administrator') {
           header("HTTP/1.0 404 Not Found");
@@ -101,54 +97,54 @@ class Bootstrap {
         break;
 
       case "/kml":
-        $kml = $this->klass("kml", "Kml");
+        $kml = $this->klass("Kml");
         $kml->get_request()->generate_kml();
         break;
 
       case "/logout":
-        $this->klass("session", "Session", false);
+        $this->klass("Session", false);
         break;
 
       case "/map":
-        $klass = $this->klass("mappr.map", "MapprMap", $this->id, $this->extension);
+        $klass = $this->klass("MapprMap", $this->id, $this->extension);
         $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/places":
-        $this->klass("places", "Places", $this->id);
+        $this->klass("Places", $this->id);
         break;
 
       case "/pptx":
         $this->set_locale();
-        $klass = $this->klass("mappr.pptx", "MapprPptx");
+        $klass = $this->klass("MapprPptx");
         $this->setup_map($klass)->execute()->create_output();
         break;
 
       case "/query":
-        $klass = $this->klass("mappr.query", "MapprQuery");
+        $klass = $this->klass("MapprQuery");
         $this->setup_map($klass)->execute()->query_layer()->create_output();
         break;
 
       case "/session":
-        $this->klass("session", "Session", true);
+        $this->klass("Session", true);
         break;
 
       case "/user":
-        $this->klass("user", "User", $this->id);
+        $this->klass("User", $this->id);
         break;
 
       case "/usermap":
-        $this->klass("usermap", "Usermap", $this->id);
+        $this->klass("Usermap", $this->id);
         break;
 
       case "/wfs":
-        $klass = $this->klass("mappr.wfs", "MapprWfs");
+        $klass = $this->klass("MapprWfs");
         $this->setup_map($klass)->make_service()->execute()->create_output();
         $this->log("WFS");
         break;
 
       case "/wms":
-        $klass = $this->klass("mappr.wms", "MapprWms");
+        $klass = $this->klass("MapprWms");
         $this->setup_map($klass)->make_service()->execute()->create_output();
         $this->log("WMS");
         break;
@@ -158,8 +154,7 @@ class Bootstrap {
     }
   }
 
-  private function klass($file, $klass, $param1 = "", $param2 = "") {
-    require_once('lib/'.$file.'.class.php');
+  private function klass($klass, $param1 = "", $param2 = "") {
     return new $klass($param1, $param2);
   }
 
@@ -175,7 +170,6 @@ class Bootstrap {
   }
 
   private function log($type = "API") {
-    require_once('lib/logger.class.php');
     $logger = new LOGGER(dirname(__FILE__) . "/log/logger.log");
     $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
     $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
@@ -183,26 +177,17 @@ class Bootstrap {
   }
 
   private function set_locale() {
-    require_once('lib/session.class.php');
     Session::select_locale();
   }
 
   private function set_up() {
     if(!isset($_SERVER['HTTP_HOST'])) { $this->render_404(); }
-
     $host = explode(".", $_SERVER['HTTP_HOST']);
     if(ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
       header('Location: http://' .  MAPPR_DOMAIN);
       exit();
     } else {
-      require_once('lib/user.class.php');
-      require_once('lib/session.class.php');
-      require_once('lib/header.class.php');
-      require_once('lib/mappr.class.php');
-      require_once('lib/utilities.class.php');
-
       Session::update_activity();
-
       return array(new Header, Session::$accepted_locales, User::$roles);
     }
   }

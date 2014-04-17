@@ -34,9 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('mappr.class.php');
-require_once('utilities.class.php');
-
 class MapprQuery extends Mappr {
 
   private $data = "";
@@ -130,4 +127,3 @@ class MapprQuery extends Mappr {
   }
 
 }
-?>

@@ -35,7 +35,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('mappr.class.php');
 set_include_path(dirname(__FILE__) . '/PHPWord/');
 include_once 'PHPWord.php';
 include_once 'PHPWord/IOFactory.php';
@@ -90,4 +89,3 @@ class MapprDocx extends Mappr {
   }
 
 }
-?>
