@@ -1856,7 +1856,6 @@ var SimpleMappr = (function($, window, document) {
       $('#download_token').val(token); // set a token to be used for cookie
 
       self.showSpinner();
-
       formString = $("form").serialize();
       formObj    = $("form").serializeJSON();
       self.postData(formString, load_data);

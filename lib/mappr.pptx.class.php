@@ -35,94 +35,94 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-/** PHPPowerPoint */
-set_include_path(dirname(__FILE__) . '/PHPPowerPoint/');
-include_once 'PHPPowerPoint.php';
-include_once 'PHPPowerPoint/IOFactory.php';
-
 class MapprPptx extends Mappr {
 
   private $slidepadding = 25;
 
   public function create_output() {
-      $objPHPPowerPoint = new PHPPowerPoint();
 
-      $clean_filename = parent::clean_filename($this->file_name);
+    /** PHPPowerPoint */
+    set_include_path(dirname(__FILE__) . '/PHPPowerPoint/');
+    include_once 'PHPPowerPoint.php';
+    include_once 'PHPPowerPoint/IOFactory.php';
 
-      // Set properties
-      $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
-      $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
-      $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
-      $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
-      $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
-      $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
+    $objPHPPowerPoint = new PHPPowerPoint();
 
-      // Create slide
-      $currentSlide = $objPHPPowerPoint->getActiveSlide();
-      $currentSlide->setSlideLayout(PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
+    $clean_filename = parent::clean_filename($this->file_name);
 
-      $width = 950;
-      $height = 720;
+    // Set properties
+    $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
+    $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
+    $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
+    $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
+    $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+    $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
 
-      $files = array();
-      $images = array('image', 'scale', 'legend');
-      foreach($images as $image) {
-        if($this->{$image}) {
-          $image_filename = basename($this->{$image}->saveWebImage());
-          $files[$image]['file'] = $this->tmp_path . $image_filename;
-          $files[$image]['size'] = getimagesize($files[$image]['file']);
-        }
+    // Create slide
+    $currentSlide = $objPHPPowerPoint->getActiveSlide();
+    $currentSlide->setSlideLayout(PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
+
+    $width = 950;
+    $height = 720;
+
+    $files = array();
+    $images = array('image', 'scale', 'legend');
+    foreach($images as $image) {
+      if($this->{$image}) {
+        $image_filename = basename($this->{$image}->saveWebImage());
+        $files[$image]['file'] = $this->tmp_path . $image_filename;
+        $files[$image]['size'] = getimagesize($files[$image]['file']);
       }
+    }
 
-      $scale = 1;
-      $scaled_w = $files['image']['size'][0];
-      $scaled_h = $files['image']['size'][1];
-      if($scaled_w > $width || $scaled_h > $height) {
-        $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
+    $scale = 1;
+    $scaled_w = $files['image']['size'][0];
+    $scaled_h = $files['image']['size'][1];
+    if($scaled_w > $width || $scaled_h > $height) {
+      $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
+    }
+
+    foreach($files as $type => $value) {
+      $size = getimagesize($value['file']);
+      $shape = $currentSlide->createDrawingShape();
+      $shape->setName('SimpleMappr ' . $clean_filename);
+      $shape->setDescription('SimpleMappr ' . $clean_filename);
+      $shape->setPath($value['file']);
+      $shape->setWidth(round($value['size'][0]/$scale));
+      $shape->setHeight(round($value['size'][1]/$scale));
+      $shape_width = $shape->getWidth();
+      $shape_height = $shape->getHeight();
+      if($type == 'image') {
+        $shape->setOffsetX(($width-$shape_width)/2);
+        $shape->setOffsetY(($height-$shape_height)/2);
+        $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER);
       }
-
-      foreach($files as $type => $value) {
-        $size = getimagesize($value['file']);
-        $shape = $currentSlide->createDrawingShape();
-        $shape->setName('SimpleMappr ' . $clean_filename);
-        $shape->setDescription('SimpleMappr ' . $clean_filename);
-        $shape->setPath($value['file']);
-        $shape->setWidth(round($value['size'][0]/$scale));
-        $shape->setHeight(round($value['size'][1]/$scale));
-        $shape_width = $shape->getWidth();
-        $shape_height = $shape->getHeight();
-        if($type == 'image') {
-          $shape->setOffsetX(($width-$shape_width)/2);
-          $shape->setOffsetY(($height-$shape_height)/2);
-          $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER);
-        }
-        if($type == 'scale') {
-          $shape->setOffsetX($width-round($shape_width*1.5)-$this->slidepadding);
-          $shape->setOffsetY($height-round($shape_height*4)-$this->slidepadding);
-        }
-        if($type == 'legend') {
-          $shape->setOffsetX($width-$shape_width-$this->slidepadding);
-          $shape->setOffsetY(200);
-        }
+      if($type == 'scale') {
+        $shape->setOffsetX($width-round($shape_width*1.5)-$this->slidepadding);
+        $shape->setOffsetY($height-round($shape_height*4)-$this->slidepadding);
       }
+      if($type == 'legend') {
+        $shape->setOffsetX($width-$shape_width-$this->slidepadding);
+        $shape->setOffsetY(200);
+      }
+    }
 
-      $shape = $currentSlide->createRichTextShape();
-      $shape->setHeight(25);
-      $shape->setWidth(450);
-      $shape->setOffsetX($width - 450);
-      $shape->setOffsetY($height - 10 - $this->slidepadding);
-      $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
-      $shape->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
-      $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
-      $textRun->getFont()->setBold(true);
-      $textRun->getFont()->setSize(12);
+    $shape = $currentSlide->createRichTextShape();
+    $shape->setHeight(25);
+    $shape->setWidth(450);
+    $shape->setOffsetX($width - 450);
+    $shape->setOffsetY($height - 10 - $this->slidepadding);
+    $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
+    $shape->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
+    $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
+    $textRun->getFont()->setBold(true);
+    $textRun->getFont()->setSize(12);
 
-      // Output PowerPoint 2007 file
-      Utilities::set_header("pptx");
-      header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
-      $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
-      $objWriter->save('php://output');
-      exit();
+    // Output PowerPoint 2007 file
+    Utilities::set_header("pptx");
+    header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
+    $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+    $objWriter->save('php://output');
   }
 
 }

@@ -483,6 +483,7 @@ class MapprApi extends Mappr {
   * Parse GeoRSS into cleaned array of points
   */
   private function parseGeoRSS() {
+    require_once('georss/rss_fetch.inc');
     $rss = fetch_rss($this->url);
     if(isset($rss->items)) {
       $num_cols = (isset($num_cols)) ? $num_cols++ : 0;

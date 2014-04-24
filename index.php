@@ -205,4 +205,3 @@ class Bootstrap {
 }
 
 $init = new Bootstrap;
-?>

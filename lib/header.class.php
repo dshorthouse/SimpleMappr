@@ -34,8 +34,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
-require_once('cssmin.php');
-
 class Header {
 
   private $js_header = array();
@@ -247,6 +245,7 @@ class Header {
       $cached_css = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
 
       if(!$cached_css) {
+        require_once('cssmin.php');
         $css_min = '';
         foreach($this->local_css as $css_file) {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";

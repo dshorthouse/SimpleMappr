@@ -50,7 +50,6 @@ class MapprApplication extends Mappr {
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
-        exit();
       break;
 
       case 'png':
@@ -65,7 +64,6 @@ class MapprApplication extends Mappr {
         ob_clean();
         flush();
         readfile($this->tmp_path.$image_filename);
-        exit();
       break;
 
       case 'svg':
@@ -73,7 +71,6 @@ class MapprApplication extends Mappr {
         header("Content-Type: image/svg+xml");
         header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         $this->image->saveImage("");
-        exit();
       break;
 
       default:

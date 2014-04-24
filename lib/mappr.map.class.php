@@ -231,7 +231,6 @@ class MapprMap extends Mappr {
       break;
 
       case 'kml':
-        require_once('kml.class.php');
         $this->add_header();
         $kml = new Kml;
         $kml->get_request($this->id, $this->coords)->generate_kml();

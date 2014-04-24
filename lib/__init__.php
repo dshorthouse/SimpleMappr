@@ -1,49 +1,47 @@
 <?php
 
 //config
-$config_dir = dirname(dirname(__FILE__)).'/config/';
-require_once($config_dir.'conf.php');
-require_once($config_dir.'conf.db.php');
+$config_dir = dirname(__DIR__).'/config/';
+require($config_dir.'conf.php');
+require($config_dir.'conf.db.php');
 
 //utilities
-require_once('utilities.class.php');
+require('utilities.class.php');
 
 //logger
-require_once('logger.class.php');
+require('logger.class.php');
 
-//header, cssmin
-require_once('cssmin.php');
-require_once('header.class.php');
+//header
+require('header.class.php');
 
 //database
-require_once('db.class.php');
+require('db.class.php');
 
 //base abstract class
-require_once('mappr.class.php');
+require('mappr.class.php');
 
 //extended classes
-require_once('mappr.api.class.php');
-require_once('mappr.application.class.php');
-require_once('mappr.docx.class.php');
-require_once('mappr.map.class.php');
-require_once('mappr.pptx.class.php');
-require_once('mappr.query.class.php');
-require_once('mappr.wfs.class.php');
-require_once('mappr.wms.class.php');
+require('mappr.api.class.php');
+require('mappr.application.class.php');
+require('mappr.docx.class.php');
+require('mappr.map.class.php');
+require('mappr.pptx.class.php');
+require('mappr.query.class.php');
+require('mappr.wfs.class.php');
+require('mappr.wms.class.php');
 
-//kml && georss
-require_once('kml.class.php');
-require_once('georss/rss_fetch.inc');
+//kml
+require('kml.class.php');
 
 //session
-require_once('session.class.php');
+require('session.class.php');
 
 //users
-require_once('user.class.php');
-require_once('usermap.class.php');
+require('user.class.php');
+require('usermap.class.php');
 
 //places
-require_once('places.class.php');
+require('places.class.php');
 
 //citations
-require_once('citation.class.php');
+require('citation.class.php');

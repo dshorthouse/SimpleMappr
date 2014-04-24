@@ -83,14 +83,201 @@ abstract class Mappr {
   /* holding bin for any geographic coordinates that fall outside extent of Earth */
   protected $bad_points = array();
 
-  /* Initial mapfile as string because outputformat cannot otherwise be set */
+  /* Initial mapfile as string */
   protected $mapfile_string = "
     MAP
 
       PROJECTION
         'init=epsg:4326'
       END
-      
+
+      SYMBOL
+        NAME 'star'
+        TYPE vector
+        FILLED true
+        TRANSPARENT 100
+        POINTS
+          0 0.375
+          0.35 0.365
+          0.5 0
+          0.65 0.375
+          1 0.375
+          0.75 0.625
+          0.875 1
+          0.5 0.75
+          0.125 1
+          0.25 0.625
+          0 0.375
+        END
+      END
+
+      SYMBOL
+        NAME 'openstar'
+        TYPE vector
+        FILLED false
+        POINTS
+          0 0.375
+          0.35 0.365
+          0.5 0
+          0.65 0.375
+          1 0.375
+          0.75 0.625
+          0.875 1
+          0.5 0.75
+          0.125 1
+          0.25 0.625
+          0 0.375
+        END
+      END
+
+      SYMBOL
+        NAME 'triangle'
+        TYPE vector
+        FILLED true
+        TRANSPARENT 100
+        POINTS
+          0 1
+          0.5 0
+          1 1
+          0 1
+        END
+      END
+
+      SYMBOL
+        NAME 'opentriangle'
+        TYPE vector
+        FILLED false
+        TRANSPARENT 100
+        POINTS
+          0 1
+          0.5 0
+          1 1
+          0 1
+        END
+      END
+
+      SYMBOL
+        NAME 'square'
+        TYPE vector
+        FILLED true
+        TRANSPARENT 100
+        POINTS
+          0 1
+          0 0
+          1 0
+          1 1
+          0 1
+        END
+      END
+
+      SYMBOL
+        NAME 'opensquare'
+        TYPE vector
+        FILLED false
+        POINTS
+          0 1
+          0 0
+          1 0
+          1 1
+          0 1
+        END
+      END
+
+      SYMBOL
+        NAME 'plus'
+        TYPE vector
+        FILLED false
+        POINTS
+          0.5 0
+          0.5 1
+          -99 -99
+          0 0.5
+          1 0.5
+        END
+      END
+
+      SYMBOL
+        NAME 'cross'
+        TYPE vector
+        FILLED false
+        POINTS
+          0 0
+          1 1
+          -99 -99
+          0 1
+          1 0
+        END
+      END
+
+      SYMBOL
+        NAME 'asterisk'
+        TYPE vector
+        FILLED false
+        POINTS
+          0 0
+          1 1
+          -99 -99
+          0 1
+          1 0
+          -99 -99
+          0.5 0
+          0.5 1
+          -99 -99
+          0 0.5
+          1 0.5
+        END
+      END
+
+      SYMBOL
+        NAME 'hexagon'
+        TYPE vector
+        FILLED true
+        TRANSPARENT 100
+        POINTS
+          0.23 0
+          0 0.5
+          0.23 1
+          0.77 1
+          1 0.5
+          0.77 0
+          0.23 0
+        END
+      END
+
+      SYMBOL
+        NAME 'openhexagon'
+        TYPE vector
+        FILLED false
+        POINTS
+          0.23 0
+          0 0.5
+          0.23 1
+          0.77 1
+          1 0.5
+          0.77 0
+          0.23 0
+        END
+      END
+
+      SYMBOL
+        NAME 'circle'
+        TYPE ellipse
+        FILLED true
+        TRANSPARENT 100
+        POINTS
+         1 1
+        END
+      END
+
+      SYMBOL
+        NAME 'opencircle'
+        TYPE ellipse
+        FILLED false
+        POINTS
+         1 1
+        END
+      END
+
       OUTPUTFORMAT
         NAME png
         DRIVER AGG/PNG
@@ -283,9 +470,15 @@ abstract class Mappr {
   * @return true,false
   */
   public static function check_coord($coord) {
-    $output = false;
-    if($coord->x && $coord->y && $coord->y <= 90 && $coord->y >= -90 && $coord->x <= 180 && $coord->x >= -180) { $output = true; }
-    return $output;
+    if($coord->x &&
+       $coord->y &&
+       is_numeric($coord->x) &&
+       is_numeric($coord->y) &&
+       $coord->y <= 90 &&
+       $coord->y >= -90 &&
+       $coord->x <= 180 &&
+       $coord->x >= -180) { return true; }
+    return false;
   }
 
   /**
@@ -294,16 +487,15 @@ abstract class Mappr {
   * return array(latitude, longitude) in DD
   */
   public static function make_coordinates($point) {
-    $loc = preg_replace('/[\p{Z}\s]/u', ' ', $point);
-    $loc = trim(preg_replace('/[^\d\s,;.\-NSEWO°ºdms\'"]/i', '', $loc));
+    $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ''), $point);
     if(preg_match('/[NSEWO]/', $loc) != 0) {
       $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
-      if (!array_key_exists(1, $coord) || empty($coord[1])) { return array(null, null); }
+      if (count($coord) != 2 || empty($coord[1])) { return array(null, null); }
       $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
       return array(self::dms_to_deg(trim($coord[0])),self::dms_to_deg(trim($coord[1])));
     } else {
       $coord = preg_split("/[\s,;]+/",$loc); //split by space, comma, or semicolon
-      if (!array_key_exists(1, $coord) || empty($coord[1])) { return array(null, null); }
+      if (count($coord) != 2 || empty($coord[1])) { return array(null, null); }
       return $coord;
     }
   }
@@ -468,226 +660,6 @@ abstract class Mappr {
   }
 
   /**
-  * Create all the symbol objects
-  */
-  private function load_symbols() {
-    if(!$this->map_obj) {
-      $this->set_error('Map object is not loaded');
-    } else {
-      //star
-      $nId = ms_newSymbolObj($this->map_obj, "star");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_TRUE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $symbol->set("transparent", 100);
-      $spoints = array(
-          0, 0.375,
-          0.35, 0.365,
-          0.5, 0,
-          0.65, 0.375,
-          1, 0.375,
-          0.75, 0.625,
-          0.875, 1,
-          0.5, 0.75,
-          0.125, 1,
-          0.25, 0.625,
-          0, 0.375
-      );
-      $symbol->setpoints($spoints);
-
-      //openstar
-      $nId = ms_newSymbolObj($this->map_obj, "openstar");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0, 0.375,
-          0.35, 0.365,
-          0.5, 0,
-          0.65, 0.375,
-          1, 0.375,
-          0.75, 0.625,
-          0.875, 1,
-          0.5, 0.75,
-          0.125, 1,
-          0.25, 0.625,
-          0, 0.375
-      );
-      $symbol->setpoints($spoints);
-
-      //triangle
-      $nId = ms_newSymbolObj($this->map_obj, "triangle");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_TRUE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $symbol->set("transparent", 100);
-      $spoints = array(
-          0, 1,
-          0.5, 0,
-          1, 1,
-          0, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //opentriangle
-      $nId = ms_newSymbolObj($this->map_obj, "opentriangle");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0, 1,
-          0.5, 0,
-          1, 1,
-          0, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //square
-      $nId = ms_newSymbolObj($this->map_obj, "square");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_TRUE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $symbol->set("transparent", 100);
-      $spoints = array(
-          0, 1,
-          0, 0,
-          1, 0,
-          1, 1,
-          0, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //opensquare
-      $nId = ms_newSymbolObj($this->map_obj, "opensquare");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0, 1,
-          0, 0,
-          1, 0,
-          1, 1,
-          0, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //plus
-      $nId = ms_newSymbolObj($this->map_obj, "plus");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0.5, 0,
-          0.5, 1,
-          -99, -99,
-          0, 0.5,
-          1, 0.5
-      );
-      $symbol->setpoints($spoints);
-
-      //cross
-      $nId = ms_newSymbolObj($this->map_obj, "cross");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0, 0,
-          1, 1,
-          -99, -99,
-          0, 1,
-          1, 0
-      );
-      $symbol->setpoints($spoints);
-
-      //asterisk
-      $nId = ms_newSymbolObj($this->map_obj, "asterisk");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0, 0,
-          1, 1,
-          -99, -99,
-          0, 1,
-          1, 0,
-          -99, -99,
-          0.5, 0,
-          0.5, 1,
-          -99, -99,
-          0, 0.5,
-          1, 0.5
-      );
-      $symbol->setpoints($spoints);
-
-      //circle
-      $nId = ms_newSymbolObj($this->map_obj, "circle");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_ELLIPSE);
-      $symbol->set("transparent", 100);
-      $symbol->set("filled", MS_TRUE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          1, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //opencircle
-      $nId = ms_newSymbolObj($this->map_obj, "opencircle");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_ELLIPSE);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          1, 1
-      );
-      $symbol->setpoints($spoints);
-
-      //hexagon
-      $nId = ms_newSymbolObj($this->map_obj, "hexagon");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_TRUE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0.23, 0,
-          0, 0.5,
-          0.23, 1,
-          0.77, 1,
-          1, 0.5,
-          0.77, 0,
-          0.23, 0
-      );
-      $symbol->setpoints($spoints);
-
-      //openhexagon
-      $nId = ms_newSymbolObj($this->map_obj, "openhexagon");
-      $symbol = $this->map_obj->getSymbolObjectById($nId);
-      $symbol->set("type", MS_SYMBOL_VECTOR);
-      $symbol->set("filled", MS_FALSE);
-      $symbol->set("inmapfile", MS_TRUE);
-      $spoints = array(
-          0.23, 0,
-          0, 0.5,
-          0.23, 1,
-          0.77, 1,
-          1, 0.5,
-          0.77, 0,
-          0.23, 0
-      );
-      $symbol->setpoints($spoints);
-    }
-  }
-
-  /**
   * Load-up all the settings for potential shapes
   */
   private function load_shapes() {
@@ -824,8 +796,6 @@ abstract class Mappr {
   */
   public function execute() {
     $this->load_shapes();
-    $this->load_symbols();
-
     $this->set_web_config();
     $this->set_resolution();
     $this->set_units();
@@ -1136,14 +1106,14 @@ abstract class Mappr {
           $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
           $new_line = ms_newLineObj();
 
-          $row = explode("\n",self::remove_empty_lines($data));  //split the lines that have data
+          $rows = explode("\n",self::remove_empty_lines($data));  //split the lines that have data
           $points = array(); //create an array to hold unique locations
 
-          foreach ($row as $loc) {
-            $coord_array = self::make_coordinates($loc);
+          foreach ($rows as $row) {
+            $coord_array = self::make_coordinates($row);
             $coord = new stdClass();
-            $coord->x = array_key_exists(1, $coord_array) ? self::clean_coord($coord_array[1]) : null;
-            $coord->y = array_key_exists(0, $coord_array) ? self::clean_coord($coord_array[0]) : null;
+            $coord->x = ($coord_array[1]) ? self::clean_coord($coord_array[1]) : null;
+            $coord->y = ($coord_array[0]) ? self::clean_coord($coord_array[0]) : null;
             //only add point when data are good & a title
             if(self::check_coord($coord) && $title != "") {
               if(!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
@@ -1153,10 +1123,12 @@ abstract class Mappr {
                 $points[$coord->x.$coord->y] = array();
               }
             } else {
-              $this->bad_points[] = stripslashes($this->coords[$j]['title'] . ' : ' . $loc);
+              $this->bad_points[] = stripslashes($this->coords[$j]['title'] . ' : ' . $row);
             }
+            unset($coord);
           }
-          $points = array();
+
+          unset($points);
           $new_shape->add($new_line);
           $layer->addFeature($new_shape);
         }
