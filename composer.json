@@ -1,0 +1,18 @@
+{
+    "name":             "SimpleMappr",
+    "description":      "A point map web application for quality publications and presentations.",
+    "keywords":         ["publication", "presentation", "map", "georeference"],
+    "homepage":         "http://www.simplemappr.net",
+    "time":             "2014-04-27",
+    "license":          "MIT",
+    "authors": [
+        {
+            "name":         "David P. Shorthouse",
+            "email":        "davidpshorthouse@gmail.com",
+            "role":         "Developer"
+        }
+    ],
+    "require": {
+      "facebook/webdriver" : "0.4"
+    }
+}

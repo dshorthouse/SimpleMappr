@@ -102,13 +102,15 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
 Tests
 -----
 
-Selenium is used for integration tests and php-unit for unit tests. Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) is included. Get selenium at [http://selenium-release.storage.googleapis.com/index.html?path=2.41/](http://selenium-release.storage.googleapis.com/index.html?path=2.41/) then execute:
+PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=2.41/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies.
 
+    $ composer install
     $ java -jar selenium-server-standalone-2.41.0.jar
     $ phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
+    $ composer install
     $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ phpunit -c Tests/chrome.phpunit.xml --stderr
 

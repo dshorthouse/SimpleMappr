@@ -34,7 +34,12 @@ function requireFiles() {
   }
 
   require_once($root . '/Tests/SimpleMapprTest.php');
-  require_once($root . '/Tests/php-webdriver/lib/__init__.php');
+  
+  try {
+    require_once($root . '/vendor/facebook/webdriver/lib/__init__.php');
+  } catch(Exception $e) {
+    echo 'Caught exception: facebook/webdriver not found. See README.' . "\n";
+  }
 }
 
 function trashCachedFiles() {

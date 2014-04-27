@@ -24,7 +24,8 @@ install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
-  # PHPUnit
+  # Composer & PHPUnit
+  - composer install
   - sh -e .travis/scripts/php-unit.sh
 
   # MapServer installation
