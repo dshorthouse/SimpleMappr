@@ -55,5 +55,8 @@ before_script:
   - sudo service apache2 restart
 
 script:
+  - phpunit --version
+  - phpunit --self-update
+  - phpunit --version
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
   - phpunit -c Tests/$BROWSER.phpunit.xml --stderr
