@@ -37,15 +37,15 @@ msgstr "publication,présentation,carte,géoréférencer"
 
 #: .index.php:22
 msgid "point maps for publication and presentation"
-msgstr "cartes point pour la publication et présentation"
+msgstr "cartes point pour les publications et présentations"
 
 #: .index.php:27
 msgid "Sign Out"
-msgstr "Déconnectez"
+msgstr "Déconnecter"
 
 #: .index.php:29
 msgid "Sign In"
-msgstr "Connectez"
+msgstr "Connecter"
 
 #: .index.php:33
 msgid "Building application..."
@@ -114,7 +114,7 @@ msgstr "exemples"
 
 #: .index.php:59
 msgid "Add a layer"
-msgstr "Ajoutez"
+msgstr "Ajouter"
 
 #: .index.php:60
 #: .index.php:73
@@ -131,7 +131,7 @@ msgstr "codes"
 
 #: .index.php:72
 msgid "Add a region"
-msgstr "Ajoutez"
+msgstr "Ajouter"
 
 #: .index.php:81
 msgid "zoom in ctrl+"
@@ -531,7 +531,7 @@ msgstr "triangles (p)"
 
 #: .index.php:340
 msgid "hexagon (s)"
-msgstr "hexagone (p)"
+msgstr "hexagones (p)"
 
 #: .index.php:342
 msgid "open"
@@ -555,12 +555,12 @@ msgstr "triangles (o)"
 
 #: .index.php:346
 msgid "hexagon (o)"
-msgstr "hexagone (o)"
+msgstr "hexagones (o)"
 
 #: .index.php:355
 #: .index.php:385
 msgid "Remove"
-msgstr "Enlevez"
+msgstr "Enlever"
 
 #: .index.php:357
 msgid "Layer %d"
@@ -582,7 +582,7 @@ msgstr "Couleur"
 #: .index.php:370
 #: .index.php:399
 msgid "Clear"
-msgstr "Effacez"
+msgstr "Effacer"
 
 #: .lib/mapprservice.pptx.class.php:108
 msgid "Created with SimpleMappr, http://www.simplemappr.net"
@@ -595,11 +595,11 @@ msgstr "Actions"
 
 #: .lib/mapprservice.usermaps.class.php:177
 msgid "Load"
-msgstr "Chargez"
+msgstr "Charger"
 
 #: .lib/mapprservice.usermaps.class.php:197
 msgid "Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab."
-msgstr "Commencez par ajouter des données sur le Point de Données ou des Régions, appuyez sur les boutons Aperçu là, puis enregistrez votre carte dans la barre supérieure de l'onglet Aperçu."
+msgstr "Commencer par ajouter des données sur le Point de Données ou des Régions, appuyer sur les boutons Aperçu là, puis enregistrer votre carte dans la barre supérieure de l'onglet Aperçu."
 
 #: .lib/mapprservice.usermaps.class.php:197
 msgid "Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade."
@@ -649,7 +649,7 @@ msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel
 
 #: .tabs/about.php:7
 msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
-msgstr "Créez des cartes point de niveaux de gris en copiant et collant les coordonnées géographiques en couches, en choisissant des styles punaise, puis en téléchargeant le résultat."
+msgstr "Créer des cartes point de niveaux de gris en copiant et collant les coordonnées géographiques en couches, en choisissant des styles punaise, puis en téléchargeant le résultat."
 
 #: .tabs/about.php:9
 msgid "Citing"
@@ -681,7 +681,7 @@ msgstr "25 juin, 2013"
 
 #: .tabs/about.php:11
 msgid "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."
-msgstr "Améliorations: Logiciel mis à jour. Bordures ajouté autour couche de hotspot de biodiversité et l'option pour les étiquettes. Demandé par Torsten Dikow."
+msgstr "Améliorations: Logiciel mis à jour. Bordures ajouté autour la couche de hotspot de biodiversité et l'option pour les étiquettes. Demandé par Torsten Dikow."
 
 #: .tabs/about.php:11
 msgid "Improvements: Created a Web Map Service (WMS), which can be used by client applications like QGIS."
@@ -838,7 +838,7 @@ msgstr "Un API peut être utilisé avec des fichiers texte séparés par des tab
 
 #: .tabs/feedback.php:3
 msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."
-msgstr "Avez-vous utilisé SimpleMappr dans un manuscrit, une affiche, une présentation PowerPoint ou avez-vous utilisé l'API? S'il vous plaît aussi écrire une note si vous avez des demandes ou de fonctionnalité de rapports de bogues."
+msgstr "Avez-vous utilisé SimpleMappr dans un manuscrit, une affiche, une présentation PowerPoint ou avez-vous utilisé l'API? S'il vous plaît aussi écrire une note si vous avez des demandes ou de fonctionnalités des rapports de bogues."
 
 #: .tabs/help.php:39
 msgid "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."
@@ -846,7 +846,7 @@ msgstr "Cette application fait un usage intensif de JavaScript. Un navigateur mo
 
 #: .tabs/help.php:46
 msgid "Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"
-msgstr "Utilisez l'onglet Aperçu pour affiner votre carte en ajustant les différentes options, télécharger le résultat, ou l'enregistrer pour réutilisation ultérieure (lorsque vous êtes connecté)"
+msgstr "Utiliser l'onglet Aperçu pour affiner votre carte en ajustant les différentes options, télécharger le résultat, ou l'enregistrer pour réutilisation ultérieure (lorsque vous êtes connecté)"
 
 #: .tabs/help.php:48
 msgid "Toolbar buttons"
@@ -878,7 +878,7 @@ msgstr "dessiner une extensible, élastique en forme de carré qui définit pré
 
 #: .tabs/help.php:59
 msgid "Fill regions"
-msgstr "remplissez les régions"
+msgstr "remplisser les régions"
 
 #: .tabs/help.php:59
 msgid "Undo"
@@ -898,7 +898,7 @@ msgstr "rétablir la dernière action"
 
 #: .tabs/help.php:60
 msgid "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."
-msgstr "choisissez une couleur puis tracez une extensible, élastique en forme de carré à l'ombre des États/provinces (si la couche visible) ou des pays. Les sélections sont ajoutés séquentiellement dans l'onglet Régions."
+msgstr "choisisser une couleur puis tracez une extensible, élastique en forme de carré à l'ombre des États/provinces (si la couche visible) ou des pays. Les sélections sont ajoutés séquentiellement dans l'onglet Régions."
 
 #: .tabs/help.php:62
 msgid "Refresh"
@@ -986,7 +986,7 @@ msgstr "dessiner un réticule sur la carte en utilisant soit fixe, 1, 5, ou 10 d
 
 #: .tabs/help.php:122
 msgid "use the slider to increase or decrease line thickness of the base and State/Provinces layers"
-msgstr "utilisez le curseur pour augmenter ou diminuer l'épaisseur du trait des couches de la base et de l'Etat/Provinces"
+msgstr "utiliser le curseur pour augmenter ou diminuer l'épaisseur du trait des couches de la base et de l'Etat/Provinces"
 
 #: .tabs/help.php:122
 msgid "projection"
@@ -994,7 +994,7 @@ msgstr "projection"
 
 #: .tabs/help.php:123
 msgid "choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
-msgstr "choisissez parmi plusieurs projections. [Suggestion: pour obtenir les meilleurs effets, utilisez le zoom avant ajuster la projection]"
+msgstr "choisisser parmi plusieurs projections. [Suggestion: pour obtenir les meilleurs effets, utilisez le zoom avant ajuster la projection]"
 
 #: .tabs/help.php:160
 msgid "type the longitude for the central meridian"
@@ -1002,11 +1002,11 @@ msgstr "tapper la longitude du méridien central"
 
 #: .tabs/help.php:128
 msgid "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."
-msgstr "en étant connecté, cliquez sur cette icône pour donner votre carte un titre et enregistrer ses paramètres."
+msgstr "en étant connecté, cliquer sur cette icône pour donner votre carte un titre et enregistrer ses paramètres."
 
 #: .tabs/help.php:131
 msgid "once a map is saved, click this icon to obtain a URL for embedding on other websites."
-msgstr "une fois qu'une carte est enregistrée, cliquez sur cette icône pour obtenir une URL pour l'intégration sur d'autres sites."
+msgstr "une fois qu'une carte est enregistrée, cliquer sur cette icône pour obtenir une URL pour l'intégration sur d'autres sites."
 
 #: .tabs/help.php:134
 msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
@@ -1014,7 +1014,7 @@ msgstr "choisir png, tif à haute résolution, pptx (PowerPoint), docx (Word), k
 
 #: .tabs/help.php:140
 msgid "Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color."
-msgstr "Utilisez l'onglet Points de Données pour coller des coordonnées latitude, longitude en degrés décimaux ou DD°MM'SS\" sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
+msgstr "Utiliser l'onglet Points de Données pour coller des coordonnées latitude, longitude en degrés décimaux ou DD°MM'SS\" sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
 
 #: .tabs/help.php:143
 msgid "Coordinate format"
@@ -1046,7 +1046,7 @@ msgstr "configuré en utilisant le schéma de couleurs RGB et un sélecteur de c
 
 #: .tabs/help.php:160
 msgid "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
-msgstr "Utilisez l'onglet Régions pour taper une liste des régions politiques que vous aimeriez ombragé et sélectionner la couleur d'ombre. Séparez chaque région politique par une virgule ou un point virgule. Alternativement, vous pouvez utiliser les codes de l'Etat/Province, comme USA[WY|WA|MT], CAN[AB BC] qui sera l'ombre du Wyoming, Washington, Montana, l'Alberta et la Colombie-Britannique. Notez que les États ou les provinces sont séparées par un espace ou un tuyau et ce sont enveloppés avec des crochets, précédée du code à trois lettres ISO du pays."
+msgstr "Utiliser l'onglet Régions pour taper une liste des régions politiques que vous aimeriez ombragé et sélectionner la couleur d'ombre. Séparer chaque région politique par une virgule ou un point virgule. Alternativement, vous pouvez utiliser les codes de l'Etat/Province, comme USA[WY|WA|MT], CAN[AB BC] qui sera l'ombre du Wyoming, Washington, Montana, l'Alberta et la Colombie-Britannique. Noter que les États ou les provinces sont séparées par un espace ou un tuyau et ce sont enveloppés avec des crochets, précédée du code à trois lettres ISO du pays."
 
 #: .tabs/help.php:165
 msgid "Country"
