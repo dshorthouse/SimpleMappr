@@ -2,7 +2,6 @@
 
 echo "---> Updating PHPUnit"
 
-wget https://phar.phpunit.de/phpunit.phar
-sudo chmod +x phpunit.phar
-sudo mv phpunit.phar /usr/local/bin/phpunit
+sudo pear install --alldeps phpunit/PHPUnit
+sudo pear install --force --alldeps phpunit/PHPUnit
 phpunit --version
