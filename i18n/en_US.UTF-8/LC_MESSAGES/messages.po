@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: SimpleMappr v1.5\n"
 "Report-Msgid-Bugs-To: (snipped)\n"
 "POT-Creation-Date: 2011-11-01 00:29-0500\n"
-"PO-Revision-Date: 2011-11-29 00:23-0500\n"
+"PO-Revision-Date: 2014-04-27 13:14-0500\n"
 "Last-Translator: David Shorthouse <davidpshorthouse@gmail.com>\n"
 "Language-Team: English (en) <davidpshorthouse@gmail.com>\n"
 "Language: en\n"
@@ -17,876 +17,1088 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .index.php:215
-#, php-format
-msgid "Dimensions: %s"
+#: .views/_admin_citations.php:6
+msgid "Citations"
 msgstr ""
 
-#: .index.php:387
+#: .views/_admin_citations.php:10
+msgid "Formatted reference"
+msgstr ""
+
+#: .views/_admin_citations.php:15
+msgid "Author surname"
+msgstr ""
+
+#: .views/_admin_citations.php:20
+msgid "Year"
+msgstr ""
+
+#: .views/_admin_citations.php:25
+msgid "DOI"
+msgstr ""
+
+#: .views/_admin_citations.php:30
+msgid "Link"
+msgstr ""
+
+#: .views/_admin_citations.php:35
+msgid "Add citation"
+msgstr ""
+
+#: .views/_admin_tools.php:8
+msgid "Tools"
+msgstr ""
+
+#: .views/_admin_tools.php:11
+msgid "Flush caches"
+msgstr ""
+
+#: .views/_point_layers.php:5
+#: .views/_point_layers.php:13
+msgid "--select--"
+msgstr ""
+
+#: .views/_point_layers.php:14
+msgid "plus"
+msgstr ""
+
+#: .views/_point_layers.php:15
+msgid "cross"
+msgstr ""
+
+#: .views/_point_layers.php:16
+msgid "asterisk"
+msgstr ""
+
+#: .views/_point_layers.php:17
+msgid "solid"
+msgstr ""
+
+#: .views/_point_layers.php:18
+msgid "circle (s)"
+msgstr ""
+
+#: .views/_point_layers.php:19
+msgid "star (s)"
+msgstr ""
+
+#: .views/_point_layers.php:20
+msgid "square (s)"
+msgstr ""
+
+#: .views/_point_layers.php:21
+msgid "triangle (s)"
+msgstr ""
+
+#: .views/_point_layers.php:22
+msgid "hexagon (s)"
+msgstr ""
+
+#: .views/_point_layers.php:24
+msgid "open"
+msgstr ""
+
+#: .views/_point_layers.php:25
+msgid "circle (o)"
+msgstr ""
+
+#: .views/_point_layers.php:26
+msgid "star (o)"
+msgstr ""
+
+#: .views/_point_layers.php:27
+msgid "square (o)"
+msgstr ""
+
+#: .views/_point_layers.php:28
+msgid "triangle (o)"
+msgstr ""
+
+#: .views/_point_layers.php:29
+msgid "hexagon (o)"
+msgstr ""
+
+#: .views/_point_layers.php:38
+#: .views/_regions.php:9
+msgid "Remove"
+msgstr ""
+
+#: .views/_point_layers.php:40
+msgid "Layer %d"
+msgstr ""
+
+#: .views/_point_layers.php:43
+#: .views/_regions.php:14
+#: .views/main.php:144
+msgid "Legend"
+msgstr ""
+
+#: .views/_point_layers.php:50
+msgid "Shape"
+msgstr ""
+
+#: .views/_point_layers.php:50
+msgid "Size"
+msgstr ""
+
+#: .views/_point_layers.php:51
+#: .views/_regions.php:21
+msgid "Color"
+msgstr ""
+
+#: .views/_point_layers.php:53
+#: .views/_regions.php:23
+msgid "Clear"
+msgstr ""
+
+#: .views/_regions.php:11
 #, php-format
 msgid "Region %d"
 msgstr ""
 
-#: .index.php:11
-msgid "A publication-quality, point map application."
+#: .views/about.php:72
+#, php-format
+msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %s and The Encyclopedia of Life's %s as a custom %s module."
 msgstr ""
 
-#: .index.php:12
-msgid "publication,map"
-msgstr ""
-
-#: .index.php:22
-msgid "point maps for publication and presentation"
-msgstr ""
-
-#: .index.php:27
-msgid "Sign Out"
-msgstr ""
-
-#: .index.php:29
-msgid "Sign In"
-msgstr ""
-
-#: .index.php:33
-msgid "Building application..."
-msgstr ""
-
-#: .index.php:35
-msgid "Sorry, you must enable javascript to use this site."
-msgstr ""
-
-#: .index.php:36
-#: .index.php:60
-#: .index.php:73
-#: .tabs/help.php:45
-msgid "Preview"
-msgstr ""
-
-#: .index.php:37
-#: .tabs/help.php:140
-msgid "Point Data"
-msgstr ""
-
-#: .index.php:38
-#: .tabs/help.php:159
-msgid "Regions"
-msgstr ""
-
-#: .index.php:39
-msgid "All Maps"
-msgstr ""
-
-#: .index.php:39
-msgid "My Maps"
-msgstr ""
-
-#: .index.php:41
-msgid "Users"
-msgstr ""
-
-#: .index.php:44
-msgid "Help"
-msgstr ""
-
-#: .index.php:45
-msgid "About"
-msgstr ""
-
-#: .index.php:46
-msgid "Feedback"
-msgstr ""
-
-#: .index.php:47
-msgid "API"
-msgstr ""
-
-#: .index.php:54
-msgid "Type geographic coordinates on separate lines in decimal degrees as latitude longitude (separated by a space, comma, or semicolon)"
-msgstr ""
-
-#: .index.php:54
-msgid "examples"
-msgstr ""
-
-#: .index.php:59
-msgid "Add a layer"
-msgstr ""
-
-#: .index.php:60
-#: .index.php:73
-msgid "Clear all"
-msgstr ""
-
-#: .index.php:67
-msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."
-msgstr ""
-
-#: .index.php:67
-msgid "codes"
-msgstr ""
-
-#: .index.php:72
-msgid "Add a region"
-msgstr ""
-
-#: .index.php:81
-msgid "zoom in ctrl+"
-msgstr ""
-
-#: .index.php:82
-msgid "zoom out ctrl-"
-msgstr ""
-
-#: .index.php:83
-msgid "crop ctrl+x"
-msgstr ""
-
-#: .index.php:84
-msgid "fill regions"
-msgstr ""
-
-#: .index.php:85
-msgid "refresh ctrl+r"
-msgstr ""
-
-#: .index.php:86
-msgid "rebuild ctrl+n"
-msgstr ""
-
-#: .index.php:91
-msgid "save ctrl+s"
-msgstr ""
-
-#: .index.php:91
-#: .index.php:194
-#: .index.php:260
-#: .tabs/help.php:129
-msgid "Save"
-msgstr ""
-
-#: .index.php:92
-msgid "embed"
-msgstr ""
-
-#: .index.php:92
-#: .index.php:273
-#: .tabs/help.php:132
-msgid "Embed"
-msgstr ""
-
-#: .index.php:94
-msgid "download ctrl+d"
-msgstr ""
-
-#: .index.php:94
-#: .index.php:200
-#: .index.php:262
-#: .tabs/help.php:135
-msgid "Download"
-msgstr ""
-
-#: .index.php:108
-msgid "pan up"
-msgstr ""
-
-#: .index.php:109
-msgid "pan right"
-msgstr ""
-
-#: .index.php:110
-msgid "pan down"
-msgstr ""
-
-#: .index.php:111
-msgid "pan left"
-msgstr ""
-
-#: .index.php:115
-msgid "Records Out of Range"
-msgstr ""
-
-#: .index.php:116
-#: .index.php:265
-msgid "Building preview..."
-msgstr ""
-
-#: .index.php:122
-msgid "Settings"
-msgstr ""
-
-#: .index.php:123
-#: .index.php:360
-#: .index.php:390
-msgid "Legend"
-msgstr ""
-
-#: .index.php:125
-#: .index.php:271
-msgid "legend will appear here"
-msgstr ""
-
-#: .index.php:127
-#: .tabs/help.php:71
-msgid "Layers"
-msgstr ""
-
-#: .index.php:129
-#: .index.php:139
-#: .tabs/help.php:73
-#: .tabs/help.php:97
-msgid "State/Provinces"
-msgstr ""
-
-#: .index.php:130
-#: .tabs/help.php:76
-msgid "lakes (outline)"
-msgstr ""
-
-#: .index.php:131
-#: .tabs/help.php:79
-msgid "lakes (greyscale)"
-msgstr ""
-
-#: .index.php:132
-#: .index.php:141
-#: .tabs/help.php:82
-#: .tabs/help.php:103
-msgid "rivers"
-msgstr ""
-
-#: .index.php:133
-#: .tabs/help.php:85
-msgid "relief"
-msgstr ""
-
-#: .index.php:134
-#: .tabs/help.php:88
-msgid "relief (greyscale)"
-msgstr ""
-
-#: .index.php:136
-#: .tabs/help.php:92
-msgid "Labels"
-msgstr ""
-
-#: .index.php:138
-#: .tabs/help.php:94
-msgid "Countries"
-msgstr ""
-
-#: .index.php:140
-#: .tabs/help.php:100
-msgid "lakes"
-msgstr ""
-
-#: .index.php:142
-#: .tabs/help.php:106
-msgid "places"
-msgstr ""
-
-#: .index.php:143
-#: .tabs/help.php:109
-msgid "physical"
-msgstr ""
-
-#: .index.php:144
-#: .tabs/help.php:112
-msgid "marine"
-msgstr ""
-
-#: .index.php:146
-#: .index.php:212
-#: .tabs/help.php:116
-msgid "Options"
-msgstr ""
-
-#: .index.php:148
-msgid "graticules (grid)"
-msgstr ""
-
-#: .index.php:150
-msgid "fixed"
-msgstr ""
-
-#: .index.php:156
-#: .tabs/help.php:122
-msgid "Projection"
-msgstr ""
-
-#: .index.php:169
-msgid "zoom prior to setting projection"
-msgstr ""
-
-#: .index.php:179
-msgid "Save and reload your map data or create a generic template."
-msgstr ""
-
-#: .index.php:193
-msgid "Records out of range"
-msgstr ""
-
-#: .index.php:196
-#: .lib/mapprservice.usermaps.class.php:161
-msgid "Title"
-msgstr ""
-
-#: .index.php:202
-msgid "map will be cropped"
-msgstr ""
-
-#: .index.php:204
-msgid "File name"
-msgstr ""
-
-#: .index.php:208
-msgid "File type"
-msgstr ""
-
-#: .index.php:218
-msgid "include border"
-msgstr ""
-
-#: .index.php:220
-msgid "embed legend"
-msgstr ""
-
-#: .index.php:222
-msgid "embed scalebar"
-msgstr ""
-
-#: .index.php:224
-msgid "does not include scalebar, legend, or relief layers"
-msgstr ""
-
-#: .index.php:226
-msgid "Building file for download..."
-msgstr ""
-
-#: .index.php:258
-msgid "Warning"
-msgstr ""
-
-#: .index.php:261
-msgid "Cancel"
-msgstr ""
-
-#: .index.php:263
-#: .index.php:270
-#: .lib/mapprservice.usermaps.class.php:182
-#: .lib/mapprservice.users.class.php:142
-msgid "Delete"
-msgstr ""
-
-#: .index.php:266
-msgid "Saving..."
-msgstr ""
-
-#: .index.php:267
-msgid "You are missing a legend for at least one of your Point Data or Regions layers."
-msgstr ""
-
-#: .index.php:268
-msgid "Loading your maps..."
-msgstr ""
-
-#: .index.php:269
-msgid "Loading user list..."
-msgstr ""
-
-#: .index.php:270
-msgid "Are you sure you want to delete"
-msgstr ""
-
-#: .index.php:272
-msgid "Example Coordinates"
-msgstr ""
-
-#: .index.php:276
-#: .index.php:281
-msgid "Additional parameters"
-msgstr ""
-
-#: .index.php:276
-msgid "width, height"
-msgstr ""
-
-#: .index.php:281
-msgid "callback"
-msgstr ""
-
-#: .index.php:325
-#: .index.php:333
-msgid "--select--"
-msgstr ""
-
-#: .index.php:334
-msgid "plus"
-msgstr ""
-
-#: .index.php:335
-msgid "cross"
-msgstr ""
-
-#: .index.php:336
-msgid "solid"
-msgstr ""
-
-#: .index.php:337
-msgid "circle (s)"
-msgstr ""
-
-#: .index.php:338
-msgid "star (s)"
-msgstr ""
-
-#: .index.php:339
-msgid "square (s)"
-msgstr ""
-
-#: .index.php:340
-msgid "triangle (s)"
-msgstr ""
-
-#: .index.php:342
-msgid "open"
-msgstr ""
-
-#: .index.php:343
-msgid "circle (o)"
-msgstr ""
-
-#: .index.php:344
-msgid "star (o)"
-msgstr ""
-
-#: .index.php:345
-msgid "square (o)"
-msgstr ""
-
-#: .index.php:346
-msgid "triangle (o)"
-msgstr ""
-
-#: .index.php:355
-#: .index.php:385
-msgid "Remove"
-msgstr ""
-
-#: .index.php:357
-msgid "Layer %d"
-msgstr ""
-
-#: .index.php:367
-msgid "Shape"
-msgstr ""
-
-#: .index.php:367
-msgid "Size"
-msgstr ""
-
-#: .index.php:368
-#: .index.php:397
-msgid "Color"
-msgstr ""
-
-#: .index.php:370
-#: .index.php:399
-msgid "Clear"
-msgstr ""
-
-#: .lib/mapprservice.pptx.class.php:108
-msgid "Created with SimpleMappr, http://www.simplemappr.net"
-msgstr ""
-
-#: .lib/mapprservice.usermaps.class.php:162
-#: .lib/mapprservice.users.class.php:127
-msgid "Actions"
-msgstr ""
-
-#: .lib/mapprservice.usermaps.class.php:180
-msgid "Load"
-msgstr ""
-
-#: .lib/mapprservice.usermaps.class.php:200
-msgid "Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab."
-msgstr ""
-
-#: .lib/mapprservice.usermaps.class.php:200
-msgid "Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade."
-msgstr ""
-
-#: .lib/mapprservice.users.class.php:123
-msgid "Username"
-msgstr ""
-
-#: .lib/mapprservice.users.class.php:124
-msgid "Email"
-msgstr ""
-
-#: .lib/mapprservice.users.class.php:125
-msgid "Maps"
-msgstr ""
-
-#: .lib/mapprservice.users.class.php:126
-msgid "Last Access"
-msgstr ""
-
-#: .tabs/about.php:38
+#: .views/about.php:74
 #, php-format
 msgid "The code behind SimpleMappr may be obtained at %s"
 msgstr ""
 
-#: .tabs/about.php:42
+#: .views/about.php:78
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript. Biodiversity Hotspot data were obtained from %s."
 msgstr ""
 
-#: .tabs/about.php:9
+#: .views/about.php:24
 msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
 msgstr ""
 
-#: .tabs/about.php:11
+#: .views/about.php:26
 msgid "Citing"
 msgstr ""
 
-#: .tabs/about.php:13
+#: .views/about.php:27
+msgid "All versions of SimpleMappr map data found on this website are in the Public Domain. You may use the maps in any manner, including modifying the content and design, electronic dissemination, and offset printing. The primary author, David P. Shorthouse renounces all financial claim to the maps and invites you to use them for personal, educational, and commercial purposes. No permission is needed to use SimpleMappr. Crediting the author is unnecessary. However, if you wish to cite the application, simply use the following."
+msgstr ""
+
+#: .views/about.php:31
 msgid "Recent Updates"
 msgstr ""
 
-#: .tabs/about.php:15
-msgid "November 23, 2011"
+#: .views/about.php:33
+msgid "January 13, 2014"
 msgstr ""
 
-#: .tabs/about.php:15
-msgid "Improvements: Added download as Word (.docx)."
+#: .views/about.php:33
+msgid "Improvements: Created a Web Map Service (WMS), which can be used by client applications like QGIS."
 msgstr ""
 
-#: .tabs/about.php:16
-msgid "November 22, 2011"
+#: .views/about.php:34
+msgid "October 29, 2013"
 msgstr ""
 
-#: .tabs/about.php:16
-msgid "Improvements: Added download as PowerPoint (.pptx)."
+#: .views/about.php:34
+msgid "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."
 msgstr ""
 
-#: .tabs/about.php:17
-msgid "November 18, 2011"
+#: .views/about.php:35
+msgid "June 25, 2013"
 msgstr ""
 
-#: .tabs/about.php:17
-msgid "Improvements: Added crop and download dimension indicators. The crop dimensions may be directly adjusted just as can the coordinates in the floating crop window. Bug fixes: specifying width and height of embedded images did not work as expected."
+#: .views/about.php:35
+msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables."
 msgstr ""
 
-#: .tabs/about.php:18
-msgid "November 17, 2011"
+#: .views/about.php:36
+msgid "May 19, 2013"
 msgstr ""
 
-#: .tabs/about.php:18
-msgid "Improvements: Cleaner URL for image embed; added KML and GeoJSON as embed options."
+#: .views/about.php:36
+msgid "Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option."
 msgstr ""
 
-#: .tabs/about.php:19
-msgid "November 16, 2011"
+#: .views/about.php:37
+msgid "May 9, 2013"
 msgstr ""
 
-#: .tabs/about.php:19
-msgid "Bug fixes: Scalebar showed tick measures in exponents (reported by GIS Unit Kew)."
+#: .views/about.php:37
+msgid "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler."
 msgstr ""
 
-#: .tabs/about.php:20
-msgid "November 15, 2011"
+#: .views/about.php:38
+msgid "April 12, 2013"
 msgstr ""
 
-#: .tabs/about.php:20
-msgid "Improvements: added an autocomplete mechanism for country names in the Regions tab; refined drawing of border around map when legend present. Bug fixes: Added more Google Earth pushpins in the kml output."
+#: .views/about.php:38
+msgid "Improvements: Added the ability to specify the longitude of natural origin in Lambert projections. Requested by Tim Dickinson."
 msgstr ""
 
-#: .tabs/about.php:21
-msgid "November 4, 2011"
+#: .views/about.php:39
+msgid "February 27, 2013"
 msgstr ""
 
-#: .tabs/about.php:21
-msgid "Improvements: a new look & feel for better use of screen real estate and to accommodate eventual internationalization."
+#: .views/about.php:39
+msgid "Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes."
 msgstr ""
 
-#: .tabs/about.php:22
-msgid "October 24, 2011"
+#: .views/about.php:40
+msgid "February 18, 2013"
 msgstr ""
 
-#: .tabs/about.php:22
-msgid "Bug fixes: corrected mechanism to draw map borders to accommodate rotation."
+#: .views/about.php:40
+msgid "Improvements: Embedded map will appear cropped when saved as such. Requested by Steven Bachman."
 msgstr ""
 
-#: .tabs/about.php:23
-msgid "October 23, 2011"
+#: .views/about.php:41
+msgid "January 23, 2013"
 msgstr ""
 
-#: .tabs/about.php:23
-msgid "Improvements: converted map rotation to a circular slider; loading a saved map with a rotation will indicate rotated angle."
+#: .views/about.php:41
+msgid "Improvements: Made line thickness in download proportional to user selected dimensions of output. Requested by Kevin M. Pfeiffer."
 msgstr ""
 
-#: .tabs/about.php:24
-msgid "October 20, 2011"
+#: .views/about.php:42
+msgid "October 16, 2012"
 msgstr ""
 
-#: .tabs/about.php:24
-msgid "Improvements: added a Country label option; scale bar is now always present in preview but optional for download."
+#: .views/about.php:42
+msgid "Improvements: Enhanced the API to allow POST of multiple points."
 msgstr ""
 
-#: .tabs/about.php:25
-msgid "October 19, 2011"
+#: .views/about.php:43
+msgid "October 14, 2012"
 msgstr ""
 
-#: .tabs/about.php:25
-msgid "Improvements: legend appearance in downloads and API. Bug fixes: proper rendering of Point Data/Regions layers after one or more were removed; improved behaviour of crop when map loaded."
+#: .views/about.php:43
+msgid "Improvements: Enhanced the API to allow sending of tab-delimited files."
 msgstr ""
 
-#: .tabs/about.php:26
-msgid "October 18, 2011"
+#: .views/about.php:44
+msgid "August 16, 2012"
 msgstr ""
 
-#: .tabs/about.php:26
-msgid "Improvements: dedicated label section in map preview settings; State/Province borders thickened to differentiate from rivers and lake outlines; lake fills made less stark to accommodate lake and river labels."
+#: .views/about.php:44
+msgid "Improvements: Adjusted URLs with tab clicks to preserve use of back button."
 msgstr ""
 
-#: .tabs/about.php:27
-msgid "October 6, 2011"
+#: .views/about.php:45
+msgid "July 22, 2012"
 msgstr ""
 
-#: .tabs/about.php:27
-msgid "Improvements: removed eps as an output format because it was raster-based; preview of shaded relief layers made faster."
+#: .views/about.php:45
+msgid "Bug fixes: Region Code lists can be filtered without causing the browser to crash."
 msgstr ""
 
-#: .tabs/about.php:28
-msgid "October 2, 2011"
+#: .views/about.php:46
+msgid "July 2, 2012"
 msgstr ""
 
-#: .tabs/about.php:28
-msgid "Bug fixes: incorrect expansion of Point Data/Regions layers after a saved map is loaded (reported by Chris Borkent)."
+#: .views/about.php:46
+msgid "Improvements: Added svg as an embedded output format."
 msgstr ""
 
-#: .tabs/about.php:29
-msgid "October 1, 2011"
+#: .views/about.php:47
+msgid "July 1, 2012"
 msgstr ""
 
-#: .tabs/about.php:29
-msgid "Improvements: keyboard shortcuts for common actions (arrow keys pan when cursor is hovered over the map)."
+#: .views/about.php:47
+msgid "Improvements: Added sort to columns in My Maps."
 msgstr ""
 
-#: .tabs/about.php:31
+#: .views/about.php:48
+msgid "June 14, 2012"
+msgstr ""
+
+#: .views/about.php:48
+msgid "Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."
+msgstr ""
+
+#: .views/about.php:52
+msgid "Live Updates"
+msgstr ""
+
+#: .views/about.php:56
 msgid "In the Wild"
 msgstr ""
 
-#: .tabs/about.php:37
-#: .tabs/help.php:172
+#: .views/about.php:65
+msgid "Applications"
+msgstr ""
+
+#: .views/about.php:71
+msgid "API Usage"
+msgstr ""
+
+#: .views/about.php:73
 msgid "Code"
 msgstr ""
 
-#: .tabs/about.php:39
+#: .views/about.php:75
 msgid "History"
 msgstr ""
 
-#: .tabs/about.php:40
+#: .views/about.php:76
 msgid "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History."
 msgstr ""
 
-#: .tabs/about.php:41
+#: .views/about.php:77
 msgid "Acknowledgments"
 msgstr ""
 
-#: .tabs/api.php:9
-msgid "A simple, restful API may be used with Internet accessible, tab-separated text files with additional parameters outlined below."
+#: .views/apidoc.php:56
+#, php-format
+msgid "Note: requires a POST request to http://%s/api/ with an enctype set to multipart/form-data."
 msgstr ""
 
-#: .tabs/feedback.php:7
+#: .views/apidoc.php:81
+#, php-format
+msgid "comma-separated bounding box in decimal degrees %s"
+msgstr ""
+
+#: .views/apidoc.php:96
+#, php-format
+msgid "the output projection in either EPSG or ESRI references. See %s for spatial references. Accepted projections are:"
+msgstr ""
+
+#: .views/apidoc.php:22
+msgid "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively."
+msgstr ""
+
+#: .views/apidoc.php:26
+msgid "Produces"
+msgstr ""
+
+#: .views/apidoc.php:27
+msgid "My Map"
+msgstr ""
+
+#: .views/apidoc.php:30
+msgid "Base URL"
+msgstr ""
+
+#: .views/apidoc.php:38
+msgid "Parameters"
+msgstr ""
+
+#: .views/apidoc.php:43
+msgid "if ping=true is included, a JSON response will be produced in place of an image."
+msgstr ""
+
+#: .views/apidoc.php:48
+msgid "a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points."
+msgstr ""
+
+#: .views/apidoc.php:51
+msgid "a URL-encoded, remote GeoRSS feed."
+msgstr ""
+
+#: .views/apidoc.php:57
+msgid "tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server."
+msgstr ""
+
+#: .views/apidoc.php:63
+msgid "single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \\n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above."
+msgstr ""
+
+#: .views/apidoc.php:66
+msgid "shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, star, hexagon, opencircle, opensquare, opentriangle, openstar, openhexagon"
+msgstr ""
+
+#: .views/apidoc.php:69
+msgid "integer-based point size of marker in column x"
+msgstr ""
+
+#: .views/apidoc.php:72
+msgid "comma-separated RGB colors for marker in column x"
+msgstr ""
+
+#: .views/apidoc.php:84
+msgid "comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets"
+msgstr ""
+
+#: .views/apidoc.php:87
+msgid "the title for the shaded places"
+msgstr ""
+
+#: .views/apidoc.php:90
+msgid "comma-separated RGB fill colors for shaded places"
+msgstr ""
+
+#: .views/apidoc.php:93
+msgid "comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames"
+msgstr ""
+
+#: .views/apidoc.php:99
+msgid "longitude of natural origin used in Lambert projections"
+msgstr ""
+
+#: .views/apidoc.php:102
+msgid "display the graticules"
+msgstr ""
+
+#: .views/apidoc.php:105
+msgid "display the graticules with defined spacing in degrees"
+msgstr ""
+
+#: .views/apidoc.php:108
+msgid "integer-based output width in pixels"
+msgstr ""
+
+#: .views/apidoc.php:111
+msgid "integer-based output height in pixels; if height is not provided, it will be half the width"
+msgstr ""
+
+#: .views/apidoc.php:114
+msgid "file format of the image or vector produced; options are png, jpg, svg"
+msgstr ""
+
+#: .views/apidoc.php:117
+msgid "embed a scalebar in the lower right of the image"
+msgstr ""
+
+#: .views/apidoc.php:120
+msgid "URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead"
+msgstr ""
+
+#: .views/feedback.php:14
 msgid "Used SimpleMappr in a manuscript, poster, PowerPoint presentation or are you making use of the API? Please also drop a note if you have feature requests or bug reports."
 msgstr ""
 
-#: .tabs/help.php:41
+#: .views/help.php:29
 msgid "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended."
 msgstr ""
 
-#: .tabs/help.php:48
+#: .views/help.php:33
+#: .views/main.php:58
+#: .views/main.php:83
+#: .views/main.php:95
+msgid "Preview"
+msgstr ""
+
+#: .views/help.php:36
 msgid "Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)"
 msgstr ""
 
-#: .tabs/help.php:50
+#: .views/help.php:38
 msgid "Toolbar buttons"
 msgstr ""
 
-#: .tabs/help.php:52
+#: .views/help.php:40
 msgid "Zoom in"
 msgstr ""
 
-#: .tabs/help.php:53
+#: .views/help.php:41
 msgid "draw a zoom region on the preview"
 msgstr ""
 
-#: .tabs/help.php:55
+#: .views/help.php:43
 msgid "Zoom out"
 msgstr ""
 
-#: .tabs/help.php:56
+#: .views/help.php:44
 msgid "zoom out one step"
 msgstr ""
 
-#: .tabs/help.php:58
+#: .views/help.php:46
 msgid "Crop"
 msgstr ""
 
-#: .tabs/help.php:59
+#: .views/help.php:47
 msgid "draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels."
 msgstr ""
 
-#: .tabs/help.php:61
+#: .views/help.php:49
 msgid "Fill regions"
 msgstr ""
 
-#: .tabs/help.php:62
+#: .views/help.php:50
 msgid "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab."
 msgstr ""
 
-#: .tabs/help.php:64
+#: .views/help.php:52
+msgid "Undo"
+msgstr ""
+
+#: .views/help.php:53
+msgid "undo the last executed action"
+msgstr ""
+
+#: .views/help.php:55
+msgid "Redo"
+msgstr ""
+
+#: .views/help.php:56
+msgid "redo the last executed action"
+msgstr ""
+
+#: .views/help.php:58
 msgid "Refresh"
 msgstr ""
 
-#: .tabs/help.php:65
+#: .views/help.php:59
 msgid "refresh the map image"
 msgstr ""
 
-#: .tabs/help.php:67
+#: .views/help.php:61
 msgid "Rebuild"
 msgstr ""
 
-#: .tabs/help.php:68
+#: .views/help.php:62
 msgid "re-render the default presentation at lowest zoom and geographic projection"
 msgstr ""
 
-#: .tabs/help.php:74
-msgid "select this checkbox to draw all State and Province borders for all countries"
+#: .views/help.php:66
+#: .views/main.php:114
+#: .views/main.php:230
+#: .views/main.php:281
+msgid "Save"
 msgstr ""
 
-#: .tabs/help.php:77
-msgid "select this checkbox to overlay lakes as black outlines"
-msgstr ""
-
-#: .tabs/help.php:80
-msgid "select this checkbox to overlay lakes as greyscale polygons"
-msgstr ""
-
-#: .tabs/help.php:83
-msgid "select this checkbox to overlay rivers as black outlines"
-msgstr ""
-
-#: .tabs/help.php:86
-msgid "select this checkbox to render a color, shaded relief layer"
-msgstr ""
-
-#: .tabs/help.php:89
-msgid "select this checkbox to render a greyscale, shaded relief layer"
-msgstr ""
-
-#: .tabs/help.php:95
-msgid "label countries"
-msgstr ""
-
-#: .tabs/help.php:98
-msgid "label States and Provinces"
-msgstr ""
-
-#: .tabs/help.php:101
-msgid "label lakes"
-msgstr ""
-
-#: .tabs/help.php:104
-msgid "label rivers"
-msgstr ""
-
-#: .tabs/help.php:107
-msgid "label city, town names"
-msgstr ""
-
-#: .tabs/help.php:110
-msgid "label physical features"
-msgstr ""
-
-#: .tabs/help.php:113
-msgid "label marine features"
-msgstr ""
-
-#: .tabs/help.php:118
-msgid "graticules"
-msgstr ""
-
-#: .tabs/help.php:119
-msgid "draw a graticule (grid) layer on the map using either fixed, 5, or 10 degree spacing"
-msgstr ""
-
-#: .tabs/help.php:124
-msgid "projection"
-msgstr ""
-
-#: .tabs/help.php:125
-msgid "Choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
-msgstr ""
-
-#: .tabs/help.php:130
+#: .views/help.php:67
 msgid "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab."
 msgstr ""
 
-#: .tabs/help.php:133
+#: .views/help.php:69
+#: .views/main.php:115
+#: .views/main.php:294
+msgid "Embed"
+msgstr ""
+
+#: .views/help.php:70
 msgid "once a map is saved, click this icon to obtain a URL for embedding on other websites."
 msgstr ""
 
-#: .tabs/help.php:136
+#: .views/help.php:72
+#: .views/main.php:117
+#: .views/main.php:236
+#: .views/main.php:283
+msgid "Download"
+msgstr ""
+
+#: .views/help.php:73
 msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
 msgstr ""
 
-#: .tabs/help.php:142
-msgid "Use the Point Data tab to paste coordinates as latitude, longitude on separate lines and select the marker shape, size, and color."
+#: .views/help.php:76
+#: .views/main.php:148
+msgid "Layers"
 msgstr ""
 
-#: .tabs/help.php:145
+#: .views/help.php:78
+#: .views/help.php:108
+#: .views/main.php:150
+#: .views/main.php:162
+msgid "State/Provinces"
+msgstr ""
+
+#: .views/help.php:79
+msgid "select this checkbox to draw all State and Province borders for all countries"
+msgstr ""
+
+#: .views/help.php:81
+#: .views/main.php:151
+msgid "lakes (outline)"
+msgstr ""
+
+#: .views/help.php:82
+msgid "select this checkbox to overlay lakes as black outlines"
+msgstr ""
+
+#: .views/help.php:84
+#: .views/main.php:152
+msgid "lakes (greyscale)"
+msgstr ""
+
+#: .views/help.php:85
+msgid "select this checkbox to overlay lakes as greyscale polygons"
+msgstr ""
+
+#: .views/help.php:87
+#: .views/help.php:114
+#: .views/main.php:153
+#: .views/main.php:164
+msgid "rivers"
+msgstr ""
+
+#: .views/help.php:88
+msgid "select this checkbox to overlay rivers as black outlines"
+msgstr ""
+
+#: .views/help.php:90
+#: .views/main.php:154
+msgid "oceans (greyscale)"
+msgstr ""
+
+#: .views/help.php:91
+msgid "select this checkbox to overlay oceans as greyscale polygons"
+msgstr ""
+
+#: .views/help.php:93
+#: .views/main.php:155
+msgid "relief"
+msgstr ""
+
+#: .views/help.php:94
+msgid "select this checkbox to render a color, shaded relief layer"
+msgstr ""
+
+#: .views/help.php:96
+#: .views/main.php:156
+msgid "relief (greyscale)"
+msgstr ""
+
+#: .views/help.php:97
+msgid "select this checkbox to render a greyscale, shaded relief layer"
+msgstr ""
+
+#: .views/help.php:99
+#: .views/main.php:157
+#: .views/main.php:168
+msgid "biodiv. hotspots"
+msgstr ""
+
+#: .views/help.php:100
+msgid "select this checkbox to render biodiversity hotspots known to Conservation International"
+msgstr ""
+
+#: .views/help.php:103
+#: .views/main.php:159
+msgid "Labels"
+msgstr ""
+
+#: .views/help.php:105
+#: .views/main.php:161
+msgid "Countries"
+msgstr ""
+
+#: .views/help.php:106
+msgid "label countries"
+msgstr ""
+
+#: .views/help.php:109
+msgid "label States and Provinces"
+msgstr ""
+
+#: .views/help.php:111
+#: .views/main.php:163
+msgid "lakes"
+msgstr ""
+
+#: .views/help.php:112
+msgid "label lakes"
+msgstr ""
+
+#: .views/help.php:115
+msgid "label rivers"
+msgstr ""
+
+#: .views/help.php:117
+#: .views/main.php:165
+msgid "places"
+msgstr ""
+
+#: .views/help.php:118
+msgid "label city, town names"
+msgstr ""
+
+#: .views/help.php:120
+#: .views/main.php:166
+msgid "physical"
+msgstr ""
+
+#: .views/help.php:121
+msgid "label physical features"
+msgstr ""
+
+#: .views/help.php:123
+#: .views/main.php:167
+msgid "marine"
+msgstr ""
+
+#: .views/help.php:124
+msgid "label marine features"
+msgstr ""
+
+#: .views/help.php:127
+#: .views/main.php:170
+#: .views/main.php:247
+msgid "Options"
+msgstr ""
+
+#: .views/help.php:129
+msgid "graticules"
+msgstr ""
+
+#: .views/help.php:130
+msgid "draw a graticule (grid) layer on the map using either fixed, 1, 5, or 10 degree spacing"
+msgstr ""
+
+#: .views/help.php:132
+#: .views/main.php:183
+msgid "Line Thickness"
+msgstr ""
+
+#: .views/help.php:133
+msgid "use the slider to increase or decrease line thickness of the base and State/Provinces layers"
+msgstr ""
+
+#: .views/help.php:136
+#: .views/main.php:185
+msgid "Projection"
+msgstr ""
+
+#: .views/help.php:138
+msgid "projection"
+msgstr ""
+
+#: .views/help.php:139
+msgid "choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]"
+msgstr ""
+
+#: .views/help.php:141
+#: .views/main.php:198
+msgid "longitude of natural origin"
+msgstr ""
+
+#: .views/help.php:142
+msgid "type the longitude for the central meridian"
+msgstr ""
+
+#: .views/help.php:146
+#: .views/main.php:59
+msgid "Point Data"
+msgstr ""
+
+#: .views/help.php:148
+msgid "Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color."
+msgstr ""
+
+#: .views/help.php:151
 msgid "Coordinate format"
 msgstr ""
 
-#: .tabs/help.php:146
-msgid "in western hemisphere above equator 45.55, -120.25; in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
+#: .views/help.php:152
+msgid "in western hemisphere above equator 45.55, -120.25 (or 45° 33'N, 120° 15'W); in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1"
 msgstr ""
 
-#: .tabs/help.php:149
+#: .views/help.php:155
 msgid "Example Data Entry"
 msgstr ""
 
-#: .tabs/help.php:150
+#: .views/help.php:156
 msgid "38,-100 (North America)"
 msgstr ""
 
-#: .tabs/help.php:151
+#: .views/help.php:157
 msgid "-25,140 (Australia)"
 msgstr ""
 
-#: .tabs/help.php:154
+#: .views/help.php:160
 msgid "Pushpin color"
 msgstr ""
 
-#: .tabs/help.php:155
+#: .views/help.php:161
 msgid "configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray."
 msgstr ""
 
-#: .tabs/help.php:162
+#: .views/help.php:165
+#: .views/main.php:60
+msgid "Regions"
+msgstr ""
+
+#: .views/help.php:168
 msgid "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
 msgstr ""
 
-#: .tabs/help.php:167
-msgid "Country"
+#: .views/main.php:251
+#, php-format
+msgid "Dimensions: %s"
 msgstr ""
 
-#: .tabs/help.php:171
-msgid "State/Province"
+#: .views/main.php:11
+#: .views/main.php:15
+msgid "A point map web application for quality publications and presentations."
 msgstr ""
 
-#: .tabs/help.php:173
-msgid "Example"
+#: .views/main.php:12
+msgid "publication,presentation,map,georeference"
+msgstr ""
+
+#: .views/main.php:28
+msgid "point maps for publication and presentation"
+msgstr ""
+
+#: .views/main.php:46
+msgid "Sign Out"
+msgstr ""
+
+#: .views/main.php:48
+msgid "Sign In"
+msgstr ""
+
+#: .views/main.php:54
+msgid "Sorry, you must enable JavaScript to use this site."
+msgstr ""
+
+#: .views/main.php:61
+msgid "All Maps"
+msgstr ""
+
+#: .views/main.php:61
+msgid "My Maps"
+msgstr ""
+
+#: .views/main.php:63
+msgid "Users"
+msgstr ""
+
+#: .views/main.php:64
+msgid "Administration"
+msgstr ""
+
+#: .views/main.php:68
+msgid "Help"
+msgstr ""
+
+#: .views/main.php:69
+msgid "About"
+msgstr ""
+
+#: .views/main.php:70
+msgid "Feedback"
+msgstr ""
+
+#: .views/main.php:71
+msgid "API"
+msgstr ""
+
+#: .views/main.php:77
+msgid "Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"
+msgstr ""
+
+#: .views/main.php:77
+msgid "examples"
+msgstr ""
+
+#: .views/main.php:82
+msgid "Add a layer"
+msgstr ""
+
+#: .views/main.php:83
+#: .views/main.php:95
+msgid "Clear all"
+msgstr ""
+
+#: .views/main.php:89
+msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]."
+msgstr ""
+
+#: .views/main.php:89
+msgid "codes"
+msgstr ""
+
+#: .views/main.php:94
+msgid "Add a region"
+msgstr ""
+
+#: .views/main.php:102
+msgid "zoom in ctrl+"
+msgstr ""
+
+#: .views/main.php:103
+msgid "zoom out ctrl-"
+msgstr ""
+
+#: .views/main.php:104
+msgid "crop ctrl+x"
+msgstr ""
+
+#: .views/main.php:105
+msgid "fill regions"
+msgstr ""
+
+#: .views/main.php:106
+msgid "undo ctrl+z"
+msgstr ""
+
+#: .views/main.php:107
+msgid "redo ctrl+y"
+msgstr ""
+
+#: .views/main.php:108
+msgid "refresh ctrl+r"
+msgstr ""
+
+#: .views/main.php:109
+msgid "rebuild ctrl+n"
+msgstr ""
+
+#: .views/main.php:114
+msgid "save ctrl+s"
+msgstr ""
+
+#: .views/main.php:115
+msgid "embed"
+msgstr ""
+
+#: .views/main.php:117
+msgid "download ctrl+d"
+msgstr ""
+
+#: .views/main.php:128
+msgid "pan up"
+msgstr ""
+
+#: .views/main.php:129
+msgid "pan right"
+msgstr ""
+
+#: .views/main.php:130
+msgid "pan down"
+msgstr ""
+
+#: .views/main.php:131
+msgid "pan left"
+msgstr ""
+
+#: .views/main.php:135
+msgid "Records Out of Range"
+msgstr ""
+
+#: .views/main.php:139
+msgid "expand/collapse ctrl+e"
+msgstr ""
+
+#: .views/main.php:143
+msgid "Settings"
+msgstr ""
+
+#: .views/main.php:146
+#: .views/main.php:291
+msgid "legend will appear here"
+msgstr ""
+
+#: .views/main.php:173
+msgid "graticules (grid)"
+msgstr ""
+
+#: .views/main.php:175
+msgid "fixed"
+msgstr ""
+
+#: .views/main.php:179
+msgid "hide labels"
+msgstr ""
+
+#: .views/main.php:201
+msgid "zoom prior to setting projection"
+msgstr ""
+
+#: .views/main.php:210
+msgid "Save and reload your map data or create a generic template."
+msgstr ""
+
+#: .views/main.php:229
+msgid "Records out of range"
+msgstr ""
+
+#: .views/main.php:232
+msgid "Title"
+msgstr ""
+
+#: .views/main.php:239
+msgid "File name"
+msgstr ""
+
+#: .views/main.php:243
+msgid "File type"
+msgstr ""
+
+#: .views/main.php:248
+msgid "map will be cropped"
+msgstr ""
+
+#: .views/main.php:255
+msgid "include border"
+msgstr ""
+
+#: .views/main.php:259
+msgid "make line thickness proportional to image scale"
+msgstr ""
+
+#: .views/main.php:263
+msgid "embed legend"
+msgstr ""
+
+#: .views/main.php:267
+msgid "embed scalebar"
+msgstr ""
+
+#: .views/main.php:270
+msgid "does not include scalebar, legend, or relief layers"
+msgstr ""
+
+#: .views/main.php:272
+msgid "Building file for download..."
+msgstr ""
+
+#: .views/main.php:279
+msgid "Warning"
+msgstr ""
+
+#: .views/main.php:282
+msgid "Cancel"
+msgstr ""
+
+#: .views/main.php:284
+#: .views/main.php:290
+msgid "Delete"
+msgstr ""
+
+#: .views/main.php:286
+msgid "There was a problem loading your map."
+msgstr ""
+
+#: .views/main.php:287
+msgid "There was a problem saving your map."
+msgstr ""
+
+#: .views/main.php:288
+msgid "Saving..."
+msgstr ""
+
+#: .views/main.php:289
+msgid "You are missing a legend for at least one of your Point Data or Regions layers."
+msgstr ""
+
+#: .views/main.php:290
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: .views/main.php:292
+msgid "Example Coordinates"
+msgstr ""
+
+#: .views/main.php:293
+msgid "State/Province Codes"
+msgstr ""
+
+#: .views/main.php:297
+#: .views/main.php:304
+msgid "Additional parameters"
+msgstr ""
+
+#: .views/main.php:297
+msgid "width, height, legend"
+msgstr ""
+
+#: .views/main.php:304
+msgid "callback"
+msgstr ""
+
+#: .views/main.php:306
+msgid "Apply"
 msgstr ""
 

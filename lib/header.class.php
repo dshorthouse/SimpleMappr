@@ -85,13 +85,13 @@ class Header {
   public static function flush_cache($output = true) {
     $cached_files = array();
 
-    $css_files = array_diff(@scandir(dirname(dirname(__FILE__)) . self::$css_cache_path), array(".", "..", ".DS_Store"));
+    $css_files = array_diff(@scandir(dirname(__DIR__) . self::$css_cache_path), array(".", "..", ".DS_Store"));
     foreach($css_files as $file) {
-      if(preg_match('/\.css$/i', $file)) { $cached_files[] = dirname(dirname(__FILE__)) . self::$css_cache_path . $file; }
+      if(preg_match('/\.css$/i', $file)) { $cached_files[] = dirname(__DIR__) . self::$css_cache_path . $file; }
     }
-    $js_files = array_diff(@scandir(dirname(dirname(__FILE__)) . self::$js_cache_path), array(".", "..", ".DS_Store"));
+    $js_files = array_diff(@scandir(dirname(__DIR__) . self::$js_cache_path), array(".", "..", ".DS_Store"));
     foreach($js_files as $file) {
-      if(preg_match('/\.js$/i', $file)) { $cached_files[] = dirname(dirname(__FILE__)) . self::$js_cache_path . $file; }
+      if(preg_match('/\.js$/i', $file)) { $cached_files[] = dirname(__DIR__) . self::$js_cache_path . $file; }
     }
     foreach($cached_files as $file) {
       unlink($file);
@@ -196,7 +196,7 @@ class Header {
   */
   private function combine_local_js() {
     if(ENVIRONMENT == "production") {
-      $cached_js = $this->files_cached(dirname(dirname(__FILE__)) . self::$js_cache_path);
+      $cached_js = $this->files_cached(dirname(__DIR__) . self::$js_cache_path);
 
       if(!$cached_js) {
         unset($this->local_js_combined['jquery'], $this->local_js_combined['jquery_ui']);
@@ -206,7 +206,7 @@ class Header {
         }
 
         $js_min_file = $this->hash . ".js";
-        $handle = fopen(dirname(dirname(__FILE__)) . self::$js_cache_path . $js_min_file, 'x+');
+        $handle = fopen(dirname(__DIR__) . self::$js_cache_path . $js_min_file, 'x+');
         fwrite($handle, $js_contents);
         fclose($handle);
 
@@ -242,7 +242,7 @@ class Header {
   */
   private function combine_local_css() {
     if(ENVIRONMENT == "production") {
-      $cached_css = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
+      $cached_css = $this->files_cached(dirname(__DIR__) . self::$css_cache_path, "css");
 
       if(!$cached_css) {
         require_once('cssmin.php');
@@ -251,7 +251,7 @@ class Header {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
         }
         $css_min_file = $this->hash . ".css";
-        $handle = fopen(dirname(dirname(__FILE__)) . self::$css_cache_path . $css_min_file, 'x+');
+        $handle = fopen(dirname(__DIR__) . self::$css_cache_path . $css_min_file, 'x+');
         fwrite($handle, $css_min);
         fclose($handle);
 
@@ -287,7 +287,7 @@ class Header {
   }
 
   public function getHash() {
-    $cache = $this->files_cached(dirname(dirname(__FILE__)) . self::$css_cache_path, "css");
+    $cache = $this->files_cached(dirname(__DIR__) . self::$css_cache_path, "css");
     if($cache) {
       list($hash, $extension) = explode(".", $cache[0]);
     } else {

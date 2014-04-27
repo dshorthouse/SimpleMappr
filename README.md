@@ -89,7 +89,7 @@ SimpleMappr uses MySQL and a sample schema is included in /db.
 Internationalization
 --------------------
 
-The following two commands make a messages.po file (by reading the index.php file) and a binary messages.mo file. Both need to be moved to relevant i18n directory such as i18n/fr\_FR.UTF-8/LC\_MESSAGES. You'll need to translate the strings in messages.po before making the binary of course.
+The following two commands make a messages.po file (by reading the index.php file) then a binary messages.mo file from a messages.po file as input. Both need to be moved to relevant i18n directory such as i18n/fr\_FR.UTF-8/LC\_MESSAGES. You'll need to translate the strings in messages.po before making the binary of course. Whenever any string is changed in any messages.po file, the messages.mo file must be generated and Apache must be restarted because translated strings are enumerated into memory when the application first loads.
 
     $ xgettext -n index.php
     $ msgfmt messages.po
@@ -97,7 +97,7 @@ The following two commands make a messages.po file (by reading the index.php fil
 Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory to make a messages.po file and move it to i18n/fr\_FR.UTF-8/LC\_MESSAGES.
 
     $ cd i18n
-    $ ruby crawler.rb ../
+    $ ruby crawler.rb ../views
 
 Tests
 -----

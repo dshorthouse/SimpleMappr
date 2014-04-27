@@ -1,7 +1,7 @@
 <?php
   
 function switchConf($restore = false) {
-  $config_dir = dirname(dirname(__FILE__)) . '/config/';
+  $config_dir = dirname(__DIR__) . '/config/';
 
   $conf = array(
     'prod' => $config_dir . 'conf.php',
@@ -27,7 +27,7 @@ function switchConf($restore = false) {
 }
 
 function requireFiles() {
-  $root = dirname(dirname(__FILE__));
+  $root = dirname(__DIR__);
   $files = glob($root . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);
@@ -38,7 +38,7 @@ function requireFiles() {
 }
 
 function trashCachedFiles() {
-  $root = dirname(dirname(__FILE__));
+  $root = dirname(__DIR__);
   $cssFiles = glob($root . "/public/stylesheets/cache/*.{css}", GLOB_BRACE);
   foreach ($cssFiles as $file) {
     unlink($file);

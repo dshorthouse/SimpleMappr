@@ -68,7 +68,7 @@ class NavigationTest extends SimpleMapprTest {
     parent::setUpPage();
     parent::setSession('user', 'fr_FR');
     $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'Jack Johnson');
-    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnectez');
+    $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnecter');
 
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Mes cartes'));
     $link->click();

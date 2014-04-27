@@ -58,11 +58,11 @@ class CitationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
     $link->click();
     parent::waitOnSpinner();
-    $citation = $this->webDriver->findElements(WebDriverBy::cssSelector('div#admin-citations-list p.citation a.citation-delete'))[0];
+    $citation = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation > .citation-delete'))[0];
     $citation->click();
-    $this->webDriver->findElement(WebDriverBy::cssSelector('div.ui-dialog-buttonset button.negative'))->click();
+    $this->webDriver->findElement(WebDriverBy::cssSelector('.ui-dialog-buttonset > .negative'))->click();
     parent::waitOnSpinner();
-    $citations_list = $this->webDriver->findElements(WebDriverBy::cssSelector('div#admin-citations-list p.citation'));
+    $citations_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation'));
     $citation_count = parent::$db->query_first("SELECT COUNT(*) as cnt FROM citations")['cnt'];
     $this->assertEquals($citation_count, count($citations_list));
   }
