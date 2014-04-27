@@ -53,10 +53,13 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 restart
+  
+  - composer install --prefer-source
 
 script:
   - phpunit --version
-  - phpunit --self-update
+  - pear config-set auto_discover 1
+  - pear install pear.phpunit.de/PHPUnit
   - phpunit --version
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
   - phpunit -c Tests/$BROWSER.phpunit.xml --stderr
