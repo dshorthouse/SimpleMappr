@@ -25,7 +25,7 @@ class NavigationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Français'));
     $link->click();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
-    $this->assertEquals('cartes point pour la publication et présentation', $tagline->getText());
+    $this->assertEquals('cartes point pour les publications et présentations', $tagline->getText());
   }
 
   public function testSignInPage() {
