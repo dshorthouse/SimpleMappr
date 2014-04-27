@@ -13,6 +13,6 @@
         }
     ],
     "require": {
-      "facebook/webdriver" : "0.4"
+      "facebook/webdriver" : "dev-master"
     }
 }

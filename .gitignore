@@ -41,5 +41,4 @@ Thumbs.db
 
 # Composer files #
 ##################
-composer.lock
 vendor/*
