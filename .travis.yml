@@ -11,11 +11,6 @@ env:
     - BROWSER=firefox
 
 before_install:
-  # Upgrade PHPUnit
-  - phpunit --version
-  - pear config-set auto_discover 1
-  - pear install pear.phpunit.de/PHPUnit
-  - phpunit --version
 
   # Selenium
   - "export DISPLAY=:99.0"
@@ -28,6 +23,12 @@ before_install:
 install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
+
+  # PHPUnit
+  - wget https://phar.phpunit.de/phpunit.phar
+  - chmod +x phpunit.phar
+  - mv phpunit.phar /usr/local/bin/phpunit
+  - phpunit --version
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
@@ -58,8 +59,6 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 restart
-  
-  - composer install --prefer-source
 
 script:
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
