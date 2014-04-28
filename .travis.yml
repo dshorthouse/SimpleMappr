@@ -24,9 +24,8 @@ install:
   # Install dependencies
   - sh -e .travis/scripts/apt-get.sh
 
-  # Composer & PHPUnit
+  # Composer
   - composer install
-  - sh -e .travis/scripts/php-unit.sh
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
@@ -60,4 +59,4 @@ before_script:
 
 script:
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
-  - phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr

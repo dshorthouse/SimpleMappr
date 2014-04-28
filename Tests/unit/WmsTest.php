@@ -10,6 +10,10 @@ class WmsTest extends PHPUnit_Framework_TestCase {
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
     $this->mappr_wms = new MapprWms();
+    $this->mappr_wms->wms_layers = array(
+      'lakes' => 'on',
+      'stateprovinces_polygon' => 'on'
+    );
     $this->mappr_wms->set_shape_path(ROOT."/lib/mapserver/maps")
         ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
         ->set_tmp_path(ROOT."/public/tmp/")
@@ -29,7 +33,7 @@ class WmsTest extends PHPUnit_Framework_TestCase {
     $xml = simplexml_load_string(ob_get_contents());
     ob_end_clean();
     $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
-    $this->assertEquals(8, count($xml->Capability->Layer->Layer));
+    $this->assertEquals(3, count($xml->Capability->Layer->Layer));
   }
 
   public function test_GetMap() {

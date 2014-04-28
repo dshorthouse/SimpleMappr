@@ -14,5 +14,8 @@
     ],
     "require": {
       "facebook/webdriver" : "dev-master"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "4.0.*"
     }
 }

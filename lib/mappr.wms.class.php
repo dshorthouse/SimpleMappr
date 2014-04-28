@@ -46,7 +46,7 @@ class MapprWms extends Mappr {
   private $filter_columns = array();
   
   /* layers */
-  private $wms_layers = array(
+  public $wms_layers = array(
     'lakes' => 'on',
     'rivers' => 'on',
     'oceans' => 'on',
