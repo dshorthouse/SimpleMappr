@@ -10,6 +10,10 @@ class WfsTest extends PHPUnit_Framework_TestCase {
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
     $this->mappr_wfs = new MapprWfs();
+    $this->mappr_wfs->wfs_layers = array(
+      'lakes' => 'on',
+      'stateprovinces_polygon' => 'on'
+    );
     $this->mappr_wfs->set_shape_path(ROOT."/lib/mapserver/maps")
         ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
         ->set_tmp_path(ROOT."/public/tmp/")
@@ -29,7 +33,7 @@ class WfsTest extends PHPUnit_Framework_TestCase {
     $xml = simplexml_load_string(ob_get_contents());
     ob_end_clean();
     $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
-    $this->assertEquals(6, count($xml->FeatureTypeList->FeatureType));
+    $this->assertEquals(3, count($xml->FeatureTypeList->FeatureType));
   }
 
   public function test_GetFeature() {

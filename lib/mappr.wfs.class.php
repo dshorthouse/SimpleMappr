@@ -46,7 +46,7 @@ class MapprWfs extends Mappr {
   private $filter_columns = array();
   
   /* layers */
-  private $wfs_layers = array(
+  public $wfs_layers = array(
     'lakes' => 'on',
     'rivers' => 'on',
     'oceans' => 'on',
