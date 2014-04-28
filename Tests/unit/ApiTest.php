@@ -9,11 +9,10 @@ class ApiTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $this->root = dirname(dirname(__FILE__));
     $this->mappr_api = new MapprApi();
-    $this->mappr_api->set_shape_path($this->root."/lib/mapserver/maps")
-        ->set_font_file($this->root."/lib/mapserver/fonts/fonts.list")
-        ->set_tmp_path($this->root."/public/tmp/")
+    $this->mappr_api->set_shape_path(ROOT."/lib/mapserver/maps")
+        ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
+        ->set_tmp_path(ROOT."/public/tmp/")
         ->set_tmp_url(MAPPR_MAPS_URL)
         ->set_default_projection("epsg:4326")
         ->set_max_extent("-180,-90,180,90");
@@ -21,7 +20,7 @@ class ApiTest extends PHPUnit_Framework_TestCase {
   
   protected function tearDown() {
     unset($_SERVER['REQUEST_METHOD']);
-    $tmpfiles = glob($this->root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+    $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
     foreach ($tmpfiles as $file) {
       unlink($file);
     }

@@ -28,18 +28,17 @@ function switchConf($restore = false) {
 
 function requireFiles() {
   $root = dirname(__DIR__);
+
+  require_once($root . '/config/conf.php');
+  require_once($root . '/config/conf.db.php');
+
   $files = glob($root . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);
   }
 
   require_once($root . '/Tests/SimpleMapprTest.php');
-  
-  try {
-    require_once($root . '/vendor/facebook/webdriver/lib/__init__.php');
-  } catch(Exception $e) {
-    echo 'Caught exception: facebook/webdriver not found. See README.' . "\n";
-  }
+  require_once($root . '/vendor/autoload.php');
 }
 
 function trashCachedFiles() {

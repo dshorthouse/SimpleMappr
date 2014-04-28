@@ -3,6 +3,9 @@
 // define the environment as 'development' or 'production'
 defined("ENVIRONMENT") || define("ENVIRONMENT", "development");
 
+// root directory
+defined("ROOT") || define("ROOT", dirname(__DIR__));
+
 // Upload directory for API calls, without trailing slash
 defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "/var/www/SimpleMappr/uploads");
 

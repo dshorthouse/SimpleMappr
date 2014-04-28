@@ -9,11 +9,10 @@ class ApplicationMapprTest extends PHPUnit_Framework_TestCase {
    protected $output;
 
    protected function setUp() {
-      $root = dirname(dirname(__FILE__));
       $mappr = new MapprApplication();
-      $mappr->set_shape_path($root."/lib/mapserver/maps")
-           ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
-           ->set_tmp_path($root."/public/tmp/")
+      $mappr->set_shape_path(ROOT."/lib/mapserver/maps")
+           ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
+           ->set_tmp_path(ROOT."/public/tmp/")
            ->set_tmp_url(MAPPR_MAPS_URL)
            ->set_default_projection("epsg:4326")
            ->set_max_extent("-180,-90,180,90")
@@ -26,8 +25,7 @@ class ApplicationMapprTest extends PHPUnit_Framework_TestCase {
    }
 
    protected function tearDown() {
-     $root = dirname(dirname(__FILE__));
-     $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+     $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
      foreach ($tmpfiles as $file) {
        unlink($file);
      }
@@ -56,18 +54,15 @@ class ApplicationMapprTest extends PHPUnit_Framework_TestCase {
     }
 
     public function test_shape_path() {
-      $root = dirname(dirname(__FILE__));
-      $this->assertEquals($this->mappr->get_shape_path(), $root."/lib/mapserver/maps");
+      $this->assertEquals($this->mappr->get_shape_path(), ROOT."/lib/mapserver/maps");
     }
 
     public function test_font_file() {
-      $root = dirname(dirname(__FILE__));
-      $this->assertEquals($this->mappr->get_font_file(), $root."/lib/mapserver/fonts/fonts.list");
+      $this->assertEquals($this->mappr->get_font_file(), ROOT."/lib/mapserver/fonts/fonts.list");
     }
 
     public function test_tmp_path() {
-      $root = dirname(dirname(__FILE__));
-      $this->assertEquals($this->mappr->get_tmp_path(), $root."/public/tmp/");
+      $this->assertEquals($this->mappr->get_tmp_path(), ROOT."/public/tmp/");
     }
 
     public function test_tmp_url() {

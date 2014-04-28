@@ -2,46 +2,46 @@
 
 //config
 $config_dir = dirname(__DIR__).'/config/';
-require($config_dir.'conf.php');
-require($config_dir.'conf.db.php');
+require_once($config_dir.'conf.php');
+require_once($config_dir.'conf.db.php');
 
 //utilities
-require('utilities.class.php');
+require_once('utilities.class.php');
 
 //logger
-require('logger.class.php');
+require_once('logger.class.php');
 
 //header
-require('header.class.php');
+require_once('header.class.php');
 
 //database
-require('db.class.php');
+require_once('db.class.php');
 
 //base abstract class
-require('mappr.class.php');
+require_once('mappr.class.php');
 
 //extended classes
-require('mappr.api.class.php');
-require('mappr.application.class.php');
-require('mappr.docx.class.php');
-require('mappr.map.class.php');
-require('mappr.pptx.class.php');
-require('mappr.query.class.php');
-require('mappr.wfs.class.php');
-require('mappr.wms.class.php');
+require_once('mappr.api.class.php');
+require_once('mappr.application.class.php');
+require_once('mappr.docx.class.php');
+require_once('mappr.map.class.php');
+require_once('mappr.pptx.class.php');
+require_once('mappr.query.class.php');
+require_once('mappr.wfs.class.php');
+require_once('mappr.wms.class.php');
 
 //kml
-require('kml.class.php');
+require_once('kml.class.php');
 
 //session
-require('session.class.php');
+require_once('session.class.php');
 
 //users
-require('user.class.php');
-require('usermap.class.php');
+require_once('user.class.php');
+require_once('usermap.class.php');
 
 //places
-require('places.class.php');
+require_once('places.class.php');
 
 //citations
-require('citation.class.php');
+require_once('citation.class.php');

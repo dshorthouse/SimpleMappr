@@ -2,6 +2,8 @@
 
 defined("ENVIRONMENT") || define("ENVIRONMENT", "production");
 
+defined("ROOT") || define("ROOT", dirname(__DIR__));
+
 // Upload directory for API calls, without trailing slash
 defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "/Users/dshorthouse/Sites/SimpleMappr/public/uploads");
 

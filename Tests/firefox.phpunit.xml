@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="bootstrap.php" colors="true">
+<phpunit
+  colors="true"
+  bootstrap="bootstrap.php" >
   <php>
     <server name="HTTP_HOST" value="www.simplemappr.local"/>
     <server name="REMOTE_ADDR" value="000.000.000"/>
     <const name="BROWSER" value="firefox"/>
   </php>
   <testsuites>
-    <testsuite name="SimpleMappr Test Suite">
-      <directory>../</directory>
+    <testsuite name="SimpleMappr Unit Test Suite">
+      <directory>./unit</directory>
+    </testsuite>
+    <testsuite name="SimpleMappr Functional Test Suite">
+      <directory>./functional</directory>
     </testsuite>
   </testsuites>
   <filter>

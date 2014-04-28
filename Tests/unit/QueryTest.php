@@ -9,11 +9,10 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $root = dirname(dirname(__FILE__));
     $this->mappr_query = new MapprQuery();
-    $this->mappr_query->set_shape_path($root."/lib/mapserver/maps")
-        ->set_font_file($root."/lib/mapserver/fonts/fonts.list")
-        ->set_tmp_path($root."/public/tmp/")
+    $this->mappr_query->set_shape_path(ROOT."/lib/mapserver/maps")
+        ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
+        ->set_tmp_path(ROOT."/public/tmp/")
         ->set_tmp_url(MAPPR_MAPS_URL)
         ->set_default_projection("epsg:4326")
         ->set_max_extent("-180,-90,180,90");
@@ -21,8 +20,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
   
   protected function tearDown() {
     unset($_SERVER['REQUEST_METHOD']);
-    $root = dirname(dirname(__FILE__));
-    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+    $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
     foreach ($tmpfiles as $file) {
       unlink($file);
     }

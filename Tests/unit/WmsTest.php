@@ -9,11 +9,10 @@ class WmsTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $this->root = dirname(dirname(__FILE__));
     $this->mappr_wms = new MapprWms();
-    $this->mappr_wms->set_shape_path($this->root."/lib/mapserver/maps")
-        ->set_font_file($this->root."/lib/mapserver/fonts/fonts.list")
-        ->set_tmp_path($this->root."/public/tmp/")
+    $this->mappr_wms->set_shape_path(ROOT."/lib/mapserver/maps")
+        ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
+        ->set_tmp_path(ROOT."/public/tmp/")
         ->set_tmp_url(MAPPR_MAPS_URL)
         ->set_default_projection("epsg:4326")
         ->set_max_extent("-180,-90,180,90");
