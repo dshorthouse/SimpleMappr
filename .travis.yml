@@ -30,6 +30,9 @@ install:
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
 
+  # Install maps
+  - sh -e .travis/scripts/maps.sh
+
   # Translations
   - sh -e .travis/scripts/locales.sh
 
