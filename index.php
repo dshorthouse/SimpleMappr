@@ -98,7 +98,7 @@ class Bootstrap {
 
       case "/kml":
         $kml = $this->klass("Kml");
-        $kml->get_request()->generate_kml();
+        $kml->get_request()->create_output();
         break;
 
       case "/logout":
@@ -107,7 +107,7 @@ class Bootstrap {
 
       case "/map":
         $klass = $this->klass("MapprMap", $this->id, $this->extension);
-        $this->setup_map($klass)->execute()->create_output();
+        $this->setup_map($klass)->create_output();
         break;
 
       case "/places":

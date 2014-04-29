@@ -353,7 +353,6 @@ class MapprApi extends Mappr {
   }
 
   public function create_output() {
-
     if($this->ping) {
       Utilities::set_header("json");
       echo json_encode(array("status" => "ok"));

@@ -42,7 +42,7 @@ class MapprPptx extends Mappr {
   public function create_output() {
 
     /** PHPPowerPoint */
-    set_include_path(dirname(__FILE__) . '/PHPPowerPoint/');
+    set_include_path(ROOT . '/vendor/phpoffice/phppowerpoint/Classes/');
     include_once 'PHPPowerPoint.php';
     include_once 'PHPPowerPoint/IOFactory.php';
 
@@ -95,7 +95,6 @@ class MapprPptx extends Mappr {
       if($type == 'image') {
         $shape->setOffsetX(($width-$shape_width)/2);
         $shape->setOffsetY(($height-$shape_height)/2);
-        $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_CENTER);
       }
       if($type == 'scale') {
         $shape->setOffsetX($width-round($shape_width*1.5)-$this->slidepadding);
@@ -112,16 +111,16 @@ class MapprPptx extends Mappr {
     $shape->setWidth(450);
     $shape->setOffsetX($width - 450);
     $shape->setOffsetY($height - 10 - $this->slidepadding);
-    $shape->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
-    $shape->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
+    $shape->getActiveParagraph()->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
+    $shape->getActiveParagraph()->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
     $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
     $textRun->getFont()->setBold(true);
     $textRun->getFont()->setSize(12);
 
     // Output PowerPoint 2007 file
+    $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
     Utilities::set_header("pptx");
     header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
-    $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
     $objWriter->save('php://output');
   }
 

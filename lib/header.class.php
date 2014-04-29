@@ -245,7 +245,7 @@ class Header {
       $cached_css = $this->files_cached(dirname(__DIR__) . self::$css_cache_path, "css");
 
       if(!$cached_css) {
-        require_once('cssmin.php');
+        require_once(ROOT . '/vendor/natxet/CssMin/src/CssMin.php');
         $css_min = '';
         foreach($this->local_css as $css_file) {
           $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";

@@ -31,9 +31,9 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $mappr_api = $this->mappr_api->get_request()->execute();
     ob_start();
     $output = $mappr_api->create_output();
-    $output = json_decode(ob_get_contents(), TRUE);
+    $decoded = json_decode(ob_get_contents(), TRUE);
     ob_end_clean();
-    $this->assertArrayHasKey("status", $output);
+    $this->assertArrayHasKey("status", $decoded);
   }
 
   public function test_apioutput_post() {
@@ -41,10 +41,10 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $mappr_api = $this->mappr_api->get_request()->execute();
     ob_start();
     $output = $mappr_api->create_output();
-    $output = json_decode(ob_get_contents(), TRUE);
+    $decoded = json_decode(ob_get_contents(), TRUE);
     ob_end_clean();
-    $this->assertArrayHasKey("imageURL", $output);
-    $this->assertArrayHasKey("expiry", $output);
+    $this->assertArrayHasKey("imageURL", $decoded);
+    $this->assertArrayHasKey("expiry", $decoded);
   }
 
   public function test_apioutput_get() {

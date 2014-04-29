@@ -10,7 +10,7 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
 
 Requirements
 --------------------------
-PHP5.5+, Apache2.2.24+, MySQL 5.5.27+, MapServer 6.4.0 & its dependencies
+PHP5.5+, Apache2.2.24+, MySQL 5.5.27+, MapServer 6.4.1 & its dependencies, Composer
 
 Configuration Instructions
 --------------------------
@@ -65,7 +65,8 @@ Homebrew on Mac OSX
           cairo \
           libsvg-cairo \
           fribidi \
-          phpunit
+          phpunit \
+          composer
 
 3. Download MapServer 6.4.1 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz))
 4. Extract and cd into folder

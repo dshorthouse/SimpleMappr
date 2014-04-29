@@ -40,21 +40,21 @@ class MapprDocx extends Mappr {
   public function create_output() {
 
     /** PHPWord */
-    set_include_path(dirname(__FILE__) . '/PHPWord/');
-    include_once 'PHPWord.php';
-    include_once 'PHPWord/IOFactory.php';
+    require_once(ROOT . '/vendor/phpoffice/phpword/src/PhpWord/Autoloader.php');
+    PhpOffice\PhpWord\Autoloader::register();
 
-    $objPHPWord = new PHPWord();
+    $objPHPWord = new \PhpOffice\PhpWord\PhpWord();
 
     $clean_filename = parent::clean_filename($this->file_name);
 
     // Set properties
-    $objPHPWord->getProperties()->setCreator("SimpleMappr");
-    $objPHPWord->getProperties()->setLastModifiedBy("SimpleMappr");
-    $objPHPWord->getProperties()->setTitle($clean_filename);
-    $objPHPWord->getProperties()->setSubject($clean_filename . " point map");
-    $objPHPWord->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
-    $objPHPWord->getProperties()->setKeywords($clean_filename . " SimpleMappr");
+    $properties = $objPHPWord->getDocumentProperties();
+    $properties->setCreator('SimpleMappr');
+    $properties->setTitle($clean_filename);
+    $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+    $properties->setLastModifiedBy("SimpleMappr");
+    $properties->setSubject($clean_filename . " point map");
+    $properties->setKeywords($clean_filename. ", SimpleMappr");
 
     // Create section
     $section = $objPHPWord->createSection();
@@ -83,9 +83,9 @@ class MapprDocx extends Mappr {
     }
 
     // Output Word 2007 file
+    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($objPHPWord, 'Word2007');
     Utilities::set_header("docx");
     header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";" );
-    $objWriter = PHPWord_IOFactory::createWriter($objPHPWord, 'Word2007');
     $objWriter->save('php://output');
   }
 

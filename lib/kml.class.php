@@ -74,14 +74,14 @@ class Kml {
   *  Generate the kml file
   * @return xml
   */
-  public function generate_kml() {
+  public function create_output() {
 
     $clean_filename = Mappr::clean_filename($this->file_name);
 
     $this->set_metadata("name", "SimpleMappr: " . $clean_filename);
 
     $this->add_coordinates();
-    
+
     $this->kml = new XMLWriter();
 
     Utilities::set_header("kml");
@@ -210,8 +210,8 @@ class Kml {
         foreach ($row as $loc) {
           $coord_array = Mappr::make_coordinates($loc);
           $coord = new stdClass();
-          $coord->x = array_key_exists(1, $coord_array) ? Mappr::clean_coord($coord_array[1]) : "nil";
-          $coord->y = array_key_exists(0, $coord_array) ? Mappr::clean_coord($coord_array[0]) : "nil";
+          $coord->x = ($coord_array[1]) ? Mappr::clean_coord($coord_array[1]) : null;
+          $coord->y = ($coord_array[0]) ? Mappr::clean_coord($coord_array[0]) : null;
           if(Mappr::check_coord($coord) && $title != "") {  //only add point when data are good & a title
             $this->set_placemark($j, $point_key, "name", $title);
             $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
