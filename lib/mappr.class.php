@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 abstract class Mappr {
 
   abstract function create_output();
@@ -1024,13 +1026,13 @@ abstract class Mappr {
       $bbox_rubberband = explode(',',$this->bbox_rubberband);
 
       //lower-left coordinate
-      $ll_point = new stdClass();
+      $ll_point = new \stdClass();
       $ll_point->x = $bbox_rubberband[0];
       $ll_point->y = $bbox_rubberband[3];
       $ll_coord = $this->pix2geo($ll_point);
 
       //upper-right coordinate
-      $ur_point = new stdClass();
+      $ur_point = new \stdClass();
       $ur_point->x = $bbox_rubberband[2];
       $ur_point->y = $bbox_rubberband[1];
       $ur_coord = $this->pix2geo($ur_point);
@@ -1111,7 +1113,7 @@ abstract class Mappr {
 
           foreach ($rows as $row) {
             $coord_array = self::make_coordinates($row);
-            $coord = new stdClass();
+            $coord = new \stdClass();
             $coord->x = ($coord_array[1]) ? self::clean_coord($coord_array[1]) : null;
             $coord->y = ($coord_array[0]) ? self::clean_coord($coord_array[0]) : null;
             //only add point when data are good & a title
@@ -1291,7 +1293,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1329,7 +1331,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1349,7 +1351,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1369,7 +1371,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1394,7 +1396,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1414,7 +1416,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "name");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1434,7 +1436,7 @@ abstract class Mappr {
             $layer->set("toleranceunits", "pixels");
             $layer->set("labelitem", "NAME");
 
-            $label = new labelObj();
+            $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "CP1252");
@@ -1470,7 +1472,7 @@ abstract class Mappr {
       $class = ms_newClassObj($layer);
       $class->settext("http://www.simplemappr.net");
       
-      $label = new labelObj();
+      $label = new \labelObj();
       $label->set("font", "arial");
       $label->set("type", MS_TRUETYPE);
       $label->set("size", 8);
@@ -1504,7 +1506,7 @@ abstract class Mappr {
       $class = ms_newClassObj($layer);
 
       if($this->gridlabel != 0) {
-        $label = new labelObj();
+        $label = new \labelObj();
         $label->set("font", "arial");
         $label->set("type", MS_TRUETYPE);
         $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
@@ -1715,7 +1717,7 @@ abstract class Mappr {
    * @return obj $newPoint reprojected point in map coordinates
    */
    public function pix2geo($point) {
-     $newPoint = new stdClass();
+     $newPoint = new \stdClass();
      $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
      $deltaY = abs($this->map_obj->extent->maxy - $this->map_obj->extent->miny);
 

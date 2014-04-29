@@ -19,6 +19,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **************************************************************************/
 
+namespace SimpleMappr;
+
 require_once(dirname(__FILE__) . '/lib/__init__.php');
 
 class Bootstrap {
@@ -155,7 +157,8 @@ class Bootstrap {
   }
 
   private function klass($klass, $param1 = "", $param2 = "") {
-    return new $klass($param1, $param2);
+    $class = '\\SimpleMappr\\' . $klass;
+    return new $class($param1, $param2);
   }
 
   private function setup_map($data) {

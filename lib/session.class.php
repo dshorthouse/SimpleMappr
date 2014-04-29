@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class Session {
 
   public static $accepted_locales = array(

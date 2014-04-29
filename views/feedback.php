@@ -1,6 +1,5 @@
 <?php
-$root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root.'/lib/session.class.php');
+namespace SimpleMappr;
 $locale = Session::select_locale();
 $tweet = ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 ?>

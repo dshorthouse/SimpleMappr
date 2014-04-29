@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class Utilities {
 
   public static function check_plain($text) {

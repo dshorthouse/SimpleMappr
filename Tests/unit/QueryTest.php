@@ -9,7 +9,7 @@ class QueryTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $this->mappr_query = new MapprQuery();
+    $this->mappr_query = new \SimpleMappr\MapprQuery();
     $this->mappr_query->set_shape_path(ROOT."/lib/mapserver/maps")
         ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
         ->set_tmp_path(ROOT."/public/tmp/")

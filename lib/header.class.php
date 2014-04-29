@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class Header {
 
   private $js_header = array();
@@ -248,7 +250,7 @@ class Header {
         require_once(ROOT . '/vendor/natxet/CssMin/src/CssMin.php');
         $css_min = '';
         foreach($this->local_css as $css_file) {
-          $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
+          $css_min .= \CssMin::minify(file_get_contents($css_file)) . "\n";
         }
         $css_min_file = $this->hash . ".css";
         $handle = fopen(dirname(__DIR__) . self::$css_cache_path . $css_min_file, 'x+');

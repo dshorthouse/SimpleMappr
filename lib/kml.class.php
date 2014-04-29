@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class Kml {
 
   public static $pushpins = array(
@@ -82,7 +84,7 @@ class Kml {
 
     $this->add_coordinates();
 
-    $this->kml = new XMLWriter();
+    $this->kml = new \XMLWriter();
 
     Utilities::set_header("kml");
     header("Content-disposition: attachment; filename=" . $clean_filename . ".kml");
@@ -209,7 +211,7 @@ class Kml {
         $point_key = 0;
         foreach ($row as $loc) {
           $coord_array = Mappr::make_coordinates($loc);
-          $coord = new stdClass();
+          $coord = new \stdClass();
           $coord->x = ($coord_array[1]) ? Mappr::clean_coord($coord_array[1]) : null;
           $coord->y = ($coord_array[0]) ? Mappr::clean_coord($coord_array[0]) : null;
           if(Mappr::check_coord($coord) && $title != "") {  //only add point when data are good & a title

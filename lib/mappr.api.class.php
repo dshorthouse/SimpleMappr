@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprApi extends Mappr {
 
   private $coord_cols = array();
@@ -54,6 +56,7 @@ class MapprApi extends Mappr {
     $this->options          = array();
 
     $this->url              = false;
+    $this->url_content      = "";
     $url                    = urldecode($this->load_param('url', false));
 
     if($this->method == "POST" && $_FILES) {
@@ -70,9 +73,6 @@ class MapprApi extends Mappr {
       $file = urldecode($this->load_param('file', false));
     }
 
-    $georss                 = urldecode($this->load_param('georss', false));
-
-    if($georss) { $this->url = $georss; }
     if($url)    { $this->url = $url; }
     if($file)   { $this->url = $file; }
 
@@ -140,14 +140,16 @@ class MapprApi extends Mappr {
           unlink($this->url);
         } else {
           $headers = get_headers($this->url, 1);
-
           if(array_key_exists('Location', $headers)) {
             $this->url = array_pop($headers['Location']);
-            $headers['Content-Type'] = array_pop($headers['Content-Type']);
           }
-
-          if(strstr($headers['Content-Type'], 'text')) { $this->parseFile(); }
-          if(strstr($headers['Content-Type'], 'xml'))  { $this->parseGeoRSS(); }
+          try {
+            $this->url_content = @file_get_contents($this->url);
+            if(!$this->parseGeo()) {
+              $this->parseFile();
+            }
+          } catch(Exception $e) {
+          }
         }
       }
 
@@ -195,7 +197,7 @@ class MapprApi extends Mappr {
 
         //add all the points
         foreach ($coords as $coord) {
-          $_coord = new stdClass();
+          $_coord = new \stdClass();
           $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
           $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
           //only add point when data are good
@@ -278,7 +280,7 @@ class MapprApi extends Mappr {
       $class = ms_newClassObj($layer);
 
       if($this->gridlabel == "true") {
-        $label = new labelObj();
+        $label = new \labelObj();
         $label->set("encoding", "ISO-8859-1");
         $label->set("font", "arial");
         $label->set("type", MS_TRUETYPE);
@@ -479,24 +481,21 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Parse GeoRSS into cleaned array of points
+  * Parse GeoRSS, GeoJSON, WKT, KML into cleaned array of points
   */
-  private function parseGeoRSS() {
-    require_once('georss/rss_fetch.inc');
-    $rss = fetch_rss($this->url);
-    if(isset($rss->items)) {
-      $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-      $this->legend[$num_cols] = $rss->channel['title'];
-      foreach ($rss->items as $item) {
-        if(isset($item['georss']) && isset($item['georss']['point'])) {
-          $this->coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['georss']['point']);
-        } elseif(isset($item['geo']) && isset($item['geo']['lat']) && isset($item['geo']['lat'])) {
-          $this->coord_cols[$num_cols][] = array($item['geo']['lat'], $item['geo']['long']);
-        } elseif(isset($item['geo']) && isset($item['geo']['lat_long'])) {
-          $this->coord_cols[$num_cols][] = preg_split("/[\s,;]+/", $item['geo']['lat_long']);
+  private function parseGeo() {
+    include_once(ROOT.'/vendor/phayes/geophp/geoPHP.inc');
+    $geometries = \geoPHP::load($this->url_content);
+    if(!$geometries) { return false; }
+    $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+    foreach($geometries as $geometry) {
+      foreach($geometry as $item) {
+        if($item->geometryType() == 'Point') {
+          $this->coord_cols[$num_cols][] = array_reverse($item->coords);
         }
       }
     }
+    return true;
   }
 
 }

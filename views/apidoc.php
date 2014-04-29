@@ -1,7 +1,5 @@
 <?php
-$root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root.'/lib/mappr.class.php');
-require_once($root.'/lib/session.class.php');
+namespace SimpleMappr;
 Session::select_locale();
 ?>
 <!-- api tab -->
@@ -48,7 +46,7 @@ Session::select_locale();
     <dd><?php echo _("a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points."); ?>
       <span class="api-example"><em>e.g.</em> url=<a href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/files/demo.txt"><?php echo urlencode('http://' . $_SERVER['HTTP_HOST'] . '/public/files/demo.txt'); ?></a></span>
       <br>
-      <?php echo _("a URL-encoded, remote GeoRSS feed."); ?> 
+      <?php echo _("a URL-encoded, remote GeoRSS, GeoJSON, or KML feed."); ?> 
       <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom"><?php echo urlencode('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom'); ?></a></span>
     </dd>
 

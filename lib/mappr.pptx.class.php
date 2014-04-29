@@ -35,6 +35,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprPptx extends Mappr {
 
   private $slidepadding = 25;
@@ -46,7 +48,7 @@ class MapprPptx extends Mappr {
     include_once 'PHPPowerPoint.php';
     include_once 'PHPPowerPoint/IOFactory.php';
 
-    $objPHPPowerPoint = new PHPPowerPoint();
+    $objPHPPowerPoint = new \PHPPowerPoint();
 
     $clean_filename = parent::clean_filename($this->file_name);
 
@@ -60,7 +62,7 @@ class MapprPptx extends Mappr {
 
     // Create slide
     $currentSlide = $objPHPPowerPoint->getActiveSlide();
-    $currentSlide->setSlideLayout(PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
+    $currentSlide->setSlideLayout(\PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
 
     $width = 950;
     $height = 720;
@@ -111,14 +113,14 @@ class MapprPptx extends Mappr {
     $shape->setWidth(450);
     $shape->setOffsetX($width - 450);
     $shape->setOffsetY($height - 10 - $this->slidepadding);
-    $shape->getActiveParagraph()->getAlignment()->setHorizontal(PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
-    $shape->getActiveParagraph()->getAlignment()->setVertical(PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
+    $shape->getActiveParagraph()->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
+    $shape->getActiveParagraph()->getAlignment()->setVertical(\PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
     $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
     $textRun->getFont()->setBold(true);
     $textRun->getFont()->setSize(12);
 
     // Output PowerPoint 2007 file
-    $objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+    $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
     Utilities::set_header("pptx");
     header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
     $objWriter->save('php://output');

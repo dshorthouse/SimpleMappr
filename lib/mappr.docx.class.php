@@ -35,13 +35,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprDocx extends Mappr {
 
   public function create_output() {
 
     /** PHPWord */
     require_once(ROOT . '/vendor/phpoffice/phpword/src/PhpWord/Autoloader.php');
-    PhpOffice\PhpWord\Autoloader::register();
+    \PhpOffice\PhpWord\Autoloader::register();
 
     $objPHPWord = new \PhpOffice\PhpWord\PhpWord();
 

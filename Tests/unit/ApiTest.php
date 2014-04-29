@@ -9,7 +9,7 @@ class ApiTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $this->mappr_api = new MapprApi();
+    $this->mappr_api = new \SimpleMappr\MapprApi();
     $this->mappr_api->set_shape_path(ROOT."/lib/mapserver/maps")
         ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
         ->set_tmp_path(ROOT."/public/tmp/")

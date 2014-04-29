@@ -12,7 +12,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
 
   public static function setUpBeforeClass() {
 
-    self::$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    self::$db = new \SimpleMappr\Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
 
     self::dropTables();
 
@@ -128,7 +128,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   }
 
   public function setUpPage() {
-    new Header;
+    new \SimpleMappr\Header;
     $this->webDriver->get($this->url);
     $this->waitOnSpinner();
   }

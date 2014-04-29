@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprWms extends Mappr {
 
   /* the request object for WFS and WMS */ 
@@ -75,8 +77,8 @@ class MapprWms extends Mappr {
 
     $input = file_get_contents("php://input");
     if($input) {
-      $xml = new XMLReader();
-      $xml2 = new XMLReader();
+      $xml = new \XMLReader();
+      $xml2 = new \XMLReader();
       $xml->XML($input);
       while($xml->read()) {
         if($xml->name == 'wms:Query') {

@@ -9,7 +9,7 @@ class PptxTest extends PHPUnit_Framework_TestCase {
 
   protected function setUp() {
     $_SERVER['REQUEST_METHOD'] = 'GET';
-    $this->mappr_pptx = new MapprPptx();
+    $this->mappr_pptx = new \SimpleMappr\MapprPptx();
     $this->mappr_pptx->set_shape_path(ROOT."/lib/mapserver/maps")
         ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
         ->set_tmp_path(ROOT."/public/tmp/")

@@ -32,6 +32,9 @@
 ###################################################################################################
 ###################################################################################################
 ###################################################################################################
+
+namespace SimpleMappr;
+
 class Database {
 
 
@@ -69,7 +72,7 @@ class Database {
   #-#############################################
   # desc: connect and select database using vars above
   function connect() {
-    $this->mysqli = new mysqli($this->server, $this->user, $this->pass, $this->database);
+    $this->mysqli = new \mysqli($this->server, $this->user, $this->pass, $this->database);
 
     if ($this->mysqli->connect_errno) {//open failed
       $this->oops("Could not connect to server: <b>$this->server</b>.");

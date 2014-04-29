@@ -1,4 +1,5 @@
 <?php
+namespace SimpleMappr;
   $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
   $header_class = $header[0];
   $accepted_locales = $header[1];

@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprMap extends Mappr {
 
   private $id;
@@ -123,7 +125,7 @@ class MapprMap extends Mappr {
 
       $class = ms_newClassObj($layer);
       if(isset($this->gridlabel) && $this->gridlabel == 1) {
-        $label = new labelObj();
+        $label = new \labelObj();
         $label->set("font", "arial");
         $label->set("type", MS_TRUETYPE);
         $label->set("size", 10);
@@ -189,7 +191,7 @@ class MapprMap extends Mappr {
         $point_key = 0;
         foreach ($row as $loc) {
           $coord_array = parent::make_coordinates($loc);
-          $coord = new stdClass();
+          $coord = new \stdClass();
           $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
           $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
           if(parent::check_coord($coord) && $title != "") {
@@ -216,7 +218,7 @@ class MapprMap extends Mappr {
       case 'json':
         $this->add_header();
         header("Content-Type: application/json");
-        $output = new stdClass;
+        $output = new \stdClass;
         $output->type = 'FeatureCollection';
         $output->features = $this->get_coordinates();
         $output->crs = array(
@@ -233,7 +235,7 @@ class MapprMap extends Mappr {
       case 'kml':
         $this->add_header();
         $kml = new Kml;
-        $kml->get_request($this->id, $this->coords)->generate_kml();
+        $kml->get_request($this->id, $this->coords)->create_output();
       break;
 
       case 'svg': 

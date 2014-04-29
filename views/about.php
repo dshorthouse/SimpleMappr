@@ -1,9 +1,5 @@
 <?php
-$root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root.'/config/conf.php');
-require_once($root.'/lib/mappr.class.php');
-require_once($root.'/lib/session.class.php');
-require_once($root.'/lib/citation.class.php');
+namespace SimpleMappr;
 Session::select_locale();
 ?>
 <!-- about tab -->

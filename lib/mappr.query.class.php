@@ -34,6 +34,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ********************************************************************/
 
+namespace SimpleMappr;
+
 class MapprQuery extends Mappr {
 
   private $data = "";
@@ -73,13 +75,13 @@ class MapprQuery extends Mappr {
     }
 
     //lower-left coordinate
-    $ll_point = new stdClass();
+    $ll_point = new \stdClass();
     $ll_point->x = $bbox_query[0];
     $ll_point->y = $bbox_query[3];
     $ll_coord = $this->pix2geo($ll_point);
 
     //upper-right coordinate
-    $ur_point = new stdClass();
+    $ur_point = new \stdClass();
     $ur_point->x = $bbox_query[2];
     $ur_point->y = $bbox_query[1];
     $ur_coord = $this->pix2geo($ur_point);
