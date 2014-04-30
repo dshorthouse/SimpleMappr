@@ -451,7 +451,7 @@ class MapprApi extends Mappr {
   * Parse text file into cleaned array of points
   */
   private function parseFile() {
-    if(@$fp = fopen($this->url, 'r')) {
+    if($fp = fopen($this->url, 'r')) {
       while ($line = fread($fp, 1024)) {
         $rows = preg_split("/[\r\n]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
         $cols = explode("\t", $rows[0]);
@@ -489,6 +489,7 @@ class MapprApi extends Mappr {
     $geometries = \geoPHP::load($this->url_content);
     if($geometries) {
       $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+      $this->legend[$num_cols] = $this->url;
       foreach($geometries as $geometry) {
         foreach($geometry as $item) {
           if($item->geometryType() == 'Point') {
