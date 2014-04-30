@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.pptx.class.php released under MIT License
+MapprPptx.class.php released under MIT License
 Extends Mappr class to produce PPTX files for download on SimpleMappr
 Depends on PHPPowerPoint, http://phppowerpoint.codeplex.com/
 

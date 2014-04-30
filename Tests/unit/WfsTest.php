@@ -3,6 +3,7 @@
 /**
  * Unit tests for static methods and set-up of MapprWfs class
  */
+
 class WfsTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_wfs;

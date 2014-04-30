@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.api.class.php released under MIT License
+MapprApi.class.php released under MIT License
 Extend Mappr class for an RESTful API to SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>
@@ -133,88 +133,68 @@ class MapprApi extends Mappr {
   */ 
   public function add_coordinates() {
     if($this->url || $this->points) {
-
-      if($this->url) {
-        if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
-          $this->parseFile();
-          unlink($this->url);
-        } else {
-          $headers = get_headers($this->url, 1);
-          if(array_key_exists('Location', $headers)) {
-            $this->url = array_pop($headers['Location']);
-          }
-          try {
-            $this->url_content = @file_get_contents($this->url);
-            if(!$this->parseGeo()) {
-              $this->parseFile();
-            }
-          } catch(Exception $e) {
-          }
-        }
-      }
-
+      if($this->url) { $this->parseUrl(); }
       if($this->points) { $this->parsePoints(); }
+      if($this->zoom) { $this->setZoom(); }
+    }
 
-      $col = 0;
-      foreach($this->coord_cols as $col => $coords) {
-        $mlayer = ms_newLayerObj($this->map_obj);
-        $mlayer->set("name",isset($this->legend[$col]) ? $this->legend[$col] : "");
-        $mlayer->set("status",MS_ON);
-        $mlayer->set("type",MS_LAYER_POINT);
-        $mlayer->set("tolerance",5);
-        $mlayer->set("toleranceunits",6);
-        $mlayer->setProjection(parent::get_projection($this->default_projection));
+    $col = 0;
+    foreach($this->coord_cols as $col => $coords) {
+      $mlayer = ms_newLayerObj($this->map_obj);
+      $mlayer->set("name",isset($this->legend[$col]) ? $this->legend[$col] : "");
+      $mlayer->set("status",MS_ON);
+      $mlayer->set("type",MS_LAYER_POINT);
+      $mlayer->set("tolerance",5);
+      $mlayer->set("toleranceunits",6);
+      $mlayer->setProjection(parent::get_projection($this->default_projection));
 
-        $class = ms_newClassObj($mlayer);
-        $class->set("name",isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
+      $class = ms_newClassObj($mlayer);
+      $class->set("name",isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
 
-        $style = ms_newStyleObj($class);
-        $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
-        $style->set("size",(array_key_exists($col, $this->size)) ? $this->size[$col] : 8);
+      $style = ms_newStyleObj($class);
+      $style->set("symbolname",(array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
+      $style->set("size",(array_key_exists($col, $this->size)) ? $this->size[$col] : 8);
 
-        if(array_key_exists($col, $this->color)) {
-          $color = explode(",",$this->color[$col]);
-          $style->color->setRGB(
-            (array_key_exists(0, $color)) ? $color[0] : 0,
-            (array_key_exists(1, $color)) ? $color[1] : 0,
-            (array_key_exists(2, $color)) ? $color[2] : 0
-          );
-        } else {
-          $style->color->setRGB(0,0,0);
-        }
-
-        if($this->outlinecolor && substr($class->getStyle(0)->symbolname, 0, 4) != 'open') {
-          $outlinecolor = explode(",", $this->outlinecolor);
-          $style->outlinecolor->setRGB(
-            (array_key_exists(0, $outlinecolor)) ? $outlinecolor[0] : 255,
-            (array_key_exists(1, $outlinecolor)) ? $outlinecolor[1] : 255,
-            (array_key_exists(2, $outlinecolor)) ? $outlinecolor[2] : 255
-          );
-        }
-
-        $mcoord_shape = ms_newShapeObj(MS_SHAPE_POINT);
-        $mcoord_line = ms_newLineObj();
-
-        //add all the points
-        foreach ($coords as $coord) {
-          $_coord = new \stdClass();
-          $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
-          $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
-          //only add point when data are good
-          if(parent::check_coord($_coord)) {
-            $mcoord_point = ms_newPointObj();
-            $mcoord_point->setXY($_coord->x, $_coord->y);
-            $mcoord_line->add($mcoord_point);
-          }
-        }
-
-        $mcoord_shape->add($mcoord_line);
-        $mlayer->addFeature($mcoord_shape);
-
-        $col++;
+      if(array_key_exists($col, $this->color)) {
+        $color = explode(",",$this->color[$col]);
+        $style->color->setRGB(
+          (array_key_exists(0, $color)) ? $color[0] : 0,
+          (array_key_exists(1, $color)) ? $color[1] : 0,
+          (array_key_exists(2, $color)) ? $color[2] : 0
+        );
+      } else {
+        $style->color->setRGB(0,0,0);
       }
 
-      if($this->zoom) { $this->setZoom(); }
+      if($this->outlinecolor && substr($class->getStyle(0)->symbolname, 0, 4) != 'open') {
+        $outlinecolor = explode(",", $this->outlinecolor);
+        $style->outlinecolor->setRGB(
+          (array_key_exists(0, $outlinecolor)) ? $outlinecolor[0] : 255,
+          (array_key_exists(1, $outlinecolor)) ? $outlinecolor[1] : 255,
+          (array_key_exists(2, $outlinecolor)) ? $outlinecolor[2] : 255
+        );
+      }
+
+      $mcoord_shape = ms_newShapeObj(MS_SHAPE_POINT);
+      $mcoord_line = ms_newLineObj();
+
+      //add all the points
+      foreach ($coords as $coord) {
+        $_coord = new \stdClass();
+        $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
+        $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
+        //only add point when data are good
+        if(parent::check_coord($_coord)) {
+          $mcoord_point = ms_newPointObj();
+          $mcoord_point->setXY($_coord->x, $_coord->y);
+          $mcoord_line->add($mcoord_point);
+        }
+      }
+
+      $mcoord_shape->add($mcoord_line);
+      $mlayer->addFeature($mcoord_shape);
+
+      $col++;
     }
   }
 
@@ -443,6 +423,25 @@ class MapprApi extends Mappr {
         $this->coord_cols[$num_cols][] = parent::make_coordinates($point);
       }
       $num_cols++;
+    }
+  }
+
+  /**
+  * Discover format of URL and parse it
+  */
+  private function parseUrl() {
+    if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
+      $this->parseFile();
+      unlink($this->url);
+    } else {
+      $headers = get_headers($this->url, 1);
+      if(array_key_exists('Location', $headers)) {
+        $this->url = array_pop($headers['Location']);
+      }
+      $this->url_content = @file_get_contents($this->url);
+      if(!$this->parseGeo()) {
+        $this->parseFile();
+      }
     }
   }
 

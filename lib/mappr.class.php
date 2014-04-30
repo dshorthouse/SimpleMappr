@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.class.php released under MIT License
+Mappr.class.php released under MIT License
 Base class for SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

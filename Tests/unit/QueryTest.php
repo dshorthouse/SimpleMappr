@@ -3,6 +3,7 @@
 /**
  * Unit tests for static methods and set-up of MapprQuery class
  */
+
 class QueryTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_query;

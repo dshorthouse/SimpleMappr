@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.docx.class.php released under MIT License
+MapprDocx.class.php released under MIT License
 Extends Mappr class to produce DOCX files for download on SimpleMappr
 Depends on PHPWord, http://phpword.codeplex.com/
 

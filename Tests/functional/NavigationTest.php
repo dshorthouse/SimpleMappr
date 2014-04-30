@@ -4,6 +4,7 @@
  * Unit tests for navigation/routes
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
+
 class NavigationTest extends SimpleMapprTest {
 
   public function setUp() {

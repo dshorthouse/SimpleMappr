@@ -4,6 +4,7 @@
  * Unit tests for citation handling
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  */
+
 class CitationTest extends SimpleMapprTest {
 
   public function setUp() {

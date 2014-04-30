@@ -1,5 +1,9 @@
 <?php
-  
+
+namespace SimpleMappr;
+
+date_default_timezone_set("America/New_York");
+
 function switchConf($restore = false) {
   $config_dir = dirname(__DIR__) . '/config/';
 
@@ -58,20 +62,19 @@ function trashCachedFiles() {
 }
 
 function loader() {
-  date_default_timezone_set("America/New_York");
   switchConf();
   requireFiles();
-  \SimpleMappr\Header::flush_cache(false);
+  Header::flush_cache(false);
   ob_start();
-  new \SimpleMappr\Header;
+  new Header;
 }
 
 function unloader() {
   switchConf('restore');
   trashCachedFiles();
-  \SimpleMappr\Header::flush_cache(false);
+  Header::flush_cache(false);
   ob_end_clean();
 }
 
-spl_autoload_register('loader');
-register_shutdown_function('unloader');
+spl_autoload_register(__NAMESPACE__.'\loader');
+register_shutdown_function(__NAMESPACE__.'\unloader');

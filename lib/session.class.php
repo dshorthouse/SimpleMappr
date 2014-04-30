@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-session.class.php released under MIT License
+Session.class.php released under MIT License
 Creates and destroys user sessions on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-kml.class.php released under MIT License
+Kml.class.php released under MIT License
 Produce a KML file from SimpleMappr data
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

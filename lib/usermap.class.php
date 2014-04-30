@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-usermap.class.php released under MIT License
+Usermap.class.php released under MIT License
 Manages user-generated maps on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

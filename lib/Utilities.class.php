@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-utilities.class.php released under MIT License
+Utilities.class.php released under MIT License
 Utility function for SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

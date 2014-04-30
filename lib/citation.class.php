@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-citation.class.php released under MIT License
+Citation.class.php released under MIT License
 Manages references that cite SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

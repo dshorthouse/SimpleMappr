@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.wms.class.php released under MIT License
+MapprWms.class.php released under MIT License
 Extends Mappr class & enables WMS endpoint on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

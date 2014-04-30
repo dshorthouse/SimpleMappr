@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-places.class.php released under MIT License
+Places.class.php released under MIT License
 Queries the database for country names on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

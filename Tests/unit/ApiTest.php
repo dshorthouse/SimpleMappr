@@ -3,6 +3,7 @@
 /**
  * Unit tests for static methods and set-up of MapprApi class
  */
+
 class ApiTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_api;

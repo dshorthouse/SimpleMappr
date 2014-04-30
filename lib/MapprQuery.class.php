@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.query.class.php released under MIT License
+MapprQuery.class.php released under MIT License
 Extends Mappr class to query a shapefile and produce JSON on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

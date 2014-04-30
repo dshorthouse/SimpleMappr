@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-user.class.php released under MIT License
+User.class.php released under MIT License
 Manages user accounts on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.map.class.php released under MIT License
+MapprMap.class.php released under MIT License
 Extends Mappr class & makes saved maps accessible via URL on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>
@@ -66,8 +66,8 @@ class MapprMap extends Mappr {
     if(isset($this->bbox_rubberband) && $this->bbox_rubberband) { $this->crop = true; }
 
     (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
-    if(!isset($this->projection_map) || $this->projection_map == "") { $this->projection_map = 'epsg:4326'; }
-    if(!isset($this->bbox_map) || $this->bbox_map == "" || $this->bbox_map == "0,0,0,0") { $this->bbox_map = '-180,-90,180,90'; }
+    if(!isset($this->projection_map) || empty($this->projection_map)) { $this->projection_map = 'epsg:4326'; }
+    if(!isset($this->bbox_map) || empty($this->bbox_map) || $this->bbox_map == "0,0,0,0") { $this->bbox_map = '-180,-90,180,90'; }
 
     $this->download         = true;
     $this->watermark        = true;

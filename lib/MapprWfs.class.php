@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-mappr.wfs.class.php released under MIT License
+MapprWfs.class.php released under MIT License
 Extends Mappr class & enables WFS endpoint on SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

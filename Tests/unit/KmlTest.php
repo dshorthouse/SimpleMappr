@@ -3,6 +3,7 @@
 /**
  * Unit tests for static methods and set-up of Kml class
  */
+
 class KmlTest extends PHPUnit_Framework_TestCase {
 
   protected $kml;

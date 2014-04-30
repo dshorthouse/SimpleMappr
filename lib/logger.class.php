@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-logger.class.php released under MIT License
+Logger.class.php released under MIT License
 Log API calls for SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>

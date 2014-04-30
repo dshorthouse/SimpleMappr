@@ -2,7 +2,7 @@
 
 /********************************************************************
 
-header.class.php released under MIT License
+Header.class.php released under MIT License
 Configure HTML headers for SimpleMappr
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>
