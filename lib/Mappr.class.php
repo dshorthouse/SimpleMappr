@@ -1059,6 +1059,7 @@ abstract class Mappr {
   * Add all coordinates to the map
   */
   public function add_coordinates() {
+    $this->bad_points = array();
     if(isset($this->coords) && $this->coords) {
       //do this in reverse order because the legend will otherwise be presented in reverse order
       for($j=count($this->coords)-1; $j>=0; $j--) {
@@ -1117,7 +1118,7 @@ abstract class Mappr {
             $coord->x = ($coord_array[1]) ? self::clean_coord($coord_array[1]) : null;
             $coord->y = ($coord_array[0]) ? self::clean_coord($coord_array[0]) : null;
             //only add point when data are good & a title
-            if(self::check_coord($coord) && $title != "") {
+            if(self::check_coord($coord) && !empty($title)) {
               if(!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
                 $new_point = ms_newPointObj();
                 $new_point->setXY($coord->x, $coord->y);
