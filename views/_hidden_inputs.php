@@ -39,8 +39,6 @@ function hidden_inputs() {
     $output[] = '<input type="hidden" name="'.$value.'" id="'.$value.'"'.$val.' />';
   }
 
-//  $output[] = '<input type="hidden" name="XDEBUG_PROFILE" value=1 />';
-
   echo implode('', $output) . "\n";
 }
 

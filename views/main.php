@@ -188,7 +188,7 @@ namespace SimpleMappr;
 <li>
 <select id="projection" name="projection">
 <?php
-foreach(MAPPR::$accepted_projections as $key => $value) {
+foreach(Mappr::$accepted_projections as $key => $value) {
   $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
   echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 }
