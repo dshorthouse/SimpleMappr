@@ -13,7 +13,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase {
   }
   
   public function test_check_coord_invalid() {
-    $coord = new \stdClass();
+    $coord = new stdClass();
     $coord->x = -133;
     $coord->y = 5543;
     $checked = \SimpleMappr\Mappr::check_coord($coord);
@@ -21,7 +21,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase {
   }
 
   public function test_check_coord_valid() {
-    $coord = new \stdClass();
+    $coord = new stdClass();
     $coord->x = -120;
     $coord->y = 43;
     $checked = \SimpleMappr\Mappr::check_coord($coord);

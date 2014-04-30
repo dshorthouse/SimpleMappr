@@ -1,7 +1,5 @@
 <?php
 
-namespace SimpleMappr;
-
 date_default_timezone_set("America/New_York");
 
 function switchConf($restore = false) {
@@ -64,15 +62,15 @@ function trashCachedFiles() {
 function loader() {
   switchConf();
   requireFiles();
-  Header::flush_cache(false);
+  \SimpleMappr\Header::flush_cache(false);
   ob_start();
-  new Header;
+  new \SimpleMappr\Header;
 }
 
 function unloader() {
   switchConf('restore');
   trashCachedFiles();
-  Header::flush_cache(false);
+  \SimpleMappr\Header::flush_cache(false);
   ob_end_clean();
 }
 
