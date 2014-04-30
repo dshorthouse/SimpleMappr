@@ -439,8 +439,10 @@ class MapprApi extends Mappr {
         $this->url = array_pop($headers['Location']);
       }
       $this->url_content = @file_get_contents($this->url);
-      if(!$this->parseGeo()) {
-        $this->parseFile();
+      if(strpos($this->url_content, "\t")) {
+        @$this->parseFile();
+      } else {
+        @$this->parseGeo();
       }
     }
   }
@@ -485,16 +487,16 @@ class MapprApi extends Mappr {
   private function parseGeo() {
     include_once(ROOT.'/vendor/phayes/geophp/geoPHP.inc');
     $geometries = \geoPHP::load($this->url_content);
-    if(!$geometries) { return false; }
-    $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-    foreach($geometries as $geometry) {
-      foreach($geometry as $item) {
-        if($item->geometryType() == 'Point') {
-          $this->coord_cols[$num_cols][] = array_reverse($item->coords);
+    if($geometries) {
+      $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
+      foreach($geometries as $geometry) {
+        foreach($geometry as $item) {
+          if($item->geometryType() == 'Point') {
+            $this->coord_cols[$num_cols][] = array_reverse($item->coords);
+          }
         }
       }
     }
-    return true;
   }
 
 }

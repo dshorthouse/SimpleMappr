@@ -27,7 +27,7 @@
  *
  * }}}
  */
-/*global jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, ga */
+/*global jQuery, window, document, self, encodeURIComponent, ga */
 var SimpleMappr = (function($, window, document) {
 
   "use strict";
