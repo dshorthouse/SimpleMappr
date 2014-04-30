@@ -439,10 +439,11 @@ class MapprApi extends Mappr {
         $this->url = array_pop($headers['Location']);
       }
       $this->url_content = @file_get_contents($this->url);
-      if(strpos($this->url_content, "\t")) {
-        @$this->parseFile();
+      preg_match_all('/[<>{}\[\]]/', $this->url_content, $match);
+      if(count($match[0]) >= 4) {
+        $this->parseGeo();
       } else {
-        @$this->parseGeo();
+        $this->parseFile();
       }
     }
   }
@@ -451,7 +452,7 @@ class MapprApi extends Mappr {
   * Parse text file into cleaned array of points
   */
   private function parseFile() {
-    if($fp = fopen($this->url, 'r')) {
+    if(@$fp = fopen($this->url, 'r')) {
       while ($line = fread($fp, 1024)) {
         $rows = preg_split("/[\r\n]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
         $cols = explode("\t", $rows[0]);
