@@ -29,9 +29,9 @@ class ApiTest extends PHPUnit_Framework_TestCase {
 
   public function test_api_ping() {
     $_REQUEST = array('ping' => true);
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $decoded = json_decode(ob_get_contents(), TRUE);
     ob_end_clean();
     $this->assertArrayHasKey("status", $decoded);
@@ -39,9 +39,9 @@ class ApiTest extends PHPUnit_Framework_TestCase {
 
   public function test_apioutput_post() {
     $_SERVER['REQUEST_METHOD'] = 'POST';
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $decoded = json_decode(ob_get_contents(), TRUE);
     ob_end_clean();
     $this->assertArrayHasKey("imageURL", $decoded);
@@ -49,13 +49,14 @@ class ApiTest extends PHPUnit_Framework_TestCase {
   }
 
   public function test_apioutput_get() {
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $image = imagecreatefromstring(ob_get_contents());
+    $file = ROOT.'/public/tmp/apioutput_get.png';
+    imagepng($image, $file);
     ob_end_clean();
-    $this->assertEquals(imagesx($image), 900);
-    $this->assertEquals(imagesy($image), 450);
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get.png'));
   }
 
   public function test_apioutput_get_params() {
@@ -65,37 +66,42 @@ class ApiTest extends PHPUnit_Framework_TestCase {
       'width' => 600,
       'graticules' => true
     );
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $image = imagecreatefromstring(ob_get_contents());
+    $file = ROOT.'/public/tmp/apioutput_get_params.png';
+    imagepng($image, $file);
     ob_end_clean();
-    $this->assertEquals(imagesx($image), 600);
-    $this->assertEquals(imagesy($image), 300);
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get_params.png'));
   }
   
   public function test_apioutput_no_coords() {
     $_REQUEST = array(
       'points' => array()
     );
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $image = imagecreatefromstring(ob_get_contents());
+    $file = ROOT.'/public/tmp/apioutput_no_coords.png';
+    imagepng($image, $file);
     ob_end_clean();
-    $this->assertEquals(imagesx($image), 900);
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
   }
 
   public function test_apioutput_coords() {
     $_REQUEST = array(
       'points' => array('45, -120\n52, -100')
     );
-    $mappr_api = $this->mappr_api->get_request()->execute();
+    $this->mappr_api->get_request()->execute();
     ob_start();
-    $output = $mappr_api->create_output();
+    $this->mappr_api->create_output();
     $image = imagecreatefromstring(ob_get_contents());
+    $file = ROOT.'/public/tmp/apioutput_no_coords.png';
+    imagepng($image, $file);
     ob_end_clean();
-    $this->assertEquals(imagesx($image), 900);
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_coords.png'));
   }
 
 }

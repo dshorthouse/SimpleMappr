@@ -89,10 +89,112 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'role' => 1
     ));
 
+    $map_data = array (
+      'coords' => 
+      array (
+        0 => 
+        array (
+          'title' => 'Sample Data',
+          'data' => '55, -115',
+          'shape' => 'star',
+          'size' => '14',
+          'color' => '255 32 3',
+        ),
+        1 => 
+        array (
+          'title' => '',
+          'data' => '',
+          'shape' => 'circle',
+          'size' => '10',
+          'color' => '0 0 0',
+        ),
+        2 => 
+        array (
+          'title' => '',
+          'data' => '',
+          'shape' => 'circle',
+          'size' => '10',
+          'color' => '0 0 0',
+        ),
+      ),
+      'regions' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'data' => '',
+          'color' => '150 150 150',
+        ),
+        1 => 
+        array (
+          'title' => '',
+          'data' => '',
+          'color' => '150 150 150',
+        ),
+        2 => 
+        array (
+          'title' => '',
+          'data' => '',
+          'color' => '150 150 150',
+        ),
+      ),
+      'layers' => 
+      array (
+        'stateprovinces' => 'on',
+      ),
+      'gridspace' => '',
+      'projection' => 'epsg:4326',
+      'origin' => '',
+      'filter-mymap' => '',
+      'citation' => 
+      array (
+        'reference' => '',
+        'first_author_surname' => '',
+        'year' => '',
+        'doi' => '',
+        'link' => '',
+      ),
+      'download-filetype' => 'svg',
+      'download-factor' => '1',
+      'download' => '',
+      'output' => 'pnga',
+      'download_token' => '1398911053520',
+      'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+      'projection_map' => 'epsg:4326',
+      'bbox_rubberband' => '',
+      'bbox_query' => '',
+      'pan' => '',
+      'zoom_out' => '',
+      'crop' => '',
+      'rotation' => '0',
+      'save' => 
+      array (
+        'title' => 'sample data',
+      ),
+      'file_name' => '',
+      'download_factor' => '1',
+      'width' => '',
+      'height' => '',
+      'download_filetype' => 'svg',
+      'grid_space' => '',
+      'options' => 
+      array (
+        'border' => '',
+        'legend' => '',
+        'scalebar' => '',
+        'scalelinethickness' => '',
+      ),
+      'border_thickness' => '',
+      'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+      'rendered_rotation' => '0',
+      'rendered_projection' => 'epsg:4326',
+      'bad_points' => '',
+    );
+
     self::$db->query_insert('maps', array(
       'uid' => $user1,
       'title' => 'Sample Map',
-      'map' => '{}',
+      'map' => serialize($map_data),
       'created' => time()
     ));
 
@@ -114,6 +216,32 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
     self::$db->query("DROP TABLE IF EXISTS users");
     self::$db->query("DROP TABLE IF EXISTS citations");
     self::$db->query("DROP TABLE IF EXISTS stateprovinces");
+  }
+
+  public static function files_identical($fn1, $fn2) {
+    if(filetype($fn1) !== filetype($fn2)) { return FALSE; }
+    if(filesize($fn1) !== filesize($fn2)) { return FALSE; }
+    if(!$fp1 = fopen($fn1, 'rb')) { return FALSE; }
+
+    if(!$fp2 = fopen($fn2, 'rb')) {
+        fclose($fp1);
+        return FALSE;
+    }
+
+    $same = TRUE;
+    while (!feof($fp1) and !feof($fp2)) {
+      if(fread($fp1, 4096) !== fread($fp2, 4096)) {
+        $same = FALSE;
+        break;
+      }
+    }
+
+    if(feof($fp1) !== feof($fp2)) { $same = FALSE; }
+
+    fclose($fp1);
+    fclose($fp2);
+
+    return $same;
   }
 
   public function setUp() {

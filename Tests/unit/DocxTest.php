@@ -28,14 +28,14 @@ class DocxTest extends PHPUnit_Framework_TestCase {
   }
 
   public function test_docx_mime() {
-    $mappr_api = $this->mappr_docx->get_request()->execute();
-    ob_start();
-    $this->mappr_docx->create_output();
-    $output = ob_get_contents();
-    ob_end_clean();
-    $finfo = new finfo(FILEINFO_MIME);
-    $mime = $finfo->buffer($output);
-    $this->assertEquals("application/zip; charset=binary", $mime);
-  }
+      $this->mappr_docx->get_request()->execute();
+      ob_start();
+      $this->mappr_docx->create_output();
+      $output = ob_get_contents();
+      ob_end_clean();
+      $finfo = new finfo(FILEINFO_MIME);
+      $mime = $finfo->buffer($output);
+      $this->assertEquals("application/zip; charset=binary", $mime);
+    }
 
 }

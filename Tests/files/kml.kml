@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+ <Document>
+  <name>SimpleMappr: My_Map</name>
+  <Style id="pushpin0">
+   <IconStyle id="simplemapprstyle0">
+    <Icon>
+     <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     <scale>1.0</scale>
+    </Icon>
+   </IconStyle>
+  </Style>
+  <Style id="pushpin1">
+   <IconStyle id="simplemapprstyle1">
+    <Icon>
+     <href>http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png</href>
+     <scale>1.0</scale>
+    </Icon>
+   </IconStyle>
+  </Style>
+  <Folder id="simplemapprfolder0">
+   <name>Sample Data</name>
+   <Placemark id="simplemapprpin00">
+    <name>Sample Data</name>
+    <description>-115,55</description>
+    <styleUrl>#pushpin0</styleUrl>
+    <Point>
+     <coordinates>-115,55,0</coordinates>
+    </Point>
+   </Placemark>
+   <Placemark id="simplemapprpin01">
+    <name>Sample Data</name>
+    <description>-110,65</description>
+    <styleUrl>#pushpin0</styleUrl>
+    <Point>
+     <coordinates>-110,65,0</coordinates>
+    </Point>
+   </Placemark>
+  </Folder>
+  <Folder id="simplemapprfolder1">
+   <name>Sample Data2</name>
+   <Placemark id="simplemapprpin10">
+    <name>Sample Data2</name>
+    <description>-120,35</description>
+    <styleUrl>#pushpin1</styleUrl>
+    <Point>
+     <coordinates>-120,35,0</coordinates>
+    </Point>
+   </Placemark>
+   <Placemark id="simplemapprpin11">
+    <name>Sample Data2</name>
+    <description>-80,70</description>
+    <styleUrl>#pushpin1</styleUrl>
+    <Point>
+     <coordinates>-80,70,0</coordinates>
+    </Point>
+   </Placemark>
+  </Folder>
+ </Document>
+</kml>

@@ -42,4 +42,4 @@ end
 SimpleMappr.new
 
 # Usage
-# $ ./application.rb "/Users/dshorthouse/Desktop" "/Users/dshorthouse/Desktop/maps"
+# $ ./file_upload.rb "/Users/dshorthouse/Desktop" "/Users/dshorthouse/Desktop/maps"

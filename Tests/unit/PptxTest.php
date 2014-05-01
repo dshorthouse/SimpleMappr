@@ -28,14 +28,14 @@ class PptxTest extends PHPUnit_Framework_TestCase {
   }
 
   public function test_pptx_mime() {
-    $mappr_api = $this->mappr_pptx->get_request()->execute();
-    ob_start();
-    $this->mappr_pptx->create_output();
-    $output = ob_get_contents();
-    ob_end_clean();
-    $finfo = new finfo(FILEINFO_MIME);
-    $mime = $finfo->buffer($output);
-    $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
-  }
+      $this->mappr_pptx->get_request()->execute();
+      ob_start();
+      $this->mappr_pptx->create_output();
+      $output = ob_get_contents();
+      ob_end_clean();
+      $finfo = new finfo(FILEINFO_MIME);
+      $mime = $finfo->buffer($output);
+      $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
+    }
 
 }
