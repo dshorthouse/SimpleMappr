@@ -52,9 +52,9 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $this->mappr_api->get_request()->execute();
     ob_start();
     $this->mappr_api->create_output();
-    $image = imagecreatefromstring(ob_get_contents());
+    $output = ob_get_contents();
     $file = ROOT.'/public/tmp/apioutput_get.png';
-    imagepng($image, $file);
+    file_put_contents($file, $output);
     ob_end_clean();
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get.png'));
   }
@@ -69,9 +69,9 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $this->mappr_api->get_request()->execute();
     ob_start();
     $this->mappr_api->create_output();
-    $image = imagecreatefromstring(ob_get_contents());
+    $output = ob_get_contents();
     $file = ROOT.'/public/tmp/apioutput_get_params.png';
-    imagepng($image, $file);
+    file_put_contents($file, $output);
     ob_end_clean();
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get_params.png'));
   }
@@ -83,23 +83,23 @@ class ApiTest extends PHPUnit_Framework_TestCase {
     $this->mappr_api->get_request()->execute();
     ob_start();
     $this->mappr_api->create_output();
-    $image = imagecreatefromstring(ob_get_contents());
+    $output = ob_get_contents();
     $file = ROOT.'/public/tmp/apioutput_no_coords.png';
-    imagepng($image, $file);
+    file_put_contents($file, $output);
     ob_end_clean();
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
   }
 
   public function test_apioutput_coords() {
     $_REQUEST = array(
-      'points' => array('45, -120\n52, -100')
+      'points' => array("45, -120\n52, -100")
     );
     $this->mappr_api->get_request()->execute();
     ob_start();
     $this->mappr_api->create_output();
-    $image = imagecreatefromstring(ob_get_contents());
-    $file = ROOT.'/public/tmp/apioutput_no_coords.png';
-    imagepng($image, $file);
+    $output = ob_get_contents();
+    $file = ROOT.'/public/tmp/apioutput_coords.png';
+    file_put_contents($file, $output);
     ob_end_clean();
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_coords.png'));
   }
