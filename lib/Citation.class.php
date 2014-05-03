@@ -64,7 +64,7 @@ class Citation {
     $method = $_SERVER['REQUEST_METHOD'];
 
     if($method == 'POST' || $method == 'DELETE') {
-      $this->check_permission();
+      User::check_permission();
     }
 
     switch($method) {
@@ -143,13 +143,6 @@ class Citation {
           c.id=".$this->db->escape($this->id);
     $this->db->query($sql);
     return $this;
-  }
-
-  private function check_permission(){
-    session_start();
-    if(!isset($_SESSION['simplemappr']) || User::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
-      Utilities::access_denied();
-    }
   }
 
   private function response($type = NULL) {

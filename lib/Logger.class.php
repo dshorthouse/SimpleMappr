@@ -49,7 +49,7 @@ class Logger {
   }
 
   public function read_log() {
-    $this->check_permission();
+    User::check_permission();
     $fd = fopen($this->filename, 'r');
     if ($fd) {
       while (($line = fgets($fd)) !== false) {
@@ -86,10 +86,4 @@ class Logger {
     }
   }
 
-  private function check_permission(){
-    session_start();
-    if(!isset($_SESSION['simplemappr']) || User::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
-      Utilities::access_denied();
-    }
-  }
 }

@@ -47,6 +47,13 @@ class User {
     2 => 'administrator'
   );
 
+  public static function check_permission() {
+    session_start();
+    if(!isset($_SESSION['simplemappr']) || self::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
+      Utilities::access_denied();
+    }
+  }
+
   function __construct($id) {
     session_start();
     if(!isset($_SESSION['simplemappr'])) {
