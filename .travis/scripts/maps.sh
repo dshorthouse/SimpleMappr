@@ -10,5 +10,5 @@ wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m
 wget http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/physical/ne_10m_lakes.zip
 
 unzip ne_10m_admin_0_map_units.zip -d lib/mapserver/maps/10m_cultural/10m_cultural/
-unzip ne_10m_admin_1_states_provinces.zip -d lib/mapserver/maps/10m_cultural/10m_cultural/
+unzip ne_10m_admin_1_states_provinces_lines.zip -d lib/mapserver/maps/10m_cultural/10m_cultural/
 unzip ne_10m_lakes.zip -d lib/mapserver/maps/10m_physical/
