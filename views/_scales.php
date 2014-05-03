@@ -12,5 +12,3 @@ function scales() {
 
   echo $output;
 }
-
-?>

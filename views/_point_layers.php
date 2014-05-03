@@ -58,5 +58,3 @@ function point_layers() {
 
   echo $output;
 }
-
-?>

@@ -222,6 +222,8 @@ foreach(Mappr::$accepted_projections as $key => $value) {
 </div>
 <div id="map-admin">
   <?php $this->partial("admin_tools"); ?>
+  <?php $this->partial("admin_api"); ?>
+  <p id="admin-api-list"></p>
   <?php $this->partial("admin_citations"); ?>
   <div id="admin-citations-list"></div>
 </div>

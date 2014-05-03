@@ -33,14 +33,16 @@ var SimpleMapprAdmin = (function($, window, document) {
   "use strict";
 
   var _private = {
-    
+
     citations_list: $('#admin-citations-list'),
-    
+    api_list: $('#admin-api-list'),
+
     init: function() {
       this.loadUserList();
       this.bindTools();
       this.loadCitationList();
       this.bindCreateCitation();
+      this.loadAPILogs();
       SimpleMappr.tabSelector(4);
     },
 
@@ -92,7 +94,7 @@ var SimpleMapprAdmin = (function($, window, document) {
         }
       });
     },
-    
+
     bindTools: function() {
       var self = this;
 
@@ -104,7 +106,7 @@ var SimpleMapprAdmin = (function($, window, document) {
         }
       });
     },
-    
+
     flushCaches: function() {
       $.ajax({
         type     : 'GET',
@@ -123,7 +125,7 @@ var SimpleMapprAdmin = (function($, window, document) {
         }
       });
     },
-    
+
     loadCitationList: function() {
       var self = this, citations = "", doi = "", link = "";
 
@@ -151,7 +153,27 @@ var SimpleMapprAdmin = (function($, window, document) {
         }
       });
     },
-    
+
+    loadAPILogs: function() {
+      var self = this;
+
+      SimpleMappr.showSpinner();
+      $.ajax({
+        type     : 'GET',
+        url      : SimpleMappr.settings.baseUrl + "/apilog/",
+        dataType : 'html',
+        timeout  : 30000,
+        success  : function(data) {
+          self.api_list.html(data);
+          SimpleMappr.hideSpinner();
+        },
+        error : function() {
+          alert("Error loading API log");
+          SimpleMappr.hideSpinner();
+        }
+      });
+    },
+
     bindDeleteCitations: function() {
       var self = this;
 
@@ -160,7 +182,7 @@ var SimpleMapprAdmin = (function($, window, document) {
         self.deleteCitationConfirmation(this);
       });
     },
-    
+
     bindCreateCitation: function() {
       var self = this;
 

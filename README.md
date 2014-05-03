@@ -68,7 +68,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download MapServer 6.4.1 tarball, http://mapserver.org/download.html (e.g. [http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz))
+3. Download [http://mapserver.org/download.html](MapServer) 6.4.1 tarball, [http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-6.4.1.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 
@@ -78,9 +78,13 @@ Homebrew on Mac OSX
             -DWITH_FCGI=0 \
             -DWITH_SVGCAIRO=1
 
-6. Execute $ make && make install
-7. Verify that mapserv is working $ mapserv -v
-8. Add extension=php_mapscript.so to php.ini and restart web server
+          $ make && make install
+
+6. Verify that mapserv is working
+
+          $ mapserv -v
+
+7. Add extension=php_mapscript.so to php.ini and restart web server
 
 Database
 --------

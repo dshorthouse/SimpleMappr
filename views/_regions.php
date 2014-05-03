@@ -28,5 +28,3 @@ function regions() {
 
   echo $output;	
 }
-
-?>

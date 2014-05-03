@@ -48,6 +48,17 @@ class Logger {
     $this->write_log($message);
   }
 
+  public function read_log() {
+    $this->check_permission();
+    $fd = fopen($this->filename, 'r');
+    if ($fd) {
+      while (($line = fgets($fd)) !== false) {
+        echo $line . "<br>";
+      }
+    }
+    fclose($fd);
+  }
+
   private function write_log($message) {
     $fd = fopen($this->filename, 'a');
     if(is_array($message)) {
@@ -72,6 +83,13 @@ class Logger {
         $string =  "\t {".$key.': '.$value."}\n ";
         fwrite($fd, $string);
       }
+    }
+  }
+
+  private function check_permission(){
+    session_start();
+    if(!isset($_SESSION['simplemappr']) || User::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
+      Utilities::access_denied();
     }
   }
 }

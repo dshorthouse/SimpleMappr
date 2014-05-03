@@ -36,4 +36,3 @@ function admin_citations() {
   
   echo $output;
 }
-?>

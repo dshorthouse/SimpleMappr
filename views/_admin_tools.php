@@ -13,5 +13,3 @@ function admin_tools() {
   
   echo $output;
 }
-
-?>

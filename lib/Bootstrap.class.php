@@ -77,6 +77,10 @@ class Bootstrap {
         include_once("views/apidoc.php");
         break;
 
+      case "/apilog":
+        $this->read_log();
+        break;
+
       case "/application":
         $klass = $this->klass("MapprApplication");
         $this->setup_map($klass)->execute()->create_output();
@@ -190,6 +194,11 @@ class Bootstrap {
     $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
     $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
     $logger->log($message);
+  }
+
+  private function read_log() {
+    $logger = new Logger(ROOT."/log/logger.log");
+    $logger->read_log();
   }
 
   private function set_locale() {

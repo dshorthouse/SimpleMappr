@@ -41,5 +41,3 @@ function hidden_inputs() {
 
   echo implode('', $output) . "\n";
 }
-
-?>

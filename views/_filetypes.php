@@ -16,5 +16,3 @@ function filetypes() {
 
   echo $output;
 }
-
-?>

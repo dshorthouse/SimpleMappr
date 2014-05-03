@@ -210,6 +210,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-admin label, #map-admin input, #map-admin textarea {display:block;}
 #map-admin .resizable-textarea {width:600px;}
 #map-admin p.citation{text-indent:-2em;padding-left:2em;font-size:0.75em;}
+#admin-api-list {font-size:11px;}
 #map-admin a.citation-delete:before{background-position:-260px -284px;margin-top:0.2em;}
 #map-admin a.citation-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-about h3{font-size:0.8em;}
