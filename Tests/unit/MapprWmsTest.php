@@ -4,7 +4,7 @@
  * Unit tests for static methods and set-up of MapprWms class
  */
 
-class WmsTest extends PHPUnit_Framework_TestCase {
+class MapprWmsTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_wms;
 

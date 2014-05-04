@@ -1,5 +1,8 @@
 <?php
 
+//set the default timezone
+date_default_timezone_set("America/New_York");
+
 // define the environment as 'development' or 'production'
 defined("ENVIRONMENT") || define("ENVIRONMENT", "development");
 
@@ -7,7 +10,7 @@ defined("ENVIRONMENT") || define("ENVIRONMENT", "development");
 defined("ROOT") || define("ROOT", dirname(__DIR__));
 
 // Upload directory for API calls, without trailing slash
-defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", "/var/www/SimpleMappr/uploads");
+defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", dirname(__DIR__)."/uploads");
 
 // Domain from where images will be served served, without a trailing slash
 defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.local");
@@ -30,9 +33,6 @@ defined("CLOUDFLARE_KEY") || define("CLOUDFLARE_KEY", "");
 defined("CLOUDFLARE_DOMAIN") || define("CLOUDFLARE_DOMAIN", "");
 
 defined("CLOUDFLARE_EMAIL") || define("CLOUDFLARE_EMAIL", "");
-
-//set the default timezone
-date_default_timezone_set("America/New_York");
 
 defined("COOKIE_TIMEOUT") || define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60)); //two week cookie lifetime
 

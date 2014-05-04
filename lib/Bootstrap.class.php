@@ -78,7 +78,7 @@ class Bootstrap {
         break;
 
       case "/apilog":
-        $this->read_log();
+        $this->tail_log();
         break;
 
       case "/application":
@@ -193,12 +193,12 @@ class Bootstrap {
     $logger = new Logger(ROOT."/log/logger.log");
     $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
     $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
-    $logger->log($message);
+    $logger->write($message);
   }
 
-  private function read_log() {
+  private function tail_log() {
     $logger = new Logger(ROOT."/log/logger.log");
-    $logger->read_log();
+    echo ($logger->tail()) ? implode("<br>", $logger->tail()) : "No log data";
   }
 
   private function set_locale() {

@@ -4,7 +4,7 @@
  * Unit tests for static methods and set-up of MapprMap class
  */
 
-class MapTest extends SimpleMapprTest {
+class MapprMapTest extends SimpleMapprTest {
 
   protected $mappr_map;
 

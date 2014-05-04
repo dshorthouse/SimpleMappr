@@ -43,6 +43,7 @@ class Utilities {
   }
 
   public static function access_denied() {
+    header("HTTP/1.0 401 Unauthorized");
     header("Content-Type: application/json");
     echo '{ "error" : "access denied" }';
     exit();

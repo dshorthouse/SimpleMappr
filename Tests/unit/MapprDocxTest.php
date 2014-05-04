@@ -4,7 +4,7 @@
  * Unit tests for static methods and set-up of MapprApi class
  */
 
-class DocxTest extends PHPUnit_Framework_TestCase {
+class MapprDocxTest extends PHPUnit_Framework_TestCase {
 
   protected $mappr_api;
 

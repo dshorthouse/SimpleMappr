@@ -4,7 +4,7 @@
  * Unit tests for static methods and default set-up of Mappr class
  */
 
-class ApplicationMapprTest extends PHPUnit_Framework_TestCase {
+class MapprApplicationTest extends PHPUnit_Framework_TestCase {
 
    protected $mappr;
    protected $output;
