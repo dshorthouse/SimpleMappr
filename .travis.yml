@@ -57,8 +57,7 @@ before_script:
   - sudo service apache2 restart
   
   # Force build of js/css
-  - #wget -q -O /dev/null "http://www.simplemappr.local"
-  - wget "http://www.simplemappr.local"
+  - wget -q -O - "http://www.simplemappr.local"
 
   # Selenium
   - "export DISPLAY=:99.0"
