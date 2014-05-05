@@ -64,6 +64,7 @@ function loader() {
   requireFiles();
   \SimpleMappr\Header::flush_cache(false);
   ob_start();
+  file_get_contents("http://".MAPPR_DOMAIN);
   new \SimpleMappr\Header;
 }
 

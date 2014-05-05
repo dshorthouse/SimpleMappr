@@ -55,9 +55,6 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 restart
-  
-  # Force build of js/css
-  - wget -q -O - "http://www.simplemappr.local"
 
   # Selenium
   - "export DISPLAY=:99.0"
