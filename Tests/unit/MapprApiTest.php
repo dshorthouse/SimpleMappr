@@ -104,4 +104,19 @@ class MapprApiTest extends PHPUnit_Framework_TestCase {
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_coords.png'));
   }
 
+  public function test_apioutput_country() {
+    $_REQUEST = array(
+      'shade' => array(
+        'places' => 'Alberta,USA[MT|WA]'
+      )
+    );
+    $this->mappr_api->get_request()->execute();
+    ob_start();
+    $this->mappr_api->create_output();
+    $output = ob_get_contents();
+    $file = ROOT.'/public/tmp/apioutput_places.png';
+    file_put_contents($file, $output);
+    ob_end_clean();
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_places.png'));
+  }
 }

@@ -105,10 +105,9 @@ class MapprQuery extends Mappr {
           $shape = $layer->getShape($layer->getResult($i));
           if($this->queryLayer == 'stateprovinces_polygon') {
             $hasc = explode(".",$shape->values['code_hasc']);
-            if(isset($shape->values['sr_adm0_a3']) && isset($hasc[1])) { $items[$shape->values['sr_adm0_a3']][$hasc[1]] = array(); }
-          }
-          else {
-            $this->data[] = $shape->values['admin'];
+            if(isset($shape->values['adm0_a3']) && isset($hasc[1])) { $items[$shape->values['adm0_a3']][$hasc[1]] = array(); }
+          } else {
+            $this->data[] = $shape->values['ADMIN'];
           }
         }
         if($this->queryLayer == 'stateprovinces_polygon') {

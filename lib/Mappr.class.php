@@ -716,7 +716,7 @@ abstract class Mappr {
 
     //stateprovinces_polygon
     $this->shapes['stateprovinces_polygon'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_shp",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 5
     );
@@ -758,7 +758,7 @@ abstract class Mappr {
 
     //State/Provincial labels
     $this->shapes['stateprovnames'] = array(
-      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_shp",
+      'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces",
       'type'  => MS_LAYER_POLYGON,
       'sort'  => 11
     );
@@ -1175,12 +1175,12 @@ abstract class Mappr {
                   foreach($states as $state) {
                     $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
                   }
-                  $qry['stateprovince'][] = "'[sr_adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
+                  $qry['stateprovince'][] = "'[adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
                   $qry['country'][] = "'[iso_a3]' = '".trim($split[0])."'";
                 } else {
                   $region = addslashes(trim($region));
                   $qry['stateprovince'][] = "'[name]' ~* '".$region."$'";
-                  $qry['country'][] = "'[name]' ~* '".$region."$' || '[name_long]' ~* '".$region."$' || '[formal_en]' ~* '".$region."$'";
+                  $qry['country'][] = "'[NAME]' ~* '".$region."$' || '[NAME_LONG]' ~* '".$region."$' || '[FORMAL_EN]' ~* '".$region."$'";
                 }
               }
             }
