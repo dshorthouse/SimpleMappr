@@ -192,8 +192,8 @@ class MapprMap extends Mappr {
         foreach ($row as $loc) {
           $coord_array = parent::make_coordinates($loc);
           $coord = new \stdClass();
-          $coord->x = array_key_exists(1, $coord_array) ? trim($coord_array[1]) : "nil";
-          $coord->y = array_key_exists(0, $coord_array) ? trim($coord_array[0]) : "nil";
+          $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
+          $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
           if(parent::check_coord($coord) && $title != "") {
             $output[] = array(
               'type' => 'Feature',

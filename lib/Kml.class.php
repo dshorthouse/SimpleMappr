@@ -105,9 +105,9 @@ class Kml {
       $this->kml->writeAttribute('id', 'pushpin'.$i);
       $this->kml->startElement('IconStyle');
       $this->kml->writeAttribute('id', 'simplemapprstyle'.$i);
+      $this->kml->writeElement('scale', '1.0');
       $this->kml->startElement('Icon');
       $this->kml->writeElement('href', self::$pushpins[$i]);
-      $this->kml->writeElement('scale', '1.0');
       $this->kml->endElement(); //end Icon
       $this->kml->endElement(); //end IconStyle
       $this->kml->endElement(); //end Style
