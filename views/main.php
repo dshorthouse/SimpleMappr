@@ -1,9 +1,9 @@
 <?php
 namespace SimpleMappr;
-  $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
-  $header_class = $header[0];
-  $accepted_locales = $header[1];
-  $roles = $header[2];
+$locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
+$header_class = $header[0];
+$accepted_locales = $header[1];
+$roles = $header[2];
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $accepted_locales[$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
