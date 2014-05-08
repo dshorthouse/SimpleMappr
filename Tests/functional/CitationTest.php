@@ -44,7 +44,7 @@ class CitationTest extends SimpleMapprTest {
     parent::waitOnSpinner();
     $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
     $this->assertContains($citation, $citation_list);
-    $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign Out')); //in toolbar and not accessible when fixed
+    $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign Out'));
     $link->click();
     $link = $this->webDriver->findElement(WebDriverBy::linkText('About'));
     $link->click();

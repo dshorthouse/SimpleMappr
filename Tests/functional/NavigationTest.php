@@ -23,7 +23,7 @@ class NavigationTest extends SimpleMapprTest {
 
   public function testTaglineFrench() {
     parent::setUpPage();
-    $link = $this->webDriver->findElement(WebDriverBy::linkText('Français')); //in toolbar and not accessible when fixed
+    $link = $this->webDriver->findElement(WebDriverBy::linkText('Français'));
     $link->click();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
     $this->assertEquals('cartes point pour les publications et présentations', $tagline->getText());
@@ -31,7 +31,7 @@ class NavigationTest extends SimpleMapprTest {
 
   public function testSignInPage() {
     parent::setUpPage();
-    $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign In')); //in toolbar and not accessible when fixed
+    $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign In'));
     $link->click();
     parent::waitOnSpinner();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('map-mymaps'));
