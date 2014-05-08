@@ -249,6 +249,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
     $host = 'http://localhost:4444/wd/hub';
     $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => BROWSER);
     $this->webDriver = RemoteWebDriver::create($host, $capabilities);
+    $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
   }
 
   public function tearDown() {

@@ -4,17 +4,17 @@
   <name>SimpleMappr: My_Map</name>
   <Style id="pushpin0">
    <IconStyle id="simplemapprstyle0">
+    <scale>1.0</scale>
     <Icon>
      <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
-     <scale>1.0</scale>
     </Icon>
    </IconStyle>
   </Style>
   <Style id="pushpin1">
    <IconStyle id="simplemapprstyle1">
+    <scale>1.0</scale>
     <Icon>
      <href>http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png</href>
-     <scale>1.0</scale>
     </Icon>
    </IconStyle>
   </Style>
