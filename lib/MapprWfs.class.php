@@ -154,7 +154,7 @@ class MapprWfs extends Mappr {
     ms_ioinstallstdouttobuffer();
     $this->map_obj->owsDispatch($this->req);
     $contenttype = ms_iostripstdoutbuffercontenttype();
-    Utilities::set_header("xml");
+    Header::set_header("xml");
     echo ms_iogetstdoutbufferstring();
     ms_ioresethandlers();
   }

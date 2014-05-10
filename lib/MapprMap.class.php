@@ -58,6 +58,7 @@ class MapprMap extends Mappr {
     if(!$record) { $this->set_not_found(); exit(); }
 
     $result = unserialize($record['map']);
+
     foreach($result as $key => $data) {
       $this->{$key} = $data;
     }
@@ -105,6 +106,9 @@ class MapprMap extends Mappr {
     }
   }
 
+  /**
+   * Override the method in the parent class
+   */
   public function execute() {
     if(in_array($this->extension, array('png', 'pnga', 'svg'))) {
       parent::execute();
@@ -216,8 +220,7 @@ class MapprMap extends Mappr {
       break;
 
       case 'json':
-        $this->add_header();
-        header("Content-Type: application/json");
+        Header::set_header('json');
         $output = new \stdClass;
         $output->type = 'FeatureCollection';
         $output->features = $this->get_coordinates();
@@ -233,26 +236,19 @@ class MapprMap extends Mappr {
       break;
 
       case 'kml':
-        $this->add_header();
+        Header::set_header('kml');
         $kml = new Kml;
         $kml->get_request($this->id, $this->coords)->create_output();
       break;
 
-      case 'svg': 
-        header("Content-Type: image/svg+xml");
+      case 'svg':
+        Header::set_header('svg');
         $this->image->saveImage("");
       break;
 
       default:
         $this->set_not_found();
     }
-  }
-
-  private function add_header() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
   }
 
 }

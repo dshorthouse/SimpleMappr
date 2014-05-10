@@ -36,9 +36,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-class Usermap {
+class Usermap extends Rest implements RestMethods {
 
-  private $id;
   private $uid;
   private $role;
   private $db;
@@ -54,7 +53,7 @@ class Usermap {
     $this->uid = (int)$_SESSION['simplemappr']['uid'];
     $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
     $this->uid_q = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
-    Utilities::set_header();
+    Header::set_header();
     $this->execute();
   }
 
@@ -67,64 +66,9 @@ class Usermap {
   }
 
   /*
-  * Detect type of request and perform appropriate method
+  * Implemented index method
   */
-  private function restful_action() {
-    $method = $_SERVER['REQUEST_METHOD'];
-
-    switch($method) {
-      case 'GET':
-        if($this->id) {
-          $this->show_map();
-        } else {
-          $this->index_maps();
-        }
-      break;
-
-      case 'POST':
-        $data = array(
-          'uid' => $this->uid,
-          'title' => $_POST['save']['title'],
-          'map' => serialize($_POST),
-          'created' => time(),
-          'updated' => time()
-        );
-
-        //see if user's map by same title already exists
-        $sql = "
-          SELECT
-            mid
-          FROM
-            maps
-          WHERE
-            uid=".$this->db->escape($this->uid)." AND title='".$this->db->escape($data['title'])."'";
-        $record = $this->db->query_first($sql);
-
-        if($record['mid']) {
-          unset($data['created']);
-          $this->db->query_update('maps', $data, 'mid='.$record['mid']);
-          $mid = $record['mid'];
-        } else {
-          $mid = $this->db->query_insert('maps', $data);
-        }
-
-        header("Content-Type: application/json");
-        echo '{"status":"ok", "mid":"'.$mid.'"}';
-      break;
-
-      case 'DELETE':
-        $this->destroy_map();
-      break;
-
-      default:
-      break;
-    }
-  }
-
-  /*
-  * Index method to produce table of maps
-  */
-  private function index_maps() {
+  public function index() {
     $where = array();
     $output = '';
     $data_uid = "";
@@ -230,14 +174,14 @@ class Usermap {
       $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
     }
 
-    header("Content-Type: text/html");
+    Header::set_header('html');
     echo $output;
   }
 
   /*
-  * Show method to obtain map data
+  * Implemented show method
   */
-  private function show_map() {
+  public function show($id) {
     $where = '';
     if(User::$roles[$this->role] !== 'administrator') { $where = ' AND uid = "'.$this->db->escape($this->uid).'"'; }
     $sql = '
@@ -246,21 +190,62 @@ class Usermap {
       FROM 
         maps
       WHERE
-        mid="'.$this->db->escape($this->id) . '"'.$where;
+        mid="'.$this->db->escape($id) . '"'.$where;
     $record = $this->db->query_first($sql);
     $data['mid'] = $record['mid'];
     $data['map'] = @unserialize($record['map']);
     $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
-    header("Content-Type: application/json");
+    Header::set_header('json');
     echo json_encode($data);
   }
 
   /*
-  * Destroy method to delete a map
+  * Implemented create method
   */
-  private function destroy_map() {
-    $where = 'mid='.$this->db->escape($this->id);
+  public function create() {
+    $data = array(
+      'uid' => $this->uid,
+      'title' => $_POST['save']['title'],
+      'map' => serialize($_POST),
+      'created' => time(),
+      'updated' => time()
+    );
+
+    //see if user's map by same title already exists
+    $sql = "
+      SELECT
+        mid
+      FROM
+        maps
+      WHERE
+        uid=".$this->db->escape($this->uid)." AND title='".$this->db->escape($data['title'])."'";
+    $record = $this->db->query_first($sql);
+
+    if($record['mid']) {
+      unset($data['created']);
+      $this->db->query_update('maps', $data, 'mid='.$record['mid']);
+      $mid = $record['mid'];
+    } else {
+      $mid = $this->db->query_insert('maps', $data);
+    }
+
+    Header::set_header('json');
+    echo '{"status":"ok", "mid":"'.$mid.'"}';
+  }
+
+  /*
+  * Implemented update method
+  */
+  public function update() {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented destroy method
+  */
+  public function destroy($id) {
+    $where = 'mid='.$this->db->escape($id);
     if(User::$roles[$this->role] !== 'administrator') {
       $where .= ' AND uid = '.$this->db->escape($this->uid);
     }
@@ -272,7 +257,7 @@ class Usermap {
         '.$where;
     $this->db->query($sql);
 
-    header("Content-Type: application/json");
+    Header::set_header('json');
     echo '{"status":"ok"}';
   }
 

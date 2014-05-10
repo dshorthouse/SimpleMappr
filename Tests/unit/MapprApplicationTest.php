@@ -50,10 +50,6 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase {
       $this->assertEquals($clean, "My_Map");
     }
 
-    public function test_mapserver_enabled() {
-      $this->assertFalse($this->mappr->has_error());
-    }
-
     public function test_shape_path() {
       $this->assertEquals($this->mappr->get_shape_path(), ROOT."/lib/mapserver/maps");
     }

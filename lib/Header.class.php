@@ -105,7 +105,7 @@ class Header {
     }
 
     if($output) {
-      Utilities::set_header("json");
+      self::set_header("json");
       $response = array(
         "files" => true,
         "cloudflare" => $cloudflare_flush
@@ -152,6 +152,66 @@ class Header {
   public static function cloudflare_enabled() {
     if(defined('CLOUDFLARE_KEY') && !empty(CLOUDFLARE_KEY)) { return true; }
     else { return false; }
+  }
+
+  public static function set_header($mime = '') {
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: private",false);
+    switch($mime) {
+      case '':
+        break;
+
+      case 'json':
+        header("Content-Type: application/json");
+        break;
+
+      case 'html':
+        header("Content-Type: text/html; charset=utf-8");
+        break;
+
+      case 'xml':
+        header('Content-type: application/xml');
+        break;
+
+      case 'kml':
+        header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
+        break;
+
+      case 'pptx':
+        header("Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation");
+        header("Content-Transfer-Encoding: binary");
+        break;
+
+      case 'docx':
+        header("Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        header("Content-Transfer-Encoding: binary");
+        break;
+
+      case 'tif':
+      case 'tiff':
+        header("Content-Type: image/tiff");
+        header("Content-Transfer-Encoding: binary");
+        break;
+
+      case 'svg':
+        header("Content-Type: image/svg+xml");
+        break;
+
+      case 'jpg':
+      case 'jpga':
+        header("Content-Type: image/jpeg");
+        break;
+
+      case 'png':
+      case 'pnga':
+        header("Content-Type: image/png");
+        break;
+
+      default:
+        header("Content-Type: image/png");
+    }
   }
 
   function __construct() {

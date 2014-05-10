@@ -542,15 +542,10 @@ abstract class Mappr {
   /* base download factor to rescale the resultant image */
   private $_download_factor = 1;
 
-  /* holding bin for any errors thrown */
-  private $_errors = array();
-
   function __construct() {
-    if (!extension_loaded("MapScript")) {
-      $this->set_error("php_mapscript.so extension is not loaded");
-      exit();
+    if (extension_loaded("MapScript")) {
+      $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
     }
-    $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
   }
 
   function __destruct() {
@@ -864,7 +859,7 @@ abstract class Mappr {
       if($output == 'pptx' || $output == 'docx') {
         $output = 'pnga_transparent';
         if(isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) {
-          $output = 'png_download'; //produces opaque legend, but point colours more faithfully preserved
+          $output = 'png_download';
         }
       }
       $this->map_obj->selectOutputFormat($output);
@@ -963,7 +958,7 @@ abstract class Mappr {
         $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
       }
     }
-    
+
     //Zoom out
     if(isset($this->zoom_out) && $this->zoom_out) {
       $zoom_point = ms_newPointObj();
@@ -1726,29 +1721,5 @@ abstract class Mappr {
      $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
      return $newPoint;
    }
-
-  /**
-  * Test if has errors
-  * @return boolean
-  */
-  public function has_error(){
-    return count($this->_errors) > 0;
-  }
-
-  /**
-  * Set error message
-  * @param string $message
-  * @param string $layer name
-  */
-  private function set_error($message, $layer = 'Error'){
-    $this->_errors[$layer][] = $message;
-  }
-
-  /**
-  * Print all errors thrown
-  */
-  private function show_errors() {
-    print_r($this->_errors);
-  }
 
 }

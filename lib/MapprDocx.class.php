@@ -86,7 +86,7 @@ class MapprDocx extends Mappr {
 
     // Output Word 2007 file
     $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($objPHPWord, 'Word2007');
-    Utilities::set_header("docx");
+    Header::set_header("docx");
     header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";" );
     $objWriter->save('php://output');
   }

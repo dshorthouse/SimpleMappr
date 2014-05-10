@@ -121,8 +121,8 @@ class Session {
   }
 
   public static function redirect($url) {
-    Utilities::set_header();
-    header("HTTP/1.1 303 See Other");
+    Header::set_header();
+    http_response_code(303);
     header("Location: " . $url);
     exit();
   }
@@ -174,13 +174,13 @@ class Session {
   }
 
   private function get_locale() {
-    $this->locale = $this->load_param('locale', 'en_US');
+    $this->locale = Utilities::load_param('locale', 'en_US');
     $this->locale_code = (array_key_exists($this->locale, self::$accepted_locales)) ? self::$accepted_locales[$this->locale]['code'] : 'en_US.UTF-8';
     return $this;
   }
 
   private function get_token() {
-    $this->token = $this->load_param('token', null);
+    $this->token = Utilities::load_param('token', null);
     if($this->token) { return $this; } else { self::redirect("http://" . MAPPR_DOMAIN); }
   }
 
@@ -261,36 +261,6 @@ class Session {
       echo 'An error occured: ' . $this->auth_info['err']['msg'];
       exit();
     }
-  }
-
-  /**
-  * Get a request parameter
-  * @param string $name
-  * @param string $default parameter optional
-  * @return string the parameter value or empty string if null
-  */
-  private function load_param($name, $default = ''){
-    if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) { return $default; }
-    $value = $_REQUEST[$name];
-    if(get_magic_quotes_gpc() != 1) { $value = $this->add_slashes_extended($value); }
-    return $value;
-  }
-
-  /**
-  * Add slashes to either a string or an array
-  * @param string/array $arr_r
-  * @return string/array
-  */
-  private function add_slashes_extended(&$arr_r) {
-    if(is_array($arr_r)) {
-      foreach ($arr_r as &$val) {
-        is_array($val) ? $this->add_slashes_extended($val) : $val = addslashes($val);
-      }
-      unset($val);
-    } else {
-      $arr_r = addslashes($arr_r);
-    }
-    return $arr_r;
   }
 
 }

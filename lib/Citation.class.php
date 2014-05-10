@@ -36,10 +36,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-class Citation {
+class Citation extends Rest implements RestMethods {
 
   private $db;
-  private $id;
   private $citations;
 
   function __construct($id = NULL) {
@@ -48,49 +47,18 @@ class Citation {
   }
 
   public function get_citations() {
-    $this->index_citations();
+    $this->index();
     return $this->citations;
   }
 
   public function execute() {
-    Utilities::set_header("json");
     $this->restful_action()->response();
   }
 
   /*
-  * Detect type of request and perform appropriate method
+  * Implemented index method
   */
-  private function restful_action() {
-    $method = $_SERVER['REQUEST_METHOD'];
-
-    if($method == 'POST' || $method == 'DELETE') {
-      User::check_permission();
-    }
-
-    switch($method) {
-      case 'GET':
-        $this->index_citations();
-      break;
-
-      case 'POST':
-        $this->create_citation();
-      break;
-
-      case 'DELETE':
-        $this->destroy_citation();
-      break;
-
-      default:
-      break;
-    }
-
-    return $this;
-  }
-
-  /*
-  * Index method to produce array of citations
-  */
-  private function index_citations() {
+  public function index() {
     $sql = "
       SELECT
         *
@@ -103,9 +71,17 @@ class Citation {
   }
 
   /*
-  * Create method to make a new citation
+  * Implemented show method
   */
-  private function create_citation() {
+  public function show($id) {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented create method
+  */
+  public function create() {
+    User::check_permission();
     $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : NULL;
     $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : NULL;
     $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : NULL;
@@ -131,16 +107,24 @@ class Citation {
   }
 
   /*
-  * Destroy method to delete a citation
+  * Implemented update method
   */
-  private function destroy_citation() {
+  public function update() {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented destroy method
+  */
+  public function destroy($id) {
+    User::check_permission();
     $sql = "
         DELETE
           c
         FROM
           citations c
         WHERE 
-          c.id=".$this->db->escape($this->id);
+          c.id=".$this->db->escape($id);
     $this->db->query($sql);
     return $this;
   }
@@ -160,6 +144,7 @@ class Citation {
         );
         break;
     }
+    Header::set_header("json");
     echo json_encode($output);
   }
 

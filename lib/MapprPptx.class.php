@@ -121,7 +121,7 @@ class MapprPptx extends Mappr {
 
     // Output PowerPoint 2007 file
     $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
-    Utilities::set_header("pptx");
+    Header::set_header("pptx");
     header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
     $objWriter->save('php://output');
   }

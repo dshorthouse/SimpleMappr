@@ -36,9 +36,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-class User {
+class User extends Rest implements RestMethods {
 
-  private $id;
   private $role;
   private $db;
   
@@ -64,7 +63,7 @@ class User {
     Session::select_locale();
     $this->id = (int)$id;
     $this->role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-    Utilities::set_header();
+    Header::set_header();
     $this->execute();
   }
 
@@ -81,32 +80,9 @@ class User {
   }
 
   /*
-  * Detect type of request and perform appropriate method
+  * Implemented index method
   */
-  private function restful_action() {
-    $method = $_SERVER['REQUEST_METHOD'];
-
-    switch($method) {
-      case 'GET':
-        $this->index_users();
-      break;
-
-      case 'POST':
-      break;
-
-      case 'DELETE':
-        $this->destroy_user();
-      break;
-
-      default:
-      break;
-    }
-  }
-
-  /*
-  * Index method to produce table of users
-  */
-  private function index_users() {
+  public function index() {
     $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
     $order = "u.access ".$dir;
 
@@ -178,9 +154,30 @@ class User {
   }
 
   /*
-  * Destroy method to delete a user
+  * Implemented show method
   */
-  private function destroy_user() {
+  public function show($id) {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented create method
+  */
+  public function create() {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented update method
+  */
+  public function update() {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented destroy method
+  */
+  public function destroy($id) {
     $sql = "
         DELETE
           u, m
@@ -189,7 +186,7 @@ class User {
         LEFT JOIN
           maps m ON u.uid = m.uid
         WHERE 
-          u.uid=".$this->db->escape($this->id);
+          u.uid=".$this->db->escape($id);
     $this->db->query($sql);
 
     header("Content-Type: application/json");

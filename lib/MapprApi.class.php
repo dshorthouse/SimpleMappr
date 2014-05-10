@@ -42,9 +42,6 @@ class MapprApi extends Mappr {
   
   private $accepted_output = array('png', 'jpg', 'svg');
 
-  /**
-  * Override method in parent class
-  */
   public function get_request() {
     //ping API to return JSON
     $this->ping             = $this->load_param('ping', false);
@@ -60,15 +57,7 @@ class MapprApi extends Mappr {
     $url                    = urldecode($this->load_param('url', false));
 
     if($this->method == "POST" && $_FILES) {
-      try {
-        $file = $this->moveFile();
-      } catch (Exception $e) {
-        $output = array(
-          'error' => "An error occurred:" . $e->getMessage()
-        );
-        echo json_encode($output);
-        exit();
-      }
+      $file = $this->moveFile();
     } else {
       $file = urldecode($this->load_param('file', false));
     }
@@ -336,27 +325,21 @@ class MapprApi extends Mappr {
 
   public function create_output() {
     if($this->ping) {
-      Utilities::set_header("json");
+      Header::set_header("json");
       echo json_encode(array("status" => "ok"));
     } else {
       if($this->method == 'GET') {
-        Utilities::set_header($this->output);
+        Header::set_header($this->output);
         $this->image->saveImage("");
       } else if ($this->method == 'OPTIONS') { //For CORS requests
-          header("HTTP/1.0 204 No Content");
+        header("HTTP/1.0 204 No Content");
       } else {
-          Utilities::set_header("json");
-          try {
-            $output = array(
-              'imageURL' => $this->image->saveWebImage(),
-              'expiry'   => date('c', time() + (6 * 60 * 60))
-            );
-          } catch(Exception $e) {
-            $output = array(
-              'error' => "An error occurred:" . $e->getMessage()
-            );
-          }
-          echo json_encode($output);
+        Header::set_header("json");
+        $output = array(
+          'imageURL' => $this->image->saveWebImage(),
+          'expiry'   => date('c', time() + (6 * 60 * 60))
+        );
+        echo json_encode($output);
       }
     }
   }
@@ -368,7 +351,6 @@ class MapprApi extends Mappr {
         return $uploadfile;
       } else {
         unlink($uploadfile);
-        throw new Exception('File is wrong mime-type');
       }
     }
     return false;

@@ -2,8 +2,8 @@
 
 /********************************************************************
 
-Utilities.class.php released under MIT License
-Utility function for SimpleMappr
+Rest.class.php released under MIT License
+Basic utility functions to coordinate handling of RESTful actions
 
 Author: David P. Shorthouse <davidpshorthouse@gmail.com>
 http://github.com/dshorthouse/SimpleMappr
@@ -36,47 +36,54 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-class Utilities {
+class Rest {
 
-  public static function check_plain($text) {
-    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-  }
+  protected $id;
 
-  public static function access_denied() {
-    Header::set_header('json');
-    http_response_code(401);
-    echo '{ "error" : "access denied" }';
-    exit();
-  }
-
-  /**
-  * Get a request parameter
-  * @param string $name
-  * @param string $default parameter optional
-  * @return string the parameter value or empty string if null
+  /*
+  * Detect type of request and perform appropriate method
   */
-  public static function load_param($name, $default = ''){
-    if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) { return $default; }
-    $value = $_REQUEST[$name];
-    if(get_magic_quotes_gpc() != 1) { $value = self::add_slashes_extended($value); }
-    return $value;
-  }
+  public function restful_action() {
+    $method = $_SERVER['REQUEST_METHOD'];
 
-  /**
-  * Add slashes to either a string or an array
-  * @param string/array $arr_r
-  * @return string/array
-  */
-  public static function add_slashes_extended(&$arr_r) {
-    if(is_array($arr_r)) {
-      foreach ($arr_r as &$val) {
-        is_array($val) ? self::add_slashes_extended($val) : $val = addslashes($val);
-      }
-      unset($val);
-    } else {
-      $arr_r = addslashes($arr_r);
+    switch($method) {
+      case 'GET':
+        if($this->id) {
+          $this->show($this->id);
+        } else {
+          $this->index();
+        }
+      break;
+
+      case 'PUT':
+        $this->update();
+      break;
+
+      case 'POST':
+        $this->create();
+      break;
+
+      case 'DELETE':
+        $this->destroy($this->id);
+      break;
+
+      default:
+      break;
     }
-    return $arr_r;
+    return $this;
   }
 
+  public function not_implemented() {
+    Header::set_header('json');
+    http_response_code(501);
+    echo '{"status":"fail", "message":"Not implemented"}';
+  }
+
+}
+
+interface RestMethods {
+  public function index();
+  public function show($id);
+  public function create();
+  public function destroy($id);
 }

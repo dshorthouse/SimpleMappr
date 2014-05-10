@@ -40,9 +40,6 @@ class MapprQuery extends Mappr {
 
   private $data = "";
 
-  /**
-  * Override the method in the MAPPR class
-  */
   public function get_request() {
     $this->download         = false;
     $this->options          = array();
@@ -123,7 +120,7 @@ class MapprQuery extends Mappr {
   }
 
   public function create_output() {
-    Utilities::set_header("json");
+    Header::set_header("json");
     echo json_encode($this->data);
   }
 

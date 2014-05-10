@@ -44,8 +44,7 @@ class MapprApplication extends Mappr {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        $this->header_nocache();
-        header("Content-Type: image/tiff");
+        Header::set_header('tif');
         header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         header("Content-Transfer-Encoding: binary");
         header("Content-Length: ".filesize($this->tmp_path.$image_filename));
@@ -58,8 +57,7 @@ class MapprApplication extends Mappr {
         error_reporting(0);
         $this->image_url = $this->image->saveWebImage();
         $image_filename = basename($this->image_url);
-        $this->header_nocache();
-        header("Content-Type: image/png");
+        Header::set_header('png');
         header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         header("Content-Transfer-Encoding: binary");
         header("Content-Length: ".filesize($this->tmp_path.$image_filename));
@@ -69,15 +67,13 @@ class MapprApplication extends Mappr {
       break;
 
       case 'svg':
-        $this->header_nocache(); 
-        header("Content-Type: image/svg+xml");
+        Header::set_header('svg');
         header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
         $this->image->saveImage("");
       break;
 
       default:
-        $this->header_nocache();
-        header("Content-Type: application/json");
+        Header::set_header('json');
 
         $this->image_url = $this->image->saveWebImage();
 
@@ -101,13 +97,7 @@ class MapprApplication extends Mappr {
 
         echo json_encode($output);
     }
-  }
 
-  private function header_nocache() {
-    header("Pragma: public");
-    header("Expires: 0");
-    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-    header("Cache-Control: private",false);
   }
 
 }

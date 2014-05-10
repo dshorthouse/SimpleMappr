@@ -36,15 +36,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-class Places {
+require_once("Rest.class.php");
 
-  private $id;
+class Places extends Rest implements RestMethods {
+
   private $db;
 
   function __construct($id) {
     $this->id = $id;
     Session::select_locale();
-    $this->execute();
+    return $this->execute();
   }
 
   /*
@@ -56,26 +57,9 @@ class Places {
   }
 
   /*
-  * Detect type of request and perform appropriate method
+  * Implemented index method
   */
-  private function restful_action() {
-    $method = $_SERVER['REQUEST_METHOD'];
-
-    switch($method) {
-      case 'GET':
-        $this->index_places();
-      break;
-
-      case 'POST':
-        $this->index_places();
-      break;
-
-      default:
-      break;
-    }
-  }
-
-  private function index_places() {
+  public function index() {
     $result = array();
     $term = isset($_REQUEST['term']) ? $_REQUEST['term'] : $this->id;
     $where = isset($_REQUEST['filter']) ? " WHERE LOWER(country) LIKE LOWER('%".$this->db->escape($_REQUEST['filter'])."%')" : null;
@@ -91,14 +75,43 @@ class Places {
         ORDER BY sp.country
         LIMIT 5";
       $result = $this->db->fetch_all_array($sql);
-      Utilities::set_header("json");
+      Header::set_header("json");
       echo json_encode($result);
     } else {
       $rows = $this->db->query($sql);
-      Utilities::set_header("html");
+      Header::set_header("html");
       $this->produce_output($rows);
     }
   }
+
+  /*
+  * Implemented show method
+  */
+  public function show($id) {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented create method
+  */
+  public function create() {
+    $this->index();
+  }
+
+  /*
+  * Implemented update method
+  */
+  public function update() {
+    $this->not_implemented();
+  }
+
+  /*
+  * Implemented destroy method
+  */
+  public function destroy($id) {
+    $this->not_implemented();
+  }
+
 
   private function produce_output($rows) {
     $output  = "";

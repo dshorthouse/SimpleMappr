@@ -43,10 +43,15 @@ class Bootstrap {
   private $extension;
 
   function __construct() {
-    $this->get_route()->set_controller();
+    try {
+      $this->get_route()->set_controller();
+    } catch (\Exception $e) {
+      echo 'Caught exception: ', $e->getMessage(), "\n";
+    }
   }
 
   private function get_route() {
+    if(!isset($_REQUEST['q'])) { throw new \Exception("q parameter missing from REQUEST"); }
     $route = preg_split("/[\/.]+/", $_REQUEST['q']);
     $this->controller = isset($route[0]) ? $route[0] : NULL;
     $this->id = isset($route[1]) ? $route[1] : NULL;
@@ -63,7 +68,7 @@ class Bootstrap {
         break;
 
       case "/about":
-        Utilities::set_header("html");
+        Header::set_header("html");
         include_once("views/about.php");
         break;
 
@@ -92,7 +97,7 @@ class Bootstrap {
         break;
 
       case "/docx":
-        $this->set_locale();
+        Session::select_locale();
         $klass = $this->klass("MapprDocx");
         $this->setup_map($klass)->execute()->create_output();
         break;
@@ -134,7 +139,7 @@ class Bootstrap {
         break;
 
       case "/pptx":
-        $this->set_locale();
+        Session::select_locale();
         $klass = $this->klass("MapprPptx");
         $this->setup_map($klass)->execute()->create_output();
         break;
@@ -174,19 +179,18 @@ class Bootstrap {
   }
 
   private function klass($klass, $param1 = "", $param2 = "") {
-    $class = '\\SimpleMappr\\' . $klass;
+    $class = __NAMESPACE__ . '\\' . $klass;
     return new $class($param1, $param2);
   }
 
   private function setup_map($data) {
-    $data->set_shape_path(ROOT."/lib/mapserver/maps")
+    return $data->set_shape_path(ROOT."/lib/mapserver/maps")
          ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
          ->set_tmp_path(ROOT."/public/tmp/")
          ->set_tmp_url(MAPPR_MAPS_URL)
          ->set_default_projection("epsg:4326")
          ->set_max_extent("-180,-90,180,90")
          ->get_request();
-    return $data;
   }
 
   private function log($type = "API") {
@@ -199,10 +203,6 @@ class Bootstrap {
   private function tail_log() {
     $logger = new Logger(ROOT."/log/logger.log");
     echo ($logger->tail()) ? implode("<br>", $logger->tail()) : "No log data";
-  }
-
-  private function set_locale() {
-    Session::select_locale();
   }
 
   private function set_up() {
@@ -223,7 +223,7 @@ class Bootstrap {
   }
 
   private function render_404() {
-    header("HTTP/1.0 404 Not Found");
+    http_response_code(404);
     readfile(ROOT.'/error/404.html');
     exit();
   }
