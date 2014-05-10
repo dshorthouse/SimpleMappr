@@ -85,5 +85,6 @@ interface RestMethods {
   public function index();
   public function show($id);
   public function create();
+  public function update();
   public function destroy($id);
 }

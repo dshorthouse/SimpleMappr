@@ -43,15 +43,10 @@ class Bootstrap {
   private $extension;
 
   function __construct() {
-    try {
-      $this->get_route()->set_controller();
-    } catch (\Exception $e) {
-      echo 'Caught exception: ', $e->getMessage(), "\n";
-    }
+    $this->get_route()->set_controller();
   }
 
   private function get_route() {
-    if(!isset($_REQUEST['q'])) { throw new \Exception("q parameter missing from REQUEST"); }
     $route = preg_split("/[\/.]+/", $_REQUEST['q']);
     $this->controller = isset($route[0]) ? $route[0] : NULL;
     $this->id = isset($route[1]) ? $route[1] : NULL;

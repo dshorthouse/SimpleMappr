@@ -332,7 +332,7 @@ class MapprApi extends Mappr {
         Header::set_header($this->output);
         $this->image->saveImage("");
       } else if ($this->method == 'OPTIONS') { //For CORS requests
-        header("HTTP/1.0 204 No Content");
+        http_response_code(204);
       } else {
         Header::set_header("json");
         $output = array(
