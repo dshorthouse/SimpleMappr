@@ -28,16 +28,16 @@ msgid "Region %d"
 msgstr "Région %d"
 
 #: .index.php:11
-msgid "A point map web application for quality publications and presentations."
-msgstr "Une application web pour produire des cartes de qualité pour vos publications et présentations."
+msgid "Create free point maps for publications and presentations"
+msgstr "Créez des cartes de points gratuits pour les publications et des présentations"
 
 #: .index.php:12
 msgid "publication,presentation,map,georeference"
 msgstr "publication,présentation,carte,géoréférencer"
 
-#: .index.php:22
-msgid "point maps for publication and presentation"
-msgstr "cartes point pour les publications et présentations"
+#: .index.php:11
+msgid "create free point maps for publications and presentations"
+msgstr "cartes de points gratuits pour publications et présentations"
 
 #: .index.php:27
 msgid "Sign Out"
@@ -648,8 +648,8 @@ msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and th
 msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel de cartographie utilisé est MapServer, %s via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %s."
 
 #: .tabs/about.php:7
-msgid "Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
-msgstr "Créer des cartes point de niveaux de gris en copiant et collant les coordonnées géographiques en couches, en choisissant des styles punaise, puis en téléchargeant le résultat."
+msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
+msgstr "Créer des cartes gratuites en copiant et collant les coordonnées géographiques en couches, en choisissant des styles punaise, puis en téléchargeant le résultat."
 
 #: .tabs/about.php:9
 msgid "Citing"

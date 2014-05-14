@@ -17,7 +17,7 @@ Session::select_locale();
 </style>
 <div id="map-about">
 <div id="general-about" class="panel ui-corner-all">
-<p><?php echo _("Create greyscale point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."); ?></p>
+<p><?php echo _("Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."); ?></p>
 </div>
 <div class="header"><h2><?php echo _("Citing"); ?></h2></div>
 <p><a href="http://creativecommons.org/publicdomain/"><img class="map-license" src="/public/images/publicdomain.gif" alt="Public Domain" width="40" height="40" /></a><?php echo _("All versions of SimpleMappr map data found on this website are in the Public Domain. You may use the maps in any manner, including modifying the content and design, electronic dissemination, and offset printing. The primary author, David P. Shorthouse renounces all financial claim to the maps and invites you to use them for personal, educational, and commercial purposes. No permission is needed to use SimpleMappr. Crediting the author is unnecessary. However, if you wish to cite the application, simply use the following."); ?></p>

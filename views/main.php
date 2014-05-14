@@ -9,11 +9,11 @@ $roles = $header[2];
 <html lang="<?php echo $accepted_locales[$locale]['canonical']; ?>" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
+<meta name="description" content="<?php echo _("Create free point maps for publications and presentations"); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
 <meta property="og:title" content="SimpleMappr" />
-<meta property="og:description" content="<?php echo _("A point map web application for quality publications and presentations."); ?>" />
+<meta property="og:description" content="<?php echo _("Create free point maps for publications and presentations"); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
@@ -26,7 +26,7 @@ $roles = $header[2];
 <body>
 <div itemscope itemtype="http://schema.org/WebApplication" id="header" class="clearfix">
 <h1 id="site-title" class="sprites-after" itemprop="name">SimpleMapp<span>r</span></h1>
-<div id="site-tagline" itemprop="description"><?php echo _("point maps for publication and presentation"); ?></div>
+<div id="site-tagline" itemprop="description"><?php echo _("create free point maps for publications and presentations"); ?></div>
 <meta itemprop="url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <div id="map-loader"><span class="mapper-loading-spinner"></span></div>

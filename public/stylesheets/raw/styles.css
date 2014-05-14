@@ -19,7 +19,7 @@ textarea{resize:none;padding:0;}
 #site-session{position:absolute;right:0.25em;}
 #site-session a.login:before{background-position:-200px -264px;}
 #site-session a.logout:before{background-position:-180px -264px;}
-#map-loader{position:absolute;left:45em;}
+#map-loader{position:absolute;left:50em;}
 .mapper-loading-spinner{background-repeat:no-repeat !important;background-position:5px 13px;background-image:url("../../images/ajax-loader.gif");padding:1em;}
 #site-languages{position:absolute;right:25em;}
 #site-languages ul{list-style:none;margin:0px;padding:0px;}
