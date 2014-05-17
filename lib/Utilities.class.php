@@ -38,10 +38,18 @@ namespace SimpleMappr;
 
 class Utilities {
 
+  /**
+  * Convert a string to HTML entities
+  * @param string $text
+  * @return string
+  */
   public static function check_plain($text) {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
   }
 
+  /**
+  * Throw a 404 and some JSON when access has been denied
+  */
   public static function access_denied() {
     Header::set_header('json');
     http_response_code(401);

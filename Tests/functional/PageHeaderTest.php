@@ -37,7 +37,7 @@ class PageHeaderTest extends SimpleMapprTest {
   public function testDescription() {
     parent::setUpPage();
     $description = $this->webDriver->findElement(WebDriverBy::xpath("//meta[@name='description']"))->getAttribute('content');
-    $this->assertContains("A point map web application for quality publications and presentations.", $description);
+    $this->assertContains("Create free point maps for publications and presentations", $description);
   }
 
   public function testKeywords() {
@@ -61,7 +61,7 @@ class PageHeaderTest extends SimpleMapprTest {
     $og_image = $this->metaElementContent("//meta[@property='og:image']");
 
     $this->assertContains("SimpleMappr", $og_title);
-    $this->assertContains("A point map web application for quality publications and presentations.", $og_description);
+    $this->assertContains("Create free point maps for publications and presentations", $og_description);
     $this->assertContains("en_US", $og_locale);
     $this->assertContains("website", $og_type);
     $this->assertContains("http://" . MAPPR_DOMAIN, $og_url);

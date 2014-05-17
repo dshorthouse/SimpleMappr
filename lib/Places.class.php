@@ -42,7 +42,7 @@ class Places extends Rest implements RestMethods {
 
   private $db;
 
-  function __construct($id) {
+  function __construct($id = NULL) {
     $this->id = $id;
     Session::select_locale();
     return $this->execute();
@@ -88,7 +88,8 @@ class Places extends Rest implements RestMethods {
   * Implemented show method
   */
   public function show($id) {
-    $this->not_implemented();
+    $this->id = $id;
+    $this->index();
   }
 
   /*

@@ -18,7 +18,7 @@ class NavigationTest extends SimpleMapprTest {
   public function testTagline() {
     parent::setUpPage();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
-    $this->assertEquals('point maps for publication and presentation', $tagline->getText());
+    $this->assertEquals('create free point maps for publications and presentations', $tagline->getText());
   }
 
   public function testTaglineFrench() {
@@ -26,7 +26,7 @@ class NavigationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Français'));
     $link->click();
     $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
-    $this->assertEquals('cartes point pour les publications et présentations', $tagline->getText());
+    $this->assertEquals('cartes de points gratuits pour publications et présentations', $tagline->getText());
   }
 
   public function testSignInPage() {
@@ -53,7 +53,7 @@ class NavigationTest extends SimpleMapprTest {
     $link->click();
     parent::waitOnSpinner();
     $content = $this->webDriver->findElement(WebDriverBy::id('general-about'));
-    $this->assertContains('Create greyscale point maps suitable for reproduction on print media', $content->getText());
+    $this->assertContains('Create free point maps suitable for reproduction on print media', $content->getText());
   }
 
   public function testHelpPage() {
