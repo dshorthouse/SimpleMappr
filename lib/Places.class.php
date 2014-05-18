@@ -140,7 +140,7 @@ class Places extends Rest implements RestMethods {
         $output .= "<td>" . $record['stateprovince_code'] . "</td>";
         $example = ($record['stateprovince_code']) ? $record['country_iso'] . "[" . $record['stateprovince_code'] . "]" : "";
         $output .= "<td>" . $example . "</td>";
-        $output .= "</tr>" . "\n";
+        $output .= "</tr>";
         $i++;
       }
     } else {

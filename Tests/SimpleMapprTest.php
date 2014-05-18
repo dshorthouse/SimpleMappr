@@ -204,6 +204,13 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'doi' => '10.XXXX/XXXXXX',
       'first_author_surname' => 'Shorthouse'
     ));
+
+  self::$db->query_insert('stateprovinces', array(
+    'country' => 'Canada',
+    'country_iso' => 'CAN',
+    'stateprovince' => 'Alberta',
+    'stateprovince_code' => 'AB'
+  ));
   }
 
   public static function tearDownAfterClass() {
