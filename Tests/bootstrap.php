@@ -34,6 +34,9 @@ function requireFiles() {
   require_once($root . '/config/conf.php');
   require_once($root . '/config/conf.db.php');
 
+  $rest = $root . '/lib/Rest.class.php';
+  require_once($rest); //force require_once of Rest.class.php
+
   $files = glob($root . '/lib/*.php');
   foreach ($files as $file) {
     require_once($file);

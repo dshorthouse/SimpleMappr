@@ -36,8 +36,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace SimpleMappr;
 
-require_once("Rest.class.php");
-
 class Places extends Rest implements RestMethods {
 
   private $db;
