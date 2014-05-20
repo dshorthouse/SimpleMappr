@@ -104,24 +104,28 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
     $ cd i18n
     $ ruby crawler.rb ../views
 
+Dependencies
+------------
+
+Install all necessary dependencies using [https://getcomposer.org/](composer).
+
+    $ composer install
+
 Tests
 -----
 
 PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=2.41/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies.
 
-    $ composer install
     $ java -jar selenium-server-standalone-2.41.0.jar
     $ ./vendor/bin/phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
-    $ composer install
     $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Likewise, if you wish to use the headless PhantomJS, the driver can be found at [http://phantomjs.org/](http://phantomjs.org/):
 
-    $ composer install
     $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.phantomjs.driver=/usr/local/bin/phantomjs
     $ ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml --stderr
 
