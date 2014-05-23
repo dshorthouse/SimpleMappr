@@ -145,13 +145,13 @@ class User extends Rest implements RestMethods {
         LEFT JOIN
           maps m ON u.uid = m.uid
         WHERE 
-          u.uid=:id";
+          u.uid=:uid";
     $this->db->prepare($sql);
     $this->db->bind_param(":uid", $id, 'integer');
     $this->db->execute();
 
     header("Content-Type: application/json");
-    echo '{"status":"ok"}';
+    echo json_encode(array("status" => "ok"));
   }
 
   private function produce_output($rows) {
