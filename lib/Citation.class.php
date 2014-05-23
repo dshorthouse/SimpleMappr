@@ -43,11 +43,12 @@ class Citation extends Rest implements RestMethods {
 
   function __construct($id = NULL) {
     $this->id = $id;
-    $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    $this->db = new Database();
   }
 
   public function get_citations() {
     $this->index();
+    $this->citations;
     return $this->citations;
   }
 
@@ -64,9 +65,11 @@ class Citation extends Rest implements RestMethods {
         *
       FROM
         citations c
-      ORDER BY c.reference ASC, c.year DESC";
+      ORDER BY
+        c.reference ASC, c.year DESC";
 
-    $this->citations = $this->db->fetch_all_array($sql);
+    $this->db->prepare($sql);
+    $this->citations = $this->db->fetch_all_object();
     return $this;
   }
 
@@ -124,8 +127,10 @@ class Citation extends Rest implements RestMethods {
         FROM
           citations c
         WHERE 
-          c.id=".$this->db->escape($id);
-    $this->db->query($sql);
+          c.id=:id";
+    $this->db->prepare($sql);
+    $this->db->bind_param(":id", $id, "integer");
+    $this->db->execute();
     return $this;
   }
 

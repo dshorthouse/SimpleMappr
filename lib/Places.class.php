@@ -38,19 +38,13 @@ namespace SimpleMappr;
 
 class Places extends Rest implements RestMethods {
 
-  private $db;
+  protected $id;
+  protected $db;
 
   function __construct($id = NULL) {
     $this->id = $id;
     Session::select_locale();
-    return $this->execute();
-  }
-
-  /*
-  * Utility method
-  */
-  private function execute() {
-    $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    $this->db = new Database();
     $this->restful_action();
   }
 
@@ -58,27 +52,27 @@ class Places extends Rest implements RestMethods {
   * Implemented index method
   */
   public function index() {
-    $result = array();
-    $term = isset($_REQUEST['term']) ? $_REQUEST['term'] : $this->id;
-    $where = isset($_REQUEST['filter']) ? " WHERE LOWER(country) LIKE LOWER('%".$this->db->escape($_REQUEST['filter'])."%')" : null;
-    $sql = "SELECT * FROM stateprovinces".$where." ORDER BY country, stateprovince";
-
-    if($term) {
-      $sql = "
-        SELECT DISTINCT
-          sp.country as label, sp.country as value
-        FROM
-          stateprovinces sp
-        WHERE sp.country LIKE '".$this->db->escape($term)."%'
-        ORDER BY sp.country
-        LIMIT 5";
-      $result = $this->db->fetch_all_array($sql);
-      Header::set_header("json");
-      echo json_encode($result);
-    } else {
-      $rows = $this->db->query($sql);
+    if(isset($_REQUEST['filter'])) {
+      $this->db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
+      $this->db->bind_param(':filter', '%'.$_REQUEST['filter'].'%', 'string');
       Header::set_header("html");
-      $this->produce_output($rows);
+      $this->produce_output($this->db->fetch_all_object());
+    } else if (isset($_REQUEST['term']) || $this->id) {
+      $term = (isset($_REQUEST['term'])) ? $_REQUEST['term'] : $this->id;
+      $this->db->prepare("SELECT DISTINCT
+        sp.country as label, sp.country as value
+      FROM
+        stateprovinces sp
+      WHERE sp.country LIKE :term
+      ORDER BY sp.country
+      LIMIT 5");
+      $this->db->bind_param(':term', $term.'%', 'string');
+      Header::set_header("json");
+      echo json_encode($this->db->fetch_all_object());
+    } else {
+      $this->db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
+      Header::set_header("html");
+      $this->produce_output($this->db->fetch_all_object());
     }
   }
 
@@ -111,7 +105,6 @@ class Places extends Rest implements RestMethods {
     $this->not_implemented();
   }
 
-
   private function produce_output($rows) {
     $output  = "";
     $output .= '<table class="countrycodes">';
@@ -127,22 +120,18 @@ class Places extends Rest implements RestMethods {
     $output .= '</tr>';
     $output .= '</thead>';
     $output .= '<tbody>';
-    if($this->db->affected_rows > 0) {
-      $i = 0;
-      while ($record = $this->db->fetch_array($rows)) {
-        $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
-        $output .= "<tr ".$class.">";
-        $output .= "<td>" . $record['country'] . "</td>";
-        $output .= "<td>" . $record['country_iso'] . "</td>";
-        $output .= "<td>" . $record['stateprovince'] . "</td>";
-        $output .= "<td>" . $record['stateprovince_code'] . "</td>";
-        $example = ($record['stateprovince_code']) ? $record['country_iso'] . "[" . $record['stateprovince_code'] . "]" : "";
-        $output .= "<td>" . $example . "</td>";
-        $output .= "</tr>";
-        $i++;
-      }
-    } else {
-     $output .= "<tr class=\"odd\"><td colspan=\"5\">"._("Nothing found")."</td></tr>";
+    $i = 0;
+    foreach($rows as $row) {
+      $class = ($i % 2) ? "class=\"even\"" : "class=\"odd\"";
+      $output .= "<tr ".$class.">";
+      $output .= "<td>" . $row->country . "</td>";
+      $output .= "<td>" . $row->country_iso . "</td>";
+      $output .= "<td>" . $row->stateprovince . "</td>";
+      $output .= "<td>" . $row->stateprovince_code . "</td>";
+      $example = ($row->stateprovince_code) ? $row->country_iso . "[" . $row->stateprovince_code . "]" : "";
+      $output .= "<td>" . $example . "</td>";
+      $output .= "</tr>";
+      $i++;
     }
     $output .= '</tbody>';
     $output .= '</table>';

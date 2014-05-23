@@ -21,7 +21,7 @@ Configuration Instructions
 4. Extract Natural Earth shapefiles to /lib/mapserver/maps/
 5. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles
 6. Make contents of /lib/mapserver/fonts readable & executable
-7. Adjust /config/conf.db.sample.php and /config/conf.sample.php and remove ".sample". These set db (MySQL) connections and constants, respectively.
+7. Adjust /config/conf.db.sample.php and /config/conf.sample.php and remove ".sample". These set db connection and constants, respectively.
 8. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.db.php
 9. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
 

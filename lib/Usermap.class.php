@@ -42,6 +42,8 @@ class Usermap extends Rest implements RestMethods {
   private $role;
   private $db;
   private $uid_q;
+  private $total;
+  private $dir;
 
   function __construct($id) {
     session_start();
@@ -61,7 +63,7 @@ class Usermap extends Rest implements RestMethods {
   * Utility method
   */
   private function execute() {
-    $this->db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    $this->db = new Database();
     $this->restful_action();
   }
 
@@ -69,41 +71,47 @@ class Usermap extends Rest implements RestMethods {
   * Implemented index method
   */
   public function index() {
-    $where = array();
-    $output = '';
-    $data_uid = "";
-    $dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-    $order = "m.created ".$dir;
-
-    if(User::$roles[$this->role] !== 'administrator') {
-      $where['user'] =  "WHERE m.uid = ".$this->db->escape($this->uid);
-    }
-    if($this->uid_q) {
-      $where['user'] = "WHERE m.uid = ".$this->db->escape($this->uid_q);
-    }
 
     $sql = "
       SELECT
-        u.username AS username, COUNT(m.mid) AS total
+        u.username, COUNT(m.mid) AS total
       FROM
         maps m
       INNER JOIN
-        users u ON (m.uid = u.uid)
-      ".implode("",$where);
+        users u ON (m.uid = u.uid)";
+    $where = array();
+    if(User::$roles[$this->role] !== 'administrator') {
+      $sql .=  " WHERE m.uid = :uid";
+      $where['user'] = " WHERE m.uid = :uid";
+      $this->db->prepare($sql);
+      $this->db->bind_param(":uid", $this->uid);
+    } else {
+      if($this->uid_q) {
+        $sql .= " WHERE m.uid = :uid_q";
+        $where['user'] = " WHERE m.uid = :uid_q";
+        $this->db->prepare($sql);
+        $this->db->bind_param(":uid_q", $this->uid_q);        
+      } else {
+        $this->db->prepare($sql);
+      }
+    }
 
-    $total = $this->db->query_first($sql);
+    $this->total = $this->db->fetch_first_object();
 
+    $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+    $order = "m.created {$this->dir}";
+    
     $b = "";
     if(isset($_GET['search'])) {
-      if(User::$roles[$this->role] == 'administrator' && !$this->uid_q) { $b = "WHERE "; }
-      $where['where'] = $b."LOWER(m.title) LIKE '%".$this->db->escape($_GET['search'])."%'";
+      if(User::$roles[$this->role] == 'administrator' && !$this->uid_q) { $b = " WHERE "; }
+      $where['where'] = $b."LOWER(m.title) LIKE :search";
       if(User::$roles[$this->role] == 'administrator' && !$this->uid_q) {
-        $where['where'] .= " OR LOWER(u.username) LIKE '%".$this->db->escape($_GET['search'])."%'";
+        $where['where'] .= " OR LOWER(u.username) LIKE :search";
       }
     }
     if(isset($_GET['sort'])) {
       if($_GET['sort'] == "created" || $_GET['sort'] == "updated") {
-        $order = "m.".$_GET['sort'] . " ".$dir;
+        $order = "m.".$_GET['sort'] . " {$this->dir}";
       }
     }
 
@@ -122,78 +130,45 @@ class Usermap extends Rest implements RestMethods {
       ".implode(" AND ", $where)."
       ORDER BY ".$order;
 
-    $rows = $this->db->query($sql);
-
-    if($total['total'] > 0) {
-      $output .= '<table class="grid-usermaps">' . "\n";
-      $output .= '<thead>' . "\n";
-      $output .= '<tr>' . "\n";
-      if($this->uid_q) {
-        $header_count = sprintf(_("%d of %d for %s"), $this->db->affected_rows, $total['total'], $total['username']);
-        $data_uid = " data-uid=".$this->uid_q;
-      } else {
-        $header_count = sprintf(_("%d of %d"), $this->db->affected_rows, $total['total']);
-      }
-      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"'.$data_uid.' /> '.$header_count.'</th>';
-      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$dir : "";
-      if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
-      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
-      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "updated" && isset($_GET['dir'])) ? " ".$dir : "";
-      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="updated" href="#">'._("Updated").'</th>';
-      $output .= '<th class="actions">'._("Actions");
-      if(User::$roles[$this->role] == 'administrator') {
-        $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
-      }
-      $output .= '</th>';
-      $output .= '</tr>' . "\n";
-      $output .= '</thead>' . "\n";
-      $output .= '<tbody>' . "\n";
-      $i=0;
-      while ($record = $this->db->fetch_array($rows)) {
-        $class = ($i % 2) ? 'class="even"' : 'class="odd"';
-        $output .= '<tr '.$class.'>';
-        $output .= '<td class="title">';
-        $output .= (User::$roles[$this->role] == 'administrator' && !$this->uid_q) ? $record['username'] . ': ' : '';
-        $output .= '<a class="map-load" data-id="'.$record['mid'].'" href="#">' . Utilities::check_plain(stripslashes($record['title'])) . '</a>';
-        $output .= '</td>';
-        $output .= '<td class="center-align">' . gmdate("M d, Y", $record['created']) . '</td>';
-        $output .= '<td class="center-align">';
-        $output .= ($record['updated']) ? gmdate("M d, Y", $record['updated']) : ' - ';
-        $output .= '</td>';
-        $output .= '<td class="actions">';
-        if($this->uid == $record['uid'] || User::$roles[$this->role] == 'administrator') {
-          $output .= '<a class="sprites-before map-delete" data-id="'.$record['mid'].'" href="#">'._("Delete").'</a>';
-        }
-        $output .= '</td>';
-        $output .= '</tr>' . "\n";
-        $i++;
-      }
-      $output .= '</tbody>' . "\n";
-      $output .= '</table>' . "\n";
+    $this->db->prepare($sql);
+    if(User::$roles[$this->role] !== 'administrator') {
+      $this->db->bind_param(":uid", $this->uid, 'integer');
     } else {
-      $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
+      if($this->uid_q) {
+        $this->db->bind_param(":uid_q", $this->uid_q, 'integer');
+      }
     }
-
-    Header::set_header('html');
-    echo $output;
+    if(isset($_GET['search'])) {
+      $this->db->bind_param(":search", "%{$_GET['search']}%", 'string');
+    }
+    $this->produce_output($this->db->fetch_all_object());
   }
 
   /*
   * Implemented show method
   */
   public function show($id) {
-    $where = '';
-    if(User::$roles[$this->role] !== 'administrator') { $where = ' AND uid = "'.$this->db->escape($this->uid).'"'; }
-    $sql = '
+    $sql = "
       SELECT
         mid, map
       FROM 
         maps
       WHERE
-        mid="'.$this->db->escape($id) . '"'.$where;
-    $record = $this->db->query_first($sql);
-    $data['mid'] = $record['mid'];
-    $data['map'] = @unserialize($record['map']);
+        mid = :mid";
+
+    if(User::$roles[$this->role] == 'administrator') {
+      $this->db->prepare($sql);
+      $this->db->bind_param(":mid", $id, 'integer');
+    } else {
+      $sql .= " AND uid = :uid";
+      $this->db->prepare($sql);
+      $this->db->bind_param(":mid", $id, 'integer');
+      $this->db->bind_param(":uid", $this->uid, 'integer');
+    }
+
+    $record = $this->db->fetch_first_object();
+    $data['mid'] = ($record) ? $record->mid : "";
+    $data['map'] = ($record) ? @unserialize($record->map) : "";
     $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
     Header::set_header('json');
@@ -219,19 +194,25 @@ class Usermap extends Rest implements RestMethods {
       FROM
         maps
       WHERE
-        uid=".$this->db->escape($this->uid)." AND title='".$this->db->escape($data['title'])."'";
-    $record = $this->db->query_first($sql);
+        uid = :uid AND title = :title";
+    $this->db->prepare($sql);
+    $this->bind_param(":uid", $this->uid, 'integer');
+    $this->bind_param(":title", $data['title'], 'string');
+    $record = $this->db->query_first_object($sql);
 
-    if($record['mid']) {
+    $output = array();
+    $output['status'] = "ok";
+
+    if($record) {
       unset($data['created']);
-      $this->db->query_update('maps', $data, 'mid='.$record['mid']);
-      $mid = $record['mid'];
+      $this->db->query_update('maps', $data, 'mid='.$record->mid);
+      $output['mid'] = $record->mid;
     } else {
-      $mid = $this->db->query_insert('maps', $data);
+      $output['mid'] = $this->db->query_insert('maps', $data);
     }
 
     Header::set_header('json');
-    echo '{"status":"ok", "mid":"'.$mid.'"}';
+    echo json_encode($output);
   }
 
   /*
@@ -245,20 +226,82 @@ class Usermap extends Rest implements RestMethods {
   * Implemented destroy method
   */
   public function destroy($id) {
-    $where = 'mid='.$this->db->escape($id);
-    if(User::$roles[$this->role] !== 'administrator') {
-      $where .= ' AND uid = '.$this->db->escape($this->uid);
-    }
-    $sql = '
+    $sql = "
       DELETE 
       FROM
         maps
       WHERE 
-        '.$where;
-    $this->db->query($sql);
-
+        mid = :mid";
+    if(User::$roles[$this->role] == 'administrator') {
+      $this->db->prepare($sql);
+      $this->db->bind_param(":mid", $id, 'integer');
+    } else {
+      $sql .= " AND uid = :uid";
+      $this->db->prepare($sql);
+      $this->db->bind_param(":mid", $id, 'integer');
+      $this->db->bind_param(":uid", $this->uid, 'integer');
+    }
+    $this->db->execute();
     Header::set_header('json');
-    echo '{"status":"ok"}';
+    echo json_encode(array("status" => "ok"));
+  }
+
+  private function produce_output($rows) {
+
+    $output = '';
+    if($this->total->total > 0) {
+      $data_uid = '';
+      $output .= '<table class="grid-usermaps">' . "\n";
+      $output .= '<thead>' . "\n";
+      $output .= '<tr>' . "\n";
+      if($this->uid_q) {
+        $header_count = sprintf(_("%d of %d for %s"), $this->db->row_count(), $this->total->total, $this->total->username);
+        $data_uid = " data-uid=".$this->uid_q;
+      } else {
+        $header_count = sprintf(_("%d of %d"), $this->db->row_count(), $this->total->total);
+      }
+      $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"'.$data_uid.' /> '.$header_count.'</th>';
+      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$this->dir : "";
+      if(!isset($_GET['sort']) && !isset($_GET['dir'])) { $sort_dir = " desc"; }
+      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
+      $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "updated" && isset($_GET['dir'])) ? " ".$this->dir : "";
+      $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="updated" href="#">'._("Updated").'</th>';
+      $output .= '<th class="actions">'._("Actions");
+      if(User::$roles[$this->role] == 'administrator') {
+        $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
+      }
+      $output .= '</th>';
+      $output .= '</tr>' . "\n";
+      $output .= '</thead>' . "\n";
+      $output .= '<tbody>' . "\n";
+      $i=0;
+      foreach($rows as $row) {
+        $class = ($i % 2) ? 'class="even"' : 'class="odd"';
+        $output .= '<tr '.$class.'>';
+        $output .= '<td class="title">';
+        $output .= (User::$roles[$this->role] == 'administrator' && !$this->uid_q) ? $row->username . ': ' : '';
+        $output .= '<a class="map-load" data-id="'.$row->mid.'" href="#">' . Utilities::check_plain(stripslashes($row->title)) . '</a>';
+        $output .= '</td>';
+        $output .= '<td class="center-align">' . gmdate("M d, Y", $row->created) . '</td>';
+        $output .= '<td class="center-align">';
+        $output .= ($row->updated) ? gmdate("M d, Y", $row->updated) : ' - ';
+        $output .= '</td>';
+        $output .= '<td class="actions">';
+        if($this->uid == $row->uid || User::$roles[$this->role] == 'administrator') {
+          $output .= '<a class="sprites-before map-delete" data-id="'.$row->mid.'" href="#">'._("Delete").'</a>';
+        }
+        $output .= '</td>';
+        $output .= '</tr>' . "\n";
+        $i++;
+      }
+      $output .= '</tbody>' . "\n";
+      $output .= '</table>' . "\n";
+    } else {
+      $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
+    }
+
+    Header::set_header('html');
+    echo $output;
   }
 
 }

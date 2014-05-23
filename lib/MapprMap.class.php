@@ -52,12 +52,14 @@ class MapprMap extends Mappr {
    */
   public function get_request() {
     if(!$this->id) { $this->set_not_found(); exit(); }
-    $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    $sql = "SELECT map FROM maps WHERE mid=" . $db->escape($this->id);
-    $record = $db->query_first($sql);
+    $db = new Database();
+    $sql = "SELECT map FROM maps WHERE mid=:mid";
+    $db->prepare($sql);
+    $db->bind_param(":mid", $this->id, 'integer');
+    $record = $db->fetch_first_object($sql);
     if(!$record) { $this->set_not_found(); exit(); }
 
-    $result = unserialize($record['map']);
+    $result = unserialize($record->map);
 
     foreach($result as $key => $data) {
       $this->{$key} = $data;
@@ -87,7 +89,7 @@ class MapprMap extends Mappr {
   }
 
   private function set_not_found() {
-    header("HTTP/1.0 404 Not Found");
+    http_response_code(404);
     switch($this->extension) {
       case 'pnga':
         header("Content-Type: image/png");
@@ -98,7 +100,7 @@ class MapprMap extends Mappr {
 
       case 'json':
         header("Content-Type: application/json");
-        echo '{ "error" : "not found" }';
+        echo json_encode(array("error" => "not found"));
       break;
 
       default:

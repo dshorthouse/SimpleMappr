@@ -12,7 +12,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
 
   public static function setUpBeforeClass() {
 
-    self::$db = new \SimpleMappr\Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    self::$db = new \SimpleMappr\Database();
 
     self::dropTables();
 
@@ -66,10 +66,10 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       KEY `index_on_country` (`country`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
-    self::$db->query($maps_table);
-    self::$db->query($users_table);
-    self::$db->query($citations_table);
-    self::$db->query($stateprovinces_table);
+    self::$db->exec($maps_table);
+    self::$db->exec($users_table);
+    self::$db->exec($citations_table);
+    self::$db->exec($stateprovinces_table);
 
     $user1 = self::$db->query_insert('users', array(
       'uid' => 1,
@@ -205,12 +205,12 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
       'first_author_surname' => 'Shorthouse'
     ));
 
-  self::$db->query_insert('stateprovinces', array(
-    'country' => 'Canada',
-    'country_iso' => 'CAN',
-    'stateprovince' => 'Alberta',
-    'stateprovince_code' => 'AB'
-  ));
+    self::$db->query_insert('stateprovinces', array(
+      'country' => 'Canada',
+      'country_iso' => 'CAN',
+      'stateprovince' => 'Alberta',
+      'stateprovince_code' => 'AB'
+    ));
   }
 
   public static function tearDownAfterClass() {
@@ -219,10 +219,10 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase {
   }
 
   public static function dropTables() {
-    self::$db->query("DROP TABLE IF EXISTS maps");
-    self::$db->query("DROP TABLE IF EXISTS users");
-    self::$db->query("DROP TABLE IF EXISTS citations");
-    self::$db->query("DROP TABLE IF EXISTS stateprovinces");
+    self::$db->exec("DROP TABLE IF EXISTS maps");
+    self::$db->exec("DROP TABLE IF EXISTS users");
+    self::$db->exec("DROP TABLE IF EXISTS citations");
+    self::$db->exec("DROP TABLE IF EXISTS stateprovinces");
   }
 
   public static function files_identical($fn1, $fn2) {

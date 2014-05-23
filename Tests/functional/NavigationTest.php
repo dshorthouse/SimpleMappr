@@ -74,7 +74,7 @@ class NavigationTest extends SimpleMapprTest {
     $link = $this->webDriver->findElement(WebDriverBy::linkText('Mes cartes'));
     $link->click();
     parent::waitOnSpinner();
-    $content = $this->webDriver->findElement(WebDriverBy::id('mymaps'));
+    $content = $this->webDriver->findElement(WebDriverBy::id('map-mymaps'));
     $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->getText());
     $this->assertCount(0, $this->webDriver->findElements(WebDriverBy::linkText('Administration')));
   }

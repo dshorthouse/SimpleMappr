@@ -44,9 +44,9 @@ class Rest {
   * Detect type of request and perform appropriate method
   */
   public function restful_action() {
-    $method = $_SERVER['REQUEST_METHOD'];
+    $verb = $_SERVER['REQUEST_METHOD'];
 
-    switch($method) {
+    switch($verb) {
       case 'GET':
         if($this->id) {
           $this->show($this->id);
@@ -76,7 +76,7 @@ class Rest {
   public function not_implemented() {
     Header::set_header('json');
     http_response_code(501);
-    echo '{"status":"fail", "message":"Not implemented"}';
+    echo json_encode(array("status" => "fail", "message" => "Not implemented"));
   }
 
 }

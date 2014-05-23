@@ -1,16 +1,13 @@
 <?php
 
-// MySQL server
-defined("DB_SERVER") || define("DB_SERVER", "127.0.0.1");
+// DB PDO connection string
+defined("DB_DSN") || define("DB_DSN", "mysql:host=127.0.0.1;dbname=simplemappr_test;charset=utf8");
 
-// MySQL login name
+// DB login name
 defined("DB_USER") || define("DB_USER", "root");
 
-// MySQLlogin password
+// DB password
 defined("DB_PASS") || define("DB_PASS", "");
-
-// MySQL database name
-defined("DB_DATABASE") || define("DB_DATABASE", "simplemappr_test");
 
 // Redis server
 defined("REDIS_SERVER") || define("REDIS_SERVER", "127.0.0.1");

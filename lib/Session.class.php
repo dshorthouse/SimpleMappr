@@ -116,8 +116,8 @@ class Session {
 
     self::write_session($cookie);
 
-    $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
+//    $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+//    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
   }
 
   public static function redirect($url) {
@@ -232,7 +232,7 @@ class Session {
         'email'       => $email
       );
 
-      $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+      $db = new Database();
 
       $sql = "
       SELECT
@@ -245,14 +245,17 @@ class Session {
       FROM 
         users u 
       WHERE  
-        u.identifier = '".$db->escape($identifier)."'";
+        u.identifier = :identifier";
 
-      $record = $db->query_first($sql);
-      $user['uid'] = (!$record['uid']) ? $db->query_insert('users', $user) : $record['uid'];
+      $db->prepare($sql);
+      $db->bind_param(":identifier", $identifier);
+      $result = $db->fetch_first_object();
+
+      $user['uid'] = (!$result) ? $db->query_insert('users', $user) : $result->uid;
       $user['locale'] = $this->locale;
-      $user['role'] = (!$record['role']) ? 1 : $record['role'];
+      $user['role'] = (!$result->role) ? 1 : $result->role;
 
-      $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), 'uid='.$db->escape($user['uid']));
+      $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
 
       self::write_session($user);
       self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($user['locale']));
