@@ -1330,7 +1330,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
             $label->set("position", MS_CC);
             $label->set("offsetx", 3);
@@ -1350,7 +1350,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
             $label->set("position", MS_CC);
             $label->set("offsetx", 3);
@@ -1370,7 +1370,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $label->set("position", MS_UR);
             $label->set("offsetx", 3);
@@ -1395,7 +1395,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $label->set("position", MS_UR);
             $label->set("offsetx", 3);
@@ -1415,7 +1415,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $label->set("position", MS_UR);
             $label->set("offsetx", 3);
@@ -1435,7 +1435,7 @@ abstract class Mappr {
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
-            $label->set("encoding", "CP1252");
+            $label->set("encoding", "UTF8");
             $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
             $label->set("position", MS_UR);
             $label->set("offsetx", 3);

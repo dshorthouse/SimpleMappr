@@ -49,6 +49,7 @@ class Database {
 
   public function prepare($sql) {
     $this->handle = $this->link->prepare($sql);
+    return $this->handle;
   }
 
   public function exec($sql) {
