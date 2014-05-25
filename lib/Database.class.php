@@ -47,52 +47,103 @@ class Database {
     $this->link->setAttribute(\PDO::ATTR_PERSISTENT, false);
   }
 
+  /**
+  * Prepare a SQL request
+  * @param string $sql
+  * @return handle object
+  */
   public function prepare($sql) {
     $this->handle = $this->link->prepare($sql);
     return $this->handle;
   }
 
+  /**
+  * Execute a SQL request
+  * @param string $sql
+  * @return resultset
+  */
   public function exec($sql) {
     return $this->link->exec($sql);
   }
 
+  /**
+  * Query a SQL request
+  * @param string $sql
+  * @return resultset object
+  */
   public function query($sql) {
     return $this->link->query($sql)->fetchAll(\PDO::FETCH_OBJ);
   }
 
+  /**
+  * Bind parameters from a prepared SQL connection
+  * @param string $key
+  * @param string/integer $value
+  * @param data type $type
+  * @return handle object
+  */
   public function bind_param($key, $value, $type = 'integer') {
     $pdo_type = ($type == 'integer') ? \PDO::PARAM_INT : \PDO::PARAM_STR;
     $this->handle->bindParam($key, $value, $pdo_type);
   }
 
+  /**
+  * Execute a prepared handle
+  */
   public function execute() {
     $this->handle->execute();
   }
 
+  /**
+  * Obtain a row count from executed handle
+  * @return integer row count
+  */
   public function row_count() {
     return $this->handle->rowCount();
   }
 
+  /**
+  * Fetch the first record as an object
+  * @return resultset as object
+  */
   public function fetch_first_object() {
     $this->execute();
     return $this->handle->fetch(\PDO::FETCH_OBJ);
   }
 
+  /**
+  * Fetch all records as an array of objects
+  * @return resultset as array of objects
+  */
   public function fetch_all_object() {
     $this->execute();
     return $this->handle->fetchAll(\PDO::FETCH_OBJ);
   }
 
+  /**
+  * Fetch the first record as an array
+  * @return resultset as array
+  */
   public function fetch_first_array() {
     $this->execute();
     return $this->handle->fetch();
   }
 
+  /**
+  * Fetch the all records as an array of arrays
+  * @return resultset as array
+  */
   public function fetch_all_array() {
     $this->execute();
     return $this->handle->fetchAll();
   }
 
+  /**
+  * Insert a new record and return last inserted id
+  * @param table name $table
+  * @param data as array $data
+  * @return last inserted id
+  */
   public function query_insert($table, $data = array()) {
     if(empty($data)) { return; }
 
@@ -110,6 +161,12 @@ class Database {
     return $this->last_insert();
   }
 
+  /**
+  * Update an existing record
+  * @param table name $table
+  * @param data as array $data
+  * @param string $where
+  */
   public function query_update($table, $data = array(), $where) {
     if(empty($data)) { return; }
 
@@ -137,6 +194,10 @@ class Database {
     $this->execute();
   }
 
+  /**
+  * Return last inserted id
+  * @return integer last inserted id
+  */
   private function last_insert() {
     return $this->link->lastInsertId();
   }

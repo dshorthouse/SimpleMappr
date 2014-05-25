@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "30e04278ac7db5a376ef53d2e07b9662",
+    "hash": "d90616f51b17f08217ab43a2c7d4b8e6",
     "packages": [
         {
             "name": "facebook/webdriver",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "390c6008ba7b39c2180e2a5cc55c790315696a1c"
+                "reference": "773333dd1f4a6afd025ae86fa0d030a2e4f56fc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/390c6008ba7b39c2180e2a5cc55c790315696a1c",
-                "reference": "390c6008ba7b39c2180e2a5cc55c790315696a1c",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/773333dd1f4a6afd025ae86fa0d030a2e4f56fc5",
+                "reference": "773333dd1f4a6afd025ae86fa0d030a2e4f56fc5",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2014-03-12 23:07:47"
+            "time": "2014-05-23 18:01:07"
         },
         {
             "name": "natxet/CssMin",
@@ -187,26 +187,27 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPWord.git",
-                "reference": "b937786cfd4c53eb272f703769b80a1023698c9e"
+                "reference": "86369ad89baae0dbc41822fbe47e1ead634f77c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/b937786cfd4c53eb272f703769b80a1023698c9e",
-                "reference": "b937786cfd4c53eb272f703769b80a1023698c9e",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/86369ad89baae0dbc41822fbe47e1ead634f77c7",
+                "reference": "86369ad89baae0dbc41822fbe47e1ead634f77c7",
                 "shasum": ""
             },
             "require": {
                 "ext-xml": "*",
-                "ext-zip": "*",
                 "php": ">=5.3.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
-                "ext-gd2": "*",
-                "ext-xmlwriter": "*",
-                "ext-xsl": "*"
+                "dompdf/dompdf": "Used to write PDF",
+                "ext-gd2": "Used to add images",
+                "ext-xmlwriter": "Used to write DOCX and ODT",
+                "ext-xsl": "Used to apply XSL style sheet to template part",
+                "ext-zip": "Used to write DOCX and ODT"
             },
             "type": "library",
             "autoload": {
@@ -216,7 +217,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0+"
+                "LGPL-2.1+"
             ],
             "authors": [
                 {
@@ -234,6 +235,10 @@
                 {
                     "name": "Ivan Lanin",
                     "homepage": "http://ivan.lanin.org"
+                },
+                {
+                    "name": "Roman Syroeshko",
+                    "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
                 }
             ],
             "description": "PHPWord - Read, Create, and Write DOCX, ODT, and RTF documents in PHP",
@@ -259,39 +264,40 @@
                 "word",
                 "writer"
             ],
-            "time": "2014-04-26 11:45:48"
+            "time": "2014-05-21 17:13:01"
         }
     ],
     "packages-dev": [
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "3dcca2120451b98a98fe60221ca279a184ee64db"
+                "reference": "bccecf50645068b44f49a84009e2a0499a500b99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3dcca2120451b98a98fe60221ca279a184ee64db",
-                "reference": "3dcca2120451b98a98fe60221ca279a184ee64db",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/bccecf50645068b44f49a84009e2a0499a500b99",
+                "reference": "bccecf50645068b44f49a84009e2a0499a500b99",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "phpunit/php-file-iterator": "~1.3.1",
-                "phpunit/php-text-template": "~1.2",
+                "phpunit/php-text-template": "~1.2.0",
                 "phpunit/php-token-stream": "~1.2.2",
-                "sebastian/environment": "~1.0",
+                "sebastian/environment": "~1.0.0",
                 "sebastian/version": "~1.0.3"
             },
             "require-dev": {
                 "ext-xdebug": ">=2.1.4",
-                "phpunit/phpunit": ">=4.0.0,<4.1.0"
+                "phpunit/phpunit": "~4.0.14"
             },
             "suggest": {
                 "ext-dom": "*",
-                "ext-xdebug": ">=2.2.1"
+                "ext-xdebug": ">=2.2.1",
+                "ext-xmlwriter": "*"
             },
             "type": "library",
             "extra": {
@@ -325,7 +331,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-03-28 10:54:55"
+            "time": "2014-04-30 09:01:21"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -512,16 +518,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.0.18",
+            "version": "4.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "95d18c9b84f5f9b200f53363b717910446686768"
+                "reference": "de121ce8708b7ac7f628603d7682d0d57f528345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/95d18c9b84f5f9b200f53363b717910446686768",
-                "reference": "95d18c9b84f5f9b200f53363b717910446686768",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/de121ce8708b7ac7f628603d7682d0d57f528345",
+                "reference": "de121ce8708b7ac7f628603d7682d0d57f528345",
                 "shasum": ""
             },
             "require": {
@@ -581,7 +587,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-04-29 07:33:55"
+            "time": "2014-05-02 07:19:37"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -844,17 +850,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.4",
+            "version": "v2.4.5",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff"
+                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
-                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/fd22bb88c3a6f73c898b39bec185a9e211b06265",
+                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265",
                 "shasum": ""
             },
             "require": {
@@ -889,7 +895,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-18 20:37:09"
+            "time": "2014-05-12 09:27:48"
         }
     ],
     "aliases": [

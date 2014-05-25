@@ -548,9 +548,6 @@ abstract class Mappr {
     }
   }
 
-  function __destruct() {
-  }
-
   public function __call($name, $arguments) {
     // set a property
     $property_prefix = substr($name,0,4);

@@ -86,12 +86,11 @@ class Session {
   }
 
   /*
-  * Update the access field in the db
-  * @param int $uid
+  * Update the access field for the active user
   */
   public static function update_activity() {
     if(isset($_REQUEST["locale"]) && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
-      header('HTTP/1.0 404 Not Found');
+      http_response_code(404);
       readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
       exit();
     }
@@ -116,8 +115,8 @@ class Session {
 
     self::write_session($cookie);
 
-//    $db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-//    $db->query_update('users', array('access' => time()), 'uid='.$db->escape($_SESSION["simplemappr"]["uid"]));
+    $db = new Database();
+    $db->query_update('users', array('access' => time()), 'uid='.$_SESSION["simplemappr"]["uid"]);
   }
 
   public static function redirect($url) {
