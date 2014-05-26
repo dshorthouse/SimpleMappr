@@ -24,7 +24,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase {
   }
 
   protected function tearDown() {
-    unset($_SERVER['REQUEST_METHOD']);
+    unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
   }
 
   public function test_GetCapabilities() {

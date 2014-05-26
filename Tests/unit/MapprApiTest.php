@@ -20,7 +20,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase {
   }
   
   protected function tearDown() {
-    unset($_SERVER['REQUEST_METHOD']);
+    unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
     $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
     foreach ($tmpfiles as $file) {
       unlink($file);
@@ -102,6 +102,21 @@ class MapprApiTest extends PHPUnit_Framework_TestCase {
     file_put_contents($file, $output);
     ob_end_clean();
     $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_coords.png'));
+  }
+
+  public function test_apioutput_encoding() {
+    $_REQUEST = array(
+      'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
+      'layers' => 'stateprovnames'
+    );
+    $this->mappr_api->get_request()->execute();
+    ob_start();
+    $this->mappr_api->create_output();
+    $output = ob_get_contents();
+    $file = ROOT."/public/tmp/apioutput_encoding.png";
+    file_put_contents($file, $output);
+    ob_end_clean();
+    $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_encoding.png'));
   }
 
   public function test_apioutput_country() {

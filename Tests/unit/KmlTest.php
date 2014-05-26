@@ -15,7 +15,7 @@ class KmlTest extends PHPUnit_Framework_TestCase {
 
   protected function tearDown() {
     session_destroy(); //req'd because Kml class sets a cookie
-    unset($_SERVER['REQUEST_METHOD']);
+    unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
     $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml,json,svg}", GLOB_BRACE);
     foreach ($tmpfiles as $file) {
       unlink($file);

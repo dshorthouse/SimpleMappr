@@ -13,7 +13,7 @@ class MapprMapTest extends SimpleMapprTest {
   }
 
   public function tearDown() {
-    unset($_SERVER['REQUEST_METHOD']);
+    unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
     $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml,json,svg}", GLOB_BRACE);
     foreach ($tmpfiles as $file) {
       unlink($file);
