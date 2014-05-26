@@ -1,5 +1,6 @@
 <?php
 namespace SimpleMappr;
+
 $locale = Session::select_locale();
 $tweet = ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter';
 ?>

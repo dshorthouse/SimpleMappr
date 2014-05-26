@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Header.class.php released under MIT License
-Configure HTML headers for SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Header.class.php released under MIT License
+ * Configure HTML headers for SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class Header {
 
@@ -46,8 +43,8 @@ class Header {
   private static $js_cache_path = "/public/javascript/cache/";
 
   /*
-  * An array of all javascript files to be minified
-  */
+   * An array of all javascript files to be minified
+   */
   public $local_js_combined = array(
     'jquery'      => 'public/javascript/jquery-1.11.1.min.js',
     'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
@@ -78,8 +75,8 @@ class Header {
   );
 
   /*
-  * An array of all css files to be minified
-  */
+   * An array of all css files to be minified
+   */
   public $local_css = array(
     'public/stylesheets/raw/styles.css'
   );
@@ -221,11 +218,11 @@ class Header {
          ->combine_local_css();
   }
 
-  /*
-  * Obtain a file name in the cache directory
-  * @param string $dir
-  * @param string $x
-  */
+  /**
+   * Obtain a file name in the cache directory
+   * @param string $dir
+   * @param string $x
+   */
   private function files_cached($dir, $x='js') {
     $allfiles = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
     $results = array();
@@ -242,9 +239,9 @@ class Header {
     return $this;
   }
 
-  /*
-  * Add javascript file(s) from remote CDN
-  */
+  /**
+   * Add javascript file(s) from remote CDN
+   */
   private function add_remote_js() {
     if(ENVIRONMENT == "production") {
       $this->addJS('jquery', $this->remote_js['jquery']);
@@ -253,9 +250,9 @@ class Header {
     return $this;
   }
 
-  /*
-  * Add existing, minified javascript to header or create if does not already exist
-  */
+  /**
+   * Add existing, minified javascript to header or create if does not already exist
+   */
   private function combine_local_js() {
     if(ENVIRONMENT == "production") {
       $cached_js = $this->files_cached(dirname(__DIR__) . self::$js_cache_path);
@@ -299,9 +296,9 @@ class Header {
     return $this;
   }
 
-  /*
-  * Add existing, minified css to header or create if does not already exist
-  */
+  /**
+   * Add existing, minified css to header or create if does not already exist
+   */
   private function combine_local_css() {
     if(ENVIRONMENT == "production") {
       $cached_css = $this->files_cached(dirname(__DIR__) . self::$css_cache_path, "css");
@@ -332,18 +329,18 @@ class Header {
     return $this;
   }
 
-  /*
-  * Add javascript file to array
-  * @param string $js
-  */
+  /**
+   * Add javascript file to array
+   * @param string $js
+   */
   private function addJS($key, $js) {
     $this->js_header[$key] = $js;
   }
 
-  /*
-  * Add css file to array
-  * @param string $css
-  */
+  /**
+   * Add css file to array
+   * @param string $css
+   */
   private function addCSS($css) {
     $this->css_header[] = $css;
   }
@@ -358,25 +355,25 @@ class Header {
     return $hash;
   }
 
-  /*
-  * Create the css header
-  */
+  /**
+   * Create the css header
+   */
   public function getCSSHeader() {
     echo implode("\n", $this->css_header) . "\n";
   }
 
-  /*
-  * DNS Prefetching
-  */
+  /**
+   * DNS Prefetching
+   */
   public function getDNSPrefetch() {
     $header  = "<link href=\"" . MAPPR_MAPS_URL . "\" rel=\"dns-prefetch\" />" . "\n";
     $header .= "<link href=\"" . MAPPR_MAPS_URL . "\" rel=\"prefetch\" />" . "\n";
     echo $header;
   }
 
-  /*
-  * Create the javascript header
-  */
+  /**
+   * Create the javascript header
+   */
   public function getJSFooter() {
     $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
     $header .= "<script>";
@@ -412,9 +409,9 @@ class Header {
     return false;
   }
 
-  /*
-  * Create Janrain inline javascript
-  */
+  /**
+   * Create Janrain inline javascript
+   */
   private function getJanrain() {
     $locale = $this->getLocale();
     $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
@@ -433,9 +430,9 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     return $janrain;
   }
 
-  /*
-  * Create Google Analytics inline javascript
-  */
+  /**
+   * Create Google Analytics inline javascript
+   */
   private function getAnalytics() {
     $analytics = "";
     if(ENVIRONMENT == "production") {

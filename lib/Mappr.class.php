@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Mappr.class.php released under MIT License
-Base class for SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Mappr.class.php released under MIT License
+ * Base class for SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 abstract class Mappr {
 
@@ -372,8 +369,10 @@ abstract class Mappr {
     END
   ";
 
-  /* acceptable projections in PROJ format */
-  /* NOTE: included here for performance reasons AND each have 'over' switch to prevent stateprovince line wraps */
+  /**
+   * Acceptable projections in PROJ format
+   * Included here for performance reasons AND each has 'over' switch to prevent line wraps
+   */
   public static $accepted_projections = array(
     'epsg:4326'   => array(
       'name' => 'Geographic',
@@ -422,19 +421,19 @@ abstract class Mappr {
   );
 
   /**
-  * Remove empty lines from a string
-  * @param $string
-  * @return string cleansed string with empty lines removed
-  */
+   * Remove empty lines from a string
+   * @param $string
+   * @return string cleansed string with empty lines removed
+   */
   public static function remove_empty_lines($string) {
     return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
   }
 
   /**
-  * Add slashes to either a string or an array
-  * @param string/array $arr_r
-  * @return string/array
-  */
+   * Add slashes to either a string or an array
+   * @param string/array $arr_r
+   * @return string/array
+   */
   public static function add_slashes_extended(&$arr_r) {
     if(is_array($arr_r)) {
       foreach ($arr_r as &$val) {
@@ -448,9 +447,9 @@ abstract class Mappr {
   }
 
   /**
-  * Get a user-defined file name, cleaned of illegal characters
-  * @return string
-  */
+   * Get a user-defined file name, cleaned of illegal characters
+   * @return string
+   */
   public static function clean_filename($file_name, $extension = "") {
     $clean_filename = preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $file_name);
     if($extension) {
@@ -460,17 +459,17 @@ abstract class Mappr {
   }
 
   /**
-  * Clean extraneous materials in coordinate that should (in theory) be DD
-  */
+   * Clean extraneous materials in coordinate that should (in theory) be DD
+   */
   public static function clean_coord($coord) {
     return preg_replace('/[^\d.-]/i', '', $coord);
   }
 
   /**
-  * Check a DD coordinate object and return true if it fits on globe, false if not
-  * @param obj $coord (x,y) coordinates
-  * @return true,false
-  */
+   * Check a DD coordinate object and return true if it fits on globe, false if not
+   * @param obj $coord (x,y) coordinates
+   * @return true,false
+   */
   public static function check_coord($coord) {
     if($coord->x &&
        $coord->y &&
@@ -484,10 +483,10 @@ abstract class Mappr {
   }
 
   /**
-  * Split DDMMSS or DD coordinate pair string into an array
-  * param string $point
-  * return array(latitude, longitude) in DD
-  */
+   * Split DDMMSS or DD coordinate pair string into an array
+   * @param string $point
+   * @return array(latitude, longitude) in DD
+   */
   public static function make_coordinates($point) {
     $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ''), $point);
     if(preg_match('/[NSEWO]/', $loc) != 0) {
@@ -503,10 +502,10 @@ abstract class Mappr {
   }
 
   /**
-  * Convert a coordinate in dms to deg
-  * @param string $dms coordinate
-  * @return float
-  */
+   * Convert a coordinate in dms to deg
+   * @param string $dms coordinate
+   * @return float
+   */
   public static function dms_to_deg($dms) {
     $dms = stripslashes($dms);
     $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
@@ -527,10 +526,10 @@ abstract class Mappr {
   }
 
   /**
-  * Get projection
-  * @param string $projection
-  * @return string
-  */
+   * Get projection
+   * @param string $projection
+   * @return string
+   */
   public static function get_projection($projection) {
     if(!array_key_exists($projection, self::$accepted_projections)) { $projection = 'epsg:4326'; }
     return self::$accepted_projections[$projection]['proj'];
@@ -565,9 +564,9 @@ abstract class Mappr {
   }
 
   /**
-  * Set the extent of the map
-  * @param array $extent
-  */
+   * Set the extent of the map
+   * @param array $extent
+   */
   public function set_max_extent($extent = array()) {
     $extent = explode(',', $extent);
     $this->max_extent = $extent;
@@ -575,8 +574,8 @@ abstract class Mappr {
   }
 
   /**
-  * Flexibly load up all the request parameters
-  */
+   * Flexibly load up all the request parameters
+   */
   public function get_request() {
     $this->coords           = $this->load_param('coords', array());
     $this->regions          = $this->load_param('regions', array());
@@ -629,11 +628,11 @@ abstract class Mappr {
   }
 
   /**
-  * Get a case insensitive request parameter
-  * @param string $name
-  * @param string $default parameter optional
-  * @return string the parameter value or empty string if null
-  */
+   * Get a case insensitive request parameter
+   * @param string $name
+   * @param string $default parameter optional
+   * @return string the parameter value or empty string if null
+   */
   public function load_param($name, $default = '') {
     $grep_key = $this->preg_grep_keys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
     if(!$grep_key || !array_values($grep_key)[0]) { return $default; }
@@ -643,19 +642,19 @@ abstract class Mappr {
   }
 
   /**
-  * Grep on array keys
-  * @param string $pattern
-  * @param string $input
-  * @param int $flags
-  * @return array of matched keys
-  */
+   * Grep on array keys
+   * @param string $pattern
+   * @param string $input
+   * @param int $flags
+   * @return array of matched keys
+   */
   private function preg_grep_keys($pattern, $input, $flags = 0) {
     return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
   }
 
   /**
-  * Load-up all the settings for potential shapes
-  */
+   * Load-up all the settings for potential shapes
+   */
   private function load_shapes() {
     //shaded relief
     $this->shapes['relief'] = array(
@@ -786,8 +785,8 @@ abstract class Mappr {
   }
 
   /**
-  * Execute the process. This is the main method that calls other req'd and optional methods.
-  */
+   * Execute the process. This is the main method that calls other req'd and optional methods.
+   */
   public function execute() {
     $this->load_shapes();
     $this->set_web_config();
@@ -812,8 +811,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set config for web config, storage of tmp files
-  */
+   * Set config for web config, storage of tmp files
+   */
   private function set_web_config() {
     $this->map_obj->set("name","simplemappr");
     $this->map_obj->setFontSet($this->font_file);
@@ -823,8 +822,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set resolution
-  */
+   * Set resolution
+   */
   private function set_resolution() {
     if($this->output == 'tif') {
       $this->map_obj->set("defresolution", 300);
@@ -833,23 +832,23 @@ abstract class Mappr {
   }
 
   /**
-  * Set units
-  */
+   * Set units
+   */
   private function set_units() {
     $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
     $this->map_obj->set("units",$units);
   }
 
   /**
-  * Set map color
-  */
+   * Set map color
+   */
   private function set_map_color() {
     $this->map_obj->imagecolor->setRGB(255,255,255);
   }
 
   /**
-  * Set output format
-  */
+   * Set output format
+   */
   private function set_output_format() {
     if(isset($this->output) && $this->output) {
       $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
@@ -864,8 +863,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add legend and scalebar
-  */
+   * Add legend and scalebar
+   */
   private function add_legend_scalebar() {
     if($this->download && array_key_exists('legend', $this->options) && $this->options['legend']) {
       $this->add_legend();
@@ -880,8 +879,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set the map extent
-  */
+   * Set the map extent
+   */
   private function set_map_extent() {
     $ext = explode(',',$this->bbox_map);
     if(isset($this->projection) && $this->projection != $this->projection_map) {
@@ -929,8 +928,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set the map size
-  */ 
+   * Set the map size
+   */ 
   private function set_map_size() {
     $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
     if($this->is_resize()) {
@@ -939,8 +938,8 @@ abstract class Mappr {
   }
 
   /**
-  * Zoom In
-  */
+   * Zoom In
+   */
   private function set_zoom() {
     //Zoom in
     if(isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
@@ -965,8 +964,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set the pan direction
-  */
+   * Set the pan direction
+   */
   private function set_pan() {
     if(isset($this->pan) && $this->pan) {
       switch ($this->pan) {
@@ -998,8 +997,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set the rotation
-  */
+   * Set the rotation
+   */
   private function set_rotation() {
     if(isset($this->rotation) && $this->rotation != 0) {
       $this->map_obj->setRotation($this->rotation);
@@ -1010,8 +1009,8 @@ abstract class Mappr {
   }
 
   /**
-  * Set a new extent in the event of a crop action
-  */
+   * Set a new extent in the event of a crop action
+   */
   private function set_crop() {
     if(isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->is_resize()) {
 
@@ -1048,8 +1047,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add all coordinates to the map
-  */
+   * Add all coordinates to the map
+   */
   public function add_coordinates() {
     $this->bad_points = array();
     if(isset($this->coords) && $this->coords) {
@@ -1132,8 +1131,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add shaded regions to the map
-  */
+   * Add shaded regions to the map
+   */
   public function add_regions() {
     if(isset($this->regions) && $this->regions) {  
       for($j=count($this->regions)-1; $j>=0; $j--) {
@@ -1212,8 +1211,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add all selected layers to the map
-  */
+   * Add all selected layers to the map
+   */
   private function add_layers() {
     $sort = array();
 
@@ -1451,8 +1450,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add a watermark
-  */
+   * Add a watermark
+   */
   private function add_watermark() {
     if(isset($this->watermark) && $this->watermark) {
       $layer = ms_newLayerObj($this->map_obj);
@@ -1486,8 +1485,8 @@ abstract class Mappr {
   }
 
   /**
-  * Add graticules (or grid lines) to map
-  */
+   * Add graticules (or grid lines) to map
+   */
   public function add_graticules() {
     if(isset($this->graticules) && $this->graticules) {
       $layer = ms_newLayerObj($this->map_obj);
@@ -1548,8 +1547,8 @@ abstract class Mappr {
   }
   
   /**
-  * Create the legend file
-  */
+   * Create the legend file
+   */
   public function add_legend() {
     if($this->_legend_required) {
       $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
@@ -1579,9 +1578,9 @@ abstract class Mappr {
   }
 
   /**
-  * Discover if the output ought to be resized
-  * @output true/false
-  */
+   * Discover if the output ought to be resized
+   * @return boolean
+   */
   private function is_resize() {
     if($this->download || $this->output == 'pptx' || $this->output == 'docx') {
       return true;
@@ -1590,8 +1589,8 @@ abstract class Mappr {
   }
 
   /**
-  * Create a scalebar image
-  */
+   * Create a scalebar image
+   */
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", 3);
@@ -1620,16 +1619,16 @@ abstract class Mappr {
   }
 
   /**
-  * Get all the coordinates that fall outside Earth's geographic extent in dd
-  * @return string
-  */
+   * Get all the coordinates that fall outside Earth's geographic extent in dd
+   * @return string
+   */
   public function get_bad_points() {
     return implode('<br />', $this->bad_points);
   }
 
   /**
-  * Add a border to a downloaded map image
-  */
+   * Add a border to a downloaded map image
+   */
   private function add_border() {
     if($this->is_resize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
       $outline_layer = ms_newLayerObj($this->map_obj);
@@ -1662,8 +1661,8 @@ abstract class Mappr {
   }
 
   /**
-  * Prepare the output
-  */
+   * Prepare the output
+   */
   private function prepare_output() {
     if(isset($this->projection)) {
       $this->reproject($this->projection_map, $this->projection);
@@ -1674,11 +1673,11 @@ abstract class Mappr {
   }
   
   /**
-  * Reproject a $map from one projection to another
-  * @param obj $map
-  * @param string $input_projection
-  * @param string $output_projection
-  */
+   * Reproject a $map from one projection to another
+   * @param obj $map
+   * @param string $input_projection
+   * @param string $output_projection
+   */
   private function reproject($input_projection,$output_projection) {
     $this->set_origin($output_projection);
 
@@ -1693,9 +1692,9 @@ abstract class Mappr {
   }
 
   /**
-  * Change the longitude of the natural origin for Lambert projections
-  * @param $output_projection
-  */
+   * Change the longitude of the natural origin for Lambert projections
+   * @param $output_projection
+   */
   private function set_origin($output_projection) {
     $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
 
@@ -1705,10 +1704,10 @@ abstract class Mappr {
   }
 
    /**
-   * Convert image coordinates to map coordinates
-   * @param obj $point, (x,y) coordinates in pixels
-   * @return obj $newPoint reprojected point in map coordinates
-   */
+    * Convert image coordinates to map coordinates
+    * @param obj $point, (x,y) coordinates in pixels
+    * @return obj $newPoint reprojected point in map coordinates
+    */
    public function pix2geo($point) {
      $newPoint = new \stdClass();
      $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);

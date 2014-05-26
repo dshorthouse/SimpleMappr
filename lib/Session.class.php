@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Session.class.php released under MIT License
-Creates and destroys user sessions on SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Session.class.php released under MIT License
+ * Creates and destroys user sessions on SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class Session {
 
@@ -57,25 +54,25 @@ class Session {
   private $locale_code;
   private $auth_info = array();
 
-  /*
-  * Create a user's session
-  */
+  /**
+   * Create a user's session
+   */
   public static function set_session() {
     session_cache_limiter('nocache');
     session_start();
     session_regenerate_id();
   }
 
-  /*
-  * Close writing to user's session
-  */
+  /**
+   * Close writing to user's session
+   */
   public static function close_session() {
     session_write_close();
   }
 
-  /*
-  * Destroy a user's session and the simplemappr cookie
-  */
+  /**
+   * Destroy a user's session and the simplemappr cookie
+   */
   public static function destroy() {
     self::set_session();
     $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
@@ -85,9 +82,9 @@ class Session {
     self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($locale));
   }
 
-  /*
-  * Update the access field for the active user
-  */
+  /**
+   * Update the access field for the active user
+   */
   public static function update_activity() {
     if(isset($_REQUEST["locale"]) && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
       http_response_code(404);
@@ -183,9 +180,9 @@ class Session {
     if($this->token) { return $this; } else { self::redirect("http://" . MAPPR_DOMAIN); }
   }
 
-  /*
-  * Execute POST to Janrain (formerly RPXNOW) to obtain OpenID account information
-  */
+  /**
+   * Execute POST to Janrain (formerly RPXNOW) to obtain OpenID account information
+   */
   private function make_call() {
     $post_data = array('token'  => $this->token,
                        'apiKey' => RPX_KEY,
@@ -211,9 +208,9 @@ class Session {
     return $this;
   }
 
-  /*
-  * Create a session and set a cookie
-  */
+  /**
+   * Create a session and set a cookie
+   */
   private function make_session() {
     if (isset($this->auth_info['stat']) && $this->auth_info['stat'] == 'ok') {
 

@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Logger.class.php released under MIT License
-Log API calls for SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Logger.class.php released under MIT License
+ * Log API calls for SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class Logger {
 
@@ -44,6 +41,10 @@ class Logger {
     $this->filename = $filename;
   }
 
+  /**
+   * Write a line to the log file
+   * @param string $message
+   */
   public function write($message) {
     $fd = fopen($this->filename, 'a');
     if(is_array($message)) {
@@ -54,6 +55,11 @@ class Logger {
     fclose($fd);
   }
 
+  /**
+   * 'Tail' the file by specified number of lines
+   * @param integer $n
+   * @return array lines
+   */
   public function tail($n = 10) {
     User::check_permission();
     $buffer_size = 1024;
@@ -86,10 +92,20 @@ class Logger {
     return array_slice(explode("\n", rtrim($input)), -$n);
   }
 
+  /**
+   * Write a string to the log file
+   * @param string $message
+   * @param file handle $fd
+   */
   private function write_string($message, $fd)  {
     fwrite($fd, $message."\n");
   }
 
+  /**
+   * Write array to the log file
+   * @param string $message
+   * @param file handle $fd
+   */
   private function write_array($message, $fd) {
     foreach($message as $key => $value) {
       if(is_array($value)) {

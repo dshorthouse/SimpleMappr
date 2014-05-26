@@ -32,11 +32,11 @@ function point_layers() {
   $output = '';
 
   for($i=0;$i<=NUMTEXTAREA-1;$i++) {
-    
+
     $output .= '<div class="form-item fieldset-points">';
 
     $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
-  
+
     $output .= '<h3><a href="#">'.sprintf(_("Layer %d"),$i+1).'</a></h3>' . "\n";
     $output .= '<div>' . "\n";
     $output .= '<div class="fieldset-taxon">' . "\n";
@@ -52,7 +52,7 @@ function point_layers() {
     $output .= '</div>' . "\n";
     $output .= '<button class="sprites-before clear clearself negative ui-corner-all">'._("Clear").'</button>' . "\n";
     $output .= '</div>' . "\n";
-  
+
     $output .= '</div>' . "\n";
   }
 

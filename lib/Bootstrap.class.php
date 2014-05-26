@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Bootstrap.class.php released under MIT License
-Bootstrapper for SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2013 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Bootstrap.class.php released under MIT License
+ * Bootstrapper for SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class Bootstrap {
 
@@ -59,12 +56,12 @@ class Bootstrap {
       case "/":
         $header = $this->set_up();
         header('Content-Type: text/html; charset=utf-8');
-        include_once("views/main.php");
+        include("views/main.php");
         break;
 
       case "/about":
         Header::set_header("html");
-        include_once("views/about.php");
+        include("views/about.php");
         break;
 
       case "/api":
@@ -74,7 +71,7 @@ class Bootstrap {
         break;
 
       case "/apidoc":
-        include_once("views/apidoc.php");
+        include("views/apidoc.php");
         break;
 
       case "/apilog":
@@ -98,7 +95,7 @@ class Bootstrap {
         break;
 
       case "/feedback":
-        include_once("views/feedback.php");
+        include("views/feedback.php");
         break;
       
       case "/flush_cache":
@@ -112,7 +109,7 @@ class Bootstrap {
         break;
 
       case "/help":
-        include_once("views/help.php");
+        include("views/help.php");
         break;
 
       case "/kml":
@@ -212,8 +209,12 @@ class Bootstrap {
     }
   }
 
+  /**
+   * Include partial HTML
+   * @param string $partial
+   */
   private function partial($partial) {
-    include "views/_$partial.php";
+    include("views/_$partial.php");
     call_user_func($partial);
   }
 

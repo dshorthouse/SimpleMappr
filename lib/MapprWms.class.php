@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-MapprWms.class.php released under MIT License
-Extends Mappr class & enables WMS endpoint on SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * MapprWms.class.php released under MIT License
+ * Extends Mappr class & enables WMS endpoint on SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class MapprWms extends Mappr {
 
@@ -59,8 +56,8 @@ class MapprWms extends Mappr {
   );
 
   /**
-  * Override the method in the MAPPR class
-  */
+   * Override the method in the MAPPR class
+   */
   public function get_request() {
     $this->params['VERSION']      = $this->load_param('VERSION', '1.1.1');
     $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
@@ -109,10 +106,10 @@ class MapprWms extends Mappr {
     return $this;
   }
 
-  /*
-  * Set the simplification filter for a WFS request
-  * @param integer
-  */
+  /**
+   * Set the simplification filter for a WFS request
+   * @param integer
+   */
   public function set_max_features($int) {
     $this->filter_simplify = $int;
   }
@@ -122,8 +119,8 @@ class MapprWms extends Mappr {
   }
 
   /**
-  * Construct metadata for WFS
-  */
+   * Construct metadata for WFS
+   */
   public function make_service() {
     $this->map_obj->setMetaData("name", "SimpleMappr Web Map Service");
     $this->map_obj->setMetaData("wms_title", "SimpleMappr Web Map Service");
@@ -159,8 +156,8 @@ class MapprWms extends Mappr {
   }
 
   /**
-  * Produce the  final output
-  */
+   * Produce the  final output
+   */
   public function create_output() {
     ms_ioinstallstdouttobuffer();
     $this->map_obj->owsDispatch($this->req);

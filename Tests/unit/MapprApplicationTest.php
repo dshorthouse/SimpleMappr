@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for static methods and default set-up of Mappr class
+ * Unit tests for static methods and default set-up of MapprApplication class
  */
 
 class MapprApplicationTest extends PHPUnit_Framework_TestCase {

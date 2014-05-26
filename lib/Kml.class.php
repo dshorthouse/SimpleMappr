@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-Kml.class.php released under MIT License
-Produce a KML file from SimpleMappr data
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * Kml.class.php released under MIT License
+ * Produce a KML file from SimpleMappr data
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class Kml {
 
@@ -60,22 +57,22 @@ class Kml {
   }
 
   /**
-  * Get the request parameter coords
-  * @param $file_name string
-  * @param $coords array
-  */
+   * Get the request parameter coords
+   * @param $file_name string
+   * @param $coords array
+   */
   public function get_request($file_name = '', $coords = array()) {
-    $this->coords         = ($coords) ? $coords : $this->load_param('coords', array());
-    $this->file_name      = ($file_name) ? $file_name : $this->load_param('file_name', time());
-    $this->download_token = $this->load_param('download_token', md5(time()));
+    $this->coords         = ($coords) ? $coords : Utilities::load_param('coords', array());
+    $this->file_name      = ($file_name) ? $file_name : Utilities::load_param('file_name', time());
+    $this->download_token = Utilities::load_param('download_token', md5(time()));
     setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
     return $this;
   }
 
   /**
-  *  Generate the kml file
-  * @return xml
-  */
+   *  Generate the kml file
+   * @return xml
+   */
   public function create_output() {
 
     $clean_filename = Mappr::clean_filename($this->file_name);
@@ -138,68 +135,55 @@ class Kml {
   }
 
   /**
-  *  Set basic metadata for kml
-  * @param string $name
-  * @param string $value
-  */
+   * Set basic metadata for kml
+   * @param string $name
+   * @param string $value
+   */
   public function set_metadata($name, $value) {
     $this->metadata[$name] = $value;
   }
 
   /**
-  * Get value of a metadata element
-  * @param string $name
-  * @return string value
-  */
+   * Get value of a metadata element
+   * @param string $name
+   * @return string value
+   */
   public function get_metadata($name) {
     return $this->metadata[$name];
   }
 
   /**
-  * Set a placemark in kml
-  * @param int $key 
-  * @param int $mark
-  * @param string $name
-  * @param string $value
-  */
+   * Set a placemark in kml
+   * @param int $key 
+   * @param int $mark
+   * @param string $name
+   * @param string $value
+   */
   public function set_placemark($key=0, $mark=0, $name, $value) {
     $this->placemark[$key][$mark][$name] = $value;
   }
 
   /**
-  * Get a placemark
-  * @param int $key
-  * @param int $mark
-  * @param string $name
-  * @return string $value
-  */
+   * Get a placemark
+   * @param int $key
+   * @param int $mark
+   * @param string $name
+   * @return string $value
+   */
   private function get_placemark($key=0, $mark=0, $name) {
     return $this->placemark[$key][$mark][$name];
   }
 
   /**
-  * Helper function to get all placemarks
-  */
+   * Helper function to get all placemarks
+   */
   private function get_all_placemarks() {
     return $this->placemark;
   }
 
   /**
-  * Get a request parameter
-  * @param string $name
-  * @param string $default parameter optional
-  * @return string the parameter value or empty string if null
-  */
-  private function load_param($name, $default = ''){
-    if(!isset($_REQUEST[$name]) || !$_REQUEST[$name]) return $default;
-    $value = $_REQUEST[$name];
-    if(get_magic_quotes_gpc() != 1) $value = Mappr::add_slashes_extended($value);
-    return $value;
-  }
-
-  /**
-  * Helper function to add coordinates to placemarks
-  */
+   * Helper function to add coordinates to placemarks
+   */
   public function add_coordinates() {
     for($j=0; $j<=count($this->coords)-1; $j++) {
       $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : '';

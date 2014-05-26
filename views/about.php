@@ -1,5 +1,6 @@
 <?php
 namespace SimpleMappr;
+
 Session::select_locale();
 ?>
 <!-- about tab -->

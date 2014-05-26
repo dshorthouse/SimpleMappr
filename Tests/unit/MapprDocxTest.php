@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for static methods and set-up of MapprDocx class
+ * Unit tests for MapprDocx class
  */
 
 class MapprDocxTest extends PHPUnit_Framework_TestCase {

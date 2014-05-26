@@ -1,40 +1,37 @@
 <?php
-
-/********************************************************************
-
-MapprApi.class.php released under MIT License
-Extend Mappr class for an RESTful API to SimpleMappr
-
-Author: David P. Shorthouse <davidpshorthouse@gmail.com>
-http://github.com/dshorthouse/SimpleMappr
-Copyright (C) 2010 David P. Shorthouse {{{
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-}}}
-
-********************************************************************/
-
 namespace SimpleMappr;
+
+/**
+ * MapprApi.class.php released under MIT License
+ * Extend Mappr class for an RESTful API to SimpleMappr
+ *
+ * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
+ * http://github.com/dshorthouse/SimpleMappr
+ * Copyright (C) 2013 David P. Shorthouse {{{
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * }}}
+ */
 
 class MapprApi extends Mappr {
 
@@ -118,8 +115,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Override method in parent class
-  */ 
+   * Override method in parent class
+   */ 
   public function add_coordinates() {
     if($this->url || $this->points) {
       if($this->url) { $this->parseUrl(); }
@@ -188,8 +185,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Override method in the parent class
-  */
+   * Override method in the parent class
+   */
   public function add_regions() {
     if($this->regions['data']) {            
       $layer = ms_newLayerObj($this->map_obj);
@@ -236,8 +233,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Override method in parent class
-  */
+   * Override method in parent class
+   */
   public function add_graticules() {
     if($this->graticules) {
       $layer = ms_newLayerObj($this->map_obj);
@@ -280,8 +277,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Override method in parent class
-  */
+   * Override method in parent class
+   */
   public function add_scalebar() {
     $this->map_obj->scalebar->set("style", 0);
     $this->map_obj->scalebar->set("intervals", ($this->width <= 500) ? 2 : 3);
@@ -357,8 +354,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Set a zoom level
-  */
+   * Set a zoom level
+   */
   private function setZoom() {
     if($this->zoom == 0 || $this->zoom > 10) { return; }
     $midpoint = $this->getMidpoint($this->coord_cols);
@@ -370,10 +367,10 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Find the geographic midpoint of a nested array of exploded dd coords
-  * @param array $array
-  * @return array(long,lat)
-  */
+   * Find the geographic midpoint of a nested array of exploded dd coords
+   * @param array $array
+   * @return array(long,lat)
+   */
   private function getMidpoint($array) {
     $x = $y = $z = array();
     foreach($array as $coords) {
@@ -394,8 +391,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Parse all POSTed data into cleaned array of points
-  */
+   * Parse all POSTed data into cleaned array of points
+   */
   private function parsePoints() {
     $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
     $coord_array = array();
@@ -409,8 +406,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Discover format of URL and parse it
-  */
+   * Discover format of URL and parse it
+   */
   private function parseUrl() {
     if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
       $this->parseFile();
@@ -431,8 +428,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Parse text file into cleaned array of points
-  */
+   * Parse text file into cleaned array of points
+   */
   private function parseFile() {
     if(@$fp = fopen($this->url, 'r')) {
       while ($line = fread($fp, 1024)) {
@@ -465,8 +462,8 @@ class MapprApi extends Mappr {
   }
 
   /**
-  * Parse GeoRSS, GeoJSON, WKT, KML into cleaned array of points
-  */
+   * Parse GeoRSS, GeoJSON, WKT, KML into cleaned array of points
+   */
   private function parseGeo() {
     include_once(ROOT.'/vendor/phayes/geophp/geoPHP.inc');
     $geometries = \geoPHP::load($this->url_content);

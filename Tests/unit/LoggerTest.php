@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for converting coordinates using static methods in Mappr class
+ * Unit tests for Logger class
  */
 
 class LoggerTest extends PHPUnit_Framework_TestCase {

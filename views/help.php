@@ -1,5 +1,6 @@
 <?php
 namespace SimpleMappr;
+
 $locale = Session::select_locale();
 ?>
 <style type="text/css">

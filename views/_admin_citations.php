@@ -30,9 +30,9 @@ function admin_citations() {
   $output .= '<label for="citation-link">' . _("Link") . '</label>';
   $output .= '<input type="text" id="citation-link" class="citation" name="citation[link]" size="60" />';
   $output .= '</p>';
-  
+
   $output .= '<p>';
   $output .= '<button class="sprites-before addmore positive ui-corner-all">' . _("Add citation") . '</button>';
-  
+
   echo $output;
 }
