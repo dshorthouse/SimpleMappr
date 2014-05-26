@@ -124,11 +124,6 @@ If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be f
     $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --stderr
 
-Likewise, if you wish to use the headless PhantomJS, the driver can be found at [http://phantomjs.org/](http://phantomjs.org/):
-
-    $ java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.phantomjs.driver=/usr/local/bin/phantomjs
-    $ ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml --stderr
-
 Copyright
 ---------
 
