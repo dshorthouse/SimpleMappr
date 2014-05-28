@@ -5,9 +5,9 @@ namespace SimpleMappr;
  * MapprApplication.class.php released under MIT License
  * Mappr Application class for SimpleMappr
  *
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (C) 2013 David P. Shorthouse {{{
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse {{{
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,69 +32,74 @@ namespace SimpleMappr;
  *
  * }}}
  */
+class MapprApplication extends Mappr
+{
+    /**
+    * Set the headers and create the output
+    *
+    * @return void
+    */
+    public function create_output()
+    {
+        switch($this->output) {
+        case 'tif':
+            error_reporting(0);
+            $this->image_url = $this->image->saveWebImage();
+            $image_filename = basename($this->image_url);
+            Header::set_header('tif');
+            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
+            header("Content-Transfer-Encoding: binary");
+            header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+            ob_clean();
+            flush();
+            readfile($this->tmp_path.$image_filename);
+            break;
 
-class MapprApplication extends Mappr {
+        case 'png':
+            error_reporting(0);
+            $this->image_url = $this->image->saveWebImage();
+            $image_filename = basename($this->image_url);
+            Header::set_header('png');
+            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
+            header("Content-Transfer-Encoding: binary");
+            header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+            ob_clean();
+            flush();
+            readfile($this->tmp_path.$image_filename);
+            break;
 
-  public function create_output() {
-    switch($this->output) {
-      case 'tif':
-        error_reporting(0);
-        $this->image_url = $this->image->saveWebImage();
-        $image_filename = basename($this->image_url);
-        Header::set_header('tif');
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-        ob_clean();
-        flush();
-        readfile($this->tmp_path.$image_filename);
-      break;
+        case 'svg':
+            Header::set_header('svg');
+            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
+            $this->image->saveImage("");
+            break;
 
-      case 'png':
-        error_reporting(0);
-        $this->image_url = $this->image->saveWebImage();
-        $image_filename = basename($this->image_url);
-        Header::set_header('png');
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: ".filesize($this->tmp_path.$image_filename));
-        ob_clean();
-        flush();
-        readfile($this->tmp_path.$image_filename);
-      break;
+        default:
+            Header::set_header('json');
 
-      case 'svg':
-        Header::set_header('svg');
-        header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";" );
-        $this->image->saveImage("");
-      break;
+            $this->image_url = $this->image->saveWebImage();
 
-      default:
-        Header::set_header('json');
+            $bbox = array(
+                sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
+                sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
+                sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
+                sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
+            );
 
-        $this->image_url = $this->image->saveWebImage();
+            $output = array(
+                'mapOutputImage'      => $this->image_url,
+                'size'                => $this->image_size,
+                'rendered_bbox'       => implode(",", $bbox),
+                'rendered_rotation'   => $this->rotation,
+                'rendered_projection' => $this->projection,
+                'legend_url'          => $this->legend_url,
+                'scalebar_url'        => $this->scalebar_url,
+                'bad_points'          => $this->get_bad_points()
+            );
 
-        $bbox = array(
-          sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
-          sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
-          sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
-          sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
-        );
+            echo json_encode($output);
+        }
 
-        $output = array(
-          'mapOutputImage'      => $this->image_url,
-          'size'                => $this->image_size,
-          'rendered_bbox'       => implode(",", $bbox),
-          'rendered_rotation'   => $this->rotation,
-          'rendered_projection' => $this->projection,
-          'legend_url'          => $this->legend_url,
-          'scalebar_url'        => $this->scalebar_url,
-          'bad_points'          => $this->get_bad_points(),
-        );
-
-        echo json_encode($output);
     }
-
-  }
 
 }

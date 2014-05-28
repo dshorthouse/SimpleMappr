@@ -6,9 +6,9 @@ namespace SimpleMappr;
  * Extends Mappr class to produce PPTX files for download on SimpleMappr
  * Depends on PHPPowerPoint, http://phppowerpoint.codeplex.com/
  *
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (C) 2013 David P. Shorthouse {{{
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse {{{
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -33,94 +33,93 @@ namespace SimpleMappr;
  *
  * }}}
  */
+class MapprPptx extends Mappr
+{
+    private $_slidepadding = 25;
 
-class MapprPptx extends Mappr {
+    public function create_output()
+    {
+        // PHPPowerPoint
+        set_include_path(ROOT . '/vendor/phpoffice/phppowerpoint/Classes/');
+        include_once 'PHPPowerPoint.php';
+        include_once 'PHPPowerPoint/IOFactory.php';
 
-  private $slidepadding = 25;
+        $objPHPPowerPoint = new \PHPPowerPoint();
 
-  public function create_output() {
+        $clean_filename = parent::clean_filename($this->file_name);
 
-    /** PHPPowerPoint */
-    set_include_path(ROOT . '/vendor/phpoffice/phppowerpoint/Classes/');
-    include_once 'PHPPowerPoint.php';
-    include_once 'PHPPowerPoint/IOFactory.php';
+        // Set properties
+        $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
+        $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
+        $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
+        $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
+        $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+        $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
 
-    $objPHPPowerPoint = new \PHPPowerPoint();
+        // Create slide
+        $currentSlide = $objPHPPowerPoint->getActiveSlide();
+        $currentSlide->setSlideLayout(\PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
 
-    $clean_filename = parent::clean_filename($this->file_name);
+        $width = 950;
+        $height = 720;
 
-    // Set properties
-    $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
-    $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
-    $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
-    $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
-    $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
-    $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
+        $files = array();
+        $images = array('image', 'scale', 'legend');
+        foreach ($images as $image) {
+            if ($this->{$image}) {
+                $image_filename = basename($this->{$image}->saveWebImage());
+                $files[$image]['file'] = $this->tmp_path . $image_filename;
+                $files[$image]['size'] = getimagesize($files[$image]['file']);
+            }
+        }
 
-    // Create slide
-    $currentSlide = $objPHPPowerPoint->getActiveSlide();
-    $currentSlide->setSlideLayout(\PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
+        $scale = 1;
+        $scaled_w = $files['image']['size'][0];
+        $scaled_h = $files['image']['size'][1];
+        if ($scaled_w > $width || $scaled_h > $height) {
+            $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
+        }
 
-    $width = 950;
-    $height = 720;
+        foreach ($files as $type => $value) {
+            $size = getimagesize($value['file']);
+            $shape = $currentSlide->createDrawingShape();
+            $shape->setName('SimpleMappr ' . $clean_filename);
+            $shape->setDescription('SimpleMappr ' . $clean_filename);
+            $shape->setPath($value['file']);
+            $shape->setWidth(round($value['size'][0]/$scale));
+            $shape->setHeight(round($value['size'][1]/$scale));
+            $shape_width = $shape->getWidth();
+            $shape_height = $shape->getHeight();
+            if ($type == 'image') {
+                $shape->setOffsetX(($width-$shape_width)/2);
+                $shape->setOffsetY(($height-$shape_height)/2);
+            }
+            if ($type == 'scale') {
+                $shape->setOffsetX($width-round($shape_width*1.5)-$this->_slidepadding);
+                $shape->setOffsetY($height-round($shape_height*4)-$this->_slidepadding);
+            }
+            if ($type == 'legend') {
+                $shape->setOffsetX($width-$shape_width-$this->_slidepadding);
+                $shape->setOffsetY(200);
+            }
+        }
 
-    $files = array();
-    $images = array('image', 'scale', 'legend');
-    foreach($images as $image) {
-      if($this->{$image}) {
-        $image_filename = basename($this->{$image}->saveWebImage());
-        $files[$image]['file'] = $this->tmp_path . $image_filename;
-        $files[$image]['size'] = getimagesize($files[$image]['file']);
-      }
+        $shape = $currentSlide->createRichTextShape();
+        $shape->setHeight(25);
+        $shape->setWidth(450);
+        $shape->setOffsetX($width - 450);
+        $shape->setOffsetY($height - 10 - $this->_slidepadding);
+        $shape->getActiveParagraph()->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
+        $shape->getActiveParagraph()->getAlignment()->setVertical(\PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
+        $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
+        $textRun->getFont()->setBold(true);
+        $textRun->getFont()->setSize(12);
+
+        // Output PowerPoint 2007 file
+        $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+        Header::set_header("pptx");
+        header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";");
+        $objWriter->save('php://output');
     }
-
-    $scale = 1;
-    $scaled_w = $files['image']['size'][0];
-    $scaled_h = $files['image']['size'][1];
-    if($scaled_w > $width || $scaled_h > $height) {
-      $scale = ($scaled_w/$width > $scaled_h/$height) ? $scaled_w/$width : $scaled_h/$height;
-    }
-
-    foreach($files as $type => $value) {
-      $size = getimagesize($value['file']);
-      $shape = $currentSlide->createDrawingShape();
-      $shape->setName('SimpleMappr ' . $clean_filename);
-      $shape->setDescription('SimpleMappr ' . $clean_filename);
-      $shape->setPath($value['file']);
-      $shape->setWidth(round($value['size'][0]/$scale));
-      $shape->setHeight(round($value['size'][1]/$scale));
-      $shape_width = $shape->getWidth();
-      $shape_height = $shape->getHeight();
-      if($type == 'image') {
-        $shape->setOffsetX(($width-$shape_width)/2);
-        $shape->setOffsetY(($height-$shape_height)/2);
-      }
-      if($type == 'scale') {
-        $shape->setOffsetX($width-round($shape_width*1.5)-$this->slidepadding);
-        $shape->setOffsetY($height-round($shape_height*4)-$this->slidepadding);
-      }
-      if($type == 'legend') {
-        $shape->setOffsetX($width-$shape_width-$this->slidepadding);
-        $shape->setOffsetY(200);
-      }
-    }
-
-    $shape = $currentSlide->createRichTextShape();
-    $shape->setHeight(25);
-    $shape->setWidth(450);
-    $shape->setOffsetX($width - 450);
-    $shape->setOffsetY($height - 10 - $this->slidepadding);
-    $shape->getActiveParagraph()->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
-    $shape->getActiveParagraph()->getAlignment()->setVertical(\PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
-    $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
-    $textRun->getFont()->setBold(true);
-    $textRun->getFont()->setSize(12);
-
-    // Output PowerPoint 2007 file
-    $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
-    Header::set_header("pptx");
-    header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";" );
-    $objWriter->save('php://output');
-  }
 
 }

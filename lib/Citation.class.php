@@ -5,9 +5,9 @@ namespace SimpleMappr;
  * Citation.class.php released under MIT License
  * Manages references that cite SimpleMappr
  *
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (C) 2013 David P. Shorthouse {{{
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse {{{
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,122 +32,140 @@ namespace SimpleMappr;
  *
  * }}}
  */
+class Citation extends Rest implements RestMethods
+{
+    private $_db;
+    private $_citations;
 
-class Citation extends Rest implements RestMethods {
-
-  private $db;
-  private $citations;
-
-  function __construct($id = NULL) {
-    $this->id = $id;
-    $this->db = new Database();
-  }
-
-  public function get_citations() {
-    $this->index();
-    $this->citations;
-    return $this->citations;
-  }
-
-  public function execute() {
-    $this->restful_action()->response();
-  }
-
-  /**
-   * Implemented index method
-   */
-  public function index() {
-    $sql = "
-      SELECT
-        *
-      FROM
-        citations c
-      ORDER BY
-        c.reference ASC, c.year DESC";
-
-    $this->db->prepare($sql);
-    $this->citations = $this->db->fetch_all_object();
-    return $this;
-  }
-
-  /**
-   * Implemented show method
-   */
-  public function show($id) {
-    $this->not_implemented();
-  }
-
-  /**
-   * Implemented create method
-   */
-  public function create() {
-    User::check_permission();
-    $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : NULL;
-    $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : NULL;
-    $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : NULL;
-    $doi = isset($_POST['citation']['doi']) ? $_POST['citation']['doi'] : NULL;
-    $link = isset($_POST['citation']['link']) ? $_POST['citation']['link'] : NULL;
-
-    if(empty($year) || empty($reference) || empty($author)) {
-      $this->response('error');
-      exit();
+    function __construct($id = null)
+    {
+        $this->id = $id;
+        $this->_db = new Database();
     }
 
-    $data = array(
-      'year' => $year,
-      'reference' => $reference,
-      'doi' => $doi,
-      'link' => $link,
-      'first_author_surname' => $author
-    );
-
-    $data['id'] = $this->db->query_insert('citations', $data);
-    $this->citations = $data;
-    return $this;
-  }
-
-  /**
-   * Implemented update method
-   */
-  public function update() {
-    $this->not_implemented();
-  }
-
-  /**
-   * Implemented destroy method
-   */
-  public function destroy($id) {
-    User::check_permission();
-    $sql = "
-        DELETE
-          c
-        FROM
-          citations c
-        WHERE 
-          c.id=:id";
-    $this->db->prepare($sql);
-    $this->db->bind_param(":id", $id, "integer");
-    $this->db->execute();
-    return $this;
-  }
-
-  private function response($type = NULL) {
-    switch($type) {
-      case 'error':
-        $output = array(
-          "status" => "error"
-        );
-        break;
-
-      default:
-        $output = array(
-          "status"    => "ok",
-          "citations" => $this->citations
-        );
-        break;
+    public function get_citations()
+    {
+        $this->index();
+        return $this->_citations;
     }
-    Header::set_header("json");
-    echo json_encode($output);
-  }
+
+    public function execute()
+    {
+        $this->restful_action()->response();
+    }
+
+    /**
+     * Implemented index method
+     */
+    public function index()
+    {
+        $sql = "
+            SELECT 
+                * 
+            FROM 
+                citations c 
+            ORDER BY 
+                c.reference ASC, c.year DESC";
+
+        $this->_db->prepare($sql);
+        $this->_citations = $this->_db->fetch_all_object();
+        return $this;
+    }
+
+    /**
+     * Implemented show method
+     *
+     * @param int $id The citation identifier
+     * @return void
+     */
+    public function show($id)
+    {
+        $this->not_implemented();
+    }
+
+    /**
+     * Implemented create method
+     */
+    public function create()
+    {
+        User::check_permission();
+        $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : null;
+        $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : null;
+        $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : null;
+        $doi = isset($_POST['citation']['doi']) ? $_POST['citation']['doi'] : null;
+        $link = isset($_POST['citation']['link']) ? $_POST['citation']['link'] : null;
+
+        if (empty($year) || empty($reference) || empty($author)) {
+            $this->response('error');
+            exit();
+        }
+
+        $data = array(
+            'year' => $year,
+            'reference' => $reference,
+            'doi' => $doi,
+            'link' => $link,
+            'first_author_surname' => $author
+        );
+
+        $data['id'] = $this->_db->query_insert('citations', $data);
+        $this->_citations = $data;
+        return $this;
+    }
+
+    /**
+     * Implemented update method
+     */
+    public function update()
+    {
+        $this->not_implemented();
+    }
+
+    /**
+     * Implemented destroy method
+     *
+     * @param int $id The citation identifier
+     * @return void
+     */
+    public function destroy($id)
+    {
+        User::check_permission();
+        $sql = "
+           DELETE 
+            c 
+           FROM 
+            citations c 
+           WHERE 
+            c.id=:id";
+        $this->_db->prepare($sql);
+        $this->_db->bind_param(":id", $id, "integer");
+        $this->_db->execute();
+        return $this;
+    }
+
+    /**
+     * Produce the JSON response
+     *
+     * @param string $type The type of response
+     * @return void
+     */
+    private function response($type = null)
+    {
+        switch($type) {
+        case 'error':
+            $output = array(
+                "status" => "error"
+            );
+            break;
+
+        default:
+            $output = array(
+                "status"    => "ok",
+                "citations" => $this->_citations
+            );
+        }
+        Header::set_header("json");
+        echo json_encode($output);
+    }
 
 }

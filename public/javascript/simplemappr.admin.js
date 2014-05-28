@@ -1,4 +1,4 @@
-/*
+/**
  * jQuery SimpleMappr Admin - released under MIT License 
  * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
  * http://github.com/dshorthouse/SimpleMappr

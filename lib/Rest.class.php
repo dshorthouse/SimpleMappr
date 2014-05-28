@@ -5,9 +5,9 @@ namespace SimpleMappr;
  * Rest.class.php released under MIT License
  * Basic utility functions to coordinate handling of RESTful actions
  *
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (C) 2013 David P. Shorthouse {{{
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse {{{
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,56 +32,56 @@ namespace SimpleMappr;
  *
  * }}}
  */
+class Rest
+{
+    protected $id;
 
-class Rest {
+    /**
+     * Detect type of request and perform appropriate method
+     */
+    public function restful_action()
+    {
+        $verb = $_SERVER['REQUEST_METHOD'];
 
-  protected $id;
+        switch($verb) {
+        case 'GET':
+            if ($this->id) {
+                $this->show($this->id);
+            } else {
+                $this->index();
+            }
+            break;
 
-  /**
-   * Detect type of request and perform appropriate method
-   */
-  public function restful_action() {
-    $verb = $_SERVER['REQUEST_METHOD'];
+        case 'PUT':
+            $this->update();
+            break;
 
-    switch($verb) {
-      case 'GET':
-        if($this->id) {
-          $this->show($this->id);
-        } else {
-          $this->index();
+        case 'POST':
+            $this->create();
+            break;
+
+        case 'DELETE':
+            $this->destroy($this->id);
+            break;
+
+        default:
         }
-      break;
-
-      case 'PUT':
-        $this->update();
-      break;
-
-      case 'POST':
-        $this->create();
-      break;
-
-      case 'DELETE':
-        $this->destroy($this->id);
-      break;
-
-      default:
-      break;
+        return $this;
     }
-    return $this;
-  }
 
-  public function not_implemented() {
-    Header::set_header('json');
-    http_response_code(501);
-    echo json_encode(array("status" => "fail", "message" => "Not implemented"));
-  }
-
+    public function not_implemented()
+    {
+        Header::set_header('json');
+        http_response_code(501);
+        echo json_encode(array("status" => "fail", "message" => "Not implemented"));
+    }
 }
 
-interface RestMethods {
-  public function index();
-  public function show($id);
-  public function create();
-  public function update();
-  public function destroy($id);
+interface RestMethods
+{
+    public function index();
+    public function show($id);
+    public function create();
+    public function update();
+    public function destroy($id);
 }

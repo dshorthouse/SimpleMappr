@@ -6,9 +6,9 @@ namespace SimpleMappr;
  * Extends Mappr class to produce DOCX files for download on SimpleMappr
  * Depends on PHPWord, http://phpword.codeplex.com/
  *
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (C) 2013 David P. Shorthouse {{{
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse {{{
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -33,59 +33,58 @@ namespace SimpleMappr;
  *
  * }}}
  */
+class MapprDocx extends Mappr
+{
+    public function create_output()
+    {
+        // PHPWord
+        include_once ROOT . '/vendor/phpoffice/phpword/src/PhpWord/Autoloader.php';
+        \PhpOffice\PhpWord\Autoloader::register();
 
-class MapprDocx extends Mappr {
+        $objPHPWord = new \PhpOffice\PhpWord\PhpWord();
 
-  public function create_output() {
+        $clean_filename = parent::clean_filename($this->file_name);
 
-    /** PHPWord */
-    require_once(ROOT . '/vendor/phpoffice/phpword/src/PhpWord/Autoloader.php');
-    \PhpOffice\PhpWord\Autoloader::register();
+        // Set properties
+        $properties = $objPHPWord->getDocumentProperties();
+        $properties->setCreator('SimpleMappr');
+        $properties->setTitle($clean_filename);
+        $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+        $properties->setLastModifiedBy("SimpleMappr");
+        $properties->setSubject($clean_filename . " point map");
+        $properties->setKeywords($clean_filename. ", SimpleMappr");
 
-    $objPHPWord = new \PhpOffice\PhpWord\PhpWord();
+        // Create section
+        $section = $objPHPWord->createSection();
 
-    $clean_filename = parent::clean_filename($this->file_name);
+        $width = $section->getSettings()->getPageSizeW() - $section->getSettings()->getMarginLeft() - $section->getSettings()->getMarginRight();
 
-    // Set properties
-    $properties = $objPHPWord->getDocumentProperties();
-    $properties->setCreator('SimpleMappr');
-    $properties->setTitle($clean_filename);
-    $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
-    $properties->setLastModifiedBy("SimpleMappr");
-    $properties->setSubject($clean_filename . " point map");
-    $properties->setKeywords($clean_filename. ", SimpleMappr");
+        $files = array();
+        $images = array('image', 'scale', 'legend');
+        foreach ($images as $image) {
+            if ($this->{$image}) {
+                $image_filename = basename($this->{$image}->saveWebImage());
+                $files[$image]['file'] = $this->tmp_path . $image_filename;
+                $files[$image]['size'] = getimagesize($files[$image]['file']);
+            }
+        }
 
-    // Create section
-    $section = $objPHPWord->createSection();
+        // Width is measured as 'dxa', which is 1/20 of a point
+        $scale = ($files['image']['size'][0]*20 > $width) ? $files['image']['size'][0]*20/$width : 1;
 
-    $width = $section->getSettings()->getPageSizeW() - $section->getSettings()->getMarginLeft() - $section->getSettings()->getMarginRight();
+        foreach ($files as $type => $values) {
+            if ($type == 'image') {
+                $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'center'));
+            } else {
+                $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'right'));
+            }
+        }
 
-    $files = array();
-    $images = array('image', 'scale', 'legend');
-    foreach($images as $image) {
-      if($this->{$image}) {
-        $image_filename = basename($this->{$image}->saveWebImage());
-        $files[$image]['file'] = $this->tmp_path . $image_filename;
-        $files[$image]['size'] = getimagesize($files[$image]['file']);
-      }
+        // Output Word 2007 file
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($objPHPWord, 'Word2007');
+        Header::set_header("docx");
+        header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";");
+        $objWriter->save('php://output');
     }
-
-    // Width is measured as 'dxa', which is 1/20 of a point
-    $scale = ($files['image']['size'][0]*20 > $width) ? $files['image']['size'][0]*20/$width : 1;
-
-    foreach($files as $type => $values) {
-      if($type == 'image') {
-        $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'center'));
-      } else {
-        $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'right'));
-      }
-    }
-
-    // Output Word 2007 file
-    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($objPHPWord, 'Word2007');
-    Header::set_header("docx");
-    header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";" );
-    $objWriter->save('php://output');
-  }
 
 }
