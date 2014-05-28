@@ -15,7 +15,9 @@ addons:
 
 before_install:
   # Initialize xvfb with 1280X1024 virtual screen
+  - "export DISPLAY=:99.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - sleep 3
 
 install:
   # Install server dependencies
@@ -64,6 +66,7 @@ before_script:
   - "wget http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar"
   # - "java -jar selenium-server-standalone-2.41.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &"
   - "java -jar selenium-server-standalone-2.41.0.jar > /dev/null &"
+  - sleep 3
 
 script:
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
