@@ -23,6 +23,7 @@ public/tmp/*
 !public/tmp/README
 
 mapserver/maps/**/*
+!mapserver/maps/README
 
 # Logs and databases #
 ######################
