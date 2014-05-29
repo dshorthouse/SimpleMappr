@@ -1,6 +1,7 @@
 <?php
 
-function admin_citations() {
+function admin_citations()
+{
     $output  = '';
     $output .= '<div class="header">';
     $output .= '<h2>' . _("Citations") . '</h2>';

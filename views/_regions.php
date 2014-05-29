@@ -1,8 +1,9 @@
 <?php
 
-function regions() {
+function regions()
+{
     $output = '';
-    for($i=0;$i<=NUMTEXTAREA-1;$i++) {
+    for ($i=0;$i<=NUMTEXTAREA-1;$i++) {
         $output .= '<div class="form-item fieldset-regions">';
         $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="regions">'._("Remove").'</button>';
         $output .= '<h3><a href="#">'.sprintf(_("Region %d"), $i+1).'</a></h3>' . "\n";

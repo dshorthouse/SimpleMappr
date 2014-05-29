@@ -1,6 +1,7 @@
 <?php
 
-function hidden_inputs() {
+function hidden_inputs()
+{
     $inputs = array(
          1 => "download",
          2 => "output",
@@ -34,7 +35,7 @@ function hidden_inputs() {
     );
 
     $output = array();
-    foreach($inputs as $key => $value) {
+    foreach ($inputs as $key => $value) {
         $val = ($key >= 24) ? ' value=""' : "";
         $output[] = '<input type="hidden" name="'.$value.'" id="'.$value.'"'.$val.' />';
     }

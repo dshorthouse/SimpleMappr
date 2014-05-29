@@ -1,6 +1,7 @@
 <?php
 
-function admin_tools() {
+function admin_tools()
+{
     $output = '';
     $output .= '<div class="header">';
     $output .= '<h2>' . _("Tools") . '</h2>';

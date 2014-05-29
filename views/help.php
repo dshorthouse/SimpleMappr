@@ -19,7 +19,9 @@ $locale = Session::select_locale();
 <script>
   $('#map-help h3:eq(1)').waypoint(function() {
     var elem = $('#country-codes').css("width", "100%");
-    if($('#country-codes').html().length === 0) { SimpleMappr.loadCodes(elem, { locale : "<?php echo $locale['locale']; ?>" }); }
+    if ($('#country-codes').html().length === 0) {
+        SimpleMappr.loadCodes(elem, { locale : "<?php echo $locale['locale']; ?>" });
+    }
   });
 </script>
 <!-- help tab -->

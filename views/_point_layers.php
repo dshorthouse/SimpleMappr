@@ -1,6 +1,7 @@
 <?php
 
-function point_layers() {
+function point_layers()
+{
     //marker sizes and shapes
     $marker_size  = '<option value="">'._("--select--").'</option>';
     $marker_size .= '<option value="6">6pt</option>';
@@ -30,10 +31,10 @@ function point_layers() {
     $marker_shape .= '</optgroup>';
 
     $output = '';
-    for($i=0;$i<=NUMTEXTAREA-1;$i++) {
+    for ($i=0;$i<=NUMTEXTAREA-1;$i++) {
         $output .= '<div class="form-item fieldset-points">';
         $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
-        $output .= '<h3><a href="#">'.sprintf(_("Layer %d"),$i+1).'</a></h3>' . "\n";
+        $output .= '<h3><a href="#">'.sprintf(_("Layer %d"), $i+1).'</a></h3>' . "\n";
         $output .= '<div>' . "\n";
         $output .= '<div class="fieldset-taxon">' . "\n";
         $output .= '<span class="fieldset-title">'._("Legend").'<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="coords['.$i.'][title]" />' . "\n";

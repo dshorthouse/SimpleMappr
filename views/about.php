@@ -53,7 +53,7 @@ Session::select_locale();
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
 <?php
 $citations = new Citation();
-foreach($citations->get_citations() as $citation) {
+foreach ($citations->get_citations() as $citation) {
     $doi = ($citation->doi) ? ' doi:<a href="http://doi.org/' . $citation->doi . '">' . $citation->doi . '</a>.' : "";
     $link = ($citation->link) ? ' (<a href="' . $citation->link . '">link</a>)' : "";
     echo '<p class="citation">' . $citation->reference . $link . $doi .'</p>';

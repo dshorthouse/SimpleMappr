@@ -1,6 +1,7 @@
 <?php
 
-function admin_api() {
+function admin_api()
+{
     $output  = '';
     $output .= '<div class="header">';
     $output .= '<h2>API Log</h2>';

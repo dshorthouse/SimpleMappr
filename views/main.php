@@ -32,11 +32,11 @@ $roles = $header[2];
 <meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <div id="map-loader"><span class="mapper-loading-spinner"></span></div>
 <div id="site-languages">
-<ul><?php foreach($accepted_locales as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
+<ul><?php foreach ($accepted_locales as $key => $locales): ?><?php $selected = ''; if($key == $locale) { $selected = ' class="selected"'; } ?><li><?php echo '<a href="/?locale='.$key.'#tabs=0"'.$selected.'>'.$locales['native'].'</a>'; ?></li><?php endforeach; ?></ul>
 </div>
-<?php if(isset($_SESSION['simplemappr'])): ?>
+<?php if (isset($_SESSION['simplemappr'])): ?>
 <div id="site-user">
-  <?php if(!empty($_SESSION['simplemappr']['displayname'])): ?>
+  <?php if (!empty($_SESSION['simplemappr']['displayname'])): ?>
     <?php echo $_SESSION['simplemappr']['displayname']; ?>
   <?php else: ?>
     <?php echo $_SESSION['simplemappr']['email']; ?>
@@ -44,7 +44,7 @@ $roles = $header[2];
 </div>
 <?php endif; ?>
 <div id="site-session">
-<?php if(isset($_SESSION['simplemappr'])): ?>
+<?php if (isset($_SESSION['simplemappr'])): ?>
 <a class="sprites-before logout" href="/logout/"><?php echo _("Sign Out"); ?></a>
 <?php else: ?>
 <a class="sprites-before login" href="#"><?php echo _("Sign In"); ?></a>
@@ -60,8 +60,8 @@ $roles = $header[2];
 <li><a href="#map-preview"><?php echo _("Preview"); ?></a></li>
 <li><a href="#map-points"><?php echo _("Point Data"); ?></a></li>
 <li><a href="#map-regions"><?php echo _("Regions"); ?></a></li>
-<li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
-<?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
+<li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
+<?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <li><a href="#map-admin"><?php echo _("Administration"); ?></a></li>
 <?php endif; ?>
@@ -112,7 +112,7 @@ $roles = $header[2];
 </ul>
 <h3 id="mapTitle"></h3>
 <ul id="map-saveDialog">
-<?php if(isset($_SESSION['simplemappr'])): ?>
+<?php if (isset($_SESSION['simplemappr'])): ?>
 <li><a class="sprites-before tooltip map-saveItem toolsSave" href="#" title="<?php echo _("save ctrl+s"); ?>"><?php echo _("Save"); ?></a></li>
 <li><a class="sprites-before tooltip map-saveItem toolsEmbed" href="#" title="<?php echo _("embed"); ?>" data-mid=""><?php echo _("Embed"); ?></a></li>
 <?php endif; ?>
@@ -189,7 +189,7 @@ $roles = $header[2];
 <li>
 <select id="projection" name="projection">
 <?php
-foreach(Mappr::$accepted_projections as $key => $value) {
+foreach (Mappr::$accepted_projections as $key => $value) {
   $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
   echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
 }
@@ -207,7 +207,7 @@ foreach(Mappr::$accepted_projections as $key => $value) {
 </div>
 
 <div id="map-mymaps">
-<?php if(!isset($_SESSION['simplemappr'])): ?>
+<?php if (!isset($_SESSION['simplemappr'])): ?>
 <div class="panel ui-corner-all">
 <p><?php echo _("Save and reload your map data or create a generic template."); ?></p> 
 </div>
@@ -217,7 +217,7 @@ foreach(Mappr::$accepted_projections as $key => $value) {
 <?php endif; ?>
 </div>
 
-<?php if(isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
+<?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <div id="map-users">
 <div id="userdata"></div>
 </div>
