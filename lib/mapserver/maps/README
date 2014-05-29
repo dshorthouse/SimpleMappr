@@ -1,6 +1,0 @@
-Obtain ArcView shapefiles from NaturalEarth as outlined in repo README and make directory readable by web server
-
-NOTE:
-
-I created a greyscale shaded relief geotiff using ogr2ogr on the full color NaturalEarth HYP_HR_SR_W_DR.zip.
-If you wish to obtain a copy of this file, please contact me directly at davidpshorthouse@gmail.com.

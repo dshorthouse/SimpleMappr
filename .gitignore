@@ -22,7 +22,7 @@ public/uploads/*
 public/tmp/*
 !public/tmp/README
 
-lib/mapserver/maps/**/*
+mapserver/maps/**/*
 
 # Logs and databases #
 ######################
