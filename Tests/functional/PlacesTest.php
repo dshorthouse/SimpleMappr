@@ -12,16 +12,25 @@
  */
 class PlacesTest extends SimpleMapprTest
 {
+    /**
+     * Parent setUp function executed before each test.
+     */
     public function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * Parent tearDown function executed after each test.
+     */
     public function tearDown()
     {
         parent::tearDown();
     }
 
+    /**
+     * Test response to index of places URL.
+     */
     public function test_PlacesIndex()
     {
         $ch = curl_init($this->url . "/places/");
@@ -38,6 +47,9 @@ class PlacesTest extends SimpleMapprTest
         $this->assertEquals('<table class="countrycodes"><thead><tr><td class="title">Country<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td><td class="code">ISO</td><td class="title">State/Province</td><td class="code">Code</td><td class="example">Example</td></tr></thead><tbody><tr class="odd"><td>Canada</td><td>CAN</td><td>Alberta</td><td>AB</td><td>CAN[AB]</td></tr></tbody></table>', $result);
     }
 
+    /**
+     * Test response to a places request for a named Country.
+     */
     public function test_PlacesSearch()
     {
         $ch = curl_init($this->url . "/places/Canada");

@@ -13,16 +13,25 @@
  */
 class ToolbarTest extends SimpleMapprTest
 {
+    /**
+     * Parent setUp function executed before each test.
+     */
     public function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * Parent tearDown function executed after each test.
+     */
     public function tearDown()
     {
         parent::tearDown();
     }
 
+    /**
+     * Test that refreshing the map makes a new image.
+     */
     public function testRefresh()
     {
         parent::setUpPage();
@@ -35,6 +44,9 @@ class ToolbarTest extends SimpleMapprTest
         $this->assertNotEquals($default_img, $new_img);
     }
 
+    /**
+     * Test that rebuilding the map makes a new image at full extent.
+     */
     public function testRebuild()
     {
         parent::setUpPage();
@@ -47,6 +59,9 @@ class ToolbarTest extends SimpleMapprTest
         $this->assertNotEquals($default_img, $new_img);
     }
 
+    /**
+     * Test that zooming out from the toolbar makes a new image.
+     */
     public function testZoomOut()
     {
         parent::setUpPage();
@@ -58,7 +73,10 @@ class ToolbarTest extends SimpleMapprTest
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
         $this->assertNotEquals($default_img, $new_img);
     }
-  
+
+    /**
+     * Test that a message is shown to user when a title is missing for a layer.
+     */
     public function testMissingTitle()
     {
         parent::setUpPage();
@@ -71,6 +89,5 @@ class ToolbarTest extends SimpleMapprTest
         $this->assertTrue($message_box->isDisplayed());
         $this->assertEquals("You are missing a legend for at least one of your Point Data or Regions layers.", $message_box->getText());
     }
-}
 
-?>
+}

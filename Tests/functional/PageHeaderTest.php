@@ -13,16 +13,25 @@
  */
 class PageHeaderTest extends SimpleMapprTest
 {
+    /**
+     * Parent setUp function executed before each test.
+     */
     public function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * Parent tearDown function executed after each test.
+     */
     public function tearDown()
     {
         parent::tearDown();
     }
 
+    /**
+     * test page title.
+     */
     public function testPageTitle()
     {
         parent::setUpPage();
@@ -30,6 +39,9 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertEquals('SimpleMappr', $title);
     }
 
+    /**
+     * Test default language attribute to HTML tag.
+     */
     public function testLanguageEnglish()
     {
         parent::setUpPage();
@@ -37,6 +49,9 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertEquals('en', $lang);
     }
 
+    /**
+     * Test lang=fr attribute for HTML tag.
+     */
     public function testLanguageFrancais()
     {
         $this->webDriver->get($this->url . "/?locale=fr_FR");
@@ -45,6 +60,9 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertEquals('fr', $lang);
     }
 
+    /**
+     * Test meta description.
+     */
     public function testDescription()
     {
         parent::setUpPage();
@@ -52,6 +70,9 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertContains("Create free point maps for publications and presentations", $description);
     }
 
+    /**
+     * Test meta keywords.
+     */
     public function testKeywords()
     {
         parent::setUpPage();
@@ -59,12 +80,18 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertContains("publication,presentation,map,georeference", $keywords);
     }
 
+    /**
+     * Test meta author.
+     */
     public function testAuthor()
     {
         parent::setUpPage();
         $this->assertContains("David P. Shorthouse", $this->metaElementContent("//meta[@name='author']"));
     }
 
+    /**
+     * Test OpenGraph content.
+     */
     public function testOpenGraph()
     {
         parent::setUpPage();
@@ -83,10 +110,15 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertContains("http://" . MAPPR_DOMAIN . "/public/images/logo_og.png", $og_image);
     }
 
+    /**
+     * Obtain content of an XPATH element.
+     *
+     * @param string $xpath The XPATH of interest.
+     * @return string The content.
+     */
     private function metaElementContent($xpath)
     {
         return $this->webDriver->findElement(WebDriverBy::xpath($xpath))->getAttribute('content');
     }
-}
 
-?>
+}

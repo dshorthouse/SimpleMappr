@@ -12,7 +12,6 @@
  */
 class MapprWmsTest extends PHPUnit_Framework_TestCase
 {
-
     protected $mappr_wms;
 
     /**

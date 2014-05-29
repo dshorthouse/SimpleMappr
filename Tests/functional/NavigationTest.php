@@ -13,16 +13,25 @@
  */
 class NavigationTest extends SimpleMapprTest
 {
+    /**
+     * Parent setUp function executed before each test
+     */
     public function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * Parent tearDown function executed after each test
+     */
     public function tearDown()
     {
         parent::tearDown();
     }
 
+    /**
+     * Test presence of tag line.
+     */
     public function testTagline()
     {
         parent::setUpPage();
@@ -30,6 +39,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertEquals('create free point maps for publications and presentations', $tagline->getText());
     }
 
+    /**
+     * Test translated tag line.
+     */
     public function testTaglineFrench()
     {
         parent::setUpPage();
@@ -39,6 +51,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertEquals('cartes de points gratuits pour publications et présentations', $tagline->getText());
     }
 
+    /**
+     * Test presence of Sign In page.
+     */
     public function testSignInPage()
     {
         parent::setUpPage();
@@ -49,6 +64,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertContains('Save and reload your map data or create a generic template.', $tagline->getText());
     }
 
+    /**
+     * Test presence of API page.
+     */
     public function testAPIPage()
     {
         parent::setUpPage();
@@ -59,6 +77,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertContains('A simple, restful API may be used with Internet accessible', $content->getText());
     }
 
+    /**
+     * Test presence of About page.
+     */
     public function testAboutPage()
     {
         parent::setUpPage();
@@ -69,6 +90,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertContains('Create free point maps suitable for reproduction on print media', $content->getText());
     }
 
+    /**
+     * Test presence of Help page.
+     */
     public function testHelpPage()
     {
         parent::setUpPage();
@@ -79,6 +103,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertContains('This application makes heavy use of JavaScript.', $content->getText());
     }
 
+    /**
+     * Test presence of user pages.
+     */
     public function testUserPage()
     {
         parent::setUpPage();
@@ -94,6 +121,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertCount(0, $this->webDriver->findElements(WebDriverBy::linkText('Administration')));
     }
 
+    /**
+     * Test presence of admin pages.
+     */
     public function testAdminPage()
     {
         parent::setUpPage();
@@ -122,6 +152,9 @@ class NavigationTest extends SimpleMapprTest
         $this->assertTag($matcher, $this->webDriver->getPageSource());
     }
 
+    /**
+     * Test flushing of caches.
+     */
     public function testFlushCache()
     {
         parent::setUpPage();
@@ -142,5 +175,3 @@ class NavigationTest extends SimpleMapprTest
     }
 
 }
-
-?>

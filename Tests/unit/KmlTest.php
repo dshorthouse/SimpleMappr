@@ -15,7 +15,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
     protected $kml;
 
     /**
-     * Parent setUp function executed before each test
+     * Parent setUp function executed before each test.
      */
     protected function setUp()
     {
@@ -24,7 +24,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Parent tearDown function executed after each test
+     * Parent tearDown function executed after each test.
      */
     protected function tearDown()
     {
@@ -36,6 +36,9 @@ class KmlTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test production of KML.
+     */
     public function test_kml()
     {
         $coords = array(

@@ -12,13 +12,19 @@
  */
 class CoordinateConversionTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Test that coordinates are cleaned of extraneous materials.
+     */
     public function test_clean_coord()
     {
         $coord = "-45d.4dt5;0dds";
         $clean = \SimpleMappr\Mappr::clean_coord($coord);
         $this->assertEquals($clean, -45.450);
     }
-  
+
+    /**
+     * Test that invalid coordinates are detected.
+     */
     public function test_check_coord_invalid()
     {
         $coord = new stdClass();
@@ -28,6 +34,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($checked);
     }
 
+    /**
+     * Test that a valid coordinate is detected.
+     */
     public function test_check_coord_valid()
     {
         $coord = new stdClass();
@@ -37,6 +46,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($checked);
     }
 
+    /**
+     * Test that a partial coordinate is not converted.
+     */
     public function test_make_coordinates_0()
     {
         $coord = "52° 32' 25\" N,";
@@ -45,6 +57,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], null);
     }
 
+    /**
+     * Test that a partial coordinate is not converted.
+     */
     public function test_make_coordinates_1()
     {
         $coord = "-120";
@@ -53,6 +68,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], null);
     }
 
+    /**
+     * Test that a partial coordinate with a comma is not converted.
+     */
     public function test_make_coordinates_2()
     {
         $coord = "-120,";
@@ -61,6 +79,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], null);
     }
 
+    /**
+     * Test that well-formed coordinate in DMS with comma is converted.
+     */
     public function test_make_coordinates_3()
     {
         $coord = "52° 32' 25\" N, 89° 40' 31\" W";
@@ -69,6 +90,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], -89.675277777778);
     }
 
+    /**
+     * Test that a well-formed coordinate in DMS with semicolon is converted.
+     */
     public function test_make_coordinates_4()
     {
         $coord = "52° 32' 25\" N; 89° 40' 31\" W";
@@ -77,6 +101,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], -89.675277777778);
     }
 
+    /**
+     * Test that a well-formed coordinate in DD with tab is parsed.
+     */
     public function test_make_coordinates_5()
     {
         $coord = "52.5\t-89.0";
@@ -85,6 +112,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], -89.0);
     }
 
+    /**
+     * Test that a single coordinate in DMS with 'd' is converted.
+     */
     public function test_dms_to_deg_1()
     {
         $dms = "45d53'25\"W";
@@ -92,6 +122,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, -45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS with degree symbol is converted.
+     */
     public function test_dms_to_deg_2()
     {
         $dms = "45° 53' 25\" W";
@@ -99,6 +132,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, -45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS with odd degree symbol is converted.
+     */
     public function test_dms_to_deg_3()
     {
         $dms = "45º 53' 25\" W";
@@ -106,6 +142,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, -45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS in East is converted.
+     */
     public function test_dms_to_deg_4()
     {
         $dms = "45d53'25\"E";
@@ -113,6 +152,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, 45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS is North is converted.
+     */
     public function test_dms_to_deg_5()
     {
         $dms = "45º 53′ 25″ N";
@@ -120,6 +162,9 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, 45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS in North with 'd' is converted.
+     */
     public function test_dms_to_deg_6()
     {
         $dms = "45d 53m 25 N";
@@ -127,13 +172,19 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd, 45.890277777778);
     }
 
+    /**
+     * Test that a single coordinate in DMS in South with 'd' is converted.
+     */
     public function test_dms_to_deg_7()
     {
         $dms = "45d53'25\"S";
         $dd = \SimpleMappr\Mappr::dms_to_deg($dms);
         $this->assertEquals($dd, -45.890277777778);
     }
-  
+
+    /**
+     * Test that a dirty coordinate in DD is parsed.
+     */
     public function test_dirty_deg()
     {
         $coord = "52.5g\t-89.0r";

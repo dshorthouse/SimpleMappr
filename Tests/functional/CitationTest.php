@@ -13,16 +13,25 @@
  */
 class CitationTest extends SimpleMapprTest
 {
+    /**
+     * Parent setUp function executed before each test.
+     */
     public function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * Parent tearDown function executed after each test.
+     */
     public function tearDown()
     {
         parent::tearDown();
     }
 
+    /**
+     * Test response from index is JSON with one record.
+     */
     public function testCitationsIndex()
     {
         $ch = curl_init($this->url . "/citation");
@@ -39,6 +48,9 @@ class CitationTest extends SimpleMapprTest
         $this->assertCount(1, $result->citations);
     }
 
+    /**
+     * Test addition of a citation.
+     */
     public function testAddCitation()
     {
         $citation = 'Shorthouse, David P. 2003. Another citation';
@@ -63,6 +75,9 @@ class CitationTest extends SimpleMapprTest
         $this->assertContains($citation, $about_page);
     }
 
+    /**
+     * Test deletion of a citation.
+     */
     public function testDeleteCitation()
     {
         parent::setUpPage();

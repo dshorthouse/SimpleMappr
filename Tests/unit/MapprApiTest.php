@@ -12,11 +12,10 @@
  */
 class MapprApiTest extends PHPUnit_Framework_TestCase
 {
-
     protected $mappr_api;
 
     /**
-     * Parent setUp function executed before each test
+     * Parent setUp function executed before each test.
      */
     protected function setUp()
     {
@@ -31,7 +30,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Parent tearDown function executed after each test
+     * Parent tearDown function executed after each test.
      */
     protected function tearDown()
     {
@@ -43,7 +42,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a ping request is produced
+     * Test that a ping request is produced.
      */
     public function test_api_ping()
     {
@@ -57,7 +56,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a simple POST request is handled
+     * Test that a simple POST request is handled.
      */
     public function test_apioutput_post()
     {
@@ -72,7 +71,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a simple GET request is handled
+     * Test that a simple GET request is handled.
      */
     public function test_apioutput_get()
     {
@@ -87,7 +86,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a few API request parameters are handled
+     * Test that a few API request parameters are handled.
      */
     public function test_apioutput_get_params()
     {
@@ -108,7 +107,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test API response in produced when coordinates are not supplied
+     * Test API response in produced when coordinates are not supplied.
      */
     public function test_apioutput_no_coords()
     {
@@ -126,7 +125,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test API response when coordinates are supplied
+     * Test API response when coordinates are supplied.
      */
     public function test_apioutput_coords()
     {
@@ -144,7 +143,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test API response to ensure that "Québec" is properly encoded
+     * Test API response to ensure that "Québec" is properly encoded.
      */
     public function test_apioutput_encoding()
     {
@@ -163,7 +162,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test API response to ensure that regions get shaded
+     * Test API response to ensure that regions get shaded.
      */
     public function test_apioutput_country()
     {
@@ -181,4 +180,5 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_places.png'));
     }
+
 }

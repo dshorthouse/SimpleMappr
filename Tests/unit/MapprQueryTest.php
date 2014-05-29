@@ -56,7 +56,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that many country names are returned with a large extent
+     * Test that many country names are returned with a large extent.
      */
     public function testManyCountries()
     {
@@ -71,7 +71,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a StateProvince code in returned when qlayer is provided
+     * Test that a StateProvince code in returned when qlayer is provided.
      */
     public function testStateProvince()
     {
@@ -84,4 +84,5 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertEquals('CAN[SK]', $output[0]);
     }
+
 }
