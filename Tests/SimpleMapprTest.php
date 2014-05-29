@@ -17,6 +17,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     protected $webDriver;
     protected $url;
 
+    /**
+     * Execute once before all tests
+     */
     public static function setUpBeforeClass()
     {
 
@@ -220,12 +223,18 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         ));
     }
 
+    /**
+     * Execute once after all tests.
+     */
     public static function tearDownAfterClass()
     {
         self::dropTables();
         self::$db = null;
     }
 
+    /**
+     * Drop all tables.
+     */
     public static function dropTables()
     {
         self::$db->exec("DROP TABLE IF EXISTS maps");
@@ -234,6 +243,13 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->exec("DROP TABLE IF EXISTS stateprovinces");
     }
 
+    /**
+     * Check if two files are identical.
+     *
+     * @param string $fn1 First file directory.
+     * @param string $fn2 Second file directory.
+     * @return bool
+     */
     public static function files_identical($fn1, $fn2)
     {
         if (filetype($fn1) !== filetype($fn2)) {
@@ -269,6 +285,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         return $same;
     }
 
+    /**
+     * Parent setUp function executed before each test.
+     */
     public function setUp()
     {
         $this->url = "http://" . MAPPR_DOMAIN . "/";
@@ -278,11 +297,17 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
 
+    /**
+     * Parent tearDown function executed after each test.
+     */
     public function tearDown()
     {
         $this->webDriver->close();
     }
 
+    /**
+     * Get a URL
+     */
     public function setUpPage()
     {
         new \SimpleMappr\Header;
@@ -290,15 +315,29 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         $this->waitOnSpinner();
     }
 
+    /**
+     * Wait on spinner then fall back to a sleep.
+     */
     public function waitOnSpinner()
     {
-        $this->webDriver->wait(10, 100)->until(
-            WebDriverExpectedCondition::invisibilityOfElementLocated(
-                WebDriverBy::cssSelector('#map-loader')
-            )
-        );
+        try {
+            $this->webDriver->wait(10, 100)->until(
+                WebDriverExpectedCondition::invisibilityOfElementLocated(
+                    WebDriverBy::id('map-loader')
+                )
+            );
+        } catch (NoSuchElementException $e) {
+            sleep(3);
+        }
     }
 
+    /**
+     * Set a user session, add a cookie, then refresh the page
+     *
+     * @param string $username User name (values are "user" or "administrator").
+     * @param string $locale Set the locale for the user.
+     * @return void
+     */
     public function setSession($username = "user", $locale = 'en_US')
     {
         $user = array(
