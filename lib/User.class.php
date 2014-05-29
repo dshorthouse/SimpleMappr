@@ -5,6 +5,8 @@ namespace SimpleMappr;
  * User.class.php released under MIT License
  * Manages user accounts on SimpleMappr
  *
+ * PHP Version >= 5.5
+ *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr
  * @license Copyright (C) 2013 David P. Shorthouse {{{

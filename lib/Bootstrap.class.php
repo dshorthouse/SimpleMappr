@@ -5,6 +5,8 @@ namespace SimpleMappr;
  * Bootstrap.class.php released under MIT License
  * Bootstrapper for SimpleMappr
  *
+ * PHP Version >= 5.5
+ *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr
  * @license Copyright (C) 2013 David P. Shorthouse {{{
@@ -39,11 +41,19 @@ class Bootstrap
     private $_id;
     private $_extension;
 
+    /**
+     * Class constructor
+     */
     function __construct()
     {
         $this->get_route()->set_controller();
     }
 
+    /**
+     * Set the controller, id, and extension variables for the request
+     *
+     * @return object $this
+     */
     private function get_route()
     {
         $route = preg_split("/[\/.]+/", $_REQUEST['q']);
@@ -53,6 +63,11 @@ class Bootstrap
         return $this;
     }
 
+    /**
+     * Set the controller for each route
+     *
+     * @return void
+     */
     private function set_controller()
     {
         switch ("/".$this->_controller) {
@@ -195,8 +210,8 @@ class Bootstrap
      */
     private function setup_map($data)
     {
-        return $data->set_shape_path(ROOT."/lib/mapserver/maps")
-            ->set_font_file(ROOT."/lib/mapserver/fonts/fonts.list")
+        return $data->set_shape_path(ROOT."/mapserver/maps")
+            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
             ->set_tmp_path(ROOT."/public/tmp/")
             ->set_tmp_url(MAPPR_MAPS_URL)
             ->set_default_projection("epsg:4326")
@@ -218,12 +233,22 @@ class Bootstrap
         $logger->write($message);
     }
 
+    /**
+     * Instantiate the Logger class and execute its tail method
+     *
+     * @return void
+     */
     private function tail_log()
     {
         $logger = new Logger(ROOT."/log/logger.log");
         echo ($logger->tail()) ? implode("<br>", $logger->tail()) : "No log data";
     }
 
+    /**
+     * Redirect requests or set-up sessions
+     *
+     * @return array instance of Header class, locales, roles
+     */
     private function set_up()
     {
         if (!isset($_SERVER['HTTP_HOST'])) {
@@ -251,6 +276,11 @@ class Bootstrap
         call_user_func($partial);
     }
 
+    /**
+     * Render a 404 document
+     *
+     * @return void
+     */
     private function render_404()
     {
         http_response_code(404);

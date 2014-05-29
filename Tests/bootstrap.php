@@ -1,81 +1,131 @@
 <?php
 
+/**
+ * Bootstrapper for executing PHP Unit tests
+ *
+ * PHP Version 5.5
+ *
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @link    http://github.com/dshorthouse/SimpleMappr
+ * @license Copyright (C) 2013 David P. Shorthouse
+ *
+ */
+
 date_default_timezone_set("America/New_York");
 
-function switchConf($restore = false) {
-  $config_dir = dirname(__DIR__) . '/config/';
+/**
+ * Switch configuration files
+ *
+ * @param bool $restore Flag to toggle swap and replacement of config files
+ * @return void
+ */
+function switchConf($restore = false)
+{
+    $config_dir = dirname(__DIR__) . '/config/';
 
-  $conf = array(
-    'prod' => $config_dir . 'conf.php',
-    'test' => $config_dir . 'conf.test.php'
-  );
-  $db = array(
-    'prod' => $config_dir . 'conf.db.php',
-    'test' => $config_dir . 'conf.db.test.php'
-  );
+    $conf = array(
+        'prod' => $config_dir . 'conf.php',
+        'test' => $config_dir . 'conf.test.php'
+    );
+    $db = array(
+        'prod' => $config_dir . 'conf.db.php',
+        'test' => $config_dir . 'conf.db.test.php'
+    );
 
-  if(!$restore) {
-    if(!file_exists($conf['prod'] . ".old")) {
-      if(file_exists($conf['prod'])) { copy($conf['prod'], $conf['prod'] . ".old"); }
-      copy($conf['test'], $conf['prod']);
-      if(file_exists($db['prod'])) { copy($db['prod'], $db['prod'] . ".old"); }
-      copy($db['test'], $db['prod']);
+    if (!$restore) {
+        if (!file_exists($conf['prod'] . ".old")) {
+            if (file_exists($conf['prod'])) {
+                copy($conf['prod'], $conf['prod'] . ".old");
+            }
+            copy($conf['test'], $conf['prod']);
+            if (file_exists($db['prod'])) {
+                copy($db['prod'], $db['prod'] . ".old");
+            }
+            copy($db['test'], $db['prod']);
+        }
+    } else {
+        if (file_exists($conf['prod'] . ".old")) {
+            rename($conf['prod'] . ".old", $conf['prod']);
+        }
+        if (file_exists($db['prod'] . ".old")) {
+            rename($db['prod'] . ".old", $db['prod']);
+        }
     }
-  } else {
-    if(file_exists($conf['prod'] . ".old")) { rename($conf['prod'] . ".old", $conf['prod']); }
-    if(file_exists($db['prod'] . ".old")) { rename($db['prod'] . ".old", $db['prod']); }
-  }
 
 }
 
-function requireFiles() {
-  $root = dirname(__DIR__);
+/**
+ * Require all files necessary to execute tests
+ *
+ * @return void
+ */
+function requireFiles()
+{
+    $root = dirname(__DIR__);
 
-  require_once($root . '/config/conf.php');
-  require_once($root . '/config/conf.db.php');
+    require_once $root . '/config/conf.php';
+    require_once $root . '/config/conf.db.php';
 
-  $rest = $root . '/lib/Rest.class.php';
-  require_once($rest); //force require_once of Rest.class.php
+    $rest = $root . '/lib/Rest.class.php';
+    require_once $rest; //force require_once of Rest.class.php
 
-  $files = glob($root . '/lib/*.php');
-  foreach ($files as $file) {
-    require_once($file);
-  }
+    $files = glob($root . '/lib/*.php');
+    foreach ($files as $file) {
+        require_once $file;
+    }
 
-  require_once($root . '/Tests/SimpleMapprTest.php');
-  require_once($root . '/vendor/autoload.php');
+    require_once $root . '/Tests/SimpleMapprTest.php';
+    require_once $root . '/vendor/autoload.php';
 }
 
-function trashCachedFiles() {
-  $root = dirname(__DIR__);
-  $cssFiles = glob($root . "/public/stylesheets/cache/*.{css}", GLOB_BRACE);
-  foreach ($cssFiles as $file) {
-    unlink($file);
-  }
-  $jsFiles = glob($root . "/public/javascript/cache/*.{js}", GLOB_BRACE);
-  foreach ($jsFiles as $file) {
-    unlink($file);
-  }
-  $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
-  foreach ($tmpfiles as $file) {
-    unlink($file);
-  }
+/**
+ * Delete all files created by SimpleMappr throughout tests
+ *
+ * @return void
+ */
+function trashCachedFiles()
+{
+    $root = dirname(__DIR__);
+    $cssFiles = glob($root . "/public/stylesheets/cache/*.{css}", GLOB_BRACE);
+    foreach ($cssFiles as $file) {
+        unlink($file);
+    }
+    $jsFiles = glob($root . "/public/javascript/cache/*.{js}", GLOB_BRACE);
+    foreach ($jsFiles as $file) {
+        unlink($file);
+    }
+    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
+    foreach ($tmpfiles as $file) {
+        unlink($file);
+    }
 }
 
-function loader() {
-  switchConf();
-  requireFiles();
-  \SimpleMappr\Header::flush_cache(false);
-  ob_start();
-  file_get_contents("http://".MAPPR_DOMAIN);
-  new \SimpleMappr\Header;
+/**
+ * Loader function executed before all tests
+ *
+ * @return void
+ */
+function loader()
+{
+    switchConf();
+    requireFiles();
+    \SimpleMappr\Header::flush_cache(false);
+    ob_start();
+    file_get_contents("http://".MAPPR_DOMAIN);
+    new \SimpleMappr\Header;
 }
 
-function unloader() {
-  switchConf('restore');
-  trashCachedFiles();
-  \SimpleMappr\Header::flush_cache(false);
-  ob_end_clean();
+/**
+ * Unloader function executed after all tests
+ *
+ * @return void
+ */
+function unloader()
+{
+    switchConf('restore');
+    trashCachedFiles();
+    \SimpleMappr\Header::flush_cache(false);
+    ob_end_clean();
 }
 
 spl_autoload_register(__NAMESPACE__.'\loader');

@@ -6,6 +6,8 @@ namespace SimpleMappr;
  * Extends Mappr class to produce DOCX files for download on SimpleMappr
  * Depends on PHPWord, http://phpword.codeplex.com/
  *
+ * PHP Version >= 5.5
+ *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr
  * @license Copyright (C) 2013 David P. Shorthouse {{{
