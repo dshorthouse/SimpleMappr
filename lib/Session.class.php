@@ -213,7 +213,7 @@ class Session
      */
     private function make_call()
     {
-        $post_data = array('token'  => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json');
+        $post_data = array('token' => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json');
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

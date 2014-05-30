@@ -90,4 +90,23 @@ class ToolbarTest extends SimpleMapprTest
         $this->assertEquals("You are missing a legend for at least one of your Point Data or Regions layers.", $message_box->getText());
     }
 
+    /**
+     * Test saving a map
+     */
+    public function testSaveMap()
+    {
+        $title = 'My New Map ' . time();
+        parent::setUpPage();
+        parent::setSession();
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
+        $link = $this->webDriver->findElement(WebDriverBy::className('toolsSave'));
+        $link->click();
+        $this->webDriver->findElement(WebDriverBy::id('m-mapSaveTitle'))->sendKeys($title);
+        $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Save']"))->click();
+        parent::waitOnSpinner();
+        $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
+        $saved_map_title = $this->webDriver->findElements(WebDriverBy::className('map-load'))[0];
+        $this->assertEquals($title, $saved_map_title->getText());
+    }
+
 }
