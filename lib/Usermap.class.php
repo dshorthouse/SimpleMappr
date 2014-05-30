@@ -205,8 +205,8 @@ class Usermap extends Rest implements RestMethods
                 WHERE
                     uid = :uid AND title = :title";
         $this->_db->prepare($sql);
-        $this->bind_param(":uid", $this->_uid, 'integer');
-        $this->bind_param(":title", $data['title'], 'string');
+        $this->_db->bind_param(":uid", $this->_uid, 'integer');
+        $this->_db->bind_param(":title", $data['title'], 'string');
         $record = $this->_db->query_first_object($sql);
 
         $output = array();
