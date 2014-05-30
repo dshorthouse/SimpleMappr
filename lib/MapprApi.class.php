@@ -1,15 +1,16 @@
 <?php
-namespace SimpleMappr;
-
 /**
- * MapprApi.class.php released under MIT License
- * Extend Mappr class for an RESTful API to SimpleMappr
+ * SimpleMappr - create point maps for publications and presentations
  *
  * PHP Version >= 5.5
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
- * @link    http://github.com/dshorthouse/SimpleMappr
- * @license Copyright (C) 2013 David P. Shorthouse {{{
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @package   SimpleMappr
+ *
+ * MIT LICENSE
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,8 +33,9 @@ namespace SimpleMappr;
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * }}}
  */
+namespace SimpleMappr;
+
 class MapprApi extends Mappr
 {
     private $_coord_cols = array();
