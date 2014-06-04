@@ -5,7 +5,7 @@ require __DIR__.'/config/conf.php';
 require __DIR__.'/config/conf.db.php';
 
 spl_autoload_register(function ($class) {
-    $file = __DIR__.'/lib/'.str_replace('SimpleMappr\\', '', $class).'.class.php';
+    $file = __DIR__.'/lib/'.str_replace(__NAMESPACE__.'\\', '', $class).'.class.php';
     if (file_exists($file)) {
         require $file;
     }
