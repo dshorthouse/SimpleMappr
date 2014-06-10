@@ -1,8 +1,13 @@
 /**
- * jQuery SimpleMappr - released under MIT License
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (c) 2010-2013 David P. Shorthouse {{{
+ * SimpleMappr - create point maps for publications and presentations
+ * jQuery SimpleMappr
+ *
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ *
+ * MIT LICENSE
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,7 +30,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * }}}
  */
 /*global jQuery, window, document, self, encodeURIComponent, ga */
 var SimpleMappr = (function($, window, document) {
@@ -1276,7 +1280,7 @@ var SimpleMappr = (function($, window, document) {
       $.each(this.vars.fieldSetsRegions.find('.fieldset-regions'), function(i) {
         if(i > 2) { $(this).remove(); }
       });
-      
+
       self.vars.newPointCount = 0;
       self.vars.newRegionCount = 0;
     },
@@ -2290,11 +2294,11 @@ var SimpleMappr = (function($, window, document) {
         });
       });
     },
-    
+
     unusedVariables: function() {
       return;
     },
-    
+
     appendImages: function() {
       this.vars.mapOutput.append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="900" height="450" />');
       this.vars.mapOutputImage = $('#mapOutputImage');
@@ -2329,7 +2333,7 @@ var SimpleMappr = (function($, window, document) {
         .find('a.toolsUndoDisabled').off('click').end()
         .find('a.toolsRedoDisabled').off('click');
     },
-    
+
     bindTooltips: function() {
       $('#mapWrapper').find('a.tooltip').tipsy({gravity : 's'});
     },

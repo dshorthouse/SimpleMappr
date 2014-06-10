@@ -1,8 +1,13 @@
 /**
- * jQuery SimpleMappr Admin - released under MIT License 
- * Author: David P. Shorthouse <davidpshorthouse@gmail.com>
- * http://github.com/dshorthouse/SimpleMappr
- * Copyright (c) 2010-2013 David P. Shorthouse {{{
+ * SimpleMappr - create point maps for publications and presentations
+ * jQuery SimpleMappr Admin
+ *
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ *
+ * MIT LICENSE
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,10 +30,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  *
- * }}}
  */
 /*global SimpleMappr, jQuery, window, document, self, XMLHttpRequest, alert, encodeURIComponent, _gaq */
-var SimpleMapprAdmin = (function($, window, document) {
+var SimpleMapprAdmin = (function($, window, sm) {
 
   "use strict";
 
@@ -43,15 +47,15 @@ var SimpleMapprAdmin = (function($, window, document) {
       this.loadCitationList();
       this.bindCreateCitation();
       this.loadAPILogs();
-      SimpleMappr.tabSelector(4);
+      sm.tabSelector(4);
     },
 
     loadUserList: function(object) {
       var self  = this,
           obj   = object || {},
-          data  = { locale : SimpleMappr.getParameterByName("locale") };
+          data  = { locale : sm.getParameterByName("locale") };
 
-      SimpleMappr.showSpinner();
+      sm.showSpinner();
 
       if(obj.sort) {
         data.sort = obj.sort.item;
@@ -62,7 +66,7 @@ var SimpleMapprAdmin = (function($, window, document) {
 
       $.ajax({
         type     : 'GET',
-        url      : SimpleMappr.settings.baseUrl + '/user/',
+        url      : sm.settings.baseUrl + '/user/',
         data     : data,
         dataType : 'html',
         success  : function(response) {
@@ -89,7 +93,7 @@ var SimpleMapprAdmin = (function($, window, document) {
                 SimpleMappr.loadMapList({ uid : $(this).attr("data-uid") });
                 SimpleMappr.tabSelector(3);
             });
-            SimpleMappr.hideSpinner();
+            sm.hideSpinner();
           }
         }
       });
@@ -100,7 +104,7 @@ var SimpleMapprAdmin = (function($, window, document) {
 
       $('#map-admin').on('click', 'a.admin-tool', function(e) {
         e.preventDefault();
-        SimpleMappr.showSpinner();
+        sm.showSpinner();
         if($(this).has('#flush-caches')) {
           self.flushCaches();
         }
@@ -110,17 +114,17 @@ var SimpleMapprAdmin = (function($, window, document) {
     flushCaches: function() {
       $.ajax({
         type     : 'GET',
-        url      : SimpleMappr.settings.baseUrl + "/flush_cache/",
+        url      : sm.settings.baseUrl + "/flush_cache/",
         dataType : 'json',
         success  : function(response) {
           if(response.files === true) {
-            SimpleMappr.hideSpinner();
+            sm.hideSpinner();
             alert("Caches flushed");
             window.location.reload();
           }
         },
         error    : function() {
-          SimpleMappr.hideSpinner();
+          sm.hideSpinner();
           alert("Error flushing caches");
         }
       });
@@ -129,10 +133,10 @@ var SimpleMapprAdmin = (function($, window, document) {
     loadCitationList: function() {
       var self = this, citations = "", doi = "", link = "";
 
-      SimpleMappr.showSpinner();
+      sm.showSpinner();
       $.ajax({
         type     : 'GET',
-        url      : SimpleMappr.settings.baseUrl + "/citation/",
+        url      : sm.settings.baseUrl + "/citation/",
         dataType : 'json',
         timeout  : 30000,
         success  : function(data) {
@@ -144,7 +148,7 @@ var SimpleMapprAdmin = (function($, window, document) {
             });
             self.citations_list.html(citations);
             self.bindDeleteCitations();
-            SimpleMappr.hideSpinner();
+            sm.hideSpinner();
           }
         },
         error : function() {
@@ -157,19 +161,19 @@ var SimpleMapprAdmin = (function($, window, document) {
     loadAPILogs: function() {
       var self = this;
 
-      SimpleMappr.showSpinner();
+      sm.showSpinner();
       $.ajax({
         type     : 'GET',
-        url      : SimpleMappr.settings.baseUrl + "/apilog/",
+        url      : sm.settings.baseUrl + "/apilog/",
         dataType : 'html',
         timeout  : 30000,
         success  : function(data) {
           self.api_list.html(data);
-          SimpleMappr.hideSpinner();
+          sm.hideSpinner();
         },
         error : function() {
           alert("Error loading API log");
-          SimpleMappr.hideSpinner();
+          sm.hideSpinner();
         }
       });
     },
@@ -189,10 +193,10 @@ var SimpleMapprAdmin = (function($, window, document) {
       $('#map-admin').on('click', 'button.addmore', function(e) {
         e.preventDefault();
         if($('#citation-reference').val() !== "" && $('#citation-surname').val() !== "" && $('#citation-year').val() !== "") {
-          SimpleMappr.showSpinner();
+          sm.showSpinner();
           $.ajax({
             type        : 'POST',
-            url         : SimpleMappr.settings.baseUrl + '/citation/',
+            url         : sm.settings.baseUrl + '/citation/',
             data        : $("form").serialize(),
             dataType    : 'json',
             success     : function(data) {
@@ -202,7 +206,7 @@ var SimpleMapprAdmin = (function($, window, document) {
                   $('#citation-'+this).removeClass('ui-state-error');
                 });
                 self.loadCitationList();
-                SimpleMappr.hideSpinner();
+                sm.hideSpinner();
               }
             }
           });
@@ -232,14 +236,14 @@ var SimpleMapprAdmin = (function($, window, document) {
             "text"  : $('#button-titles').find('span.delete').text(),
             "class" : "negative",
             "click" : function() {
-              SimpleMappr.showSpinner();
+              sm.showSpinner();
               $.ajax({
                 type    : 'DELETE',
-                url     : SimpleMappr.settings.baseUrl + "/user/" + id,
+                url     : sm.settings.baseUrl + "/user/" + id,
                 success : function() {
                   self.loadUserList();
-                  SimpleMappr.hideSpinner();
-                  SimpleMappr.trackEvent('user', 'delete');
+                  sm.hideSpinner();
+                  sm.trackEvent('user', 'delete');
                 }
               });
               $(this).dialog("destroy");
@@ -273,12 +277,12 @@ var SimpleMapprAdmin = (function($, window, document) {
             "text"  : $('#button-titles').find('span.delete').text(),
             "class" : "negative",
             "click" : function() {
-              SimpleMappr.showSpinner();
+              sm.showSpinner();
               $.ajax({
                 type    : 'DELETE',
-                url     : SimpleMappr.settings.baseUrl + "/citation/" + id,
+                url     : sm.settings.baseUrl + "/citation/" + id,
                 success : function() {
-                  SimpleMappr.hideSpinner();
+                  sm.hideSpinner();
                   self.loadCitationList();
                 }
               });
@@ -303,4 +307,4 @@ var SimpleMapprAdmin = (function($, window, document) {
     }
   };
 
-}(jQuery, window, document));
+}(jQuery, window, SimpleMappr));
