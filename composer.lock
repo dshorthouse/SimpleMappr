@@ -3,48 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d90616f51b17f08217ab43a2c7d4b8e6",
+    "hash": "2f2c8ebae411ce2b97879a0007f1ba74",
     "packages": [
-        {
-            "name": "facebook/webdriver",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "773333dd1f4a6afd025ae86fa0d030a2e4f56fc5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/773333dd1f4a6afd025ae86fa0d030a2e4f56fc5",
-                "reference": "773333dd1f4a6afd025ae86fa0d030a2e4f56fc5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.19"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "A php client for WebDriver",
-            "homepage": "https://github.com/facebook/php-webdriver",
-            "keywords": [
-                "facebook",
-                "php",
-                "selenium",
-                "webdriver"
-            ],
-            "time": "2014-05-23 18:01:07"
-        },
         {
             "name": "natxet/CssMin",
             "version": "dev-master",
@@ -126,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPPowerPoint.git",
-                "reference": "50fd978df41f031c1ceadfcc18b947231cefe1a1"
+                "reference": "d45779bf794e5773c85fd068fab98a4730f2d75a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/50fd978df41f031c1ceadfcc18b947231cefe1a1",
-                "reference": "50fd978df41f031c1ceadfcc18b947231cefe1a1",
+                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/d45779bf794e5773c85fd068fab98a4730f2d75a",
+                "reference": "d45779bf794e5773c85fd068fab98a4730f2d75a",
                 "shasum": ""
             },
             "require": {
@@ -179,7 +139,7 @@
                 "pptx",
                 "presentations"
             ],
-            "time": "2014-04-27 01:57:57"
+            "time": "2014-06-11 14:45:36"
         },
         {
             "name": "phpoffice/phpword",
@@ -187,12 +147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPWord.git",
-                "reference": "86369ad89baae0dbc41822fbe47e1ead634f77c7"
+                "reference": "38d3d7be20e6eb8d5f56e77515a49ceb41b676b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/86369ad89baae0dbc41822fbe47e1ead634f77c7",
-                "reference": "86369ad89baae0dbc41822fbe47e1ead634f77c7",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/38d3d7be20e6eb8d5f56e77515a49ceb41b676b6",
+                "reference": "38d3d7be20e6eb8d5f56e77515a49ceb41b676b6",
                 "shasum": ""
             },
             "require": {
@@ -200,7 +160,12 @@
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "dompdf/dompdf": "0.6.*",
+                "mpdf/mpdf": "5.*",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "1.*",
+                "tecnick.com/tcpdf": "6.*"
             },
             "suggest": {
                 "dompdf/dompdf": "Used to write PDF",
@@ -217,7 +182,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1+"
+                "LGPL-3.0"
             ],
             "authors": [
                 {
@@ -241,7 +206,7 @@
                     "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
                 }
             ],
-            "description": "PHPWord - Read, Create, and Write DOCX, ODT, and RTF documents in PHP",
+            "description": "PHPWord - A pure PHP library for reading and writing word processing documents (DOCX, ODT, RTF, HTML, PDF)",
             "homepage": "http://phpoffice.github.io",
             "keywords": [
                 "ISO IEC 29500",
@@ -255,8 +220,10 @@
                 "WordprocessingML",
                 "doc",
                 "docx",
+                "html",
                 "odt",
                 "office",
+                "pdf",
                 "php",
                 "reader",
                 "rtf",
@@ -264,22 +231,62 @@
                 "word",
                 "writer"
             ],
-            "time": "2014-05-21 17:13:01"
+            "time": "2014-06-02 11:30:51"
         }
     ],
     "packages-dev": [
         {
-            "name": "phpunit/php-code-coverage",
-            "version": "2.0.6",
+            "name": "facebook/webdriver",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "bccecf50645068b44f49a84009e2a0499a500b99"
+                "url": "https://github.com/facebook/php-webdriver.git",
+                "reference": "41d5e9f2f9c6c8f8efc2d146a9bde8809342a6f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/bccecf50645068b44f49a84009e2a0499a500b99",
-                "reference": "bccecf50645068b44f49a84009e2a0499a500b99",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/41d5e9f2f9c6c8f8efc2d146a9bde8809342a6f1",
+                "reference": "41d5e9f2f9c6c8f8efc2d146a9bde8809342a6f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.19"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A php client for WebDriver",
+            "homepage": "https://github.com/facebook/php-webdriver",
+            "keywords": [
+                "facebook",
+                "php",
+                "selenium",
+                "webdriver"
+            ],
+            "time": "2014-06-16 18:29:11"
+        },
+        {
+            "name": "phpunit/php-code-coverage",
+            "version": "2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "58401826c8cfc8fd689b60026e91c337df374bca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/58401826c8cfc8fd689b60026e91c337df374bca",
+                "reference": "58401826c8cfc8fd689b60026e91c337df374bca",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +338,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-04-30 09:01:21"
+            "time": "2014-05-26 14:55:24"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -591,16 +598,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.0.5",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "3697daa12ab57b2bfc27b734ab963142f27b9159"
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/3697daa12ab57b2bfc27b734ab963142f27b9159",
-                "reference": "3697daa12ab57b2bfc27b734ab963142f27b9159",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a01285d0b705af5963367451088508b6d4e417f2",
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2",
                 "shasum": ""
             },
             "require": {
@@ -644,7 +651,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-04-16 14:50:10"
+            "time": "2014-06-07 16:22:54"
         },
         {
             "name": "sebastian/diff",
@@ -850,17 +857,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.5",
+            "version": "v2.5.0",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265"
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/fd22bb88c3a6f73c898b39bec185a9e211b06265",
-                "reference": "fd22bb88c3a6f73c898b39bec185a9e211b06265",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
                 "shasum": ""
             },
             "require": {
@@ -869,7 +876,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -895,7 +902,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-12 09:27:48"
+            "time": "2014-05-16 14:25:18"
         }
     ],
     "aliases": [
@@ -903,11 +910,11 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "facebook/webdriver": 20,
         "natxet/cssmin": 20,
         "phpoffice/phppowerpoint": 20,
         "phpoffice/phpword": 20,
-        "phayes/geophp": 20
+        "phayes/geophp": 20,
+        "facebook/webdriver": 20
     },
     "platform": [
 

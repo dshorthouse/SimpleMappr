@@ -72,7 +72,7 @@ Homebrew on Mac OSX
 4. Extract and cd into folder
 5. Execute from command line:
 
-          $ cmake \
+          $ mkdir build; cd build; cmake .. \
             -DWITH_KML=1 \
             -DWITH_PHP=1 \
             -DWITH_FCGI=0 \
@@ -107,9 +107,10 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
 Dependencies
 ------------
 
-Install all necessary dependencies using [https://getcomposer.org/](composer).
+Install all necessary dependencies using [https://getcomposer.org/](composer) and update them as required.
 
     $ composer install
+    $ composer update
 
 Tests
 -----

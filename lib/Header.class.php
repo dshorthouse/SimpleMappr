@@ -74,7 +74,7 @@ class Header
     );
 
     public $remote_js = array(
-        'jquery'    => '//code.jquery.com/jquery-1.11.1.min.js',
+        'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
         'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
     );
 
