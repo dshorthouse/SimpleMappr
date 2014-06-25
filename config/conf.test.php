@@ -7,7 +7,7 @@ mb_http_output("UTF-8");
 //set the default timezone
 date_default_timezone_set("America/New_York");
 
-defined("ENVIRONMENT") || define("ENVIRONMENT", "production");
+defined("ENVIRONMENT") || define("ENVIRONMENT", "testing");
 
 defined("ROOT") || define("ROOT", dirname(__DIR__));
 

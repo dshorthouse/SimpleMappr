@@ -74,7 +74,7 @@ class MapprMap extends Mappr
             exit();
         }
 
-        $result = unserialize($record->map);
+        $result = json_decode($record->map, true);
 
         foreach ($result as $key => $data) {
             $this->{$key} = $data;

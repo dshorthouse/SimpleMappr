@@ -179,7 +179,7 @@ class Usermap extends Rest implements RestMethods
 
         $record = $this->_db->fetch_first_object();
         $data['mid'] = ($record) ? $record->mid : "";
-        $data['map'] = ($record) ? json_decode($record->map) : "";
+        $data['map'] = ($record) ? json_decode($record->map, true) : "";
         $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
         Header::set_header('json');

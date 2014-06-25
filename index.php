@@ -2,7 +2,6 @@
 namespace SimpleMappr;
 
 require __DIR__.'/config/conf.php';
-require __DIR__.'/config/conf.db.php';
 require __DIR__.'/vendor/autoload.php';
 
 spl_autoload_register(function ($class) {

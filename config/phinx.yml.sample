@@ -1,5 +1,5 @@
 paths:
-    migrations: %%PHINX_CONFIG_DIR%%/migrations
+    migrations: %%PHINX_CONFIG_DIR%%/db/migrations
 
 environments:
     default_migration_table: migrations
@@ -15,7 +15,7 @@ environments:
     development:
         adapter: mysql
         host: localhost
-        name: simplemappr_development
+        name: simplemappr_devel
         user: root
         pass: ''
         port: 3306

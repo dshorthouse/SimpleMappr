@@ -27,10 +27,6 @@ function switchConf($restore = false)
         'prod' => $config_dir . 'conf.php',
         'test' => $config_dir . 'conf.test.php'
     );
-    $db = array(
-        'prod' => $config_dir . 'conf.db.php',
-        'test' => $config_dir . 'conf.db.test.php'
-    );
 
     if (!$restore) {
         if (!file_exists($conf['prod'] . ".old")) {
@@ -38,17 +34,10 @@ function switchConf($restore = false)
                 copy($conf['prod'], $conf['prod'] . ".old");
             }
             copy($conf['test'], $conf['prod']);
-            if (file_exists($db['prod'])) {
-                copy($db['prod'], $db['prod'] . ".old");
-            }
-            copy($db['test'], $db['prod']);
         }
     } else {
         if (file_exists($conf['prod'] . ".old")) {
             rename($conf['prod'] . ".old", $conf['prod']);
-        }
-        if (file_exists($db['prod'] . ".old")) {
-            rename($db['prod'] . ".old", $db['prod']);
         }
     }
 
@@ -64,7 +53,6 @@ function requireFiles()
     $root = dirname(__DIR__);
 
     require_once $root . '/config/conf.php';
-    require_once $root . '/config/conf.db.php';
 
     $rest = $root . '/lib/Rest.class.php';
     require_once $rest; //force require_once of Rest.class.php

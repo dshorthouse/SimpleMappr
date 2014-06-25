@@ -7,7 +7,7 @@ env:
   global:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
-    - DBNAME=simplemappr_test
+    - DBNAME=simplemappr_testing
     - BROWSER=firefox
 
 addons:

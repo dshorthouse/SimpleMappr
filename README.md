@@ -86,11 +86,6 @@ Homebrew on Mac OSX
 
 7. Add extension=php_mapscript.so to php.ini and restart web server
 
-Database
---------
-
-SimpleMappr uses MySQL and a sample schema is included in /db.
-
 Internationalization
 --------------------
 
@@ -111,6 +106,15 @@ Install all necessary dependencies using [https://getcomposer.org/](composer) an
 
     $ composer install
     $ composer update
+
+Database
+--------
+
+SimpleMappr uses MySQL and [http://docs.phinx.org/](phinx) for migrations. A sample schema is included in /db and migrations are stored in /db/migrations.
+Create databases simplemappr, simplemappr\_development and simplemappr\_testing.
+Rename /config/phinx.yml.sample to /config/phinx.yml and adjust as necessary.
+
+    $ ./vendor/bin/phinx migrate -c config/phinx.yml -e development
 
 Tests
 -----

@@ -1,5 +1,5 @@
 # Ignore configuration files
-phinx.yml
+config/phinx.yml
 config/conf.php
 config/conf.db.php
 config/conf.php.old

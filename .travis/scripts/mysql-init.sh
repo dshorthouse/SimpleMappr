@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DBNAME="simplemappr_test"
+DBNAME="simplemappr_testing"
 if [ "$1" ]
 then
     DBNAME="$1"

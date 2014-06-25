@@ -254,7 +254,7 @@ class Header
 
     private function make_hash()
     {
-        if (ENVIRONMENT == "production") {
+        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $this->_hash = substr(md5(microtime()), 0, 8);
         }
         return $this;
@@ -265,7 +265,7 @@ class Header
      */
     private function add_remote_js()
     {
-        if (ENVIRONMENT == "production") {
+        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $this->addJS('jquery', $this->remote_js['jquery']);
             $this->addJS('jquery_ui', $this->local_js_combined['jquery_ui']);
         }
@@ -277,7 +277,7 @@ class Header
      */
     private function combine_local_js()
     {
-        if (ENVIRONMENT == "production") {
+        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $cached_js = $this->files_cached(dirname(__DIR__) . self::$_js_cache_path);
 
             if (!$cached_js) {
@@ -311,7 +311,7 @@ class Header
         }
         if ($this->isAdministrator()) {
             foreach ($this->admin_js as $key => $js_file) {
-                if (ENVIRONMENT == "production") {
+                if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
                     $this->addJS($key, $js_file);
                 } else {
                     $this->addJS($key, str_replace(".min", "", $js_file));
@@ -326,7 +326,7 @@ class Header
      */
     private function combine_local_css()
     {
-        if (ENVIRONMENT == "production") {
+        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $cached_css = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
 
             if (!$cached_css) {
@@ -414,7 +414,7 @@ class Header
         $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
         $header .= "<script>";
         $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-        $namespace = (ENVIRONMENT == "production") ? "compiled" : "simplemappr";
+        $namespace = (ENVIRONMENT == "production" || ENVIRONMENT == "testing") ? "compiled" : "simplemappr";
         $header .= "head.js(";
         $headjs = array();
         foreach ($this->_js_header as $key => $file) {
@@ -479,7 +479,7 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     private function getAnalytics()
     {
         $analytics = "";
-        if (ENVIRONMENT == "production") {
+        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $analytics  = "<script>" . "\n";
             $analytics .= "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
