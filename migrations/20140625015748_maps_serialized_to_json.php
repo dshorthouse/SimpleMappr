@@ -22,6 +22,10 @@ class MapsSerializedToJson extends AbstractMigration
      */
     public function down()
     {
-
+        $rows = $this->fetchAll('SELECT mid, map FROM maps');
+        foreach($rows as $row) {
+            $map = serialize(json_decode($row['map']));
+            $this->execute(sprintf("UPDATE maps set map = '%s' WHERE mid=%d", addslashes($map), $row['mid']));
+        }
     }
 }
