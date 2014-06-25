@@ -21,7 +21,8 @@
       "natxet/CssMin"           : "dev-master",
       "phpoffice/phppowerpoint" : "dev-master",
       "phpoffice/phpword"       : "dev-master",
-      "phayes/geophp"           : "dev-master"
+      "phayes/geophp"           : "dev-master",
+      "robmorgan/phinx"         : "*"
     },
     "require-dev": {
       "phpunit/phpunit"         : "4.0.*",

@@ -40,8 +40,6 @@ class MapprDocx extends Mappr
 {
     public function create_output()
     {
-        // PHPWord
-        include_once ROOT . '/vendor/phpoffice/phpword/src/PhpWord/Autoloader.php';
         \PhpOffice\PhpWord\Autoloader::register();
 
         $objPHPWord = new \PhpOffice\PhpWord\PhpWord();

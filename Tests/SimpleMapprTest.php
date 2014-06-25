@@ -204,7 +204,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->query_insert('maps', array(
           'uid' => $user1,
           'title' => 'Sample Map',
-          'map' => serialize($map_data),
+          'map' => json_encode($map_data),
           'created' => time()
         ));
 

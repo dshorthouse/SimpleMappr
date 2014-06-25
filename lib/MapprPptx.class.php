@@ -42,11 +42,6 @@ class MapprPptx extends Mappr
 
     public function create_output()
     {
-        // PHPPowerPoint
-        set_include_path(ROOT . '/vendor/phpoffice/phppowerpoint/Classes/');
-        include_once 'PHPPowerPoint.php';
-        include_once 'PHPPowerPoint/IOFactory.php';
-
         $objPHPPowerPoint = new \PHPPowerPoint();
 
         $clean_filename = parent::clean_filename($this->file_name);

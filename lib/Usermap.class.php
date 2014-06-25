@@ -179,7 +179,7 @@ class Usermap extends Rest implements RestMethods
 
         $record = $this->_db->fetch_first_object();
         $data['mid'] = ($record) ? $record->mid : "";
-        $data['map'] = ($record) ? @unserialize($record->map) : "";
+        $data['map'] = ($record) ? json_decode($record->map) : "";
         $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
         Header::set_header('json');
@@ -194,7 +194,7 @@ class Usermap extends Rest implements RestMethods
         $data = array(
             'uid' => $this->_uid,
             'title' => $_POST['save']['title'],
-            'map' => serialize($_POST),
+            'map' => json_encode($_POST),
             'created' => time(),
             'updated' => time()
         );

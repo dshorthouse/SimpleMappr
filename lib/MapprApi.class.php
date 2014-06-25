@@ -510,7 +510,6 @@ class MapprApi extends Mappr
      */
     private function parseGeo()
     {
-        include_once ROOT.'/vendor/phayes/geophp/geoPHP.inc';
         $geometries = \geoPHP::load($this->url_content);
         if ($geometries) {
             $num_cols = (isset($num_cols)) ? $num_cols++ : 0;

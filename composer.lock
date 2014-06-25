@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "2f2c8ebae411ce2b97879a0007f1ba74",
+    "hash": "50f01fb0aaccd00818ff18e29b1f283d",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -147,12 +148,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPWord.git",
-                "reference": "38d3d7be20e6eb8d5f56e77515a49ceb41b676b6"
+                "reference": "d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/38d3d7be20e6eb8d5f56e77515a49ceb41b676b6",
-                "reference": "38d3d7be20e6eb8d5f56e77515a49ceb41b676b6",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca",
+                "reference": "d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +232,321 @@
                 "word",
                 "writer"
             ],
-            "time": "2014-06-02 11:30:51"
+            "time": "2014-06-24 08:30:46"
+        },
+        {
+            "name": "robmorgan/phinx",
+            "version": "v0.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robmorgan/phinx.git",
+                "reference": "92b18483c600dba243d6282e34f31f0cb03ddafd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/92b18483c600dba243d6282e34f31f0cb03ddafd",
+                "reference": "92b18483c600dba243d6282e34f31f0cb03ddafd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/class-loader": "2.*",
+                "symfony/config": "2.*",
+                "symfony/console": "2.*",
+                "symfony/yaml": "2.*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "dev-phpcs-fixer"
+            },
+            "bin": [
+                "bin/phinx"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Phinx": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Morgan",
+                    "email": "robbym@gmail.com",
+                    "homepage": "http://robmorgan.id.au",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
+            "homepage": "http://phinx.org",
+            "keywords": [
+                "database",
+                "database migrations",
+                "db",
+                "migrations",
+                "phinx"
+            ],
+            "time": "2014-06-21 11:27:52"
+        },
+        {
+            "name": "symfony/class-loader",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/ClassLoader",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ClassLoader.git",
+                "reference": "09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0",
+                "reference": "09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-16 10:36:34"
+        },
+        {
+            "name": "symfony/config",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config.git",
+                "reference": "9c8caadb38ecc69ac35ab31af4d1996944b5a09f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/9c8caadb38ecc69ac35ab31af4d1996944b5a09f",
+                "reference": "9c8caadb38ecc69ac35ab31af4d1996944b5a09f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/filesystem": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-22 08:11:23"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c",
+                "reference": "ef4ca73b0b3a10cbac653d3ca482d0cdd4502b2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "For using the console logger",
+                "symfony/event-dispatcher": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-05-22 08:54:24"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/98e831eac836a0a5911626ce82684155f21d0e4d",
+                "reference": "98e831eac836a0a5911626ce82684155f21d0e4d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-16 10:36:21"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
+                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-05-16 14:25:18"
         }
     ],
     "packages-dev": [
@@ -854,60 +1169,9 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2014-03-07 15:35:33"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v2.5.0",
-            "target-dir": "Symfony/Component/Yaml",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Yaml\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-05-16 14:25:18"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "natxet/cssmin": 20,
@@ -916,10 +1180,6 @@
         "phayes/geophp": 20,
         "facebook/webdriver": 20
     },
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }
