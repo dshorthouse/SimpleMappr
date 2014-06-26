@@ -52,6 +52,7 @@ before_script:
   - phpenv config-add .travis/travis.php.ini
 
   # MySQL
+  - sudo cp config/phinx.yml.sample config/phinx.yml
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
 
   # Restart Apache
