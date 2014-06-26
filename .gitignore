@@ -1,16 +1,13 @@
 # Ignore configuration files
 config/phinx.yml
 config/conf.php
-config/conf.db.php
-config/conf.php.old
-config/conf.db.php.old
 
 # Ignore misc files
 robots.txt
 sitemap.xml
 googlea6eb060e8a251a1c.html
 
-# Ignore contents of direcories
+# Ignore contents of directories
 public/javascript/cache/*
 !public/javascript/cache/README
 
