@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * API handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprApi extends Mappr
 {
     private $_coord_cols = array();

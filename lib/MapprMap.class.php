@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Map handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprMap extends Mappr
 {
     private $_id;

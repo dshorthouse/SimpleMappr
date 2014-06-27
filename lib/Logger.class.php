@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Logger for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Logger
 {
     private $_filename;

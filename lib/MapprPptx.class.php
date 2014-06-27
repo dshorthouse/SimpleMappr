@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * PPTX handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprPptx extends Mappr
 {
     private $_slidepadding = 25;

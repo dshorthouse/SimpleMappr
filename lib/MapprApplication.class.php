@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Application class for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprApplication extends Mappr
 {
     /**

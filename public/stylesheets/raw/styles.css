@@ -16,6 +16,7 @@ textarea{resize:none;padding:0;}
 #site-title span{color:#3ad1ff;}
 #site-tagline{position:absolute;left:14em;font-style:italic;}
 #site-user{position:absolute;right:9em;}
+#site-user img{max-height:1.8em;vertical-align:middle;}
 #site-session{position:absolute;right:0.5em;}
 #site-session a.login:before{background-position:-200px -264px;}
 #site-session a.logout:before{background-position:-180px -264px;}

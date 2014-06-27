@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * User handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class User extends Rest implements RestMethods
 {
 

@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * KML handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Kml
 {
     public static $pushpins = array(

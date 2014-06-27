@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Places handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Places extends Rest implements RestMethods
 {
     protected $id;

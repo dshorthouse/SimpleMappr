@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Header handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Header
 {
 

@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Session handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Session
 {
     public static $accepted_locales = array(
@@ -250,12 +256,14 @@ class Session
             $email       = (isset($profile['email'])) ? Utilities::check_plain($profile['email']) : '';
             $username    = (isset($profile['preferredUsername'])) ? Utilities::check_plain($profile['preferredUsername']) : $email;
             $displayname = (isset($profile['displayName'])) ? Utilities::check_plain($profile['displayName']) : '';
+            $photo       = (isset($profile['photo'])) ? $profile['photo'] : '';
 
             $user = array(
                 'identifier'  => $identifier,
                 'username'    => $username,
                 'displayname' => $displayname,
-                'email'       => $email
+                'email'       => $email,
+                'photo'       => $photo
             );
 
             $db = new Database();
@@ -266,6 +274,7 @@ class Session
                         u.email,
                         u.username,
                         u.displayname,
+                        u.photo,
                         u.role
                     FROM 
                         users u 
@@ -280,7 +289,7 @@ class Session
             $user['locale'] = $this->_locale;
             $user['role'] = (!$result->role) ? 1 : $result->role;
 
-            $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
+            $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'photo' => $photo, 'access' => time()), "uid=".$user['uid']);
 
             self::write_session($user);
             self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($user['locale']));

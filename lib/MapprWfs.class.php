@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Web Feature Service (WFS) for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprWfs extends Mappr
 {
     /* the request object for WFS and WMS */ 

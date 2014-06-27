@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Query handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class MapprQuery extends Mappr
 {
     private $_data = "";

@@ -38,6 +38,12 @@ namespace SimpleMappr;
 
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Database class for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Database
 {
     private $_link;
@@ -225,6 +231,12 @@ class Database
         $this->execute();
     }
 
+    /**
+     * Make PDO connection string and get credentials from parsed Phinx YML.
+     *
+     * @param array $config.
+     * @return array PDO connection, username, password.
+     */
     private function credentials($config)
     {
         $adapter = $config['environments'][ENVIRONMENT]['adapter'];
@@ -240,7 +252,7 @@ class Database
     }
 
     /**
-     * Return last inserted id,
+     * Return last inserted id.
      *
      * @return int The last inserted id.
      */

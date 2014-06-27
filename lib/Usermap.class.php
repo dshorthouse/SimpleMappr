@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * User map handler for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 class Usermap extends Rest implements RestMethods
 {
     private $_uid;

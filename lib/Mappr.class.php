@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Main Mappr class for SimpleMappr
+ *
+ * @package SimpleMappr
+ * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ */
 abstract class Mappr
 {
     abstract function create_output();
