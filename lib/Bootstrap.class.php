@@ -249,7 +249,17 @@ class Bootstrap
     private function tail_log()
     {
         $logger = new Logger(ROOT."/log/logger.log");
-        echo ($logger->tail()) ? implode("<br>", $logger->tail()) : "No log data";
+        $logs = $logger->tail();
+        if ($logs) {
+            foreach ($logs as $key => $log) {
+                if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $log, $match)) {
+                    if (filter_var($match[0], FILTER_VALIDATE_IP)) {
+                        $logs[$key] = str_replace($match, "<a href=\"http://tools.whois.net/whoisbyip/?host=".$match[0]."\" target=\"_blank\">".$match[0]."</a>", $log);
+                    }
+                }
+            }
+        }
+        echo ($logs) ? implode("<br>", $logs) : "No log data";
     }
 
     /**

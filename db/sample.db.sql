@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(50) DEFAULT NULL,
   `displayname` varchar(125) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
   `role` int(11) DEFAULT '1',
   `created` int(11) DEFAULT NULL,
   `access` int(11) DEFAULT NULL,
