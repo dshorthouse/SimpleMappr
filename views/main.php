@@ -36,9 +36,6 @@ $roles = $header[2];
 </div>
 <?php if (isset($_SESSION['simplemappr'])): ?>
 <div id="site-user">
-  <?php if (array_key_exists('photo', $_SESSION['simplemappr']) && !empty($_SESSION['simplemappr']['photo'])): ?>
-      <img src="<?php echo $_SESSION['simplemappr']['photo']; ?>" />
-  <?php endif; ?>
   <?php if (!empty($_SESSION['simplemappr']['displayname'])): ?>
     <?php echo $_SESSION['simplemappr']['displayname']; ?>
   <?php else: ?>
