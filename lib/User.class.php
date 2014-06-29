@@ -121,6 +121,7 @@ class User extends Rest implements RestMethods
                     maps m ON (u.uid = m.uid)
                 GROUP BY
                     u.uid
+                HAVING count(m.mid) > 0
                 ORDER BY " . $order;
 
         $this->db->prepare($sql);
