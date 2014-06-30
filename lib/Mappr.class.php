@@ -768,7 +768,7 @@ abstract class Mappr
 
         //stateprovinces_polygon
         $this->shapes['stateprovinces_polygon'] = array(
-            'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_shp",
+            'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces",
             'type'  => MS_LAYER_POLYGON,
             'sort'  => 5
         );
