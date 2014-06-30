@@ -137,7 +137,7 @@ class NavigationTest extends SimpleMapprTest
             'tag' => 'tbody',
             'parent' => array('attributes' => array('class' => 'grid-users')),
             'ancestor' => array('id' => 'userdata'),
-            'children' => array('count' => 2)
+            'children' => array('count' => 1)
         );
         $this->assertTag($matcher, $this->webDriver->getPageSource());
 

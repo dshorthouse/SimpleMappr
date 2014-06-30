@@ -236,16 +236,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.3.5",
+            "version": "v0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "92b18483c600dba243d6282e34f31f0cb03ddafd"
+                "reference": "42e1c104673fb3958466fd21218a3eb8e6797f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/92b18483c600dba243d6282e34f31f0cb03ddafd",
-                "reference": "92b18483c600dba243d6282e34f31f0cb03ddafd",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/42e1c104673fb3958466fd21218a3eb8e6797f20",
+                "reference": "42e1c104673fb3958466fd21218a3eb8e6797f20",
                 "shasum": ""
             },
             "require": {
@@ -289,7 +289,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-06-21 11:27:52"
+            "time": "2014-06-29 10:54:25"
         },
         {
             "name": "symfony/class-loader",
@@ -592,16 +592,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.0.8",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca"
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/58401826c8cfc8fd689b60026e91c337df374bca",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ed8ac99ce38c3fd134128c898f7ca74665abef7f",
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f",
                 "shasum": ""
             },
             "require": {
@@ -653,7 +653,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-05-26 14:55:24"
+            "time": "2014-06-29 08:14:40"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -913,16 +913,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.0.9",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "a01285d0b705af5963367451088508b6d4e417f2"
+                "reference": "e60bb929c50ae4237aaf680a4f6773f4ee17f0a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a01285d0b705af5963367451088508b6d4e417f2",
-                "reference": "a01285d0b705af5963367451088508b6d4e417f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/e60bb929c50ae4237aaf680a4f6773f4ee17f0a2",
+                "reference": "e60bb929c50ae4237aaf680a4f6773f4ee17f0a2",
                 "shasum": ""
             },
             "require": {
@@ -966,7 +966,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-06-07 16:22:54"
+            "time": "2014-06-12 07:19:48"
         },
         {
             "name": "sebastian/diff",

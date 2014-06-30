@@ -302,7 +302,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        $this->webDriver->close();
+        if (isset($this->webDriver)) {
+            $this->webDriver->close();
+        }
     }
 
     /**
