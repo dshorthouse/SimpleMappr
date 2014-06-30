@@ -4,7 +4,9 @@ echo $FOO
 
 EXTRA_PACKETS="
 apache2 \
+build-essential \
 libapache2-mod-fastcgi \
+php5-dev \
 php5-mysql \
 locales \
 gettext \
