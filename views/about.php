@@ -46,10 +46,12 @@ Session::select_locale();
 <dt class="update"><?php echo _("June 14, 2012"); ?></dt><dd><?php echo _("Bug fixes: Download when legend selected in absence of regions or coordinates resulted in error thrown."); ?></dd>
 </dl>
 </div>
+<?php if (ENVIRONMENT == "production"): ?>
 <div id="live-updates">
 <div class="header"><h2><?php echo _("Live Updates"); ?></h2></div>
 <div id="twitter_div"><a class="twitter-timeline" href="https://twitter.com/SimpleMappr" data-widget-id="325778519898603520">Tweets by @SimpleMappr</a></div>
 </div>
+<?php endif; ?>
 </div>
 <div class="header"><h2><?php echo _("In the Wild"); ?></h2></div>
 <?php
@@ -75,4 +77,6 @@ taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297
 <div class="header"><h2><?php echo _("Acknowledgments"); ?></h2></div>
 <p><?php echo sprintf(_("Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript. Biodiversity Hotspot data were obtained from %s."), "<a href=\"http://www.naturalearthdata.com/\" target=\"_blank\">http://www.naturalearthdata.com/</a>", "<a href=\"http://mapserver.org\" target=\"_blank\">http://mapserver.org</a>", "<a href=\"http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx\" target=\"_blank\">Conservation International</a>"); ?></p>
 </div>
+<?php if (ENVIRONMENT == "production"): ?>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<?php endif; ?>

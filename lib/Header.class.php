@@ -53,11 +53,17 @@ class Header
     private static $_js_cache_path = "/public/javascript/cache/";
 
     /**
-     * An array of all javascript files to be minified
+     * An array of javascript files that remain uncombined
+     */
+    public $local_js_uncombined = array(
+        'jquery'      => 'public/javascript/jquery-1.11.1.min.js',
+        'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js'
+     );
+
+    /**
+     * An array of all javascript files to be combined
      */
     public $local_js_combined = array(
-        'jquery'      => 'public/javascript/jquery-1.11.1.min.js',
-        'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
         'color'       => 'public/javascript/jquery.colorpicker.min.js',
         'jcrop'       => 'public/javascript/jquery.Jcrop.min.js',
         'textarea'    => 'public/javascript/jquery.textarearesizer.min.js',
@@ -235,8 +241,9 @@ class Header
     {
         $this->make_hash()
             ->add_remote_js()
-            ->combine_local_js()
-            ->combine_local_css();
+            ->add_uncombined_js()
+            ->add_combined_js()
+            ->add_combined_css();
     }
 
     /**
@@ -271,9 +278,19 @@ class Header
      */
     private function add_remote_js()
     {
-        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+        if (ENVIRONMENT == "production") {
+            unset($this->local_js_uncombined['jquery']);
             $this->addJS('jquery', $this->remote_js['jquery']);
-            $this->addJS('jquery_ui', $this->local_js_combined['jquery_ui']);
+        }
+        return $this;
+    }
+
+    /**
+     * Add uncombined, local javascript files
+     */
+    private function add_uncombined_js() {
+        foreach ($this->local_js_uncombined as $key => $js_file) {
+            $this->addJS($key, $js_file);
         }
         return $this;
     }
@@ -281,13 +298,12 @@ class Header
     /**
      * Add existing, minified javascript to header or create if does not already exist
      */
-    private function combine_local_js()
+    private function add_combined_js()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $cached_js = $this->files_cached(dirname(__DIR__) . self::$_js_cache_path);
 
             if (!$cached_js) {
-                unset($this->local_js_combined['jquery'], $this->local_js_combined['jquery_ui']);
                 $js_contents = '';
                 foreach ($this->local_js_combined as $js_file) {
                     $js_contents .= file_get_contents($js_file) . "\n";
@@ -312,7 +328,7 @@ class Header
                 $this->addJS($key, $js_file);
             }
         }
-        if (!isset($_SESSION['simplemappr'])) {
+        if (!isset($_SESSION['simplemappr']) && ENVIRONMENT !== "testing") {
             $this->addJS("janrain", $this->remote_js["janrain"]);
         }
         if ($this->isAdministrator()) {
@@ -330,7 +346,7 @@ class Header
     /**
      * Add existing, minified css to header or create if does not already exist
      */
-    private function combine_local_css()
+    private function add_combined_css()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $cached_css = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
