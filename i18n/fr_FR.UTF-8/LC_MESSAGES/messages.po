@@ -668,6 +668,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "June 30, 2014"
+msgstr "30 juin, 2014"
+
+#: .tabs/about.php:11
 msgid "January 13, 2014"
 msgstr "13 janvier, 2014"
 
@@ -678,6 +682,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about:11
+msgid "Improvements: Codebase migrated to a dedicated hosting service."
+msgstr "Améliorations: Logicielle migré vers un service d'hébergement dédié."
 
 #: .tabs/about.php:11
 msgid "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow."
