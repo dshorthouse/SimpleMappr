@@ -35,8 +35,9 @@ class ToolbarTest extends SimpleMapprTest
     public function testRefresh()
     {
         parent::setUpPage();
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        $link = $this->webDriver->findElement(WebDriverBy::className('toolsRefresh'));
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsRefresh'))[0];
         $link->click();
         parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
@@ -50,8 +51,9 @@ class ToolbarTest extends SimpleMapprTest
     public function testRebuild()
     {
         parent::setUpPage();
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        $link = $this->webDriver->findElement(WebDriverBy::className('toolsRebuild'));
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsRebuild'))[0];
         $link->click();
         parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
@@ -65,8 +67,9 @@ class ToolbarTest extends SimpleMapprTest
     public function testZoomOut()
     {
         parent::setUpPage();
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        $link = $this->webDriver->findElement(WebDriverBy::className('toolsZoomOut'));
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsZoomOut'))[0];
         $link->click();
         parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
@@ -99,7 +102,7 @@ class ToolbarTest extends SimpleMapprTest
         parent::setUpPage();
         parent::setSession();
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
-        $link = $this->webDriver->findElement(WebDriverBy::className('toolsSave'));
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsSave'))[0];
         $link->click();
         $this->webDriver->findElement(WebDriverBy::id('m-mapSaveTitle'))->sendKeys($title);
         $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Save']"))->click();
