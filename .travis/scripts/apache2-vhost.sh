@@ -29,4 +29,4 @@ sudo a2ensite $VHOSTNAME
 
 sudo service apache2 reload
 
-sudo less /etc/apache2/sites-enabled/$VHOSTNAME
+sudo head -1000 /etc/apache2/sites-enabled/$VHOSTNAME
