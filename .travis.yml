@@ -68,4 +68,4 @@ before_script:
 
 script:
   # - phpunit -c Tests/chrome.phpunit.xml --stderr
-  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
