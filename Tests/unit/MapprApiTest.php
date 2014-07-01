@@ -75,6 +75,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_get()
     {
+        $_REQUEST = array();
         $this->mappr_api->get_request()->execute();
         ob_start();
         $this->mappr_api->create_output();

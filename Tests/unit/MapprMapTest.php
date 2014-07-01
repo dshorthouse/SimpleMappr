@@ -83,6 +83,22 @@ class MapprMapTest extends SimpleMapprTest
     }
 
     /**
+     * Test that the output is SVG.
+     */
+    public function test_map_svg()
+    {
+        $this->setUpMap('svg');
+        $this->mappr_map->get_request()->execute();
+        ob_start();
+        $this->mappr_map->create_output();
+        $output = ob_get_contents();
+        $file = ROOT."/public/tmp/map_svg.svg";
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_svg.svg'));
+    }
+
+    /**
      * Test that the output is KML.
      */
     public function test_map_kml()
@@ -97,22 +113,6 @@ class MapprMapTest extends SimpleMapprTest
         ob_end_clean();
         session_destroy(); //req'd because Kml class sets a cookie
         $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_kml.kml'));
-    }
-
-    /**
-     * Test that the output is SVG.
-     */
-    public function test_map_svg()
-    {
-        $this->setUpMap('svg');
-        $this->mappr_map->get_request()->execute();
-        ob_start();
-        $this->mappr_map->create_output();
-        $output = ob_get_contents();
-        $file = ROOT."/public/tmp/map_svg.svg";
-        file_put_contents($file, $output);
-        ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_svg.svg'));
     }
 
 }
