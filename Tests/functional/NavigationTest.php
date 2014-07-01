@@ -162,7 +162,7 @@ class NavigationTest extends SimpleMapprTest
         $orig_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
         $this->webDriver->findElement(WebDriverBy::linkText('Administration'))->click();
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('admin-api-list'))->getText(), 'No log data');
-        if (!getenv('CI')) {
+        if (!getenv('CI')) { //hack because headless CI like Travis cannot handle alert boxes
             $this->webDriver->findElement(WebDriverBy::linkText('Flush caches'))->click();
             $this->webDriver->wait()->until(WebDriverExpectedCondition::alertIsPresent());
             $dialog = $this->webDriver->switchTo()->alert();
