@@ -1947,12 +1947,11 @@ var SimpleMappr = (function($, window, document) {
         .attr("width", data.size[0])
         .attr("height", data.size[1])
         .css({width:data.size[0]+'px', height:data.size[1]+'px'})
-        .attr("src", data.mapOutputImage)
-        .one('load', function() {
+        .one("load", function() {
           if(!load_data) { load_data = { "map" : { "bbox_rubberband" : "" }}; }
           self.loadCropSettings(load_data);
           self.hideSpinner();
-        });
+        }).attr("src", data.mapOutputImage);
     },
 
     addBadRecordsViewer: function() {
