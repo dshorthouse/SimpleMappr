@@ -161,6 +161,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
         timeout  : 30000,
         success  : function(data) {
           if(data.status === 'ok') {
+            citations += "<h2>Total: " + data.citations.length + "</h2>";
             $.each(data.citations, function() {
               doi = (this.doi) ? ' doi:<a href="http://doi.org/' + this.doi + '">' + this.doi + '</a>.' : "";
               link = (this.link) ? ' (<a href="' + this.link + '">link</a>)' : "";
