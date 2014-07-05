@@ -2,8 +2,11 @@
   ServerName %hostname%
   ServerAdmin davidpshorthouse@gmail.com
   DocumentRoot %basedir%/public/tmp
-  Options -Indexes +FollowSymlinks
+  Alias "/error" "/var/www/SimpleMappr/error/"
+  ErrorDocument 404 "/error/404.html"
+  ErrorDocument 403 "/error/403.html"
 <Directory "%basedir%/public/tmp">
+  Options -Indexes +FollowSymlinks
   AllowOverride None
   Order allow,deny
   Allow from all

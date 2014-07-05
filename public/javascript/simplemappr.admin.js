@@ -109,6 +109,26 @@ var SimpleMapprAdmin = (function($, window, sm) {
           self.flushCaches();
         }
       });
+
+      $('#citation-doi').on('blur', function() {
+        var val = $(this).val();
+        if(val.length > 0 && $('#citation-reference').val().length === 0) {
+          sm.showSpinner();
+          $.getJSON("http://search.crossref.org/dois?q=" + encodeURIComponent(val), function(data) {
+            if (data && data.length > 0) {
+              $.each(data[0], function(key, value) {
+                if(key === "fullCitation") {
+                  $('#citation-reference').val(value);
+                }
+                if(key === "year") {
+                  $('#citation-year').val(value);
+                }
+              });
+            }
+          });
+          sm.hideSpinner();
+        }
+      });
     },
 
     flushCaches: function() {
