@@ -130,6 +130,7 @@ class MapprWfs extends Mappr
     public function make_service()
     {
         $this->map_obj->setMetaData("name", "SimpleMappr Web Feature Service");
+        $this->map_obj->setMetadata("wfs_encoding", "UTF-8");
         $this->map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
         $this->map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
 
