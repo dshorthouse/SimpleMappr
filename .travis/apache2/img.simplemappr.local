@@ -15,10 +15,11 @@
   FileEtag None
   <IfModule mod_headers.c>
     Header unset ETag
-    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
   </IfModule>
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png "access plus 1 hour"
+   </IfModule>
 </Directory>
 <Directory "%basedir%/error">
   Options -Indexes

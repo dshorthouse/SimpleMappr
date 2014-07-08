@@ -124,6 +124,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #jcrop-dimension-h{margin-left:2px;text-align:left;}
 #map{position:absolute;top:40px;left:0;width:900px;}
 #mapImage{position:relative;}
+#mapOutput{height:450px;}
 #mapOutputImage{background-color:#fff;}
 #mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:1000;top:5px;left:5px}
 #mapControls .controls{position:absolute;}
