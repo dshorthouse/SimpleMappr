@@ -76,10 +76,19 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           KEY `index_on_country` (`country`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
 
+        $shares_table = 'CREATE TABLE IF NOT EXISTS `shares` (
+          `sid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+          `mid` int(11) NOT NULL,
+          `created` int(11) NOT NULL,
+          PRIMARY KEY (`sid`),
+          KEY `index_on_mid` (`mid`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+    
         self::$db->exec($maps_table);
         self::$db->exec($users_table);
         self::$db->exec($citations_table);
         self::$db->exec($stateprovinces_table);
+        self::$db->exec($shares_table);
 
         $user1 = self::$db->query_insert('users', array(
           'uid' => 1,
@@ -99,7 +108,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'role' => 1
         ));
 
-        $map_data = array (
+        $map_data1 = array (
           'coords' => 
           array (
             0 => 
@@ -179,7 +188,109 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'rotation' => '0',
           'save' => 
           array (
-            'title' => 'sample data',
+            'title' => 'Sample Map',
+          ),
+          'file_name' => '',
+          'download_factor' => '1',
+          'width' => '',
+          'height' => '',
+          'download_filetype' => 'svg',
+          'grid_space' => '',
+          'options' => 
+          array (
+            'border' => '',
+            'legend' => '',
+            'scalebar' => '',
+            'scalelinethickness' => '',
+          ),
+          'border_thickness' => '',
+          'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+          'rendered_rotation' => '0',
+          'rendered_projection' => 'epsg:4326',
+          'bad_points' => '',
+        );
+
+        $map_data2 = array (
+          'coords' => 
+          array (
+            0 => 
+            array (
+              'title' => 'More Sample Data',
+              'data' => '45, -115',
+              'shape' => 'circle',
+              'size' => '14',
+              'color' => '255 32 3',
+            ),
+            1 => 
+            array (
+              'title' => '',
+              'data' => '',
+              'shape' => 'circle',
+              'size' => '10',
+              'color' => '0 0 0',
+            ),
+            2 => 
+            array (
+              'title' => '',
+              'data' => '',
+              'shape' => 'circle',
+              'size' => '10',
+              'color' => '0 0 0',
+            ),
+          ),
+          'regions' => 
+          array (
+            0 => 
+            array (
+              'title' => '',
+              'data' => '',
+              'color' => '150 150 150',
+            ),
+            1 => 
+            array (
+              'title' => '',
+              'data' => '',
+              'color' => '150 150 150',
+            ),
+            2 => 
+            array (
+              'title' => '',
+              'data' => '',
+              'color' => '150 150 150',
+            ),
+          ),
+          'layers' => 
+          array (
+            'stateprovinces' => 'on',
+          ),
+          'gridspace' => '',
+          'projection' => 'epsg:4326',
+          'origin' => '',
+          'filter-mymap' => '',
+          'citation' => 
+          array (
+            'reference' => '',
+            'first_author_surname' => '',
+            'year' => '',
+            'doi' => '',
+            'link' => '',
+          ),
+          'download-filetype' => 'svg',
+          'download-factor' => '1',
+          'download' => '',
+          'output' => 'pnga',
+          'download_token' => '1398911053520',
+          'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+          'projection_map' => 'epsg:4326',
+          'bbox_rubberband' => '',
+          'bbox_query' => '',
+          'pan' => '',
+          'zoom_out' => '',
+          'crop' => '',
+          'rotation' => '0',
+          'save' => 
+          array (
+            'title' => 'Sample Map 2',
           ),
           'file_name' => '',
           'download_factor' => '1',
@@ -204,7 +315,14 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->query_insert('maps', array(
           'uid' => $user1,
           'title' => 'Sample Map',
-          'map' => json_encode($map_data),
+          'map' => json_encode($map_data1),
+          'created' => time()
+        ));
+
+        self::$db->query_insert('maps', array(
+          'uid' => $user2,
+          'title' => 'Sample Map 2',
+          'map' => json_encode($map_data2),
           'created' => time()
         ));
 

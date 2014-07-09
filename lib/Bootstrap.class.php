@@ -171,6 +171,10 @@ class Bootstrap
             $this->klass("Session", true);
             break;
 
+        case "/share":
+            $this->klass("Share", $this->_id);
+            break;
+
         case "/user":
             $this->klass("User", $this->_id);
             break;

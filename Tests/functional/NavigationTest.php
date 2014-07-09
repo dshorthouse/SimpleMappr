@@ -104,24 +104,6 @@ class NavigationTest extends SimpleMapprTest
     }
 
     /**
-     * Test presence of user pages.
-     */
-    public function testUserPage()
-    {
-        parent::setUpPage();
-        parent::setSession('user', 'fr_FR');
-        $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'Jack Johnson');
-        $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-session'))->getText(), 'Déconnecter');
-
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('Mes cartes'));
-        $link->click();
-        parent::waitOnSpinner();
-        $content = $this->webDriver->findElement(WebDriverBy::id('map-mymaps'));
-        $this->assertContains('Alternativement, vous pouvez créer et enregistrer un modèle générique sans points de données', $content->getText());
-        $this->assertCount(0, $this->webDriver->findElements(WebDriverBy::linkText('Administration')));
-    }
-
-    /**
      * Test presence of admin pages.
      */
     public function testAdminPage()
@@ -137,7 +119,7 @@ class NavigationTest extends SimpleMapprTest
             'tag' => 'tbody',
             'parent' => array('attributes' => array('class' => 'grid-users')),
             'ancestor' => array('id' => 'userdata'),
-            'children' => array('count' => 1)
+            'children' => array('count' => 2)
         );
         $this->assertTag($matcher, $this->webDriver->getPageSource());
 

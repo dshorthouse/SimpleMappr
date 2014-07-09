@@ -37,33 +37,17 @@
 namespace SimpleMappr;
 
 /**
- * User handler for SimpleMappr
+ * Share handler for SimpleMappr
  *
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class User extends Rest implements RestMethods
+class Share extends Rest implements RestMethods
 {
-
-    private $_role;
     private $_dir;
-
-    protected $db;
-
-    public static $roles = array(
-        1 => 'user',
-        2 => 'administrator'
-    );
-
-    public static function check_permission()
-    {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (!isset($_SESSION['simplemappr']) || self::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
-            Utilities::access_denied();
-        }
-    }
+    private $_db;
+    private $_uid;
+    private $_role;
 
     function __construct($id)
     {
@@ -73,6 +57,7 @@ class User extends Rest implements RestMethods
         }
         Session::select_locale();
         $this->id = (int)$id;
+        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
         Header::set_header();
         $this->execute();
@@ -83,12 +68,8 @@ class User extends Rest implements RestMethods
      */
     private function execute()
     {
-        if (self::$roles[$this->_role] !== 'administrator') {
-            Utilities::access_denied();
-        } else {
-            $this->db = new Database();
-            $this->restful_action();
-        }
+        $this->_db = new Database();
+        $this->restful_action();
     }
 
     /**
@@ -97,35 +78,33 @@ class User extends Rest implements RestMethods
     public function index()
     {
         $this->_dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-        $order = "u.access {$this->_dir}";
-
+        
+        $order = "m.created {$this->_dir}";
         if (isset($_GET['sort'])) {
-            $order = "";
-            $sort = $_GET['sort'];
-            if ($sort == "num" || $sort == "access" || $sort == "username") {
-                if ($sort == "accessed") {
-                    $order = "m.";
-                }
-                if ($sort == "username") {
-                    $order = "u.";
-                }
-                $order = $order.$sort." ".$this->_dir;
+            if ($_GET['sort'] == "created") {
+                $order = "s.".$_GET['sort'] . " {$this->_dir}";
+            }
+            if ($_GET['sort'] == "username") {
+                $order = "u.".$_GET['sort'] . " {$this->_dir}";
+            }
+            if ($_GET['sort'] == "title") {
+                $order = "m.".$_GET['sort'] . " {$this->_dir}";
             }
         }
 
-        $sql = "SELECT
-                    u.uid, u.username, u.email, u.access, u.role, count(m.mid) as num
-                FROM
-                    users u
-                LEFT JOIN
-                    maps m ON (u.uid = m.uid)
-                GROUP BY
-                    u.uid
-                HAVING count(m.mid) > 0
-                ORDER BY " . $order;
-
-        $this->db->prepare($sql);
-        $this->produce_output($this->db->fetch_all_object());
+        $sql = "
+            SELECT
+                s.sid, m.title, u.username, s.created
+            FROM
+                maps m
+            INNER JOIN
+                users u ON (m.uid = u.uid)
+            INNER JOIN
+                shares s ON (s.mid = m.mid)
+            ORDER BY ".$order;
+        
+        $this->_db->prepare($sql);
+        $this->produce_output($this->_db->fetch_all_object());
     }
 
     /**
@@ -136,7 +115,26 @@ class User extends Rest implements RestMethods
      */
     public function show($id)
     {
-        $this->not_implemented();
+        $sql = "
+            SELECT
+                m.mid, m.map
+            FROM 
+                maps m
+            INNER JOIN
+                shares s ON (m.mid = s.mid)
+            WHERE
+                s.sid = :sid";
+
+        $this->_db->prepare($sql);
+        $this->_db->bind_param(":sid", $id, 'integer');
+
+        $record = $this->_db->fetch_first_object();
+        $data['mid'] = ($record) ? $record->mid : "";
+        $data['map'] = ($record) ? json_decode($record->map, true) : "";
+        $data['status'] = ($data['map']) ? 'ok' : 'failed';
+
+        Header::set_header('json');
+        echo json_encode($data);
     }
 
     /**
@@ -163,49 +161,46 @@ class User extends Rest implements RestMethods
      */
     public function destroy($id)
     {
-        if (self::$roles[$this->_role] !== 'administrator') {
-            Utilities::access_denied();
-        } else {
-            $sql = "DELETE
-                        u, m
+        if (User::$roles[$this->_role] == 'administrator') {
+            $sql = "DELETE 
                     FROM
-                        users u
-                    LEFT JOIN
-                        maps m ON u.uid = m.uid
+                        shares
                     WHERE 
-                        u.uid=:uid";
-            $this->db->prepare($sql);
-            $this->db->bind_param(":uid", $id, 'integer');
-            $this->db->execute();
-
-            header("Content-Type: application/json");
-            echo json_encode(array("status" => "ok"));
+                        sid = :sid";
+            $this->_db->prepare($sql);
+            $this->_db->bind_param(":sid", $id, 'integer');
+        } else {
+            $sql = "DELETE s.*
+                    FROM
+                        shares s
+                    INNER JOIN
+                        maps m ON (m.mid = s.mid)
+                    WHERE 
+                        s.sid = :sid AND m.uid = :uid";
+            $this->_db->prepare($sql);
+            $this->_db->bind_param(":sid", $id, 'integer');
+            $this->_db->bind_param(":uid", $this->_uid, 'integer');
         }
+        $this->_db->execute();
+        Header::set_header('json');
+        echo json_encode(array("status" => "ok"));
     }
 
-    /**
-     * Produce the HTML output for user list
-     *
-     * @param array $rows Rows returned from the resultset
-     * @return void
-     */
     private function produce_output($rows)
     {
         $output  = '';
-        $output .= '<table class="grid-users">' . "\n";
+        $output .= '<table class="grid-shares">' . "\n";
         $output .= '<thead>' . "\n";
         $output .= '<tr>' . "\n";
+        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "title" && isset($_GET['dir'])) ? " ".$this->_dir : "";
+        $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="title" href="#">'._("Title").'</a></th>';
         $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$dir : "";
         $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
-        $output .= '<th class="left-align">'._("Email").'</th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "num" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="num" href="#">'._("Maps").'</a></th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "access" && isset($_GET['dir'])) ? " ".$this->_dir : "";
+        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$this->_dir : "";
         if (!isset($_GET['sort']) && !isset($_GET['dir'])) {
             $sort_dir = " desc";
         }
-        $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="access" href="#">'._("Last Access").'</a></th>';
-        $output .= '<th class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></th>';
+        $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
         $output .= '</tr>' . "\n";
         $output .= '</thead>' . "\n";
         $output .= '<tbody>' . "\n";
@@ -213,18 +208,9 @@ class User extends Rest implements RestMethods
         foreach ($rows as $row) {
             $class = ($i % 2) ? 'class="even"' : 'class="odd"';
             $output .= '<tr '.$class.'>';
-            $output .= '<td><a class="user-load" data-uid="'.$row->uid.'" href="#">';
-            $output .= Utilities::check_plain(stripslashes($row->username));
-            $output .= '</a></td>';
-            $output .= '<td>'.Utilities::check_plain(stripslashes($row->email)).'</td>';
-            $output .= '<td class="usermaps-number">'.$row->num.'</td>';
-            $access = ($row->access) ? gmdate("M d, Y", $row->access) : '-';
-            $output .= '<td class="usermaps-center">'.$access.'</td>';
-            $output .= '<td class="actions">';
-            if (!$row->role || self::$roles[$row->role] !== 'administrator') {
-                $output .= '<a class="sprites-before user-delete" data-id="'.$row->uid.'" href="#">'._("Delete").'</a>';
-            }
-            $output .= '</td>';
+            $output .= '<td class="title"><a class="map-load" data-id="'.$row->sid.'" href="#">' . Utilities::check_plain(stripslashes($row->title)) . '</a></td>';
+            $output .= '<td>' . Utilities::check_plain(stripslashes($row->username)) . '</td>';
+            $output .= '<td class="center-align">' . gmdate("M d, Y", $row->created) . '</td>';
             $output .= '</tr>' . "\n";
             $i++;
         }
