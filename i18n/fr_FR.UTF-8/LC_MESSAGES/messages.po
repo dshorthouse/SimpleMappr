@@ -684,6 +684,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "July 9, 2014"
+msgstr "9 juillet, 2014"
+
+#: .tabs/about.php:11
 msgid "June 30, 2014"
 msgstr "30 juin, 2014"
 
@@ -698,6 +702,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about:11
+msgid "Improvements: Added ability to share and unshare maps with authenticated users."
+msgstr "Améliorations: Ajouté l'option de partager vos cartes avec d'autres utilisateurs."
 
 #: .tabs/about:11
 msgid "Improvements: Codebase migrated to a dedicated hosting service."
