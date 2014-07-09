@@ -81,7 +81,8 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           `mid` int(11) NOT NULL,
           `created` int(11) NOT NULL,
           PRIMARY KEY (`sid`),
-          KEY `index_on_mid` (`mid`)
+          KEY `index_on_mid` (`mid`),
+          KEY `idx_created` (`created`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
     
         self::$db->exec($maps_table);

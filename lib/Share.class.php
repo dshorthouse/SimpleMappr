@@ -52,13 +52,8 @@ class Share extends Rest implements RestMethods
     function __construct($id)
     {
         session_start();
-        if (!isset($_SESSION['simplemappr'])) {
-            Utilities::access_denied();
-        }
         Session::select_locale();
         $this->id = (int)$id;
-        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
-        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
         Header::set_header();
         $this->execute();
     }
@@ -94,7 +89,7 @@ class Share extends Rest implements RestMethods
 
         $sql = "
             SELECT
-                s.sid, m.title, u.username, s.created
+                s.mid, m.title, u.username, s.created
             FROM
                 maps m
             INNER JOIN
@@ -142,7 +137,14 @@ class Share extends Rest implements RestMethods
      */
     public function create()
     {
-        $this->not_implemented();
+        $this->check_session();
+        $data = array(
+            'mid' => $_POST["mid"],
+            'created' => time(),
+        );
+        $this->_db->query_insert('shares', $data);
+        Header::set_header('json');
+        echo json_encode(array("status" => "ok"));
     }
 
     /**
@@ -150,6 +152,7 @@ class Share extends Rest implements RestMethods
      */
     public function update()
     {
+        $this->check_session();
         $this->not_implemented();
     }
 
@@ -161,6 +164,7 @@ class Share extends Rest implements RestMethods
      */
     public function destroy($id)
     {
+        $this->check_session();
         if (User::$roles[$this->_role] == 'administrator') {
             $sql = "DELETE 
                     FROM
@@ -186,36 +190,50 @@ class Share extends Rest implements RestMethods
         echo json_encode(array("status" => "ok"));
     }
 
+    private function check_session()
+    {
+        if (!isset($_SESSION['simplemappr'])) {
+            Utilities::access_denied();
+        }
+        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
+        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
+    }
+
     private function produce_output($rows)
     {
         $output  = '';
-        $output .= '<table class="grid-shares">' . "\n";
-        $output .= '<thead>' . "\n";
-        $output .= '<tr>' . "\n";
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "title" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="title" href="#">'._("Title").'</a></th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$dir : "";
-        $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        if (!isset($_GET['sort']) && !isset($_GET['dir'])) {
-            $sort_dir = " desc";
-        }
-        $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
-        $output .= '</tr>' . "\n";
-        $output .= '</thead>' . "\n";
-        $output .= '<tbody>' . "\n";
-        $i=0;
-        foreach ($rows as $row) {
-            $class = ($i % 2) ? 'class="even"' : 'class="odd"';
-            $output .= '<tr '.$class.'>';
-            $output .= '<td class="title"><a class="map-load" data-id="'.$row->sid.'" href="#">' . Utilities::check_plain(stripslashes($row->title)) . '</a></td>';
-            $output .= '<td>' . Utilities::check_plain(stripslashes($row->username)) . '</td>';
-            $output .= '<td class="center-align">' . gmdate("M d, Y", $row->created) . '</td>';
+        if (count($rows) > 0) {
+            $output .= '<table class="grid-shares">' . "\n";
+            $output .= '<thead>' . "\n";
+            $output .= '<tr>' . "\n";
+            $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "title" && isset($_GET['dir'])) ? " ".$this->_dir : "";
+            $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="title" href="#">'._("Title").'</a></th>';
+            $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$this->_dir : "";
+            $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
+            $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$this->_dir : "";
+            if (!isset($_GET['sort']) && !isset($_GET['dir'])) {
+                $sort_dir = " desc";
+            }
+            $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
             $output .= '</tr>' . "\n";
-            $i++;
+            $output .= '</thead>' . "\n";
+            $output .= '<tbody>' . "\n";
+            $i=0;
+            foreach ($rows as $row) {
+                $class = ($i % 2) ? 'class="even"' : 'class="odd"';
+                $output .= '<tr '.$class.'>';
+                $output .= '<td class="title"><a class="map-load" data-id="'.$row->mid.'" href="#">' . Utilities::check_plain(stripslashes($row->title)) . '</a></td>';
+                $output .= '<td>' . Utilities::check_plain(stripslashes($row->username)) . '</td>';
+                $output .= '<td class="center-align">' . gmdate("M d, Y", $row->created) . '</td>';
+                $output .= '</tr>' . "\n";
+                $i++;
+            }
+            $output .= '</tbody>' . "\n";
+            $output .= '</table>' . "\n";
         }
-        $output .= '</tbody>' . "\n";
-        $output .= '</table>' . "\n";
+         else {
+            $output .= '<div id="sharedmaps" class="panel ui-corner-all"><p>'._("Maps shared by other authenticated users will appear here for you to reuse as templates in your account. You can share your saved maps with all other users from your My Maps panel.").'</p></div>';
+        }
 
         header("Content-Type: text/html");
         echo $output;

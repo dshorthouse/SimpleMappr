@@ -13,6 +13,7 @@ class CreateShares extends AbstractMigration
         $table->addColumn('mid', 'integer')
               ->addColumn('created', 'integer')
               ->addIndex(array("mid"))
+              ->addIndex(array("created"))
               ->create();
         $table->renameColumn("id", "sid");
     }

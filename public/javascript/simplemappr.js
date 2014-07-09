@@ -1249,6 +1249,20 @@ var SimpleMappr = (function($, window, document) {
                 self.loadMap(this);
                 self.trackEvent('map', 'load');
               })
+              .on('click', 'a.map-share', function(e) {
+                e.preventDefault();
+                self.shareMap(this, 'create');
+                self.loadMapList(data);
+                self.loadShareList();
+                self.trackEvent('map', 'share');
+              })
+              .on('click', 'a.map-unshare', function(e) {
+                e.preventDefault();
+                self.shareMap(this, 'destroy');
+                self.loadMapList(data);
+                self.loadShareList();
+                self.trackEvent('map', 'unshare');
+              })
               .on('click', 'a.map-delete', function(e) {
                 e.preventDefault();
                 self.deleteMapConfirmation(this);
@@ -1268,6 +1282,81 @@ var SimpleMappr = (function($, window, document) {
           }
         }
       });
+    },
+
+    loadShareList: function(object) {
+      var self = this,
+          obj = object || {},
+          data = {};
+
+      self.showSpinner();
+
+      data = {
+        locale : self.getParameterByName("locale")
+      };
+
+      if(obj.sort) {
+        data.sort = obj.sort.item;
+        data.dir = obj.sort.dir;
+      }
+
+      if(!data.locale) { delete data.locale; }
+
+      $.ajax({
+        type     : 'GET',
+        url      : self.settings.baseUrl + "/share/",
+        data     : data,
+        dataType : 'html',
+        success  : function(response) {
+          if(response.indexOf("session timeout") !== -1) {
+            window.location.reload();
+          } else {
+            $('#sharedmaps').off().html(response)
+              .on('click', 'a.ui-icon-triangle-sort', function(e) {
+                e.preventDefault();
+                data.sort = { item : $(this).attr("data-sort"), dir : "asc" };
+                if($(this).hasClass("asc")) { data.sort.dir = "desc"; }
+                self.loadShareList(data);
+                self.trackEvent('maplist', 'sort');
+              })
+              .on('click', 'a.map-load', function(e) {
+                e.preventDefault();
+                self.loadMap(this);
+                self.trackEvent('map', 'load');
+              });
+            self.hideSpinner();
+          }
+        }
+      });
+    },
+
+    shareMap: function(obj, type) {
+      var self = this,
+          mid = $(obj).attr("data-id");
+
+      if(type === 'create') {
+        self.showSpinner();
+        $.ajax({
+          type     : 'POST',
+          url      : self.settings.baseUrl + "/share/",
+          data     : { "mid" : mid },
+          dataType : "json",
+          success  : function() {
+            self.hideSpinner();
+          }
+        });
+      } else if (type === 'destroy') {
+        self.showSpinner();
+        $.ajax({
+          type     : 'DELETE',
+          url      : self.settings.baseUrl + "/share/" + mid,
+          dataType : "json",
+          success  : function() {
+            self.hideSpinner();
+          }
+        });
+      }
+
     },
 
     removeExtraElements: function() {
@@ -2340,6 +2429,7 @@ var SimpleMappr = (function($, window, document) {
     getUserData: function() {
       if($('#usermaps').length > 0) {
         this.loadMapList();
+        this.loadShareList();
         this.tabSelector(3);
       }
     },

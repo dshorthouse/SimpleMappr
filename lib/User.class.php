@@ -195,7 +195,7 @@ class User extends Rest implements RestMethods
         $output .= '<table class="grid-users">' . "\n";
         $output .= '<thead>' . "\n";
         $output .= '<tr>' . "\n";
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$dir : "";
+        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$this->_dir : "";
         $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
         $output .= '<th class="left-align">'._("Email").'</th>';
         $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "num" && isset($_GET['dir'])) ? " ".$this->_dir : "";

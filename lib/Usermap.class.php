@@ -135,12 +135,15 @@ class Usermap extends Rest implements RestMethods
                     m.created,
                     m.updated,
                     u.uid,
-                    u.username 
+                    u.username,
+                    s.sid 
                 FROM 
                     maps m 
                 INNER JOIN
                     users u ON (m.uid = u.uid)
-                    ".implode(" AND ", $where)."
+                LEFT JOIN
+                    shares s ON (m.mid = s.mid)
+                " . implode(" AND ", $where) . "
                 ORDER BY ".$order;
 
         $this->_db->prepare($sql);
@@ -173,15 +176,8 @@ class Usermap extends Rest implements RestMethods
             WHERE
                 mid = :mid";
 
-        if (User::$roles[$this->_role] == 'administrator') {
-            $this->_db->prepare($sql);
-            $this->_db->bind_param(":mid", $id, 'integer');
-        } else {
-            $sql .= " AND uid = :uid";
-            $this->_db->prepare($sql);
-            $this->_db->bind_param(":mid", $id, 'integer');
-            $this->_db->bind_param(":uid", $this->_uid, 'integer');
-        }
+        $this->_db->prepare($sql);
+        $this->_db->bind_param(":mid", $id, 'integer');
 
         $record = $this->_db->fetch_first_object();
         $data['mid'] = ($record) ? $record->mid : "";
@@ -316,6 +312,11 @@ class Usermap extends Rest implements RestMethods
                 $output .= ($row->updated) ? gmdate("M d, Y", $row->updated) : ' - ';
                 $output .= '</td>';
                 $output .= '<td class="actions">';
+                if ($row->sid) {
+                    $output .= '<a class="sprites-before map-unshare" data-id="'.$row->sid.'" href="#">'._("Unshare").'</a>';
+                } else {
+                   $output .= '<a class="sprites-before map-share" data-id="'.$row->mid.'" href="#">'._("Share").'</a>';
+                }
                 if ($this->_uid == $row->uid || User::$roles[$this->_role] == 'administrator') {
                     $output .= '<a class="sprites-before map-delete" data-id="'.$row->mid.'" href="#">'._("Delete").'</a>';
                 }

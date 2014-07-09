@@ -80,6 +80,14 @@ msgstr "Cartes"
 msgid "My Maps"
 msgstr "Mes cartes"
 
+#: .index.php:39
+msgid "Shared Maps"
+msgstr "Cartes partagés"
+
+#: .index.php:39
+msgid "Maps shared by other authenticated users will appear here for you to reuse as templates in your account. You can share your saved maps with all other users from your My Maps panel."
+msgstr "Cartes partagés par d'autres utilisateurs apparaît ici telle que vous pouvez les réutiliser en tant que modèles dans votre compte. Vous pouvez partager vos cartes enregistrées avec tous les autres utilisateurs de votre panneau «Mes cartes»."
+
 #: .index.php:41
 msgid "Users"
 msgstr "Usagers"
@@ -380,9 +388,21 @@ msgstr "%d de %d pour %s"
 msgid "Created"
 msgstr "Crée"
 
+#: .lib/mapprservice.usermaps.class.php:164
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
 #: .lib/mapprservice.usermaps.class.php:165
 msgid "Updated"
 msgstr "Mise à jour"
+
+#: .lib/mapprservice.usermaps.class.php:164
+msgid "Share"
+msgstr "Partager"
+
+#: .lib/mapprservice.usermaps.class.php:164
+msgid "Unshare"
+msgstr "Non-partager"
 
 #: .index.php:202
 msgid "map will be cropped"
@@ -608,10 +628,6 @@ msgstr "Alternativement, vous pouvez créer et enregistrer un modèle génériqu
 #: views/main.php:100
 msgid "Flush caches"
 msgstr "Vider les caches"
-
-#: .lib/mapprservice.users.class.php:121
-msgid "Username"
-msgstr "Nom d'utilisateur"
 
 #: .lib/mapprservice.users.class.php:122
 msgid "Email"

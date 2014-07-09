@@ -61,6 +61,9 @@ $roles = $header[2];
 <li><a href="#map-points"><?php echo _("Point Data"); ?></a></li>
 <li><a href="#map-regions"><?php echo _("Regions"); ?></a></li>
 <li><a href="#map-mymaps" class="sprites-before map-mymaps"><?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?><?php echo _("All Maps"); ?><?php else: ?><?php echo _("My Maps"); ?><?php endif; ?></a></li>
+<?php if (isset($_SESSION['simplemappr'])): ?>
+<li><a href="#map-shares"><?php echo _("Shared Maps"); ?></a></li>
+<?php endif; ?>
 <?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <li><a href="#map-users" class="sprites-before map-users"><?php echo _("Users"); ?></a></li>
 <li><a href="#map-admin"><?php echo _("Administration"); ?></a></li>
@@ -216,6 +219,12 @@ foreach (Mappr::$accepted_projections as $key => $value) {
 <div id="usermaps"></div>
 <?php endif; ?>
 </div>
+
+<?php if (isset($_SESSION['simplemappr'])): ?>
+<div id="map-shares">
+<div id="sharedmaps"></div>
+</div>
+<?php endif; ?>
 
 <?php if (isset($_SESSION['simplemappr']) && $roles[$_SESSION['simplemappr']['role']] == 'administrator'): ?>
 <div id="map-users">
