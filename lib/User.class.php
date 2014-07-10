@@ -47,8 +47,7 @@ class User extends Rest implements RestMethods
 
     private $_role;
     private $_dir;
-
-    protected $db;
+    private $_db;
 
     public static $roles = array(
         1 => 'user',
@@ -86,7 +85,7 @@ class User extends Rest implements RestMethods
         if (self::$roles[$this->_role] !== 'administrator') {
             Utilities::access_denied();
         } else {
-            $this->db = new Database();
+            $this->_db = new Database();
             $this->restful_action();
         }
     }
@@ -124,8 +123,8 @@ class User extends Rest implements RestMethods
                 HAVING count(m.mid) > 0
                 ORDER BY " . $order;
 
-        $this->db->prepare($sql);
-        $this->produce_output($this->db->fetch_all_object());
+        $this->_db->prepare($sql);
+        $this->produce_output($this->_db->fetch_all_object());
     }
 
     /**
@@ -174,9 +173,9 @@ class User extends Rest implements RestMethods
                         maps m ON u.uid = m.uid
                     WHERE 
                         u.uid=:uid";
-            $this->db->prepare($sql);
-            $this->db->bind_param(":uid", $id, 'integer');
-            $this->db->execute();
+            $this->_db->prepare($sql);
+            $this->_db->bind_param(":uid", $id, 'integer');
+            $this->_db->execute();
 
             header("Content-Type: application/json");
             echo json_encode(array("status" => "ok"));
