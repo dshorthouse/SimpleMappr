@@ -113,7 +113,7 @@ class MapprQuery extends Mappr
                             $items[$shape->values['adm0_a3']][$hasc[1]] = array();
                         }
                     } else {
-                        $this->_data[] = $shape->values['ADMIN'];
+                        $this->_data[] = $shape->values['admin'];
                     }
                 }
                 if ($this->queryLayer == 'stateprovinces_polygon') {
