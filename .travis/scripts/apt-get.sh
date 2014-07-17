@@ -13,7 +13,7 @@ locales \
 gettext \
 autoconf \
 libjpeg-dev \
-libpng12-dev \
+libpng-dev \
 freetype* \
 libgdal-dev \
 libproj-dev \
