@@ -444,7 +444,7 @@ class Header
         }
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
-        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session." }); });" . "\n";
+        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
         if ($this->isAdministrator()) {
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }

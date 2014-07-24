@@ -25,6 +25,9 @@ defined("MAPPR_DOMAIN") || define("MAPPR_DOMAIN", "www.simplemappr.local");
 // Number of textarea boxes for user data entry
 defined("NUMTEXTAREA") || define("NUMTEXTAREA", 3);
 
+// Maximum number of texteara boxes for user entry
+defined("MAXNUMTEXTAREA") || define("MAXNUMTEXTAREA", 10);
+
 // Google Analytics UA-XXXXXX-XX key
 defined("GOOGLE_ANALYTICS") || define("GOOGLE_ANALYTICS", "UA-XXXXXX-10");
 

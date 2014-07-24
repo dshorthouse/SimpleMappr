@@ -87,29 +87,34 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPPowerPoint.git",
-                "reference": "d45779bf794e5773c85fd068fab98a4730f2d75a"
+                "reference": "7538eb3ada47b084378eb3ea0fd2806f92f0bb3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/d45779bf794e5773c85fd068fab98a4730f2d75a",
-                "reference": "d45779bf794e5773c85fd068fab98a4730f2d75a",
+                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/7538eb3ada47b084378eb3ea0fd2806f92f0bb3a",
+                "reference": "7538eb3ada47b084378eb3ea0fd2806f92f0bb3a",
                 "shasum": ""
             },
             "require": {
                 "ext-xml": "*",
-                "php": ">=5.2.0"
+                "ext-zip": "*",
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phploc/phploc": "2.*",
+                "phpmd/phpmd": "2.*",
+                "phpunit/phpunit": "3.7.*",
+                "sebastian/phpcpd": "2.*",
+                "squizlabs/php_codesniffer": "1.*"
             },
             "suggest": {
-                "ext-gd2": "*",
-                "ext-zip": "*"
+                "ext-gd2": "Required to add images"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "PHPPowerPoint": "Classes/"
+                    "PHPPowerPoint": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -118,11 +123,11 @@
             ],
             "authors": [
                 {
-                    "name": "Franck Lefevre",
-                    "homepage": "http://blog.rootslabs.net"
+                    "name": "Mark Baker"
                 },
                 {
-                    "name": "Mark Baker"
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
                 },
                 {
                     "name": "Ivan Lanin",
@@ -140,7 +145,7 @@
                 "pptx",
                 "presentations"
             ],
-            "time": "2014-06-11 14:45:36"
+            "time": "2014-07-22 10:02:05"
         },
         {
             "name": "phpoffice/phpword",
@@ -556,12 +561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "f117bbee7176ebb3552fffcd1c5a50430d28a12d"
+                "reference": "b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/f117bbee7176ebb3552fffcd1c5a50430d28a12d",
-                "reference": "f117bbee7176ebb3552fffcd1c5a50430d28a12d",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba",
+                "reference": "b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba",
                 "shasum": ""
             },
             "require": {
@@ -589,7 +594,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2014-07-12 05:22:02"
+            "time": "2014-07-22 16:01:30"
         },
         {
             "name": "phpunit/php-code-coverage",
