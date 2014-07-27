@@ -47,7 +47,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
       this.loadCitationList();
       this.bindCreateCitation();
       this.loadAPILogs();
-      sm.tabSelector(4);
+      sm.tabSelector(5);
     },
 
     loadUserList: function(object) {
