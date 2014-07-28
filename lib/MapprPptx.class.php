@@ -36,6 +36,12 @@
  */
 namespace SimpleMappr;
 
+use \PhpOffice\PhpPowerpoint\Autoloader;
+use \PhpOffice\PhpPowerpoint\PhpPowerpoint;
+use \PhpOffice\PhpPowerpoint\Slide\Layout;
+use \PhpOffice\PhpPowerpoint\Style\Alignment;
+use \PhpOffice\PhpPowerpoint\IOFactory;
+
 /**
  * PPTX handler for SimpleMappr
  *
@@ -48,21 +54,25 @@ class MapprPptx extends Mappr
 
     public function create_output()
     {
-        $objPHPPowerPoint = new \PHPPowerPoint();
+        require_once ROOT . "/vendor/phpoffice/phppowerpoint/src/PhpPowerpoint/Autoloader.php";
+
+        Autoloader::register();
+        $objPHPPowerPoint = new PhpPowerpoint();
 
         $clean_filename = parent::clean_filename($this->file_name);
 
         // Set properties
-        $objPHPPowerPoint->getProperties()->setCreator("SimpleMappr");
-        $objPHPPowerPoint->getProperties()->setLastModifiedBy("SimpleMappr");
-        $objPHPPowerPoint->getProperties()->setTitle($clean_filename);
-        $objPHPPowerPoint->getProperties()->setSubject($clean_filename . " point map");
-        $objPHPPowerPoint->getProperties()->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
-        $objPHPPowerPoint->getProperties()->setKeywords($clean_filename . " SimpleMappr");
+        $properties = $objPHPPowerPoint->getProperties();
+        $properties->setCreator("SimpleMappr");
+        $properties->setLastModifiedBy("SimpleMappr");
+        $properties->setTitle($clean_filename);
+        $properties->setSubject($clean_filename . " point map");
+        $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+        $properties->setKeywords($clean_filename . " SimpleMappr");
 
         // Create slide
         $currentSlide = $objPHPPowerPoint->getActiveSlide();
-        $currentSlide->setSlideLayout(\PHPPowerPoint_Slide_Layout::TITLE_AND_CONTENT);
+        $currentSlide->setSlideLayout(Layout::TITLE_AND_CONTENT);
 
         $width = 950;
         $height = 720;
@@ -113,16 +123,16 @@ class MapprPptx extends Mappr
         $shape->setWidth(450);
         $shape->setOffsetX($width - 450);
         $shape->setOffsetY($height - 10 - $this->_slidepadding);
-        $shape->getActiveParagraph()->getAlignment()->setHorizontal(\PHPPowerPoint_Style_Alignment::HORIZONTAL_RIGHT);
-        $shape->getActiveParagraph()->getAlignment()->setVertical(\PHPPowerPoint_Style_Alignment::VERTICAL_CENTER);
+        $alignment = $shape->getActiveParagraph()->getAlignment();
+        $alignment->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+        $alignment->setVertical(Alignment::VERTICAL_CENTER);
         $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
         $textRun->getFont()->setBold(true);
         $textRun->getFont()->setSize(12);
 
         // Output PowerPoint 2007 file
-        $objWriter = \PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
-        Header::set_header("pptx");
-        header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".pptx\";");
+        $objWriter = IOFactory::createWriter($objPHPPowerPoint, 'PowerPoint2007');
+        Header::set_header("pptx", $clean_filename . ".pptx");
         $objWriter->save('php://output');
     }
 

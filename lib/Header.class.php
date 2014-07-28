@@ -176,12 +176,18 @@ class Header
         }
     }
 
-    public static function set_header($mime = '')
+    public static function set_header($mime = '', $filename = '', $filesize = '')
     {
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false);
+        if($filename) {
+            header("Content-Disposition: attachment; filename=\"" . $filename  . "\";");
+        }
+        if($filesize) {
+            header("Content-Length: " . $filesize);
+        }
         switch($mime) {
         case '':
             break;
@@ -225,15 +231,18 @@ class Header
         case 'jpg':
         case 'jpga':
             header("Content-Type: image/jpeg");
+            header("Content-Transfer-Encoding: binary");
             break;
 
         case 'png':
         case 'pnga':
             header("Content-Type: image/png");
+            header("Content-Transfer-Encoding: binary");
             break;
 
         default:
             header("Content-Type: image/png");
+            header("Content-Transfer-Encoding: binary");
         }
     }
 

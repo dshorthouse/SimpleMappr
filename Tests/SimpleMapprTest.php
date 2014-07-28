@@ -313,18 +313,23 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'bad_points' => '',
         );
 
-        self::$db->query_insert('maps', array(
+        $map1 = self::$db->query_insert('maps', array(
           'uid' => $user1,
           'title' => 'Sample Map',
           'map' => json_encode($map_data1),
           'created' => time()
         ));
 
-        self::$db->query_insert('maps', array(
+        $map2 = self::$db->query_insert('maps', array(
           'uid' => $user2,
           'title' => 'Sample Map 2',
           'map' => json_encode($map_data2),
           'created' => time()
+        ));
+
+        self::$db->query_insert('shares', array(
+            'mid' => $map1,
+            'created' => time()
         ));
 
         self::$db->query_insert('citations', array(
@@ -359,6 +364,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->exec("DROP TABLE IF EXISTS maps");
         self::$db->exec("DROP TABLE IF EXISTS users");
         self::$db->exec("DROP TABLE IF EXISTS citations");
+        self::$db->exec("DROP TABLE IF EXISTS shares");
         self::$db->exec("DROP TABLE IF EXISTS stateprovinces");
     }
 

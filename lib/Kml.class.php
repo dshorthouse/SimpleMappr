@@ -97,8 +97,7 @@ class Kml
 
         $this->_kml = new \XMLWriter();
 
-        Header::set_header("kml");
-        header("Content-disposition: attachment; filename=" . $clean_filename . ".kml");
+        Header::set_header("kml", $clean_filename . ".kml");
         $this->_kml->openURI('php://output');
 
         $this->_kml->startDocument('1.0', 'UTF-8');

@@ -56,10 +56,9 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            Header::set_header('tif');
-            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
-            header("Content-Transfer-Encoding: binary");
-            header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            $filesize = filesize($this->tmp_path.$image_filename);
+            Header::set_header('tif', $clean_filename, $filesize);
             ob_clean();
             flush();
             readfile($this->tmp_path.$image_filename);
@@ -69,18 +68,17 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            Header::set_header('png');
-            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
-            header("Content-Transfer-Encoding: binary");
-            header("Content-Length: ".filesize($this->tmp_path.$image_filename));
+            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            $filesize = filesize($this->tmp_path.$image_filename);
+            Header::set_header('png', $clean_filename, $filesize);
             ob_clean();
             flush();
             readfile($this->tmp_path.$image_filename);
             break;
 
         case 'svg':
-            Header::set_header('svg');
-            header("Content-Disposition: attachment; filename=\"" . self::clean_filename($this->file_name, $this->output) . "\";");
+            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            Header::set_header('svg', $clean_filename);
             $this->image->saveImage("");
             break;
 

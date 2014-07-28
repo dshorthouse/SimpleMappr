@@ -36,6 +36,10 @@
  */
 namespace SimpleMappr;
 
+use \PhpOffice\PhpWord\Autoloader;
+use \PhpOffice\PhpWord\PhpWord;
+use \PhpOffice\PhpWord\IOFactory;
+
 /**
  * DOCX handler for SimpleMappr
  *
@@ -46,9 +50,8 @@ class MapprDocx extends Mappr
 {
     public function create_output()
     {
-        \PhpOffice\PhpWord\Autoloader::register();
-
-        $objPHPWord = new \PhpOffice\PhpWord\PhpWord();
+        Autoloader::register();
+        $objPHPWord = new PhpWord();
 
         $clean_filename = parent::clean_filename($this->file_name);
 
@@ -88,9 +91,8 @@ class MapprDocx extends Mappr
         }
 
         // Output Word 2007 file
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($objPHPWord, 'Word2007');
-        Header::set_header("docx");
-        header("Content-Disposition: attachment; filename=\"" . $clean_filename . ".docx\";");
+        $objWriter = IOFactory::createWriter($objPHPWord, 'Word2007');
+        Header::set_header("docx", $clean_filename . ".docx");
         $objWriter->save('php://output');
     }
 
