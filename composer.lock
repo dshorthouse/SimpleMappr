@@ -561,12 +561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba"
+                "reference": "0e9152a82e7c9e4d6f6391a12c59b27e9d583bef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba",
-                "reference": "b88a65219b0ccd9bfc8ac1696fd9b4df6cf79cba",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/0e9152a82e7c9e4d6f6391a12c59b27e9d583bef",
+                "reference": "0e9152a82e7c9e4d6f6391a12c59b27e9d583bef",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +594,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2014-07-22 16:01:30"
+            "time": "2014-07-29 04:22:33"
         },
         {
             "name": "phpunit/php-code-coverage",
