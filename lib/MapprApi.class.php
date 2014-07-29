@@ -502,7 +502,7 @@ class MapprApi extends Mappr
                                     parent::dms_to_deg(trim($coord[1]))
                                 );
                             } else {
-                                $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", $cols[$i]);
+                                $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $cols[$i])));
                             }
                         }
                     }

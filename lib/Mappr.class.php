@@ -525,7 +525,7 @@ abstract class Mappr
             $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
             return array(self::dms_to_deg(trim($coord[0])),self::dms_to_deg(trim($coord[1])));
         } else {
-            $coord = preg_split("/[\s,;]+/", $loc); //split by space, comma, or semicolon
+            $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc))); //split by space, comma, or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
                 return array(null, null);
             }

@@ -193,4 +193,15 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dd[1], -89.0);
     }
 
+    /**
+     * Test DD with deg symbols.
+     */
+    public function test_dd_symbols()
+    {
+        $coord = " 49.129774°  46.677716°";
+        $dd = \SimpleMappr\Mappr::make_coordinates($coord);
+        $this->assertEquals($dd[0], 49.129774);
+        $this->assertEquals($dd[1], 46.677716);
+    }
+
 }
