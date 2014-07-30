@@ -92,6 +92,7 @@ class Usermap extends Rest implements RestMethods
                 INNER JOIN
                     users u ON (m.uid = u.uid)";
         $where = array();
+        $limit = "";
         if (User::$roles[$this->_role] !== 'administrator') {
             $sql .=  " WHERE m.uid = :uid";
             $where['user'] = " WHERE m.uid = :uid";
@@ -104,6 +105,7 @@ class Usermap extends Rest implements RestMethods
                 $this->_db->prepare($sql);
                 $this->_db->bind_param(":uid_q", $this->_uid_q);        
             } else {
+                $limit = " LIMIT 100";
                 $this->_db->prepare($sql);
             }
         }
@@ -144,7 +146,7 @@ class Usermap extends Rest implements RestMethods
                 LEFT JOIN
                     shares s ON (m.mid = s.mid)
                 " . implode(" AND ", $where) . "
-                ORDER BY ".$order;
+                ORDER BY " . $order . $limit;
 
         $this->_db->prepare($sql);
         if (User::$roles[$this->_role] !== 'administrator') {
