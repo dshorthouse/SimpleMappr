@@ -13,6 +13,9 @@ $roles = $header[2];
 <meta name="description" content="<?php echo _("Create free point maps for publications and presentations"); ?>" />
 <meta name="keywords" content="<?php echo _("publication,presentation,map,georeference"); ?>" />
 <meta name="author" content="David P. Shorthouse" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@SimpleMappr" />
+<meta name="twitter:creator" content="@dpsSpiders" />
 <meta property="og:title" content="SimpleMappr" />
 <meta property="og:description" content="<?php echo _("Create free point maps for publications and presentations"); ?>" />
 <meta property="og:locale" content="<?php echo $locale; ?>" />

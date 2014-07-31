@@ -111,6 +111,21 @@ class PageHeaderTest extends SimpleMapprTest
     }
 
     /**
+     * Test Twitter card
+     */
+    public function testTwitterCard()
+    {
+        parent::setUpPage();
+        $twitter_card = $this->metaElementContent("//meta[@name='twitter:card']");
+        $twitter_site = $this->metaElementContent("//meta[@name='twitter:site']");
+        $twitter_creator = $this->metaElementContent("//meta[@name='twitter:creator']");
+
+        $this->assertContains("summary", $twitter_card);
+        $this->assertContains("@SimpleMappr", $twitter_site);
+        $this->assertContains("@dpsSpiders", $twitter_creator);
+    }
+
+    /**
      * Obtain content of an XPATH element.
      *
      * @param string $xpath The XPATH of interest.

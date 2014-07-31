@@ -1186,6 +1186,7 @@
         "phayes/geophp": 20,
         "facebook/webdriver": 20
     },
+    "prefer-stable": false,
     "platform": [],
     "platform-dev": []
 }
