@@ -432,7 +432,7 @@ var SimpleMappr = (function($, window, document) {
       $('#actionsBar').find('a.toolsEmbed').css({display:'none'});
       $('#border_thickness').val(1.25);
       $('#border-slider').slider({value:1.25});
-      $('#clearLayers, #clearRegions').each(function(e) {
+      $('#clearLayers, #clearRegions').each(function() {
         self.clearZone($(this).parent().prev().prev().children());
       });
       this.resetJbbox();
