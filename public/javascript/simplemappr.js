@@ -369,6 +369,10 @@ var SimpleMappr = (function($, window, document) {
               self.resetJbbox();
             break;
 
+            case 'new':
+              self.mapNew();
+            break;
+
             case 'refresh':
               self.mapRefresh();
             break;
@@ -415,6 +419,24 @@ var SimpleMappr = (function($, window, document) {
       this.resetJbbox();
       this.destroyRedo();
       this.showMap();
+    },
+
+    mapNew: function() {
+      var self = this;
+
+      $('#mapOptions').find("input").prop("checked", false);
+      $('#gridspace').prop("checked", true);
+      $('#mapTitle').html('');
+      $('#m-mapSaveTitle').val('');
+      $('#file-name').val('');
+      $('#actionsBar').find('a.toolsEmbed').css({display:'none'});
+      $('#border_thickness').val(1.25);
+      $('#border-slider').slider({value:1.25});
+      $('#clearLayers, #clearRegions').each(function(e) {
+        self.clearZone($(this).parent().prev().prev().children());
+      });
+      this.resetJbbox();
+      this.mapRebuild();
     },
 
     mapRefresh: function() {
@@ -597,8 +619,9 @@ var SimpleMappr = (function($, window, document) {
         'ctrl+s' : self.bindCallback(self, self.mapSave),
         'ctrl+d' : self.bindCallback(self, self.mapDownload),
         'ctrl+l' : self.bindCallback(self, self.mapList),
+        'ctrl+n' : self.bindCallback(self, self.mapNew),
         'ctrl+r' : self.bindCallback(self, self.mapRefresh),
-        'ctrl+n' : self.bindCallback(self, self.mapRebuild),
+        'ctrl+b' : self.bindCallback(self, self.mapRebuild),
         'ctrl+x' : self.bindCallback(self, self.mapCrop),
         'ctrl+e' : self.bindCallback(self, self.mapToggleSettings),
         'ctrl++' : self.bindCallback(self, self.mapZoom, "in"),
@@ -786,7 +809,7 @@ var SimpleMappr = (function($, window, document) {
         e.preventDefault();
         self.clearZone($(this).parent().prev().prev().children());
       });
-      
+
       $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function() {
         $(this).on('click', 'button.clearself', function(e) {
           e.preventDefault();

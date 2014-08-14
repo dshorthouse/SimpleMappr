@@ -57,6 +57,9 @@ $locale = Session::select_locale();
     <dt class="sprites-before toolsRedo"><?php echo _("Redo"); ?>:</dt>
     <dd><?php echo _("redo the last executed action"); ?></dd>
 
+    <dt class="sprites-before toolsNew"><?php echo _("New"); ?>:</dt>
+    <dd><?php echo _("create a new map image"); ?></dd>
+
     <dt class="sprites-before toolsRefresh"><?php echo _("Refresh"); ?>:</dt>
     <dd><?php echo _("refresh the map image"); ?></dd>
 

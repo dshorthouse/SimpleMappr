@@ -108,13 +108,14 @@ $roles = $header[2];
 <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
 <ul>
 <li><a href="#" class="sprites tooltip toolsZoomIn" title="<?php echo _("zoom in ctrl+"); ?>"></a></li>
-<li><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out ctrl-"); ?>"></a></li>
+<li class="divider"><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out ctrl-"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsCrop" title="<?php echo _("crop ctrl+x"); ?>"></a></li>
-<li><a href="#" class="sprites tooltip toolsQuery" title="<?php echo _("fill regions"); ?>"></a></li>
+<li class="divider"><a href="#" class="sprites tooltip toolsQuery" title="<?php echo _("fill regions"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsUndoDisabled" title="<?php echo _("undo ctrl+z"); ?>"></a></li>
-<li><a href="#" class="sprites tooltip toolsRedoDisabled" title="<?php echo _("redo ctrl+y"); ?>"></a></li>
+<li class="divider"><a href="#" class="sprites tooltip toolsRedoDisabled" title="<?php echo _("redo ctrl+y"); ?>"></a></li>
+<li><a href="#" class="sprites tooltip toolsNew" title="<?php echo _("new ctrl+n"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsRefresh" title="<?php echo _("refresh ctrl+r"); ?>"></a></li>
-<li><a href="#" class="sprites tooltip toolsRebuild" title="<?php echo _("rebuild ctrl+n"); ?>"></a></li>
+<li><a href="#" class="sprites tooltip toolsRebuild" title="<?php echo _("rebuild ctrl+b"); ?>"></a></li>
 </ul>
 <h3 id="mapTitle"></h3>
 <ul id="map-saveDialog">

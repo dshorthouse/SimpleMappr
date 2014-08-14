@@ -95,12 +95,14 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #actionsBar a{text-decoration:none;}
 #actionsBar ul{margin:0;padding:0;}
 #actionsBar li{list-style:none;font-size:small;float:left;z-index:1001;border:1px solid transparent;border-radius:4px;line-height:1em;}
+#actionsBar li.divider{border-right:1px solid #aaa;border-top-right-radius:0px;border-bottom-right-radius:0px;}
 #actionsBar a{display:block;margin:3px 4px;}
 #actionsBar a.tooltip{width:16px;height:16px;}
 #actionsBar a.toolsZoomIn, #map-help dt.toolsZoomIn:before{background-position:-160px -304px;}
 #actionsBar a.toolsZoomOut, #map-help dt.toolsZoomOut:before{background-position:-180px -304px;}
 #actionsBar a.toolsCrop, #map-help dt.toolsCrop:before{background-position:-200px -304px;}
 #actionsBar a.toolsQuery, #map-help dt.toolsQuery:before{background-position:-220px -304px;}
+#actionsBar a.toolsNew, #map-help dt.toolsNew:before{background-position:-200px -366px;}
 #actionsBar a.toolsRefresh, #map-help dt.toolsRefresh:before{background-position:-240px -324px;}
 #actionsBar a.toolsRebuild, #map-help dt.toolsRebuild:before{background-position:-260px -324px;}
 #actionsBar a.toolsUndoDisabled{background-position:-240px -344px;}

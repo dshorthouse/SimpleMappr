@@ -166,12 +166,16 @@ msgid "redo ctrl+y"
 msgstr "refaire ctrl+y"
 
 #: .index.php:85
+msgid "new ctrl+n"
+msgstr "nouvelle ctrl+n"
+
+#: .index.php:85
 msgid "refresh ctrl+r"
 msgstr "régénérer ctrl+r"
 
 #: .index.php:86
-msgid "rebuild ctrl+n"
-msgstr "rebâtis ctrl+n"
+msgid "rebuild ctrl+b"
+msgstr "rebâtis ctrl+b"
 
 #: .index.php:91
 msgid "save ctrl+s"
@@ -684,6 +688,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "August 14, 2014"
+msgstr "14 août, 2014"
+
+#: .tabs/about.php:11
 msgid "July 27, 2014"
 msgstr "27 juillet, 2014"
 
@@ -706,6 +714,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about:11
+msgid "Improvements: Added an icon in the toolbar to create a new empty map."
+msgstr "Améliorations: Ajouté une nouvelle icône dans la barre d'outils pour créer une nouvelle carte vide."
 
 #: .tabs/about:11
 msgid "Improvements: Recognize decimal degree coordinates with degree symbol."
@@ -871,6 +883,10 @@ msgstr "choisisser une couleur puis tracez une extensible, élastique en forme d
 #: .tabs/help.php:62
 msgid "Refresh"
 msgstr "régénérer"
+
+#: .tabs/help.php:63
+msgid "create a new map image"
+msgstr "créer une nouvelle carte"
 
 #: .tabs/help.php:63
 msgid "refresh the map image"

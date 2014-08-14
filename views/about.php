@@ -27,6 +27,7 @@ Session::select_locale();
 <div id="recent-updates">
 <div class="header"><h2><?php echo _("Recent Updates"); ?></h2></div>
 <dl>
+<dt class="update"><?php echo _("August 14, 2014"); ?></dt><dd><?php echo _("Improvements: Added an icon in the toolbar to create a new empty map."); ?></dd>
 <dt class="update"><?php echo _("July 27, 2014"); ?></dt><dd><?php echo _("Improvements: Recognize decimal degree coordinates with degree symbol."); ?></dd>
 <dt class="update"><?php echo _("July 9, 2014"); ?></dt><dd><?php echo _("Improvements: Added ability to share and unshare maps with authenticated users. Requested by Tim Dickinson."); ?></dd>
 <dt class="update"><?php echo _("June 30, 2014"); ?></dt><dd><?php echo _("Improvements: Codebase migrated to a dedicated hosting service."); ?></dd>
