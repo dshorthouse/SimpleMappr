@@ -241,16 +241,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.3.6",
+            "version": "v0.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "42e1c104673fb3958466fd21218a3eb8e6797f20"
+                "reference": "d918fef14f44bc2e68c6263327ba5b44582313c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/42e1c104673fb3958466fd21218a3eb8e6797f20",
-                "reference": "42e1c104673fb3958466fd21218a3eb8e6797f20",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/d918fef14f44bc2e68c6263327ba5b44582313c6",
+                "reference": "d918fef14f44bc2e68c6263327ba5b44582313c6",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +294,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-06-29 10:54:25"
+            "time": "2014-08-18 08:15:10"
         },
         {
             "name": "symfony/class-loader",

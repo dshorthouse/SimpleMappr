@@ -1794,7 +1794,7 @@ abstract class Mappr
 
         $oRect = $this->map_obj->extent;
         $oRect->project($origProjObj, $newProjObj);
-
+        //TODO: failing for http://www.simplemappr.net/map/2962
         $this->map_obj->setExtent($oRect->minx, $oRect->miny, $oRect->maxx, $oRect->maxy);
         $this->map_obj->setProjection(self::get_projection($output_projection));
     }

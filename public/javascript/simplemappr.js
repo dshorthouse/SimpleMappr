@@ -613,7 +613,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindHotkeys: function() {
-      var self = this, keys = {}, arrows = {};
+      var self = this,
 
       keys = {
         'ctrl+s' : self.bindCallback(self, self.mapSave),
@@ -629,7 +629,7 @@ var SimpleMappr = (function($, window, document) {
         'esc'    : self.bindCallback(self, self.destroyJcrop),
         'ctrl+z' : self.bindCallback(self, self.mapUndo),
         'ctrl+y' : self.bindCallback(self, self.mapRedo)
-      };
+      },
 
       arrows = {
         'up'    : self.bindCallback(self, self.mapPan, "up"),
