@@ -107,8 +107,8 @@ $roles = $header[2];
 <div id="mapWrapper">
 <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
 <ul>
-<li><a href="#" class="sprites tooltip toolsZoomIn" title="<?php echo _("zoom in ctrl+"); ?>"></a></li>
-<li class="divider"><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out ctrl-"); ?>"></a></li>
+<li><a href="#" class="sprites tooltip toolsZoomIn" title="<?php echo _("zoom in +"); ?>"></a></li>
+<li class="divider"><a href="#" class="sprites tooltip toolsZoomOut" title="<?php echo _("zoom out -"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsCrop" title="<?php echo _("crop ctrl+x"); ?>"></a></li>
 <li class="divider"><a href="#" class="sprites tooltip toolsQuery" title="<?php echo _("fill regions"); ?>"></a></li>
 <li><a href="#" class="sprites tooltip toolsUndoDisabled" title="<?php echo _("undo ctrl+z"); ?>"></a></li>

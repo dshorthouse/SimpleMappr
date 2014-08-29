@@ -125,12 +125,7 @@ class Bootstrap
             break;
 
         case "/flush_cache":
-            Session::set_session();
-            if (!isset($_SESSION["simplemappr"]) || User::$roles[$_SESSION["simplemappr"]["role"]] !== 'administrator') {
-                http_response_code(404);
-                readfile(dirname(__FILE__).'/error/404.html');
-                exit();
-            }
+            User::check_permission();
             Header::flush_cache();
             break;
 

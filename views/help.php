@@ -127,6 +127,9 @@ $locale = Session::select_locale();
 
     <dt><?php echo _("marine"); ?>:</dt>
     <dd><?php echo _("label marine features"); ?></dd>
+
+    <dt><?php echo _("biodiv. hotspots"); ?>:</dt>
+    <dd><?php echo _("label biodiversity hotspots"); ?></dd>
   </dl>
 
   <h3><?php echo _("Options"); ?></h3>

@@ -142,12 +142,12 @@ msgid "Add a region"
 msgstr "Ajouter"
 
 #: .index.php:81
-msgid "zoom in ctrl+"
-msgstr "zoomer ctrl+"
+msgid "zoom in +"
+msgstr "zoomer +"
 
 #: .index.php:82
-msgid "zoom out ctrl-"
-msgstr "dézoomer ctrl-"
+msgid "zoom out -"
+msgstr "dézoomer -"
 
 #: .index.php:83
 msgid "crop ctrl+x"
@@ -959,6 +959,10 @@ msgstr "étiquettes pour caractéristiques physiques"
 #: .tabs/help.php:111
 msgid "label marine features"
 msgstr "étiquettes pour caractéristiques marines"
+
+#: .tabs/help.php:111
+msgid "label biodiversity hotspots"
+msgstr "étiquettes pour hotspots de biodiversité"
 
 #: .tabs/help.php:116
 msgid "graticules"

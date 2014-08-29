@@ -479,16 +479,30 @@ var SimpleMappr = (function($, window, document) {
 
     mapZoom: function(dir) {
       var zoom = "";
-      if(dir === "in") {
-        this.initJzoom();
-        this.vars.zoom = true;
-      } else {
-        zoom = $('#zoom_out');
-        this.resetJbbox();
-        zoom.val(1);
-        this.destroyRedo();
-        this.showMap();
-        zoom.val('');
+
+      switch(dir) {
+        case "in":
+          this.initJzoom();
+          this.vars.zoom = true;
+        break;
+
+        case "in-auto":
+          zoom = $('#zoom_in');
+          this.resetJbbox();
+          zoom.val(1);
+          this.destroyRedo();
+          this.showMap();
+          zoom.val('');
+        break;
+
+        case "out":
+          zoom = $('#zoom_out');
+          this.resetJbbox();
+          zoom.val(1);
+          this.destroyRedo();
+          this.showMap();
+          zoom.val('');
+        break;
       }
     },
 
@@ -616,19 +630,21 @@ var SimpleMappr = (function($, window, document) {
       var self = this,
 
       keys = {
-        'ctrl+s' : self.bindCallback(self, self.mapSave),
-        'ctrl+d' : self.bindCallback(self, self.mapDownload),
-        'ctrl+l' : self.bindCallback(self, self.mapList),
-        'ctrl+n' : self.bindCallback(self, self.mapNew),
-        'ctrl+r' : self.bindCallback(self, self.mapRefresh),
-        'ctrl+b' : self.bindCallback(self, self.mapRebuild),
-        'ctrl+x' : self.bindCallback(self, self.mapCrop),
-        'ctrl+e' : self.bindCallback(self, self.mapToggleSettings),
-        'ctrl++' : self.bindCallback(self, self.mapZoom, "in"),
-        'ctrl+-' : self.bindCallback(self, self.mapZoom, "out"),
-        'esc'    : self.bindCallback(self, self.destroyJcrop),
-        'ctrl+z' : self.bindCallback(self, self.mapUndo),
-        'ctrl+y' : self.bindCallback(self, self.mapRedo)
+        'ctrl+s'  : self.bindCallback(self, self.mapSave),
+        'ctrl+d'  : self.bindCallback(self, self.mapDownload),
+        'ctrl+l'  : self.bindCallback(self, self.mapList),
+        'ctrl+n'  : self.bindCallback(self, self.mapNew),
+        'ctrl+r'  : self.bindCallback(self, self.mapRefresh),
+        'ctrl+b'  : self.bindCallback(self, self.mapRebuild),
+        'ctrl+x'  : self.bindCallback(self, self.mapCrop),
+        'ctrl+e'  : self.bindCallback(self, self.mapToggleSettings),
+        '='       : self.bindCallback(self, self.mapZoom, "in-auto"),
+        '+'       : self.bindCallback(self, self.mapZoom, "in-auto"),
+        'shift+=' : self.bindCallback(self, self.mapZoom, "in-auto"),
+        '-'       : self.bindCallback(self, self.mapZoom, "out"),
+        'esc'     : self.bindCallback(self, self.destroyJcrop),
+        'ctrl+z'  : self.bindCallback(self, self.mapUndo),
+        'ctrl+y'  : self.bindCallback(self, self.mapRedo)
       },
 
       arrows = {

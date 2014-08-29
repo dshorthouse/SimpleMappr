@@ -107,6 +107,7 @@ class Header
                 $cached_files[] = dirname(__DIR__) . self::$_css_cache_path . $file;
             }
         }
+
         $js_files = array_diff(@scandir(dirname(__DIR__) . self::$_js_cache_path), array(".", "..", ".DS_Store"));
         foreach ($js_files as $file) {
             if (preg_match('/\.js$/i', $file)) {
@@ -169,7 +170,7 @@ class Header
 
     public static function cloudflare_enabled()
     {
-        if (defined('CLOUDFLARE_KEY')) {
+        if (defined('CLOUDFLARE_KEY') && !empty(CLOUDFLARE_KEY)) {
             return true;
         } else {
             return false;

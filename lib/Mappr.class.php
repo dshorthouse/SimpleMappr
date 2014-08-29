@@ -667,6 +667,7 @@ abstract class Mappr
         $this->border_thickness = (float)$this->load_param('border_thickness', 1.25);
 
         $this->rotation         = (int)$this->load_param('rotation', 0);
+        $this->zoom_in          = $this->load_param('zoom_in', false);
         $this->zoom_out         = $this->load_param('zoom_out', false);
 
         $this->_download_factor = (int)$this->load_param('download_factor', 1);
@@ -1030,6 +1031,13 @@ abstract class Mappr
                 $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
                 $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
             }
+        }
+
+        //Auto Zoom in
+        if (isset($this->zoom_in) && $this->zoom_in) {
+            $zoom_point = ms_newPointObj();
+            $zoom_point->setXY($this->map_obj->width/2, $this->map_obj->height/2);
+            $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
         }
 
         //Zoom out
