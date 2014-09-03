@@ -235,7 +235,10 @@ class Bootstrap
     private function log($type = "API")
     {
         $logger = new Logger(ROOT."/log/logger.log");
-        $ip = (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER["REMOTE_ADDR"];
+        $ip = $_SERVER["REMOTE_ADDR"];
+        if (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") {
+            $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        }
         $message = implode(" - ", array(date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]));
         $logger->write($message);
     }

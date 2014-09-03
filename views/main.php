@@ -29,7 +29,7 @@ $roles = $header[2];
 <?php flush(); ?>
 <body>
 <div itemscope itemtype="http://schema.org/WebApplication" id="header" class="clearfix">
-<h1 id="site-title" class="sprites-after" itemprop="name">SimpleMapp<span>r</span></h1>
+<h1 id="site-title" itemprop="name">SimpleMapp<span>r</span></h1>
 <div id="site-tagline" itemprop="description"><?php echo _("create free point maps for publications and presentations"); ?></div>
 <meta itemprop="url" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>" />
 <meta itemprop="image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
