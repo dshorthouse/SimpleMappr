@@ -15,6 +15,7 @@ autoconf \
 libjpeg-dev \
 libpng-dev \
 freetype* \
+libgdal1-dev \
 libgdal-dev \
 libproj-dev \
 libxml2-dev \
