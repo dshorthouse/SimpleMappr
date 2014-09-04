@@ -50,12 +50,24 @@ var SimpleMapprAdmin = (function($, window, sm) {
       sm.tabSelector(5);
     },
 
+    getParameterByName: function(name) {
+      var cname   = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]"),
+          regexS  = "[\\?&]" + cname + "=([^&#]*)",
+          regex   = new RegExp(regexS),
+          results = regex.exec(window.location.href);
+
+      if(results === null) { return ""; }
+      return decodeURIComponent(results[1].replace(/\+/g, " "));
+    },
+
     loadUserList: function(object) {
       var self  = this,
           obj   = object || {},
-          data  = { locale : sm.getParameterByName("locale") };
+          data  = {};
 
       sm.showSpinner();
+
+      data = { locale : this.getParameterByName("locale") };
 
       if(obj.sort) {
         data.sort = obj.sort.item;
@@ -90,8 +102,8 @@ var SimpleMapprAdmin = (function($, window, sm) {
               })
               .on('click', 'a.user-load', function(e) {
                 e.preventDefault();
-                SimpleMappr.loadMapList({ uid : $(this).attr("data-uid") });
-                SimpleMappr.tabSelector(3);
+                sm.loadMapList({ uid : $(this).attr("data-uid") });
+                sm.tabSelector(3);
             });
             sm.hideSpinner();
           }
@@ -139,7 +151,6 @@ var SimpleMapprAdmin = (function($, window, sm) {
         success  : function(response) {
           if(response.files === true) {
             sm.hideSpinner();
-            alert("Caches flushed");
             window.location.reload();
           }
         },
@@ -174,7 +185,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
         },
         error : function() {
           alert("Error loading citations");
-          SimpleMappr.hideSpinner();
+          sm.hideSpinner();
         }
       });
     },

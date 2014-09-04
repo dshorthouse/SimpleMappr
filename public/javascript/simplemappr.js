@@ -2506,9 +2506,6 @@ var SimpleMappr = (function($, window, document) {
       $.extend(_private.settings, args);
       _private.init();
     },
-    getParameterByName: function(name) {
-      _private.getParameterByName(name);
-    },
     showSpinner: function() {
       _private.showSpinner();
     },
