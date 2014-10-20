@@ -1121,7 +1121,9 @@ var SimpleMappr = (function($, window, document) {
           clone = button.parent().prev().children("div:last").clone();
           num = parseInt(clone.find("h3 a").text().split(" ")[1],10);
           counter = self.textareaCounter(data_type, 'increase');
+          clone.find("h3").attr("id", clone.find("h3").attr("id").replace(/(\d+)+/g, num));
           clone.find("h3 a").text(clone.find("h3 a").text().split(" ")[0] + " " + (num+1).toString());
+          clone.find("div").eq(0).attr("id", clone.find("div").eq(0).attr("id").replace(/(\d+)+/g, num));
           clone.find("input.m-mapTitle").attr("name", data_type + "["+num.toString()+"][title]").val("");
           clone.find("textarea")
                   .attr("name", data_type + "["+num.toString()+"][data]")
@@ -1164,7 +1166,7 @@ var SimpleMappr = (function($, window, document) {
               }).parent()
               .find("button.clearself").on('click', function(e) {
                 e.preventDefault();
-                self.clearSelf($(this));
+                self.clearZone($(this));
               }).parent().parent()
               .find(".ui-icon:last").remove();
             }
