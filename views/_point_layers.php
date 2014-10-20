@@ -31,8 +31,6 @@ function point_layers()
     $marker_shape .= '</optgroup>';
 
     $output = '';
-//h3  id="ui-accordion-fieldSetsPoints-header-'.$i+1.'"
-//div  id="ui-accordion-fieldSetsPoints-panel-'.$i+1.'"
     for ($i=0;$i<=NUMTEXTAREA-1;$i++) {
         $output .= '<div class="form-item fieldset-points">';
         $output .= '<button class="sprites-before removemore negative ui-corner-all" data-type="coords">'._("Remove").'</button>';
