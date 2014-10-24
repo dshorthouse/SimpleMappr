@@ -13,6 +13,12 @@
  */
 class PointDataTest extends SimpleMapprTest
 {
+    protected $title;
+    protected $data;
+    protected $shape;
+    protected $size;
+    protected $color;
+
     /**
      * Parent setUp function executed before each test.
      */
@@ -29,6 +35,23 @@ class PointDataTest extends SimpleMapprTest
         parent::tearDown();
     }
 
+    private function setLayerContent($id)
+    {
+        $this->title = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][title]'));
+        $this->data = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][data]'));
+        $this->shape = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][shape]'));
+        $this->size = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][size]'));
+        $this->color = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][color]'));
+        
+        $this->title->sendKeys('My Layer');
+        $this->data->sendKeys('45, -120');
+        $selected_shape = new WebDriverSelect($this->shape);
+        $selected_shape->selectByValue('plus');
+        $selected_size = new WebDriverSelect($this->size);
+        $selected_size->selectByValue('16');
+        $this->color->clear()->sendKeys('120 120 120');
+    }
+
     /**
      * Test clear a point data layer.
      */
@@ -38,36 +61,22 @@ class PointDataTest extends SimpleMapprTest
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 
-        $title = $this->webDriver->findElement(WebDriverBy::name('coords[0][title]'));
-        $points = $this->webDriver->findElement(WebDriverBy::name('coords[0][data]'));
-        $shape = $this->webDriver->findElement(WebDriverBy::name('coords[0][shape]'));
-        $size = $this->webDriver->findElement(WebDriverBy::name('coords[0][size]'));
-        $color = $this->webDriver->findElement(WebDriverBy::name('coords[0][color]'));
+        $layer_id = 0;
+        $this->setLayerContent($layer_id);
 
-        $title->sendKeys('My Layer');
-        $this->assertEquals($title->getAttribute('value'), 'My Layer');
+        $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
+        $this->assertEquals($this->data->getAttribute('value'), '45, -120');
+        $this->assertEquals($this->shape->getAttribute('value'), 'plus');
+        $this->assertEquals($this->size->getAttribute('value'), '16');
+        $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $points->sendKeys('45, -120');
-        $this->assertEquals($points->getAttribute('value'), '45, -120');
+        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-".$layer_id."']/button[text()='Clear']"))->click();
 
-        $selected_shape = new WebDriverSelect($shape);
-        $selected_shape->selectByValue('plus');
-        $this->assertEquals($shape->getAttribute('value'), 'plus');
-
-        $selected_size = new WebDriverSelect($size);
-        $selected_size->selectByValue('16');
-        $this->assertEquals($size->getAttribute('value'), '16');
-
-        $color->clear()->sendKeys('120 120 120');
-        $this->assertEquals($color->getAttribute('value'), '120 120 120');
-
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-0']/button[text()='Clear']"))->click();
-
-        $this->assertEquals($title->getAttribute('value'), '');
-        $this->assertEquals($points->getAttribute('value'), '');
-        $this->assertEquals($shape->getAttribute('value'), 'circle');
-        $this->assertEquals($size->getAttribute('value'), '10');
-        $this->assertEquals($color->getAttribute('value'), '0 0 0');
+        $this->assertEquals($this->title->getAttribute('value'), '');
+        $this->assertEquals($this->data->getAttribute('value'), '');
+        $this->assertEquals($this->shape->getAttribute('value'), 'circle');
+        $this->assertEquals($this->size->getAttribute('value'), '10');
+        $this->assertEquals($this->color->getAttribute('value'), '0 0 0');
     }
 
     /**
@@ -80,35 +89,21 @@ class PointDataTest extends SimpleMapprTest
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a layer']"))->click();
 
-        $title = $this->webDriver->findElement(WebDriverBy::name('coords[3][title]'));
-        $points = $this->webDriver->findElement(WebDriverBy::name('coords[3][data]'));
-        $shape = $this->webDriver->findElement(WebDriverBy::name('coords[3][shape]'));
-        $size = $this->webDriver->findElement(WebDriverBy::name('coords[3][size]'));
-        $color = $this->webDriver->findElement(WebDriverBy::name('coords[3][color]'));
+        $layer_id = 3;
+        $this->setLayerContent($layer_id);
 
-        $title->sendKeys('My Layer');
-        $this->assertEquals($title->getAttribute('value'), 'My Layer');
+        $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
+        $this->assertEquals($this->data->getAttribute('value'), '45, -120');
+        $this->assertEquals($this->shape->getAttribute('value'), 'plus');
+        $this->assertEquals($this->size->getAttribute('value'), '16');
+        $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $points->sendKeys('45, -120');
-        $this->assertEquals($points->getAttribute('value'), '45, -120');
+        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-".$layer_id."']/button[text()='Clear']"))->click();
 
-        $selected_shape = new WebDriverSelect($shape);
-        $selected_shape->selectByValue('plus');
-        $this->assertEquals($shape->getAttribute('value'), 'plus');
-
-        $selected_size = new WebDriverSelect($size);
-        $selected_size->selectByValue('16');
-        $this->assertEquals($size->getAttribute('value'), '16');
-
-        $color->clear()->sendKeys('120 120 120');
-        $this->assertEquals($color->getAttribute('value'), '120 120 120');
-
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-3']/button[text()='Clear']"))->click();
-
-        $this->assertEquals($title->getAttribute('value'), '');
-        $this->assertEquals($points->getAttribute('value'), '');
-        $this->assertEquals($shape->getAttribute('value'), 'circle');
-        $this->assertEquals($size->getAttribute('value'), '10');
-        $this->assertEquals($color->getAttribute('value'), '0 0 0');
+        $this->assertEquals($this->title->getAttribute('value'), '');
+        $this->assertEquals($this->data->getAttribute('value'), '');
+        $this->assertEquals($this->shape->getAttribute('value'), 'circle');
+        $this->assertEquals($this->size->getAttribute('value'), '10');
+        $this->assertEquals($this->color->getAttribute('value'), '0 0 0');
     }
 }
