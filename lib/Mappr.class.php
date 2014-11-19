@@ -1554,7 +1554,7 @@ abstract class Mappr
         if (isset($this->watermark) && $this->watermark) {
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", 'watermark');
-            $layer->set("type", MS_LAYER_ANNOTATION);
+            $layer->set("type", MS_LAYER_POINT);
             $layer->set("status", MS_ON);
             $layer->set("transform", MS_FALSE);
             $layer->set("sizeunits", MS_PIXELS);
@@ -1666,7 +1666,6 @@ abstract class Mappr
             $this->map_obj->legend->label->set("type", MS_TRUETYPE);
             $this->map_obj->legend->label->set("position", 1);
             $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-            $this->map_obj->legend->label->set("antialias", 50);
             $this->map_obj->legend->label->color->setRGB(0, 0, 0);
 
             //svg format cannot do legends in MapServer

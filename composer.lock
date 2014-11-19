@@ -12,18 +12,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/natxet/CssMin.git",
-                "reference": "afdcdbdb5fc332313f47a79ae60346df3e69a572"
+                "reference": "9fa6bb8cde53ec74021275ea4a63c481f63b076d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/afdcdbdb5fc332313f47a79ae60346df3e69a572",
-                "reference": "afdcdbdb5fc332313f47a79ae60346df3e69a572",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/9fa6bb8cde53ec74021275ea4a63c481f63b076d",
+                "reference": "9fa6bb8cde53ec74021275ea4a63c481f63b076d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -46,7 +51,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2013-07-02 20:53:35"
+            "time": "2014-11-10 15:13:20"
         },
         {
             "name": "phayes/geophp",
@@ -87,12 +92,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPPowerPoint.git",
-                "reference": "7538eb3ada47b084378eb3ea0fd2806f92f0bb3a"
+                "reference": "01611e55ca54dbdc3dbfab95caa564d4847bb58c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/7538eb3ada47b084378eb3ea0fd2806f92f0bb3a",
-                "reference": "7538eb3ada47b084378eb3ea0fd2806f92f0bb3a",
+                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/01611e55ca54dbdc3dbfab95caa564d4847bb58c",
+                "reference": "01611e55ca54dbdc3dbfab95caa564d4847bb58c",
                 "shasum": ""
             },
             "require": {
@@ -115,6 +120,9 @@
             "autoload": {
                 "psr-0": {
                     "PHPPowerPoint": "src/"
+                },
+                "psr-4": {
+                    "PhpOffice\\PhpPowerpoint\\": "src/PhpPowerpoint/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -126,12 +134,12 @@
                     "name": "Mark Baker"
                 },
                 {
-                    "name": "Franck Lefevre",
-                    "homepage": "http://blog.rootslabs.net"
-                },
-                {
                     "name": "Ivan Lanin",
                     "homepage": "http://ivan.lanin.org"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://rootslabs.net"
                 }
             ],
             "description": "PHPPowerPoint - Read, Create and Write Presentations documents in PHP",
@@ -145,7 +153,7 @@
                 "pptx",
                 "presentations"
             ],
-            "time": "2014-07-22 10:02:05"
+            "time": "2014-09-24 14:22:20"
         },
         {
             "name": "phpoffice/phpword",
@@ -153,12 +161,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPWord.git",
-                "reference": "d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca"
+                "reference": "5e68fd9bbddd92243ec5db67f449c883bc8d1ff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca",
-                "reference": "d8fbac6407f109cf7fcea404fbc8ceb2dffee5ca",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/5e68fd9bbddd92243ec5db67f449c883bc8d1ff4",
+                "reference": "5e68fd9bbddd92243ec5db67f449c883bc8d1ff4",
                 "shasum": ""
             },
             "require": {
@@ -192,6 +200,9 @@
             ],
             "authors": [
                 {
+                    "name": "Mark Baker"
+                },
+                {
                     "name": "Franck Lefevre",
                     "homepage": "http://blog.rootslabs.net"
                 },
@@ -199,9 +210,6 @@
                     "name": "Gabriel Bull",
                     "email": "me@gabrielbull.com",
                     "homepage": "http://gabrielbull.com/"
-                },
-                {
-                    "name": "Mark Baker"
                 },
                 {
                     "name": "Ivan Lanin",
@@ -237,20 +245,20 @@
                 "word",
                 "writer"
             ],
-            "time": "2014-06-24 08:30:46"
+            "time": "2014-10-02 15:21:27"
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.3.7",
+            "version": "v0.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "d918fef14f44bc2e68c6263327ba5b44582313c6"
+                "reference": "589319c8bd7f819580bbab11a8987fb38853bfe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/d918fef14f44bc2e68c6263327ba5b44582313c6",
-                "reference": "d918fef14f44bc2e68c6263327ba5b44582313c6",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/589319c8bd7f819580bbab11a8987fb38853bfe7",
+                "reference": "589319c8bd7f819580bbab11a8987fb38853bfe7",
                 "shasum": ""
             },
             "require": {
@@ -294,21 +302,21 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-08-18 08:15:10"
+            "time": "2014-10-06 09:27:17"
         },
         {
             "name": "symfony/class-loader",
-            "version": "v2.5.4",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/ClassLoader",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "9acd88cd723cdd31d0c9ac3fafef0137e6a0e2ad"
+                "reference": "174f30f12a2e9235d79399699bd0dce4f044a9ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/9acd88cd723cdd31d0c9ac3fafef0137e6a0e2ad",
-                "reference": "9acd88cd723cdd31d0c9ac3fafef0137e6a0e2ad",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/174f30f12a2e9235d79399699bd0dce4f044a9ab",
+                "reference": "174f30f12a2e9235d79399699bd0dce4f044a9ab",
                 "shasum": ""
             },
             "require": {
@@ -344,21 +352,21 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-31 03:22:04"
+            "time": "2014-10-01 05:50:18"
         },
         {
             "name": "symfony/config",
-            "version": "v2.5.4",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "080eabdc256c1d7a3a7cf6296271edb68eb1ab2b"
+                "reference": "0316364bfebc8b080077c731a99f189341476bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/080eabdc256c1d7a3a7cf6296271edb68eb1ab2b",
-                "reference": "080eabdc256c1d7a3a7cf6296271edb68eb1ab2b",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/0316364bfebc8b080077c731a99f189341476bd7",
+                "reference": "0316364bfebc8b080077c731a99f189341476bd7",
                 "shasum": ""
             },
             "require": {
@@ -392,21 +400,21 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-31 03:22:04"
+            "time": "2014-09-23 05:25:11"
         },
         {
             "name": "symfony/console",
-            "version": "v2.5.4",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "748beed2a1e73179c3f5154d33fe6ae100c1aeb1"
+                "reference": "6f177fca24200a5b97aef5ce7a5c98124a0f0db0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/748beed2a1e73179c3f5154d33fe6ae100c1aeb1",
-                "reference": "748beed2a1e73179c3f5154d33fe6ae100c1aeb1",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/6f177fca24200a5b97aef5ce7a5c98124a0f0db0",
+                "reference": "6f177fca24200a5b97aef5ce7a5c98124a0f0db0",
                 "shasum": ""
             },
             "require": {
@@ -447,21 +455,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-14 16:10:54"
+            "time": "2014-10-05 13:57:04"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.5.4",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "a765efd199e02ff4001c115c318e219030be9364"
+                "reference": "4e62fab0060a826561c78b665925b37c870c45f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a765efd199e02ff4001c115c318e219030be9364",
-                "reference": "a765efd199e02ff4001c115c318e219030be9364",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/4e62fab0060a826561c78b665925b37c870c45f5",
+                "reference": "4e62fab0060a826561c78b665925b37c870c45f5",
                 "shasum": ""
             },
             "require": {
@@ -494,21 +502,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-09-03 09:00:14"
+            "time": "2014-09-22 09:14:18"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.4",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "01a7695bcfb013d0a15c6757e15aae120342986f"
+                "reference": "2d9f527449cabfa8543dd7fa3a466d6ae83d6726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/01a7695bcfb013d0a15c6757e15aae120342986f",
-                "reference": "01a7695bcfb013d0a15c6757e15aae120342986f",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2d9f527449cabfa8543dd7fa3a466d6ae83d6726",
+                "reference": "2d9f527449cabfa8543dd7fa3a466d6ae83d6726",
                 "shasum": ""
             },
             "require": {
@@ -541,7 +549,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-31 03:22:04"
+            "time": "2014-10-01 05:50:18"
         }
     ],
     "packages-dev": [
@@ -551,12 +559,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "b6e002e5bf811a8edba393ce6872322c1b7cf796"
+                "reference": "11c7bc5c73a0ee7a658ea1c8b5ac3a06a8ce6970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/b6e002e5bf811a8edba393ce6872322c1b7cf796",
-                "reference": "b6e002e5bf811a8edba393ce6872322c1b7cf796",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/11c7bc5c73a0ee7a658ea1c8b5ac3a06a8ce6970",
+                "reference": "11c7bc5c73a0ee7a658ea1c8b5ac3a06a8ce6970",
                 "shasum": ""
             },
             "require": {
@@ -584,7 +592,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2014-08-05 02:55:46"
+            "time": "2014-11-10 17:54:21"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -965,25 +973,28 @@
         },
         {
             "name": "sebastian/diff",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "1e091702a5a38e6b4c1ba9ca816e3dd343df2e2d"
+                "reference": "5843509fed39dee4b356a306401e9dd1a931fec7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/1e091702a5a38e6b4c1ba9ca816e3dd343df2e2d",
-                "reference": "1e091702a5a38e6b4c1ba9ca816e3dd343df2e2d",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/5843509fed39dee4b356a306401e9dd1a931fec7",
+                "reference": "5843509fed39dee4b356a306401e9dd1a931fec7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "phpunit/phpunit": "~4.2"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -997,13 +1008,12 @@
             ],
             "authors": [
                 {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                },
-                {
                     "name": "Kore Nordmann",
                     "email": "mail@kore-nordmann.de"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Diff implementation",
@@ -1011,32 +1021,32 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2013-08-03 16:46:33"
+            "time": "2014-08-15 10:29:00"
         },
         {
             "name": "sebastian/environment",
-            "version": "1.0.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "79517609ec01139cd7e9fded0dd7ce08c952ef6a"
+                "reference": "0d9bf79554d2a999da194a60416c15cf461eb67d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/79517609ec01139cd7e9fded0dd7ce08c952ef6a",
-                "reference": "79517609ec01139cd7e9fded0dd7ce08c952ef6a",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/0d9bf79554d2a999da194a60416c15cf461eb67d",
+                "reference": "0d9bf79554d2a999da194a60416c15cf461eb67d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.0.*@dev"
+                "phpunit/phpunit": "~4.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -1051,8 +1061,7 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Provides functionality to handle HHVM/PHP environments",
@@ -1062,27 +1071,27 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2014-02-18 16:17:19"
+            "time": "2014-10-22 06:38:05"
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529"
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529",
-                "reference": "1f9a98e6f5dfe0524cb8c6166f7c82f3e9ae1529",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
+                "reference": "c7d59948d6e82818e1bdff7cadb6c34710eb7dc0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.0.*@dev"
+                "phpunit/phpunit": "~4.0"
             },
             "type": "library",
             "extra": {
@@ -1101,11 +1110,6 @@
             ],
             "authors": [
                 {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                },
-                {
                     "name": "Jeff Welch",
                     "email": "whatthejeff@gmail.com"
                 },
@@ -1114,12 +1118,16 @@
                     "email": "github@wallbash.com"
                 },
                 {
-                    "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
-                },
-                {
                     "name": "Bernhard Schussek",
                     "email": "bschussek@2bepublished.at"
+                },
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                },
+                {
+                    "name": "Adam Harvey",
+                    "email": "aharvey@php.net"
                 }
             ],
             "description": "Provides the functionality to export PHP variables for visualization",
@@ -1128,7 +1136,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2014-02-16 08:26:31"
+            "time": "2014-09-10 00:51:36"
         },
         {
             "name": "sebastian/version",

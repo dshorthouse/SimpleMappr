@@ -47,7 +47,7 @@ class LayerDataTest extends SimpleMapprTest
     /**
      * Test clear a point data layer.
      */
-    public function testClearPointLayer()
+    public function testClearRegionLayer()
     {
         parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Regions'));
@@ -64,18 +64,18 @@ class LayerDataTest extends SimpleMapprTest
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '0 0 0');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
     }
 
     /**
      * Test clear a point data layer from a newly added layer.
      */
-    public function testNewClearPointLayer()
+    public function testNewClearRegionLayer()
     {
         parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Regions'));
         $link->click();
-        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a layer']"))->click();
+        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a region']"))->click();
 
         $layer_id = 3;
         $this->setLayerContent($layer_id);
@@ -88,6 +88,6 @@ class LayerDataTest extends SimpleMapprTest
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '0 0 0');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
     }
 }
