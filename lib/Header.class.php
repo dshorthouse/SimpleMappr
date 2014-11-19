@@ -183,10 +183,10 @@ class Header
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false);
-        if($filename) {
+        if ($filename) {
             header("Content-Disposition: attachment; filename=\"" . $filename  . "\";");
         }
-        if($filesize) {
+        if ($filesize) {
             header("Content-Length: " . $filesize);
         }
         switch($mime) {
@@ -470,7 +470,7 @@ class Header
         }
         echo $foot;
     }
-  
+
     private function isAdministrator()
     {
         if (isset($_SESSION['simplemappr']) && User::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {

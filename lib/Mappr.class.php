@@ -1712,7 +1712,6 @@ abstract class Mappr
         $this->map_obj->scalebar->label->set("font", "arial");
         $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
         $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
-        $this->map_obj->scalebar->label->set("antialias", 50);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do scalebar in MapServer
