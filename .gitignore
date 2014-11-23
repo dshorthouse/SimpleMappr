@@ -1,6 +1,7 @@
 # Ignore configuration files
 config/phinx.yml
 config/conf.php
+config/conf.php.old
 
 # Ignore misc files
 robots.txt
