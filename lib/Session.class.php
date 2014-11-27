@@ -48,10 +48,12 @@ class Session
         'en_US' => array(
             'canonical' => 'en',
             'locale' => 'en_US',
+            'hreflang' => 'en-us',
             'native' => 'English',
             'code'   => 'en_US.UTF-8'),
         'fr_FR' => array(
             'canonical' => 'fr',
+            'hreflang' => 'fr-fr',
             'locale' => 'fr_FR',
             'native' => 'Français',
             'code'   => 'fr_FR.UTF-8'),

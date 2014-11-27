@@ -26,7 +26,7 @@ $roles = $header[2];
 <?php $header_class->getCSSHeader(); ?>
 <?php $header_class->getDNSPrefetch(); ?>
 <?php foreach ($accepted_locales as $key => $locales): ?>
-<link rel="alternate" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/?locale=<?php echo $key; ?>" hreflang="<?php echo $key; ?>" />
+<link rel="alternate" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/?locale=<?php echo $key; ?>" hreflang="<?php echo $locales['hreflang']; ?>" />
 <?php endforeach; ?>
 </head>
 <?php flush(); ?>
