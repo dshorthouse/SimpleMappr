@@ -1052,3 +1052,22 @@ msgstr "Exemple"
 msgid "Nothing found"
 msgstr "Rien trouvé"
 
+#: .tabs/main.php
+msgid "Unsupported file type"
+msgstr "Ce type de fichier n'est pas supporté"
+
+#: .tabs/main.php
+msgid "Only files of type text are accepted."
+msgstr "Seulements les fichiers de type texte sont acceptées."
+
+#: ./tabs/main.php
+msgid "Upload text or csv file"
+msgstr "Téléverser un fichier texte or csv"
+
+#: ./tabs/main.php
+msgid "Example 1"
+msgstr "Exemple 1"
+
+#: ./tabs/main.php
+msgid "Example 2"
+msgstr "Exemple 2"

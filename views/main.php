@@ -87,6 +87,7 @@ $roles = $header[2];
 <div id="general-points" class="panel ui-corner-all">
 <p><?php echo _("Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon"); ?> <a href="#" class="sprites-before help show-examples"><?php echo _("examples"); ?></a></p>
 </div>
+<div id="upload-panel" class="panel ui-corner-all"><h3><?php echo _("Upload text or csv file"); ?></h3><p><input type="file" id="fileInput" /><a href="public/files/demo.txt"><?php echo _("Example 1"); ?></a>, <a href="public/files/demo2.csv"><?php echo _("Example 2"); ?></a></p></div>
 <div id="fieldSetsPoints" class="fieldSets">
 <?php $this->partial("point_layers"); ?>
 </div>
@@ -246,6 +247,7 @@ foreach (Mappr::$accepted_projections as $key => $value) {
 </div>
 <?php endif; ?>
 
+<div id="badFile" title="<?php echo _("Unsupported file type"); ?>"><?php echo _("Only files of type text are accepted."); ?></div>
 <div id="badRecordsViewer" title="<?php echo _("Records out of range"); ?>"><div id="badRecords"></div></div>
 <div id="mapSave" title="<?php echo _("Save"); ?>">
 <p>

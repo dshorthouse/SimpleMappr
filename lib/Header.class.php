@@ -78,6 +78,7 @@ class Header
         'bbq'         => 'public/javascript/jquery.ba-bbq.min.js',
         'hashchange'  => 'public/javascript/jquery.ba-hashchange.min.js',
         'toggle'      => 'public/javascript/jquery.toggleClick.min.js',
+        'parse'         => 'public/javascript/papaparse.min.js',
         'simplemappr' => 'public/javascript/simplemappr.min.js'
     );
 

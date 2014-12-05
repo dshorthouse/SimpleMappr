@@ -31,7 +31,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-/*global jQuery, window, document, self, encodeURIComponent, ga */
+/*global jQuery, window, document, self, encodeURIComponent, Papa, ga */
 var SimpleMappr = (function($, window, document) {
 
   "use strict";
@@ -1629,10 +1629,12 @@ var SimpleMappr = (function($, window, document) {
 
       $.each(['shape', 'size'], function(key, value) {
         self.unusedVariables(key);
-        if(coords[i][value].toString === "") {
-          self.vars.fieldSetsPoints.find('select[name="coords['+i.toString()+']['+value+']"]')[0].selectedIndex = 3;
-        } else {
-          self.vars.fieldSetsPoints.find('select[name="coords['+i.toString()+']['+value+']"]').val(coords[i][value]);
+        if(coords[i].hasOwnProperty(value)) {
+          if(coords[i][value].toString === "") {
+            self.vars.fieldSetsPoints.find('select[name="coords['+i.toString()+']['+value+']"]')[0].selectedIndex = 3;
+          } else {
+            self.vars.fieldSetsPoints.find('select[name="coords['+i.toString()+']['+value+']"]').val(coords[i][value]);
+          }
         }
       });
     },
@@ -2392,7 +2394,93 @@ var SimpleMappr = (function($, window, document) {
       });
       $(window).trigger('hashchange');
     },
-    
+
+    bindUpload: function() {
+      var self = this,
+          fileInput = $('#fileInput'),
+          file, textType, reader;
+
+      if(window.FileReader === "undefined") {
+        $('#upload-panel').remove();
+      }
+
+      fileInput.on('change', function() {
+        file = fileInput[0].files[0];
+        textType = /text.*/;
+
+        if (file.type.match(textType)) {
+          reader = new FileReader();
+          reader.onload = function() {
+            self.removeExtraElements();
+            self.clearZone($('#clearLayers').parent().prev().prev().children());
+            self.loadCoordinates(self.parseFile(reader.result));
+          }
+          reader.readAsText(file);
+        } else {
+          self.showUnsupportedFile();
+        }
+      });
+    },
+
+    showUnsupportedFile: function() {
+      $('#badFile').dialog({
+        autoOpen      : true,
+        height        : '200',
+        width         : '500',
+        dialogClass   : 'ui-dialog-title-badFile',
+        position      : [200, 200],
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : true,
+        resizable     : false,
+        buttons: [
+          {
+            "text"  : "OK",
+            "class" : "positive",
+            "click" : function() {
+              $(this).dialog("destroy");
+            }
+          }
+        ]
+      });
+    },
+
+    parseFile: function(content) {
+      var csv, data, headers, coords = {}, coord_arr = [], options = {};
+
+      if(content.indexOf("\t") !== -1) {
+        $.extend(options, { "delimiter" : "\t" });
+      }
+
+      csv = Papa.parse(content, options);
+      data = csv.data;
+
+      if(data.length > 1) {
+        headers = data[0];
+        if(isNaN(headers[headers.length-1])) {
+          data.shift();
+          coord_arr = $.map(headers, function(name, i) {
+            return { "title" : name, "data" : $.map(data, function(coords) { return coords[i]; }).join("\n") };
+          });
+        } else {
+          $.each(data, function(k,v) {
+            var key = v.shift();
+            if(coords.hasOwnProperty(key)) {
+              coords[key].push(v.join("\t"));
+            } else {
+              coords[key] = [];
+              coords[key].push(v.join("\t"));
+            }
+          });
+          $.each(coords, function(k,v) {
+            coord_arr.push({ "title" : k, "data" : v.join("\n") });
+          });
+        }
+      }
+
+      return { "map" : { "coords" :  coord_arr } };
+    },
+
     adjustLanguageLinks: function(id, idx) {
       var url = "";
       $.each($('#site-languages').find('a'), function() {
@@ -2481,6 +2569,7 @@ var SimpleMappr = (function($, window, document) {
       this.bindRotateWheel();
       this.bindTooltips();
       this.bindTabs();
+      this.bindUpload();
       this.appendImages();
       this.bindSpecialClicks();
       this.bindAccordions();

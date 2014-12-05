@@ -34,7 +34,7 @@ ul.navigation a.map-mymaps:before{background-position:-200px -284px;}
 ul.navigation a.map-users:before{background-position:-160px -264px;}
 ul.navigation a.map-myhelp:before{background-position:-220px -264px;}
 li.map-extras{float:right !important;}
-#mapSave, #mapExport, #mapEmbed{display:none;}
+#mapSave, #mapExport, #mapEmbed, #badFile{display:none;}
 #mapEmbed .header{margin-top:5px;}
 #mapEmbed h2{font-size:0.9em;}
 #mapSave p, #mapExport p, #mapEmbed p{font-size:0.8em;margin:5px 0px;}
@@ -42,6 +42,7 @@ li.map-extras{float:right !important;}
 .ui-dialog-title-mapSave .ui-dialog-title:before{background-position:-240px -284px;}
 .ui-dialog-title-mapEmbed .ui-dialog-title:before{background-position:-220px -284px;}
 .ui-dialog-title-mapExport .ui-dialog-title:before{background-position:-160px -284px;}
+.ui-dialog-title-badFile .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-badRecordsViewer .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-mapper-message .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-mapper-message-delete .ui-dialog-title:before{background-position:-260px -284px;}
@@ -172,6 +173,8 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .download-message{display:none;background-repeat:no-repeat !important;background-position:10px 10px !important;padding-left:35px !important;padding:.5em 1em .5em 35px;background-image:url("../../images/throbber.gif") !important;}
 #janrainEngageEmbed {margin-top:10px;}
 #janrainEngageEmbed div{margin:0px;}
+#upload-panel h3{margin:0px;padding:0px;font-size:0.8em;}
+#upload-panel p{margin:0.5em;}
 #map-mymaps table, #map-users table, #map-shares table{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}
 #map-mymaps thead tr, #map-users thead tr, #map-shares thead tr{height:1.75em;}
 #map-mymaps thead th, #map-users thead th, #map-shares thead th{background-color:#e9e9e9;font-weight:normal;text-align:center;}
@@ -380,7 +383,7 @@ input.ui-button{padding:.4em 1em;}
 @media print{
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
-#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
+#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badFile,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
 #mapScale{text-align: right;}
 #mapLegend p{display:none;}
 #mapLegend img{display:block;}
