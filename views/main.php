@@ -158,60 +158,23 @@ $roles = $header[2];
 </ul>
 <div id="mapLegend"><p><em><?php echo _("legend will appear here"); ?></em></p></div>
 <div id="mapOptions">
+
 <h2><?php echo _("Layers"); ?></h2>
-<ul class="columns ui-helper-clearfix">
-<li><input type="checkbox" id="stateprovinces" class="layeropt" name="layers[stateprovinces]" /> <label for="stateprovinces"><?php echo _("State/Provinces"); ?></label></li>
-<li><input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" /> <label for="lakesOutline"><?php echo _("lakes (outline)"); ?></label></li>
-<li><input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" /> <label for="lakes"><?php echo _("lakes (greyscale)"); ?></label></li>
-<li><input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" /> <label for="rivers"><?php echo _("rivers"); ?></label></li>
-<li><input type="checkbox" id="oceans" class="layeropt" name="layers[oceans]" /> <label for="oceans"><?php echo _("oceans (greyscale)"); ?></label></li>
-<li><input type="checkbox" id="relief" class="layeropt" name="layers[relief]" /> <label for="relief"><?php echo _("relief"); ?></label></li>
-<li><input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" /> <label for="reliefgrey"><?php echo _("relief (greyscale)"); ?></label></li>
-<li><input type="checkbox" id="conservation" class="layeropt" name="layers[conservation]" /> <label for="conservation"><?php echo _("biodiv. hotspots"); ?></label></li>
-</ul>
+<?php $this->partial("layers"); ?>
+
 <h2><?php echo _("Labels"); ?></h2>
-<ul class="columns ui-helper-clearfix">
-<li><input type="checkbox" id="countrynames" class="layeropt" name="layers[countrynames]" /> <label for="countrynames"><?php echo _("Countries"); ?></label></li>
-<li><input type="checkbox" id="stateprovincenames" class="layeropt" name="layers[stateprovnames]" /> <label for="stateprovincenames"><?php echo _("State/Provinces"); ?></label></li>
-<li><input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" /> <label for="lakenames"><?php echo _("lakes"); ?></label></li>
-<li><input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" /> <label for="rivernames"><?php echo _("rivers"); ?></label></li>
-<li><input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" /> <label for="placenames"><?php echo _("places"); ?></label></li>
-<li><input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" /> <label for="physicalLabels"><?php echo _("physical"); ?></label></li>
-<li><input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" /> <label for="marineLabels"><?php echo _("marine"); ?></label></li>
-<li><input type="checkbox" id="hotspotLabels" class="layeropt" name="layers[hotspotLabels]" /> <label for="hotspotLabels"><?php echo _("biodiv. hotspots"); ?></label></li>
-</ul>
+<?php $this->partial("labels"); ?>
+
 <h2><?php echo _("Options"); ?></h2>
-<ul>
-<li>
-<input type="checkbox" id="graticules"  class="layeropt" name="layers[grid]" /> <label for="graticules"><?php echo _("graticules (grid)"); ?></label>
-<div id="graticules-selection">
-<input type="radio" id="gridspace" class="gridopt" name="gridspace" value="" checked="checked" /> <label for="gridspace"><?php echo _("fixed"); ?></label>
-<input type="radio" id="gridspace-1" class="gridopt" name="gridspace" value="1" /> <label for="gridspace-1">1<sup>o</sup></label>
-<input type="radio" id="gridspace-5" class="gridopt" name="gridspace" value="5" /> <label for="gridspace-5">5<sup>o</sup></label>
-<input type="radio" id="gridspace-10" class="gridopt" name="gridspace" value="10" /> <label for="gridspace-10">10<sup>o</sup></label>
-<input type="checkbox" id="gridlabel" name="gridlabel" /> <label for="gridlabel"><?php echo _("hide labels"); ?></label>
-</div>
-</li>
-</ul>
+<?php $this->partial("options"); ?>
+
 <h3><?php echo _("Line Thickness"); ?></h3>
 <div id="border-slider"></div>
+
 <h2><?php echo _("Projection"); ?>*</h2>
-<ul>
-<li>
-<select id="projection" name="projection">
-<?php
-foreach (Mappr::$accepted_projections as $key => $value) {
-  $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
-  echo '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>' . "\n";
-}
-?>
-</select>
-</li>
-<li id="origin-selector">
-<label for="origin"><?php echo _("longitude of natural origin"); ?></label><input type="text" id="origin" name="origin" size="4" />
-</li>
-</ul>
+<?php $this->partial("projections"); ?>
 <p>*<?php echo _("zoom prior to setting projection"); ?></p>
+
 </div>
 </div>
 </div>

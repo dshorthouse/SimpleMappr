@@ -256,7 +256,7 @@ class Bootstrap
             foreach ($logs as $key => $log) {
                 if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $log, $match)) {
                     if (filter_var($match[0], FILTER_VALIDATE_IP)) {
-                        $logs[$key] = str_replace($match, "<a href=\"http://tools.whois.net/whoisbyip/?host=".$match[0]."\">".$match[0]."</a>", $log);
+                        $logs[$key] = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
                     }
                 }
             }

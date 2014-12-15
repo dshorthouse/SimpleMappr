@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/natxet/CssMin.git",
-                "reference": "9fa6bb8cde53ec74021275ea4a63c481f63b076d"
+                "reference": "8883d28cd2de131c364f2f657e4bcc09bfa45082"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/9fa6bb8cde53ec74021275ea4a63c481f63b076d",
-                "reference": "9fa6bb8cde53ec74021275ea4a63c481f63b076d",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/8883d28cd2de131c364f2f657e4bcc09bfa45082",
+                "reference": "8883d28cd2de131c364f2f657e4bcc09bfa45082",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2014-11-10 15:13:20"
+            "time": "2014-12-05 11:02:56"
         },
         {
             "name": "phayes/geophp",
@@ -564,12 +564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "0a83b762e8a71bd248935479b55af64d72449fe2"
+                "reference": "e3e354cc0f7c1f3c2ef0afa199aacba2e649bbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/0a83b762e8a71bd248935479b55af64d72449fe2",
-                "reference": "0a83b762e8a71bd248935479b55af64d72449fe2",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/e3e354cc0f7c1f3c2ef0afa199aacba2e649bbbe",
+                "reference": "e3e354cc0f7c1f3c2ef0afa199aacba2e649bbbe",
                 "shasum": ""
             },
             "require": {
@@ -597,7 +597,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2014-12-02 04:07:50"
+            "time": "2014-12-08 18:18:56"
         },
         {
             "name": "phpunit/php-code-coverage",
