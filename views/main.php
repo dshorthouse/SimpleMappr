@@ -24,7 +24,6 @@ $roles = $header[2];
 <meta property="og:image" content="http://<?php echo $_SERVER['HTTP_HOST']; ?>/public/images/logo_og.png" />
 <title>SimpleMappr</title>
 <?php $header_class->getCSSHeader(); ?>
-<?php $header_class->getDNSPrefetch(); ?>
 <?php foreach ($accepted_locales as $key => $locales): ?>
 <link rel="alternate" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/?locale=<?php echo $key; ?>" hreflang="<?php echo $locales['hreflang']; ?>" />
 <?php endforeach; ?>
