@@ -160,6 +160,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           ),
           'layers' => 
           array (
+            'countries' => 'on',
             'stateprovinces' => 'on',
           ),
           'gridspace' => '',
@@ -262,6 +263,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           ),
           'layers' => 
           array (
+            'countries' => 'on',
             'stateprovinces' => 'on',
           ),
           'gridspace' => '',

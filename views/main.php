@@ -29,7 +29,6 @@ $roles = $header[2];
 <link rel="alternate" href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/?locale=<?php echo $key; ?>" hreflang="<?php echo $locales['hreflang']; ?>" />
 <?php endforeach; ?>
 </head>
-<?php flush(); ?>
 <body>
 <div itemscope itemtype="http://schema.org/WebApplication" id="header" class="clearfix">
 <h1 id="site-title" itemprop="name">SimpleMapp<span>r</span></h1>
@@ -172,7 +171,7 @@ $roles = $header[2];
 <div id="border-slider"></div>
 
 <h2><?php echo _("Projection"); ?>*</h2>
-<?php $this->partial("projections"); ?>
+<?php $this->partial("projections", Mappr::$accepted_projections); ?>
 <p>*<?php echo _("zoom prior to setting projection"); ?></p>
 
 </div>

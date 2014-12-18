@@ -1,15 +1,15 @@
 <?php
 
-function projections()
+function projections($args)
 {
     $output  = '';
     $output .= '<ul>';
     $output .= '<li>';
     $output .= '<select id="projection" name="projection">';
-//    foreach (Mappr::$accepted_projections as $key => $value) {
-//      $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
-//      $output .= '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>';
-//    }
+    foreach ($args[0] as $key => $value) {
+      $selected = ($value['name'] == 'Geographic') ? ' selected="selected"': '';
+      $output .= '<option value="'.$key.'"'.$selected.'>'.$value['name'].'</option>';
+    }
     $output .= '</select>';
     $output .= '</li>';
     $output .= '<li id="origin-selector">';

@@ -762,6 +762,13 @@ abstract class Mappr
 
         //base map
         $this->shapes['base'] = array(
+            'shape' => $this->shape_path . "/10m_physical/ne_10m_land",
+            'type'  => MS_LAYER_LINE,
+            'sort'  => 4
+        );
+
+        //base map
+        $this->shapes['countries'] = array(
             'shape' => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_0_map_units",
             'type'  => MS_LAYER_LINE,
             'sort'  => 4
@@ -1273,7 +1280,7 @@ abstract class Mappr
                     $layer->set("name", "query_layer_".$j);
 
                     if ($baselayer) {
-                        $layer->set("data", $this->shapes['base']['shape']);
+                        $layer->set("data", $this->shapes['countries']['shape']);
                         $layer->set("type", MS_LAYER_POLYGON);
                     } else {
                         $layer->set("data", $this->shapes['stateprovinces_polygon']['shape']);
@@ -1397,6 +1404,7 @@ abstract class Mappr
                     break;
 
                 case 'base':
+                case 'countries':
                 case 'stateprovinces':
                     $class = ms_newClassObj($layer);
                     $style = ms_newStyleObj($class);

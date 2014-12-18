@@ -290,10 +290,12 @@ class Bootstrap
      * @param string $partial Name of function called to include an HTML snippet
      * @return void
      */
-    private function partial($partial)
+    private function partial()
     {
-        include "views/_$partial.php";
-        call_user_func($partial);
+        $args = func_get_args();
+        $func = array_shift($args);
+        include "views/_$func.php";
+        call_user_func($func, $args);
     }
 
     /**

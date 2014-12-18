@@ -62,7 +62,7 @@ class MapprQuery extends Mappr
         $this->layers           = $this->load_param('layers', array());
         $this->graticules       = $this->load_param('graticules', false);
         $this->bbox_query       = $this->load_param('bbox_query', '0,0,0,0');
-        $this->queryLayer       = $this->load_param('qlayer', 'base');
+        $this->queryLayer       = $this->load_param('qlayer', 'countries');
 
         return $this;
     }
@@ -75,7 +75,7 @@ class MapprQuery extends Mappr
         $bbox_query = explode(',', $this->bbox_query);
 
         if (!array_key_exists($this->queryLayer, $this->shapes)) {
-            $this->queryLayer = 'base';
+            $this->queryLayer = 'countries';
         }
 
         //lower-left coordinate

@@ -425,6 +425,7 @@ var SimpleMappr = (function($, window, document) {
       var self = this;
 
       $('#mapOptions').find("input").prop("checked", false);
+      $('#countries').prop("checked", true);
       $('#gridspace').prop("checked", true);
       $('#mapTitle').html('');
       $('#m-mapSaveTitle').val('');
@@ -1020,7 +1021,7 @@ var SimpleMappr = (function($, window, document) {
             projection     : $('#projection').val(),
             projection_map : $('#projection_map').val(),
             origin         : $('#origin').val(),
-            qlayer         : ($('#stateprovinces').prop('checked')) ? 'stateprovinces_polygon' : 'base',
+            qlayer         : ($('#stateprovinces').prop('checked')) ? 'stateprovinces_polygon' : 'countries',
             width          : $('#width').val(),
             height         : $('#height').val()
           };

@@ -688,6 +688,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "December 17, 2014"
+msgstr "17 décembre, 2014"
+
+#: .tabs/about.php:11
 msgid "December 4, 2014"
 msgstr "4 décembre, 2014"
 
@@ -718,6 +722,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added a Countries layer to toggle international borders. Requested by Yossef Rapoport."
+msgstr "Améliorations: Ajouté une couche pour les bordures internationales. Demandé par Yossef Rapoport."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added file upload for Point Layer data."

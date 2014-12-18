@@ -102,6 +102,7 @@ class MapprApi extends Mappr
         //convert layers as comma-separated values to an array
         $_layers                = explode(',', $this->load_param('layers', ''));
         $layers = array();
+        $layers['countries']    = true;
         foreach ($_layers as $_layer) {
             if ($_layer) {
                 $layers[trim($_layer)] = trim($_layer);
