@@ -2413,6 +2413,7 @@ var SimpleMappr = (function($, window, document) {
           reader = new FileReader();
           reader.onload = function() {
             self.removeExtraElements();
+            $('#map-points').find('button.addmore').prop("disabled", false);
             self.clearZone($('#clearLayers').parent().prev().prev().children());
             self.loadCoordinates(self.parseFile(reader.result));
           }
