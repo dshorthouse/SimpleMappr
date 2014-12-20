@@ -31,7 +31,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-/*global jQuery, window, document, self, encodeURIComponent, Papa, ga */
+/*global jQuery, window, document, self, FileReader, encodeURIComponent, Papa, ga */
 var SimpleMappr = (function($, window, document) {
 
   "use strict";
@@ -2407,7 +2407,7 @@ var SimpleMappr = (function($, window, document) {
 
       fileInput.on('change', function() {
         file = fileInput[0].files[0];
-        textType = /text.*/;
+        textType = /text[\w\W]*?/;
 
         if (file.type.match(textType)) {
           reader = new FileReader();
@@ -2416,7 +2416,7 @@ var SimpleMappr = (function($, window, document) {
             $('#map-points').find('button.addmore').prop("disabled", false);
             self.clearZone($('#clearLayers').parent().prev().prev().children());
             self.loadCoordinates(self.parseFile(reader.result));
-          }
+          };
           reader.readAsText(file);
         } else {
           self.showUnsupportedFile();
@@ -2448,7 +2448,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     parseFile: function(content) {
-      var csv, data, headers, coords = {}, coord_arr = [], options = {};
+      var csv, data, headers, self = this, coords = {}, coord_arr = [], options = {};
 
       if(content.indexOf("\t") !== -1) {
         $.extend(options, { "delimiter" : "\t" });
@@ -2467,6 +2467,7 @@ var SimpleMappr = (function($, window, document) {
         } else {
           $.each(data, function(k,v) {
             var key = v.shift();
+            self.unusedVariables(k);
             if(coords.hasOwnProperty(key)) {
               coords[key].push(v.join("\t"));
             } else {
