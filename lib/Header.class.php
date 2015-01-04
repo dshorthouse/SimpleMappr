@@ -56,7 +56,7 @@ class Header
      * An array of javascript files that remain uncombined
      */
     public $local_js_uncombined = array(
-        'jquery'      => 'public/javascript/jquery-1.11.1.min.js',
+        'jquery'      => 'public/javascript/jquery-1.11.2.min.js',
         'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js'
      );
 
@@ -87,7 +87,7 @@ class Header
     );
 
     public $remote_js = array(
-        'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',
+        'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js',
         'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
     );
 
