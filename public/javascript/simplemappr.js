@@ -29,7 +29,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 /*global jQuery, window, document, self, FileReader, encodeURIComponent, Papa, ga */
 var SimpleMappr = (function($, window, document) {
@@ -2537,6 +2536,10 @@ var SimpleMappr = (function($, window, document) {
       });
     },
 
+    appendDialogs: function() {
+      $('body').append($('#dialog-template').html());
+    },
+
     disableDefaultButtons: function() {
       $("input").on('keypress', function(e) {
         var key = e.keyCode || e.which;
@@ -2567,6 +2570,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     init: function() {
+      this.appendDialogs();
       this.disableDefaultButtons();
       this.screenSizeListener();
       this.bindRotateWheel();

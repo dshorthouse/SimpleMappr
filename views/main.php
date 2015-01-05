@@ -208,7 +208,6 @@ $roles = $header[2];
 </div>
 <?php endif; ?>
 
-<div id="badFile" title="<?php echo _("Unsupported file type"); ?>"><?php echo _("Only files of type text are accepted."); ?></div>
 <div id="badRecordsViewer" title="<?php echo _("Records out of range"); ?>"><div id="badRecords"></div></div>
 <div id="mapSave" title="<?php echo _("Save"); ?>">
 <p>
@@ -259,6 +258,8 @@ $roles = $header[2];
 
 </div>
 </div>
+
+<script type="text/template" id="dialog-template">
 <div id="mapper-message" class="ui-state-error" title="<?php echo _("Warning"); ?>"></div>
 <div id="button-titles" class="hidden-message">
   <span class="save"><?php echo _("Save"); ?></span>
@@ -286,6 +287,9 @@ $roles = $header[2];
   <p><input id="embed-json" type="text" size="65" value="" /></p>
   <p><strong><?php echo _("Additional parameters"); ?></strong>:<br><span class="indent"><?php echo _("callback"); ?> (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
 </div>
+<div id="badFile" title="<?php echo _("Unsupported file type"); ?>"><?php echo _("Only files of type text are accepted."); ?></div>
+</script>
+
 <div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit"><?php echo _("Apply"); ?></div></div></div>
 <?php $header_class->getJSVars(); ?>
 <?php $header_class->getJSFooter(); ?>
