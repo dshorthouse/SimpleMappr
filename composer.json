@@ -23,7 +23,8 @@
       "phpoffice/phpword"       : "dev-master",
       "phayes/geophp"           : "dev-master",
       "symfony/yaml"            : "*",
-      "robmorgan/phinx"         : "*"
+      "robmorgan/phinx"         : "*",
+      "twig/twig"               : "~1.0"
     },
     "require-dev": {
       "phpunit/phpunit"         : "4.0.*",
