@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="description" content="{% trans "Create free point maps for publications and presentations" %}" />
+<meta name="keywords" content="{% trans "publication,presentation,map,georeference" %}" />
+<meta name="author" content="David P. Shorthouse" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@SimpleMappr" />
+<meta name="twitter:creator" content="@dpsSpiders" />
+<meta property="og:title" content="SimpleMappr" />
+<meta property="og:description" content="{% trans "Create free point maps for publications and presentations" %}" />
+<meta property="og:locale" content="{{ locale['locale'] }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ og.url }}" />
+<meta property="og:image" content="{{ og.logo }}" />
+{% endblock meta %}
+
+{% block stylesheet %}
+    {% include "fragments/fragment.stylesheet.html" %}
+{% endblock stylesheet%}
+
+{% block pageheader %}
+{% include "fragments/fragment.pageheader.html" %}
+{% endblock pageheader %}
+
+{% block content %}
+    <div id="wrapper">
+    <noscript>
+    <div id="noscript">{% trans "Sorry, you must enable JavaScript to use this site." %}</div>
+    </noscript>
+    <div id="tabs">
+    <ul class="navigation">
+    <li><a href="#map-preview">{% trans "Preview" %}</a></li>
+    <li><a href="#map-points">{% trans "Point Data" %}</a></li>
+    <li><a href="#map-regions">{% trans "Regions" %}</a></li>
+    <li><a href="#map-mymaps" class="sprites-before map-mymaps">
+        {% if session and roles[session['role']] == 'administrator' %}
+            {% trans "All Maps" %}
+        {% else %}
+            {% trans "My Maps" %}
+        {% endif %}
+        </a></li>
+    {% if session %}
+        <li><a href="#map-shares">{% trans "Shared Maps" %}</a></li>
+    {% endif %}
+    {% if session and roles[session['role']] == 'administrator' %}
+        <li><a href="#map-users" class="sprites-before map-users">{% trans "Users" %}</a></li>
+        <li><a href="#map-admin">{% trans "Administration" %}</a></li>
+    {% endif %}
+    <li class="map-extras"><a href="help{{ qlocale }}" class="sprites-before map-myhelp">{% trans "Help" %}</a></li>
+    <li class="map-extras"><a href="about{{ qlocale }}">{% trans "About" %}</a></li>
+    <li class="map-extras"><a href="feedback{{ qlocale }}">{% trans "Feedback" %}</a></li>
+    <li class="map-extras"><a href="apidoc{{ qlocale }}">{% trans "API" %}</a></li>
+    </ul>
+    <form id="form-mapper" accept-charset="UTF-8" action="application/" method="post" autocomplete="off">
+
+    <div id="map-points">
+    <div id="general-points" class="panel ui-corner-all">
+    <p>{% trans "Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon" %} <a href="#" class="sprites-before help show-examples">{% trans "examples" %}</a></p>
+    </div>
+    <div id="upload-panel" class="panel ui-corner-all"><h3>{% trans "Upload text or csv file" %}</h3><p><input type="file" id="fileInput" /><a href="public/files/demo.txt">{% trans "Example 1" %}</a>, <a href="public/files/demo2.csv">{% trans "Example 2" %}</a></p></div>
+
+    <div id="fieldSetsPoints" class="fieldSets">
+    {% include "fragments/fragment.layers.point.html" %}
+    </div>
+
+    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="coords">{% trans "Add a layer" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearLayers" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    </div>
+
+    <div id="map-regions">
+    <div id="regions-introduction" class="panel ui-corner-all">
+
+    {% set tabIndex = (session and roles[session['role']] == 'administrator') ? 5 : 4 %}
+
+    <p>{% trans "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]." %} <a href="#" data-tab="{{ tabIndex }}" class="sprites-before help show-codes">{% trans "codes" %}</a></p>
+    </div>
+
+    <div id="fieldSetsRegions" class="fieldSets">
+    {% include "fragments/fragment.layers.region.html" %}
+    </div>
+
+    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="regions">{% trans "Add a region" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearRegions" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    </div>
+
+    <div id="map-preview">
+    <div id="mapWrapper">
+    <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
+    <ul>
+    <li><a href="#" class="sprites tooltip toolsZoomIn" title="{% trans "zoom in +" %}"></a></li>
+    <li class="divider"><a href="#" class="sprites tooltip toolsZoomOut" title="{% trans "zoom out -" %}"></a></li>
+    <li><a href="#" class="sprites tooltip toolsCrop" title="{% trans "crop ctrl+x" %}"></a></li>
+    <li class="divider"><a href="#" class="sprites tooltip toolsQuery" title="{% trans "fill regions" %}"></a></li>
+    <li><a href="#" class="sprites tooltip toolsUndoDisabled" title="{% trans "undo ctrl+z" %}"></a></li>
+    <li class="divider"><a href="#" class="sprites tooltip toolsRedoDisabled" title="{% trans "redo ctrl+y" %}"></a></li>
+    <li><a href="#" class="sprites tooltip toolsNew" title="{% trans "new ctrl+n" %}"></a></li>
+    <li><a href="#" class="sprites tooltip toolsRefresh" title="{% trans "refresh ctrl+r" %}"></a></li>
+    <li><a href="#" class="sprites tooltip toolsRebuild" title="{% trans "rebuild ctrl+b" %}"></a></li>
+    </ul>
+    <h3 id="mapTitle"></h3>
+    <ul id="map-saveDialog">
+    {% if session %}
+        <li><a class="sprites-before tooltip map-saveItem toolsSave" href="#" title="{% trans "save ctrl+s" %}">{% trans "Save" %}</a></li>
+        <li><a class="sprites-before tooltip map-saveItem toolsEmbed" href="#" title="{% trans "embed" %}" data-mid="">{% trans "Embed" %}</a></li>
+    {% endif %}
+    <li><a class="sprites-before tooltip map-saveItem toolsDownload" href="#" title="{% trans "download ctrl+d" %}">{% trans "Download" %}</a></li>
+    </ul>
+    </div>
+    <div id="map">
+    <div id="mapImage">
+    <div id="mapControls">
+    <div class="viewport">
+    <ul class="overview"></ul>
+    </div>
+    <div class="dot"></div>
+    <div id="wheel-overlay">
+    <a href="#" class="sprites tooltip controls arrows up" data-pan="up" title="{% trans "pan up" %}"></a>
+    <a href="#" class="sprites tooltip controls arrows right" data-pan="right" title="{% trans "pan right" %}"></a>
+    <a href="#" class="sprites tooltip controls arrows down" data-pan="down" title="{% trans "pan down" %}"></a>
+    <a href="#" class="sprites tooltip controls arrows left" data-pan="left" title="{% trans "pan left" %}"></a>
+    </div>
+    <div class="thumb ui-corner-all ui-widget-header"></div>
+    </div>
+    <div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords">{% trans "Records Out of Range" %}</a></div>
+    <div id="mapOutput"></div>
+    </div>
+    <div id="mapScale"></div>
+    <div id="mapToolsCollapse" class="mapTools-default ui-widget-header ui-corner-left"><a href="#" class="sprites tooltip" title="{% trans "expand/collapse ctrl+e" %}"></a></div>
+    </div>
+    <div id="mapTools">
+    <ul>
+    <li><a href="#mapOptions">{% trans "Settings" %}</a></li>
+    <li><a href="#mapLegend">{% trans "Legend" %}</a></li>
+    </ul>
+    <div id="mapLegend"><p><em>{% trans "legend will appear here" %}</em></p></div>
+    <div id="mapOptions">
+
+    <h2>{% trans "Layers" %}</h2>
+    {% include "fragments/fragment.layers.html" %}
+
+    <h2>{% trans "Labels" %}</h2>
+    {% include "fragments/fragment.labels.html" %}
+
+    <h2>{% trans "Options" %}</h2>
+    {% include "fragments/fragment.options.html" %}
+
+    <h3>{% trans "Line Thickness" %}</h3>
+    <div id="border-slider"></div>
+
+    <h2>{% trans "Projection" %}*</h2>
+    {% include "fragments/fragment.projections.html" %}
+    <p>*{% trans "zoom prior to setting projection" %}</p>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <div id="map-mymaps">
+    {% if session %}
+        <div id="usermaps"></div>
+    {% else %}
+        <div class="panel ui-corner-all">
+            <p>{% trans "Save and reload your map data or create a generic template." %}</p> 
+        </div>
+        <div id="janrainEngageEmbed"></div>
+    {% endif %}
+    </div>
+
+    {% if session %}
+        <div id="map-shares">
+        <div id="sharedmaps"></div>
+    </div>
+    {% endif %}
+
+    {% if session and roles[session['role']] == 'administrator' %}
+        <div id="map-users">
+            <div id="userdata"></div>
+        </div>
+        {% include "fragments/fragment.admin.html" %}
+    {% endif %}
+
+    <div id="badRecordsViewer" title="{% trans "Records out of range" %}"><div id="badRecords"></div></div>
+    <div id="mapSave" title="{% trans "Save" %}">
+    <p>
+    <label for="m-mapSaveTitle">{% trans "Title" %}<span class="required">*</span></label>
+    <input type="text" id="m-mapSaveTitle" class="m-mapSaveTitle" size="30" maxlength="30" />
+    </p>
+    </div>
+    <div id="mapExport" title="{% trans "Download" %}">
+    <div class="download-dialog">
+    <p>
+    <label for="file-name">{% trans "File name" %}</label>
+    <input type="text" id="file-name" maxlength="30" size="30" />
+    </p>
+    <fieldset>
+    <legend>{% trans "File type" %}</legend>
+    {% include "fragments/fragment.filetypes.html" %}
+    </fieldset>
+    <fieldset>
+    <legend>{% trans "Options" %}</legend>
+    <p id="mapCropMessage" class="sprites-before">{% trans "map will be cropped" %}</p>
+    <div class="download-options">
+    {% include "fragments/fragment.scales.html" %}
+    {% set dim = '<span></span>' %}
+    <div id="scale-measure">{% trans %}Dimensions: {{ dim }}{% endtrans %}</div>
+    </div>
+    <div class="options-row">
+    <input type="checkbox" id="border" />
+    <label for="border">{% trans "include border" %}</label>
+    </div>
+    <div class="options-row">
+    <input type="checkbox" id="scalelinethickness" />
+    <label for="scalelinethickness">{% trans "make line thickness proportional to image scale" %}</label>
+    </div>
+    <div class="options-row">
+    <input type="checkbox" id="legend" disabled="disabled" />
+    <label for="legend">{% trans "embed legend" %}</label>
+    </div>
+    <div class="options-row">
+    <input type="checkbox" id="scalebar" disabled="disabled" />
+    <label for="scalebar">{% trans "embed scalebar" %}</label>
+    </div>
+    </fieldset>
+    <p>*{% trans "does not include scalebar, legend, or relief layers" %}</p>
+    </div>
+    <div class="download-message">{% trans "Building file for download..." %}</div>
+    </div>
+    {% include "fragments/fragment.hiddeninputs.html" %}
+    </form>
+
+    </div>
+    </div>
+
+    <script type="text/template" id="dialog-template">
+    <div id="mapper-message" class="ui-state-error" title="{% trans "Warning" %}"></div>
+    <div id="button-titles" class="hidden-message">
+      <span class="save">{% trans "Save" %}</span>
+      <span class="cancel">{% trans "Cancel" %}</span>
+      <span class="download">{% trans "Download" %}</span>
+      <span class="delete">{% trans "Delete" %}</span>
+    </div>
+    <div id="mapper-loading-error-message" class="hidden-message">{% trans "There was a problem loading your map." %}</div>
+    <div id="mapper-saving-error-message" class="hidden-message">{% trans "There was a problem saving your map." %}</div>
+    <div id="mapper-saving-message" class="hidden-message">{% trans "Saving..." %}</div>
+    <div id="mapper-missing-legend" class="hidden-message">{% trans "You are missing a legend for at least one of your Point Data or Regions layers." %}</div>
+    <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="{% trans "Delete" %}">{% trans "Are you sure you want to delete" %} <span></span>?</div>
+    <div id="mapper-legend-message" class="hidden-message">{% trans "legend will appear here" %}</div>
+    <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="{% trans "Example Coordinates" %}"></div>
+    <div id="mapper-message-codes" class="ui-state-highlight hidden-message" title="{% trans "State/Province Codes" %}"></div>
+    <div id="mapEmbed" class="ui-state-highlight hidden-message" title="{% trans "Embed" %}">
+      <div class="header"><h2>{% trans 'Image' %}</h2></div>
+      <p><input id="embed-img" type="text" size="65" value="" /></p>
+      <p><strong>{% trans "Additional parameters" %}</strong>:<br><span class="indent">{% trans "width, height, legend" %} <br><em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150&amp;legend=true</span></p>
+      <div class="header"><h2>{% trans 'KML' %}</h2></div>
+      <p><input id="embed-kml" type="text" size="65" value="" /></p>
+      <div class="header"><h2>{% trans 'SVG' %}</h2></div>
+      <p><input id="embed-svg" type="text" size="65" value="" /></p>
+      <div class="header"><h2>{% trans 'GeoJSON' %}</h2></div>
+      <p><input id="embed-json" type="text" size="65" value="" /></p>
+      <p><strong>{% trans "Additional parameters" %}</strong>:<br><span class="indent">{% trans "callback" %} (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
+    </div>
+    <div id="badFile" title="{% trans "Unsupported file type" %}">{% trans "Only files of type text are accepted." %}</div>
+    </script>
+
+    <div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit">{% trans "Apply" %}</div></div></div>
+
+{% endblock content %}
+
+{%block footer %}{{ footer|raw }}{%endblock %}

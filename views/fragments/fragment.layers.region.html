@@ -1,0 +1,19 @@
+{% for i in 0..2 %}
+    {% set index = loop.index %}
+    <div class="form-item fieldset-regions">
+    <button class="sprites-before removemore negative ui-corner-all" data-type="regions">{% trans "Remove" %}</button>
+    <h3><a href="#">{% trans %}Region {{ index }}{% endtrans %}</a></h3>
+    <div>
+    <div class="fieldset-taxon">
+    <span class="fieldset-title">{% trans "Legend" %}<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="40" maxlength="40" name="regions[{{ i }}][title]" />
+    </div>
+    <div class="resizable-textarea">
+    <span><textarea class="resizable m-mapCoord" rows="5" cols="60" name="regions[{{ i }}][data]"></textarea></span>
+    </div>
+    <div class="fieldset-extras">
+    <span class="fieldset-title">{% trans "Color" %}:</span> <input type="text" class="colorPicker" size="12" maxlength="11" name="regions[{{ i }}][color]" value="150 150 150" />
+    </div>
+    <button class="sprites-before clear clearself negative ui-corner-all">{% trans "Clear" %}</button>
+    </div>
+    </div>
+{% endfor %}

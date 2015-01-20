@@ -44,6 +44,7 @@ namespace SimpleMappr;
  */
 class Bootstrap
 {
+    public $locale;
 
     private $_controller;
     private $_id;
@@ -80,9 +81,8 @@ class Bootstrap
     {
         switch ("/".$this->_controller) {
         case "/":
-            $header = $this->set_up();
             header('Content-Type: text/html; charset=utf-8');
-            include "views/main.php";
+            $this->view();
             break;
 
         case "/about":
@@ -269,7 +269,7 @@ class Bootstrap
      *
      * @return array instance of Header class, locales, roles
      */
-    private function set_up()
+    private function view()
     {
         if (!isset($_SERVER['HTTP_HOST'])) {
             $this->render_404();
@@ -280,9 +280,39 @@ class Bootstrap
             exit();
         } else {
             Session::update_activity();
-            return array(new Header, Session::$accepted_locales, User::$roles);
+            echo $this->twig()->render("main.html");
         }
     }
+
+    /**
+     * Load twig templating engine
+     * @return twig object
+     */
+     private function twig()
+     {
+         $header = new Header;
+         $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
+         $qlocale = "?v=" . $header->getHash();
+         $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
+
+         $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
+         $twig = new \Twig_Environment($loader);
+         $twig->addExtension(new \Twig_Extensions_Extension_I18n());
+
+         $twig->addGlobal('locales', Session::$accepted_locales);
+         $twig->addGlobal('roles', User::$roles);
+         $twig->addGlobal('projections', Mappr::$accepted_projections);
+         $twig->addGlobal('og.url', 'http://' . $_SERVER['HTTP_HOST']);
+         $twig->addGlobal('og.logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
+         $twig->addGlobal('stylesheet', $header->getCSSHeader());
+         $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : array());
+         $twig->addGlobal('qlocale', $qlocale);
+         $twig->addGlobal('locale', $locale);
+         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
+         $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
+
+         return $twig;
+     }
 
     /**
      * Include partial HTML

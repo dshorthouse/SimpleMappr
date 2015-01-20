@@ -1,0 +1,4 @@
+{{ stylesheet|raw }}
+{% for locale in locales %}
+<link rel="alternate" href="/?locale={{ locale['locale'] }}" hreflang="{{ locale['hreflang'] }}" />
+{% endfor %}

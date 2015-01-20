@@ -426,7 +426,7 @@ class Header
      */
     public function getCSSHeader()
     {
-        echo implode("\n", $this->_css_header) . "\n";
+        return implode("\n", $this->_css_header) . "\n";
     }
 
     /**
@@ -450,7 +450,7 @@ class Header
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }
         $header .= "</script>" . "\n";
-        echo $header;
+        return $header;
     }
 
     public function getJSVars()
@@ -459,7 +459,7 @@ class Header
         if (!isset($_SESSION['simplemappr'])) {
             $foot .= $this->getJanrain();
         }
-        echo $foot;
+        return $foot;
     }
 
     private function isAdministrator()
