@@ -1,0 +1,23 @@
+<table class="countrycodes">
+<thead>
+<tr>
+<td class="title">{% trans "Country" %}<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td>
+<td class="code">ISO</td>
+<td class="title">{% trans "State/Province" %}</td>
+<td class="code">{% trans "Code" %}</td>
+<td class="example">{% trans "Example" %}</td>
+</tr>
+</thead>
+<tbody>
+{% for row in rows -%}
+<tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+<td>{{ row.country }}</td>
+<td>{{ row.country_iso }}</td>
+<td>{{ row.stateprovince }}</td>
+<td>{{ row.stateprovince_code }}</td>
+{% set example = (row.stateprovince_code) ? row.country_iso ~ "[" ~ row.stateprovince_code ~ "]" : "" -%}
+<td>{{ example }}</td>
+</tr>
+{% endfor -%}
+</tbody>
+</table>

@@ -44,14 +44,16 @@ namespace SimpleMappr;
  */
 class Places extends Rest implements RestMethods
 {
+    public $results;
+
     protected $id;
     protected $db;
 
     function __construct($id = null)
     {
         $this->id = $id;
-        Session::select_locale();
         $this->db = new Database();
+        $this->results = new \stdClass();
         $this->restful_action();
     }
 
@@ -63,8 +65,6 @@ class Places extends Rest implements RestMethods
         if (isset($_REQUEST['filter'])) {
             $this->db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
             $this->db->bind_param(':filter', '%'.$_REQUEST['filter'].'%', 'string');
-            Header::set_header("html");
-            $this->produce_output($this->db->fetch_all_object());
         } else if (isset($_REQUEST['term']) || $this->id) {
             $term = (isset($_REQUEST['term'])) ? $_REQUEST['term'] : $this->id;
             $this->db->prepare(
@@ -79,13 +79,10 @@ class Places extends Rest implements RestMethods
                 LIMIT 5"
             );
             $this->db->bind_param(':term', $term.'%', 'string');
-            Header::set_header("json");
-            echo json_encode($this->db->fetch_all_object());
         } else {
             $this->db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
-            Header::set_header("html");
-            $this->produce_output($this->db->fetch_all_object());
         }
+        $this->results = $this->db->fetch_all_object();
     }
 
     /**
@@ -125,45 +122,6 @@ class Places extends Rest implements RestMethods
     public function destroy($id)
     {
         $this->not_implemented();
-    }
-
-    /**
-     * Produce HTML table of places from an array of rows.
-     *
-     * @param array $rows An array of row data.
-     */
-    private function produce_output($rows)
-    {
-        $output  = '';
-        $output .= '<table class="countrycodes">';
-        $output .= '<thead>';
-        $output .= '<tr>';
-        $output .= '<td class="title">'._("Country");
-        $output .= '<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" />';
-        $output .= '</td>';
-        $output .= '<td class="code">ISO</td>';
-        $output .= '<td class="title">'._("State/Province").'</td>';
-        $output .= '<td class="code">'._("Code").'</td>';
-        $output .= '<td class="example">'._("Example").'</td>';
-        $output .= '</tr>';
-        $output .= '</thead>';
-        $output .= '<tbody>';
-        $i = 0;
-        foreach ($rows as $row) {
-            $class = ($i % 2) ? 'class="even"' : 'class="odd"';
-            $output .= '<tr '.$class.'>';
-            $output .= '<td>' . $row->country . '</td>';
-            $output .= '<td>' . $row->country_iso . '</td>';
-            $output .= '<td>' . $row->stateprovince . '</td>';
-            $output .= '<td>' . $row->stateprovince_code . '</td>';
-            $example = ($row->stateprovince_code) ? $row->country_iso . '[' . $row->stateprovince_code . ']' : '';
-            $output .= '<td>' . $example . '</td>';
-            $output .= '</tr>';
-            $i++;
-        }
-        $output .= '</tbody>';
-        $output .= '</table>';
-        echo $output;
     }
 
 }

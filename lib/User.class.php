@@ -44,9 +44,11 @@ namespace SimpleMappr;
  */
 class User extends Rest implements RestMethods
 {
+    public $sort;
+    public $dir;
+    public $results;
 
     private $_role;
-    private $_dir;
     private $_db;
 
     public static $roles = array(
@@ -95,8 +97,9 @@ class User extends Rest implements RestMethods
      */
     public function index()
     {
-        $this->_dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-        $order = "u.access {$this->_dir}";
+        $this->sort = (isset($_GET['sort'])) ? $_GET['sort'] : "";
+        $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+        $order = "u.access {$this->dir}";
 
         if (isset($_GET['sort'])) {
             $order = "";
@@ -108,7 +111,7 @@ class User extends Rest implements RestMethods
                 if ($sort == "username") {
                     $order = "u.";
                 }
-                $order = $order.$sort." ".$this->_dir;
+                $order = $order.$sort." ".$this->dir;
             }
         }
 
@@ -124,7 +127,7 @@ class User extends Rest implements RestMethods
                 ORDER BY " . $order;
 
         $this->_db->prepare($sql);
-        $this->produce_output($this->_db->fetch_all_object());
+        $this->results = $this->_db->fetch_all_object();
     }
 
     /**
@@ -180,58 +183,6 @@ class User extends Rest implements RestMethods
             header("Content-Type: application/json");
             echo json_encode(array("status" => "ok"));
         }
-    }
-
-    /**
-     * Produce the HTML output for user list
-     *
-     * @param array $rows Rows returned from the resultset
-     * @return void
-     */
-    private function produce_output($rows)
-    {
-        $output  = '';
-        $output .= '<table class="grid-users">' . "\n";
-        $output .= '<thead>' . "\n";
-        $output .= '<tr>' . "\n";
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "username" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        $output .= '<th class="left-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="username" href="#">'._("Username").'</a></th>';
-        $output .= '<th class="left-align">'._("Email").'</th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "num" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="num" href="#">'._("Maps").'</a></th>';
-        $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "access" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-        if (!isset($_GET['sort']) && !isset($_GET['dir'])) {
-            $sort_dir = " desc";
-        }
-        $output .= '<th><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="access" href="#">'._("Last Access").'</a></th>';
-        $output .= '<th class="actions">'._("Actions").'<a href="#" class="sprites-after toolsRefresh"></a></th>';
-        $output .= '</tr>' . "\n";
-        $output .= '</thead>' . "\n";
-        $output .= '<tbody>' . "\n";
-        $i=0;
-        foreach ($rows as $row) {
-            $class = ($i % 2) ? 'class="even"' : 'class="odd"';
-            $output .= '<tr '.$class.'>';
-            $output .= '<td><a class="user-load" data-uid="'.$row->uid.'" href="#">';
-            $output .= Utilities::check_plain(stripslashes($row->username));
-            $output .= '</a></td>';
-            $output .= '<td>'.Utilities::check_plain(stripslashes($row->email)).'</td>';
-            $output .= '<td class="usermaps-number">'.$row->num.'</td>';
-            $access = ($row->access) ? gmdate("M d, Y", $row->access) : '-';
-            $output .= '<td class="usermaps-center">'.$access.'</td>';
-            $output .= '<td class="actions">';
-            if (!$row->role || self::$roles[$row->role] !== 'administrator') {
-                $output .= '<a class="sprites-before user-delete" data-id="'.$row->uid.'" href="#">'._("Delete").'</a>';
-            }
-            $output .= '</td>';
-            $output .= '</tr>' . "\n";
-            $i++;
-        }
-        $output .= '</tbody>' . "\n";
-        $output .= '</table>' . "\n";
-
-        header("Content-Type: text/html");
-        echo $output;
     }
 
 }

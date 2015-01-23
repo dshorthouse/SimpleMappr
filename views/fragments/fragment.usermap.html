@@ -1,0 +1,67 @@
+{% if total > 0 %}
+    <table class="grid-usermaps">
+    <thead>
+    <tr>
+        {% set data_uid = "" %}
+        {% if filter_uid %}
+            {% set data_uid = " data-uid=" ~ filter_uid %}
+        {% endif %}
+    <th class="left-align">{% trans "Title" %} <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"{{ data_uid }} />
+        {% if filter_uid %}
+            {% trans %}
+                {{ row_count}} of {{ total }} for {{ filter_username }}
+            {% endtrans %}
+        {% else %}
+            {% trans %}
+                {{ row_count}} of {{ total }}
+            {% endtrans %}
+        {% endif %}
+    </th>
+    {% set sort_dir = (sort == "created") ? " " ~ dir : "" %}
+    {% if sort is empty %}
+        {% set sort_dir = " desc" %}
+    {% endif %}
+    <th class="center-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="created" href="#">{% trans "Created" %}</a></th>
+    {% set sort_dir = (sort == "updated") ? " " ~ dir : "" %}
+    <th class="center-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="updated" href="#">{% trans "Updated" %}</th>
+    <th class="actions">{% trans "Actions" %}
+    {% if roles[session['role']] == 'administrator' %}
+        <a href="#" class="sprites-after toolsRefresh"></a>
+    {% endif %}
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+            <td class="title">
+                {% if roles[session['role']] == 'administrator' and filter_uid is empty %}
+                    {{ row.username }} :
+                {% endif %}
+            <a class="map-load" data-id="{{ row.mid }}" href="#">{{ row.title }}</a>
+            </td>
+            <td class="center-align">{{ row.created|date("M d, Y") }}</td>
+            <td class="center-align">
+                {% if row.updated %}
+                    {{ row.updated|date("M d, Y") }}
+                {% else %}
+                    - 
+                {% endif %}
+            </td>
+            <td class="actions">
+                {% if row.sid %}
+                    <a class="sprites-before map-unshare" data-id="{{ row.sid }}" href="#">{% trans "Unshare" %}</a>
+                {% else %}
+                    <a class="sprites-before map-share" data-id="{{ row.mid }}" href="#">{% trans "Share" %}</a>
+                {% endif %}
+                {% if session['uid'] == row.uid or roles[session['role']] == 'administrator' %}
+                    <a class="sprites-before map-delete" data-id="{{ row.mid }}" href="#">{% trans "Delete" %}</a>
+                {% endif %}
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <div id="mymaps" class="panel ui-corner-all"><p>{% trans "Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab." %}</p><p>{% trans "Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade." %}</p></div>
+{% endif %}

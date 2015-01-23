@@ -44,12 +44,17 @@ namespace SimpleMappr;
  */
 class Usermap extends Rest implements RestMethods
 {
+    public $total;
+    public $filter_username;
+    public $filter_uid;
+    public $results;
+    public $dir;
+    public $sort;
+    public $row_count;
+
     private $_uid;
     private $_role;
     private $_db;
-    private $_uid_q;
-    private $_total;
-    private $_dir;
 
     /**
      * Class constructor
@@ -66,7 +71,7 @@ class Usermap extends Rest implements RestMethods
         $this->id = (int)$id;
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-        $this->_uid_q = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
+        $this->filter_uid = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
         Header::set_header();
         $this->execute();
     }
@@ -85,6 +90,9 @@ class Usermap extends Rest implements RestMethods
      */
     public function index()
     {
+        $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+        $this->sort = (isset($_GET['sort'])) ? $_GET['sort'] : "";
+
         $sql = "SELECT
                     u.username, COUNT(m.mid) AS total
                 FROM
@@ -99,35 +107,35 @@ class Usermap extends Rest implements RestMethods
             $this->_db->prepare($sql);
             $this->_db->bind_param(":uid", $this->_uid);
         } else {
-            if ($this->_uid_q) {
+            if ($this->filter_uid) {
                 $sql .= " WHERE m.uid = :uid_q";
                 $where['user'] = " WHERE m.uid = :uid_q";
                 $this->_db->prepare($sql);
-                $this->_db->bind_param(":uid_q", $this->_uid_q);        
+                $this->_db->bind_param(":uid_q", $this->filter_uid);        
             } else {
                 $limit = " LIMIT 100";
                 $this->_db->prepare($sql);
             }
         }
 
-        $this->_total = $this->_db->fetch_first_object();
+        $this->total = $this->_db->fetch_first_object()->total;
+        $this->filter_username = $this->_db->fetch_first_object()->username;
 
-        $this->_dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-        $order = "m.created {$this->_dir}";
+        $order = "m.created {$this->dir}";
 
         $b = "";
         if (isset($_GET['search'])) {
-            if (User::$roles[$this->_role] == 'administrator' && !$this->_uid_q) {
+            if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
                 $b = " WHERE ";
             }
             $where['where'] = $b."LOWER(m.title) LIKE :search";
-            if (User::$roles[$this->_role] == 'administrator' && !$this->_uid_q) {
+            if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
                 $where['where'] .= " OR LOWER(u.username) LIKE :search";
             }
         }
         if (isset($_GET['sort'])) {
             if ($_GET['sort'] == "created" || $_GET['sort'] == "updated") {
-                $order = "m.".$_GET['sort'] . " {$this->_dir}";
+                $order = "m.".$_GET['sort'] . " {$this->dir}";
             }
         }
 
@@ -152,14 +160,15 @@ class Usermap extends Rest implements RestMethods
         if (User::$roles[$this->_role] !== 'administrator') {
             $this->_db->bind_param(":uid", $this->_uid, 'integer');
         } else {
-            if ($this->_uid_q) {
-                $this->_db->bind_param(":uid_q", $this->_uid_q, 'integer');
+            if ($this->filter_uid) {
+                $this->_db->bind_param(":uid_q", $this->filter_uid, 'integer');
             }
         }
         if (isset($_GET['search'])) {
             $this->_db->bind_param(":search", "%{$_GET['search']}%", 'string');
         }
-        $this->produce_output($this->_db->fetch_all_object());
+        $this->results = $this->_db->fetch_all_object();
+        $this->row_count = $this->_db->row_count();
     }
 
     /**
@@ -263,77 +272,6 @@ class Usermap extends Rest implements RestMethods
         $this->_db->execute();
         Header::set_header('json');
         echo json_encode(array("status" => "ok"));
-    }
-
-    /**
-     * Template to produce a list of maps
-     *
-     * @param array $rows The rows from a resultset
-     * @return void
-     */
-    private function produce_output($rows)
-    {
-        $output = '';
-        if ($this->_total->total > 0) {
-            $data_uid = '';
-            $output .= '<table class="grid-usermaps">' . "\n";
-            $output .= '<thead>' . "\n";
-            $output .= '<tr>' . "\n";
-            if ($this->_uid_q) {
-                $header_count = sprintf(_("%d of %d for %s"), $this->_db->row_count(), $this->_total->total, $this->_total->username);
-                $data_uid = " data-uid=".$this->_uid_q;
-            } else {
-                $header_count = sprintf(_("%d of %d"), $this->_db->row_count(), $this->_total->total);
-            }
-            $output .= '<th class="left-align">'._("Title").' <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"'.$data_uid.' /> '.$header_count.'</th>';
-            $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "created" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-            if (!isset($_GET['sort']) && !isset($_GET['dir'])) {
-                $sort_dir = " desc";
-            }
-            $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="created" href="#">'._("Created").'</a></th>';
-            $sort_dir = (isset($_GET['sort']) && $_GET['sort'] == "updated" && isset($_GET['dir'])) ? " ".$this->_dir : "";
-            $output .= '<th class="center-align"><a class="sprites-after ui-icon-triangle-sort'.$sort_dir.'" data-sort="updated" href="#">'._("Updated").'</th>';
-            $output .= '<th class="actions">'._("Actions");
-            if (User::$roles[$this->_role] == 'administrator') {
-                $output .= '<a href="#" class="sprites-after toolsRefresh"></a>';
-            }
-            $output .= '</th>';
-            $output .= '</tr>' . "\n";
-            $output .= '</thead>' . "\n";
-            $output .= '<tbody>' . "\n";
-            $i=0;
-            foreach ($rows as $row) {
-                $class = ($i % 2) ? 'class="even"' : 'class="odd"';
-                $output .= '<tr '.$class.'>';
-                $output .= '<td class="title">';
-                $output .= (User::$roles[$this->_role] == 'administrator' && !$this->_uid_q) ? $row->username . ': ' : '';
-                $output .= '<a class="map-load" data-id="'.$row->mid.'" href="#">' . Utilities::check_plain(stripslashes($row->title)) . '</a>';
-                $output .= '</td>';
-                $output .= '<td class="center-align">' . gmdate("M d, Y", $row->created) . '</td>';
-                $output .= '<td class="center-align">';
-                $output .= ($row->updated) ? gmdate("M d, Y", $row->updated) : ' - ';
-                $output .= '</td>';
-                $output .= '<td class="actions">';
-                if ($row->sid) {
-                    $output .= '<a class="sprites-before map-unshare" data-id="'.$row->sid.'" href="#">'._("Unshare").'</a>';
-                } else {
-                   $output .= '<a class="sprites-before map-share" data-id="'.$row->mid.'" href="#">'._("Share").'</a>';
-                }
-                if ($this->_uid == $row->uid || User::$roles[$this->_role] == 'administrator') {
-                    $output .= '<a class="sprites-before map-delete" data-id="'.$row->mid.'" href="#">'._("Delete").'</a>';
-                }
-                $output .= '</td>';
-                $output .= '</tr>' . "\n";
-                $i++;
-            }
-            $output .= '</tbody>' . "\n";
-            $output .= '</table>' . "\n";
-        } else {
-            $output .= '<div id="mymaps" class="panel ui-corner-all"><p>'._("Start by adding data on the Point Data or Regions tabs, press the Preview buttons there, then save your map from the top bar of the Preview tab.").'</p><p>'._("Alternatively, you may create and save a generic template by setting the extent, projection, and layer options you like without adding point data or specifying what political regions to shade.").'</p></div>';
-        }
-
-        Header::set_header('html');
-        echo $output;
     }
 
 }

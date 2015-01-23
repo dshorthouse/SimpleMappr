@@ -23,26 +23,26 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that invalid coordinates are detected.
+     * Test that off Earth coordinates are detected.
      */
-    public function test_check_coord_invalid()
+    public function test_check_on_earth_invalid()
     {
         $coord = new stdClass();
         $coord->x = -133;
         $coord->y = 5543;
-        $checked = \SimpleMappr\Mappr::check_coord($coord);
+        $checked = \SimpleMappr\Mappr::check_on_earth($coord);
         $this->assertFalse($checked);
     }
 
     /**
-     * Test that a valid coordinate is detected.
+     * Test that an on Earth coordinate is detected.
      */
-    public function test_check_coord_valid()
+    public function test_check_on_earth_valid()
     {
         $coord = new stdClass();
         $coord->x = -120;
         $coord->y = 43;
-        $checked = \SimpleMappr\Mappr::check_coord($coord);
+        $checked = \SimpleMappr\Mappr::check_on_earth($coord);
         $this->assertTrue($checked);
     }
 
@@ -180,6 +180,26 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $dms = "45d53'25\"S";
         $dd = \SimpleMappr\Mappr::dms_to_deg($dms);
         $this->assertEquals($dd, -45.890277777778);
+    }
+
+    /**
+     * Test that a single coordinate in DMS with minutes > 60 is not converted.
+     */
+    public function test_dms_to_deg_8()
+    {
+        $dms = "45º 70′ 25″ N";
+        $dd = \SimpleMappr\Mappr::dms_to_deg($dms);
+        $this->assertEquals($dd, null);
+    }
+
+    /**
+     * Test that a single coordinate in DMS with seconds > 60 is not converted.
+     */
+    public function test_dms_to_deg_9()
+    {
+        $dms = "45º 40′ 85″ N";
+        $dd = \SimpleMappr\Mappr::dms_to_deg($dms);
+        $this->assertEquals($dd, null);
     }
 
     /**

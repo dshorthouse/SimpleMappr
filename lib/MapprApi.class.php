@@ -201,7 +201,7 @@ class MapprApi extends Mappr
                 $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
                 $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
                 //only add point when data are good
-                if (parent::check_coord($_coord)) {
+                if (parent::check_on_earth($_coord)) {
                     $mcoord_point = ms_newPointObj();
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);

@@ -227,7 +227,7 @@ class Kml
                     $coord = new \stdClass();
                     $coord->x = ($coord_array[1]) ? Mappr::clean_coord($coord_array[1]) : null;
                     $coord->y = ($coord_array[0]) ? Mappr::clean_coord($coord_array[0]) : null;
-                    if (Mappr::check_coord($coord) && $title != "") {  //only add point when data are good & a title
+                    if (Mappr::check_on_earth($coord) && $title != "") {  //only add point when data are good & a title
                         $this->set_placemark($j, $point_key, "name", $title);
                         $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;

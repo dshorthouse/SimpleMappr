@@ -19,8 +19,8 @@ msgstr ""
 
 #: .index.php:215
 #, php-format
-msgid "Dimensions: %s"
-msgstr "Dimension: %s"
+msgid "Dimensions: %dim%"
+msgstr "Dimension: %dim%"
 
 #: .index.php:387
 #, php-format
@@ -654,18 +654,18 @@ msgid "API Usage"
 msgstr "Utilisation de l'API"
 
 #: .tabs/about.php:36
-msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %s and The Encyclopedia of Life's %s as a custom %s module."
-msgstr "L'API est utilisée par %s de Le Missouri Botanical Garden et %s de Encyclopedia of Life comme un module %s."
+msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %urls_tropicos% and The Encyclopedia of Life's %urls_lifedesks% as a custom %urls_drupal% module."
+msgstr "L'API est utilisée par %urls_tropicos% de Le Missouri Botanical Garden et %urls_lifedesks% de Encyclopedia of Life comme un module %urls_drupal%."
 
 #: .tabs/about.php:36
 #, php-format
-msgid "The code behind SimpleMappr may be obtained at %s"
-msgstr "Le code pour SimpleMappr peuvent être obtenus à %s"
+msgid "The code behind SimpleMappr may be obtained at %urls_github"
+msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github"
 
 #: .tabs/about.php:40
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %s and the mapping software used is MapServer, %s via PHP MapScript. Biodiversity Hotspot data were obtained from %s."
-msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %s et le logiciel de cartographie utilisé est MapServer, %s via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %s."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation%."
+msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %urls_naturalearth% et le logiciel de cartographie utilisé est MapServer, %urls_mapserver% via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation%."
 
 #: .tabs/about.php:7
 msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
@@ -686,6 +686,10 @@ msgstr "Mises à jour"
 #: .tabs/about.php:11
 msgid "Live Updates"
 msgstr "Mises à jour direct"
+
+#: .tabs/about.php:11
+msgid "January 23, 2015"
+msgstr "23 janvier, 2015"
 
 #: .tabs/about.php:11
 msgid "December 17, 2014"
@@ -722,6 +726,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Invalid DDMMSS coordinates were silently converted to DD."
+msgstr "Corrections: Coordonnées de DDMMSS non valides ont été transformées automatiquement en DD."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added a Countries layer to toggle international borders. Requested by Yossef Rapoport."
@@ -915,6 +923,10 @@ msgstr "rebâtis"
 #: .tabs/help.php:66
 msgid "re-render the default presentation at lowest zoom and geographic projection"
 msgstr "rendre la présentation par défaut au plus bas de zoom et projection géographique"
+
+#: .tabs/help.php:72
+msgid "select this checkbox to draw all Country borders"
+msgstr "rendre toutes les frontières des pays"
 
 #: .tabs/help.php:72
 msgid "select this checkbox to draw all State and Province borders for all countries"

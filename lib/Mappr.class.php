@@ -492,7 +492,7 @@ abstract class Mappr
      * @param obj $coord (x,y) coordinates
      * @return bool
      */
-    public static function check_coord($coord)
+    public static function check_on_earth($coord)
     {
         if ($coord->x 
             && $coord->y 
@@ -541,6 +541,7 @@ abstract class Mappr
      */
     public static function dms_to_deg($dms)
     {
+        $dec = null;
         $dms = stripslashes($dms);
         $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
         $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i', '', $dms);
@@ -557,7 +558,9 @@ abstract class Mappr
             unset($parts[2]);
         }
         $s = isset($parts[2]) ? (float)$parts[2] : 0;
-        $dec = ($d + ($m/60) + ($s/3600))*$neg; 
+        if($m >= 0 && $m < 60 && $s >= 0 && $s < 60) {
+            $dec = ($d + ($m/60) + ($s/3600))*$neg;
+        }
         return $dec;
     }
 
@@ -1208,7 +1211,7 @@ abstract class Mappr
                         $coord->x = ($coord_array[1]) ? self::clean_coord($coord_array[1]) : null;
                         $coord->y = ($coord_array[0]) ? self::clean_coord($coord_array[0]) : null;
                         //only add point when data are good & a title
-                        if (self::check_coord($coord) && !empty($title)) {
+                        if (self::check_on_earth($coord) && !empty($title)) {
                             if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
                                 $new_point = ms_newPointObj();
                                 $new_point->setXY($coord->x, $coord->y);

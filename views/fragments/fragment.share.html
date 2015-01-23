@@ -1,0 +1,28 @@
+{% if rows|length > 0 %}
+<table class="grid-shares">
+<thead>
+<tr>
+{% set sort_dir = (sort == 'title') ? " " ~ dir : "" %}
+<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{sort_dir}}" data-sort="title" href="#">{% trans "Title" %}</a></th>
+{% set sort_dir = (sort == 'username') ? " " ~ dir : "" %}
+<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{sort_dir}}" data-sort="username" href="#">{% trans "Username" %}</a></th>
+{% set sort_dir = (sort == 'created') ? " " ~ dir : "" %}
+{% if sort is empty %}
+    {% set sort_dir = " desc" %}
+{% endif %}
+<th class="center-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="created" href="#">{% trans "Created" %}</a></th>
+</tr>
+</thead>
+<tbody>
+{% for row in rows %}
+    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+    <td class="title"><a class="map-load" data-id="{{ row.mid }}" href="#">{{ row.title }}</a></td>
+    <td>{{ row.username }}</td>
+    <td class="center-align">{{ row.created|date("M d, Y") }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+    <div id="sharedmaps" class="panel ui-corner-all"><p>{% trans "Maps shared by other authenticated users will appear here for you to reuse as templates in your account. You can share your saved maps with all other users from your My Maps panel." %}</p></div>
+{% endif %}

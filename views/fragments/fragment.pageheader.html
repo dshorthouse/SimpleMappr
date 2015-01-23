@@ -1,16 +1,13 @@
 <div itemscope itemtype="http://schema.org/WebApplication" id="header" class="clearfix">
 <h1 id="site-title" itemprop="name">SimpleMapp<span>r</span></h1>
 <div id="site-tagline" itemprop="description">{% trans "create free point maps for publications and presentations" %}</div>
-<meta itemprop="url" content="{{ og.url }}" />
-<meta itemprop="image" content="{{ og.logo }}" />
+<meta itemprop="url" content="{{ og_url }}" />
+<meta itemprop="image" content="{{ og_logo }}" />
 <div id="map-loader"><span class="mapper-loading-spinner"></span></div>
 <div id="site-languages">
 <ul>
 {% for locale_choice in locales %}
-    {% set selected = "" %}
-    {% if locale_choice['locale'] == locale %}
-        {% set selected = " class=selected" %}
-    {% endif %}
+    {% set selected = (locale_choice['locale'] == locale) ? " class=selected" : "" %}
   <li><a href="/?locale={{ locale_choice['locale'] }}#tabs=0"{{ selected }}>{{ locale_choice['native'] }}</a></li>
 {% endfor %}
 </ul>

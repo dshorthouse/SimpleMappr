@@ -44,7 +44,26 @@ class PlacesTest extends SimpleMapprTest
         curl_close($ch);
 
         $this->assertEquals('text/html; charset=utf-8', $type);
-        $this->assertEquals('<table class="countrycodes"><thead><tr><td class="title">Country<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td><td class="code">ISO</td><td class="title">State/Province</td><td class="code">Code</td><td class="example">Example</td></tr></thead><tbody><tr class="odd"><td>Canada</td><td>CAN</td><td>Alberta</td><td>AB</td><td>CAN[AB]</td></tr></tbody></table>', $result);
+        $this->assertEquals('<table class="countrycodes">
+<thead>
+<tr>
+<td class="title">Country<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td>
+<td class="code">ISO</td>
+<td class="title">State/Province</td>
+<td class="code">Code</td>
+<td class="example">Example</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Canada</td>
+<td>CAN</td>
+<td>Alberta</td>
+<td>AB</td>
+<td>CAN[AB]</td>
+</tr>
+</tbody>
+</table>', $result);
     }
 
     /**
@@ -52,7 +71,7 @@ class PlacesTest extends SimpleMapprTest
      */
     public function test_PlacesSearch()
     {
-        $ch = curl_init($this->url . "/places/Canada");
+        $ch = curl_init($this->url . "/places.json/Canada");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

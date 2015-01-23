@@ -62,13 +62,25 @@ class Bootstrap
      * Set the controller, id, and extension variables for the request
      *
      * @return object $this
+     * TODO: replace with better routing mechanism
      */
     private function get_route()
     {
-        $route = preg_split("/[\/.]+/", $_REQUEST['q']);
+        $route = preg_split("/[\/]+/", $_REQUEST['q']);
         $this->_controller = isset($route[0]) ? $route[0] : null;
+        $this->_extension = null;
+        if(strpos($this->_controller, ".") !== false) {
+            $newroute = explode(".", $this->_controller);
+            $this->_controller = $newroute[0];
+            $this->_extension = $newroute[1];
+            $this->_id = null;
+        }
         $this->_id = isset($route[1]) ? $route[1] : null;
-        $this->_extension = isset($route[2]) ? $route[2] : null;
+        if(strpos($this->_id, ".") !== false) {
+            $newid = explode(".", $this->_id);
+            $this->_id = $newid[0];
+            $this->_extension = $newid[1];
+        }
         return $this;
     }
 
@@ -76,6 +88,7 @@ class Bootstrap
      * Set the controller for each route
      *
      * @return void
+     * TODO: replace with better routing mechanism
      */
     private function set_controller()
     {
@@ -87,7 +100,12 @@ class Bootstrap
 
         case "/about":
             Header::set_header("html");
-            include "views/about.php";
+            Session::select_locale();
+            $citations = new Citation();
+            $config = array(
+                'citations' => $citations->get_citations()
+            );
+            echo $this->twig(false)->render("about.html", $config);
             break;
 
         case "/api":
@@ -97,7 +115,15 @@ class Bootstrap
             break;
 
         case "/apidoc":
-            include "views/apidoc.php";
+            Session::select_locale();
+            array_walk(Mappr::$accepted_projections, function($val, $key) use (&$projections) {
+                $projections[] = $key . " (" . $val['name'] . ")";
+            });
+            $config = array(
+                'mappr_maps_url' => MAPPR_MAPS_URL,
+                'projections' => $projections
+            );
+            echo $this->twig()->render("apidoc.html", $config);
             break;
 
         case "/apilog":
@@ -121,7 +147,12 @@ class Bootstrap
             break;
 
         case "/feedback":
-            include "views/feedback.php";
+            $locale = Session::select_locale();
+            $config = array(
+                'locale' => $locale,
+                'tweet' => ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter'
+            );
+            echo $this->twig(true)->render("feedback.html", $config);
             break;
 
         case "/flush_cache":
@@ -130,7 +161,11 @@ class Bootstrap
             break;
 
         case "/help":
-            include "views/help.php";
+            Session::select_locale();
+            $config = array(
+                'locale' => Session::select_locale()
+            );
+            echo $this->twig(false)->render("help.html", $config);
             break;
 
         case "/kml":
@@ -148,7 +183,17 @@ class Bootstrap
             break;
 
         case "/places":
-            $this->klass("Places", $this->_id);
+            Session::select_locale();
+            $config = array(
+                'rows' => $this->klass("Places", $this->_id)->results
+            );
+            if($this->_extension == "json") {
+                Header::set_header("json");
+                echo json_encode($config['rows']);
+            } else {
+                Header::set_header("html");
+                echo $this->twig(false)->render("fragments/fragment.places.html", $config);
+            }
             break;
 
         case "/pptx":
@@ -167,15 +212,46 @@ class Bootstrap
             break;
 
         case "/share":
-            $this->klass("Share", $this->_id);
+            $results = $this->klass("Share", $this->_id);
+            if($_SERVER['REQUEST_METHOD'] == 'GET') {
+                header("Content-Type: text/html");
+                $config = array(
+                    'rows' => $results->results,
+                    'sort' => $results->sort,
+                    'dir' => $results->dir
+                );
+                echo $this->twig(true)->render("fragments/fragment.share.html", $config);
+            }
             break;
 
         case "/user":
-            $this->klass("User", $this->_id);
+            $results = $this->klass("User", $this->_id);
+            if($_SERVER['REQUEST_METHOD'] == 'GET') {
+                header("Content-Type: text/html");
+                $config = array(
+                    'rows' => $results->results,
+                    'sort' => $results->sort,
+                    'dir' => $results->dir
+                );
+                echo $this->twig(true)->render("fragments/fragment.user.html", $config);
+            }
             break;
 
         case "/usermap":
-            $this->klass("Usermap", $this->_id);
+            $results = $this->klass("Usermap", $this->_id);
+            if($_SERVER['REQUEST_METHOD'] == 'GET' && $this->_extension != "json") {
+                header("Content-Type: text/html");
+                $config = array(
+                    'rows' => $results->results,
+                    'total' => $results->total,
+                    'sort' => $results->sort,
+                    'dir' => $results->dir,
+                    'filter_username' => $results->filter_username,
+                    'filter_uid' => $results->filter_uid,
+                    'row_count' => $results->row_count
+                );
+                echo $this->twig(true)->render("fragments/fragment.usermap.html", $config);
+            }
             break;
 
         case "/wfs":
@@ -288,45 +364,34 @@ class Bootstrap
      * Load twig templating engine
      * @return twig object
      */
-     private function twig()
+     private function twig($globals = true)
      {
-         $header = new Header;
-         $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
-         $qlocale = "?v=" . $header->getHash();
-         $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
-
          $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
          $twig = new \Twig_Environment($loader);
          $twig->addExtension(new \Twig_Extensions_Extension_I18n());
+         $twig->addGlobal('environment', ENVIRONMENT);
 
-         $twig->addGlobal('locales', Session::$accepted_locales);
-         $twig->addGlobal('roles', User::$roles);
-         $twig->addGlobal('projections', Mappr::$accepted_projections);
-         $twig->addGlobal('og.url', 'http://' . $_SERVER['HTTP_HOST']);
-         $twig->addGlobal('og.logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
-         $twig->addGlobal('stylesheet', $header->getCSSHeader());
-         $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : array());
-         $twig->addGlobal('qlocale', $qlocale);
-         $twig->addGlobal('locale', $locale);
-         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
-         $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
+         if($globals) {
+             $header = new Header;
+             $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
+             $qlocale = "?v=" . $header->getHash();
+             $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
+
+             $twig->addGlobal('locales', Session::$accepted_locales);
+             $twig->addGlobal('roles', User::$roles);
+             $twig->addGlobal('projections', Mappr::$accepted_projections);
+             $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
+             $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
+             $twig->addGlobal('stylesheet', $header->getCSSHeader());
+             $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : array());
+             $twig->addGlobal('qlocale', $qlocale);
+             $twig->addGlobal('locale', $locale);
+             $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
+             $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter()); 
+         }
 
          return $twig;
      }
-
-    /**
-     * Include partial HTML
-     *
-     * @param string $partial Name of function called to include an HTML snippet
-     * @return void
-     */
-    private function partial()
-    {
-        $args = func_get_args();
-        $func = array_shift($args);
-        include "views/_$func.php";
-        call_user_func($func, $args);
-    }
 
     /**
      * Render a 404 document

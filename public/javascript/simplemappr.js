@@ -862,7 +862,7 @@ var SimpleMappr = (function($, window, document) {
         if (e.keyCode === $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active) { e.preventDefault(); }
       }).autocomplete({
         source: function(request, response) {
-          $.getJSON( "/places/" + self.extractLast(request.term), {}, response);
+          $.getJSON( "/places.json/" + self.extractLast(request.term), {}, response);
         },
         search: function() {
           term = self.extractLast(this.value);
@@ -1510,7 +1510,7 @@ var SimpleMappr = (function($, window, document) {
 
       $.ajax({
         type     : 'GET',
-        url      : self.settings.baseUrl + "/usermap/" + id,
+        url      : self.settings.baseUrl + "/usermap/" + id +".json",
         dataType : 'json',
         timeout  : 30000,
         success  : function(data) {

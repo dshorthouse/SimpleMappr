@@ -1,0 +1,33 @@
+<table class="grid-users">
+<thead>
+<tr>
+{% set sort_dir = (sort == 'username') ? " " ~ dir : "" %}
+<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="username" href="#">{% trans "Username" %}</a></th>
+<th class="left-align">{% trans "Email" %}</th>
+{% set sort_dir = (sort == 'num') ? " " ~ dir : "" %}
+<th><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="num" href="#">{% trans "Maps" %}</a></th>
+{% set sort_dir = (sort == 'access') ? " " ~ dir : "" %}
+{% if sort is empty %}
+    {% set sort_dir = " desc" %}
+{% endif %}
+<th><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="access" href="#">{% trans "Last Access" %}</a></th>
+<th class="actions">{% trans "Actions" %}<a href="#" class="sprites-after toolsRefresh"></a></th>
+</tr>
+</thead>
+<tbody>
+{% for row in rows %}
+    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+    <td><a class="user-load" data-uid="{{ row.uid }}" href="#">{{ row.username }}</a></td>
+    <td>{{ row.email }}</td>
+    <td class="usermaps-number">{{ row.num }}</td>
+    {% set access = (row.access) ? row.access|date("M d, Y") : '' %}
+    <td class="usermaps-center">{{ access }}</td>
+    <td class="actions">
+        {% if roles[row.role] != 'administrator' %}
+        <a class="sprites-before user-delete" data-id="{{ row.uid }}" href="#">{% trans "Delete" %}</a>
+        {% endif %}
+    </td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>

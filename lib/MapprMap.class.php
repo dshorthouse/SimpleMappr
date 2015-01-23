@@ -244,7 +244,7 @@ class MapprMap extends Mappr
                     $coord = new \stdClass();
                     $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
                     $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
-                    if (parent::check_coord($coord) && $title != "") {
+                    if (parent::check_on_earth($coord) && $title != "") {
                         $output[] = array(
                             'type' => 'Feature',
                             'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),

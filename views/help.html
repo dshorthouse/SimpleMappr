@@ -1,0 +1,177 @@
+<style type="text/css">
+#map-help h3{font-size:0.75em;}
+#map-help p{font-size:0.75em;}
+#map-help dl{font-size:0.75em;}
+#map-help dt{float:left;margin-right:5px;line-height:20px;}
+#map-help dl.toolbar dt:before{margin-top:0.2em !important;float:left;}
+#map-help dt,#map-help dd{line-height:20px;}
+#example-data{height:220px;}
+#example-data img{vertical-align:middle;margin-right:20px;}
+#country-codes{position:relative;width:200px;}
+#country-codes .mapper-loading-message{left:5%;}
+</style>
+<script src="../public/javascript/jquery.waypoints.min.js"></script>
+<script>
+  $('#map-help h3:eq(1)').waypoint(function() {
+    var elem = $('#country-codes').css("width", "100%");
+    if ($('#country-codes').html().length === 0) {
+        SimpleMappr.loadCodes(elem, { locale : "{{ locale['locale'] }}" });
+    }
+  });
+</script>
+<!-- help tab -->
+<div id="map-help">
+    
+  <div class="panel ui-corner-all">
+    <p>{% trans "This application makes heavy use of JavaScript. A modern browser like Internet Explorer 9, FireFox 6+, Google Chrome, or Safari 5+ is strongly recommended." %}</p>
+  </div>
+
+  <div class="header">
+    <h2>{% trans "Preview" %}</h2>
+  </div>
+
+  <p>{% trans "Use the Preview tab to refine your eventual map export by adjusting various options, downloading the result, or saving it for later re-use (when logged in)" %}</p>
+
+  <h3>{% trans "Toolbar buttons" %}</h3>
+  <dl class="toolbar ui-helper-clearfix">
+    <dt class="sprites-before toolsZoomIn">{% trans "Zoom in" %}:</dt>
+    <dd>{% trans "draw a zoom region on the preview" %}</dd>
+
+    <dt class="sprites-before toolsZoomOut">{% trans "Zoom out" %}:</dt>
+    <dd>{% trans "zoom out one step" %}</dd>
+
+    <dt class="sprites-before toolsCrop">{% trans "Crop" %}:</dt>
+    <dd>{% trans "draw an expandable, square-shaped rubber band that precisely defines a cropped portion of the map you wish to appear in the exported map. Typing precise coordinates in the corner boxes within the crop window are not always retained after the crop window is automatically redrawn because your computer monitor has a finite number of pixels." %}</dd>
+
+    <dt class="sprites-before toolsQuery">{% trans "Fill regions" %}:</dt>
+    <dd>{% trans "choose a color then draw an expandable, square-shaped rubber band to shade States/Provinces (if layer visible) or Countries. Selections are sequentially added in the Regions tab." %}</dd>
+
+    <dt class="sprites-before toolsUndo">{% trans "Undo" %}:</dt>
+    <dd>{% trans "undo the last executed action" %}</dd>
+
+    <dt class="sprites-before toolsRedo">{% trans "Redo" %}:</dt>
+    <dd>{% trans "redo the last executed action" %}</dd>
+
+    <dt class="sprites-before toolsNew">{% trans "New" %}:</dt>
+    <dd>{% trans "create a new map image" %}</dd>
+
+    <dt class="sprites-before toolsRefresh">{% trans "Refresh" %}:</dt>
+    <dd>{% trans "refresh the map image" %}</dd>
+
+    <dt class="sprites-before toolsRebuild">{% trans "Rebuild" %}:</dt>
+    <dd>{% trans "re-render the default presentation at lowest zoom and geographic projection" %}</dd>
+  </dl>
+
+  <dl class="toolbar ui-helper-clearfix">
+    <dt class="sprites-before toolsSave">{% trans "Save" %}:</dt>
+    <dd>{% trans "while logged in, click this icon to give your map a title and save its settings for later reuse from the My Maps tab." %}</dd>
+
+    <dt class="sprites-before toolsEmbed">{% trans "Embed" %}:</dt>
+    <dd>{% trans "once a map is saved, click this icon to obtain a URL for embedding on other websites." %}</dd>
+
+    <dt class="sprites-before toolsDownload">{% trans "Download" %}:</dt>
+    <dd>{% trans "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based." %}</dd>
+  </dl>
+
+  <h3>{% trans "Layers" %}</h3>
+  <dl class="ui-helper-clearfix">
+    <dt>{% trans "Countries" %}:</dt>
+    <dd>{% trans "select this checkbox to draw Country borders" %}</dd>
+
+    <dt>{% trans "State/Provinces" %}:</dt>
+    <dd>{% trans "select this checkbox to draw all State and Province borders for all countries" %}</dd>
+
+    <dt>{% trans "lakes (outline)" %}:</dt>
+    <dd>{% trans "select this checkbox to overlay lakes as black outlines" %}</dd>
+
+    <dt>{% trans "lakes (greyscale)" %}:</dt>
+    <dd>{% trans "select this checkbox to overlay lakes as greyscale polygons" %}</dd>
+
+    <dt>{% trans "rivers" %}:</dt>
+    <dd>{% trans "select this checkbox to overlay rivers as black outlines" %}</dd>
+
+    <dt>{% trans "oceans (greyscale)" %}:</dt>
+    <dd>{% trans "select this checkbox to overlay oceans as greyscale polygons" %}</dd>
+
+    <dt>{% trans "relief" %}:</dt>
+    <dd>{% trans "select this checkbox to render a color, shaded relief layer" %}</dd>
+
+    <dt>{% trans "relief (greyscale)" %}:</dt>
+    <dd>{% trans "select this checkbox to render a greyscale, shaded relief layer" %}</dd>
+
+    <dt>{% trans "biodiv. hotspots" %}:</dt>
+    <dd>{% trans "select this checkbox to render biodiversity hotspots known to Conservation International" %}</dd>
+  </dl>
+
+  <h3>{% trans "Labels" %}</h3>
+  <dl class="ui-helper-clearfix">
+    <dt>{% trans "Countries" %}:</dt>
+    <dd>{% trans "label countries" %}</dd>
+
+    <dt>{% trans "State/Provinces" %}:</dt>
+    <dd>{% trans "label States and Provinces" %}</dd>
+
+    <dt>{% trans "lakes" %}:</dt>
+    <dd>{% trans "label lakes" %}</dd>
+
+    <dt>{% trans "rivers" %}:</dt>
+    <dd>{% trans "label rivers" %}</dd>
+
+    <dt>{% trans "places" %}:</dt>
+    <dd>{% trans "label city, town names" %}</dd>
+
+    <dt>{% trans "physical" %}:</dt>
+    <dd>{% trans "label physical features" %}</dd>
+
+    <dt>{% trans "marine" %}:</dt>
+    <dd>{% trans "label marine features" %}</dd>
+
+    <dt>{% trans "biodiv. hotspots" %}:</dt>
+    <dd>{% trans "label biodiversity hotspots" %}</dd>
+  </dl>
+
+  <h3>{% trans "Options" %}</h3>
+  <dl class="ui-helper-clearfix">
+    <dt>{% trans "graticules" %}:</dt>
+    <dd>{% trans "draw a graticule (grid) layer on the map using either fixed, 1, 5, or 10 degree spacing" %}</dd>
+
+    <dt>{% trans "Line Thickness" %}:</dt>
+    <dd>{% trans "use the slider to increase or decrease line thickness of the base and State/Provinces layers" %}
+  </dl>
+
+  <h3>{% trans "Projection" %}</h3>
+  <dl class="ui-helper-clearfix">
+    <dt>{% trans "projection" %}:</dt>
+    <dd>{% trans "choose among several projections. [Hint: first use zoom while on the base geographic projection for best effects]" %}</dd>
+
+    <dt>{% trans "longitude of natural origin" %}:</dt>
+    <dd>{% trans "type the longitude for the central meridian" %}</dd>
+  </dl>
+
+    <div class="header">
+      <h2>{% trans "Point Data" %}</h2>
+    </div>
+    <p>{% trans "Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color." %}</p>
+
+    <dl class="ui-helper-clearfix">
+      <dt>{% trans "Coordinate format" %}:</dt>
+      <dd>{% trans "in western hemisphere above equator 45.55, -120.25 (or 45° 33'N, 120° 15'W); in western hemisphere below equator -15.66, -65.10; eastern hemisphere above equator 64.82, 75.1" %}</dd>
+    </dl>
+    <div id="example-data">
+      <img src="../public/images/help-data.png" alt="{% trans "Example Data Entry" %}" width="400" height="215" />
+      <img src="../public/images/38100.png" alt="{% trans "38,-100 (North America)" %}" width="200" height="100" />
+      <img src="../public/images/25140.png" alt="{% trans "-25,140 (Australia)" %}" width="200" height="100" />
+    </div>
+    <dl class="ui-helper-clearfix">
+      <dt>{% trans "Pushpin color" %}:</dt>
+      <dd>{% trans "configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray." %}</dd>
+    </dl>
+
+    <div class="header">
+      <h2>{% trans "Regions" %}</h2>
+    </div>
+
+    <p>{% trans "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code." %}</p>
+
+    <div id="country-codes"></div>
+</div>

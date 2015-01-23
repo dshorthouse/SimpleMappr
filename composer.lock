@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/natxet/CssMin.git",
-                "reference": "8883d28cd2de131c364f2f657e4bcc09bfa45082"
+                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/8883d28cd2de131c364f2f657e4bcc09bfa45082",
-                "reference": "8883d28cd2de131c364f2f657e4bcc09bfa45082",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
+                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2014-12-05 11:02:56"
+            "time": "2015-01-21 10:40:33"
         },
         {
             "name": "phayes/geophp",
@@ -608,16 +608,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.16.3",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af"
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
                 "shasum": ""
             },
             "require": {
@@ -626,7 +626,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16-dev"
+                    "dev-master": "1.17-dev"
                 }
             },
             "autoload": {
@@ -661,7 +661,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-12-25 19:58:19"
+            "time": "2015-01-14 10:15:49"
         }
     ],
     "packages-dev": [
@@ -671,12 +671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "da9b3f98bfcd79e4597fdc0f15e931f6d49670e0"
+                "reference": "44feb1a7d810a14133a31cf697912faf5cab2579"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/da9b3f98bfcd79e4597fdc0f15e931f6d49670e0",
-                "reference": "da9b3f98bfcd79e4597fdc0f15e931f6d49670e0",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/44feb1a7d810a14133a31cf697912faf5cab2579",
+                "reference": "44feb1a7d810a14133a31cf697912faf5cab2579",
                 "shasum": ""
             },
             "require": {
@@ -704,7 +704,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2015-01-07 04:07:11"
+            "time": "2015-01-20 18:54:55"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -906,16 +906,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876"
+                "reference": "db32c18eba00b121c145575fcbcd4d4d24e6db74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/f8d5d08c56de5cfd592b3340424a81733259a876",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/db32c18eba00b121c145575fcbcd4d4d24e6db74",
+                "reference": "db32c18eba00b121c145575fcbcd4d4d24e6db74",
                 "shasum": ""
             },
             "require": {
@@ -928,7 +928,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -951,7 +951,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-08-31 06:12:13"
+            "time": "2015-01-17 09:51:32"
         },
         {
             "name": "phpunit/phpunit",

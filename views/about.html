@@ -1,0 +1,78 @@
+<style type="text/css">
+#map-about p,#map-about dl{font-size:0.75em;}
+#map-about p.citation{text-indent:-2em;padding-left:2em;}
+#map-about dt.update{font-weight:bold;}
+#map-about dd{margin:0 0 10px 25px;}
+#recent-updates{float:left;width:65%;}
+#live-updates{margin-left:65%;width:350px;padding:0.5em;}
+#live-updates .header{width:85%;}
+#twitter_div{margin-top:1em;}
+.twtr-tweet-text{font-size:1.5em;}
+.map-license{float:left;margin:0 5px 5px 0;border:0px;}
+</style>
+<div id="map-about">
+<div id="general-about" class="panel ui-corner-all">
+<p>{% trans "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result." %}</p>
+</div>
+<div class="header"><h2>{% trans "Citing" %}</h2></div>
+<p><a href="http://creativecommons.org/publicdomain/"><img class="map-license" src="/public/images/publicdomain.gif" alt="Public Domain" width="40" height="40" /></a>{% trans "All versions of SimpleMappr map data found on this website are in the Public Domain. You may use the maps in any manner, including modifying the content and design, electronic dissemination, and offset printing. The primary author, David P. Shorthouse renounces all financial claim to the maps and invites you to use them for personal, educational, and commercial purposes. No permission is needed to use SimpleMappr. Crediting the author is unnecessary. However, if you wish to cite the application, simply use the following." %}</p>
+<p>Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed {{ "now"|date("F d, Y") }}].</p>
+<div class="ui-helper-clearfix">
+<div id="recent-updates">
+<div class="header"><h2>{% trans "Recent Updates" %}</h2></div>
+<dl>
+<dt class="update">{% trans "January 23, 2015" %}</dt><dd>{% trans "Bug fixes: Invalid DDMMSS coordinates were silently converted to DD." %}</dd>
+<dt class="update">{% trans "December 17, 2014" %}</dt><dd>{% trans "Improvements: Added a Countries layer to toggle international borders. Requested by Yossef Rapoport." %}</dd>
+<dt class="update">{% trans "December 4, 2014" %}</dt><dd>{% trans "Improvements: Added file upload for Point Layer data." %}</dd>
+<dt class="update">{% trans "August 14, 2014" %}</dt><dd>{% trans "Improvements: Added an icon in the toolbar to create a new empty map." %}</dd>
+<dt class="update">{% trans "July 27, 2014" %}</dt><dd>{% trans "Improvements: Recognize decimal degree coordinates with degree symbol." %}</dd>
+<dt class="update">{% trans "July 9, 2014" %}</dt><dd>{% trans "Improvements: Added ability to share and unshare maps with authenticated users. Requested by Tim Dickinson." %}</dd>
+<dt class="update">{% trans "June 30, 2014" %}</dt><dd>{% trans "Improvements: Codebase migrated to a dedicated hosting service." %}</dd>
+<dt class="update">{% trans "January 13, 2014" %}</dt><dd>{% trans "Improvements: Created a Web Map Service (WMS), which can be used by client applications like QGIS." %}</dd>
+<dt class="update">{% trans "October 29, 2013" %}</dt><dd>{% trans "Improvements: Upgraded underlying software. Added borders around biodiversity hotspot layer and option for labels. Requested by Torsten Dikow." %}</dd>
+<dt class="update">{% trans "June 25, 2013" %}</dt><dd>{% trans "Bug fixes: Point Data layers incorrectly loaded from saved map when there are blank layers followed by layers with data. Reported by Chandra Venables." %}</dd>
+<dt class="update">{% trans "May 19, 2013" %}</dt><dd>{% trans "Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option." %}</dd>
+<dt class="update">{% trans "May 9, 2013" %}</dt><dd>{% trans "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler." %}</dd>
+<dt class="update">{% trans "April 12, 2013" %}</dt><dd>{% trans "Improvements: Added the ability to specify the longitude of natural origin in Lambert projections. Requested by Tim Dickinson." %}</dd>
+<dt class="update">{% trans "February 27, 2013" %}</dt><dd>{% trans "Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes." %}</dd>
+<dt class="update">{% trans "February 18, 2013" %}</dt><dd>{% trans "Improvements: Embedded map will appear cropped when saved as such. Requested by Steven Bachman." %}</dd>
+</dl>
+</div>
+{% if environment == "production" %}
+<div id="live-updates">
+<div class="header"><h2>{% trans "Live Updates" %}</h2></div>
+<div id="twitter_div"><a class="twitter-timeline" href="https://twitter.com/SimpleMappr" data-widget-id="325778519898603520">Tweets by @SimpleMappr</a></div>
+</div>
+{% endif %}
+</div>
+<div class="header"><h2>{% trans "In the Wild" %}</h2></div>
+{% for citation in citations %}
+    {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
+    {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
+    <p class="citation">{{ citation.reference|raw }}{{ link|raw }}{{ doi|raw }}</p>
+{% endfor %}
+<div class="header"><h2>{% trans "Applications" %}</h2></div>
+<h3>Microsoft Excel</h3>
+<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of
+taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. doi: <a href="http://dx.doi.org/10.11646/zootaxa.3683.3.8">10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
+<h3>Ruby 1.9.3</h3>
+<p class="citation">SimpleMappr <a href="https://github.com/dshorthouse/SimpleMappr/wiki/Client-Example:-Ruby-1.9.3">wiki</a>.</p>
+<div class="header"><h2>{% trans "API Usage" %}</h2></div>
+{% set urls_tropicos = '<a href="http://www.tropicos.org/">Tropicos</a>' %}
+{% set urls_lifedesks = '<a href="http://syrphidae.lifedesks.org/pages/24837">LifeDesks</a>' %}
+{% set urls_drupal = '<a href="https://github.com/LifeDesks/LifeDesksExpert/tree/master/sites/all/modules/simplemappr">Drupal</a>' %}
+<p>{% trans %}The SimpleMappr API is used by The Missouri Botanical Garden's {{ urls_tropicos }} and The Encyclopedia of Life's {{ urls_lifedesks }} as a custom {{ urls_drupal }} module.{% endtrans %}</p>
+<div class="header"><h2>{% trans "Code" %}</h2></div>
+{% set urls_github = '<a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>' %}
+<p>{% trans %}The code behind SimpleMappr may be obtained at {{ urls_github }}{% endtrans %}</p>
+<div class="header"><h2>{% trans "History" %}</h2></div>
+<p>{% trans "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History." %}</p>
+<div class="header"><h2>{% trans "Acknowledgments" %}</h2></div>
+{% set urls_naturalearth = '<a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a>' %}
+{% set urls_mapserver = '<a href="http://mapserver.org" target="_blank">http://mapserver.org</a>' %}
+{% set urls_conservation = '<a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx" target="_blank">Conservation International</a>' %}
+<p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }}.{% endtrans %}</p>
+</div>
+{% if environment == "production" %}
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endif %}
