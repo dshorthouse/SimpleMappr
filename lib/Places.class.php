@@ -42,19 +42,17 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Places extends Rest implements RestMethods
+class Places implements RestMethods
 {
     public $results;
+    public $id;
 
-    protected $id;
-    protected $db;
+    protected $_db;
 
-    function __construct($id = null)
+    function __construct()
     {
-        $this->id = $id;
-        $this->db = new Database();
+        $this->_db = new Database();
         $this->results = new \stdClass();
-        $this->restful_action();
     }
 
     /**
@@ -62,12 +60,12 @@ class Places extends Rest implements RestMethods
      */
     public function index()
     {
-        if (isset($_REQUEST['filter'])) {
-            $this->db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
-            $this->db->bind_param(':filter', '%'.$_REQUEST['filter'].'%', 'string');
+        if (isset($_REQUEST['filter']) && $_REQUEST['filter'] != "") {
+            $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
+            $this->_db->bind_param(':filter', '%'.$_REQUEST['filter'].'%', 'string');
         } else if (isset($_REQUEST['term']) || $this->id) {
             $term = (isset($_REQUEST['term'])) ? $_REQUEST['term'] : $this->id;
-            $this->db->prepare(
+            $this->_db->prepare(
                 "SELECT DISTINCT
                     sp.country as label, sp.country as value
                 FROM
@@ -78,11 +76,12 @@ class Places extends Rest implements RestMethods
                     sp.country
                 LIMIT 5"
             );
-            $this->db->bind_param(':term', $term.'%', 'string');
+            $this->_db->bind_param(':term', $term.'%', 'string');
         } else {
-            $this->db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
+            $this->_db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
         }
-        $this->results = $this->db->fetch_all_object();
+        $this->results = $this->_db->fetch_all_object();
+        return $this;
     }
 
     /**
@@ -94,7 +93,7 @@ class Places extends Rest implements RestMethods
     public function show($id)
     {
         $this->id = $id;
-        $this->index();
+        return $this->index();
     }
 
     /**
@@ -108,9 +107,8 @@ class Places extends Rest implements RestMethods
     /**
      * Implemented update method.
      */
-    public function update()
+    public function update($id)
     {
-        $this->not_implemented();
     }
 
     /**
@@ -121,7 +119,6 @@ class Places extends Rest implements RestMethods
      */
     public function destroy($id)
     {
-        $this->not_implemented();
     }
 
 }

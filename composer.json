@@ -22,6 +22,7 @@
       "phpoffice/phppowerpoint" : "dev-master",
       "phpoffice/phpword"       : "dev-master",
       "phayes/geophp"           : "dev-master",
+      "phroute/phroute"         : "2.*",
       "symfony/yaml"            : "*",
       "robmorgan/phinx"         : "*",
       "twig/twig"               : "~1.0",

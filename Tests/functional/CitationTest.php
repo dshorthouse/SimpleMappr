@@ -34,7 +34,10 @@ class CitationTest extends SimpleMapprTest
      */
     public function testCitationsIndex()
     {
-        $ch = curl_init($this->url . "/citation");
+        parent::setUpPage();
+        parent::setSession('administrator');
+
+        $ch = curl_init($this->url . "citation.json");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -53,26 +56,20 @@ class CitationTest extends SimpleMapprTest
      */
     public function testAddCitation()
     {
-        $citation = 'Shorthouse, David P. 2003. Another citation';
         parent::setUpPage();
         parent::setSession('administrator');
+
+        $citation = 'Shorthouse, David P. 2003. Another citation';
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
         $link->click();
-        parent::waitOnSpinner();
         $this->webDriver->findElement(WebDriverBy::id('citation-reference'))->sendKeys($citation);
         $this->webDriver->findElement(WebDriverBy::id('citation-surname'))->sendKeys('Shorthouse');
         $this->webDriver->findElement(WebDriverBy::id('citation-year'))->sendKeys('2003');
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add citation']"))->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
         $this->assertContains($citation, $citation_list);
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign Out'));
-        $link->click();
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('About'));
-        $link->click();
-        parent::waitOnSpinner();
-        $about_page = $this->webDriver->findElement(WebDriverBy::id('map-about'))->getText();
-        $this->assertContains($citation, $about_page);
+        parent::$db->exec("DELETE FROM citations WHERE reference = '".$citation."'");
     }
 
     /**
@@ -80,18 +77,26 @@ class CitationTest extends SimpleMapprTest
      */
     public function testDeleteCitation()
     {
+        $citation_id = parent::$db->query_insert("citations", array(
+            'year' => 2015,
+            'reference' => 'Aaarnoldson, Peter. 2015. Here be a new citation. [Retrieved from http://www.simplemappr.net. Accessed 01 January, 2015].',
+            'doi' => '10.XXXX/XXXXXX',
+            'first_author_surname' => 'Aaarnoldson'
+        ));
+
         parent::setUpPage();
         parent::setSession('administrator');
+
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
         $link->click();
-        parent::waitOnSpinner();
-        $citation = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation > .citation-delete'))[0];
-        $citation->click();
+        $delete_link = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation > .citation-delete'))[0];
+        $delete_link->click();
         $this->webDriver->findElement(WebDriverBy::cssSelector('.ui-dialog-buttonset > .negative'))->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $citations_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation'));
         $result = parent::$db->query("SELECT COUNT(*) as cnt FROM citations");
         $this->assertEquals($result[0]->cnt, count($citations_list));
+        parent::$db->exec("DELETE FROM citations WHERE id = ".$citation_id."");
     }
 
 }

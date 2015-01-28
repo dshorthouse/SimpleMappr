@@ -445,7 +445,7 @@ class Header
         }
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
-        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".$_SERVER['HTTP_HOST']."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
+        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".MAPPR_DOMAIN."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
         if ($this->isAdministrator()) {
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }
@@ -484,7 +484,7 @@ class Header
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
 w.janrain.settings.language = '" . Session::$accepted_locales[$locale]['canonical'] . "';
-w.janrain.settings.tokenUrl = 'http://" . $_SERVER['HTTP_HOST'] . "/session/" . $locale_q . "';
+w.janrain.settings.tokenUrl = 'http://" . MAPPR_DOMAIN . "/session/" . $locale_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }

@@ -48,7 +48,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
     {
         $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
         ob_start();
-        $mappr_wfs->create_output();
+        echo $mappr_wfs->create_output();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
@@ -67,7 +67,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
         );
         $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
         ob_start();
-        $mappr_wfs->create_output();
+        echo $mappr_wfs->create_output();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $ns = $xml->getNamespaces(true);

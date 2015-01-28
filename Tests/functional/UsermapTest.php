@@ -36,8 +36,7 @@ class UsermapTest extends SimpleMapprTest
     {
         parent::setUpPage();
         parent::setSession();
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('My Maps'));
-        $link->click();
+
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
         $this->assertEquals(count($map_list), 1);
     }
@@ -49,6 +48,7 @@ class UsermapTest extends SimpleMapprTest
     {
         parent::setUpPage();
         parent::setSession('administrator');
+
         $link = $this->webDriver->findElement(WebDriverBy::linkText('All Maps'));
         $link->click();
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
@@ -60,20 +60,22 @@ class UsermapTest extends SimpleMapprTest
      */
     public function testCreateUserMap()
     {
-        $title = 'My New Map ' . time();
         parent::setUpPage();
         parent::setSession();
+
+        $title = 'My New Map User ' . time();
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsSave'))[0];
         $link->click();
         $this->webDriver->findElement(WebDriverBy::id('m-mapSaveTitle'))->sendKeys($title);
         $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Save']"))->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
         $saved_map_title = $this->webDriver->findElements(WebDriverBy::className('map-load'))[0];
         $this->assertEquals($title, $saved_map_title->getText());
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
         $this->assertEquals(count($map_list), 2);
+        parent::$db->exec("DELETE FROM maps where title = '".$title."'");
     }
     
     /**
@@ -83,14 +85,31 @@ class UsermapTest extends SimpleMapprTest
     {
         parent::setUpPage();
         parent::setSession();
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('My Maps'));
-        $link->click();
-        $delete = $this->webDriver->findElements(WebDriverBy::className('map-delete'))[0];
-        $delete->click();
+
+        $cookie = json_decode(urldecode($this->webDriver->manage()->getCookieNamed('simplemappr')['value']));
+        $title = 'Another Sample Map User';
+        $mid = parent::$db->query_insert("maps", array(
+            'uid' => $cookie->uid,
+            'title' => $title,
+            'map' => json_encode(array('save' => array('title' => $title))),
+            'created' => time()
+        ));
+        $this->webDriver->navigate()->refresh();
+        $this->waitOnAjax();
+        $delete_links = $this->webDriver->findElements(WebDriverBy::cssSelector("#usermaps > .grid-usermaps > tbody > tr > .actions > .map-delete"));
+        foreach($delete_links as $delete_link) {
+            if($delete_link->getAttribute('data-id') == $mid) {
+                $delete_link->click();
+                break;
+            }
+        }
+        $delete_text = $this->webDriver->findElement(WebDriverBy::id('mapper-message-delete'))->getText();
+        $this->assertContains($title, $delete_text);
         $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Delete']"))->click();
-        parent::waitOnSpinner();
-        $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
+        parent::waitOnAjax();
+        $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > .grid-usermaps > tbody > tr'));
         $this->assertEquals(count($map_list), 1);
+        parent::$db->exec("DELETE FROM maps WHERE mid = ".$mid);
     }
 
     /**
@@ -98,16 +117,17 @@ class UsermapTest extends SimpleMapprTest
      */
     public function testLoadUserMap()
     {
-        $map_title = "Sample Map 2";
         parent::setUpPage();
         parent::setSession();
+
+        $map_title = "Sample Map User";
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElement(WebDriverBy::linkText('My Maps'));
         $link->click();
         $map_link = $this->webDriver->findElement(WebDriverBy::linkText($map_title));
         $map_link->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('mapTitle'))->getText(), $map_title);
         $this->assertNotEquals($default_img, $new_img);

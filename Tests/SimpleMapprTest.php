@@ -190,7 +190,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'rotation' => '0',
           'save' => 
           array (
-            'title' => 'Sample Map',
+            'title' => 'Sample Map Administrator',
           ),
           'file_name' => '',
           'download_factor' => '1',
@@ -293,7 +293,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'rotation' => '0',
           'save' => 
           array (
-            'title' => 'Sample Map 2',
+            'title' => 'Sample Map User',
           ),
           'file_name' => '',
           'download_factor' => '1',
@@ -317,14 +317,14 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
 
         $map1 = self::$db->query_insert('maps', array(
           'uid' => $user1,
-          'title' => 'Sample Map',
+          'title' => 'Sample Map Administrator',
           'map' => json_encode($map_data1),
           'created' => time()
         ));
 
         $map2 = self::$db->query_insert('maps', array(
           'uid' => $user2,
-          'title' => 'Sample Map 2',
+          'title' => 'Sample Map User',
           'map' => json_encode($map_data2),
           'created' => time()
         ));
@@ -445,6 +445,17 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     /**
      * Wait on spinner then fall back to a sleep.
      */
+    public function waitOnAjax()
+    {
+        $this->webDriver->wait()->until(function() {
+            $condition = 'return ($.active == 0);';
+            return $this->webDriver->executeScript($condition);
+        });
+    }
+
+    /**
+     * Wait on spinner then fall back to a sleep.
+     */
     public function waitOnSpinner()
     {
         $this->webDriver->wait()->until(
@@ -487,6 +498,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         $_SESSION["simplemappr"] = $user;
         session_write_close();
         $this->webDriver->navigate()->refresh();
+        $this->waitOnAjax();
     }
 
 }

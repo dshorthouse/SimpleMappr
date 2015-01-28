@@ -42,7 +42,7 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Usermap extends Rest implements RestMethods
+class Usermap implements RestMethods
 {
     public $total;
     public $filter_username;
@@ -58,31 +58,13 @@ class Usermap extends Rest implements RestMethods
 
     /**
      * Class constructor
-     *
-     * @param int $id The map identifier
      */
-    function __construct($id)
+    function __construct()
     {
-        session_start();
-        if (!isset($_SESSION['simplemappr'])) {
-            Utilities::access_denied();
-        }
-        Session::select_locale();
-        $this->id = (int)$id;
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
         $this->filter_uid = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
-        Header::set_header();
-        $this->execute();
-    }
-
-    /**
-     * Utility method
-     */
-    private function execute()
-    {
         $this->_db = new Database();
-        $this->restful_action();
     }
 
     /**
@@ -169,6 +151,8 @@ class Usermap extends Rest implements RestMethods
         }
         $this->results = $this->_db->fetch_all_object();
         $this->row_count = $this->_db->row_count();
+
+        return $this;
     }
 
     /**
@@ -195,8 +179,7 @@ class Usermap extends Rest implements RestMethods
         $data['map'] = ($record) ? json_decode($record->map, true) : "";
         $data['status'] = ($data['map']) ? 'ok' : 'failed';
 
-        Header::set_header('json');
-        echo json_encode($data);
+        return $data;
     }
 
     /**
@@ -235,16 +218,14 @@ class Usermap extends Rest implements RestMethods
             $output['mid'] = $this->_db->query_insert('maps', $data);
         }
 
-        Header::set_header('json');
-        echo json_encode($output);
+        return $output;
     }
 
     /**
      * Implemented update method
      */
-    public function update()
+    public function update($id)
     {
-        $this->not_implemented();
     }
 
     /**
@@ -270,8 +251,7 @@ class Usermap extends Rest implements RestMethods
             $this->_db->bind_param(":uid", $this->_uid, 'integer');
         }
         $this->_db->execute();
-        Header::set_header('json');
-        echo json_encode(array("status" => "ok"));
+        return array("status" => "ok");
     }
 
 }

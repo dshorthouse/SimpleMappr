@@ -76,7 +76,6 @@ class Logger
      */
     public function tail($n = 10)
     {
-        User::check_permission();
         $buffer_size = 1024;
         $input = '';
         $line_count = 0;

@@ -44,7 +44,7 @@ namespace SimpleMappr;
  */
 class MapprQuery extends Mappr
 {
-    private $_data = "";
+    public $data = "";
 
     public function get_request()
     {
@@ -113,12 +113,12 @@ class MapprQuery extends Mappr
                             $items[$shape->values['adm0_a3']][$hasc[1]] = array();
                         }
                     } else {
-                        $this->_data[] = $shape->values['admin'];
+                        $this->data[] = $shape->values['admin'];
                     }
                 }
                 if ($this->queryLayer == 'stateprovinces_polygon') {
                     foreach ($items as $key => $value) {
-                        $this->_data[] = $key . "[" . implode(" ", array_keys($value)) . "]";
+                        $this->data[] = $key . "[" . implode(" ", array_keys($value)) . "]";
                     }
                 }
                 $layer->close();
@@ -130,8 +130,6 @@ class MapprQuery extends Mappr
 
     public function create_output()
     {
-        Header::set_header("json");
-        echo json_encode($this->_data);
     }
 
 }

@@ -49,7 +49,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_REQUEST = array('ping' => true);
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $decoded = json_decode(ob_get_contents(), true);
         ob_end_clean();
         $this->assertArrayHasKey("status", $decoded);
@@ -63,7 +63,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $decoded = json_decode(ob_get_contents(), true);
         ob_end_clean();
         $this->assertArrayHasKey("imageURL", $decoded);
@@ -78,7 +78,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_REQUEST = array();
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/apioutput_get.png';
         file_put_contents($file, $output);
@@ -99,7 +99,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         );
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/apioutput_get_params.png';
         file_put_contents($file, $output);
@@ -117,7 +117,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         );
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/apioutput_no_coords.png';
         file_put_contents($file, $output);
@@ -135,7 +135,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         );
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/apioutput_coords.png';
         file_put_contents($file, $output);
@@ -154,7 +154,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         );
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/apioutput_encoding.png";
         file_put_contents($file, $output);
@@ -174,7 +174,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         );
         $this->mappr_api->get_request()->execute();
         ob_start();
-        $this->mappr_api->create_output();
+        echo $this->mappr_api->create_output();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/apioutput_places.png';
         file_put_contents($file, $output);

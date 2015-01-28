@@ -42,7 +42,7 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class User extends Rest implements RestMethods
+class User implements RestMethods
 {
     public $sort;
     public $dir;
@@ -56,40 +56,31 @@ class User extends Rest implements RestMethods
         2 => 'administrator'
     );
 
-    public static function check_permission()
+    public static function check_permission($role = 'user')
     {
         if (!isset($_SESSION)) {
             session_start();
         }
-        if (!isset($_SESSION['simplemappr']) || self::$roles[$_SESSION['simplemappr']['role']] !== 'administrator') {
-            Utilities::access_denied();
-        }
-    }
-
-    function __construct($id)
-    {
-        session_start();
         if (!isset($_SESSION['simplemappr'])) {
-            Utilities::access_denied();
+            header('Location: /');
+            return false;
         }
-        Session::select_locale();
-        $this->id = (int)$id;
-        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-        Header::set_header();
-        $this->execute();
+        elseif($role == 'user' && (self::$roles[$_SESSION['simplemappr']['role']] == 'user' || self::$roles[$_SESSION['simplemappr']['role']] == 'administrator')) {
+            return true;
+        }
+        elseif($role == 'administrator' && self::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
+            return true;
+        }
+        else {
+            header('Location: /');
+            return false;
+        }
     }
 
-    /**
-     * Utility method
-     */
-    private function execute()
+    function __construct()
     {
-        if (self::$roles[$this->_role] !== 'administrator') {
-            Utilities::access_denied();
-        } else {
-            $this->_db = new Database();
-            $this->restful_action();
-        }
+        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
+        $this->_db = new Database();
     }
 
     /**
@@ -128,6 +119,7 @@ class User extends Rest implements RestMethods
 
         $this->_db->prepare($sql);
         $this->results = $this->_db->fetch_all_object();
+        return $this;
     }
 
     /**
@@ -138,7 +130,6 @@ class User extends Rest implements RestMethods
      */
     public function show($id)
     {
-        $this->not_implemented();
     }
 
     /**
@@ -146,15 +137,14 @@ class User extends Rest implements RestMethods
      */
     public function create()
     {
-        $this->not_implemented();
     }
 
     /**
      * Implemented update method
+     * @param $int id The User identifier
      */
-    public function update()
+    public function update($id)
     {
-        $this->not_implemented();
     }
 
     /**
@@ -165,24 +155,19 @@ class User extends Rest implements RestMethods
      */
     public function destroy($id)
     {
-        if (self::$roles[$this->_role] !== 'administrator') {
-            Utilities::access_denied();
-        } else {
-            $sql = "DELETE
-                        u, m
-                    FROM
-                        users u
-                    LEFT JOIN
-                        maps m ON u.uid = m.uid
-                    WHERE 
-                        u.uid=:uid";
-            $this->_db->prepare($sql);
-            $this->_db->bind_param(":uid", $id, 'integer');
-            $this->_db->execute();
+        $sql = "DELETE
+                    u, m
+                FROM
+                    users u
+                LEFT JOIN
+                    maps m ON u.uid = m.uid
+                WHERE 
+                    u.uid=:uid";
+        $this->_db->prepare($sql);
+        $this->_db->bind_param(":uid", $id, 'integer');
+        $this->_db->execute();
 
-            header("Content-Type: application/json");
-            echo json_encode(array("status" => "ok"));
-        }
+        return array("status" => "ok");
     }
 
 }

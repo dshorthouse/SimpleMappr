@@ -58,6 +58,7 @@ class PointDataTest extends SimpleMapprTest
     public function testClearPointLayer()
     {
         parent::setUpPage();
+
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 
@@ -85,6 +86,7 @@ class PointDataTest extends SimpleMapprTest
     public function testNewClearPointLayer()
     {
         parent::setUpPage();
+
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a layer']"))->click();

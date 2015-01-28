@@ -35,11 +35,12 @@ class ToolbarTest extends SimpleMapprTest
     public function testRefresh()
     {
         parent::setUpPage();
+
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRefresh'))[0];
         $link->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
         $this->assertNotEquals($default_img, $new_img);
@@ -51,11 +52,12 @@ class ToolbarTest extends SimpleMapprTest
     public function testRebuild()
     {
         parent::setUpPage();
+
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRebuild'))[0];
         $link->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
         $this->assertNotEquals($default_img, $new_img);
@@ -67,11 +69,12 @@ class ToolbarTest extends SimpleMapprTest
     public function testZoomOut()
     {
         parent::setUpPage();
+
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsZoomOut'))[0];
         $link->click();
-        parent::waitOnSpinner();
+        parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
         $this->assertNotEquals($default_img, $new_img);
@@ -83,6 +86,7 @@ class ToolbarTest extends SimpleMapprTest
     public function testMissingTitle()
     {
         parent::setUpPage();
+
         $this->webDriver->findElement(WebDriverBy::linkText('Point Data'))->click();
         $coord_box = $this->webDriver->findElements(WebDriverBy::className('m-mapCoord'))[0];
         $coord_box->sendKeys("45, -120");

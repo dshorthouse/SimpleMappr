@@ -54,8 +54,8 @@ function requireFiles()
 
     require_once $root . '/config/conf.php';
 
-    $rest = $root . '/lib/Rest.class.php';
-    require_once $rest; //force require_once of Rest.class.php
+    $rest = $root . '/lib/RestMethods.class.php';
+    require_once $rest; //force require_once of RestMethods.class.php
 
     $files = glob($root . '/lib/*.php');
     foreach ($files as $file) {

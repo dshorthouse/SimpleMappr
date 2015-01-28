@@ -166,7 +166,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
       sm.showSpinner();
       $.ajax({
         type     : 'GET',
-        url      : sm.settings.baseUrl + "/citation/",
+        url      : sm.settings.baseUrl + "/citation.json",
         dataType : 'json',
         timeout  : 30000,
         success  : function(data) {
@@ -227,7 +227,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
           sm.showSpinner();
           $.ajax({
             type        : 'POST',
-            url         : sm.settings.baseUrl + '/citation/',
+            url         : sm.settings.baseUrl + '/citation',
             data        : $("form").serialize(),
             dataType    : 'json',
             success     : function(data) {

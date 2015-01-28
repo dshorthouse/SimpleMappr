@@ -42,7 +42,7 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Share extends Rest implements RestMethods
+class Share implements RestMethods
 {
     public $sort;
     public $dir;
@@ -52,22 +52,11 @@ class Share extends Rest implements RestMethods
     private $_uid;
     private $_role;
 
-    function __construct($id)
-    {
-        session_start();
-        Session::select_locale();
-        $this->id = (int)$id;
-        Header::set_header();
-        $this->execute();
-    }
-
-    /**
-     * Utility method
-     */
-    private function execute()
+    function __construct()
     {
         $this->_db = new Database();
-        $this->restful_action();
+        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
+        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
     }
 
     /**
@@ -104,36 +93,17 @@ class Share extends Rest implements RestMethods
 
         $this->_db->prepare($sql);
         $this->results = $this->_db->fetch_all_object();
+        return $this;
     }
 
     /**
      * Implemented show method
      *
-     * @param int $id The User identifier
+     * @param int $id The Share identifier
      * @return void
      */
     public function show($id)
     {
-        $sql = "
-            SELECT
-                m.mid, m.map
-            FROM 
-                maps m
-            INNER JOIN
-                shares s ON (m.mid = s.mid)
-            WHERE
-                s.sid = :sid";
-
-        $this->_db->prepare($sql);
-        $this->_db->bind_param(":sid", $id, 'integer');
-
-        $record = $this->_db->fetch_first_object();
-        $data['mid'] = ($record) ? $record->mid : "";
-        $data['map'] = ($record) ? json_decode($record->map, true) : "";
-        $data['status'] = ($data['map']) ? 'ok' : 'failed';
-
-        Header::set_header('json');
-        echo json_encode($data);
     }
 
     /**
@@ -141,23 +111,19 @@ class Share extends Rest implements RestMethods
      */
     public function create()
     {
-        $this->check_session();
         $data = array(
             'mid' => $_POST["mid"],
             'created' => time(),
         );
         $this->_db->query_insert('shares', $data);
-        Header::set_header('json');
-        echo json_encode(array("status" => "ok"));
+        return array("status" => "ok");
     }
 
     /**
      * Implemented update method
      */
-    public function update()
+    public function update($id)
     {
-        $this->check_session();
-        $this->not_implemented();
     }
 
     /**
@@ -168,7 +134,6 @@ class Share extends Rest implements RestMethods
      */
     public function destroy($id)
     {
-        $this->check_session();
         if (User::$roles[$this->_role] == 'administrator') {
             $sql = "DELETE 
                     FROM
@@ -190,17 +155,7 @@ class Share extends Rest implements RestMethods
             $this->_db->bind_param(":uid", $this->_uid, 'integer');
         }
         $this->_db->execute();
-        Header::set_header('json');
-        echo json_encode(array("status" => "ok"));
-    }
-
-    private function check_session()
-    {
-        if (!isset($_SESSION['simplemappr'])) {
-            Utilities::access_denied();
-        }
-        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
-        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
+        return array("status" => "ok");
     }
 
 }

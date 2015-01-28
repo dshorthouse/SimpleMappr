@@ -42,30 +42,19 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Citation extends Rest implements RestMethods
+class Citation implements RestMethods
 {
     private $_db;
     private $_citations;
 
-    function __construct($id = null)
+    function __construct()
     {
-        $this->id = $id;
         $this->_db = new Database();
-    }
-
-    public function get_citations()
-    {
-        $this->index();
-        return $this->_citations;
-    }
-
-    public function execute()
-    {
-        $this->restful_action()->response();
     }
 
     /**
      * Implemented index method
+     * @return response array
      */
     public function index()
     {
@@ -79,26 +68,26 @@ class Citation extends Rest implements RestMethods
 
         $this->_db->prepare($sql);
         $this->_citations = $this->_db->fetch_all_object();
-        return $this;
+        return $this->response();
     }
 
     /**
      * Implemented show method
      *
-     * @param int $id The citation identifier
+     * @param int $id the citation identifier
      * @return void
      */
     public function show($id)
     {
-        $this->not_implemented();
     }
 
     /**
      * Implemented create method
+     *
+     * @return response array
      */
     public function create()
     {
-        User::check_permission();
         $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : null;
         $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : null;
         $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : null;
@@ -120,26 +109,27 @@ class Citation extends Rest implements RestMethods
 
         $data['id'] = $this->_db->query_insert('citations', $data);
         $this->_citations = $data;
-        return $this;
+        return $this->response();
     }
 
     /**
      * Implemented update method
+     *
+     * @param int $param the citation identifier
+     * @return void
      */
-    public function update()
+    public function update($param)
     {
-        $this->not_implemented();
     }
 
     /**
      * Implemented destroy method
      *
      * @param int $id The citation identifier
-     * @return void
+     * @return response array
      */
     public function destroy($id)
     {
-        User::check_permission();
         $sql = "
            DELETE 
             c 
@@ -150,7 +140,8 @@ class Citation extends Rest implements RestMethods
         $this->_db->prepare($sql);
         $this->_db->bind_param(":id", $id, "integer");
         $this->_db->execute();
-        return $this;
+        $this->_citations = "";
+        return $this->response();
     }
 
     /**
@@ -161,21 +152,11 @@ class Citation extends Rest implements RestMethods
      */
     private function response($type = null)
     {
-        switch($type) {
-        case 'error':
-            $output = array(
-                "status" => "error"
-            );
-            break;
-
-        default:
-            $output = array(
-                "status"    => "ok",
-                "citations" => $this->_citations
-            );
+        if($type == 'error') {
+            return array("status" => "error");
+        } else {
+            return array("status" => "ok", "citations" => $this->_citations);
         }
-        Header::set_header("json");
-        echo json_encode($output);
     }
 
 }

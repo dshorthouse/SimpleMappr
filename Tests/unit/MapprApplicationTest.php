@@ -29,10 +29,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
             ->set_max_extent("-180,-90,180,90")
             ->get_request();
         $this->mappr = $mappr->execute();
-        ob_start();
-        $this->mappr->create_output();
-        $this->output = json_decode(ob_get_contents(), true);
-        ob_end_clean();
+        $this->output = $this->mappr->create_output();
     }
 
     /**
@@ -292,14 +289,6 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_default_image_url()
     {
         $this->assertStringEndsWith(".png", $this->mappr->image_url);
-    }
-
-    /**
-     * Test that the default application output is valid JSON.
-     */
-    public function test_mapserver_output_is_json()
-    {
-        $this->assertTrue(json_last_error() == JSON_ERROR_NONE);
     }
 
     /**

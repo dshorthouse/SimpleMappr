@@ -83,8 +83,6 @@ class MapprApplication extends Mappr
             break;
 
         default:
-            Header::set_header('json');
-
             $this->image_url = $this->image->saveWebImage();
 
             $bbox = array(
@@ -105,7 +103,7 @@ class MapprApplication extends Mappr
                 'bad_points'          => $this->get_bad_points()
             );
 
-            echo json_encode($output);
+            return $output;
         }
 
     }

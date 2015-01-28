@@ -37,61 +37,16 @@
 namespace SimpleMappr;
 
 /**
- * REST class for SimpleMappr
+ * RestMethods interface for SimpleMappr
  *
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Rest
-{
-    protected $id;
-
-    /**
-     * Detect type of request and perform appropriate method
-     */
-    public function restful_action()
-    {
-        $verb = $_SERVER['REQUEST_METHOD'];
-
-        switch($verb) {
-        case 'GET':
-            if ($this->id) {
-                $this->show($this->id);
-            } else {
-                $this->index();
-            }
-            break;
-
-        case 'PUT':
-            $this->update();
-            break;
-
-        case 'POST':
-            $this->create();
-            break;
-
-        case 'DELETE':
-            $this->destroy($this->id);
-            break;
-
-        default:
-        }
-        return $this;
-    }
-
-    public function not_implemented()
-    {
-        Header::set_header('json');
-        http_response_code(501);
-        echo json_encode(array("status" => "fail", "message" => "Not implemented"));
-    }
-}
-
 interface RestMethods
 {
     public function index();
     public function show($id);
     public function create();
-    public function update();
+    public function update($id);
     public function destroy($id);
 }

@@ -365,7 +365,7 @@ class MapprApi extends Mappr
     {
         if ($this->ping) {
             Header::set_header("json");
-            echo json_encode(array("status" => "ok"));
+            return json_encode(array("status" => "ok"));
         } else {
             if ($this->method == 'GET') {
                 Header::set_header($this->output);
@@ -378,7 +378,7 @@ class MapprApi extends Mappr
                     'imageURL' => $this->image->saveWebImage(),
                     'expiry'   => date('c', time() + (6 * 60 * 60))
                 );
-                echo json_encode($output);
+                return json_encode($output);
             }
         }
     }
