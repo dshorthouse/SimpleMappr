@@ -48,7 +48,6 @@ use \Phroute\Phroute\Dispatcher;
  */
 class Bootstrap
 {
-    public $locale;
 
     /**
      * Class constructor
@@ -75,7 +74,7 @@ class Bootstrap
         $router->filter('check_role_administrator', function() { User::check_permission('administrator'); });
 
         $router->get('/', function() {
-            return $this->index();
+            return $this->main();
         });
 
         $router->get('/about', function() {
@@ -109,7 +108,6 @@ class Bootstrap
             return $this->tail_log();
         }, array('before' => 'check_permission'));
 
-        //TODO: check that correct content is returned
         $router->post('/application', function() {
             $klass = $this->klass("MapprApplication");
             return $this->setup_map($klass)->execute()->create_output();
@@ -140,7 +138,6 @@ class Bootstrap
             });
         });
 
-        //TODO: check to see if the return works
         $router->post('/docx', function() {
             Session::select_locale();
             $klass = $this->klass("MapprDocx");
@@ -167,7 +164,6 @@ class Bootstrap
             return $this->twig()->render("help.html", $config);
         });
 
-        //TODO: check to see if the return works
         $router->post('/kml', function() {
             $kml = $this->klass("Kml");
             return $kml->get_request()->create_output();
@@ -201,14 +197,12 @@ class Bootstrap
             return json_encode($this->klass("Places")->index()->results);
         });
 
-        //TODO: check to see if the return works
         $router->post('/pptx', function() {
             Session::select_locale();
             $klass = $this->klass("MapprPptx");
             return $this->setup_map($klass)->execute()->create_output();
         });
 
-        //TODO: check to see if the return works
         $router->post('/query', function() {
             Header::set_header("json");
             $klass = $this->klass("MapprQuery");
@@ -306,7 +300,7 @@ class Bootstrap
             $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
             echo $response;
         } catch(\Exception $e) {
-            $this->render_404();
+            echo $this->render_404();
         }
 
     }
@@ -385,7 +379,7 @@ class Bootstrap
      *
      * @return array instance of Header class, locales, roles
      */
-    private function index()
+    private function main()
     {
         $host = explode(".", $_SERVER['HTTP_HOST']);
         if (ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
@@ -404,7 +398,10 @@ class Bootstrap
      private function twig($globals = true)
      {
          $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
-         $twig = new \Twig_Environment($loader, array('cache' => false, 'auto_reload' => true));
+         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
+         $reload = (ENVIRONMENT == "development") ? true : false;
+         $twig = new \Twig_Environment($loader, array('cache' => $cache, 'auto_reload' => $reload));
+         $twig->clearCacheFiles();
          $twig->addExtension(new \Twig_Extensions_Extension_I18n());
          $twig->addGlobal('environment', ENVIRONMENT);
 
@@ -440,6 +437,6 @@ class Bootstrap
             'title' => ' - Not Found',
             'google_analytics' => GOOGLE_ANALYTICS
         );
-        echo $this->twig()->render("404.html", $config);
+        return $this->twig()->render("404.html", $config);
     }
 }

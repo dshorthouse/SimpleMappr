@@ -66,25 +66,13 @@ function requireFiles()
     require_once $root . '/vendor/autoload.php';
 }
 
-/**
- * Delete all files created by SimpleMappr throughout tests
- *
- * @return void
- */
-function trashCachedFiles()
+function flushCaches()
 {
-    $root = dirname(__DIR__);
-    $cssFiles = glob($root . "/public/stylesheets/cache/*.{css}", GLOB_BRACE);
-    foreach ($cssFiles as $file) {
-        unlink($file);
-    }
-    $jsFiles = glob($root . "/public/javascript/cache/*.{js}", GLOB_BRACE);
-    foreach ($jsFiles as $file) {
-        unlink($file);
-    }
-    $tmpfiles = glob($root."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
-    foreach ($tmpfiles as $file) {
-        unlink($file);
+    \SimpleMappr\Header::flush_cache(false);
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__DIR__) . "/public/tmp"), RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
+        if ($file->isFile()) {
+            @unlink($file->getPathname());
+        }
     }
 }
 
@@ -97,7 +85,7 @@ function loader()
 {
     switchConf();
     requireFiles();
-    \SimpleMappr\Header::flush_cache(false);
+    flushCaches();
     ob_start();
     file_get_contents("http://".MAPPR_DOMAIN);
     new \SimpleMappr\Header;
@@ -111,8 +99,7 @@ function loader()
 function unloader()
 {
     switchConf('restore');
-    trashCachedFiles();
-    \SimpleMappr\Header::flush_cache(false);
+    flushCaches();
     ob_end_clean();
 }
 

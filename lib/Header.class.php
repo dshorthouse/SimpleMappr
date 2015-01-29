@@ -100,22 +100,10 @@ class Header
 
     public static function flush_cache($output = true)
     {
-        $cached_files = array();
-
-        $css_files = array_diff(@scandir(dirname(__DIR__) . self::$_css_cache_path), array(".", "..", ".DS_Store"));
-        foreach ($css_files as $file) {
-            if (preg_match('/\.css$/i', $file)) {
-                $cached_files[] = dirname(__DIR__) . self::$_css_cache_path . $file;
-            }
+        foreach (glob(dirname(__DIR__) . self::$_css_cache_path . "*.{css}", GLOB_BRACE) as $file) {
+            unlink($file);
         }
-
-        $js_files = array_diff(@scandir(dirname(__DIR__) . self::$_js_cache_path), array(".", "..", ".DS_Store"));
-        foreach ($js_files as $file) {
-            if (preg_match('/\.js$/i', $file)) {
-                $cached_files[] = dirname(__DIR__) . self::$_js_cache_path . $file;
-            }
-        }
-        foreach ($cached_files as $file) {
+        foreach (glob(dirname(__DIR__) . self::$_js_cache_path . "*.{js}", GLOB_BRACE) as $file) {
             unlink($file);
         }
 
