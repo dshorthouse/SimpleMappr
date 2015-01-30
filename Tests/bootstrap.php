@@ -70,9 +70,8 @@ function flushCaches()
 {
     \SimpleMappr\Header::flush_cache(false);
     $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . "/public/tmp");
-    $filterItr = new \SimpleMappr\HiddenFilterIterator($dirItr);
-    foreach (new RecursiveIteratorIterator($filterItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
-        if ($file->isFile()) {
+    foreach (new RecursiveIteratorIterator($dirItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
+        if ($file->isFile() && $file->getFilename()[0] !== ".") {
             @unlink($file->getPathname());
         }
     }

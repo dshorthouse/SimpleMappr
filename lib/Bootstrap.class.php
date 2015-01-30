@@ -401,7 +401,6 @@ class Bootstrap
          $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
          $reload = (ENVIRONMENT == "development") ? true : false;
          $twig = new \Twig_Environment($loader, array('cache' => $cache, 'auto_reload' => $reload));
-         $twig->clearCacheFiles();
          $twig->addExtension(new \Twig_Extensions_Extension_I18n());
          $twig->addGlobal('environment', ENVIRONMENT);
 
