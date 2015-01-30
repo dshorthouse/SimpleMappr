@@ -113,7 +113,8 @@ class MapprQuery extends Mappr
                             $items[$shape->values['adm0_a3']][$hasc[1]] = array();
                         }
                     } else {
-                        $this->data[] = $shape->values['admin'];
+                        //DigitalEarth ne_10m_admin_0_map_units is inconsistent
+                        $this->data[] = (isset($shape->values['admin'])) ? $shape->values['admin'] : $shape->values['ADMIN'];
                     }
                 }
                 if ($this->queryLayer == 'stateprovinces_polygon') {

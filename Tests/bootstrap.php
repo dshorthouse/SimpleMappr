@@ -69,7 +69,9 @@ function requireFiles()
 function flushCaches()
 {
     \SimpleMappr\Header::flush_cache(false);
-    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__DIR__) . "/public/tmp"), RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
+    $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . "/public/tmp");
+    $filterItr = new \SimpleMappr\HiddenFilterIterator($dirItr);
+    foreach (new RecursiveIteratorIterator($filterItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
         if ($file->isFile()) {
             @unlink($file->getPathname());
         }

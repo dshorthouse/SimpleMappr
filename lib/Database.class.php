@@ -54,7 +54,7 @@ class Database
         $creds = $this->credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
         $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);
         $this->_link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, false);
+        $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);
     }
 
     /**
@@ -243,7 +243,7 @@ class Database
         $host = $config['environments'][ENVIRONMENT]['host'];
         $db = $config['environments'][ENVIRONMENT]['name'];
         $charset = $config['environments'][ENVIRONMENT]['charset'];
-        
+
         return array(
             'conn' => $adapter . ':host=' . $host . ';dbname=' . $db . ';charset=' . $charset,
             'user' =>  $config['environments'][ENVIRONMENT]['user'],
