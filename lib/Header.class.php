@@ -95,7 +95,7 @@ class Header
      * An array of all css files to be minified
      */
     public $local_css = array(
-        '/public/stylesheets/raw/styles.css'
+        'public/stylesheets/raw/styles.css'
     );
 
     public static function flush_cache($output = true)
@@ -360,10 +360,10 @@ class Header
                 fwrite($handle, $css_min);
                 fclose($handle);
 
-                $this->addCSS('<link type="text/css" href="/public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
+                $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
             } else {
                 foreach ($cached_css as $css) {
-                    $this->addCSS('<link type="text/css" href="/public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
+                    $this->addCSS('<link type="text/css" href="public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
                 }
             }
 
