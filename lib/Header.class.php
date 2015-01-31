@@ -95,7 +95,7 @@ class Header
      * An array of all css files to be minified
      */
     public $local_css = array(
-        'public/stylesheets/raw/styles.css'
+        '/public/stylesheets/raw/styles.css'
     );
 
     public static function flush_cache($output = true)
