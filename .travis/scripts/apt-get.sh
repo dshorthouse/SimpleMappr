@@ -15,6 +15,7 @@ gettext \
 autoconf \
 libjpeg-dev \
 libpng12-dev \
+libagg-dev \
 freetype* \
 libgdal1-dev \
 libgdal-dev \
