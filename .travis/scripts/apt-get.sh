@@ -13,7 +13,7 @@ locales \
 gettext \
 autoconf \
 libjpeg-dev \
-libpng-dev \
+libpng12-dev \
 freetype* \
 libgdal1-dev \
 libgdal-dev \
@@ -21,6 +21,7 @@ libproj-dev \
 libxml2-dev \
 libgeos-dev \
 libcairo2-dev \
+svgcairo \
 libghc-svgcairo-dev \
 libfribidi-dev \
 phpunit \
