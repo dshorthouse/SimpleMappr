@@ -21,7 +21,6 @@ libproj-dev \
 libxml2-dev \
 libgeos-dev \
 libcairo2-dev \
-svgcairo \
 libghc-svgcairo-dev \
 libfribidi-dev \
 phpunit \
