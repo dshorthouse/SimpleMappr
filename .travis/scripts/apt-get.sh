@@ -7,6 +7,7 @@ apache2 \
 build-essential \
 libapache2-mod-fastcgi \
 php5-dev \
+php5-gd \
 php5-mysql \
 php5-curl \
 locales \
