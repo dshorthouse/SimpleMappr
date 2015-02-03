@@ -21,7 +21,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequest();
         $this->mappr_query = $this->setMapprDefaults(new \SimpleMappr\MapprQuery());
     }
 

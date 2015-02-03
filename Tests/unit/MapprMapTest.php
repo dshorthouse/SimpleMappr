@@ -30,6 +30,7 @@ class MapprMapTest extends SimpleMapprTest
     public function tearDown()
     {
         $this->clearRequest();
+        $this->clearTmpFiles();
     }
 
     /**

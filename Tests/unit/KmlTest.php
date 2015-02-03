@@ -32,6 +32,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
     {
         session_destroy(); //req'd because Kml class sets a cookie
         $this->clearRequest();
+        $this->clearTmpFiles();
     }
 
     /**

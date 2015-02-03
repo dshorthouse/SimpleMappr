@@ -21,7 +21,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequest();
         $this->mappr_api = $this->setMapprDefaults(new \SimpleMappr\MapprApi());
     }
 
@@ -31,6 +31,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->clearRequest();
+        $this->clearTmpFiles();
     }
 
     /**
@@ -52,7 +53,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_post()
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $this->setRequest('POST');
         $this->mappr_api->get_request()->execute();
         ob_start();
         echo $this->mappr_api->create_output();

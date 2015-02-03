@@ -21,7 +21,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequest();
         $this->mappr_docx = $this->setMapprDefaults(new \SimpleMappr\MapprDocx());
     }
 
@@ -31,6 +31,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->clearRequest();
+        $this->clearTmpFiles();
     }
 
     /**

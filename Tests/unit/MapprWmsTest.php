@@ -21,7 +21,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequest();
         $this->mappr_wms = new \SimpleMappr\MapprWms();
         $this->mappr_wms->wms_layers = array(
             'lakes' => 'on',

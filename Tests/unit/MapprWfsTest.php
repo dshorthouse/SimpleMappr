@@ -21,7 +21,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequest();
         $this->mappr_wfs = new \SimpleMappr\MapprWfs();
         $this->mappr_wfs->wfs_layers = array(
             'lakes' => 'on',

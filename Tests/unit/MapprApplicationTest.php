@@ -33,6 +33,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->clearRequest();
+        $this->clearTmpFiles();
     }
 
     /**
