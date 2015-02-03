@@ -12,6 +12,8 @@
  */
 class MapprWmsTest extends PHPUnit_Framework_TestCase
 {
+    use SimpleMapprMixin;
+
     protected $mappr_wms;
 
     /**
@@ -25,12 +27,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
             'lakes' => 'on',
             'stateprovinces_polygon' => 'on'
         );
-        $this->mappr_wms->set_shape_path(ROOT."/mapserver/maps")
-            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
-            ->set_tmp_path(ROOT."/public/tmp/")
-            ->set_tmp_url(MAPPR_MAPS_URL)
-            ->set_default_projection("epsg:4326")
-            ->set_max_extent("-180,-90,180,90");
+        $this->mappr_wms = $this->setMapprDefaults($this->mappr_wms);
     }
 
     /**
@@ -38,7 +35,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
+        $this->clearRequest();
     }
 
     /**

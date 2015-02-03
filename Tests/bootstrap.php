@@ -55,7 +55,7 @@ function requireFiles()
     require_once $root . '/config/conf.php';
 
     $rest = $root . '/lib/RestMethods.class.php';
-    require_once $rest; //force require_once of RestMethods.class.php
+    require_once $rest;
 
     $files = glob($root . '/lib/*.php');
     foreach ($files as $file) {
@@ -63,13 +63,14 @@ function requireFiles()
     }
 
     require_once $root . '/Tests/SimpleMapprTest.php';
+    require_once $root . '/Tests/SimpleMapprMixin.php';
     require_once $root . '/vendor/autoload.php';
 }
 
 function flushCaches()
 {
     \SimpleMappr\Header::flush_cache(false);
-    $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . "/public/tmp");
+    $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
     foreach (new RecursiveIteratorIterator($dirItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
         if ($file->isFile() && $file->getFilename()[0] !== ".") {
             @unlink($file->getPathname());

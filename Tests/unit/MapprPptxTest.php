@@ -12,7 +12,9 @@
  */
 class MapprPptxTest extends PHPUnit_Framework_TestCase
 {
-    protected $mappr_api;
+    use SimpleMapprMixin;
+
+    protected $mappr_pptx;
 
     /**
      * Parent setUp function executed before each test.
@@ -20,24 +22,14 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->mappr_pptx = new \SimpleMappr\MapprPptx();
-        $this->mappr_pptx->set_shape_path(ROOT."/mapserver/maps")
-            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
-            ->set_tmp_path(ROOT."/public/tmp/")
-            ->set_tmp_url(MAPPR_MAPS_URL)
-            ->set_default_projection("epsg:4326")
-            ->set_max_extent("-180,-90,180,90");
+        $this->mappr_pptx = $this->setMapprDefaults(new \SimpleMappr\MapprPptx());
     }
 
     /**
      * Parent tearDown function executed after each test.
      */
     protected function tearDown() {
-        unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
-        $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml}", GLOB_BRACE);
-        foreach ($tmpfiles as $file) {
-            unlink($file);
-        }
+        $this->clearRequest();
     }
 
     /**

@@ -12,6 +12,8 @@
  */
 class MapprMapTest extends SimpleMapprTest
 {
+    use SimpleMapprMixin;
+
     protected $mappr_map;
 
     /**
@@ -27,11 +29,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function tearDown()
     {
-        unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
-        $tmpfiles = glob(ROOT."/public/tmp/*.{jpg,png,tiff,pptx,docx,kml,json,svg}", GLOB_BRACE);
-        foreach ($tmpfiles as $file) {
-            unlink($file);
-        }
+        $this->clearRequest();
     }
 
     /**
@@ -41,13 +39,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     private function setUpMap($ext = "png")
     {
-        $this->mappr_map = new \SimpleMappr\MapprMap(1, $ext);
-        $this->mappr_map->set_shape_path(ROOT."/mapserver/maps")
-            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
-            ->set_tmp_path(ROOT."/public/tmp/")
-            ->set_tmp_url(MAPPR_MAPS_URL)
-            ->set_default_projection("epsg:4326")
-            ->set_max_extent("-180,-90,180,90");
+        $this->mappr_map = $this->setMapprDefaults(new \SimpleMappr\MapprMap(1, $ext));
     }
 
     /**
