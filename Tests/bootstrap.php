@@ -52,19 +52,10 @@ function requireFiles()
 {
     $root = dirname(__DIR__);
 
-    require_once $root . '/config/conf.php';
-
-    $rest = $root . '/lib/RestMethods.class.php';
-    require_once $rest;
-
-    $files = glob($root . '/lib/*.php');
-    foreach ($files as $file) {
-        require_once $file;
-    }
-
-    require_once $root . '/Tests/SimpleMapprTest.php';
-    require_once $root . '/Tests/SimpleMapprMixin.php';
-    require_once $root . '/vendor/autoload.php';
+    require $root . '/config/conf.php';
+    require $root . '/vendor/autoload.php';
+    require $root . '/Tests/SimpleMapprTest.php';
+    require $root . '/Tests/SimpleMapprMixin.php';
 }
 
 function flushCaches()

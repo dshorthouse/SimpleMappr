@@ -2570,14 +2570,14 @@ var SimpleMappr = (function($, window, document) {
     },
 
     init: function() {
-      this.appendImages();
-      this.bindRotateWheel();
       this.appendDialogs();
       this.disableDefaultButtons();
       this.screenSizeListener();
+      this.bindRotateWheel();
       this.bindTooltips();
       this.bindTabs();
       this.bindUpload();
+      this.appendImages();
       this.bindSpecialClicks();
       this.bindAccordions();
       this.bindStorage();

@@ -17,6 +17,9 @@
       "issues" : "https://github.com/dshorthouse/SimpleMappr/issues",
       "source" : "https://github.com/dshorthouse/SimpleMappr"
     },
+    "autoload" : {
+      "psr-4" : { "SimpleMappr\\" : "src/" }
+    },
     "require": {
       "natxet/CssMin"           : "dev-master",
       "phpoffice/phppowerpoint" : "dev-master",

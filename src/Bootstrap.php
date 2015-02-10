@@ -60,8 +60,7 @@ class Bootstrap
     /**
      * Set the controller for each route
      *
-     * @return void
-     * TODO: replace with better routing mechanism
+     * @return views
      */
     private function set_routes()
     {
@@ -395,7 +394,7 @@ class Bootstrap
      * Load twig templating engine
      * @return twig object
      */
-     private function twig($globals = true)
+     private function twig()
      {
          $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
          $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";

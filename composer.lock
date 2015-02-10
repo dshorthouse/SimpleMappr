@@ -300,21 +300,20 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.4.1",
+            "version": "v0.4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "357210707c000f50edea802d84b74724ad122478"
+                "reference": "1bc1396392d4073b8b29ee5289e445889cbc12b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/357210707c000f50edea802d84b74724ad122478",
-                "reference": "357210707c000f50edea802d84b74724ad122478",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/1bc1396392d4073b8b29ee5289e445889cbc12b5",
+                "reference": "1bc1396392d4073b8b29ee5289e445889cbc12b5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/class-loader": "~2.6.0",
                 "symfony/config": "~2.6.0",
                 "symfony/console": "~2.6.0",
                 "symfony/yaml": "~2.6.0"
@@ -328,8 +327,8 @@
             ],
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Phinx": "src/"
+                "psr-4": {
+                    "Phinx\\": "src/Phinx"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -342,6 +341,12 @@
                     "email": "robbym@gmail.com",
                     "homepage": "http://robmorgan.id.au",
                     "role": "Lead Developer"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "homepage": "http://shadowhand.me",
+                    "role": "Developer"
                 }
             ],
             "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
@@ -353,71 +358,21 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-12-23 06:06:14"
-        },
-        {
-            "name": "symfony/class-loader",
-            "version": "v2.6.3",
-            "target-dir": "Symfony/Component/ClassLoader",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "deac802f76910708ab50d039806cfd1866895b52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/deac802f76910708ab50d039806cfd1866895b52",
-                "reference": "deac802f76910708ab50d039806cfd1866895b52",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "symfony/finder": "~2.0,>=2.0.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\ClassLoader\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Symfony ClassLoader Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-01-05 14:28:40"
+            "time": "2015-02-08 03:41:44"
         },
         {
             "name": "symfony/config",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "d94f222eff99a22ce313555b78642b4873418d56"
+                "reference": "a9f781ba1221067d1f07c8cec0bc50f81b8d7408"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/d94f222eff99a22ce313555b78642b4873418d56",
-                "reference": "d94f222eff99a22ce313555b78642b4873418d56",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/a9f781ba1221067d1f07c8cec0bc50f81b8d7408",
+                "reference": "a9f781ba1221067d1f07c8cec0bc50f81b8d7408",
                 "shasum": ""
             },
             "require": {
@@ -451,21 +406,21 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 08:01:59"
+            "time": "2015-01-21 20:57:55"
         },
         {
             "name": "symfony/console",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476"
+                "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
-                "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
+                "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
                 "shasum": ""
             },
             "require": {
@@ -508,11 +463,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-06 17:50:02"
+            "time": "2015-01-25 04:39:26"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
@@ -559,17 +514,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "82462a90848a52c2533aa6b598b107d68076b018"
+                "reference": "60ed7751671113cf1ee7d7778e691642c2e9acd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/82462a90848a52c2533aa6b598b107d68076b018",
-                "reference": "82462a90848a52c2533aa6b598b107d68076b018",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/60ed7751671113cf1ee7d7778e691642c2e9acd8",
+                "reference": "60ed7751671113cf1ee7d7778e691642c2e9acd8",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +557,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 15:33:07"
+            "time": "2015-01-25 04:39:26"
         },
         {
             "name": "twig/extensions",
@@ -715,12 +670,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "44feb1a7d810a14133a31cf697912faf5cab2579"
+                "reference": "2c5b305ea91b00ebbc433ad1663b7f16c1b31ec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/44feb1a7d810a14133a31cf697912faf5cab2579",
-                "reference": "44feb1a7d810a14133a31cf697912faf5cab2579",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/2c5b305ea91b00ebbc433ad1663b7f16c1b31ec5",
+                "reference": "2c5b305ea91b00ebbc433ad1663b7f16c1b31ec5",
                 "shasum": ""
             },
             "require": {
@@ -748,7 +703,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2015-01-20 18:54:55"
+            "time": "2015-02-09 19:39:34"
         },
         {
             "name": "phpunit/php-code-coverage",
