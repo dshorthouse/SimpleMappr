@@ -100,6 +100,9 @@ class MapprMap extends Mappr
         if (!isset($this->bbox_map) || empty($this->bbox_map) || $this->bbox_map == "0,0,0,0") {
             $this->bbox_map = '-180,-90,180,90';
         }
+        if (!isset($this->origin)) {
+            $this->origin = (int)$this->load_param('origin', false);
+        }
 
         $this->download         = true;
         $this->watermark        = true;
@@ -110,8 +113,11 @@ class MapprMap extends Mappr
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 800; $this->height = 400;
         }
-        if ($this->load_param('legend', false)) {
+
+        if ($this->load_param('legend', false) == "true") {
             $this->options['legend'] = true;
+        } else if($this->load_param('legend', false) == "false") {
+            $this->options['legend'] = false;
         }
 
         $this->image_size       = array($this->width, $this->height);

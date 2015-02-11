@@ -83,7 +83,7 @@ class Bootstrap
             $config = array(
                 'citations' => $citations->index()
             );
-            return $this->twig(false)->render("about.html", $config);
+            return $this->twig()->render("about.html", $config);
         });
 
         $router->any('/api', function() {
