@@ -108,4 +108,39 @@ class MapprMapTest extends SimpleMapprTest
         $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_kml.kml'));
     }
 
+    /**
+     * Test that the output has a legend.
+     */
+    public function test_map_legend()
+    {
+        $this->setRequest();
+        $this->setUpMap();
+        $_REQUEST = array('legend' => 'true');
+        $this->mappr_map->get_request()->execute();
+        ob_start();
+        $this->mappr_map->create_output();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/map_png_legend.png';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png_legend.png'));
+    }
+
+    /**
+     * Test that the output does not have a legend.
+     */
+    public function test_map_nolegend()
+    {
+        $this->setRequest();
+        $this->setUpMap();
+        $_REQUEST = array('legend' => 'false');
+        $this->mappr_map->get_request()->execute();
+        ob_start();
+        $this->mappr_map->create_output();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/map_png_nolegend.png';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png.png'));
+    }
 }

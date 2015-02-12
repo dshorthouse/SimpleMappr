@@ -165,6 +165,32 @@ abstract class Mappr
             END
 
             SYMBOL
+                NAME 'inversetriangle'
+                TYPE vector
+                FILLED true
+                TRANSPARENT 100
+                POINTS
+                    0 1
+                    0.5 0
+                    1 1
+                    0 1
+                END
+            END
+
+            SYMBOL
+                NAME 'inverseopentriangle'
+                TYPE vector
+                FILLED false
+                TRANSPARENT 100
+                POINTS
+                    0 1
+                    0.5 0
+                    1 1
+                    0 1
+                END
+            END
+
+            SYMBOL
                 NAME 'square'
                 TYPE vector
                 FILLED true
