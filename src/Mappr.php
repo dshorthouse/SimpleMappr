@@ -170,10 +170,10 @@ abstract class Mappr
                 FILLED true
                 TRANSPARENT 100
                 POINTS
-                    0 1
-                    0.5 0
-                    1 1
-                    0 1
+                    0 0
+                    1 0
+                    0.5 1
+                    0 0
                 END
             END
 
@@ -183,10 +183,10 @@ abstract class Mappr
                 FILLED false
                 TRANSPARENT 100
                 POINTS
-                    0 1
-                    0.5 0
-                    1 1
-                    0 1
+                    0 0
+                    1 0
+                    0.5 1
+                    0 0
                 END
             END
 
@@ -447,11 +447,13 @@ abstract class Mappr
         'openstar',
         'opensquare',
         'opentriangle',
+        'inverseopentriangle',
         'openhexagon',
         'circle',
         'star',
         'square',
         'triangle',
+        'inversetriangle',
         'hexagon'
     );
 

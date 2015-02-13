@@ -554,6 +554,10 @@ msgid "triangle (s)"
 msgstr "triangles (p)"
 
 #: .index.php:340
+msgid "inverse triangle (s)"
+msgstr "triangles inverses (p)"
+
+#: .index.php:340
 msgid "hexagon (s)"
 msgstr "hexagones (p)"
 
@@ -576,6 +580,10 @@ msgstr "carrés (o)"
 #: .index.php:346
 msgid "triangle (o)"
 msgstr "triangles (o)"
+
+#: .index.php:346
+msgid "inverse triangle (o)"
+msgstr "triangles inverses (o)"
 
 #: .index.php:346
 msgid "hexagon (o)"
@@ -688,6 +696,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "February 12, 2015"
+msgstr "12 février, 2015"
+
+#: .tabs/about.php:11
 msgid "January 23, 2015"
 msgstr "23 janvier, 2015"
 
@@ -726,6 +738,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added inverse triangle as a marker shape. Requested by Michael Schwartz."
+msgstr "Améliorations: Ajouté triangles inverses comme option. Demandé par Michael Schwartz."
 
 #: .tabs/about.php:11
 msgid "Bug fixes: Invalid DDMMSS coordinates were silently converted to DD."
