@@ -99,219 +99,6 @@ abstract class Mappr
                 'init=epsg:4326'
             END
 
-            SYMBOL
-                NAME 'star'
-                TYPE vector
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    0 0.375
-                    0.35 0.365
-                    0.5 0
-                    0.65 0.375
-                    1 0.375
-                    0.75 0.625
-                    0.875 1
-                    0.5 0.75
-                    0.125 1
-                    0.25 0.625
-                    0 0.375
-                END
-            END
-
-            SYMBOL
-                NAME 'openstar'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0 0.375
-                    0.35 0.365
-                    0.5 0
-                    0.65 0.375
-                    1 0.375
-                    0.75 0.625
-                    0.875 1
-                    0.5 0.75
-                    0.125 1
-                    0.25 0.625
-                    0 0.375
-                END
-            END
-
-            SYMBOL
-                NAME 'triangle'
-                TYPE vector
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    0 1
-                    0.5 0
-                    1 1
-                    0 1
-                END
-            END
-
-            SYMBOL
-                NAME 'opentriangle'
-                TYPE vector
-                FILLED false
-                TRANSPARENT 100
-                POINTS
-                    0 1
-                    0.5 0
-                    1 1
-                    0 1
-                END
-            END
-
-            SYMBOL
-                NAME 'inversetriangle'
-                TYPE vector
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    0 0
-                    1 0
-                    0.5 1
-                    0 0
-                END
-            END
-
-            SYMBOL
-                NAME 'inverseopentriangle'
-                TYPE vector
-                FILLED false
-                TRANSPARENT 100
-                POINTS
-                    0 0
-                    1 0
-                    0.5 1
-                    0 0
-                END
-            END
-
-            SYMBOL
-                NAME 'square'
-                TYPE vector
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    0 1
-                    0 0
-                    1 0
-                    1 1
-                    0 1
-                END
-            END
-
-            SYMBOL
-                NAME 'opensquare'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0 1
-                    0 0
-                    1 0
-                    1 1
-                    0 1
-                END
-            END
-
-            SYMBOL
-                NAME 'plus'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0.5 0
-                    0.5 1
-                    -99 -99
-                    0 0.5
-                    1 0.5
-                END
-            END
-
-            SYMBOL
-                NAME 'cross'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0 0
-                    1 1
-                    -99 -99
-                    0 1
-                    1 0
-                END
-            END
-
-            SYMBOL
-                NAME 'asterisk'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0 0
-                    1 1
-                    -99 -99
-                    0 1
-                    1 0
-                    -99 -99
-                    0.5 0
-                    0.5 1
-                    -99 -99
-                    0 0.5
-                    1 0.5
-                END
-            END
-
-            SYMBOL
-                NAME 'hexagon'
-                TYPE vector
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    0.23 0
-                    0 0.5
-                    0.23 1
-                    0.77 1
-                    1 0.5
-                    0.77 0
-                    0.23 0
-                END
-            END
-
-            SYMBOL
-                NAME 'openhexagon'
-                TYPE vector
-                FILLED false
-                POINTS
-                    0.23 0
-                    0 0.5
-                    0.23 1
-                    0.77 1
-                    1 0.5
-                    0.77 0
-                    0.23 0
-                END
-            END
-
-            SYMBOL
-                NAME 'circle'
-                TYPE ellipse
-                FILLED true
-                TRANSPARENT 100
-                POINTS
-                    1 1
-                END
-            END
-
-            SYMBOL
-                NAME 'opencircle'
-                TYPE ellipse
-                FILLED false
-                POINTS
-                    1 1
-                END
-            END
-
             OUTPUTFORMAT
                 NAME png
                 DRIVER AGG/PNG
@@ -885,11 +672,258 @@ abstract class Mappr
     }
 
     /**
+     * Load-up all the symbols
+     */
+    private function load_symbols() {
+        //plus
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[0]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0.5, 0,
+            0.5, 1,
+            -99, -99,
+            0, 0.5,
+            1, 0.5
+        );
+        $symbol->setpoints($spoints);
+
+        //cross
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[1]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 0,
+            1, 1,
+            -99, -99,
+            0, 1,
+            1, 0
+        );
+        $symbol->setpoints($spoints);
+
+        //asterisk
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[2]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 0,
+            1, 1,
+            -99, -99,
+            0, 1,
+            1, 0,
+            -99, -99,
+            0.5, 0,
+            0.5, 1,
+            -99, -99,
+            0, 0.5,
+            1, 0.5
+        );
+        $symbol->setpoints($spoints);
+
+        //opencircle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[3]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_ELLIPSE);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            1, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //openstar
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[4]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 0.375,
+            0.35, 0.365,
+            0.5, 0,
+            0.65, 0.375,
+            1, 0.375,
+            0.75, 0.625,
+            0.875, 1,
+            0.5, 0.75,
+            0.125, 1,
+            0.25, 0.625,
+            0, 0.375
+        );
+        $symbol->setpoints($spoints);
+
+        //opensquare
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[5]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 1,
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //opentriangle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[6]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 1,
+            0.5, 0,
+            1, 1,
+            0, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //inverseopentriangle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[7]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0, 0,
+            1, 0,
+            0.5, 1,
+            0, 0
+        );
+        $symbol->setpoints($spoints);
+
+        //openhexagon
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[8]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0.23, 0,
+            0, 0.5,
+            0.23, 1,
+            0.77, 1,
+            1, 0.5,
+            0.77, 0,
+            0.23, 0
+        );
+        $symbol->setpoints($spoints);
+
+        //circle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[9]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_ELLIPSE);
+        $symbol->set("transparent", 100);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            1, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //star
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[10]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->set("transparent", 100);
+        $spoints = array(
+            0, 0.375,
+            0.35, 0.365,
+            0.5, 0,
+            0.65, 0.375,
+            1, 0.375,
+            0.75, 0.625,
+            0.875, 1,
+            0.5, 0.75,
+            0.125, 1,
+            0.25, 0.625,
+            0, 0.375
+        );
+        $symbol->setpoints($spoints);
+
+        //square
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[11]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->set("transparent", 100);
+        $spoints = array(
+            0, 1,
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //triangle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[12]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->set("transparent", 100);
+        $spoints = array(
+            0, 1,
+            0.5, 0,
+            1, 1,
+            0, 1
+        );
+        $symbol->setpoints($spoints);
+
+        //inversetriangle
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[13]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->set("transparent", 100);
+        $spoints = array(
+            0, 0,
+            1, 0,
+            0.5, 1,
+            0, 0
+        );
+        $symbol->setpoints($spoints);
+
+        //hexagon
+        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[14]);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_VECTOR);
+        $symbol->set("transparent", 100);
+        $symbol->set("filled", MS_TRUE);
+        $symbol->set("inmapfile", MS_TRUE);
+        $spoints = array(
+            0.23, 0,
+            0, 0.5,
+            0.23, 1,
+            0.77, 1,
+            1, 0.5,
+            0.77, 0,
+            0.23, 0
+        );
+        $symbol->setpoints($spoints);
+    }
+
+    /**
      * Execute the process. This is the main method that calls other req'd and optional methods.
      */
     public function execute()
     {
         $this->load_shapes();
+        $this->load_symbols();
         $this->set_web_config();
         $this->set_resolution();
         $this->set_units();
