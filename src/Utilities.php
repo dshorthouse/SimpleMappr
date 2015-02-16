@@ -73,7 +73,7 @@ class Utilities
      * @param string $default Default when parameter not supplied.
      * @return string The parameter value or empty string if null.
      */
-    public static function load_param($name, $default = '')
+    public static function load_param($name, $default = "")
     {
         if (!isset($_REQUEST[$name]) || !$_REQUEST[$name]) {
             return $default;

@@ -100,7 +100,7 @@ class MapprApi extends Mappr
         $this->zoom             = (int)$this->load_param('zoom', false);
 
         //convert layers as comma-separated values to an array
-        $_layers                = explode(',', $this->load_param('layers', ''));
+        $_layers                = explode(',', $this->load_param('layers', ""));
         $layers = array();
         $layers['countries']    = true;
         foreach ($_layers as $_layer) {
@@ -494,7 +494,7 @@ class MapprApi extends Mappr
                     for ($i=0;$i<$num_cols;$i++) {
                         if (array_key_exists($i, $cols)) {
                             $cols[$i] = preg_replace('/[\p{Z}\s]/u', ' ', $cols[$i]);
-                            $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', '', $cols[$i]));
+                            $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', "", $cols[$i]));
                             if (preg_match('/[NSEWO]/', $cols[$i]) != 0) {
                                 $coord = preg_split("/[,;]/", $cols[$i]);
                                 $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);

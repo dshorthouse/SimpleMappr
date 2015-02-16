@@ -294,7 +294,7 @@ abstract class Mappr
      */
     public static function clean_coord($coord)
     {
-        return preg_replace('/[^\d.-]/i', '', $coord);
+        return preg_replace('/[^\d.-]/i', "", $coord);
     }
 
     /**
@@ -327,7 +327,7 @@ abstract class Mappr
      */
     public static function make_coordinates($point)
     {
-        $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ''), $point);
+        $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ""), $point);
         if (preg_match('/[NSEWO]/', $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
@@ -355,7 +355,7 @@ abstract class Mappr
         $dec = null;
         $dms = stripslashes($dms);
         $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
-        $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i', '', $dms);
+        $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i', "", $dms);
         $pattern = "/(\\d*\\.?\\d+)(?:[°ºd: ]+)(\\d*\\.?\\d+)*(?:['m′: ])*(\\d*\\.?\\d+)*[\"s″ ]?/i";
         $parts = preg_split($pattern, $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         if (!$parts) {
@@ -501,7 +501,7 @@ abstract class Mappr
      * @param string $default Default value for the parameter.
      * @return string The parameter value or empty string if null.
      */
-    public function load_param($name, $default = '')
+    public function load_param($name, $default = "")
     {
         $grep_key = $this->preg_grep_keys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
         if (!$grep_key || !array_values($grep_key)[0]) {
@@ -1220,11 +1220,11 @@ abstract class Mappr
             for ($j=count($this->coords)-1; $j>=0; $j--) {
 
                 //clear out previous loop's selection
-                $size = '';
-                $shape = '';
-                $color = '';
+                $size = "";
+                $shape = "";
+                $color = "";
 
-                $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : '';
+                $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
                 $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
                 if ($this->is_resize() && $this->_download_factor > 1) {
                     $size = $this->_download_factor*$size;
@@ -1304,8 +1304,8 @@ abstract class Mappr
         if (isset($this->regions) && $this->regions) {  
             for ($j=count($this->regions)-1; $j>=0; $j--) {
                 //clear out previous loop's selection
-                $color = '';
-                $title = ($this->regions[$j]['title']) ? stripslashes($this->regions[$j]['title']) : '';
+                $color = "";
+                $title = ($this->regions[$j]['title']) ? stripslashes($this->regions[$j]['title']) : "";
                 $color = ($this->regions[$j]['color']) ? explode(" ", $this->regions[$j]['color']) : explode(" ", "0 0 0");
                 if (!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
                     $color = array(0,0,0);

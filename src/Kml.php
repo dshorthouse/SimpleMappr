@@ -57,7 +57,7 @@ class Kml
         'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
     );
 
-    private $_kml = '';
+    private $_kml = "";
     private $_metadata = array();
     private $_placemark = array();
 
@@ -73,7 +73,7 @@ class Kml
      * @param array $coords An array of geographic coordinates.
      * @return object $this
      */
-    public function get_request($file_name = '', $coords = array())
+    public function get_request($file_name = "", $coords = array())
     {
         $this->coords         = ($coords) ? $coords : Utilities::load_param('coords', array());
         $this->file_name      = ($file_name) ? $file_name : Utilities::load_param('file_name', time());
@@ -215,7 +215,7 @@ class Kml
     public function add_coordinates()
     {
         for ($j=0; $j<=count($this->coords)-1; $j++) {
-            $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : '';
+            $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : "";
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);  //grab the whole textarea

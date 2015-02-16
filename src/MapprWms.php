@@ -71,7 +71,7 @@ class MapprWms extends Mappr
     {
         $this->params['VERSION']      = $this->load_param('VERSION', '1.1.1');
         $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
-        $this->params['LAYERS']       = $this->load_param('LAYERS', '');
+        $this->params['LAYERS']       = $this->load_param('LAYERS', "");
         $this->params['MAXFEATURES']  = $this->load_param('MAXFEATURES', $this->get_max_features());
         $this->params['FORMAT']       = $this->load_param('FORMAT', 'image/png');
         $this->params['FILTER']       = $this->load_param('FILTER', null);

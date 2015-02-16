@@ -69,7 +69,7 @@ class MapprWfs extends Mappr
     {
         $this->params['VERSION']      = $this->load_param('VERSION', '1.0.0');
         $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
-        $this->params['TYPENAME']     = $this->load_param('TYPENAME', '');
+        $this->params['TYPENAME']     = $this->load_param('TYPENAME', "");
         $this->params['MAXFEATURES']  = $this->load_param('MAXFEATURES', $this->get_max_features());
         $this->params['OUTPUTFORMAT'] = $this->load_param('OUTPUTFORMAT', 'gml2');
         $this->params['FILTER']       = $this->load_param('FILTER', null);

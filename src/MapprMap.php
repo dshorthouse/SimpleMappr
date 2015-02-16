@@ -238,7 +238,7 @@ class MapprMap extends Mappr
     {
         $output = array();
         for ($j=0; $j<=count($this->coords)-1; $j++) {
-            $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : '';
+            $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);

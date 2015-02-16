@@ -166,7 +166,7 @@ class Header
         }
     }
 
-    public static function set_header($mime = '', $filename = '', $filesize = '')
+    public static function set_header($mime = "", $filename = "", $filesize = "")
     {
         header("Pragma: public");
         header("Expires: 0");
@@ -179,7 +179,7 @@ class Header
             header("Content-Length: " . $filesize);
         }
         switch($mime) {
-        case '':
+        case "":
             break;
 
         case 'json':
@@ -303,7 +303,7 @@ class Header
             $cached_js = $this->files_cached(dirname(__DIR__) . self::$_js_cache_path);
 
             if (!$cached_js) {
-                $js_contents = '';
+                $js_contents = "";
                 foreach ($this->local_js_combined as $js_file) {
                     $js_contents .= file_get_contents($js_file) . "\n";
                 }
@@ -351,7 +351,7 @@ class Header
             $cached_css = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
 
             if (!$cached_css) {
-                $css_min = '';
+                $css_min = "";
                 foreach ($this->local_css as $css_file) {
                     $css_min .= \CssMin::minify(file_get_contents($css_file)) . "\n";
                 }

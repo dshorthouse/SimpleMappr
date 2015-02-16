@@ -77,7 +77,7 @@ class Logger
     public function tail($n = 10)
     {
         $buffer_size = 1024;
-        $input = '';
+        $input = "";
         $line_count = 0;
 
         $fp = fopen($this->_filename, 'r');

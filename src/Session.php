@@ -255,9 +255,9 @@ class Session
             $profile = $this->_auth_info['profile'];
 
             $identifier  = $profile['identifier'];
-            $email       = (isset($profile['email'])) ? Utilities::check_plain($profile['email']) : '';
+            $email       = (isset($profile['email'])) ? Utilities::check_plain($profile['email']) : "";
             $username    = (isset($profile['preferredUsername'])) ? Utilities::check_plain($profile['preferredUsername']) : $email;
-            $displayname = (isset($profile['displayName'])) ? Utilities::check_plain($profile['displayName']) : '';
+            $displayname = (isset($profile['displayName'])) ? Utilities::check_plain($profile['displayName']) : "";
 
             $user = array(
                 'identifier'  => $identifier,
