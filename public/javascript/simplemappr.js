@@ -689,6 +689,7 @@ var SimpleMappr = (function($, window, document) {
         this.resetJbbox();
         this.destroyRedo();
         this.showMap();
+        this.trackEvent('options', e.target.name);
       }
     },
 
