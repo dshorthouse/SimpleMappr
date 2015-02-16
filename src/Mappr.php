@@ -95,10 +95,6 @@ abstract class Mappr
     protected $mapfile_string = "
         MAP
 
-            PROJECTION
-                'init=epsg:4326'
-            END
-
             OUTPUTFORMAT
                 NAME png
                 DRIVER AGG/PNG
@@ -531,6 +527,11 @@ abstract class Mappr
         return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
     }
 
+    private function load_projection()
+    {
+        $this->map_obj->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+    }
+
     /**
      * Load-up all the settings for potential shapes
      */
@@ -922,6 +923,7 @@ abstract class Mappr
      */
     public function execute()
     {
+        $this->load_projection();
         $this->load_shapes();
         $this->load_symbols();
         $this->set_web_config();
