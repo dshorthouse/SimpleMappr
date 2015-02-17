@@ -42,7 +42,7 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class Kml
+class KML
 {
     public static $pushpins = array(
         'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
@@ -89,7 +89,7 @@ class Kml
      */
     public function create_output()
     {
-        $clean_filename = Mappr::clean_filename($this->file_name);
+        $clean_filename = AbstractMappr::clean_filename($this->file_name);
 
         $this->set_metadata("name", "SimpleMappr: " . $clean_filename);
 

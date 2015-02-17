@@ -18,7 +18,9 @@
       "source" : "https://github.com/dshorthouse/SimpleMappr"
     },
     "autoload" : {
-      "psr-4" : { "SimpleMappr\\" : "src/" }
+      "psr-4" : {
+        "SimpleMappr\\" : "src/"
+      }
     },
     "require": {
       "natxet/CssMin"           : "dev-master",

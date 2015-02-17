@@ -164,7 +164,7 @@ class Bootstrap
         });
 
         $router->post('/kml', function() {
-            $kml = $this->klass("Kml");
+            $kml = $this->klass("KML");
             return $kml->get_request()->create_output();
         });
 
