@@ -290,7 +290,7 @@ class MapprMap extends Mappr
 
         case 'kml':
             Header::set_header('kml');
-            $kml = new Kml;
+            $kml = new KML;
             $kml->get_request($this->_id, $this->coords)->create_output();
             break;
 

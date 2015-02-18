@@ -1337,7 +1337,7 @@ abstract class Mappr
                                 } else {
                                     $region = addslashes(trim($region));
                                     $qry['stateprovince'][] = "'[name]' ~* '".$region."$'";
-                                    $qry['country'][] = "'[NAME]' ~* '".$region."$' || '[NAME_LONG]' ~* '".$region."$' || '[FORMAL_EN]' ~* '".$region."$'";
+                                    $qry['country'][] = "'[NAME]' ~* '".$region."$' || '[NAME_LONG]' ~* '".$region."$' || '[GEOUNIT]' ~* '".$region."$' || '[FORMAL_EN]' ~* '".$region."$'";
                                 }
                             }
                         }

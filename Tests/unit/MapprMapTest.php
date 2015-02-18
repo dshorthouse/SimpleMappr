@@ -104,7 +104,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT."/public/tmp/map_kml.kml";
         file_put_contents($file, $output);
         ob_end_clean();
-        session_destroy(); //req'd because Kml class sets a cookie
+        session_destroy(); //req'd because KML class sets a cookie
         $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_kml.kml'));
     }
 

@@ -89,7 +89,7 @@ class KML
      */
     public function create_output()
     {
-        $clean_filename = AbstractMappr::clean_filename($this->file_name);
+        $clean_filename = Mappr::clean_filename($this->file_name);
 
         $this->set_metadata("name", "SimpleMappr: " . $clean_filename);
 

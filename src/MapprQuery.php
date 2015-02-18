@@ -114,7 +114,7 @@ class MapprQuery extends Mappr
                         }
                     } else {
                         //DigitalEarth ne_10m_admin_0_map_units is inconsistent
-                        $this->data[] = (isset($shape->values['admin'])) ? $shape->values['admin'] : $shape->values['ADMIN'];
+                        $this->data[] = (isset($shape->values['geounit'])) ? $shape->values['geounit'] : $shape->values['GEOUNIT'];
                     }
                 }
                 if ($this->queryLayer == 'stateprovinces_polygon') {
