@@ -302,6 +302,11 @@ msgstr "relief (gris)"
 msgid "biodiv. hotspots"
 msgstr "hotspot de biodiv."
 
+#: .index.php:134
+#: .tabs/help.php:86
+msgid "ecoregions"
+msgstr "écorégions"
+
 #: .index.php:136
 #: .tabs/help.php:90
 msgid "Labels"
