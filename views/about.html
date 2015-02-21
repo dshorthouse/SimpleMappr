@@ -21,6 +21,7 @@
 <div id="recent-updates">
 <div class="header"><h2>{% trans "Recent Updates" %}</h2></div>
 <dl>
+<dt class="update">{% trans "February 20, 2015" %}</dt><dd>{% trans "Improvements: Added terrestrial ecoregions layer. Requested by François Génier." %}</dd>
 <dt class="update">{% trans "February 12, 2015" %}</dt><dd>{% trans "Improvements: Added inverse triangle as a marker shape. Requested by Michael Schwartz." %}</dd>
 <dt class="update">{% trans "January 23, 2015" %}</dt><dd>{% trans "Bug fixes: Invalid DDMMSS coordinates were silently converted to DD." %}</dd>
 <dt class="update">{% trans "December 17, 2014" %}</dt><dd>{% trans "Improvements: Added a Countries layer to toggle international borders. Requested by Yossef Rapoport." %}</dd>
@@ -35,7 +36,6 @@
 <dt class="update">{% trans "May 19, 2013" %}</dt><dd>{% trans "Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option." %}</dd>
 <dt class="update">{% trans "May 9, 2013" %}</dt><dd>{% trans "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler." %}</dd>
 <dt class="update">{% trans "April 12, 2013" %}</dt><dd>{% trans "Improvements: Added the ability to specify the longitude of natural origin in Lambert projections. Requested by Tim Dickinson." %}</dd>
-<dt class="update">{% trans "February 27, 2013" %}</dt><dd>{% trans "Bug fixes: Relief layers had artifacts under polar projections. Reported by Derek Sikes." %}</dd>
 </dl>
 </div>
 {% if environment == "production" %}
@@ -71,7 +71,8 @@ taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297
 {% set urls_naturalearth = '<a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a>' %}
 {% set urls_mapserver = '<a href="http://mapserver.org" target="_blank">http://mapserver.org</a>' %}
 {% set urls_conservation = '<a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx" target="_blank">Conservation International</a>' %}
-<p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }}.{% endtrans %}</p>
+{% set urls_wwf = '<a href="">World Wildlife Fund</a>' %}
+<p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }} and terrestrial ecoregions from the {{ urls_wwf }}.{% endtrans %}</p>
 </div>
 {% if environment == "production" %}
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

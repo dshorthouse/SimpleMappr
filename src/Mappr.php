@@ -579,6 +579,13 @@ abstract class Mappr
             'sort'  => 3
         );
 
+        //ecoregions
+        $this->shapes['ecoregions'] = array(
+            'shape' => $this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos",
+            'type'  => MS_LAYER_POLYGON,
+            'sort'  => 3
+        );
+
         //base map
         $this->shapes['base'] = array(
             'shape' => $this->shape_path . "/10m_physical/ne_10m_land",
@@ -666,6 +673,13 @@ abstract class Mappr
         //hotspotLabels
         $this->shapes['hotspotLabels'] = array(
             'shape' => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
+            'type'  => MS_LAYER_POLYGON,
+            'sort'  => 14
+        );
+
+        //ecoregions
+        $this->shapes['ecoregionLabels'] = array(
+            'shape' => $this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos",
             'type'  => MS_LAYER_POLYGON,
             'sort'  => 14
         );
@@ -1449,6 +1463,14 @@ abstract class Mappr
                     $this->_legend_required = true;
                     break;
 
+                case 'ecoregions':
+                    $layer->set("opacity", 75);
+                    $layer->set("classitem", "ECO_SYM");
+                    $this->set_ecoregion_classes($layer);
+                    $this->_legend_required = true;
+                    break;
+
+
                 case 'rivernames':
                 case 'lakenames':
                     $layer->set("tolerance", 1);
@@ -1599,6 +1621,26 @@ abstract class Mappr
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "NAME");
+
+                    $label = new \labelObj();
+                    $label->set("font", "arial");
+                    $label->set("type", MS_TRUETYPE);
+                    $label->set("encoding", "UTF8");
+                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
+                    $label->set("position", MS_UR);
+                    $label->set("offsetx", 3);
+                    $label->set("offsety", 3);
+                    $label->set("partials", MS_FALSE);
+                    $label->color->setRGB(10, 10, 10);
+
+                    $class = ms_newClassObj($layer);
+                    $class->addLabel($label);
+                    break;
+
+                case 'ecoregionLabels':
+                    $layer->set("tolerance", 5);
+                    $layer->set("toleranceunits", "pixels");
+                    $layer->set("labelitem", "ECO_NAME");
 
                     $label = new \labelObj();
                     $label->set("font", "arial");
@@ -1908,6 +1950,49 @@ abstract class Mappr
         $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
         $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
         return $newPoint;
+    }
+
+    /**
+     * Convert hex colour (eg for css) to RGB
+     *
+     * @param hex string
+     * @return array of RGB
+     */
+    private function hex2rgb($hex)
+    {
+        $hex = str_replace("#", "", $hex);
+
+        if(strlen($hex) == 3) {
+            $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+            $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+            $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+        } else {
+            $r = hexdec(substr($hex,0,2));
+            $g = hexdec(substr($hex,2,2));
+            $b = hexdec(substr($hex,4,2));
+        }
+        return array($r, $g, $b);
+    }
+
+    /**
+     * Build ecoregion layer classes from SLD file
+     *
+     * @param obj $layer
+     * @return void
+     */
+    private function set_ecoregion_classes($layer)
+    {
+        $xml = simplexml_load_file($this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos.sld");
+        $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
+        $xml->registerXPathNamespace('ogc', 'http://www.opengis.net/ogc');
+        foreach($xml->xpath('//sld:Rule') as $rule) {
+            $class = ms_newClassObj($layer);
+            $class->setExpression("([ECO_SYM] = ".$rule->xpath('.//sld:Name')[0].")");
+            $style = ms_newStyleObj($class);
+            $color = $this->hex2rgb($rule->xpath('.//sld:CssParameter')[0]);
+            $style->color->setRGB($color[0], $color[1], $color[2]);
+            $style->outlinecolor->setRGB(30, 30, 30);
+        }
     }
 
 }

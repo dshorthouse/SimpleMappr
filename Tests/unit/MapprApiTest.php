@@ -175,4 +175,22 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_places.png'));
     }
 
+    /**
+     * Test API response to ensure that ecoregions get shaded.
+     */
+    public function test_apioutput_ecoregions()
+    {
+        $_REQUEST = array(
+            'layers' => 'ecoregions'
+        );
+        $this->mappr_api->get_request()->execute();
+        ob_start();
+        echo $this->mappr_api->create_output();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
+    }
+
 }

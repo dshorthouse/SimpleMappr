@@ -54,9 +54,6 @@ class MapprPptx extends Mappr
 
     public function create_output()
     {
-        require_once ROOT . "/vendor/phpoffice/phppowerpoint/src/PhpPowerpoint/Autoloader.php";
-
-        Autoloader::register();
         $objPHPPowerPoint = new PhpPowerpoint();
 
         $clean_filename = parent::clean_filename($this->file_name);

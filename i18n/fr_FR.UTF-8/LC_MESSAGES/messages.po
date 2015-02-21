@@ -672,8 +672,8 @@ msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github"
 
 #: .tabs/about.php:40
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation%."
-msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %urls_naturalearth% et le logiciel de cartographie utilisé est MapServer, %urls_mapserver% via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation%."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and ecoregions from the %urls_wwf%."
+msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %urls_naturalearth% et le logiciel de cartographie utilisé est MapServer, %urls_mapserver% via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_conservation%."
 
 #: .tabs/about.php:7
 msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
@@ -694,6 +694,10 @@ msgstr "Mises à jour"
 #: .tabs/about.php:11
 msgid "Live Updates"
 msgstr "Mises à jour direct"
+
+#: .tabs/about.php:11
+msgid "February 20, 2015"
+msgstr "20 février, 2015"
 
 #: .tabs/about.php:11
 msgid "February 12, 2015"
@@ -738,6 +742,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added terrestrial ecoregions layer. Requested by François Génier."
+msgstr "Améliorations: Ajouté une couche pour des écorégions terrestres. Demandé par François Génier."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added inverse triangle as a marker shape. Requested by Michael Schwartz."

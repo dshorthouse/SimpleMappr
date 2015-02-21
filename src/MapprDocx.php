@@ -50,7 +50,6 @@ class MapprDocx extends Mappr
 {
     public function create_output()
     {
-        Autoloader::register();
         $objPHPWord = new PhpWord();
 
         $clean_filename = parent::clean_filename($this->file_name);
