@@ -673,7 +673,7 @@ msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github"
 #: .tabs/about.php:40
 #, php-format
 msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and ecoregions from the %urls_wwf%."
-msgstr "ArcView shapefiles ont été obtenus à Natural Earth, %urls_naturalearth% et le logiciel de cartographie utilisé est MapServer, %urls_mapserver% via PHP MapScript. Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_conservation%."
+msgstr "Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_wwf%."
 
 #: .tabs/about.php:7
 msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
