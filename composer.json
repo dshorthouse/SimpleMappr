@@ -24,6 +24,7 @@
     },
     "require": {
       "natxet/CssMin"           : "dev-master",
+      "neitanod/forceutf8"      : "dev-master",
       "phpoffice/phppowerpoint" : "dev-master",
       "phpoffice/phpword"       : "dev-master",
       "phayes/geophp"           : "dev-master",

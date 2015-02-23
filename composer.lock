@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f4fb65235f0c4b0345f660d0b342e2a4",
+    "hash": "c190777553c10f79815243011b08ac4b",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -52,6 +52,40 @@
                 "minify"
             ],
             "time": "2015-01-21 10:40:33"
+        },
+        {
+            "name": "neitanod/forceutf8",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neitanod/forceutf8.git",
+                "reference": "0fb6983af43fae715eff1bb0f3653fbabd984f15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neitanod/forceutf8/zipball/0fb6983af43fae715eff1bb0f3653fbabd984f15",
+                "reference": "0fb6983af43fae715eff1bb0f3653fbabd984f15",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ForceUTF8\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Sebastián Grignoli",
+                    "email": "grignoli@gmail.com"
+                }
+            ],
+            "description": "PHP Class Encoding featuring popular Encoding::toUTF8() function --formerly known as forceUTF8()-- that fixes mixed encoded strings.",
+            "homepage": "https://github.com/neitanod/forceutf8",
+            "time": "2015-02-10 21:22:33"
         },
         {
             "name": "phayes/geophp",
@@ -300,16 +334,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.4.2.1",
+            "version": "v0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "1bc1396392d4073b8b29ee5289e445889cbc12b5"
+                "reference": "0d1f9cb9939f65f506a8a3f5fee356764c310fd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/1bc1396392d4073b8b29ee5289e445889cbc12b5",
-                "reference": "1bc1396392d4073b8b29ee5289e445889cbc12b5",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/0d1f9cb9939f65f506a8a3f5fee356764c310fd4",
+                "reference": "0d1f9cb9939f65f506a8a3f5fee356764c310fd4",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +392,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2015-02-08 03:41:44"
+            "time": "2015-02-23 16:38:12"
         },
         {
             "name": "symfony/config",
@@ -1286,6 +1320,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "natxet/cssmin": 20,
+        "neitanod/forceutf8": 20,
         "phpoffice/phppowerpoint": 20,
         "phpoffice/phpword": 20,
         "phayes/geophp": 20,

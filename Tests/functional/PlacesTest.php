@@ -43,7 +43,7 @@ class PlacesTest extends SimpleMapprTest
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
 
-        $this->assertEquals('text/html; charset=utf-8', $type);
+        $this->assertEquals('text/html; charset=UTF-8', $type);
         $this->assertEquals('<table class="countrycodes">
 <thead>
 <tr>
@@ -81,7 +81,7 @@ class PlacesTest extends SimpleMapprTest
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
 
-        $this->assertEquals('application/json', $type);
+        $this->assertEquals('application/json; charset=UTF-8', $type);
         $this->assertEquals("Canada", $result[0]->value);
     }
 

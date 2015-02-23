@@ -36,6 +36,8 @@
  */
 namespace SimpleMappr;
 
+use \ForceUTF8\Encoding;
+
 /**
  * Main Mappr class for SimpleMappr
  *
@@ -508,6 +510,7 @@ abstract class Mappr
             return $default;
         }
         $value = array_values($grep_key)[0];
+        $value = Encoding::fixUTF8($value);
         if (get_magic_quotes_gpc() != 1) {
             $value = self::add_slashes_extended($value);
         }
@@ -1520,7 +1523,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
                     $label->set("position", MS_CC);
                     $label->set("offsetx", 3);
@@ -1540,7 +1543,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
                     $label->set("position", MS_CC);
                     $label->set("offsetx", 3);
@@ -1560,7 +1563,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
                     $label->set("position", MS_UR);
                     $label->set("offsetx", 3);
@@ -1585,7 +1588,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
                     $label->set("position", MS_UR);
                     $label->set("offsetx", 3);
@@ -1605,7 +1608,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
                     $label->set("position", MS_UR);
                     $label->set("offsetx", 3);
@@ -1625,7 +1628,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
                     $label->set("position", MS_UR);
                     $label->set("offsetx", 3);
@@ -1645,7 +1648,7 @@ abstract class Mappr
                     $label = new \labelObj();
                     $label->set("font", "arial");
                     $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF8");
+                    $label->set("encoding", "UTF-8");
                     $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
                     $label->set("position", MS_UR);
                     $label->set("offsetx", 3);
@@ -1682,6 +1685,7 @@ abstract class Mappr
             $label = new \labelObj();
             $label->set("font", "arial");
             $label->set("type", MS_TRUETYPE);
+            $label->set("encoding", "UTF-8");
             $label->set("size", 8);
             $label->set("position", MS_XY);
             $label->color->setRGB(10, 10, 10);
@@ -1717,6 +1721,7 @@ abstract class Mappr
                 $label = new \labelObj();
                 $label->set("font", "arial");
                 $label->set("type", MS_TRUETYPE);
+                $label->set("encoding", "UTF-8");
                 $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
                 $label->set("position", MS_CC);
                 $label->color->setRGB(30, 30, 30);
@@ -1781,6 +1786,7 @@ abstract class Mappr
             $this->map_obj->legend->set("postlabelcache", 1);
             $this->map_obj->legend->label->set("font", "arial");
             $this->map_obj->legend->label->set("type", MS_TRUETYPE);
+            $this->map_obj->legend->label->set("encoding", "UTF-8");
             $this->map_obj->legend->label->set("position", 1);
             $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
             $this->map_obj->legend->label->color->setRGB(0, 0, 0);
@@ -1824,9 +1830,9 @@ abstract class Mappr
         $this->map_obj->scalebar->color->setRGB(30, 30, 30);
         $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
         $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-        $this->map_obj->scalebar->label->set("encoding", "UTF-8");
         $this->map_obj->scalebar->label->set("font", "arial");
         $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
+        $this->map_obj->scalebar->label->set("encoding", "UTF-8");
         $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 

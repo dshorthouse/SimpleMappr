@@ -183,19 +183,19 @@ class Header
             break;
 
         case 'json':
-            header("Content-Type: application/json");
+            header("Content-Type: application/json; charset=UTF-8");
             break;
 
         case 'html':
-            header("Content-Type: text/html; charset=utf-8");
+            header("Content-Type: text/html; charset=UTF-8");
             break;
 
         case 'xml':
-            header('Content-type: application/xml');
+            header('Content-type: application/xml; charset=UTF-8');
             break;
 
         case 'kml':
-            header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=utf8");
+            header("Content-Type: application/vnd.google-earth.kml+xml kml; charset=UTF-8");
             break;
 
         case 'pptx':

@@ -47,7 +47,7 @@ class CitationTest extends SimpleMapprTest
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
 
-        $this->assertEquals('application/json', $type);
+        $this->assertEquals('application/json; charset=UTF-8', $type);
         $this->assertCount(1, $result->citations);
     }
 
