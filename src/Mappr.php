@@ -1479,20 +1479,8 @@ abstract class Mappr
                     $layer->set("tolerance", 1);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "CP1252");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label(8, "CP1252"));
                     break;
 
                 case 'base':
@@ -1519,60 +1507,24 @@ abstract class Mappr
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 12);
-                    $label->set("position", MS_CC);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label(12, "CP1252"));
                     break;
 
                 case 'stateprovnames':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
-                    $label->set("position", MS_CC);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label(10));
                     break;
 
                 case 'placenames':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label(8, "CP1252"));
 
                     $style = ms_newStyleObj($class);
                     $style->set("symbolname", "circle");
@@ -1584,86 +1536,59 @@ abstract class Mappr
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label());
                     break;
 
                 case 'marineLabels':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label(8, "CP1252"));
                     break;
 
                 case 'hotspotLabels':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "NAME");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label());
                     break;
 
                 case 'ecoregionLabels':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "ECO_NAME");
-
-                    $label = new \labelObj();
-                    $label->set("font", "arial");
-                    $label->set("type", MS_TRUETYPE);
-                    $label->set("encoding", "UTF-8");
-                    $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 8);
-                    $label->set("position", MS_UR);
-                    $label->set("offsetx", 3);
-                    $label->set("offsety", 3);
-                    $label->set("partials", MS_FALSE);
-                    $label->color->setRGB(10, 10, 10);
-
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($label);
+                    $class->addLabel($this->create_label());
                     break;
 
                 default:
                 }
             }
         }
+    }
+
+    /**
+     * Make label for layers
+     *
+     * @param int $size
+     * @return labelObj
+     */
+    private function create_label($size = 8, $encoding = "UTF-8")
+    {
+        $label = new \labelObj();
+        $label->set("font", "arial");
+        $label->set("type", MS_TRUETYPE);
+        $label->set("encoding", $encoding);
+        $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : $size);
+        $label->set("position", MS_UR);
+        $label->set("offsetx", 3);
+        $label->set("offsety", 3);
+        $label->set("partials", MS_FALSE);
+        $label->color->setRGB(10, 10, 10);
+        return $label;
     }
 
     /**
