@@ -42,7 +42,7 @@ namespace SimpleMappr;
  * @package SimpleMappr
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  */
-class KML
+class Kml
 {
     public static $pushpins = array(
         'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
