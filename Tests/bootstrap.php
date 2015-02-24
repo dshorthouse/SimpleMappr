@@ -52,10 +52,10 @@ function requireFiles()
 {
     $root = dirname(__DIR__);
 
-    require $root . '/config/conf.php';
-    require $root . '/vendor/autoload.php';
-    require $root . '/Tests/SimpleMapprTest.php';
-    require $root . '/Tests/SimpleMapprMixin.php';
+    require_once $root . '/config/conf.php';
+    require_once $root . '/vendor/autoload.php';
+    require_once $root . '/Tests/SimpleMapprTest.php';
+    require_once $root . '/Tests/SimpleMapprMixin.php';
 }
 
 function flushCaches()

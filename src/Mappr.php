@@ -1508,7 +1508,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(12));
+                    $class->addLabel($this->create_label(12, MS_CC));
                     break;
 
                 case 'stateprovnames':
@@ -1516,7 +1516,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(10, "UTF-8"));
+                    $class->addLabel($this->create_label(10, MS_CC, "UTF-8"));
                     break;
 
                 case 'placenames':
@@ -1576,14 +1576,14 @@ abstract class Mappr
      * @param int $size
      * @return labelObj
      */
-    private function create_label($size = 8, $encoding = "CP1252")
+    private function create_label($size = 8, $position = MS_UR, $encoding = "CP1252")
     {
         $label = new \labelObj();
         $label->set("font", "arial");
         $label->set("type", MS_TRUETYPE);
         $label->set("encoding", $encoding);
         $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : $size);
-        $label->set("position", MS_UR);
+        $label->set("position", $position);
         $label->set("offsetx", 3);
         $label->set("offsety", 3);
         $label->set("partials", MS_FALSE);
