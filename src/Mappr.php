@@ -1480,7 +1480,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8, "CP1252"));
+                    $class->addLabel($this->create_label(8));
                     break;
 
                 case 'base':
@@ -1508,7 +1508,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(12, "CP1252"));
+                    $class->addLabel($this->create_label(12));
                     break;
 
                 case 'stateprovnames':
@@ -1516,7 +1516,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(10));
+                    $class->addLabel($this->create_label(10, "UTF-8"));
                     break;
 
                 case 'placenames':
@@ -1524,7 +1524,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8, "CP1252"));
+                    $class->addLabel($this->create_label(8));
 
                     $style = ms_newStyleObj($class);
                     $style->set("symbolname", "circle");
@@ -1537,7 +1537,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label());
+                    $class->addLabel($this->create_label(8));
                     break;
 
                 case 'marineLabels':
@@ -1545,7 +1545,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8, "CP1252"));
+                    $class->addLabel($this->create_label(8));
                     break;
 
                 case 'hotspotLabels':
@@ -1553,7 +1553,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "NAME");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label());
+                    $class->addLabel($this->create_label(8, "UTF-8"));
                     break;
 
                 case 'ecoregionLabels':
@@ -1561,7 +1561,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "ECO_NAME");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label());
+                    $class->addLabel($this->create_label(8, "UTF-8"));
                     break;
 
                 default:
@@ -1576,7 +1576,7 @@ abstract class Mappr
      * @param int $size
      * @return labelObj
      */
-    private function create_label($size = 8, $encoding = "UTF-8")
+    private function create_label($size = 8, $encoding = "CP1252")
     {
         $label = new \labelObj();
         $label->set("font", "arial");
