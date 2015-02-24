@@ -36,6 +36,8 @@
  */
 namespace SimpleMappr;
 
+use \ForceUTF8\Encoding;
+
 /**
  * Query handler for SimpleMappr
  *
@@ -44,7 +46,7 @@ namespace SimpleMappr;
  */
 class MapprQuery extends Mappr
 {
-    public $data = "";
+    public $data = array();
 
     public function get_request()
     {
@@ -114,7 +116,7 @@ class MapprQuery extends Mappr
                         }
                     } else {
                         //DigitalEarth ne_10m_admin_0_map_units is inconsistent
-                        $this->data[] = (isset($shape->values['geounit'])) ? $shape->values['geounit'] : $shape->values['GEOUNIT'];
+                        $this->data[] = (isset($shape->values['geounit'])) ? Encoding::fixUTF8($shape->values['geounit']) : Encoding::fixUTF8($shape->values['GEOUNIT']);
                     }
                 }
                 if ($this->queryLayer == 'stateprovinces_polygon') {
