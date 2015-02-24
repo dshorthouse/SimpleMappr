@@ -56,7 +56,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT."/public/tmp/map_png.png";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/map_png.png'));
     }
 
     /**
@@ -123,7 +123,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png_legend.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
 
     /**
@@ -141,6 +141,6 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/map_png.png'));
     }
 }

@@ -413,6 +413,22 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Check if two images are similar.
+     *
+     * @param string $fn1 First file directory.
+     * @param string $fn2 Second file directory.
+     * @return bool
+     */
+    public static function images_similar($fn1, $fn2)
+    {
+        $image = new \imagick($fn1);
+        $image2 = new \imagick($fn2);
+
+        $similar = ($image->compareImages($image2, \Imagick::METRIC_MEANSQUAREERROR)[1] < 0.002) ? true : false;
+        return $similar;
+    }
+
+    /**
      * Parent setUp function executed before each test.
      */
     public function setUp()

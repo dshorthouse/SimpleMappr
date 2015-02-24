@@ -6,8 +6,10 @@ EXTRA_PACKETS="
 apache2 \
 build-essential \
 libapache2-mod-fastcgi \
+imagemagick \
 php5-dev \
 php5-gd \
+php5-imagick \
 php5-mysql \
 php5-curl \
 locales \

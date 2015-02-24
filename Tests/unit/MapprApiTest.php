@@ -76,7 +76,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_get.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
 
     /**
@@ -97,7 +97,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_get_params.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_get_params.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_get_params.png'));
     }
 
     /**
@@ -115,7 +115,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_no_coords.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
     }
 
     /**
@@ -133,7 +133,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_coords.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_coords.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_coords.png'));
     }
 
     /**
@@ -152,7 +152,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT."/public/tmp/apioutput_encoding.png";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_encoding.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
     }
 
     /**
@@ -172,7 +172,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_places.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_places.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_places.png'));
     }
 
     /**
@@ -190,7 +190,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
+        $this->assertTrue(SimpleMapprTest::images_similar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
     }
 
 }
