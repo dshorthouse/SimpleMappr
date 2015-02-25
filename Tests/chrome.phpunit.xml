@@ -14,6 +14,9 @@
     <testsuite name="SimpleMappr Functional Test Suite">
       <directory>./functional</directory>
     </testsuite>
+    <testsuite name="SimpleMappr Binary Test Suite">
+      <directory>./binary</directory>
+    </testsuite>
   </testsuites>
   <filter>
     <whitelist>
