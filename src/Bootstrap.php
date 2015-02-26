@@ -104,6 +104,7 @@ class Bootstrap
         });
 
         $router->get('/apilog', function() {
+            Header::set_header('html');
             return $this->tail_log();
         }, array('before' => 'check_permission'));
 
@@ -123,12 +124,12 @@ class Bootstrap
             $router->get('/citation.json', function() {
                 Header::set_header("json");
                 $klass = $this->klass("Citation");
-                return json_encode($klass->index());
+                return json_encode($klass->index(null));
             })
             ->post('/citation', function() {
                 Header::set_header("json");
                 $klass = $this->klass("Citation");
-                return json_encode($klass->create());
+                return json_encode($klass->create((object)$_POST['citation']));
             })
             ->delete('/citation/{id:i}', function($id) {
                 Header::set_header("json");
@@ -186,14 +187,14 @@ class Bootstrap
             Header::set_header("html");
             Session::select_locale();
             $config = array(
-                'rows' => $this->klass("Places")->index()->results
+                'rows' => $this->klass("Places")->index((object)$_GET)->results
             );
             return $this->twig()->render("fragments/fragment.places.html", $config);
         });
 
         $router->get('/places.json', function() {
             Header::set_header("json");
-            return json_encode($this->klass("Places")->index()->results);
+            return json_encode($this->klass("Places")->index((object)$_GET)->results);
         });
 
         $router->post('/pptx', function() {
@@ -216,7 +217,7 @@ class Bootstrap
             $router->get('/share', function() {
                 Header::set_header('html');
                 Session::select_locale();
-                $results = $this->klass("Share")->index();
+                $results = $this->klass("Share")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
                     'sort' => $results->sort,
@@ -226,7 +227,7 @@ class Bootstrap
             })
             ->post('/share', function() {
                 Header::set_header('json');
-                return json_encode($this->klass("Share")->create());
+                return json_encode($this->klass("Share")->create((object)$_POST));
             })
             ->delete('/share/{id:i}', function($id) {
                 Header::set_header('json');
@@ -238,7 +239,7 @@ class Bootstrap
             $router->get('/user', function() {
                 Header::set_header('html');
                 Session::select_locale();
-                $results = $this->klass("User")->index();
+                $results = $this->klass("User")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
                     'sort' => $results->sort,
@@ -256,7 +257,7 @@ class Bootstrap
             $router->get('/usermap', function() {
                 Header::set_header('html');
                 Session::select_locale();
-                $results = $this->klass("Usermap")->index();
+                $results = $this->klass("Usermap")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
                     'total' => $results->total,
@@ -274,7 +275,7 @@ class Bootstrap
             })
             ->post('/usermap', function() {
                 Header::set_header('json');
-                return json_encode($this->klass("Usermap")->create());
+                return json_encode($this->klass("Usermap")->create($_POST));
             })
             ->delete('/usermap/{id:i}', function($id) {
                 Header::set_header('json');

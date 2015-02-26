@@ -44,9 +44,9 @@ namespace SimpleMappr;
  */
 interface RestMethods
 {
-    public function index();
+    public function index($params);
     public function show($id);
-    public function create();
+    public function create($params);
     public function update($id);
     public function destroy($id);
 }

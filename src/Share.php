@@ -62,21 +62,21 @@ class Share implements RestMethods
     /**
      * Implemented index method
      */
-    public function index()
+    public function index($params)
     {
-        $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-        $this->sort = (isset($_GET['sort'])) ? $_GET['sort'] : "";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
+        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
 
         $order = "m.created {$this->dir}";
-        if (isset($_GET['sort'])) {
-            if ($_GET['sort'] == "created") {
-                $order = "s.".$_GET['sort'] . " {$this->dir}";
+        if (!empty($this->sort)) {
+            if ($this->sort == "created") {
+                $order = "s.".$this->sort . " {$this->dir}";
             }
-            if ($_GET['sort'] == "username") {
-                $order = "u.".$_GET['sort'] . " {$this->dir}";
+            if ($this->sort == "username") {
+                $order = "u.".$this->sort . " {$this->dir}";
             }
-            if ($_GET['sort'] == "title") {
-                $order = "m.".$_GET['sort'] . " {$this->dir}";
+            if ($this->sort == "title") {
+                $order = "m.".$this->sort . " {$this->dir}";
             }
         }
 
@@ -109,10 +109,17 @@ class Share implements RestMethods
     /**
      * Implemented create method
      */
-    public function create()
+    public function create($params)
     {
+        $mid = (property_exists($params, 'mid')) ? $params->mid : null;
+
+        if (empty($mid)) {
+            return array("status" => "error");
+            exit();
+        }
+
         $data = array(
-            'mid' => $_POST["mid"],
+            'mid' => $mid,
             'created' => time(),
         );
         $this->_db->query_insert('shares', $data);

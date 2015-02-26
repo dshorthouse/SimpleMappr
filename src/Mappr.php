@@ -371,7 +371,7 @@ abstract class Mappr
             unset($parts[2]);
         }
         $s = isset($parts[2]) ? (float)$parts[2] : 0;
-        if($m >= 0 && $m < 60 && $s >= 0 && $s < 60) {
+        if ($m >= 0 && $m < 60 && $s >= 0 && $s < 60) {
             $dec = ($d + ($m/60) + ($s/3600))*$neg;
         }
         return $dec;
@@ -1893,7 +1893,7 @@ abstract class Mappr
     {
         $hex = str_replace("#", "", $hex);
 
-        if(strlen($hex) == 3) {
+        if (strlen($hex) == 3) {
             $r = hexdec(substr($hex,0,1).substr($hex,0,1));
             $g = hexdec(substr($hex,1,1).substr($hex,1,1));
             $b = hexdec(substr($hex,2,1).substr($hex,2,1));

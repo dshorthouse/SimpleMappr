@@ -58,13 +58,13 @@ class Places implements RestMethods
     /**
      * Implemented index method.
      */
-    public function index()
+    public function index($params)
     {
-        if (isset($_REQUEST['filter']) && $_REQUEST['filter'] != "") {
+        if (property_exists($params, 'filter') && $params->filter != "") {
             $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
-            $this->_db->bind_param(':filter', '%'.$_REQUEST['filter'].'%', 'string');
-        } else if (isset($_REQUEST['term']) || $this->id) {
-            $term = (isset($_REQUEST['term'])) ? $_REQUEST['term'] : $this->id;
+            $this->_db->bind_param(':filter', '%'.$params->filter.'%', 'string');
+        } else if (property_exists($params, 'term') || $this->id) {
+            $term = (property_exists($params, 'term')) ? $params->term : $this->id;
             $this->_db->prepare(
                 "SELECT DISTINCT
                     sp.country as label, sp.country as value
@@ -87,7 +87,7 @@ class Places implements RestMethods
     /**
      * Implemented show method.
      *
-     * @param int $id Identifier for places.
+     * @param int $id identifier for places.
      * @return void
      */
     public function show($id)
@@ -99,9 +99,8 @@ class Places implements RestMethods
     /**
      * Implemented create method.
      */
-    public function create()
+    public function create($params)
     {
-        $this->index();
     }
 
     /**
@@ -114,7 +113,7 @@ class Places implements RestMethods
     /**
      * Implemented destroy method.
      *
-     * @param int $id Identifier for the place.
+     * @param int $id identifier for the place.
      * @return void
      */
     public function destroy($id)

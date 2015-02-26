@@ -56,7 +56,7 @@ class Citation implements RestMethods
      * Implemented index method
      * @return response array
      */
-    public function index()
+    public function index($params)
     {
         $sql = "
             SELECT 
@@ -86,13 +86,13 @@ class Citation implements RestMethods
      *
      * @return response array
      */
-    public function create()
+    public function create($params)
     {
-        $year = isset($_POST['citation']['year']) ? (int)$_POST['citation']['year'] : null;
-        $reference = isset($_POST['citation']['reference']) ? $_POST['citation']['reference'] : null;
-        $author = isset($_POST['citation']['first_author_surname']) ? $_POST['citation']['first_author_surname'] : null;
-        $doi = isset($_POST['citation']['doi']) ? $_POST['citation']['doi'] : null;
-        $link = isset($_POST['citation']['link']) ? $_POST['citation']['link'] : null;
+        $year = property_exists($params, 'year') ? (int)$params->year : null;
+        $reference = property_exists($params, 'reference') ? $params->reference : null;
+        $author = property_exists($params, 'first_author_surname') ? $params->first_author_surname : null;
+        $doi = property_exists($params, 'doi') ? $params->doi : null;
+        $link = property_exists($params, 'link') ? $params->link : null;
 
         if (empty($year) || empty($reference) || empty($author)) {
             $this->response('error');

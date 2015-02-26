@@ -50,6 +50,7 @@ class Usermap implements RestMethods
     public $results;
     public $dir;
     public $sort;
+    public $search;
     public $row_count;
 
     private $_uid;
@@ -63,17 +64,18 @@ class Usermap implements RestMethods
     {
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-        $this->filter_uid = isset($_REQUEST['uid']) ? (int)$_REQUEST['uid'] : null;
         $this->_db = new Database();
     }
 
     /**
      * Implemented index method
      */
-    public function index()
+    public function index($params)
     {
-        $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
-        $this->sort = (isset($_GET['sort'])) ? $_GET['sort'] : "";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
+        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
+        $this->search = (property_exists($params, 'search')) ? $params->search : "";
+        $this->filter_uid = (property_exists($params, 'uid')) ? (int)$params->uid : null;
 
         $sql = "SELECT
                     u.username, COUNT(m.mid) AS total
@@ -106,7 +108,7 @@ class Usermap implements RestMethods
         $order = "m.created {$this->dir}";
 
         $b = "";
-        if (isset($_GET['search'])) {
+        if (!empty($this->search)) {
             if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
                 $b = " WHERE ";
             }
@@ -115,9 +117,9 @@ class Usermap implements RestMethods
                 $where['where'] .= " OR LOWER(u.username) LIKE :search";
             }
         }
-        if (isset($_GET['sort'])) {
-            if ($_GET['sort'] == "created" || $_GET['sort'] == "updated") {
-                $order = "m.".$_GET['sort'] . " {$this->dir}";
+        if (!empty($this->sort)) {
+            if ($this->sort == "created" || $this->sort == "updated") {
+                $order = "m.".$this->sort . " {$this->dir}";
             }
         }
 
@@ -146,8 +148,8 @@ class Usermap implements RestMethods
                 $this->_db->bind_param(":uid_q", $this->filter_uid, 'integer');
             }
         }
-        if (isset($_GET['search'])) {
-            $this->_db->bind_param(":search", "%{$_GET['search']}%", 'string');
+        if (!empty($this->search)) {
+            $this->_db->bind_param(":search", "%{$this->search}%", 'string');
         }
         $this->results = $this->_db->fetch_all_object();
         $this->row_count = $this->_db->row_count();
@@ -185,12 +187,12 @@ class Usermap implements RestMethods
     /**
      * Implemented create method
      */
-    public function create()
+    public function create($params)
     {
         $data = array(
             'uid' => $this->_uid,
-            'title' => $_POST['save']['title'],
-            'map' => json_encode($_POST),
+            'title' => $params['save']['title'],
+            'map' => json_encode($params),
             'created' => time(),
             'updated' => time()
         );

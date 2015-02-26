@@ -65,10 +65,10 @@ class User implements RestMethods
             header('Location: /');
             return false;
         }
-        elseif($role == 'user' && (self::$roles[$_SESSION['simplemappr']['role']] == 'user' || self::$roles[$_SESSION['simplemappr']['role']] == 'administrator')) {
+        elseif ($role == 'user' && (self::$roles[$_SESSION['simplemappr']['role']] == 'user' || self::$roles[$_SESSION['simplemappr']['role']] == 'administrator')) {
             return true;
         }
-        elseif($role == 'administrator' && self::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
+        elseif ($role == 'administrator' && self::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
             return true;
         }
         else {
@@ -86,23 +86,22 @@ class User implements RestMethods
     /**
      * Implemented index method
      */
-    public function index()
+    public function index($params)
     {
-        $this->sort = (isset($_GET['sort'])) ? $_GET['sort'] : "";
-        $this->dir = (isset($_GET['dir']) && in_array(strtolower($_GET['dir']), array("asc", "desc"))) ? $_GET["dir"] : "desc";
+        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
         $order = "u.access {$this->dir}";
 
-        if (isset($_GET['sort'])) {
+        if (!empty($this->sort)) {
             $order = "";
-            $sort = $_GET['sort'];
-            if ($sort == "num" || $sort == "access" || $sort == "username") {
-                if ($sort == "accessed") {
+            if ($this->sort == "num" || $this->sort == "access" || $this->sort == "username") {
+                if ($this->sort == "accessed") {
                     $order = "m.";
                 }
-                if ($sort == "username") {
+                if ($this->sort == "username") {
                     $order = "u.";
                 }
-                $order = $order.$sort." ".$this->dir;
+                $order = $order.$this->sort." ".$this->dir;
             }
         }
 
@@ -135,7 +134,7 @@ class User implements RestMethods
     /**
      * Implemented create method
      */
-    public function create()
+    public function create($content)
     {
     }
 
