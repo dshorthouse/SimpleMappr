@@ -56,7 +56,7 @@ class Citation implements RestMethods
      * Implemented index method
      * @return response array
      */
-    public function index($params)
+    public function index($params = null)
     {
         $sql = "
             SELECT 

@@ -701,6 +701,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "February 27, 2015"
+msgstr "27 février, 2015"
+
+#: .tabs/about.php:11
 msgid "February 20, 2015"
 msgstr "20 février, 2015"
 
@@ -747,6 +751,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Points disappear when the interface is Français. Reported by Carole Sinou."
+msgstr "Corrections: Points disparaissent lorsque l'interface est Français. Rapporté par Carole Sinou."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added terrestrial ecoregions layer. Requested by François Génier."
