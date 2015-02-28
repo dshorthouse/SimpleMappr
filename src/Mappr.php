@@ -372,7 +372,7 @@ abstract class Mappr
         }
         $s = isset($parts[2]) ? (float)$parts[2] : 0;
         if ($m >= 0 && $m < 60 && $s >= 0 && $s < 60) {
-            $dec = str_replace(",", ".", ($d + ($m/60) + ($s/3600))*$neg);
+            $dec = ($d + ($m/60) + ($s/3600))*$neg;
         }
         return $dec;
     }

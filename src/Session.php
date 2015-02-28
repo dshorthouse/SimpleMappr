@@ -156,14 +156,14 @@ class Session
     {
         if (isset($_REQUEST["locale"]) && array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
             putenv('LC_ALL='.self::$accepted_locales[$_REQUEST["locale"]]['code']);
-            setlocale(LC_ALL, self::$accepted_locales[$_REQUEST["locale"]]['code']);
+            setlocale(LC_COLLATE, self::$accepted_locales[$_REQUEST["locale"]]['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
             bind_textdomain_codeset(self::$domain, 'UTF-8'); 
             textdomain(self::$domain);
             return self::$accepted_locales[$_REQUEST["locale"]];
         } else {
             putenv('LC_ALL='.self::$accepted_locales['en_US']['code']);
-            setlocale(LC_ALL, self::$accepted_locales['en_US']['code']);
+            setlocale(LC_COLLATE, self::$accepted_locales['en_US']['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
             bind_textdomain_codeset(self::$domain, 'UTF-8'); 
             textdomain(self::$domain);
