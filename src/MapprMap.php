@@ -72,7 +72,7 @@ class MapprMap extends Mappr
      *
      * @return object $this
      */
-    public function get_request()
+    public function getRequest()
     {
         if (!$this->_id) {
             $this->_setNotFound();
@@ -179,14 +179,14 @@ class MapprMap extends Mappr
      *
      * @return void
      */
-    public function add_graticules()
+    public function addGraticules()
     {
         if ($this->graticules) {
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
-            $layer->setProjection(parent::get_projection($this->default_projection));
+            $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
             if (isset($this->gridlabel) && $this->gridlabel == 1) {
@@ -229,7 +229,7 @@ class MapprMap extends Mappr
      *
      * @return void
      */
-    public function add_scalebar()
+    public function addScalebar()
     {
         $this->map_obj->scalebar->set("style", 0);
         $this->map_obj->scalebar->set("intervals", 3);
@@ -266,15 +266,15 @@ class MapprMap extends Mappr
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);
-                $row = explode("\n", $this->remove_empty_lines($whole));
+                $row = explode("\n", $this->removeEmptyLines($whole));
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = parent::make_coordinates($loc);
+                    $coord_array = parent::makeCoordinates($loc);
                     $coord = new \stdClass();
                     $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
                     $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
-                    if (parent::check_on_earth($coord) && $title != "") {
+                    if (parent::checkOnEarth($coord) && $title != "") {
                         $output[] = array(
                             'type' => 'Feature',
                             'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),
@@ -320,7 +320,7 @@ class MapprMap extends Mappr
         case 'kml':
             Header::setHeader('kml');
             $kml = new Kml;
-            $kml->get_request($this->_id, $this->coords)->createOutput();
+            $kml->getRequest($this->_id, $this->coords)->createOutput();
             break;
 
         case 'svg':

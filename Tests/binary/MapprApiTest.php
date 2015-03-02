@@ -40,7 +40,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     public function test_api_ping()
     {
         $_REQUEST = array('ping' => true);
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $decoded = json_decode(ob_get_contents(), true);
@@ -54,7 +54,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     public function test_apioutput_post()
     {
         $this->setRequest('POST');
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $decoded = json_decode(ob_get_contents(), true);
@@ -69,7 +69,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     public function test_apioutput_get()
     {
         $_REQUEST = array();
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -90,7 +90,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
             'width' => 600,
             'graticules' => true
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -108,7 +108,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_REQUEST = array(
             'points' => array()
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -126,7 +126,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_REQUEST = array(
             'points' => array("45, -120\n52, -100")
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -145,7 +145,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
             'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
             'layers' => 'stateprovnames'
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -165,7 +165,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
                 'places' => 'Alberta,USA[MT|WA]'
             )
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();
@@ -183,7 +183,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $_REQUEST = array(
             'layers' => 'ecoregions'
         );
-        $this->mappr_api->get_request()->execute();
+        $this->mappr_api->getRequest()->execute();
         ob_start();
         echo $this->mappr_api->createOutput();
         $output = ob_get_contents();

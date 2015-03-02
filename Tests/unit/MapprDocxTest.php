@@ -39,7 +39,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
      */
     public function test_docx_mime()
     {
-        $this->mappr_docx->get_request()->execute();
+        $this->mappr_docx->getRequest()->execute();
         ob_start();
         $this->mappr_docx->createOutput();
         $output = ob_get_contents();

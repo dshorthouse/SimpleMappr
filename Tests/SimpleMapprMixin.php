@@ -62,7 +62,7 @@ trait SimpleMapprMixin
             ->set_tmp_path(ROOT."/public/tmp/")
             ->set_tmp_url(MAPPR_MAPS_URL)
             ->set_default_projection("epsg:4326")
-            ->set_max_extent("-180,-90,180,90");
+            ->setMaxExtent("-180,-90,180,90");
         return $class;
     }
 }

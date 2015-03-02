@@ -274,11 +274,11 @@ class Header
      */
     function __construct()
     {
-        $this->make_hash()
-            ->add_remote_js()
-            ->add_uncombined_js()
-            ->add_combined_js()
-            ->add_combined_css();
+        $this->_makeHash()
+            ->_addRemoteJs()
+            ->_addUncombinedJs()
+            ->_addCombinedJs()
+            ->_addCombinedCss();
     }
 
     /**
@@ -289,7 +289,7 @@ class Header
      *
      * @return array An array of cached files
      */
-    private function files_cached($dir, $x='js')
+    private function _filesCached($dir, $x='js')
     {
         $allfiles = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
         $results = array();
@@ -306,7 +306,7 @@ class Header
      *
      * @return object $this
      */
-    private function make_hash()
+    private function _makeHash()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
             $this->_hash = substr(md5(microtime()), 0, 8);
@@ -319,11 +319,11 @@ class Header
      *
      * @return object $this
      */
-    private function add_remote_js()
+    private function _addRemoteJs()
     {
         if (ENVIRONMENT == "production") {
             unset($this->local_js_uncombined['jquery']);
-            $this->addJS('jquery', $this->remote_js['jquery']);
+            $this->_addJs('jquery', $this->remote_js['jquery']);
         }
         return $this;
     }
@@ -333,10 +333,10 @@ class Header
      *
      * @return object $this
      */
-    private function add_uncombined_js()
+    private function _addUncombinedJs()
     {
         foreach ($this->local_js_uncombined as $key => $js_file) {
-            $this->addJS($key, $js_file);
+            $this->_addJs($key, $js_file);
         }
         return $this;
     }
@@ -346,10 +346,10 @@ class Header
      *
      * @return object $this
      */
-    private function add_combined_js()
+    private function _addCombinedJs()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
-            $cached_js = $this->files_cached(dirname(__DIR__) . self::$_js_cache_path);
+            $cached_js = $this->_filesCached(dirname(__DIR__) . self::$_js_cache_path);
 
             if (!$cached_js) {
                 $js_contents = "";
@@ -362,10 +362,10 @@ class Header
                 fwrite($handle, $js_contents);
                 fclose($handle);
 
-                $this->addJS("compiled", self::$_js_cache_path . $js_min_file);
+                $this->_addJs("compiled", self::$_js_cache_path . $js_min_file);
             } else {
                 foreach ($cached_js as $js) {
-                    $this->addJS("compiled", self::$_js_cache_path . $js);
+                    $this->_addJs("compiled", self::$_js_cache_path . $js);
                 }
             }
         } else {
@@ -373,18 +373,18 @@ class Header
                 if ($key == "simplemappr") {
                     $js_file = str_replace(".min", "", $js_file);
                 }
-                $this->addJS($key, $js_file);
+                $this->_addJs($key, $js_file);
             }
         }
         if (!isset($_SESSION['simplemappr']) && ENVIRONMENT !== "testing") {
-            $this->addJS("janrain", $this->remote_js["janrain"]);
+            $this->_addJs("janrain", $this->remote_js["janrain"]);
         }
-        if ($this->isAdministrator()) {
+        if ($this->_isAdministrator()) {
             foreach ($this->admin_js as $key => $js_file) {
                 if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
-                    $this->addJS($key, $js_file);
+                    $this->_addJs($key, $js_file);
                 } else {
-                    $this->addJS($key, str_replace(".min", "", $js_file));
+                    $this->_addJs($key, str_replace(".min", "", $js_file));
                 }
             }
         }
@@ -396,10 +396,10 @@ class Header
      *
      * @return object $this
      */
-    private function add_combined_css()
+    private function _addCombinedCss()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
-            $cached_css = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
+            $cached_css = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
 
             if (!$cached_css) {
                 $css_min = "";
@@ -411,16 +411,16 @@ class Header
                 fwrite($handle, $css_min);
                 fclose($handle);
 
-                $this->addCSS('<link type="text/css" href="/public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
+                $this->_addCss('<link type="text/css" href="/public/stylesheets/cache/' . $css_min_file . '" rel="stylesheet" media="screen,print" />');
             } else {
                 foreach ($cached_css as $css) {
-                    $this->addCSS('<link type="text/css" href="/public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
+                    $this->_addCss('<link type="text/css" href="/public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
                 }
             }
 
         } else {
             foreach ($this->local_css as $css_file) {
-                $this->addCSS('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
+                $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
             }
         }
         return $this;
@@ -434,7 +434,7 @@ class Header
      *
      * @return void
      */
-    private function addJS($key, $js)
+    private function _addJs($key, $js)
     {
         $this->_js_header[$key] = $js;
     }
@@ -446,7 +446,7 @@ class Header
      *
      * @return void
      */
-    private function addCSS($css)
+    private function _addCss($css)
     {
         $this->_css_header[] = $css;
     }
@@ -458,7 +458,7 @@ class Header
      */
     public function getHash()
     {
-        $cache = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
+        $cache = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
         if ($cache) {
             list($hash, $extension) = explode(".", $cache[0]);
         } else {
@@ -496,7 +496,7 @@ class Header
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
         $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".MAPPR_DOMAIN."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
-        if ($this->isAdministrator()) {
+        if ($this->_isAdministrator()) {
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }
         $header .= "</script>" . "\n";
@@ -510,9 +510,9 @@ class Header
      */
     public function getJSVars()
     {
-        $foot = $this->getAnalytics();
+        $foot = $this->_getAnalytics();
         if (!isset($_SESSION['simplemappr'])) {
-            $foot .= $this->getJanrain();
+            $foot .= $this->_getJanrain();
         }
         return $foot;
     }
@@ -522,7 +522,7 @@ class Header
      *
      * @return bool
      */
-    private function isAdministrator()
+    private function _isAdministrator()
     {
         if (isset($_SESSION['simplemappr']) && User::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
             return true;
@@ -535,9 +535,9 @@ class Header
      *
      * @return string An HTML script tag snippet
      */
-    private function getJanrain()
+    private function _getJanrain()
     {
-        $locale = $this->getLocale();
+        $locale = $this->_getLocale();
         $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
         $janrain  = "<script>" . "\n";
         $janrain .= "(function(w,d) {
@@ -559,7 +559,7 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
      *
      * @return string An HTML script tag snippet
      */
-    private function getAnalytics()
+    private function _getAnalytics()
     {
         $analytics = "";
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
@@ -580,7 +580,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
      *
      * @return string The locale string
      */
-    private function getLocale()
+    private function _getLocale()
     {
         return isset($_GET["locale"]) ? $_GET["locale"] : "en_US";
     }

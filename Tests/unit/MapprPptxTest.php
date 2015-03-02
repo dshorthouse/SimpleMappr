@@ -37,7 +37,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
      * Test that PPTX output has the correct MIME type.
      */
     public function test_pptx_mime() {
-        $this->mappr_pptx->get_request()->execute();
+        $this->mappr_pptx->getRequest()->execute();
         ob_start();
         $this->mappr_pptx->createOutput();
         $output = ob_get_contents();

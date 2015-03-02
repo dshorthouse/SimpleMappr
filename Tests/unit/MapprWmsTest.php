@@ -43,7 +43,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetCapabilities()
     {
-        $mappr_wms = $this->mappr_wms->get_request()->makeService()->execute();
+        $mappr_wms = $this->mappr_wms->getRequest()->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
@@ -65,7 +65,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
             'WIDTH' => 400,
             'HEIGHT' => 200
         );
-        $mappr_wms = $this->mappr_wms->get_request()->makeService()->execute();
+        $mappr_wms = $this->mappr_wms->getRequest()->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
         $image = imagecreatefromstring(ob_get_contents());
@@ -87,7 +87,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
           'width' => 400,
           'height' => 200
         );
-        $mappr_wms = $this->mappr_wms->get_request();
+        $mappr_wms = $this->mappr_wms->getRequest();
         $this->assertEquals($this->mappr_wms->params['REQUEST'], $_REQUEST['request']);
         $this->assertEquals($this->mappr_wms->params['LAYERS'], $_REQUEST['layers']);
         $this->assertEquals($this->mappr_wms->params['BBOX'], $_REQUEST['bbox']);

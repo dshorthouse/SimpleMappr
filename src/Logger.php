@@ -74,9 +74,9 @@ class Logger
     {
         $fd = fopen($this->_filename, 'a');
         if (is_array($message)) {
-            $this->write_array($message, $fd);
+            $this->_writeArray($message, $fd);
         } else {
-            $this->write_string($message, $fd);
+            $this->_writeString($message, $fd);
         }
         fclose($fd);
     }
@@ -134,7 +134,7 @@ class Logger
      *
      * @return void
      */
-    private function write_string($message, $fd)
+    private function _writeString($message, $fd)
     {
         fwrite($fd, $message."\n");
     }
@@ -147,12 +147,12 @@ class Logger
      *
      * @return void
      */
-    private function write_array($message, $fd)
+    private function _writeArray($message, $fd)
     {
         foreach ($message as $key => $value) {
             if (is_array($value)) {
                 fwrite($fd, $key."{ ");
-                $this->write_array($value, $fd);
+                $this->_writeArray($value, $fd);
                 fwrite($fd, " }\n");
             } else {
                 $string =  "\t {".$key.': '.$value."}\n ";

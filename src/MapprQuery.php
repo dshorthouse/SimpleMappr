@@ -58,7 +58,7 @@ class MapprQuery extends Mappr
      *
      * @return object $this
      */
-    public function get_request()
+    public function getRequest()
     {
         $this->download         = false;
         $this->options          = array();
@@ -84,7 +84,7 @@ class MapprQuery extends Mappr
      *
      * @return object $this
      */
-    public function query_layer()
+    public function queryLayer()
     {
         $bbox_query = explode(',', $this->bbox_query);
 
@@ -96,20 +96,20 @@ class MapprQuery extends Mappr
         $ll_point = new \stdClass();
         $ll_point->x = $bbox_query[0];
         $ll_point->y = $bbox_query[3];
-        $ll_coord = $this->pix2geo($ll_point);
+        $ll_coord = $this->pix2Geo($ll_point);
 
         //upper-right coordinate
         $ur_point = new \stdClass();
         $ur_point->x = $bbox_query[2];
         $ur_point->y = $bbox_query[1];
-        $ur_coord = $this->pix2geo($ur_point);
+        $ur_coord = $this->pix2Geo($ur_point);
 
         $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name", "stateprovinces_polygon_query");
         $layer->set("data", $this->shapes[$this->queryLayer]['shape']);
         $layer->set("type", $this->shapes[$this->queryLayer]['type']);
         $layer->set("template", "template.html");
-        $layer->setProjection(parent::get_projection($this->default_projection));
+        $layer->setProjection(parent::getProjection($this->default_projection));
 
         $rect = ms_newRectObj();
         $extent = $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);

@@ -23,7 +23,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $mappr = $this->setMapprDefaults(new \SimpleMappr\MapprApplication());
-        $this->mappr = $mappr->get_request()->execute();
+        $this->mappr = $mappr->getRequest()->execute();
         $this->output = $this->mappr->createOutput();
     }
 
@@ -39,10 +39,10 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     /**
      * Test that empty lines are removed.
      */
-    public function test_remove_empty_lines()
+    public function test_removeEmptyLines()
     {
         $data = "\n\n45.0\t-120.0\n\n\n\n\n55.0\t-110.0\n\n\n60.0 -100.0\n\n\n";
-        $removed_lines = \SimpleMappr\Mappr::remove_empty_lines($data);
+        $removed_lines = \SimpleMappr\Mappr::removeEmptyLines($data);
         $this->assertEquals($removed_lines, "\n45.0\t-120.0\n55.0\t-110.0\n60.0 -100.0\n");
     }
 
@@ -62,7 +62,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_clean_filename()
     {
         $name = "My %!  <>  .  Map";
-        $clean = \SimpleMappr\Mappr::clean_filename($name);
+        $clean = \SimpleMappr\Mappr::cleanFilename($name);
         $this->assertEquals($clean, "My_Map");
     }
 

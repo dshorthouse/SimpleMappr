@@ -72,7 +72,7 @@ class MapprWfs extends Mappr
      *
      * @return object $this
      */
-    public function get_request()
+    public function getRequest()
     {
         $this->params['VERSION']      = $this->loadParam('VERSION', '1.0.0');
         $this->params['REQUEST']      = $this->loadParam('REQUEST', 'GetCapabilities');

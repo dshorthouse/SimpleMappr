@@ -57,7 +57,7 @@ class MapprApi extends Mappr
      *
      * @return object $this
      */
-    public function get_request()
+    public function getRequest()
     {
         //ping API to return JSON
         $this->ping             = $this->loadParam('ping', false);
@@ -153,7 +153,7 @@ class MapprApi extends Mappr
      *
      * @return void
      */ 
-    public function add_coordinates()
+    public function addCoordinates()
     {
         if ($this->url || $this->points) {
             if ($this->url) {
@@ -175,7 +175,7 @@ class MapprApi extends Mappr
             $mlayer->set("type", MS_LAYER_POINT);
             $mlayer->set("tolerance", 5);
             $mlayer->set("toleranceunits", 6);
-            $mlayer->setProjection(parent::get_projection($this->default_projection));
+            $mlayer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($mlayer);
             $class->set("name", isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
@@ -210,10 +210,10 @@ class MapprApi extends Mappr
             //add all the points
             foreach ($coords as $coord) {
                 $_coord = new \stdClass();
-                $_coord->x = array_key_exists(1, $coord) ? parent::clean_coord($coord[1]) : null;
-                $_coord->y = array_key_exists(0, $coord) ? parent::clean_coord($coord[0]) : null;
+                $_coord->x = array_key_exists(1, $coord) ? parent::cleanCoord($coord[1]) : null;
+                $_coord->y = array_key_exists(0, $coord) ? parent::cleanCoord($coord[0]) : null;
                 //only add point when data are good
-                if (parent::check_on_earth($_coord)) {
+                if (parent::checkOnEarth($_coord)) {
                     $mcoord_point = ms_newPointObj();
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);
@@ -232,7 +232,7 @@ class MapprApi extends Mappr
      *
      * @return void
      */
-    public function add_regions()
+    public function addRegions()
     {
         if ($this->regions['data']) {            
             $layer = ms_newLayerObj($this->map_obj);
@@ -240,11 +240,11 @@ class MapprApi extends Mappr
             $layer->set("data", $this->shapes['stateprovinces_polygon']['shape']);
             $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
             $layer->set("template", "template.html");
-            $layer->setProjection(parent::get_projection($this->default_projection));
+            $layer->setProjection(parent::getProjection($this->default_projection));
 
             //grab the data for regions & split
             $whole = trim($this->regions['data']);
-            $rows = explode("\n", parent::remove_empty_lines($whole));
+            $rows = explode("\n", parent::removeEmptyLines($whole));
             $qry = array();
             foreach ($rows as $row) {
                 $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -283,14 +283,14 @@ class MapprApi extends Mappr
      *
      * @return void
      */
-    public function add_graticules()
+    public function addGraticules()
     {
         if ($this->graticules) {
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
-            $layer->setProjection(parent::get_projection($this->default_projection));
+            $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
 
@@ -336,7 +336,7 @@ class MapprApi extends Mappr
      *
      * @return void
      */
-    public function add_scalebar()
+    public function addScalebar()
     {
         $this->map_obj->scalebar->set("style", 0);
         $this->map_obj->scalebar->set("intervals", ($this->width <= 500) ? 2 : 3);
@@ -366,7 +366,7 @@ class MapprApi extends Mappr
      *
      * @return void
      */
-    public function add_legend()
+    public function addLegend()
     {
         $this->map_obj->legend->set("postlabelcache", 1);
         $this->map_obj->legend->label->set("font", "arial");
@@ -484,9 +484,9 @@ class MapprApi extends Mappr
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
         $coord_array = array();
         foreach ($this->points as $rows) {
-            $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(parent::remove_empty_lines($rows)));
+            $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(parent::removeEmptyLines($rows)));
             foreach (str_replace("\\", "", $row) as $point) {
-                $this->_coord_cols[$num_cols][] = parent::make_coordinates($point);
+                $this->_coord_cols[$num_cols][] = parent::makeCoordinates($point);
             }
             $num_cols++;
         }
@@ -541,8 +541,8 @@ class MapprApi extends Mappr
                                 $coord = preg_split("/[,;]/", $cols[$i]);
                                 $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
                                 $this->_coord_cols[$i][] = array(
-                                    parent::dms_to_deg(trim($coord[0])),
-                                    parent::dms_to_deg(trim($coord[1]))
+                                    parent::dmsToDeg(trim($coord[0])),
+                                    parent::dmsToDeg(trim($coord[1]))
                                 );
                             } else {
                                 $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $cols[$i])));

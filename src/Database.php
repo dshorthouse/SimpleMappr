@@ -61,7 +61,7 @@ class Database
      */
     function __construct()
     {
-        $creds = $this->credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
+        $creds = $this->_credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
         $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);
         $this->_link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);
@@ -208,7 +208,7 @@ class Database
             $this->bindParam(":{$key}", $value);
         }
         $this->execute();
-        return $this->last_insert();
+        return $this->_lastInsert();
     }
 
     /**
@@ -257,7 +257,7 @@ class Database
      *
      * @return array PDO connection, username, password.
      */
-    private function credentials($config)
+    private function _credentials($config)
     {
         $adapter = $config['environments'][ENVIRONMENT]['adapter'];
         $host = $config['environments'][ENVIRONMENT]['host'];
@@ -276,7 +276,7 @@ class Database
      *
      * @return int The last inserted id.
      */
-    private function last_insert()
+    private function _lastInsert()
     {
         return $this->_link->lastInsertId();
     }

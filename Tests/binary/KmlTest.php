@@ -56,7 +56,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
                 'color' => '255 32 3'
             )
         );
-        $this->kml->get_request("My Map", $coords);
+        $this->kml->getRequest("My Map", $coords);
         ob_start();
         $this->kml->createOutput();
         $output = ob_get_contents();

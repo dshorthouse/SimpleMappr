@@ -66,7 +66,7 @@ class MapprPptx extends Mappr
     {
         $objPHPPowerPoint = new PhpPowerpoint();
 
-        $clean_filename = parent::clean_filename($this->file_name);
+        $clean_filename = parent::cleanFilename($this->file_name);
 
         // Set properties
         $properties = $objPHPPowerPoint->getProperties();

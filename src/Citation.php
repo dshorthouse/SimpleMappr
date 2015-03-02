@@ -81,7 +81,7 @@ class Citation implements RestMethods
 
         $this->_db->prepare($sql);
         $this->_citations = $this->_db->fetchAllObject();
-        return $this->response();
+        return $this->_response();
     }
 
     /**
@@ -111,7 +111,7 @@ class Citation implements RestMethods
         $link = property_exists($params, 'link') ? $params->link : null;
 
         if (empty($year) || empty($reference) || empty($author)) {
-            $this->response('error');
+            $this->_response('error');
             exit();
         }
 
@@ -125,7 +125,7 @@ class Citation implements RestMethods
 
         $data['id'] = $this->_db->queryInsert('citations', $data);
         $this->_citations = $data;
-        return $this->response();
+        return $this->_response();
     }
 
     /**
@@ -159,7 +159,7 @@ class Citation implements RestMethods
         $this->_db->bindParam(":id", $id, "integer");
         $this->_db->execute();
         $this->_citations = "";
-        return $this->response();
+        return $this->_response();
     }
 
     /**
@@ -169,7 +169,7 @@ class Citation implements RestMethods
      *
      * @return void
      */
-    private function response($type = null)
+    private function _response($type = null)
     {
         if ($type == 'error') {
             return array("status" => "error");

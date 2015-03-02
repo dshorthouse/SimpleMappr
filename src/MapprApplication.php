@@ -61,7 +61,7 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            $clean_filename = self::cleanFilename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
             Header::setHeader('tif', $clean_filename, $filesize);
             ob_clean();
@@ -73,7 +73,7 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            $clean_filename = self::cleanFilename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
             Header::setHeader('png', $clean_filename, $filesize);
             ob_clean();
@@ -82,7 +82,7 @@ class MapprApplication extends Mappr
             break;
 
         case 'svg':
-            $clean_filename = self::clean_filename($this->file_name, $this->output);
+            $clean_filename = self::cleanFilename($this->file_name, $this->output);
             Header::setHeader('svg', $clean_filename);
             $this->image->saveImage("");
             break;
@@ -105,7 +105,7 @@ class MapprApplication extends Mappr
                 'rendered_projection' => $this->projection,
                 'legend_url'          => $this->legend_url,
                 'scalebar_url'        => $this->scalebar_url,
-                'bad_points'          => $this->get_bad_points()
+                'bad_points'          => $this->getBadPoints()
             );
 
             return $output;

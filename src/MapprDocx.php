@@ -53,11 +53,17 @@ use \PhpOffice\PhpWord\IOFactory;
  */
 class MapprDocx extends Mappr
 {
+
+    /**
+     * Implemented createOutput
+     *
+     * @return void
+     */
     public function createOutput()
     {
         $objPHPWord = new PhpWord();
 
-        $clean_filename = parent::clean_filename($this->file_name);
+        $clean_filename = parent::cleanFilename($this->file_name);
 
         // Set properties
         $properties = $objPHPWord->getDocumentProperties();

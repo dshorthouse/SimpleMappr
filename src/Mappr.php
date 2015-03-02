@@ -259,7 +259,7 @@ abstract class Mappr
      *
      * @return string cleansed string with empty lines removed
      */
-    public static function remove_empty_lines($text)
+    public static function removeEmptyLines($text)
     {
         return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $text);
     }
@@ -292,7 +292,7 @@ abstract class Mappr
      *
      * @return string Cleaned string that can be a file name.
      */
-    public static function clean_filename($file_name, $extension = "")
+    public static function cleanFilename($file_name, $extension = "")
     {
         $clean_filename = preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $file_name);
         if ($extension) {
@@ -308,7 +308,7 @@ abstract class Mappr
      *
      * @return real Cleaned coordinate
      */
-    public static function clean_coord($coord)
+    public static function cleanCoord($coord)
     {
         return preg_replace('/[^\d.-]/i', "", $coord);
     }
@@ -320,7 +320,7 @@ abstract class Mappr
      *
      * @return bool
      */
-    public static function check_on_earth($coord)
+    public static function checkOnEarth($coord)
     {
         if ($coord->x 
             && $coord->y 
@@ -343,7 +343,7 @@ abstract class Mappr
      *
      * @return array(latitude, longitude) in DD
      */
-    public static function make_coordinates($point)
+    public static function makeCoordinates($point)
     {
         $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ""), $point);
         if (preg_match('/[NSEWO]/', $loc) != 0) {
@@ -352,7 +352,7 @@ abstract class Mappr
                 return array(null, null);
             }
             $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-            return array(self::dms_to_deg(trim($coord[0])),self::dms_to_deg(trim($coord[1])));
+            return array(self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1])));
         } else {
             $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc))); //split by space, comma, or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
@@ -369,7 +369,7 @@ abstract class Mappr
      *
      * @return float
      */
-    public static function dms_to_deg($dms)
+    public static function dmsToDeg($dms)
     {
         $dec = null;
         $dms = stripslashes($dms);
@@ -401,7 +401,7 @@ abstract class Mappr
      *
      * @return string PROJ representation of projection
      */
-    public static function get_projection($projection)
+    public static function getProjection($projection)
     {
         if (!array_key_exists($projection, self::$accepted_projections)) {
             $projection = 'epsg:4326';
@@ -457,7 +457,7 @@ abstract class Mappr
      *
      * @return object $this
      */
-    public function set_max_extent($extent = array())
+    public function setMaxExtent($extent = array())
     {
         $extent = explode(',', $extent);
         $this->max_extent = $extent;
@@ -469,7 +469,7 @@ abstract class Mappr
      *
      * @return object $this
      */
-    public function get_request()
+    public function getRequest()
     {
         $this->coords           = $this->loadParam('coords', array());
         $this->regions          = $this->loadParam('regions', array());
@@ -532,7 +532,7 @@ abstract class Mappr
      */
     public function loadParam($name, $default = "")
     {
-        $grep_key = $this->preg_grep_keys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
+        $grep_key = $this->_pregGrepKeys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
         if (!$grep_key || !array_values($grep_key)[0]) {
             return $default;
         }
@@ -553,7 +553,7 @@ abstract class Mappr
      *
      * @return array of matched keys.
      */
-    private function preg_grep_keys($pattern, $input, $flags = 0)
+    private function _pregGrepKeys($pattern, $input, $flags = 0)
     {
         return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
     }
@@ -563,7 +563,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function load_projection()
+    private function _loadProjection()
     {
         $this->map_obj->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
     }
@@ -573,7 +573,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function load_shapes()
+    private function _loadShapes()
     {
         //shaded relief
         $this->shapes['relief'] = array(
@@ -729,7 +729,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function load_symbols()
+    private function _loadSymbols()
     {
         //plus
         $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[0]);
@@ -980,26 +980,26 @@ abstract class Mappr
      */
     public function execute()
     {
-        $this->load_projection();
-        $this->load_shapes();
-        $this->load_symbols();
-        $this->set_web_config();
-        $this->set_resolution();
-        $this->set_units();
-        $this->set_map_color();
-        $this->set_output_format();
-        $this->set_map_extent();
-        $this->set_map_size();
-        $this->set_zoom();
-        $this->set_pan();
-        $this->set_rotation();
-        $this->set_crop();
-        $this->add_regions();
-        $this->add_layers();
-        $this->add_graticules();
-        $this->add_coordinates();
-        $this->add_watermark();
-        $this->prepare_output();
+        $this->_loadProjection();
+        $this->_loadShapes();
+        $this->_loadSymbols();
+        $this->_setWebConfig();
+        $this->_setResolution();
+        $this->_setUnits();
+        $this->_setMapColor();
+        $this->_setOutputFormat();
+        $this->_setMapExtent();
+        $this->_setMapSize();
+        $this->_setZoom();
+        $this->_setPan();
+        $this->_setRotation();
+        $this->_setCrop();
+        $this->addRegions();
+        $this->_addLayers();
+        $this->addGraticules();
+        $this->addCoordinates();
+        $this->_addWatermark();
+        $this->_prepareOutput();
 
         return $this;
     }
@@ -1009,7 +1009,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_web_config()
+    private function _setWebConfig()
     {
         $this->map_obj->set("name", "simplemappr");
         $this->map_obj->setFontSet($this->font_file);
@@ -1023,7 +1023,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_resolution()
+    private function _setResolution()
     {
         if ($this->output == 'tif') {
             $this->map_obj->set("defresolution", 300);
@@ -1036,7 +1036,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_units()
+    private function _setUnits()
     {
         $units = (isset($this->projection) && $this->projection == $this->default_projection) ? MS_DD : MS_METERS;
         $this->map_obj->set("units", $units);
@@ -1047,7 +1047,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_map_color()
+    private function _setMapColor()
     {
         $this->map_obj->imagecolor->setRGB(255, 255, 255);
     }
@@ -1057,7 +1057,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_output_format()
+    private function _setOutputFormat()
     {
         if (isset($this->output) && $this->output) {
             $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
@@ -1076,17 +1076,17 @@ abstract class Mappr
      *
      * @return void
      */
-    private function add_legend_scalebar()
+    private function _addLegendScalebar()
     {
         if ($this->download && array_key_exists('legend', $this->options) && $this->options['legend']) {
-            $this->add_legend();
+            $this->addLegend();
         } else if (!$this->download) {
-            $this->add_legend();
+            $this->addLegend();
         }
         if ($this->download && array_key_exists('scalebar', $this->options) && $this->options['scalebar']) {
-            $this->add_scalebar();
+            $this->addScalebar();
         } else if (!$this->download) {
-            $this->add_scalebar();
+            $this->addScalebar();
         }
     }
 
@@ -1095,12 +1095,12 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_map_extent()
+    private function _setMapExtent()
     {
         $ext = explode(',', $this->bbox_map);
         if (isset($this->projection) && $this->projection != $this->projection_map) {
-            $origProjObj = ms_newProjectionObj(self::get_projection($this->projection_map));
-            $newProjObj = ms_newProjectionObj(self::get_projection($this->default_projection));
+            $origProjObj = ms_newProjectionObj(self::getProjection($this->projection_map));
+            $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
 
             $poPoint1 = ms_newPointObj();
             $poPoint1->setXY($ext[0], $ext[1]);
@@ -1153,10 +1153,10 @@ abstract class Mappr
      *
      * @return void
      */ 
-    private function set_map_size()
+    private function _setMapSize()
     {
         $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
-        if ($this->is_resize()) {
+        if ($this->_isResize()) {
             $this->map_obj->setSize($this->_download_factor*$this->image_size[0], $this->_download_factor*$this->image_size[1]);
         }
     }
@@ -1166,10 +1166,10 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_zoom()
+    private function _setZoom()
     {
         //Zoom in
-        if (isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->is_resize()) {
+        if (isset($this->bbox_rubberband) && $this->bbox_rubberband && !$this->_isResize()) {
             $bbox_rubberband = explode(',', $this->bbox_rubberband);
             if ($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
                 $zoom_point = ms_newPointObj();
@@ -1202,7 +1202,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_pan()
+    private function _setPan()
     {
         if (isset($this->pan) && $this->pan) {
             switch ($this->pan) {
@@ -1238,12 +1238,12 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_rotation()
+    private function _setRotation()
     {
         if (isset($this->rotation) && $this->rotation != 0) {
             $this->map_obj->setRotation($this->rotation);
             if ($this->projection == $this->default_projection) {
-                $this->reproject($this->default_projection, $this->projection);
+                $this->_reproject($this->default_projection, $this->projection);
             }
         }
     }
@@ -1253,9 +1253,9 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_crop()
+    private function _setCrop()
     {
-        if (isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->is_resize()) {
+        if (isset($this->crop) && $this->crop && $this->bbox_rubberband && $this->_isResize()) {
 
             $bbox_rubberband = explode(',', $this->bbox_rubberband);
 
@@ -1263,20 +1263,20 @@ abstract class Mappr
             $ll_point = new \stdClass();
             $ll_point->x = $bbox_rubberband[0];
             $ll_point->y = $bbox_rubberband[3];
-            $ll_coord = $this->pix2geo($ll_point);
+            $ll_coord = $this->pix2Geo($ll_point);
 
             //upper-right coordinate
             $ur_point = new \stdClass();
             $ur_point->x = $bbox_rubberband[2];
             $ur_point->y = $bbox_rubberband[1];
-            $ur_coord = $this->pix2geo($ur_point);
+            $ur_coord = $this->pix2Geo($ur_point);
 
             //set the size as selected
             $width = abs($bbox_rubberband[2]-$bbox_rubberband[0]);
             $height = abs($bbox_rubberband[3]-$bbox_rubberband[1]);
 
             $this->map_obj->setSize($width, $height);
-            if ($this->is_resize() && $this->_download_factor > 1) {
+            if ($this->_isResize() && $this->_download_factor > 1) {
                 $this->map_obj->setSize($this->_download_factor*$width, $this->_download_factor*$height);
             }
 
@@ -1290,7 +1290,7 @@ abstract class Mappr
      *
      * @return object
      */
-    public function get_shapes()
+    public function getShapes()
     {
         return $this->shapes;
     }
@@ -1300,7 +1300,7 @@ abstract class Mappr
      *
      * @return void
      */
-    public function add_coordinates()
+    public function addCoordinates()
     {
         $this->bad_points = array();
         if (isset($this->coords) && $this->coords) {
@@ -1314,7 +1314,7 @@ abstract class Mappr
 
                 $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
                 $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
-                if ($this->is_resize() && $this->_download_factor > 1) {
+                if ($this->_isResize() && $this->_download_factor > 1) {
                     $size = $this->_download_factor*$size;
                 }
                 $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
@@ -1333,7 +1333,7 @@ abstract class Mappr
                     $layer->set("type", MS_LAYER_POINT);
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", 6);
-                    $layer->setProjection(self::get_projection($this->default_projection));
+                    $layer->setProjection(self::getProjection($this->default_projection));
 
                     $class = ms_newClassObj($layer);
                     if ($title != "") {
@@ -1354,16 +1354,16 @@ abstract class Mappr
                     $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
                     $new_line = ms_newLineObj();
 
-                    $rows = explode("\n", self::remove_empty_lines($data));  //split the lines that have data
+                    $rows = explode("\n", self::removeEmptyLines($data));  //split the lines that have data
                     $points = array(); //create an array to hold unique locations
 
                     foreach ($rows as $row) {
-                        $coord_array = self::make_coordinates($row);
+                        $coord_array = self::makeCoordinates($row);
                         $coord = new \stdClass();
-                        $coord->x = ($coord_array[1]) ? self::clean_coord($coord_array[1]) : null;
-                        $coord->y = ($coord_array[0]) ? self::clean_coord($coord_array[0]) : null;
+                        $coord->x = ($coord_array[1]) ? self::cleanCoord($coord_array[1]) : null;
+                        $coord->y = ($coord_array[0]) ? self::cleanCoord($coord_array[0]) : null;
                         //only add point when data are good & a title
-                        if (self::check_on_earth($coord) && !empty($title)) {
+                        if (self::checkOnEarth($coord) && !empty($title)) {
                             if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
                                 $new_point = ms_newPointObj();
                                 $new_point->setXY($coord->x, $coord->y);
@@ -1389,7 +1389,7 @@ abstract class Mappr
      *
      * @return void
      */
-    public function add_regions()
+    public function addRegions()
     {
         if (isset($this->regions) && $this->regions) {  
             for ($j=count($this->regions)-1; $j>=0; $j--) {
@@ -1407,7 +1407,7 @@ abstract class Mappr
                     $this->_legend_required = true;
                     $baselayer = true;
                     //grab the textarea for regions & split
-                    $rows = explode("\n", self::remove_empty_lines($data));
+                    $rows = explode("\n", self::removeEmptyLines($data));
                     $qry = array();
                     foreach ($rows as $row) {
                         $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -1445,7 +1445,7 @@ abstract class Mappr
                     }
 
                     $layer->set("template", "template.html");
-                    $layer->setProjection(self::get_projection($this->default_projection));
+                    $layer->setProjection(self::getProjection($this->default_projection));
 
                     $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
 
@@ -1471,7 +1471,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function add_layers()
+    private function _addLayers()
     {
         $sort = array();
 
@@ -1507,7 +1507,7 @@ abstract class Mappr
                 $layer->set("status", MS_ON);
                 $layer->setConnectionType(MS_SHAPEFILE);
                 $layer->set("data", $this->shapes[$name]['shape']);
-                $layer->setProjection(self::get_projection($this->default_projection));
+                $layer->setProjection(self::getProjection($this->default_projection));
                 $layer->set("template", "template.html");
                 $layer->set("dump", true);
 
@@ -1544,7 +1544,7 @@ abstract class Mappr
                 case 'ecoregions':
                     $layer->set("opacity", 75);
                     $layer->set("classitem", "ECO_SYM");
-                    $this->set_ecoregion_classes($layer);
+                    $this->_setEcoregionClasses($layer);
                     $this->_legend_required = true;
                     break;
 
@@ -1555,7 +1555,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8));
+                    $class->addLabel($this->_createLabel(8));
                     break;
 
                 case 'base':
@@ -1566,7 +1566,7 @@ abstract class Mappr
                     $width = 1.25;
                     if (isset($this->border_thickness)) {
                         $width = $this->border_thickness;
-                        if ($this->is_resize() 
+                        if ($this->_isResize() 
                             && $this->_download_factor > 1
                             && array_key_exists('scalelinethickness', $this->options)
                             && $this->options['scalelinethickness']
@@ -1583,7 +1583,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(12, MS_CC));
+                    $class->addLabel($this->_createLabel(12, MS_CC));
                     break;
 
                 case 'stateprovnames':
@@ -1591,7 +1591,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(10, MS_CC, "UTF-8"));
+                    $class->addLabel($this->_createLabel(10, MS_CC, "UTF-8"));
                     break;
 
                 case 'placenames':
@@ -1599,11 +1599,11 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8));
+                    $class->addLabel($this->_createLabel(8));
 
                     $style = ms_newStyleObj($class);
                     $style->set("symbolname", "circle");
-                    $style->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
+                    $style->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
                     $style->color->setRGB(100, 100, 100);
                     break;
 
@@ -1612,7 +1612,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8));
+                    $class->addLabel($this->_createLabel(8));
                     break;
 
                 case 'marineLabels':
@@ -1620,7 +1620,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "name");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8));
+                    $class->addLabel($this->_createLabel(8));
                     break;
 
                 case 'hotspotLabels':
@@ -1628,7 +1628,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "NAME");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8, "UTF-8"));
+                    $class->addLabel($this->_createLabel(8, "UTF-8"));
                     break;
 
                 case 'ecoregionLabels':
@@ -1636,7 +1636,7 @@ abstract class Mappr
                     $layer->set("toleranceunits", "pixels");
                     $layer->set("labelitem", "ECO_NAME");
                     $class = ms_newClassObj($layer);
-                    $class->addLabel($this->create_label(8, "UTF-8"));
+                    $class->addLabel($this->_createLabel(8, "UTF-8"));
                     break;
 
                 default:
@@ -1654,13 +1654,13 @@ abstract class Mappr
      *
      * @return object $label
      */
-    private function create_label($size = 8, $position = MS_UR, $encoding = "CP1252")
+    private function _createLabel($size = 8, $position = MS_UR, $encoding = "CP1252")
     {
         $label = new \labelObj();
         $label->set("font", "arial");
         $label->set("type", MS_TRUETYPE);
         $label->set("encoding", $encoding);
-        $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*7 : $size);
+        $label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*7 : $size);
         $label->set("position", $position);
         $label->set("offsetx", 3);
         $label->set("offsety", 3);
@@ -1674,7 +1674,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function add_watermark()
+    private function _addWatermark()
     {
         if (isset($this->watermark) && $this->watermark) {
             $layer = ms_newLayerObj($this->map_obj);
@@ -1713,14 +1713,14 @@ abstract class Mappr
      *
      * @return void
      */
-    public function add_graticules()
+    public function addGraticules()
     {
         if (isset($this->graticules) && $this->graticules) {
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
-            $layer->setProjection(self::get_projection($this->default_projection));
+            $layer->setProjection(self::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
 
@@ -1729,7 +1729,7 @@ abstract class Mappr
                 $label->set("font", "arial");
                 $label->set("type", MS_TRUETYPE);
                 $label->set("encoding", "UTF-8");
-                $label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
+                $label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
                 $label->set("position", MS_CC);
                 $label->color->setRGB(30, 30, 30);
                 $class->addLabel($label);
@@ -1744,8 +1744,8 @@ abstract class Mappr
 
             //project the extent back to default such that we can work with proper tick marks
             if ($this->projection != $this->default_projection && $this->projection == $this->projection_map) {
-                $origProjObj = ms_newProjectionObj(self::get_projection($this->projection));
-                $newProjObj = ms_newProjectionObj(self::get_projection($this->default_projection));
+                $origProjObj = ms_newProjectionObj(self::getProjection($this->projection));
+                $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
 
                 $poPoint1 = ms_newPointObj();
                 $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
@@ -1785,19 +1785,19 @@ abstract class Mappr
      *
      * @return void
      */
-    public function add_legend()
+    public function addLegend()
     {
         if ($this->_legend_required) {
-            $this->map_obj->legend->set("keysizex", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-            $this->map_obj->legend->set("keysizey", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
-            $this->map_obj->legend->set("keyspacingx", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
-            $this->map_obj->legend->set("keyspacingy", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+            $this->map_obj->legend->set("keysizex", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+            $this->map_obj->legend->set("keysizey", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*15 : 20);
+            $this->map_obj->legend->set("keyspacingx", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
+            $this->map_obj->legend->set("keyspacingy", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
             $this->map_obj->legend->set("postlabelcache", 1);
             $this->map_obj->legend->label->set("font", "arial");
             $this->map_obj->legend->label->set("type", MS_TRUETYPE);
             $this->map_obj->legend->label->set("encoding", "UTF-8");
             $this->map_obj->legend->label->set("position", 1);
-            $this->map_obj->legend->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
+            $this->map_obj->legend->label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
             $this->map_obj->legend->label->color->setRGB(0, 0, 0);
 
             //svg format cannot do legends in MapServer
@@ -1819,7 +1819,7 @@ abstract class Mappr
      *
      * @return bool
      */
-    private function is_resize()
+    private function _isResize()
     {
         if ($this->download || $this->output == 'pptx' || $this->output == 'docx') {
             return true;
@@ -1832,19 +1832,19 @@ abstract class Mappr
      *
      * @return void
      */
-    public function add_scalebar()
+    public function addScalebar()
     {
         $this->map_obj->scalebar->set("style", 0);
         $this->map_obj->scalebar->set("intervals", 3);
-        $this->map_obj->scalebar->set("height", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*4 : 8);
-        $this->map_obj->scalebar->set("width", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*100 : 200);
+        $this->map_obj->scalebar->set("height", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*4 : 8);
+        $this->map_obj->scalebar->set("width", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*100 : 200);
         $this->map_obj->scalebar->color->setRGB(30, 30, 30);
         $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
         $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
         $this->map_obj->scalebar->label->set("font", "arial");
         $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
         $this->map_obj->scalebar->label->set("encoding", "UTF-8");
-        $this->map_obj->scalebar->label->set("size", ($this->is_resize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
+        $this->map_obj->scalebar->label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do scalebar in MapServer
@@ -1865,7 +1865,7 @@ abstract class Mappr
      *
      * @return string
      */
-    public function get_bad_points()
+    public function getBadPoints()
     {
         return implode('<br />', $this->bad_points);
     }
@@ -1875,9 +1875,9 @@ abstract class Mappr
      *
      * @return void
      */
-    private function add_border()
+    private function _addBorder()
     {
-        if ($this->is_resize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
+        if ($this->_isResize() && array_key_exists('border', $this->options) && ($this->options['border'] == 1 || $this->options['border'] == 'true')) {
             $outline_layer = ms_newLayerObj($this->map_obj);
             $outline_layer->set("name", "outline");
             $outline_layer->set("type", MS_LAYER_POLYGON);
@@ -1912,12 +1912,12 @@ abstract class Mappr
      *
      * @return void
      */
-    private function prepare_output()
+    private function _prepareOutput()
     {
         if (isset($this->projection)) {
-            $this->reproject($this->projection_map, $this->projection);
-            $this->add_legend_scalebar();
-            $this->add_border();
+            $this->_reproject($this->projection_map, $this->projection);
+            $this->_addLegendScalebar();
+            $this->_addBorder();
             $this->image = $this->map_obj->drawQuery();
         }
     }
@@ -1930,18 +1930,18 @@ abstract class Mappr
      *
      * @return void
      */
-    private function reproject($input_projection, $output_projection)
+    private function _reproject($input_projection, $output_projection)
     {
-        $this->set_origin($output_projection);
+        $this->_setOrigin($output_projection);
 
-        $origProjObj = ms_newProjectionObj(self::get_projection($input_projection));
-        $newProjObj = ms_newProjectionObj(self::get_projection($output_projection));
+        $origProjObj = ms_newProjectionObj(self::getProjection($input_projection));
+        $newProjObj = ms_newProjectionObj(self::getProjection($output_projection));
 
         $oRect = $this->map_obj->extent;
         $oRect->project($origProjObj, $newProjObj);
         //TODO: failing for http://www.simplemappr.net/map/2962
         $this->map_obj->setExtent($oRect->minx, $oRect->miny, $oRect->maxx, $oRect->maxy);
-        $this->map_obj->setProjection(self::get_projection($output_projection));
+        $this->map_obj->setProjection(self::getProjection($output_projection));
     }
 
     /**
@@ -1951,11 +1951,11 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_origin($output_projection)
+    private function _setOrigin($output_projection)
     {
         $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
         if (in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
-            self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::get_projection($output_projection));
+            self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::getProjection($output_projection));
         }
     }
 
@@ -1966,7 +1966,7 @@ abstract class Mappr
      *
      * @return object $newPoint reprojected point in map coordinates
      */
-    public function pix2geo($point)
+    public function pix2Geo($point)
     {
         $newPoint = new \stdClass();
         $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
@@ -1984,7 +1984,7 @@ abstract class Mappr
      *
      * @return array of RGB
      */
-    private function hex2rgb($hex)
+    private function _hex2Rgb($hex)
     {
         $hex = str_replace("#", "", $hex);
 
@@ -2007,7 +2007,7 @@ abstract class Mappr
      *
      * @return void
      */
-    private function set_ecoregion_classes($layer)
+    private function _setEcoregionClasses($layer)
     {
         $xml = simplexml_load_file($this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos.sld");
         $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
@@ -2016,7 +2016,7 @@ abstract class Mappr
             $class = ms_newClassObj($layer);
             $class->setExpression("([ECO_SYM] = ".$rule->xpath('.//sld:Name')[0].")");
             $style = ms_newStyleObj($class);
-            $color = $this->hex2rgb($rule->xpath('.//sld:CssParameter')[0]);
+            $color = $this->_hex2Rgb($rule->xpath('.//sld:CssParameter')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
         }

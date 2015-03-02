@@ -84,7 +84,7 @@ class Kml
      *
      * @return object $this
      */
-    public function get_request($file_name = "", $coords = array())
+    public function getRequest($file_name = "", $coords = array())
     {
         $this->coords         = ($coords) ? $coords : Utilities::loadParam('coords', array());
         $this->file_name      = ($file_name) ? $file_name : Utilities::loadParam('file_name', time());
@@ -100,11 +100,11 @@ class Kml
      */
     public function createOutput()
     {
-        $clean_filename = Mappr::clean_filename($this->file_name);
+        $clean_filename = Mappr::cleanFilename($this->file_name);
 
-        $this->set_metadata("name", "SimpleMappr: " . $clean_filename);
+        $this->setMetadata("name", "SimpleMappr: " . $clean_filename);
 
-        $this->add_coordinates();
+        $this->addCoordinates();
 
         $this->_kml = new \XMLWriter();
 
@@ -118,10 +118,10 @@ class Kml
         $this->_kml->writeAttribute('xmlns:gx', 'http://www.google.com/kml/ext/2.2');
 
         $this->_kml->startElement('Document');
-        $this->_kml->writeElement('name', $this->get_metadata('name'));
+        $this->_kml->writeElement('name', $this->getMetadata('name'));
 
         //Style elements
-        for ($i=0; $i<=count($this->get_all_placemarks())-1; $i++) {
+        for ($i=0; $i<=count($this->_getAllPlacemarks())-1; $i++) {
             $this->_kml->startElement('Style');
             $this->_kml->writeAttribute('id', 'pushpin'.$i);
             $this->_kml->startElement('IconStyle');
@@ -134,18 +134,18 @@ class Kml
             $this->_kml->endElement(); //end Style
         }
 
-        foreach ($this->get_all_placemarks() as $key => $placemarks) {
+        foreach ($this->_getAllPlacemarks() as $key => $placemarks) {
             $this->_kml->startElement('Folder');
             $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
-            $this->_kml->writeElement('name', $this->get_placemark($key, 0, 'name'));
+            $this->_kml->writeElement('name', $this->_getPlacemark($key, 0, 'name'));
             foreach ($placemarks as $id => $placemark) {
                 $this->_kml->startElement('Placemark');
                 $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
-                $this->_kml->writeElement('name', $this->get_placemark($key, $id, 'name'));
-                $this->_kml->writeElement('description', $this->get_placemark($key, $id, 'coordinate'));
+                $this->_kml->writeElement('name', $this->_getPlacemark($key, $id, 'name'));
+                $this->_kml->writeElement('description', $this->_getPlacemark($key, $id, 'coordinate'));
                 $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
                 $this->_kml->startElement('Point');
-                $this->_kml->writeElement('coordinates', $this->get_placemark($key, $id, 'coordinate') . ',0');
+                $this->_kml->writeElement('coordinates', $this->_getPlacemark($key, $id, 'coordinate') . ',0');
                 $this->_kml->endElement(); //end Point
                 $this->_kml->endElement(); //end Placemark
             }
@@ -166,7 +166,7 @@ class Kml
      *
      * @return void
      */
-    public function set_metadata($name, $value)
+    public function setMetadata($name, $value)
     {
         $this->_metadata[$name] = $value;
     }
@@ -178,7 +178,7 @@ class Kml
      *
      * @return string The metadata value.
      */
-    public function get_metadata($name)
+    public function getMetadata($name)
     {
         return $this->_metadata[$name];
     }
@@ -193,7 +193,7 @@ class Kml
      *
      * @return void
      */
-    public function set_placemark($key, $mark, $name, $value)
+    public function setPlacemark($key, $mark, $name, $value)
     {
         $this->_placemark[$key][$mark][$name] = $value;
     }
@@ -207,7 +207,7 @@ class Kml
      *
      * @return string The placemark.
      */
-    private function get_placemark($key, $mark, $name)
+    private function _getPlacemark($key, $mark, $name)
     {
         return $this->_placemark[$key][$mark][$name];
     }
@@ -217,7 +217,7 @@ class Kml
      *
      * @return void
      */
-    private function get_all_placemarks()
+    private function _getAllPlacemarks()
     {
         return $this->_placemark;
     }
@@ -227,24 +227,24 @@ class Kml
      *
      * @return void
      */
-    public function add_coordinates()
+    public function addCoordinates()
     {
         for ($j=0; $j<=count($this->coords)-1; $j++) {
             $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : "";
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-                $row = explode("\n", Mappr::remove_empty_lines($whole));  //split the lines that have data
+                $row = explode("\n", Mappr::removeEmptyLines($whole));  //split the lines that have data
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = Mappr::make_coordinates($loc);
+                    $coord_array = Mappr::makeCoordinates($loc);
                     $coord = new \stdClass();
-                    $coord->x = ($coord_array[1]) ? Mappr::clean_coord($coord_array[1]) : null;
-                    $coord->y = ($coord_array[0]) ? Mappr::clean_coord($coord_array[0]) : null;
-                    if (Mappr::check_on_earth($coord) && $title != "") {  //only add point when data are good & a title
-                        $this->set_placemark($j, $point_key, "name", $title);
-                        $this->set_placemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
+                    $coord->x = ($coord_array[1]) ? Mappr::cleanCoord($coord_array[1]) : null;
+                    $coord->y = ($coord_array[0]) ? Mappr::cleanCoord($coord_array[0]) : null;
+                    if (Mappr::checkOnEarth($coord) && $title != "") {  //only add point when data are good & a title
+                        $this->setPlacemark($j, $point_key, "name", $title);
+                        $this->setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;
                     }
                 }
