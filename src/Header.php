@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Header handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Header
 {
@@ -98,7 +103,14 @@ class Header
         'public/stylesheets/raw/styles.css'
     );
 
-    public static function flush_cache($output = true)
+    /**
+     * Flush the caches
+     *
+     * @param bool $output If output is required
+     *
+     * @return echo json_encoded $response
+     */
+    public static function flushCache($output = true)
     {
         foreach (glob(dirname(__DIR__) . self::$_css_cache_path . "*.{css}", GLOB_BRACE) as $file) {
             unlink($file);
@@ -108,12 +120,12 @@ class Header
         }
 
         $cloudflare_flush = "n/a";
-        if (self::cloudflare_enabled()) {
-            $cloudflare_flush = (self::flush_cloudflare()) ? true : false;
+        if (self::cloudflareEnabled()) {
+            $cloudflare_flush = (self::flushCloudflare()) ? true : false;
         }
 
         if ($output) {
-            self::set_header("json");
+            self::setHeader("json");
             $response = array(
                 "files" => true,
                 "cloudflare" => $cloudflare_flush
@@ -122,7 +134,12 @@ class Header
         }
     }
 
-    public static function flush_cloudflare()
+    /**
+     * Flush CloudFlare caches
+     *
+     * @return bool
+     */
+    public static function flushCloudflare()
     {
         $URL = "https://www.cloudflare.com/api_json.html";
 
@@ -157,7 +174,12 @@ class Header
         return false;
     }
 
-    public static function cloudflare_enabled()
+    /**
+     * Determine if CloudFlare is enabled
+     *
+     * @return bool
+     */
+    public static function cloudflareEnabled()
     {
         if (defined('CLOUDFLARE_KEY') && !empty(CLOUDFLARE_KEY)) {
             return true;
@@ -166,7 +188,16 @@ class Header
         }
     }
 
-    public static function set_header($mime = "", $filename = "", $filesize = "")
+    /**
+     * Set the HTTP response headers
+     *
+     * @param string $mime     Shortcut for the mimetype
+     * @param string $filename The filename requested in a download
+     * @param string $filesize The filesize
+     *
+     * @return void
+     */
+    public static function setHeader($mime = "", $filename = "", $filesize = "")
     {
         header("Pragma: public");
         header("Expires: 0");
@@ -236,6 +267,11 @@ class Header
         }
     }
 
+    /**
+     * The constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         $this->make_hash()
@@ -249,7 +285,8 @@ class Header
      * Obtain a file name in the cache directory
      *
      * @param string $dir The fully qualified directory
-     * @param string $x The file extension
+     * @param string $x   The file extension
+     *
      * @return array An array of cached files
      */
     private function files_cached($dir, $x='js')
@@ -264,6 +301,11 @@ class Header
         return $results;
     }
 
+    /**
+     * Make an MD5 hash for the minified js and css files
+     *
+     * @return object $this
+     */
     private function make_hash()
     {
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
@@ -274,6 +316,8 @@ class Header
 
     /**
      * Add javascript file(s) from remote CDN
+     *
+     * @return object $this
      */
     private function add_remote_js()
     {
@@ -286,8 +330,11 @@ class Header
 
     /**
      * Add uncombined, local javascript files
+     *
+     * @return object $this
      */
-    private function add_uncombined_js() {
+    private function add_uncombined_js()
+    {
         foreach ($this->local_js_uncombined as $key => $js_file) {
             $this->addJS($key, $js_file);
         }
@@ -296,6 +343,8 @@ class Header
 
     /**
      * Add existing, minified javascript to header or create if does not already exist
+     *
+     * @return object $this
      */
     private function add_combined_js()
     {
@@ -344,6 +393,8 @@ class Header
 
     /**
      * Add existing, minified css to header or create if does not already exist
+     *
+     * @return object $this
      */
     private function add_combined_css()
     {
@@ -379,7 +430,8 @@ class Header
      * Add javascript file to array
      *
      * @param string $key Shorthand name for file
-     * @param string $js Relative directory of file
+     * @param string $js  Relative directory of file
+     *
      * @return void
      */
     private function addJS($key, $js)
@@ -391,6 +443,7 @@ class Header
      * Add css file to array
      *
      * @param string $css The relative path of the css file
+     *
      * @return void
      */
     private function addCSS($css)
@@ -398,6 +451,11 @@ class Header
         $this->_css_header[] = $css;
     }
 
+    /**
+     * Get the hash created from existing file name
+     *
+     * @return string $hash
+     */
     public function getHash()
     {
         $cache = $this->files_cached(dirname(__DIR__) . self::$_css_cache_path, "css");
@@ -411,6 +469,8 @@ class Header
 
     /**
      * Create the css header
+     *
+     * @return string
      */
     public function getCSSHeader()
     {
@@ -419,6 +479,8 @@ class Header
 
     /**
      * Create the javascript header
+     *
+     * @return string The header
      */
     public function getJSFooter()
     {
@@ -441,6 +503,11 @@ class Header
         return $header;
     }
 
+    /**
+     * Get all the js for the footer
+     *
+     * @return string $foot
+     */
     public function getJSVars()
     {
         $foot = $this->getAnalytics();
@@ -450,6 +517,11 @@ class Header
         return $foot;
     }
 
+    /**
+     * Determine if session is an administrator account
+     *
+     * @return bool
+     */
     private function isAdministrator()
     {
         if (isset($_SESSION['simplemappr']) && User::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {

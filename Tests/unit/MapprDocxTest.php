@@ -41,7 +41,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
     {
         $this->mappr_docx->get_request()->execute();
         ob_start();
-        $this->mappr_docx->create_output();
+        $this->mappr_docx->createOutput();
         $output = ob_get_contents();
         ob_end_clean();
         $finfo = new finfo(FILEINFO_MIME);

@@ -43,9 +43,9 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetCapabilities()
     {
-        $mappr_wms = $this->mappr_wms->get_request()->make_service()->execute();
+        $mappr_wms = $this->mappr_wms->get_request()->makeService()->execute();
         ob_start();
-        $mappr_wms->create_output();
+        $mappr_wms->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
@@ -65,9 +65,9 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
             'WIDTH' => 400,
             'HEIGHT' => 200
         );
-        $mappr_wms = $this->mappr_wms->get_request()->make_service()->execute();
+        $mappr_wms = $this->mappr_wms->get_request()->makeService()->execute();
         ob_start();
-        $mappr_wms->create_output();
+        $mappr_wms->createOutput();
         $image = imagecreatefromstring(ob_get_contents());
         ob_end_clean();
         $this->assertEquals(imagesx($image), 400);

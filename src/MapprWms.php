@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Web Map Service (WMS) for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprWms extends Mappr
 {
@@ -65,22 +70,24 @@ class MapprWms extends Mappr
     );
 
     /**
-     * Override the method in the MAPPR class
+     * Override the method in the parent class
+     *
+     * @return object $this
      */
     public function get_request()
     {
-        $this->params['VERSION']      = $this->load_param('VERSION', '1.1.1');
-        $this->params['REQUEST']      = $this->load_param('REQUEST', 'GetCapabilities');
-        $this->params['LAYERS']       = $this->load_param('LAYERS', "");
-        $this->params['MAXFEATURES']  = $this->load_param('MAXFEATURES', $this->get_max_features());
-        $this->params['FORMAT']       = $this->load_param('FORMAT', 'image/png');
-        $this->params['FILTER']       = $this->load_param('FILTER', null);
-        $this->params['SRS']          = $this->load_param('SRS', 'epsg:4326');
-        $this->params['CRS']          = $this->load_param('CRS', 'CRS:84');
-        $this->params['BBOX']         = $this->load_param('BBOX', '-180,-90,180,90');
-        $this->params['WIDTH']        = $this->load_param('WIDTH', '200');
-        $this->params['HEIGHT']       = $this->load_param('HEIGHT', '100');
-        $this->params['TRANSPARENT']  = $this->load_param('TRANSPARENT', true);
+        $this->params['VERSION']      = $this->loadParam('VERSION', '1.1.1');
+        $this->params['REQUEST']      = $this->loadParam('REQUEST', 'GetCapabilities');
+        $this->params['LAYERS']       = $this->loadParam('LAYERS', "");
+        $this->params['MAXFEATURES']  = $this->loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['FORMAT']       = $this->loadParam('FORMAT', 'image/png');
+        $this->params['FILTER']       = $this->loadParam('FILTER', null);
+        $this->params['SRS']          = $this->loadParam('SRS', 'epsg:4326');
+        $this->params['CRS']          = $this->loadParam('CRS', 'CRS:84');
+        $this->params['BBOX']         = $this->loadParam('BBOX', '-180,-90,180,90');
+        $this->params['WIDTH']        = $this->loadParam('WIDTH', '200');
+        $this->params['HEIGHT']       = $this->loadParam('HEIGHT', '100');
+        $this->params['TRANSPARENT']  = $this->loadParam('TRANSPARENT', true);
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -108,7 +115,7 @@ class MapprWms extends Mappr
         }
 
         $this->layers     = $this->wms_layers;
-        $this->bbox_map   = $this->load_param('bbox', '-180,-90,180,90');
+        $this->bbox_map   = $this->loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
         $this->image_size = array(900,450);
@@ -120,22 +127,30 @@ class MapprWms extends Mappr
      * Set the simplification filter for a WFS request
      *
      * @param int $int The maximum number of features
+     *
      * @return void
      */
-    public function set_max_features($int)
+    public function setMaxFeatures($int)
     {
         $this->_filter_simplify = $int;
     }
 
-    private function get_max_features()
+    /**
+     * Get the maximum number of features
+     *
+     * @return int
+     */
+    private function _getMaxFeatures()
     {
         return $this->_filter_simplify;
     }
 
     /**
      * Construct metadata for WFS
+     *
+     * @return object $this
      */
-    public function make_service()
+    public function makeService()
     {
         $this->map_obj->setMetaData("name", "SimpleMappr Web Map Service");
         $this->map_obj->setMetaData("wms_title", "SimpleMappr Web Map Service");
@@ -148,11 +163,16 @@ class MapprWms extends Mappr
         $this->map_obj->setMetaData("wms_enable_request", "*");
         $this->map_obj->setMetaData("wms_connectiontimeout", "60");
 
-        $this->make_request();
+        $this->_makeRequest();
         return $this;
     }
 
-    private function make_request()
+    /**
+     * Make the request
+     *
+     * @return object $this
+     */
+    private function _makeRequest()
     {
         $this->_req = ms_newOwsRequestObj();
         $this->_req->setParameter("SERVICE", "wms");
@@ -176,18 +196,20 @@ class MapprWms extends Mappr
     }
 
     /**
-     * Produce the  final output
+     * Implement the createOutput method from the parent class
+     *
+     * @return void
      */
-    public function create_output()
+    public function createOutput()
     {
         ms_ioinstallstdouttobuffer();
         $this->map_obj->owsDispatch($this->_req);
         $contenttype = ms_iostripstdoutbuffercontenttype();
         if (strtolower($this->params['REQUEST']) == 'getcapabilities') {
-            Header::set_header("xml");
+            Header::setHeader("xml");
             echo ms_iogetstdoutbufferstring();
         } else if (strtolower($this->params['REQUEST']) == 'getmap' || strtolower($this->params['REQUEST']) == 'getlegendgraphic') {
-            Header::set_header();
+            Header::setHeader();
             header('Content-type: ' . $contenttype);
             ms_iogetstdoutbufferbytes();
         }

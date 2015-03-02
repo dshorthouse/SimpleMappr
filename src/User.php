@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * User handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class User implements RestMethods
 {
@@ -56,7 +61,14 @@ class User implements RestMethods
         2 => 'administrator'
     );
 
-    public static function check_permission($role = 'user')
+    /**
+     * Check permissions, used in router
+     *
+     * @param string $role The role
+     *
+     * @return bool True/False
+     */
+    public static function checkPermission($role = 'user')
     {
         if (!isset($_SESSION)) {
             session_start();
@@ -77,6 +89,11 @@ class User implements RestMethods
         }
     }
 
+    /**
+     * The constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
@@ -85,6 +102,10 @@ class User implements RestMethods
 
     /**
      * Implemented index method
+     *
+     * @param object $params The parameters sent from the router
+     *
+     * @return object $this
      */
     public function index($params)
     {
@@ -117,7 +138,7 @@ class User implements RestMethods
                 ORDER BY " . $order;
 
         $this->_db->prepare($sql);
-        $this->results = $this->_db->fetch_all_object();
+        $this->results = $this->_db->fetchAllObject();
         return $this;
     }
 
@@ -125,6 +146,7 @@ class User implements RestMethods
      * Implemented show method
      *
      * @param int $id The User identifier
+     *
      * @return void
      */
     public function show($id)
@@ -133,6 +155,10 @@ class User implements RestMethods
 
     /**
      * Implemented create method
+     *
+     * @param array $content The content to create
+     *
+     * @return void
      */
     public function create($content)
     {
@@ -140,7 +166,10 @@ class User implements RestMethods
 
     /**
      * Implemented update method
-     * @param $int id The User identifier
+     *
+     * @param int $id The User identifier
+     *
+     * @return void
      */
     public function update($id)
     {
@@ -150,6 +179,7 @@ class User implements RestMethods
      * Implemented destroy method
      *
      * @param int $id The User identifier
+     *
      * @return void
      */
     public function destroy($id)
@@ -163,7 +193,7 @@ class User implements RestMethods
                 WHERE 
                     u.uid=:uid";
         $this->_db->prepare($sql);
-        $this->_db->bind_param(":uid", $id, 'integer');
+        $this->_db->bindParam(":uid", $id, 'integer');
         $this->_db->execute();
 
         return array("status" => "ok");

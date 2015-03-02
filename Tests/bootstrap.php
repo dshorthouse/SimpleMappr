@@ -60,7 +60,7 @@ function requireFiles()
 
 function flushCaches()
 {
-    \SimpleMappr\Header::flush_cache(false);
+    \SimpleMappr\Header::flushCache(false);
     $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
     foreach (new RecursiveIteratorIterator($dirItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
         if ($file->isFile() && $file->getFilename()[0] !== ".") {

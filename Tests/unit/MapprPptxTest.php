@@ -39,7 +39,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
     public function test_pptx_mime() {
         $this->mappr_pptx->get_request()->execute();
         ob_start();
-        $this->mappr_pptx->create_output();
+        $this->mappr_pptx->createOutput();
         $output = ob_get_contents();
         ob_end_clean();
         $finfo = new finfo(FILEINFO_MIME);

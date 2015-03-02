@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -41,36 +42,47 @@ use \ForceUTF8\Encoding;
 /**
  * Query handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprQuery extends Mappr
 {
     public $data = array();
 
+    /**
+     * Override get_request method in parent class
+     *
+     * @return object $this
+     */
     public function get_request()
     {
         $this->download         = false;
         $this->options          = array();
         $this->border_thickness = 1.25;
-        $this->width            = (float)$this->load_param('width', 900);
-        $this->height           = (float)$this->load_param('height', $this->width/2);
+        $this->width            = (float)$this->loadParam('width', 900);
+        $this->height           = (float)$this->loadParam('height', $this->width/2);
         $this->image_size       = array($this->width, $this->height);
-        $this->output           = $this->load_param('output', 'pnga');
-        $this->projection       = $this->load_param('projection', 'epsg:4326');
-        $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
-        $this->origin           = (int)$this->load_param('origin', false);
-        $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
-        $this->layers           = $this->load_param('layers', array());
-        $this->graticules       = $this->load_param('graticules', false);
-        $this->bbox_query       = $this->load_param('bbox_query', '0,0,0,0');
-        $this->queryLayer       = $this->load_param('qlayer', 'countries');
+        $this->output           = $this->loadParam('output', 'pnga');
+        $this->projection       = $this->loadParam('projection', 'epsg:4326');
+        $this->projection_map   = $this->loadParam('projection_map', 'epsg:4326');
+        $this->origin           = (int)$this->loadParam('origin', false);
+        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
+        $this->layers           = $this->loadParam('layers', array());
+        $this->graticules       = $this->loadParam('graticules', false);
+        $this->bbox_query       = $this->loadParam('bbox_query', '0,0,0,0');
+        $this->queryLayer       = $this->loadParam('qlayer', 'countries');
 
         return $this;
     }
 
     /**
      * Query a layer
+     *
+     * @return object $this
      */
     public function query_layer()
     {
@@ -131,7 +143,12 @@ class MapprQuery extends Mappr
         return $this;
     }
 
-    public function create_output()
+    /**
+     * Implemented createOutput method
+     *
+     * @return void
+     */
+    public function createOutput()
     {
     }
 

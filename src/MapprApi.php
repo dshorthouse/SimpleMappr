@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,18 +40,27 @@ namespace SimpleMappr;
 /**
  * API handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprApi extends Mappr
 {
     private $_coord_cols = array();
     private $_accepted_output = array('png', 'jpg', 'svg');
 
+    /**
+     * Override get_request method in parent class
+     *
+     * @return object $this
+     */
     public function get_request()
     {
         //ping API to return JSON
-        $this->ping             = $this->load_param('ping', false);
+        $this->ping             = $this->loadParam('ping', false);
 
         $this->method           = $_SERVER['REQUEST_METHOD'];
 
@@ -60,12 +70,12 @@ class MapprApi extends Mappr
 
         $this->url              = false;
         $this->url_content      = "";
-        $url                    = urldecode($this->load_param('url', false));
+        $url                    = urldecode($this->loadParam('url', false));
 
         if ($this->method == "POST" && $_FILES) {
-            $file = $this->moveFile();
+            $file = $this->_moveFile();
         } else {
-            $file = urldecode($this->load_param('file', false));
+            $file = urldecode($this->loadParam('file', false));
         }
 
         if ($url) {
@@ -75,32 +85,32 @@ class MapprApi extends Mappr
             $this->url = $file;
         }
 
-        $this->points           = $this->load_param('points', array());
-        $this->legend           = $this->load_param('legend', array());
-        $this->shape            = (is_array($this->load_param('shape', array()))) ? $this->load_param('shape', array()) : array($this->load_param('shape', array()));
-        $this->size             = (is_array($this->load_param('size', array()))) ? $this->load_param('size', array()) : array($this->load_param('size', array()));
-        $this->color            = (is_array($this->load_param('color', array()))) ? $this->load_param('color', array()) : array($this->load_param('color', array()));
+        $this->points           = $this->loadParam('points', array());
+        $this->legend           = $this->loadParam('legend', array());
+        $this->shape            = (is_array($this->loadParam('shape', array()))) ? $this->loadParam('shape', array()) : array($this->loadParam('shape', array()));
+        $this->size             = (is_array($this->loadParam('size', array()))) ? $this->loadParam('size', array()) : array($this->loadParam('size', array()));
+        $this->color            = (is_array($this->loadParam('color', array()))) ? $this->loadParam('color', array()) : array($this->loadParam('color', array()));
 
-        $this->outlinecolor     = $this->load_param('outlinecolor', null);
-        $this->border_thickness = (float)$this->load_param('thickness', 1.25);
+        $this->outlinecolor     = $this->loadParam('outlinecolor', null);
+        $this->border_thickness = (float)$this->loadParam('thickness', 1.25);
 
-        $shaded = $this->load_param('shade', array());
+        $shaded = $this->loadParam('shade', array());
         $this->regions = array(
             'data' => (array_key_exists('places', $shaded)) ? $shaded['places'] : "",
             'title' => (array_key_exists('title', $shaded)) ? $shaded['title'] : "",
             'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ", $shaded['color']) : "120 120 120"
         );
 
-        $this->output           = $this->load_param('output', 'pnga');
-        $this->projection       = $this->load_param('projection', 'epsg:4326');
+        $this->output           = $this->loadParam('output', 'pnga');
+        $this->projection       = $this->loadParam('projection', 'epsg:4326');
         $this->projection_map   = 'epsg:4326';
-        $this->origin           = (int)$this->load_param('origin', false);
+        $this->origin           = (int)$this->loadParam('origin', false);
 
-        $this->bbox_map         = $this->load_param('bbox', '-180,-90,180,90');
-        $this->zoom             = (int)$this->load_param('zoom', false);
+        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
+        $this->zoom             = (int)$this->loadParam('zoom', false);
 
         //convert layers as comma-separated values to an array
-        $_layers                = explode(',', $this->load_param('layers', ""));
+        $_layers                = explode(',', $this->loadParam('layers', ""));
         $layers = array();
         $layers['countries']    = true;
         foreach ($_layers as $_layer) {
@@ -109,23 +119,23 @@ class MapprApi extends Mappr
             }
         }
         $this->layers           = $layers;
-        $this->graticules       = $this->load_param('graticules', false);
-        $this->gridspace        = $this->load_param('spacing', false);
-        $this->gridlabel        = $this->load_param('gridlabel', "true");
+        $this->graticules       = $this->loadParam('graticules', false);
+        $this->gridspace        = $this->loadParam('spacing', false);
+        $this->gridlabel        = $this->loadParam('gridlabel', "true");
 
-        if ($this->load_param('border', false)) {
+        if ($this->loadParam('border', false)) {
             $this->options['border'] = true;
         }
-        if ($this->load_param('legend', false)) {
+        if ($this->loadParam('legend', false)) {
             $this->options['legend'] = true;
         }
-        if ($this->load_param('scalebar', false)) {
+        if ($this->loadParam('scalebar', false)) {
             $this->options['scalebar'] = true;
         }
 
         //set the image size from width & height to array(width, height)
-        $this->width            = (float)$this->load_param('width', 900);
-        $this->height           = (float)$this->load_param('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
+        $this->width            = (float)$this->loadParam('width', 900);
+        $this->height           = (float)$this->loadParam('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 900; $this->height = 450;
         }
@@ -140,18 +150,20 @@ class MapprApi extends Mappr
 
     /**
      * Override method in parent class
+     *
+     * @return void
      */ 
     public function add_coordinates()
     {
         if ($this->url || $this->points) {
             if ($this->url) {
-                $this->parseUrl();
+                $this->_parseUrl();
             }
             if ($this->points) {
-                $this->parsePoints();
+                $this->_parsePoints();
             }
             if ($this->zoom) {
-                $this->setZoom();
+                $this->_setZoom();
             }
         }
 
@@ -217,6 +229,8 @@ class MapprApi extends Mappr
 
     /**
      * Override method in the parent class
+     *
+     * @return void
      */
     public function add_regions()
     {
@@ -266,6 +280,8 @@ class MapprApi extends Mappr
 
     /**
      * Override method in parent class
+     *
+     * @return void
      */
     public function add_graticules()
     {
@@ -317,6 +333,8 @@ class MapprApi extends Mappr
 
     /**
      * Override method in parent class
+     *
+     * @return void
      */
     public function add_scalebar()
     {
@@ -343,6 +361,11 @@ class MapprApi extends Mappr
         }
     }
 
+    /**
+     * Override method to add legen in parent class
+     *
+     * @return void
+     */
     public function add_legend()
     {
         $this->map_obj->legend->set("postlabelcache", 1);
@@ -361,19 +384,24 @@ class MapprApi extends Mappr
         }
     }
 
-    public function create_output()
+    /**
+     * Implemented createOutput method
+     *
+     * @return json_encoded $output
+     */
+    public function createOutput()
     {
         if ($this->ping) {
-            Header::set_header("json");
+            Header::setHeader("json");
             return json_encode(array("status" => "ok"));
         } else {
             if ($this->method == 'GET') {
-                Header::set_header($this->output);
+                Header::setHeader($this->output);
                 $this->image->saveImage("");
             } else if ($this->method == 'OPTIONS') { //For CORS requests
                 http_response_code(204);
             } else {
-                Header::set_header("json");
+                Header::setHeader("json");
                 $output = array(
                     'imageURL' => $this->image->saveWebImage(),
                     'expiry'   => date('c', time() + (6 * 60 * 60))
@@ -383,7 +411,12 @@ class MapprApi extends Mappr
         }
     }
 
-    private function moveFile()
+    /**
+     * Move an uploaded file
+     *
+     * @return string The path of the uploaded file
+     */
+    private function _moveFile()
     {
         $uploadfile = MAPPR_UPLOAD_DIRECTORY . "/" . md5(time()) . '.txt';
         if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
@@ -398,13 +431,15 @@ class MapprApi extends Mappr
 
     /**
      * Set a zoom level
+     *
+     * @return void
      */
-    private function setZoom()
+    private function _setZoom()
     {
         if ($this->zoom == 0 || $this->zoom > 10) {
             return;
         }
-        $midpoint = $this->getMidpoint($this->_coord_cols);
+        $midpoint = $this->_getMidpoint($this->_coord_cols);
         $x = $this->map_obj->width*(($midpoint[0] + 180)/360);
         $y = $this->map_obj->height*((90 - $midpoint[1])/180);
         $zoom_point = ms_newPointObj();
@@ -416,9 +451,10 @@ class MapprApi extends Mappr
      * Find the geographic midpoint of a nested array of exploded dd coords
      *
      * @param array $array Array of coordinates
+     *
      * @return array(long,lat)
      */
-    private function getMidpoint($array)
+    private function _getMidpoint($array)
     {
         $x = $y = $z = array();
         foreach ($array as $coords) {
@@ -440,8 +476,10 @@ class MapprApi extends Mappr
 
     /**
      * Parse all POSTed data into cleaned array of points
+     *
+     * @return void
      */
-    private function parsePoints()
+    private function _parsePoints()
     {
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
         $coord_array = array();
@@ -456,11 +494,13 @@ class MapprApi extends Mappr
 
     /**
      * Discover format of URL and parse it
+     *
+     * @return void
      */
-    private function parseUrl()
+    private function _parseUrl()
     {
         if (strstr($this->url, MAPPR_UPLOAD_DIRECTORY)) {
-            $this->parseFile();
+            $this->_parseFile();
             unlink($this->url);
         } else {
             $headers = get_headers($this->url, 1);
@@ -470,17 +510,19 @@ class MapprApi extends Mappr
             $this->url_content = @file_get_contents($this->url);
             preg_match_all('/[<>{}\[\]]/', $this->url_content, $match);
             if (count($match[0]) >= 4) {
-                $this->parseGeo();
+                $this->_parseGeo();
             } else {
-                $this->parseFile();
+                $this->_parseFile();
             }
         }
     }
 
     /**
      * Parse text file into cleaned array of points
+     *
+     * @return void
      */
-    private function parseFile()
+    private function _parseFile()
     {
         if (@$fp = fopen($this->url, 'r')) {
             while ($line = fread($fp, 1024)) {
@@ -514,8 +556,10 @@ class MapprApi extends Mappr
 
     /**
      * Parse GeoRSS, GeoJSON, WKT, KML into cleaned array of points
+     *
+     * @return void
      */
-    private function parseGeo()
+    private function _parseGeo()
     {
         $geometries = \geoPHP::load($this->url_content);
         if ($geometries) {

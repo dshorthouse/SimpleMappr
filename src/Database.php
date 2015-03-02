@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -41,14 +42,23 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Database class for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Database
 {
     private $_link;
     private $_handle;
 
+    /**
+     * Constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         $creds = $this->credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
@@ -61,6 +71,7 @@ class Database
      * Prepare a SQL request
      *
      * @param string $sql A SQL statement.
+     *
      * @return object The connection handle.
      */
     public function prepare($sql)
@@ -73,6 +84,7 @@ class Database
      * Execute a SQL request
      *
      * @param string $sql A SQL statement
+     *
      * @return object The resultset
      */
     public function exec($sql)
@@ -84,6 +96,7 @@ class Database
      * Query a SQL request
      *
      * @param string $sql A SQL statement
+     *
      * @return object The resultset
      */
     public function query($sql)
@@ -94,12 +107,13 @@ class Database
     /**
      * Bind parameters from a prepared SQL connection
      *
-     * @param string $key The parameter to be bound.
-     * @param string/int $value The value to be set.
-     * @param string/int $type The type of data.
+     * @param string $key   The parameter to be bound.
+     * @param string $value The value to be set.
+     * @param string $type  The type of data.
+     *
      * @return object The connection handle.
      */
-    public function bind_param($key, $value, $type = 'integer')
+    public function bindParam($key, $value, $type = 'integer')
     {
         $pdo_type = ($type == 'integer') ? \PDO::PARAM_INT : \PDO::PARAM_STR;
         $this->_handle->bindParam($key, $value, $pdo_type);
@@ -107,6 +121,8 @@ class Database
 
     /**
      * Execute a prepared handle
+     *
+     * @return void
      */
     public function execute()
     {
@@ -118,7 +134,7 @@ class Database
      *
      * @return int The affected row count of the last executed statement.
      */
-    public function row_count()
+    public function rowCount()
     {
         return $this->_handle->rowCount();
     }
@@ -128,7 +144,7 @@ class Database
      *
      * @return object The first resultset as an object.
      */
-    public function fetch_first_object()
+    public function fetchFirstObject()
     {
         $this->execute();
         return $this->_handle->fetch(\PDO::FETCH_OBJ);
@@ -139,7 +155,7 @@ class Database
      *
      * @return array The resultset as an array of objects.
      */
-    public function fetch_all_object()
+    public function fetchAllObject()
     {
         $this->execute();
         return $this->_handle->fetchAll(\PDO::FETCH_OBJ);
@@ -150,7 +166,7 @@ class Database
      *
      * @return array The first resultset as an array.
      */
-    public function fetch_first_array()
+    public function fetchFirstArray()
     {
         $this->execute();
         return $this->_handle->fetch();
@@ -161,7 +177,7 @@ class Database
      *
      * @return array The resultset as an array of arrays.
      */
-    public function fetch_all_array()
+    public function fetchAllArray()
     {
         $this->execute();
         return $this->_handle->fetchAll();
@@ -171,10 +187,11 @@ class Database
      * Insert a new record and return last inserted id.
      *
      * @param string $table The table name.
-     * @param array $data An array of all data to be inserted.
+     * @param array  $data  An array of all data to be inserted.
+     *
      * @return int The last inserted id.
      */
-    public function query_insert($table, $data = array())
+    public function queryInsert($table, $data = array())
     {
         if (empty($data)) {
             return;
@@ -188,7 +205,7 @@ class Database
 
         $this->prepare($sql);
         foreach ($data as $key => $value) {
-            $this->bind_param(":{$key}", $value);
+            $this->bindParam(":{$key}", $value);
         }
         $this->execute();
         return $this->last_insert();
@@ -198,10 +215,12 @@ class Database
      * Update an existing record.
      *
      * @param string $table The table name.
-     * @param array $data An array of data to be updated.
+     * @param array  $data  An array of data to be updated.
      * @param string $where A where statement.
+     *
+     * @return void
      */
-    public function query_update($table, $data = array(), $where)
+    public function queryUpdate($table, $data, $where)
     {
         if (empty($data) || !$where) {
             return;
@@ -223,10 +242,10 @@ class Database
 
         $this->prepare($sql);
         foreach ($data as $key => $val) {
-            $this->bind_param(":{$key}", $val);
+            $this->bindParam(":{$key}", $val);
         }
         if (count($where_parts) == 2) {
-            $this->bind_param(":{$where_parts[0]}", trim($where_parts[1]));
+            $this->bindParam(":{$where_parts[0]}", trim($where_parts[1]));
         }
         $this->execute();
     }
@@ -234,7 +253,8 @@ class Database
     /**
      * Make PDO connection string and get credentials from parsed Phinx YML.
      *
-     * @param array $config.
+     * @param array $config Config array from parsed YML.
+     *
      * @return array PDO connection, username, password.
      */
     private function credentials($config)

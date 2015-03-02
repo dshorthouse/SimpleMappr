@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Application class for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprApplication extends Mappr
 {
@@ -49,7 +54,7 @@ class MapprApplication extends Mappr
     *
     * @return void
     */
-    public function create_output()
+    public function createOutput()
     {
         switch($this->output) {
         case 'tif':
@@ -58,7 +63,7 @@ class MapprApplication extends Mappr
             $image_filename = basename($this->image_url);
             $clean_filename = self::clean_filename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
-            Header::set_header('tif', $clean_filename, $filesize);
+            Header::setHeader('tif', $clean_filename, $filesize);
             ob_clean();
             flush();
             readfile($this->tmp_path.$image_filename);
@@ -70,7 +75,7 @@ class MapprApplication extends Mappr
             $image_filename = basename($this->image_url);
             $clean_filename = self::clean_filename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
-            Header::set_header('png', $clean_filename, $filesize);
+            Header::setHeader('png', $clean_filename, $filesize);
             ob_clean();
             flush();
             readfile($this->tmp_path.$image_filename);
@@ -78,7 +83,7 @@ class MapprApplication extends Mappr
 
         case 'svg':
             $clean_filename = self::clean_filename($this->file_name, $this->output);
-            Header::set_header('svg', $clean_filename);
+            Header::setHeader('svg', $clean_filename);
             $this->image->saveImage("");
             break;
 

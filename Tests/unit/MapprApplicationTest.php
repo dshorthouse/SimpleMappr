@@ -24,7 +24,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     {
         $mappr = $this->setMapprDefaults(new \SimpleMappr\MapprApplication());
         $this->mappr = $mappr->get_request()->execute();
-        $this->output = $this->mappr->create_output();
+        $this->output = $this->mappr->createOutput();
     }
 
     /**
@@ -49,10 +49,10 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     /**
      * Test that slashes are added.
      */
-    public function test_add_slashes_extended()
+    public function test_addSlashesExtended()
     {
         $data = array(array('title' => 'my "title"'));
-        $add_slashes = \SimpleMappr\Mappr::add_slashes_extended($data);
+        $add_slashes = \SimpleMappr\Mappr::addSlashesExtended($data);
         $this->assertEquals($add_slashes[0]['title'], "my \\\"title\\\"");
     }
 

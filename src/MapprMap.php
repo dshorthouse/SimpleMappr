@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Map handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprMap extends Mappr
 {
@@ -50,8 +55,9 @@ class MapprMap extends Mappr
     /**
      * Constructor
      *
-     * @param int $id Identifier for the map
+     * @param int    $id        Identifier for the map
      * @param string $extension File extension
+     *
      * @return void
      */
     function __construct($id, $extension)
@@ -63,20 +69,22 @@ class MapprMap extends Mappr
 
     /**
      * Override the method in the parent class
+     *
+     * @return object $this
      */
     public function get_request()
     {
         if (!$this->_id) {
-            $this->set_not_found();
+            $this->_setNotFound();
             exit();
         }
         $db = new Database();
         $sql = "SELECT map FROM maps WHERE mid=:mid";
         $db->prepare($sql);
-        $db->bind_param(":mid", $this->_id, 'integer');
-        $record = $db->fetch_first_object($sql);
+        $db->bindParam(":mid", $this->_id, 'integer');
+        $record = $db->fetchFirstObject($sql);
         if (!$record) {
-            $this->set_not_found();
+            $this->_setNotFound();
             exit();
         }
 
@@ -101,33 +109,38 @@ class MapprMap extends Mappr
             $this->bbox_map = '-180,-90,180,90';
         }
         if (!isset($this->origin)) {
-            $this->origin = (int)$this->load_param('origin', false);
+            $this->origin = (int)$this->loadParam('origin', false);
         }
 
         $this->download         = true;
         $this->watermark        = true;
 
         unset($this->options['border']);
-        $this->width            = (float)$this->load_param('width', 800);
-        $this->height           = (float)$this->load_param('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+        $this->width            = (float)$this->loadParam('width', 800);
+        $this->height           = (float)$this->loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 800; $this->height = 400;
         }
 
-        if ($this->load_param('legend', false) == "true") {
+        if ($this->loadParam('legend', false) == "true") {
             $this->options['legend'] = true;
-        } else if($this->load_param('legend', false) == "false") {
+        } elseif ($this->loadParam('legend', false) == "false") {
             $this->options['legend'] = false;
         }
 
         $this->image_size       = array($this->width, $this->height);
-        $this->callback         = $this->load_param('callback', null);
+        $this->callback         = $this->loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
 
         return $this;
     }
 
-    private function set_not_found()
+    /**
+     * Set default not found image and 404
+     *
+     * @return void
+     */
+    private function _setNotFound()
     {
         http_response_code(404);
         switch ($this->_extension) {
@@ -150,6 +163,8 @@ class MapprMap extends Mappr
 
     /**
      * Override the method in the parent class
+     *
+     * @return object $this
      */
     public function execute()
     {
@@ -161,6 +176,8 @@ class MapprMap extends Mappr
 
     /**
      * Override the method in the parent class
+     *
+     * @return void
      */
     public function add_graticules()
     {
@@ -209,6 +226,8 @@ class MapprMap extends Mappr
 
     /**
      * Override the method in the parent class
+     *
+     * @return void
      */
     public function add_scalebar()
     {
@@ -234,7 +253,12 @@ class MapprMap extends Mappr
         }
     }
 
-    private function get_coordinates()
+    /**
+     * Get all coordinates in KML format
+     *
+     * @return array $output
+     */
+    private function _getCoordinates()
     {
         $output = array();
         for ($j=0; $j<=count($this->coords)-1; $j++) {
@@ -263,7 +287,12 @@ class MapprMap extends Mappr
         return $output;
     }
 
-    public function create_output()
+    /**
+     * Implemented createOutput method
+     *
+     * @return void
+     */
+    public function createOutput()
     {
         switch($this->_extension) {
         case 'png':
@@ -273,10 +302,10 @@ class MapprMap extends Mappr
             break;
 
         case 'json':
-            Header::set_header('json');
+            Header::setHeader('json');
             $output = new \stdClass;
             $output->type = 'FeatureCollection';
-            $output->features = $this->get_coordinates();
+            $output->features = $this->_getCoordinates();
             $output->crs = array(
                 'type'       => 'name',
                 'properties' => array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84')
@@ -289,18 +318,18 @@ class MapprMap extends Mappr
             break;
 
         case 'kml':
-            Header::set_header('kml');
+            Header::setHeader('kml');
             $kml = new Kml;
-            $kml->get_request($this->_id, $this->coords)->create_output();
+            $kml->get_request($this->_id, $this->coords)->createOutput();
             break;
 
         case 'svg':
-            Header::set_header('svg');
+            Header::setHeader('svg');
             $this->image->saveImage("");
             break;
 
         default:
-            $this->set_not_found();
+            $this->_setNotFound();
         }
     }
 

@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,14 +40,23 @@ namespace SimpleMappr;
 /**
  * Citation handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Citation implements RestMethods
 {
     private $_db;
     private $_citations;
 
+    /**
+     * Constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         $this->_db = new Database();
@@ -54,6 +64,9 @@ class Citation implements RestMethods
 
     /**
      * Implemented index method
+     *
+     * @param object $params null
+     *
      * @return response array
      */
     public function index($params = null)
@@ -67,7 +80,7 @@ class Citation implements RestMethods
                 c.reference ASC, c.year DESC";
 
         $this->_db->prepare($sql);
-        $this->_citations = $this->_db->fetch_all_object();
+        $this->_citations = $this->_db->fetchAllObject();
         return $this->response();
     }
 
@@ -75,6 +88,7 @@ class Citation implements RestMethods
      * Implemented show method
      *
      * @param int $id the citation identifier
+     *
      * @return void
      */
     public function show($id)
@@ -83,6 +97,8 @@ class Citation implements RestMethods
 
     /**
      * Implemented create method
+     *
+     * @param object $params The parameters send from router
      *
      * @return response array
      */
@@ -107,7 +123,7 @@ class Citation implements RestMethods
             'first_author_surname' => $author
         );
 
-        $data['id'] = $this->_db->query_insert('citations', $data);
+        $data['id'] = $this->_db->queryInsert('citations', $data);
         $this->_citations = $data;
         return $this->response();
     }
@@ -116,6 +132,7 @@ class Citation implements RestMethods
      * Implemented update method
      *
      * @param int $param the citation identifier
+     *
      * @return void
      */
     public function update($param)
@@ -126,6 +143,7 @@ class Citation implements RestMethods
      * Implemented destroy method
      *
      * @param int $id The citation identifier
+     *
      * @return response array
      */
     public function destroy($id)
@@ -138,7 +156,7 @@ class Citation implements RestMethods
            WHERE 
             c.id=:id";
         $this->_db->prepare($sql);
-        $this->_db->bind_param(":id", $id, "integer");
+        $this->_db->bindParam(":id", $id, "integer");
         $this->_db->execute();
         $this->_citations = "";
         return $this->response();
@@ -148,11 +166,12 @@ class Citation implements RestMethods
      * Produce the JSON response
      *
      * @param string $type The type of response
+     *
      * @return void
      */
     private function response($type = null)
     {
-        if($type == 'error') {
+        if ($type == 'error') {
             return array("status" => "error");
         } else {
             return array("status" => "ok", "citations" => $this->_citations);

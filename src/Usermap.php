@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * User map handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Usermap implements RestMethods
 {
@@ -69,6 +74,10 @@ class Usermap implements RestMethods
 
     /**
      * Implemented index method
+     *
+     * @param object $params The parameters from the router
+     *
+     * @return object $this
      */
     public function index($params)
     {
@@ -89,21 +98,21 @@ class Usermap implements RestMethods
             $sql .=  " WHERE m.uid = :uid";
             $where['user'] = " WHERE m.uid = :uid";
             $this->_db->prepare($sql);
-            $this->_db->bind_param(":uid", $this->_uid);
+            $this->_db->bindParam(":uid", $this->_uid);
         } else {
             if ($this->filter_uid) {
                 $sql .= " WHERE m.uid = :uid_q";
                 $where['user'] = " WHERE m.uid = :uid_q";
                 $this->_db->prepare($sql);
-                $this->_db->bind_param(":uid_q", $this->filter_uid);        
+                $this->_db->bindParam(":uid_q", $this->filter_uid);        
             } else {
                 $limit = " LIMIT 100";
                 $this->_db->prepare($sql);
             }
         }
 
-        $this->total = $this->_db->fetch_first_object()->total;
-        $this->filter_username = $this->_db->fetch_first_object()->username;
+        $this->total = $this->_db->fetchFirstObject()->total;
+        $this->filter_username = $this->_db->fetchFirstObject()->username;
 
         $order = "m.created {$this->dir}";
 
@@ -142,17 +151,17 @@ class Usermap implements RestMethods
 
         $this->_db->prepare($sql);
         if (User::$roles[$this->_role] !== 'administrator') {
-            $this->_db->bind_param(":uid", $this->_uid, 'integer');
+            $this->_db->bindParam(":uid", $this->_uid, 'integer');
         } else {
             if ($this->filter_uid) {
-                $this->_db->bind_param(":uid_q", $this->filter_uid, 'integer');
+                $this->_db->bindParam(":uid_q", $this->filter_uid, 'integer');
             }
         }
         if (!empty($this->search)) {
-            $this->_db->bind_param(":search", "%{$this->search}%", 'string');
+            $this->_db->bindParam(":search", "%{$this->search}%", 'string');
         }
-        $this->results = $this->_db->fetch_all_object();
-        $this->row_count = $this->_db->row_count();
+        $this->results = $this->_db->fetchAllObject();
+        $this->row_count = $this->_db->rowCount();
 
         return $this;
     }
@@ -161,6 +170,7 @@ class Usermap implements RestMethods
      * Implemented show method
      *
      * @param int $id The map identifier.
+     *
      * @return void
      */
     public function show($id)
@@ -174,9 +184,9 @@ class Usermap implements RestMethods
                 mid = :mid";
 
         $this->_db->prepare($sql);
-        $this->_db->bind_param(":mid", $id, 'integer');
+        $this->_db->bindParam(":mid", $id, 'integer');
 
-        $record = $this->_db->fetch_first_object();
+        $record = $this->_db->fetchFirstObject();
         $data['mid'] = ($record) ? $record->mid : "";
         $data['map'] = ($record) ? json_decode($record->map, true) : "";
         $data['status'] = ($data['map']) ? 'ok' : 'failed';
@@ -186,6 +196,10 @@ class Usermap implements RestMethods
 
     /**
      * Implemented create method
+     *
+     * @param array $params The parameters from the router
+     *
+     * @return array $output
      */
     public function create($params)
     {
@@ -205,19 +219,19 @@ class Usermap implements RestMethods
                 WHERE
                     uid = :uid AND title = :title";
         $this->_db->prepare($sql);
-        $this->_db->bind_param(":uid", $this->_uid, 'integer');
-        $this->_db->bind_param(":title", $data['title'], 'string');
-        $record = $this->_db->fetch_first_object($sql);
+        $this->_db->bindParam(":uid", $this->_uid, 'integer');
+        $this->_db->bindParam(":title", $data['title'], 'string');
+        $record = $this->_db->fetchFirstObject($sql);
 
         $output = array();
         $output['status'] = "ok";
 
         if ($record) {
             unset($data['created']);
-            $this->_db->query_update('maps', $data, 'mid='.$record->mid);
+            $this->_db->queryUpdate('maps', $data, 'mid='.$record->mid);
             $output['mid'] = $record->mid;
         } else {
-            $output['mid'] = $this->_db->query_insert('maps', $data);
+            $output['mid'] = $this->_db->queryInsert('maps', $data);
         }
 
         return $output;
@@ -225,6 +239,10 @@ class Usermap implements RestMethods
 
     /**
      * Implemented update method
+     *
+     * @param int $id The identifer
+     *
+     * @return void
      */
     public function update($id)
     {
@@ -234,6 +252,7 @@ class Usermap implements RestMethods
      * Implemented destroy method
      *
      * @param int $id The map identifier.
+     *
      * @return void
      */
     public function destroy($id)
@@ -245,12 +264,12 @@ class Usermap implements RestMethods
                     mid = :mid";
         if (User::$roles[$this->_role] == 'administrator') {
             $this->_db->prepare($sql);
-            $this->_db->bind_param(":mid", $id, 'integer');
+            $this->_db->bindParam(":mid", $id, 'integer');
         } else {
             $sql .= " AND uid = :uid";
             $this->_db->prepare($sql);
-            $this->_db->bind_param(":mid", $id, 'integer');
-            $this->_db->bind_param(":uid", $this->_uid, 'integer');
+            $this->_db->bindParam(":mid", $id, 'integer');
+            $this->_db->bindParam(":uid", $this->_uid, 'integer');
         }
         $this->_db->execute();
         return array("status" => "ok");

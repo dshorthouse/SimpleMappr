@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Session handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Session
 {
@@ -68,8 +73,10 @@ class Session
 
     /**
      * Create a user's session
+     *
+     * @return void
      */
-    public static function set_session()
+    public static function setSession()
     {
         session_cache_limiter('nocache');
         session_start();
@@ -78,29 +85,35 @@ class Session
 
     /**
      * Close writing to user's session
+     *
+     * @return void
      */
-    public static function close_session()
+    public static function closeSession()
     {
         session_write_close();
     }
 
     /**
      * Destroy a user's session and the simplemappr cookie
+     *
+     * @return void
      */
     public static function destroy()
     {
-        self::set_session();
+        self::setSession();
         $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
         session_unset();
         session_destroy();
         setcookie("simplemappr", "", time() - 3600, "/", MAPPR_DOMAIN);
-        self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($locale));
+        self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($locale));
     }
 
     /**
      * Update the access field for the active user
+     *
+     * @return void
      */
-    public static function update_activity()
+    public static function updateActivity()
     {
         if (isset($_REQUEST["locale"]) && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
             http_response_code(404);
@@ -111,7 +124,7 @@ class Session
         $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
         if (!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
-            self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($cookie["locale"]));
+            self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($cookie["locale"]));
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
             if (isset($_COOKIE["simplemappr"])) {
                 $cookie["locale"] = "en_US";
@@ -123,27 +136,41 @@ class Session
         } else {
         }
 
-        self::select_locale();
+        self::selectLocale();
 
         if (!isset($_COOKIE["simplemappr"])) {
             return;
         }
 
-        self::write_session($cookie);
+        self::writeSession($cookie);
 
         $db = new Database();
-        $db->query_update('users', array('access' => time()), 'uid='.$_SESSION["simplemappr"]["uid"]);
+        $db->queryUpdate('users', array('access' => time()), 'uid='.$_SESSION["simplemappr"]["uid"]);
     }
 
+    /**
+     * Redirect to a URL and set a 303 code
+     *
+     * @param string $url The destination URL
+     *
+     * @return void
+     */
     public static function redirect($url)
     {
-        Header::set_header();
+        Header::setHeader();
         http_response_code(303);
         header("Location: " . $url);
         exit();
     }
 
-    public static function make_locale_param($locale = "")
+    /**
+     * Add a locale parameter to the URL path
+     *
+     * @param string $locale The locale
+     *
+     * @return string the path
+     */
+    public static function makeLocaleParam($locale = "")
     {
         $param = "";
         if ($locale && $locale != "en_US") {
@@ -152,7 +179,12 @@ class Session
         return $param;
     }
 
-    public static function select_locale()
+    /**
+     * Select the locale
+     *
+     * @return string The locale
+     */
+    public static function selectLocale()
     {
         if (isset($_REQUEST["locale"]) && array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
             putenv('LC_ALL='.self::$accepted_locales[$_REQUEST["locale"]]['code']);
@@ -175,42 +207,66 @@ class Session
      * Write a new session.
      *
      * @param array $data Content for the session.
+     *
+     * @return void
      */
-    public static function write_session($data)
+    public static function writeSession($data)
     {
-        self::set_session();
+        self::setSession();
         $_SESSION["simplemappr"] = $data;
-        self::close_session();
+        self::closeSession();
         setcookie("simplemappr", json_encode($data), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
     }
 
+    /**
+     * Constructor
+     *
+     * @param bool $new_session Create a new session or destroy one
+     *
+     * @return void
+     */
     function __construct($new_session)
     {
         if ($new_session) {
-            $this->execute();
+            $this->_execute();
         } else {
             self::destroy();
         }
     }
 
-    private function execute()
+    /**
+     * Executor method
+     *
+     * @return void
+     */
+    private function _execute()
     {
-        $this->get_locale()
-            ->get_token()
-            ->make_call()
-            ->make_session();
+        $this->_getLocale()
+            ->_getToken()
+            ->_makeCall()
+            ->_makeSession();
     }
 
-    private function get_locale()
+    /**
+     * Get the locale
+     *
+     * @return object $this
+     */
+    private function _getLocale()
     {
-        $this->_locale = Utilities::load_param('locale', 'en_US');
+        $this->_locale = Utilities::loadParam('locale', 'en_US');
         $this->_locale_code = (array_key_exists($this->_locale, self::$accepted_locales)) ? self::$accepted_locales[$this->_locale]['code'] : 'en_US.UTF-8';
         return $this;
     }
 
-    private function get_token()
+    /**
+     * The the token from the URL & if missing, redirect to homepage
+     *
+     * @return object $this
+     */
+    private function _getToken()
     {
-        $this->_token = Utilities::load_param('token', null);
+        $this->_token = Utilities::loadParam('token', null);
         if ($this->_token) {
             return $this;
         } else {
@@ -220,8 +276,10 @@ class Session
 
     /**
      * Execute POST to Janrain (formerly RPXNOW) to obtain OpenID account information
+     *
+     * @return object $this
      */
-    private function make_call()
+    private function _makeCall()
     {
         $post_data = array('token' => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json');
 
@@ -247,17 +305,19 @@ class Session
 
     /**
      * Create a session and set a cookie
+     *
+     * @return void
      */
-    private function make_session()
+    private function _makeSession()
     {
         if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
 
             $profile = $this->_auth_info['profile'];
 
             $identifier  = $profile['identifier'];
-            $email       = (isset($profile['email'])) ? Utilities::check_plain($profile['email']) : "";
-            $username    = (isset($profile['preferredUsername'])) ? Utilities::check_plain($profile['preferredUsername']) : $email;
-            $displayname = (isset($profile['displayName'])) ? Utilities::check_plain($profile['displayName']) : "";
+            $email       = (isset($profile['email'])) ? Utilities::checkPlain($profile['email']) : "";
+            $username    = (isset($profile['preferredUsername'])) ? Utilities::checkPlain($profile['preferredUsername']) : $email;
+            $displayname = (isset($profile['displayName'])) ? Utilities::checkPlain($profile['displayName']) : "";
 
             $user = array(
                 'identifier'  => $identifier,
@@ -281,17 +341,17 @@ class Session
                         u.identifier = :identifier";
 
             $db->prepare($sql);
-            $db->bind_param(":identifier", $identifier);
-            $result = $db->fetch_first_object();
+            $db->bindParam(":identifier", $identifier);
+            $result = $db->fetchFirstObject();
 
-            $user['uid'] = (!$result) ? $db->query_insert('users', $user) : $result->uid;
+            $user['uid'] = (!$result) ? $db->queryInsert('users', $user) : $result->uid;
             $user['locale'] = $this->_locale;
             $user['role'] = (!$result->role) ? 1 : $result->role;
 
-            $db->query_update('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
+            $db->queryUpdate('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
 
-            self::write_session($user);
-            self::redirect("http://" . MAPPR_DOMAIN . self::make_locale_param($user['locale']));
+            self::writeSession($user);
+            self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($user['locale']));
 
         } else {
             echo 'An error occured: ' . $this->_auth_info['err']['msg'];

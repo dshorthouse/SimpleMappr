@@ -91,7 +91,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->exec($stateprovinces_table);
         self::$db->exec($shares_table);
 
-        $user1 = self::$db->query_insert('users', array(
+        $user1 = self::$db->queryInsert('users', array(
           'uid' => 1,
           'identifier' => 'administrator',
           'username' => 'administrator',
@@ -100,7 +100,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'role' => 2
         ));
 
-        $user2 = self::$db->query_insert('users', array(
+        $user2 = self::$db->queryInsert('users', array(
           'uid' => 2,
           'identifier' => 'user',
           'username' => 'user',
@@ -315,33 +315,33 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'bad_points' => '',
         );
 
-        $map1 = self::$db->query_insert('maps', array(
+        $map1 = self::$db->queryInsert('maps', array(
           'uid' => $user1,
           'title' => 'Sample Map Administrator',
           'map' => json_encode($map_data1),
           'created' => time()
         ));
 
-        $map2 = self::$db->query_insert('maps', array(
+        $map2 = self::$db->queryInsert('maps', array(
           'uid' => $user2,
           'title' => 'Sample Map User',
           'map' => json_encode($map_data2),
           'created' => time()
         ));
 
-        self::$db->query_insert('shares', array(
+        self::$db->queryInsert('shares', array(
             'mid' => $map1,
             'created' => time()
         ));
 
-        self::$db->query_insert('citations', array(
+        self::$db->queryInsert('citations', array(
           'year' => 2010,
           'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
           'doi' => '10.XXXX/XXXXXX',
           'first_author_surname' => 'Shorthouse'
         ));
 
-        self::$db->query_insert('stateprovinces', array(
+        self::$db->queryInsert('stateprovinces', array(
           'country' => 'Canada',
           'country_iso' => 'CAN',
           'stateprovince' => 'Alberta',
@@ -377,7 +377,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
      * @param string $fn2 Second file directory.
      * @return bool
      */
-    public static function files_identical($fn1, $fn2)
+    public static function filesIdentical($fn1, $fn2)
     {
         if (filetype($fn1) !== filetype($fn2)) {
             return false;

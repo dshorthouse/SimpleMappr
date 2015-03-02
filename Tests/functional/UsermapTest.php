@@ -88,7 +88,7 @@ class UsermapTest extends SimpleMapprTest
 
         $cookie = json_decode(urldecode($this->webDriver->manage()->getCookieNamed('simplemappr')['value']));
         $title = 'Another Sample Map User';
-        $mid = parent::$db->query_insert("maps", array(
+        $mid = parent::$db->queryInsert("maps", array(
             'uid' => $cookie->uid,
             'title' => $title,
             'map' => json_encode(array('save' => array('title' => $title))),

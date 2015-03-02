@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Utilities for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Utilities
 {
@@ -48,19 +53,22 @@ class Utilities
      * Convert a string to HTML entities.
      *
      * @param string $text Some HTML that needs cleaning.
+     *
      * @return string Cleaned string.
      */
-    public static function check_plain($text)
+    public static function checkPlain($text)
     {
         return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
     }
 
     /**
      * Throw a 404 and some JSON when access has been denied.
+     *
+     * @return void
      */
-    public static function access_denied()
+    public static function accessDenied()
     {
-        Header::set_header('json');
+        Header::setHeader('json');
         http_response_code(401);
         echo json_encode(array("error" => "access denied"));
         exit();
@@ -69,18 +77,19 @@ class Utilities
     /**
      * Get a request parameter.
      *
-     * @param string $name Parameter name.
+     * @param string $name    Parameter name.
      * @param string $default Default when parameter not supplied.
+     *
      * @return string The parameter value or empty string if null.
      */
-    public static function load_param($name, $default = "")
+    public static function loadParam($name, $default = "")
     {
         if (!isset($_REQUEST[$name]) || !$_REQUEST[$name]) {
             return $default;
         }
         $value = $_REQUEST[$name];
         if (get_magic_quotes_gpc() != 1) {
-            $value = self::add_slashes_extended($value);
+            $value = self::addSlashesExtended($value);
         }
         return $value;
     }
@@ -88,14 +97,15 @@ class Utilities
     /**
      * Add slashes to either a string or an array
      *
-     * @param string/array &$arr_r String or array to add slashes
+     * @param string $arr_r String or array to add slashes
+     *
      * @return string/array
      */
-    public static function add_slashes_extended(&$arr_r)
+    public static function addSlashesExtended(&$arr_r)
     {
         if (is_array($arr_r)) {
             foreach ($arr_r as &$val) {
-                is_array($val) ? self::add_slashes_extended($val) : $val = addslashes($val);
+                is_array($val) ? self::addSlashesExtended($val) : $val = addslashes($val);
             }
             unset($val);
         } else {

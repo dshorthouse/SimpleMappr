@@ -51,12 +51,12 @@ class MapprMapTest extends SimpleMapprTest
         $this->setUpMap();
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/map_png.png";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_png.png'));
     }
 
     /**
@@ -67,12 +67,12 @@ class MapprMapTest extends SimpleMapprTest
         $this->setUpMap('json');
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/map_json.json";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_json.json'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json.json'));
     }
 
     /**
@@ -83,12 +83,12 @@ class MapprMapTest extends SimpleMapprTest
         $this->setUpMap('svg');
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/map_svg.svg";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_svg.svg'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_svg.svg'));
     }
 
     /**
@@ -99,13 +99,13 @@ class MapprMapTest extends SimpleMapprTest
         $this->setUpMap('kml');
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/map_kml.kml";
         file_put_contents($file, $output);
         ob_end_clean();
         session_destroy(); //req'd because KML class sets a cookie
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_kml.kml'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_kml.kml'));
     }
 
     /**
@@ -118,12 +118,12 @@ class MapprMapTest extends SimpleMapprTest
         $_REQUEST = array('legend' => 'true');
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png_legend.png'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
 
     /**
@@ -136,11 +136,11 @@ class MapprMapTest extends SimpleMapprTest
         $_REQUEST = array('legend' => 'false');
         $this->mappr_map->get_request()->execute();
         ob_start();
-        $this->mappr_map->create_output();
+        $this->mappr_map->createOutput();
         $output = ob_get_contents();
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_png.png'));
     }
 }

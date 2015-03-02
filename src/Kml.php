@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * KML handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Kml
 {
@@ -61,6 +66,11 @@ class Kml
     private $_metadata = array();
     private $_placemark = array();
 
+    /**
+     * The constructor
+     *
+     * @return void
+     */
     public function __construct()
     {
         session_start();
@@ -70,24 +80,25 @@ class Kml
      * Get the request parameter coords.
      *
      * @param string $file_name A name for a file to be downloaded.
-     * @param array $coords An array of geographic coordinates.
+     * @param array  $coords    An array of geographic coordinates.
+     *
      * @return object $this
      */
     public function get_request($file_name = "", $coords = array())
     {
-        $this->coords         = ($coords) ? $coords : Utilities::load_param('coords', array());
-        $this->file_name      = ($file_name) ? $file_name : Utilities::load_param('file_name', time());
-        $this->download_token = Utilities::load_param('download_token', md5(time()));
+        $this->coords         = ($coords) ? $coords : Utilities::loadParam('coords', array());
+        $this->file_name      = ($file_name) ? $file_name : Utilities::loadParam('file_name', time());
+        $this->download_token = Utilities::loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
         return $this;
     }
 
     /**
-     *  Generate the kml file.
+     * Generate the kml file.
      *
      * @return xml The xml file.
      */
-    public function create_output()
+    public function createOutput()
     {
         $clean_filename = Mappr::clean_filename($this->file_name);
 
@@ -97,7 +108,7 @@ class Kml
 
         $this->_kml = new \XMLWriter();
 
-        Header::set_header("kml", $clean_filename . ".kml");
+        Header::setHeader("kml", $clean_filename . ".kml");
         $this->_kml->openURI('php://output');
 
         $this->_kml->startDocument('1.0', 'UTF-8');
@@ -150,8 +161,9 @@ class Kml
     /**
      * Set basic metadata for kml.
      *
-     * @param string $name The metadata key.
+     * @param string $name  The metadata key.
      * @param string $value The metadata value.
+     *
      * @return void
      */
     public function set_metadata($name, $value)
@@ -163,6 +175,7 @@ class Kml
      * Get value of a metadata element.
      *
      * @param string $name The metadata key.
+     *
      * @return string The metadata value.
      */
     public function get_metadata($name)
@@ -173,10 +186,11 @@ class Kml
     /**
      * Set a placemark in kml.
      *
-     * @param int $key An index for a group placemarks.
-     * @param int $mark An index for the placemark.
-     * @param string $name The name of the placemark.
+     * @param int    $key   An index for a group placemarks.
+     * @param int    $mark  An index for the placemark.
+     * @param string $name  The name of the placemark.
      * @param string $value The coordinates for the placemark.
+     *
      * @return void
      */
     public function set_placemark($key, $mark, $name, $value)
@@ -187,9 +201,10 @@ class Kml
     /**
      * Get a placemark.
      *
-     * @param int $key An index for a group of placemarks.
-     * @param int $mark An index for the placemark.
+     * @param int    $key  An index for a group of placemarks.
+     * @param int    $mark An index for the placemark.
      * @param string $name The name of the placemark.
+     *
      * @return string The placemark.
      */
     private function get_placemark($key, $mark, $name)

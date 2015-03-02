@@ -58,12 +58,12 @@ class KmlTest extends PHPUnit_Framework_TestCase
         );
         $this->kml->get_request("My Map", $coords);
         ob_start();
-        $this->kml->create_output();
+        $this->kml->createOutput();
         $output = ob_get_contents();
         $file = ROOT."/public/tmp/kml.kml";
         file_put_contents($file, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::files_identical($file, ROOT.'/Tests/files/kml.kml'));
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/kml.kml'));
     }
 
 }

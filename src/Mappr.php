@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -41,12 +42,21 @@ use \ForceUTF8\Encoding;
 /**
  * Main Mappr class for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 abstract class Mappr
 {
-    abstract function create_output();
+    /**
+     * Create output, required for all extended classes
+     *
+     * @return void
+     */
+    abstract function createOutput();
 
     /* the base map object */
     protected $map_obj;
@@ -246,6 +256,7 @@ abstract class Mappr
      * Remove empty lines from a string.
      *
      * @param string $text String of characters
+     *
      * @return string cleansed string with empty lines removed
      */
     public static function remove_empty_lines($text)
@@ -256,14 +267,15 @@ abstract class Mappr
     /**
      * Add slashes to either a string or an array.
      *
-     * @param string/array &$arr_r Array that needs addslashes.
+     * @param array $arr_r Array that needs addslashes.
+     *
      * @return string/array
      */
-    public static function add_slashes_extended(&$arr_r)
+    public static function addSlashesExtended(&$arr_r)
     {
         if (is_array($arr_r)) {
             foreach ($arr_r as &$val) {
-                is_array($val) ? self::add_slashes_extended($val) : $val = addslashes($val);
+                is_array($val) ? self::addSlashesExtended($val) : $val = addslashes($val);
             }
             unset($val);
         } else {
@@ -277,6 +289,7 @@ abstract class Mappr
      *
      * @param string $file_name String that should be a file name.
      * @param string $extension File extension.
+     *
      * @return string Cleaned string that can be a file name.
      */
     public static function clean_filename($file_name, $extension = "")
@@ -292,6 +305,7 @@ abstract class Mappr
      * Clean extraneous materials in coordinate that should (in theory) be DD.
      *
      * @param string $coord Dirty string that should be an real number
+     *
      * @return real Cleaned coordinate
      */
     public static function clean_coord($coord)
@@ -303,6 +317,7 @@ abstract class Mappr
      * Check a DD coordinate object and return true if it fits on globe, false if not
      *
      * @param obj $coord (x,y) coordinates
+     *
      * @return bool
      */
     public static function check_on_earth($coord)
@@ -325,6 +340,7 @@ abstract class Mappr
      * Split DDMMSS or DD coordinate pair string into an array
      *
      * @param string $point A string purported to be a coordinate
+     *
      * @return array(latitude, longitude) in DD
      */
     public static function make_coordinates($point)
@@ -350,6 +366,7 @@ abstract class Mappr
      * Convert a coordinate in dms to deg
      *
      * @param string $dms coordinate
+     *
      * @return float
      */
     public static function dms_to_deg($dms)
@@ -381,6 +398,7 @@ abstract class Mappr
      * Get projection
      *
      * @param string $projection Projection expressed as epsg code
+     *
      * @return string PROJ representation of projection
      */
     public static function get_projection($projection)
@@ -397,6 +415,11 @@ abstract class Mappr
     /* base download factor to rescale the resultant image */
     private $_download_factor = 1;
 
+    /**
+     * Constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         if (extension_loaded("MapScript")) {
@@ -407,8 +430,9 @@ abstract class Mappr
     /**
      * Global call method to coordinate setters, getters.
      *
-     * @param string $name Name of the object.
-     * @param array $arguments Value for the object.
+     * @param string $name      Name of the object.
+     * @param array  $arguments Value for the object.
+     *
      * @return object $this
      */
     public function __call($name, $arguments)
@@ -428,7 +452,9 @@ abstract class Mappr
 
     /**
      * Set the extent of the map.
+     *
      * @param array $extent The maximum extent.
+     *
      * @return object $this
      */
     public function set_max_extent($extent = array())
@@ -445,52 +471,52 @@ abstract class Mappr
      */
     public function get_request()
     {
-        $this->coords           = $this->load_param('coords', array());
-        $this->regions          = $this->load_param('regions', array());
+        $this->coords           = $this->loadParam('coords', array());
+        $this->regions          = $this->loadParam('regions', array());
 
-        $this->output           = $this->load_param('output', 'pnga');
-        $this->width            = (float)$this->load_param('width', 900);
-        $this->height           = (float)$this->load_param('height', $this->width/2);
+        $this->output           = $this->loadParam('output', 'pnga');
+        $this->width            = (float)$this->loadParam('width', 900);
+        $this->height           = (float)$this->loadParam('height', $this->width/2);
 
         $this->image_size       = array($this->width, $this->height);
 
-        $this->projection       = $this->load_param('projection', 'epsg:4326');
-        $this->projection_map   = $this->load_param('projection_map', 'epsg:4326');
-        $this->origin           = (int)$this->load_param('origin', false);
+        $this->projection       = $this->loadParam('projection', 'epsg:4326');
+        $this->projection_map   = $this->loadParam('projection_map', 'epsg:4326');
+        $this->origin           = (int)$this->loadParam('origin', false);
 
-        $this->bbox_map         = $this->load_param('bbox_map', '-180,-90,180,90');
+        $this->bbox_map         = $this->loadParam('bbox_map', '-180,-90,180,90');
 
-        $this->bbox_rubberband  = $this->load_param('bbox_rubberband', array());
+        $this->bbox_rubberband  = $this->loadParam('bbox_rubberband', array());
 
-        $this->pan              = $this->load_param('pan', false);
+        $this->pan              = $this->loadParam('pan', false);
 
-        $this->layers           = $this->load_param('layers', array());
+        $this->layers           = $this->loadParam('layers', array());
 
         $this->graticules       = (array_key_exists('grid', $this->layers)) ? true : false;
 
-        $this->watermark        = $this->load_param('watermark', false);
+        $this->watermark        = $this->loadParam('watermark', false);
 
-        $this->gridspace        = $this->load_param('gridspace', false);
+        $this->gridspace        = $this->loadParam('gridspace', false);
 
-        $this->gridlabel        = (int)$this->load_param('gridlabel', 1);
+        $this->gridlabel        = (int)$this->loadParam('gridlabel', 1);
 
-        $this->download         = $this->load_param('download', false);
+        $this->download         = $this->loadParam('download', false);
 
-        $this->crop             = $this->load_param('crop', false);
+        $this->crop             = $this->loadParam('crop', false);
 
-        $this->options          = $this->load_param('options', array()); //scalebar, legend, border, linethickness
+        $this->options          = $this->loadParam('options', array()); //scalebar, legend, border, linethickness
 
-        $this->border_thickness = (float)$this->load_param('border_thickness', 1.25);
+        $this->border_thickness = (float)$this->loadParam('border_thickness', 1.25);
 
-        $this->rotation         = (int)$this->load_param('rotation', 0);
-        $this->zoom_in          = $this->load_param('zoom_in', false);
-        $this->zoom_out         = $this->load_param('zoom_out', false);
+        $this->rotation         = (int)$this->loadParam('rotation', 0);
+        $this->zoom_in          = $this->loadParam('zoom_in', false);
+        $this->zoom_out         = $this->loadParam('zoom_out', false);
 
-        $this->_download_factor = (int)$this->load_param('download_factor', 1);
+        $this->_download_factor = (int)$this->loadParam('download_factor', 1);
 
-        $this->file_name        = $this->load_param('file_name', time());
+        $this->file_name        = $this->loadParam('file_name', time());
 
-        $this->download_token   = $this->load_param('download_token', md5(time()));
+        $this->download_token   = $this->loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
 
         return $this;
@@ -499,11 +525,12 @@ abstract class Mappr
     /**
      * Get a case insensitive request parameter.
      *
-     * @param string $name Name of the parameter.
+     * @param string $name    Name of the parameter.
      * @param string $default Default value for the parameter.
+     *
      * @return string The parameter value or empty string if null.
      */
-    public function load_param($name, $default = "")
+    public function loadParam($name, $default = "")
     {
         $grep_key = $this->preg_grep_keys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
         if (!$grep_key || !array_values($grep_key)[0]) {
@@ -512,7 +539,7 @@ abstract class Mappr
         $value = array_values($grep_key)[0];
         $value = Encoding::fixUTF8($value);
         if (get_magic_quotes_gpc() != 1) {
-            $value = self::add_slashes_extended($value);
+            $value = self::addSlashesExtended($value);
         }
         return $value;
     }
@@ -521,8 +548,9 @@ abstract class Mappr
      * Grep on array keys.
      *
      * @param string $pattern A regex.
-     * @param array $input An associative array.
-     * @param int $flags Preg grep flags.
+     * @param array  $input   An associative array.
+     * @param int    $flags   Preg grep flags.
+     *
      * @return array of matched keys.
      */
     private function preg_grep_keys($pattern, $input, $flags = 0)
@@ -530,6 +558,11 @@ abstract class Mappr
         return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
     }
 
+    /**
+     * Set the projection
+     *
+     * @return void
+     */
     private function load_projection()
     {
         $this->map_obj->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
@@ -537,6 +570,8 @@ abstract class Mappr
 
     /**
      * Load-up all the settings for potential shapes
+     *
+     * @return void
      */
     private function load_shapes()
     {
@@ -691,8 +726,11 @@ abstract class Mappr
 
     /**
      * Load-up all the symbols
+     *
+     * @return void
      */
-    private function load_symbols() {
+    private function load_symbols()
+    {
         //plus
         $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[0]);
         $symbol = $this->map_obj->getSymbolObjectById($nId);
@@ -937,6 +975,8 @@ abstract class Mappr
 
     /**
      * Execute the process. This is the main method that calls other req'd and optional methods.
+     *
+     * @return object $this
      */
     public function execute()
     {
@@ -966,6 +1006,8 @@ abstract class Mappr
 
     /**
      * Set config for web object, storage of tmp files
+     *
+     * @return void
      */
     private function set_web_config()
     {
@@ -978,6 +1020,8 @@ abstract class Mappr
 
     /**
      * Set resolution
+     *
+     * @return void
      */
     private function set_resolution()
     {
@@ -989,6 +1033,8 @@ abstract class Mappr
 
     /**
      * Set units
+     *
+     * @return void
      */
     private function set_units()
     {
@@ -998,6 +1044,8 @@ abstract class Mappr
 
     /**
      * Set map color
+     *
+     * @return void
      */
     private function set_map_color()
     {
@@ -1006,6 +1054,8 @@ abstract class Mappr
 
     /**
      * Set output format
+     *
+     * @return void
      */
     private function set_output_format()
     {
@@ -1023,6 +1073,8 @@ abstract class Mappr
 
     /**
      * Add legend and scalebar
+     *
+     * @return void
      */
     private function add_legend_scalebar()
     {
@@ -1040,6 +1092,8 @@ abstract class Mappr
 
     /**
      * Set the map extent
+     *
+     * @return void
      */
     private function set_map_extent()
     {
@@ -1096,6 +1150,8 @@ abstract class Mappr
 
     /**
      * Set the map size
+     *
+     * @return void
      */ 
     private function set_map_size()
     {
@@ -1107,6 +1163,8 @@ abstract class Mappr
 
     /**
      * Zoom In
+     *
+     * @return void
      */
     private function set_zoom()
     {
@@ -1141,6 +1199,8 @@ abstract class Mappr
 
     /**
      * Set the pan direction
+     *
+     * @return void
      */
     private function set_pan()
     {
@@ -1175,6 +1235,8 @@ abstract class Mappr
 
     /**
      * Set the rotation
+     *
+     * @return void
      */
     private function set_rotation()
     {
@@ -1188,6 +1250,8 @@ abstract class Mappr
 
     /**
      * Set a new extent in the event of a crop action
+     *
+     * @return void
      */
     private function set_crop()
     {
@@ -1221,6 +1285,11 @@ abstract class Mappr
         }
     }
 
+    /**
+     * Get all the shapes
+     *
+     * @return object
+     */
     public function get_shapes()
     {
         return $this->shapes;
@@ -1228,6 +1297,8 @@ abstract class Mappr
 
     /**
      * Add all coordinates to the map
+     *
+     * @return void
      */
     public function add_coordinates()
     {
@@ -1315,6 +1386,8 @@ abstract class Mappr
 
     /**
      * Add shaded regions to the map
+     *
+     * @return void
      */
     public function add_regions()
     {
@@ -1395,6 +1468,8 @@ abstract class Mappr
 
     /**
      * Add all selected layers to the map
+     *
+     * @return void
      */
     private function add_layers()
     {
@@ -1573,8 +1648,11 @@ abstract class Mappr
     /**
      * Make label for layers
      *
-     * @param int $size
-     * @return labelObj
+     * @param int    $size     The pixel size for the label.
+     * @param int    $position The position of the label using MapScript constant
+     * @param string $encoding The encoding
+     *
+     * @return object $label
      */
     private function create_label($size = 8, $position = MS_UR, $encoding = "CP1252")
     {
@@ -1593,6 +1671,8 @@ abstract class Mappr
 
     /**
      * Add a watermark
+     *
+     * @return void
      */
     private function add_watermark()
     {
@@ -1630,6 +1710,8 @@ abstract class Mappr
 
     /**
      * Add graticules (or grid lines) to map
+     *
+     * @return void
      */
     public function add_graticules()
     {
@@ -1700,6 +1782,8 @@ abstract class Mappr
 
     /**
      * Create the legend file
+     *
+     * @return void
      */
     public function add_legend()
     {
@@ -1745,6 +1829,8 @@ abstract class Mappr
 
     /**
      * Create a scalebar image
+     *
+     * @return void
      */
     public function add_scalebar()
     {
@@ -1786,6 +1872,8 @@ abstract class Mappr
 
     /**
      * Add a border to a downloaded map image
+     *
+     * @return void
      */
     private function add_border()
     {
@@ -1821,6 +1909,8 @@ abstract class Mappr
 
     /**
      * Prepare the output.
+     *
+     * @return void
      */
     private function prepare_output()
     {
@@ -1835,8 +1925,9 @@ abstract class Mappr
     /**
      * Reproject a $map from one projection to another.
      *
-     * @param string $input_projection The input projection.
+     * @param string $input_projection  The input projection.
      * @param string $output_projection The output projection.
+     *
      * @return void
      */
     private function reproject($input_projection, $output_projection)
@@ -1857,6 +1948,8 @@ abstract class Mappr
      * Change the longitude of the natural origin for Lambert projections.
      *
      * @param string $output_projection The output projection.
+     *
+     * @return void
      */
     private function set_origin($output_projection)
     {
@@ -1869,8 +1962,9 @@ abstract class Mappr
     /**
      * Convert image coordinates to map coordinates
      *
-     * @param obj $point, (x,y) coordinates in pixels
-     * @return obj $newPoint reprojected point in map coordinates
+     * @param obj $point (x,y) coordinates in pixels
+     *
+     * @return object $newPoint reprojected point in map coordinates
      */
     public function pix2geo($point)
     {
@@ -1886,7 +1980,8 @@ abstract class Mappr
     /**
      * Convert hex colour (eg for css) to RGB
      *
-     * @param hex string
+     * @param string $hex The hexidecimal string for the colour.
+     *
      * @return array of RGB
      */
     private function hex2rgb($hex)
@@ -1894,13 +1989,13 @@ abstract class Mappr
         $hex = str_replace("#", "", $hex);
 
         if (strlen($hex) == 3) {
-            $r = hexdec(substr($hex,0,1).substr($hex,0,1));
-            $g = hexdec(substr($hex,1,1).substr($hex,1,1));
-            $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+            $r = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
         } else {
-            $r = hexdec(substr($hex,0,2));
-            $g = hexdec(substr($hex,2,2));
-            $b = hexdec(substr($hex,4,2));
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
         }
         return array($r, $g, $b);
     }
@@ -1908,7 +2003,8 @@ abstract class Mappr
     /**
      * Build ecoregion layer classes from SLD file
      *
-     * @param obj $layer
+     * @param obj $layer The MapScript layer object.
+     *
      * @return void
      */
     private function set_ecoregion_classes($layer)
@@ -1916,7 +2012,7 @@ abstract class Mappr
         $xml = simplexml_load_file($this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos.sld");
         $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
         $xml->registerXPathNamespace('ogc', 'http://www.opengis.net/ogc');
-        foreach($xml->xpath('//sld:Rule') as $rule) {
+        foreach ($xml->xpath('//sld:Rule') as $rule) {
             $class = ms_newClassObj($layer);
             $class->setExpression("([ECO_SYM] = ".$rule->xpath('.//sld:Name')[0].")");
             $style = ms_newStyleObj($class);

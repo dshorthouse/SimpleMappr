@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,13 +40,24 @@ namespace SimpleMappr;
 /**
  * Logger for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Logger
 {
     private $_filename;
 
+    /**
+     * Constructor
+     *
+     * @param string $filename The filename
+     *
+     * @return void
+     */
     function __construct($filename)
     {
         $this->_filename = $filename;
@@ -55,6 +67,7 @@ class Logger
      * Write a line to the log file.
      *
      * @param string $message The message to write.
+     *
      * @return void
      */
     public function write($message)
@@ -72,6 +85,7 @@ class Logger
      * 'Tail' the file by specified number of lines.
      *
      * @param integer $n An integer.
+     *
      * @return array lines.
      */
     public function tail($n = 10)
@@ -116,7 +130,8 @@ class Logger
      * Write a string to the log file.
      *
      * @param string $message The message to write.
-     * @param object $fd The file handle.
+     * @param object $fd      The file handle.
+     *
      * @return void
      */
     private function write_string($message, $fd)
@@ -128,7 +143,8 @@ class Logger
      * Write array to the log file.
      *
      * @param string $message The message to write.
-     * @param object $fd The file handle.
+     * @param object $fd      The file handle.
+     *
      * @return void
      */
     private function write_array($message, $fd)

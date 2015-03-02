@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -43,8 +44,12 @@ use \Phroute\Phroute\Dispatcher;
 /**
  * Bootstrapper for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Bootstrap
 {
@@ -66,19 +71,19 @@ class Bootstrap
     {
         $router = new RouteCollector();
 
-        $router->filter('logAPI', function() { $this->log("API"); });
-        $router->filter('logWMS', function() { $this->log("WMS"); });
-        $router->filter('logWFS', function() { $this->log("WFS"); });
-        $router->filter('check_role_user', function() { User::check_permission('user'); });
-        $router->filter('check_role_administrator', function() { User::check_permission('administrator'); });
+        $router->filter('logAPI', function () { $this->log("API"); });
+        $router->filter('logWMS', function () { $this->log("WMS"); });
+        $router->filter('logWFS', function () { $this->log("WFS"); });
+        $router->filter('check_role_user', function () { User::checkPermission('user'); });
+        $router->filter('check_role_administrator', function () { User::checkPermission('administrator'); });
 
-        $router->get('/', function() {
+        $router->get('/', function () {
             return $this->main();
         });
 
-        $router->get('/about', function() {
-            Header::set_header("html");
-            Session::select_locale();
+        $router->get('/about', function () {
+            Header::setHeader("html");
+            Session::selectLocale();
             $citations = new Citation();
             $config = array(
                 'citations' => $citations->index()
@@ -86,14 +91,14 @@ class Bootstrap
             return $this->twig()->render("about.html", $config);
         });
 
-        $router->any('/api', function() {
+        $router->any('/api', function () {
             $klass = $this->klass("MapprApi");
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         }, array('after' => 'logAPI'));
 
-        $router->get('/apidoc', function() {
-            Session::select_locale();
-            array_walk(Mappr::$accepted_projections, function($val, $key) use (&$projections) {
+        $router->get('/apidoc', function () {
+            Session::selectLocale();
+            array_walk(Mappr::$accepted_projections, function ($val, $key) use (&$projections) {
                 $projections[] = $key . " (" . $val['name'] . ")";
             });
             $config = array(
@@ -103,49 +108,49 @@ class Bootstrap
             return $this->twig()->render("apidoc.html", $config);
         });
 
-        $router->get('/apilog', function() {
-            Header::set_header('html');
+        $router->get('/apilog', function () {
+            Header::setHeader('html');
             return $this->tail_log();
-        }, array('before' => 'check_permission'));
+        }, array('before' => 'checkPermission'));
 
-        $router->post('/application', function() {
+        $router->post('/application', function () {
             $klass = $this->klass("MapprApplication");
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         });
 
-        $router->post('/application.json', function() {
-            Header::set_header('json');
+        $router->post('/application.json', function () {
+            Header::setHeader('json');
             $klass = $this->klass("MapprApplication");
-            $output = $this->setup_map($klass)->execute()->create_output();
+            $output = $this->setup_map($klass)->execute()->createOutput();
             return json_encode($output);
         });
 
-        $router->group(array('before' => 'check_role_administrator'), function($router) {
-            $router->get('/citation.json', function() {
-                Header::set_header("json");
+        $router->group(array('before' => 'check_role_administrator'), function ($router) {
+            $router->get('/citation.json', function () {
+                Header::setHeader("json");
                 $klass = $this->klass("Citation");
                 return json_encode($klass->index(null));
             })
-            ->post('/citation', function() {
-                Header::set_header("json");
+            ->post('/citation', function () {
+                Header::setHeader("json");
                 $klass = $this->klass("Citation");
                 return json_encode($klass->create((object)$_POST['citation']));
             })
-            ->delete('/citation/{id:i}', function($id) {
-                Header::set_header("json");
+            ->delete('/citation/{id:i}', function ($id) {
+                Header::setHeader("json");
                 $klass = $this->klass("Citation");
                 return json_encode($klass->destroy($id));
             });
         });
 
-        $router->post('/docx', function() {
-            Session::select_locale();
+        $router->post('/docx', function () {
+            Session::selectLocale();
             $klass = $this->klass("MapprDocx");
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         });
 
-        $router->get('/feedback', function() {
-            $locale = Session::select_locale();
+        $router->get('/feedback', function () {
+            $locale = Session::selectLocale();
             $config = array(
                 'locale' => $locale,
                 'tweet' => ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter'
@@ -153,70 +158,70 @@ class Bootstrap
             return $this->twig()->render("feedback.html", $config);
         });
 
-        $router->get('/flush_cache', function() {
-            Header::flush_cache();
+        $router->get('/flush_cache', function () {
+            Header::flushCache();
         }, array('before' => 'check_role_administrator'));
 
-        $router->get('/help', function() {
+        $router->get('/help', function () {
             $config = array(
-                'locale' => Session::select_locale()
+                'locale' => Session::selectLocale()
             );
             return $this->twig()->render("help.html", $config);
         });
 
-        $router->post('/kml', function() {
+        $router->post('/kml', function () {
             $kml = $this->klass("Kml");
-            return $kml->get_request()->create_output();
+            return $kml->get_request()->createOutput();
         });
 
-        $router->get('/logout', function() {
+        $router->get('/logout', function () {
             $this->klass("Session", false);
         });
 
-        $router->get('/map/{id:i}', function($id) {
+        $router->get('/map/{id:i}', function ($id) {
             $klass = $this->klass("MapprMap", $id, 'png');
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         });
 
-        $router->get('/map/{id:i}.{ext:[kml|svg|json]+}', function($id, $ext) {
+        $router->get('/map/{id:i}.{ext:[kml|svg|json]+}', function ($id, $ext) {
             $klass = $this->klass("MapprMap", $id, $ext);
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         });
 
-        $router->get('/places', function() {
-            Header::set_header("html");
-            Session::select_locale();
+        $router->get('/places', function () {
+            Header::setHeader("html");
+            Session::selectLocale();
             $config = array(
                 'rows' => $this->klass("Places")->index((object)$_GET)->results
             );
             return $this->twig()->render("fragments/fragment.places.html", $config);
         });
 
-        $router->get('/places.json', function() {
-            Header::set_header("json");
+        $router->get('/places.json', function () {
+            Header::setHeader("json");
             return json_encode($this->klass("Places")->index((object)$_GET)->results);
         });
 
-        $router->post('/pptx', function() {
-            Session::select_locale();
+        $router->post('/pptx', function () {
+            Session::selectLocale();
             $klass = $this->klass("MapprPptx");
-            return $this->setup_map($klass)->execute()->create_output();
+            return $this->setup_map($klass)->execute()->createOutput();
         });
 
-        $router->post('/query', function() {
-            Header::set_header("json");
+        $router->post('/query', function () {
+            Header::setHeader("json");
             $klass = $this->klass("MapprQuery");
             return json_encode($this->setup_map($klass)->execute()->query_layer()->data);
         });
 
-        $router->post('/session', function() {
+        $router->post('/session', function () {
             $this->klass("Session", true);
         });
 
-        $router->group(array('before' => 'check_role_user'), function($router) {
-            $router->get('/share', function() {
-                Header::set_header('html');
-                Session::select_locale();
+        $router->group(array('before' => 'check_role_user'), function ($router) {
+            $router->get('/share', function () {
+                Header::setHeader('html');
+                Session::selectLocale();
                 $results = $this->klass("Share")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
@@ -225,20 +230,20 @@ class Bootstrap
                 );
                 return $this->twig()->render("fragments/fragment.share.html", $config);
             })
-            ->post('/share', function() {
-                Header::set_header('json');
+            ->post('/share', function () {
+                Header::setHeader('json');
                 return json_encode($this->klass("Share")->create((object)$_POST));
             })
-            ->delete('/share/{id:i}', function($id) {
-                Header::set_header('json');
+            ->delete('/share/{id:i}', function ($id) {
+                Header::setHeader('json');
                 return json_encode($this->klass("Share")->destroy($id));
             });
         });
 
-        $router->group(array('before' => 'check_role_administrator'), function($router) {
-            $router->get('/user', function() {
-                Header::set_header('html');
-                Session::select_locale();
+        $router->group(array('before' => 'check_role_administrator'), function ($router) {
+            $router->get('/user', function () {
+                Header::setHeader('html');
+                Session::selectLocale();
                 $results = $this->klass("User")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
@@ -247,16 +252,16 @@ class Bootstrap
                 );
                 return $this->twig()->render("fragments/fragment.user.html", $config);
             })
-            ->delete('/user/{id:i}', function($id) {
-                Header::set_header('json');
+            ->delete('/user/{id:i}', function ($id) {
+                Header::setHeader('json');
                 return json_encode($this->klass("User")->destroy($id));
             });
         });
         
-        $router->group(array('before' => 'check_role_user'), function($router) {
-            $router->get('/usermap', function() {
-                Header::set_header('html');
-                Session::select_locale();
+        $router->group(array('before' => 'check_role_user'), function ($router) {
+            $router->get('/usermap', function () {
+                Header::setHeader('html');
+                Session::selectLocale();
                 $results = $this->klass("Usermap")->index((object)$_GET);
                 $config = array(
                     'rows' => $results->results,
@@ -269,30 +274,30 @@ class Bootstrap
                 );
                 return $this->twig()->render("fragments/fragment.usermap.html", $config);
             })
-            ->get('/usermap/{id:i}.json', function($id) {
-                Header::set_header('json');
+            ->get('/usermap/{id:i}.json', function ($id) {
+                Header::setHeader('json');
                 return json_encode($this->klass("Usermap")->show($id));
             })
-            ->post('/usermap', function() {
-                Header::set_header('json');
+            ->post('/usermap', function () {
+                Header::setHeader('json');
                 return json_encode($this->klass("Usermap")->create($_POST));
             })
-            ->delete('/usermap/{id:i}', function($id) {
-                Header::set_header('json');
+            ->delete('/usermap/{id:i}', function ($id) {
+                Header::setHeader('json');
                 return json_encode($this->klass("Usermap")->destroy($id));
             });
         });
 
-        $router->any('/wfs', function() {
-            Header::set_header("xml");
+        $router->any('/wfs', function () {
+            Header::setHeader("xml");
             $klass = $this->klass("MapprWfs");
-            return $this->setup_map($klass)->make_service()->execute()->create_output();
+            return $this->setup_map($klass)->makeService()->execute()->createOutput();
         }, array('after' => 'logWFS'));
 
-        $router->any('/wms', function() {
+        $router->any('/wms', function () {
             //Headers are set in WMS class
             $klass = $this->klass("MapprWms");
-            return $this->setup_map($klass)->make_service()->execute()->create_output();
+            return $this->setup_map($klass)->makeService()->execute()->createOutput();
         }, array('after' => 'logWMS'));
 
         try {
@@ -308,10 +313,11 @@ class Bootstrap
     /**
      * Instantiates a new class and passes parameters.
      *
-     * @param string $klass The class name.
+     * @param string $klass  The class name.
      * @param string $param1 First optional parameter.
      * @param string $param2 Second optional parameter.
-     * @return new instance of $klass
+     *
+     * @return class $klass  The instance of class.
      */
     private function klass($klass, $param1 = "", $param2 = "")
     {
@@ -323,6 +329,7 @@ class Bootstrap
      * Shortcut function for Mappr class methods.
      *
      * @param object $data Instance of a Mappr class.
+     *
      * @return object $data Loaded instance of a Mappr class.
      */
     private function setup_map($data)
@@ -340,6 +347,7 @@ class Bootstrap
      * Write a timestamp and URI to the logger.
      *
      * @param string $type Type of log, defaults to "API"
+     *
      * @return void
      */
     private function log($type)
@@ -386,43 +394,44 @@ class Bootstrap
             header('Location: http://'.MAPPR_DOMAIN);
             exit();
         } else {
-            Session::update_activity();
+            Session::updateActivity();
             return $this->twig()->render("main.html");
         }
     }
 
     /**
      * Load twig templating engine
+     *
      * @return twig object
      */
-     private function twig()
-     {
-         $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
-         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
-         $reload = (ENVIRONMENT == "development") ? true : false;
-         $twig = new \Twig_Environment($loader, array('cache' => $cache, 'auto_reload' => $reload));
-         $twig->addExtension(new \Twig_Extensions_Extension_I18n());
-         $twig->addGlobal('environment', ENVIRONMENT);
+    private function twig()
+    {
+        $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
+        $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
+        $reload = (ENVIRONMENT == "development") ? true : false;
+        $twig = new \Twig_Environment($loader, array('cache' => $cache, 'auto_reload' => $reload));
+        $twig->addExtension(new \Twig_Extensions_Extension_I18n());
+        $twig->addGlobal('environment', ENVIRONMENT);
 
-         $header = new Header;
-         $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
-         $qlocale = "?v=" . $header->getHash();
-         $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
+        $header = new Header;
+        $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
+        $qlocale = "?v=" . $header->getHash();
+        $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
 
-         $twig->addGlobal('locales', Session::$accepted_locales);
-         $twig->addGlobal('roles', User::$roles);
-         $twig->addGlobal('projections', Mappr::$accepted_projections);
-         $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
-         $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
-         $twig->addGlobal('stylesheet', $header->getCSSHeader());
-         $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : array());
-         $twig->addGlobal('qlocale', $qlocale);
-         $twig->addGlobal('locale', $locale);
-         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
-         $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
+        $twig->addGlobal('locales', Session::$accepted_locales);
+        $twig->addGlobal('roles', User::$roles);
+        $twig->addGlobal('projections', Mappr::$accepted_projections);
+        $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
+        $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
+        $twig->addGlobal('stylesheet', $header->getCSSHeader());
+        $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : array());
+        $twig->addGlobal('qlocale', $qlocale);
+        $twig->addGlobal('locale', $locale);
+        $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
+        $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
 
-         return $twig;
-     }
+        return $twig;
+    }
 
     /**
      * Render a 404 document

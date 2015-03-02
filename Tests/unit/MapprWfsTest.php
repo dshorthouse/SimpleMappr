@@ -43,9 +43,9 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetCapabilities()
     {
-        $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
+        $mappr_wfs = $this->mappr_wfs->get_request()->makeService()->execute();
         ob_start();
-        echo $mappr_wfs->create_output();
+        echo $mappr_wfs->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
@@ -62,9 +62,9 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10'
         );
-        $mappr_wfs = $this->mappr_wfs->get_request()->make_service()->execute();
+        $mappr_wfs = $this->mappr_wfs->get_request()->makeService()->execute();
         ob_start();
-        echo $mappr_wfs->create_output();
+        echo $mappr_wfs->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $ns = $xml->getNamespaces(true);

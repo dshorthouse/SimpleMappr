@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,8 +40,12 @@ namespace SimpleMappr;
 /**
  * Places handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class Places implements RestMethods
 {
@@ -49,6 +54,11 @@ class Places implements RestMethods
 
     protected $_db;
 
+    /**
+     * Constructor
+     *
+     * @return void
+     */
     function __construct()
     {
         $this->_db = new Database();
@@ -57,12 +67,16 @@ class Places implements RestMethods
 
     /**
      * Implemented index method.
+     *
+     * @param object $params The parameters from the router
+     *
+     * @return object $this
      */
     public function index($params)
     {
         if (property_exists($params, 'filter') && $params->filter != "") {
             $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
-            $this->_db->bind_param(':filter', '%'.$params->filter.'%', 'string');
+            $this->_db->bindParam(':filter', '%'.$params->filter.'%', 'string');
         } else if (property_exists($params, 'term') || $this->id) {
             $term = (property_exists($params, 'term')) ? $params->term : $this->id;
             $this->_db->prepare(
@@ -76,11 +90,11 @@ class Places implements RestMethods
                     sp.country
                 LIMIT 5"
             );
-            $this->_db->bind_param(':term', $term.'%', 'string');
+            $this->_db->bindParam(':term', $term.'%', 'string');
         } else {
             $this->_db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
         }
-        $this->results = $this->_db->fetch_all_object();
+        $this->results = $this->_db->fetchAllObject();
         return $this;
     }
 
@@ -88,6 +102,7 @@ class Places implements RestMethods
      * Implemented show method.
      *
      * @param int $id identifier for places.
+     *
      * @return void
      */
     public function show($id)
@@ -98,6 +113,10 @@ class Places implements RestMethods
 
     /**
      * Implemented create method.
+     *
+     * @param object $params The parameters
+     *
+     * @return void
      */
     public function create($params)
     {
@@ -105,6 +124,10 @@ class Places implements RestMethods
 
     /**
      * Implemented update method.
+     *
+     * @param int $id The integer
+     *
+     * @return void
      */
     public function update($id)
     {
@@ -114,6 +137,7 @@ class Places implements RestMethods
      * Implemented destroy method.
      *
      * @param int $id identifier for the place.
+     *
      * @return void
      */
     public function destroy($id)

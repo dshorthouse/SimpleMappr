@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -43,12 +44,16 @@ use \PhpOffice\PhpWord\IOFactory;
 /**
  * DOCX handler for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 class MapprDocx extends Mappr
 {
-    public function create_output()
+    public function createOutput()
     {
         $objPHPWord = new PhpWord();
 
@@ -91,7 +96,7 @@ class MapprDocx extends Mappr
 
         // Output Word 2007 file
         $objWriter = IOFactory::createWriter($objPHPWord, 'Word2007');
-        Header::set_header("docx", $clean_filename . ".docx");
+        Header::setHeader("docx", $clean_filename . ".docx");
         $objWriter->save('php://output');
     }
 

@@ -4,11 +4,12 @@
  *
  * PHP Version >= 5.5
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
- * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
- * @package   SimpleMappr
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -39,14 +40,57 @@ namespace SimpleMappr;
 /**
  * RestMethods interface for SimpleMappr
  *
- * @package SimpleMappr
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2013 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  */
 interface RestMethods
 {
+    /**
+     * The index REST method
+     *
+     * @param object $params Any parameters
+     *
+     * @return void
+     */
     public function index($params);
+
+    /**
+     * The show REST method
+     *
+     * @param int $id The integer
+     *
+     * @return void
+     */
     public function show($id);
+
+    /**
+     * The create REST method
+     *
+     * @param object $params Any parameters
+     *
+     * @return void
+     */
     public function create($params);
+
+    /**
+     * The update REST method
+     *
+     * @param int $id The integer
+     *
+     * @return void
+     */
     public function update($id);
+
+    /**
+     * The destroy REST method
+     *
+     * @param int $id The integer
+     *
+     * @return void
+     */
     public function destroy($id);
 }
