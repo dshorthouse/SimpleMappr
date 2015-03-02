@@ -64,7 +64,8 @@ class MapprWfs extends Mappr
         'rivers' => 'on',
         'oceans' => 'on',
         'conservation' => 'on',
-        'stateprovinces_polygon' => 'on'
+        'stateprovinces_polygon' => 'on',
+        'ecoregions' => 'on'
     );
 
     /**
