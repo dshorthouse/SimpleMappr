@@ -222,7 +222,7 @@ class Header
             break;
 
         case 'xml':
-            header('Content-type: application/xml; charset=UTF-8');
+            header('Content-type: application/xml');
             break;
 
         case 'kml':

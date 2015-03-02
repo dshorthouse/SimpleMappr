@@ -302,7 +302,7 @@ class Bootstrap
 
         try {
             $dispatcher = new Dispatcher($router->getData());
-            $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], parse_url(str_replace(":", "%3A", $_SERVER['REQUEST_URI']), PHP_URL_PATH));
             echo $response;
         } catch(\Exception $e) {
             echo $this->_render404();
