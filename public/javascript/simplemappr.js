@@ -63,7 +63,7 @@ var SimpleMappr = (function($, window, document) {
       fieldSetsPoints    : $('#fieldSetsPoints'),
       fieldSetsRegions   : $('#fieldSetsRegions'),
       mapOutput          : $('#mapOutput'),
-      mapOutputImage     : ""
+      mapOutputImage     : $('#mapOutputImage')
     },
 
     trackEvent: function(category, action) {
@@ -2347,7 +2347,6 @@ var SimpleMappr = (function($, window, document) {
 
     bindRotateWheel: function() {
       var self = this;
-      $('#wheel-overlay').css({backgroundImage: 'url("public/images/bg-rotatescroll.png")'});
       $('#mapControls').find('ul.overview').append(self.mapCircleSlider())
         .end()
         .tinycircleslider({snaptodots:true,radius:28,callback:function(element,index){
@@ -2519,12 +2518,6 @@ var SimpleMappr = (function($, window, document) {
       return;
     },
 
-    appendImages: function() {
-      this.vars.mapOutput.append('<img id="mapOutputImage" src="public/images/basemap.png" alt="" width="900" height="450" />');
-      this.vars.mapOutputImage = $('#mapOutputImage');
-      $('#mapScale').append('<img id="mapOutputScale" src="public/images/basemap-scalebar.png" width="200" height="27" />');
-    },
-    
     bindAccordions: function() {
       $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function() {
         $(this).accordion({header : 'h3', collapsible : true, autoHeight : false});
@@ -2578,7 +2571,6 @@ var SimpleMappr = (function($, window, document) {
       this.bindTooltips();
       this.bindTabs();
       this.bindUpload();
-      this.appendImages();
       this.bindSpecialClicks();
       this.bindAccordions();
       this.bindStorage();

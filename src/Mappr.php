@@ -199,6 +199,12 @@ abstract class Mappr
         END
   ";
 
+    /* placeholder for presence of anything that might need a legend */
+    private $_legend_required = false;
+
+    /* base download factor to rescale the resultant image */
+    private $_download_factor = 1;
+
     /**
      * Acceptable projections in PROJ format
      * Included here for performance reasons AND each has 'over' switch to prevent line wraps
@@ -409,12 +415,6 @@ abstract class Mappr
         return self::$accepted_projections[$projection]['proj'];
     }
 
-    /* placeholder for presence of anything that might need a legend */
-    private $_legend_required = false;
-
-    /* base download factor to rescale the resultant image */
-    private $_download_factor = 1;
-
     /**
      * Constructor
      *
@@ -523,6 +523,37 @@ abstract class Mappr
     }
 
     /**
+     * Execute the process. This is the main method that calls other req'd and optional methods.
+     *
+     * @return object $this
+     */
+    public function execute()
+    {
+        $this->_loadProjection();
+        $this->_loadShapes();
+        $this->_loadSymbols();
+        $this->_setWebConfig();
+        $this->_setResolution();
+        $this->_setUnits();
+        $this->_setMapColor();
+        $this->_setOutputFormat();
+        $this->_setMapExtent();
+        $this->_setMapSize();
+        $this->_setZoom();
+        $this->_setPan();
+        $this->_setRotation();
+        $this->_setCrop();
+        $this->addRegions();
+        $this->_addLayers();
+        $this->addGraticules();
+        $this->addCoordinates();
+        $this->_addWatermark();
+        $this->_prepareOutput();
+
+        return $this;
+    }
+
+    /**
      * Get a case insensitive request parameter.
      *
      * @param string $name    Name of the parameter.
@@ -542,6 +573,24 @@ abstract class Mappr
             $value = self::addSlashesExtended($value);
         }
         return $value;
+    }
+
+    /**
+     * Convert image coordinates to map coordinates
+     *
+     * @param obj $point (x,y) coordinates in pixels
+     *
+     * @return object $newPoint reprojected point in map coordinates
+     */
+    public function pix2Geo($point)
+    {
+        $newPoint = new \stdClass();
+        $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
+        $deltaY = abs($this->map_obj->extent->maxy - $this->map_obj->extent->miny);
+
+        $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
+        $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
+        return $newPoint;
     }
 
     /**
@@ -971,37 +1020,6 @@ abstract class Mappr
             0.23, 0
         );
         $symbol->setpoints($spoints);
-    }
-
-    /**
-     * Execute the process. This is the main method that calls other req'd and optional methods.
-     *
-     * @return object $this
-     */
-    public function execute()
-    {
-        $this->_loadProjection();
-        $this->_loadShapes();
-        $this->_loadSymbols();
-        $this->_setWebConfig();
-        $this->_setResolution();
-        $this->_setUnits();
-        $this->_setMapColor();
-        $this->_setOutputFormat();
-        $this->_setMapExtent();
-        $this->_setMapSize();
-        $this->_setZoom();
-        $this->_setPan();
-        $this->_setRotation();
-        $this->_setCrop();
-        $this->addRegions();
-        $this->_addLayers();
-        $this->addGraticules();
-        $this->addCoordinates();
-        $this->_addWatermark();
-        $this->_prepareOutput();
-
-        return $this;
     }
 
     /**
@@ -1776,7 +1794,6 @@ abstract class Mappr
             $layer->grid->set("maxarcs", $ticks);
             $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
             $layer->grid->set("maxsubdivide", 2);
-
         }
     }
 
@@ -1957,24 +1974,6 @@ abstract class Mappr
         if (in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
             self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::getProjection($output_projection));
         }
-    }
-
-    /**
-     * Convert image coordinates to map coordinates
-     *
-     * @param obj $point (x,y) coordinates in pixels
-     *
-     * @return object $newPoint reprojected point in map coordinates
-     */
-    public function pix2Geo($point)
-    {
-        $newPoint = new \stdClass();
-        $deltaX = abs($this->map_obj->extent->maxx - $this->map_obj->extent->minx);
-        $deltaY = abs($this->map_obj->extent->maxy - $this->map_obj->extent->miny);
-
-        $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
-        $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
-        return $newPoint;
     }
 
     /**
