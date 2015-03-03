@@ -2415,6 +2415,7 @@ var SimpleMappr = (function($, window, document) {
             $('#map-points').find('button.addmore').prop("disabled", false);
             self.clearZone($('#clearLayers').parent().prev().prev().children());
             self.loadCoordinates(self.parseFile(reader.result));
+            self.vars.fieldSetsPoints.accordion("activate", 0);
           };
           reader.readAsText(file);
         } else {
