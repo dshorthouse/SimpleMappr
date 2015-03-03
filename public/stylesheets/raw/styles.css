@@ -138,7 +138,6 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapControls .viewport{height:60px;width:60px;position:relative;margin:0 auto;overflow:hidden;}
 #mapControls .overview{position: absolute; width:58px;list-style:none;margin:0;padding:0;left:0;top:0;}
 #mapControls li{height:60px;width:60px;float:left;position:relative;}
-#wheel-overlay{background-repeat:no-repeat;background-position:0 0;background-image:url("../../images/bg-rotatescroll.png");position:absolute;left:0;top:0;height:60px;width:60px;}
 #mapControls .thumb{cursor:pointer;width:12px;height:12px;position:absolute;cursor:pointer;}
 #mapControls .dot{display:none;}
 #mapControls span{display: none;}
@@ -146,6 +145,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #badRecordsWarning a.toolsBadRecords{text-decoration:none;color:#ff0000;}
 #badRecordsWarning a.toolsBadRecords:before{background-position:-240px -264px;}
 #badRecords{font-size:0.75em;}
+#wheel-overlay{background-image:url("../../images/bg-rotatescroll.png");background-repeat:no-repeat;background-position:0 0;position:absolute;left:0;top:0;height:60px;width:60px;}
 #mapScale{text-align:right;}
 #mapTools{position:absolute;top:0px;left:920px;right:0px;min-height:410px;}
 #mapToolsCollapse{position:absolute;top:0;width:16px;z-index:10;padding:5px;}

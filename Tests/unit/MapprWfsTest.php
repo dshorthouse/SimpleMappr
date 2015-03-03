@@ -55,12 +55,32 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
     /**
      * Test a GetFeature WFS response.
      */
-    public function test_GetFeature()
+    public function test_GetFeature1()
     {
         $_REQUEST = array(
             'REQUEST' => 'GetFeature',
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10'
+        );
+        $mappr_wfs = $this->mappr_wfs->getRequest()->makeService()->execute();
+        ob_start();
+        echo $mappr_wfs->createOutput();
+        $xml = simplexml_load_string(ob_get_contents());
+        ob_end_clean();
+        $ns = $xml->getNamespaces(true);
+        $this->assertEquals(10, count($xml->children($ns['gml'])->featureMember));
+    }
+
+    /**
+     * Test a GetFeature WFS response with optional SRSNAME parameter
+     */
+    public function test_GetFeature2()
+    {
+        $_REQUEST = array(
+            'REQUEST' => 'GetFeature',
+            'TYPENAME' => 'lakes',
+            'MAXFEATURES' => '10',
+            'SRSNAME' => 'EPSG:4326'
         );
         $mappr_wfs = $this->mappr_wfs->getRequest()->makeService()->execute();
         ob_start();
