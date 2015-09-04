@@ -1697,7 +1697,6 @@ abstract class Mappr
     {
         $label = new \labelObj();
         $label->set("font", "arial");
-        $label->set("type", MS_TRUETYPE);
         $label->set("encoding", $encoding);
         $label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*7 : $size);
         $label->set("position", $position);
@@ -1728,7 +1727,6 @@ abstract class Mappr
 
             $label = new \labelObj();
             $label->set("font", "arial");
-            $label->set("type", MS_TRUETYPE);
             $label->set("encoding", "UTF-8");
             $label->set("size", 8);
             $label->set("position", MS_XY);
@@ -1766,7 +1764,6 @@ abstract class Mappr
             if ($this->gridlabel != 0) {
                 $label = new \labelObj();
                 $label->set("font", "arial");
-                $label->set("type", MS_TRUETYPE);
                 $label->set("encoding", "UTF-8");
                 $label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*9 : 10);
                 $label->set("position", MS_CC);
@@ -1832,7 +1829,6 @@ abstract class Mappr
             $this->map_obj->legend->set("keyspacingy", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*3 : 5);
             $this->map_obj->legend->set("postlabelcache", 1);
             $this->map_obj->legend->label->set("font", "arial");
-            $this->map_obj->legend->label->set("type", MS_TRUETYPE);
             $this->map_obj->legend->label->set("encoding", "UTF-8");
             $this->map_obj->legend->label->set("position", 1);
             $this->map_obj->legend->label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*8 : 10);
@@ -1880,7 +1876,6 @@ abstract class Mappr
         $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
         $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
         $this->map_obj->scalebar->label->set("font", "arial");
-        $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
         $this->map_obj->scalebar->label->set("encoding", "UTF-8");
         $this->map_obj->scalebar->label->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*5 : 8);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);

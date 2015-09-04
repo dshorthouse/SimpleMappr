@@ -49,6 +49,7 @@ class NavigationTest extends SimpleMapprTest
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Français'));
         $link->click();
+        parent::waitOnAjax();
         $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
         $this->assertEquals('cartes de points gratuits pour publications et présentations', $tagline->getText());
     }

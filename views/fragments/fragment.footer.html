@@ -1,0 +1,9 @@
+<div id="footer" class="tab-selector ui-helper-clearfix">
+    <a href="/about?locale={{ locale }}">{% trans "About" %}</a>
+    <a href="/apidoc?locale={{ locale }}">{% trans "API" %}</a>
+    <a href="/feedback?locale={{ locale }}">{% trans "Feedback" %}</a>
+    <a href="/help?locale={{ locale }}">{% trans "Help" %}</a>
+    {% if session and roles[session['role']] == 'administrator' %}
+        <a href="/admin?locale={{ locale }}">{% trans "Administration" %}</a>
+    {% endif %}
+</div>

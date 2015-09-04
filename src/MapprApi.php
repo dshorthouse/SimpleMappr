@@ -298,7 +298,6 @@ class MapprApi extends Mappr
                 $label = new \labelObj();
                 $label->set("encoding", "ISO-8859-1");
                 $label->set("font", "arial");
-                $label->set("type", MS_TRUETYPE);
                 $label->set("size", 10);
                 $label->set("position", MS_UC);
                 $label->color->setRGB(30, 30, 30);
@@ -348,7 +347,6 @@ class MapprApi extends Mappr
         $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
         $this->map_obj->scalebar->label->set("encoding", "UTF-8");
         $this->map_obj->scalebar->label->set("font", "arial");
-        $this->map_obj->scalebar->label->set("type", MS_TRUETYPE);
         $this->map_obj->scalebar->label->set("size", ($this->width <= 500) ? 8 : 10);
         $this->map_obj->scalebar->label->set("antialias", 50);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
@@ -370,7 +368,6 @@ class MapprApi extends Mappr
     {
         $this->map_obj->legend->set("postlabelcache", 1);
         $this->map_obj->legend->label->set("font", "arial");
-        $this->map_obj->legend->label->set("type", MS_TRUETYPE);
         $this->map_obj->legend->label->set("position", 1);
         $this->map_obj->legend->label->set("size", ($this->width <= 500) ? 8 : 10);
         $this->map_obj->legend->label->set("antialias", 50);
