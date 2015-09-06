@@ -64,7 +64,7 @@ class LayerDataTest extends SimpleMapprTest
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
+        $this->assertEquals($this->color->getAttribute('value'), '');
     }
 
     /**
@@ -88,6 +88,6 @@ class LayerDataTest extends SimpleMapprTest
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
+        $this->assertEquals($this->color->getAttribute('value'), '');
     }
 }

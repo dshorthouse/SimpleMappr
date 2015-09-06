@@ -1834,6 +1834,7 @@ abstract class Mappr
             $layer->grid->set("maxarcs", $ticks);
             $layer->grid->set("maxinterval", ($this->gridspace) ? $this->gridspace : $ticks);
             $layer->grid->set("maxsubdivide", 2);
+
         }
     }
 

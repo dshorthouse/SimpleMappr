@@ -348,7 +348,6 @@ class MapprApi extends Mappr
         $this->map_obj->scalebar->label->set("encoding", "UTF-8");
         $this->map_obj->scalebar->label->set("font", "arial");
         $this->map_obj->scalebar->label->set("size", ($this->width <= 500) ? 8 : 10);
-        $this->map_obj->scalebar->label->set("antialias", 50);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do scalebar in MapServer
@@ -370,7 +369,6 @@ class MapprApi extends Mappr
         $this->map_obj->legend->label->set("font", "arial");
         $this->map_obj->legend->label->set("position", 1);
         $this->map_obj->legend->label->set("size", ($this->width <= 500) ? 8 : 10);
-        $this->map_obj->legend->label->set("antialias", 50);
         $this->map_obj->legend->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do legends in MapServer
