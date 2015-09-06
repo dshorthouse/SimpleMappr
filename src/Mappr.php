@@ -543,8 +543,8 @@ abstract class Mappr
         $this->_setPan();
         $this->_setRotation();
         $this->_setCrop();
-        $this->addRegions();
         $this->_addLayers();
+        $this->addRegions();
         $this->addGraticules();
         $this->addCoordinates();
         $this->_addWatermark();
