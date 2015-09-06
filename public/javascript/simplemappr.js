@@ -851,7 +851,7 @@ var SimpleMappr = (function($, window, document) {
         if($(this).hasClass("fieldset-points")) {
           color_picker.val('0 0 0');
         } else {
-          color_picker.val('150 150 150');
+          color_picker.val('');
         }
       });
     },
@@ -1674,7 +1674,7 @@ var SimpleMappr = (function($, window, document) {
 
         region_title = regions[i].title || "";
         region_data  = regions[i].data  || "";
-        region_color = regions[i].color || "150 150 150";
+        region_color = regions[i].color || "";
 
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][title]"]').val(region_title);
         self.vars.fieldSetsRegions.find('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
