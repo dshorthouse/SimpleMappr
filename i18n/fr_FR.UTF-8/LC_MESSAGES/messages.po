@@ -701,6 +701,10 @@ msgid "Live Updates"
 msgstr "Mises à jour direct"
 
 #: .tabs/about.php:11
+msgid "September 5, 2015"
+msgstr "6 septembre, 2015"
+
+#: .tabs/about.php:11
 msgid "February 27, 2015"
 msgstr "27 février, 2015"
 
@@ -751,6 +755,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Upgraded to MapServer 7.0.0. Regions overlay selected layers. Blank colours for Regions result in transparency. Requested by Ryan St Laurent."
+msgstr "Améliorations: Mise à jour MapServer 7.0.0. Régions superposent les couches sélectionnées. Couleurs vierges pour les régions se traduisent par une couche transparente. Demandé par Ryan St Laurent."
 
 #: .tabs/about.php:11
 msgid "Bug fixes: Points disappear when the interface is Français. Reported by Carole Sinou."
