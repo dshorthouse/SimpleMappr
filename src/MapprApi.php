@@ -290,6 +290,7 @@ class MapprApi extends Mappr
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
+            $layer->setConnectionType(MS_GRATICULE);
             $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
