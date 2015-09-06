@@ -1349,7 +1349,7 @@ abstract class Mappr
                 //clear out previous loop's selection
                 $size = "";
                 $shape = "";
-                $color = "";
+                $color = array();
 
                 $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
                 $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
@@ -1357,9 +1357,11 @@ abstract class Mappr
                     $size = $this->_download_factor*$size;
                 }
                 $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
-                $color = ($this->coords[$j]['color']) ? explode(" ", $this->coords[$j]['color']) : explode(" ", "0 0 0");
-                if (!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
-                    $color = array(0,0,0);
+                if ($this->coords[$j]['color']) {
+                    $color = explode(" ", $this->coords[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = array();
+                    }
                 }
 
                 $data = trim($this->coords[$j]['data']);
@@ -1383,12 +1385,17 @@ abstract class Mappr
                     $style->set("symbolname", $shape);
                     $style->set("size", $size);
 
-                    if (substr($shape, 0, 4) == 'open') {
-                        $style->color->setRGB($color[0], $color[1], $color[2]);
+                    if (!empty($color)) {
+                        if (substr($shape, 0, 4) == 'open') {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                        } else {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                            $style->outlinecolor->setRGB(85, 85, 85);
+                        }
                     } else {
-                        $style->color->setRGB($color[0], $color[1], $color[2]);
-                        $style->outlinecolor->setRGB(85, 85, 85);
+                        $style->outlinecolor->setRGB(0, 0, 0);
                     }
+
 
                     $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
                     $new_line = ms_newLineObj();
@@ -1433,11 +1440,13 @@ abstract class Mappr
         if (isset($this->regions) && $this->regions) {  
             for ($j=count($this->regions)-1; $j>=0; $j--) {
                 //clear out previous loop's selection
-                $color = "";
+                $color = array();
                 $title = ($this->regions[$j]['title']) ? stripslashes($this->regions[$j]['title']) : "";
-                $color = ($this->regions[$j]['color']) ? explode(" ", $this->regions[$j]['color']) : explode(" ", "0 0 0");
-                if (!is_array($color) || !array_key_exists(0, $color) || !array_key_exists(1, $color) || !array_key_exists(2, $color)) {
-                    $color = array(0,0,0);
+                if ($this->regions[$j]['color']) {
+                    $color = explode(" ", $this->regions[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = array();
+                    }
                 }
 
                 $data = trim($this->regions[$j]['data']);
@@ -1494,10 +1503,23 @@ abstract class Mappr
                     $class->set("name", $title);
 
                     $style = ms_newStyleObj($class);
-                    $style->color->setRGB($color[0], $color[1], $color[2]);
+                    if (!empty($color)) {
+                        $style->color->setRGB($color[0], $color[1], $color[2]);
+                    }
                     $style->outlinecolor->setRGB(30, 30, 30);
                     $style->set("opacity", 75);
-
+                    $width = 1.25;
+                    if (isset($this->border_thickness)) {
+                        $width = $this->border_thickness;
+                        if ($this->_isResize() 
+                            && $this->_download_factor > 1
+                            && array_key_exists('scalelinethickness', $this->options)
+                            && $this->options['scalelinethickness']
+                        ) {
+                            $width = $this->border_thickness*$this->_download_factor/2;
+                        }
+                    }
+                    $style->set("width", $width);
                     $layer->set("status", MS_ON);
                 }
 
