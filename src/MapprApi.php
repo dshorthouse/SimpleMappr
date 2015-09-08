@@ -290,14 +290,13 @@ class MapprApi extends Mappr
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
-            $layer->setConnectionType(MS_GRATICULE);
             $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
 
             if ($this->gridlabel == "true") {
                 $label = new \labelObj();
-                $label->set("encoding", "ISO-8859-1");
+                $label->set("encoding", "UTF-8");
                 $label->set("font", "arial");
                 $label->set("size", 10);
                 $label->set("position", MS_UC);

@@ -1779,7 +1779,6 @@ abstract class Mappr
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
-            $layer->setConnectionType(MS_GRATICULE);
             $layer->setProjection(self::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);

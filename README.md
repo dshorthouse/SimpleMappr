@@ -21,8 +21,8 @@ Configuration Instructions
 4. Extract Natural Earth shapefiles to /mapserver/maps/
 5. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles
 6. Make contents of /mapserver/fonts readable & executable
-7. Adjust /config/conf.db.sample.php and /config/conf.sample.php and remove ".sample". These set db connection and constants, respectively.
-8. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.db.php
+7. Rename /config/conf.sample.php to /config/conf.php and phinx.yml.sample to phinx.yml. These set configuration and db constants, respectively.
+8. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.php
 9. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
 
 ### Apache Rewrite Configuration
@@ -86,6 +86,11 @@ Homebrew on Mac OSX
 
 7. Add extension=php_mapscript.so to php.ini and restart web server
 
+Unix-based Server
+------------------
+
+See the useful guide on [http://mapserver.org/installation/unix.html](MapServer).
+
 Internationalization
 --------------------
 
@@ -111,8 +116,7 @@ Database
 --------
 
 SimpleMappr uses MySQL and [http://docs.phinx.org/](phinx) for migrations. A sample schema is included in /db and migrations are stored in /db/migrations.
-Create databases simplemappr, simplemappr\_development and simplemappr\_testing.
-Rename /config/phinx.yml.sample to /config/phinx.yml and adjust as necessary.
+Create databases simplemappr, simplemappr\_development and simplemappr\_testing. Adjust your /config/phinx.yml as necessary.
 
     $ ./vendor/bin/phinx migrate -c config/phinx.yml -e development
 
