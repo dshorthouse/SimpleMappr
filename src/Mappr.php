@@ -1396,6 +1396,18 @@ abstract class Mappr
                         $style->outlinecolor->setRGB(0, 0, 0);
                     }
 
+                    $width = 1.25;
+                    if (isset($this->border_thickness)) {
+                        $width = $this->border_thickness;
+                        if ($this->_isResize() 
+                            && $this->_download_factor > 1
+                            && array_key_exists('scalelinethickness', $this->options)
+                            && $this->options['scalelinethickness']
+                        ) {
+                            $width = $this->border_thickness*$this->_download_factor/2;
+                        }
+                    }
+                    $style->set("width", $width);
 
                     $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
                     $new_line = ms_newLineObj();
