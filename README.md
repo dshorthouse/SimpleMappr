@@ -125,17 +125,17 @@ Tests
 
 PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=2.41/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies.
 
-    $ java -jar selenium-server-standalone-2.45.0.jar
+    $ java -jar selenium-server-standalone-2.47.1.jar
     $ ./vendor/bin/phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
-    $ java -jar selenium-server-standalone-2.45.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
+    $ java -jar selenium-server-standalone-2.47.1.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Likewise, if you wish to use a headless webdriver such as [PhantomJS](http://phantomjs.org/):
 
-    $ java -jar selenium-server-standalone-2.45.0 -Dphantomjs.binary.path=/usr/local/bin/phantomjs
+    $ java -jar selenium-server-standalone-2.47.1 -Dphantomjs.binary.path=/usr/local/bin/phantomjs
     $ ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml --verbose --stderr
 
 Copyright

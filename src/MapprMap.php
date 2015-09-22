@@ -201,26 +201,30 @@ class MapprMap extends Mappr
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200, 200, 200);
 
-            ms_newGridObj($layer);
             $minx = $this->map_obj->extent->minx;
             $maxx = $this->map_obj->extent->maxx;
 
-            $ticks = abs($maxx-$minx)/24;
+            $maxarcs = abs($maxx-$minx)/24;
 
-            if ($ticks >= 5) {
+            if ($maxarcs >= 5) {
                 $labelformat = "DD";
             }
-            if ($ticks < 5) {
+            if ($maxarcs < 5) {
                 $labelformat = "DDMM";
             }
-            if ($ticks <= 1) {
+            if ($maxarcs <= 1) {
                 $labelformat = "DDMMSS";
             }
 
-            $layer->grid->set("labelformat", $labelformat);
-            $layer->grid->set("maxarcs", $ticks);
-            $layer->grid->set("maxinterval", isset($this->gridspace) ? $this->gridspace : $ticks);
-            $layer->grid->set("maxsubdivide", 2);
+            $maxinterval = ($this->gridspace) ? $this->gridspace : $maxarcs;
+            $maxsubdivide = 2;
+
+            $string  = 'LAYER name "grid"' . "\n";
+            $string .= 'GRID' . "\n";
+            $string .= 'labelformat "'.$labelformat.'" maxarcs '.$maxarcs.' maxinterval '.$maxinterval.' maxsubdivide '.$maxsubdivide . "\n";
+            $string .= 'END' . "\n";
+            $string .= 'END' . "\n";
+            $layer->updateFromString($string);
         }
     }
 
