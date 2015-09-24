@@ -10,9 +10,6 @@ env:
     - DBNAME=simplemappr_testing
     - BROWSER=firefox
 
-addons:
-  firefox: "29.0"
-
 install:
   # Install server dependencies
   - sh -e .travis/scripts/apt-get.sh

@@ -25,6 +25,7 @@ libgeos-dev \
 libcairo2-dev \
 libghc-svgcairo-dev \
 libfribidi-dev \
+svgcairo \
 phpunit \
 php-pear \
 gtk2-engines-pixbuf \
