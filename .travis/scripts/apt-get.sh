@@ -30,19 +30,8 @@ php-pear \
 gtk2-engines-pixbuf \
 libgtk2.0-0 \
 xvfb \
-cmake \
-g++ \
-felx \
-bison \
-gpref \
-perl \
-libsqlite3-dev \
-libfontconfig1-dev \
-libicu-dev \
-libssl-dev \
-python \
-libx11-dev \
-libxext-dev"
+phantomjs \
+cmake"
 
 if [ "$1" ]
 then

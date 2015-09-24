@@ -62,7 +62,7 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "wget http://goo.gl/yLJLZg"
-  - "java -jar selenium-server-standalone-2.47.1.jar -Dphantomjs.binary.path=/usr/local/bin/phantomjs > /dev/null &"
+  - "java -jar selenium-server-standalone-2.47.1.jar -Dphantomjs.binary.path=/usr/bin/phantomjs > /dev/null &"
   - sleep 5
 
 script:
