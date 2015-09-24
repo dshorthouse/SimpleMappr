@@ -7,6 +7,7 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
     Email: davidpshorthouse@gmail.com
 
 [![Build Status](https://secure.travis-ci.org/dshorthouse/SimpleMappr.png?branch=master)](http://travis-ci.org/dshorthouse/SimpleMappr)
+[![Coverage Status](https://coveralls.io/repos/dshorthouse/SimpleMappr/badge.svg?branch=master&service=github)](https://coveralls.io/github/dshorthouse/SimpleMappr?branch=master)
 
 Requirements
 --------------------------
