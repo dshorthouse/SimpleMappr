@@ -8,7 +8,7 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
-    - BROWSER=firefox
+    - BROWSER=phantomjs
 
 install:
   # Install server dependencies
@@ -55,16 +55,19 @@ before_script:
   # Restart Apache
   - sudo service apache2 restart
 
-  # Selenium
+  # PhantomJS
+  - sudo -e .travis/scripts/phantomjs.sh
+
+  # Selenium using PhantomJS
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "wget http://goo.gl/yLJLZg"
-  - "java -jar selenium-server-standalone-2.47.1.jar > /dev/null &"
+  - "java -jar selenium-server-standalone-2.47.1.jar -Dphantomjs.binary.path=/usr/local/bin/phantomjs > /dev/null &"
   - sleep 5
 
 script:
   #- ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
-  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml --stderr
 
 after_script:
   - ./vendor/bin/coveralls -c .coveralls.yml -v
