@@ -56,7 +56,7 @@ before_script:
   - sudo service apache2 restart
 
   # PhantomJS
-  - sudo -e .travis/scripts/phantomjs.sh
+  #- sudo -e .travis/scripts/phantomjs.sh
 
   # Selenium using PhantomJS
   - "export DISPLAY=:99.0"
