@@ -59,13 +59,12 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "wget http://goo.gl/yLJLZg"
-  # - "java -jar selenium-server-standalone-2.47.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &"
   - "java -jar selenium-server-standalone-2.47.1.jar > /dev/null &"
   - sleep 5
 
 script:
-  # - phpunit -c Tests/chrome.phpunit.xml --stderr
-  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
+  #- ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
+  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
 after_script:
   - ./vendor/bin/coveralls -c .coveralls.yml -v
