@@ -30,7 +30,7 @@ php-pear \
 gtk2-engines-pixbuf \
 libgtk2.0-0 \
 xvfb \
-phantomjs \
+unzip \
 cmake"
 
 if [ "$1" ]
