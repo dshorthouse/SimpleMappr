@@ -59,7 +59,6 @@ before_script:
   - sh -e .travis/scripts/chrome.sh
 
 script:
-  #- ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
   - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
 after_script:
