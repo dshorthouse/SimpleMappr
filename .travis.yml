@@ -56,7 +56,7 @@ before_script:
   - sudo service apache2 restart
 
   # Chrome Driver & Framebuffer
-  - sudo -e .travis/scripts/chrome.sh
+  - sh -e .travis/scripts/chrome.sh
 
 script:
   #- ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "SimpleMappr Unit Test Suite" --stderr
