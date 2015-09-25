@@ -76,6 +76,7 @@ class LayerDataTest extends SimpleMapprTest
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Regions'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a region']"))->click();
+        sleep(1);
 
         $layer_id = 3;
         $this->setLayerContent($layer_id);

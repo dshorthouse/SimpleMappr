@@ -90,6 +90,7 @@ class PointDataTest extends SimpleMapprTest
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a layer']"))->click();
+        sleep(1);
 
         $layer_id = 3;
         $this->setLayerContent($layer_id);

@@ -50,11 +50,13 @@ class ShareTest extends SimpleMapprTest
         parent::setUpPage();
         parent::setSession();
 
-        $this->webDriver->findElement(WebDriverBy::cssSelector(".map-share"))->click();
+        $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
+        $link = $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"));
+        $this->assertEquals("Share", $link->getText());
+        $link->click();
         parent::waitOnAjax();
-        $this->assertEquals("Unshare", $this->webDriver->findElement(WebDriverBy::cssSelector(".map-unshare"))->getText());
 
-        $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'))->click();
+        $this->assertEquals("Unshare", $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"))->getText());
         $this->assertContains("Sample Map User", $this->shareContent());
     }
 
@@ -66,9 +68,13 @@ class ShareTest extends SimpleMapprTest
         parent::setUpPage();
         parent::setSession();
 
-        $this->webDriver->findElement(WebDriverBy::cssSelector(".map-unshare"))->click();
+        $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
+        $link = $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"));
+        $this->assertEquals("Unshare", $link->getText());
+        $link->click();
         parent::waitOnAjax();
-        $this->assertEquals("Share", $this->webDriver->findElement(WebDriverBy::cssSelector(".map-share"))->getText());
+
+        $this->assertEquals("Share", $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"))->getText());
         $this->assertNotContains("Sample User Map", $this->shareContent());
     }
 
