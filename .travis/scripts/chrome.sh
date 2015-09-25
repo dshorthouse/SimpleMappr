@@ -13,12 +13,14 @@ sudo apt-get -y install google-chrome-stable
 sudo apt-get -y install xvfb gtk2-engines-pixbuf
 sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
 
-echo "Starting Selenium in background..."
-wget -c http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip
-unzip chromedriver_linux64.zip
+echo "---> Getting ChromeDriver and Selenium..."
+wget -c http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux32.zip
+unzip chromedriver_linux32.zip
 sudo cp ./chromedriver /usr/bin/
 sudo chmod ugo+rx /usr/bin/chromedriver
 
-wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar
+wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar
 
-java -jar selenium-server-standalone-2.45.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &
+echo "---> Launching Selenium-Server-Standalone..."
+java -jar selenium-server-standalone-2.47.1.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &
+sleep 5
