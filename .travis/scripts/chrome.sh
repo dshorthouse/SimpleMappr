@@ -19,8 +19,8 @@ echo "---> Getting ChromeDriver and Selenium..."
 wget "http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip"
 wget "http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar"
 unzip chromedriver_linux64.zip
-mv chromedriver /usr/local/bin
-mv selenium-server-standalone-2.47.1.jar /usr/local/bin/selenium.jar
+sudo mv chromedriver /usr/local/bin
+sudo mv selenium-server-standalone-2.47.1.jar /usr/local/bin/selenium.jar
 
 echo "---> Launching Selenium-Server-Standalone..."
 nohup java -jar ./selenium.jar -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver > /dev/null &
