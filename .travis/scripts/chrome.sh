@@ -7,9 +7,6 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 
 sudo apt-get update
 
-sudo apt-get -y install python python-pip
-sudo pip install selenium
-
 sudo apt-get -y install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4
 sudo apt-get -y install google-chrome-stable
 
@@ -22,11 +19,6 @@ unzip chromedriver_linux64.zip
 sudo cp ./chromedriver /usr/bin/
 sudo chmod ugo+rx /usr/bin/chromedriver
 
-wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar
+wget http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar
 
-echo "Starting X virtual framebuffer (Xvfb) in background..."
-Xvfb -ac :99 -screen 0 1280x1024x16 &
-export DISPLAY=:99
-
-java -jar selenium-server-standalone-2.47.1.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &
-sleep 5
+java -jar selenium-server-standalone-2.45.0.jar -Dwebdriver.chrome.driver=/usr/bin/chromedriver > /dev/null &
