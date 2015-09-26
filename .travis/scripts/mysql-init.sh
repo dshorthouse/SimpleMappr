@@ -28,3 +28,6 @@ echo "---> Creating $(tput bold ; tput setaf 2)MySQL database$(tput sgr0) : $(tp
 echo "---> User $(tput bold ; tput setaf 2)$USERNAME ($HASPASSWORD)$(tput sgr0)"
 
 mysql -u$USERNAME $PASSWORD -e "DROP DATABASE IF EXISTS $DBNAME; CREATE DATABASE $DBNAME;"
+
+echo "---> Loading default schema"
+mysql -u$USERNAME $PASSWORD $DBNAME < db/sample.db.sql
