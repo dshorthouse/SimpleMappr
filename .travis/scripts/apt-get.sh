@@ -6,6 +6,9 @@ EXTRA_PACKETS="
 apache2 \
 build-essential \
 libapache2-mod-fastcgi \
+php5 \
+php5-cli \
+php5-common \
 php5-dev \
 php5-gd \
 php5-mysql \
