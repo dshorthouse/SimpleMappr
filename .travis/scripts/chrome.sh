@@ -12,9 +12,6 @@ sudo apt-get -y install google-chrome-stable
 echo "Starting Google Chrome ..."
 google-chrome --remote-debugging-port=9222 &
 
-sudo apt-get -y install xvfb gtk2-engines-pixbuf
-sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-
 echo "---> Getting ChromeDriver and Selenium..."
 wget "http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip"
 wget "http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar"
@@ -23,4 +20,4 @@ sudo mv chromedriver /usr/local/bin
 sudo mv selenium-server-standalone-2.47.1.jar /usr/local/bin/selenium.jar
 
 echo "---> Launching Selenium-Server-Standalone..."
-nohup java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver > /dev/null &
+java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver > /dev/null &
