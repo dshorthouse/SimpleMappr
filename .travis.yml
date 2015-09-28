@@ -62,8 +62,7 @@ before_script:
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - sh -e .travis/scripts/xvfb.sh
   - sleep 3
 
 script:

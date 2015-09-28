@@ -9,9 +9,6 @@ sudo apt-get update
 
 sudo apt-get -y install google-chrome-stable
 
-echo "Starting Google Chrome ..."
-google-chrome --remote-debugging-port=9222 &
-
 echo "---> Getting ChromeDriver and Selenium..."
 wget "http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip"
 wget "http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar"
@@ -19,7 +16,6 @@ unzip chromedriver_linux64.zip
 sudo chmod 755 chromedriver
 sudo mv chromedriver /usr/local/bin
 sudo mv selenium-server-standalone-2.47.1.jar /usr/local/bin/selenium.jar
-exec $SHELL
 
 echo "---> Launching Selenium-Server-Standalone..."
-java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -port 4444 > /dev/null &
+nohup java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -port 4444 > /dev/null &
