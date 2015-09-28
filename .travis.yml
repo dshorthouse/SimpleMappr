@@ -10,6 +10,11 @@ env:
     - DBNAME=simplemappr_testing
     - BROWSER=chrome
 
+addons:
+  hosts:
+    - www.simplemappr.local
+    - img.simplemappr.local
+
 install:
   # Install server dependencies
   - sh -e .travis/scripts/apt-get.sh
