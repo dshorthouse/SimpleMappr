@@ -48,4 +48,3 @@ echo "---> Packets to install : $(tput bold ; tput setaf 3)$EXTRA_PACKETS$(tput 
 
 sudo apt-get update
 sudo apt-get install -y --force-yes $EXTRA_PACKETS
-sudo php5enmod imagick
