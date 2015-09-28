@@ -27,6 +27,7 @@ libghc-svgcairo-dev \
 libfribidi-dev \
 phpunit \
 php-pear \
+php5-imagick \
 gtk2-engines-pixbuf \
 libgtk2.0-0 \
 xvfb \
@@ -44,3 +45,4 @@ echo "---> Packets to install : $(tput bold ; tput setaf 3)$EXTRA_PACKETS$(tput 
 
 sudo apt-get update
 sudo apt-get install -y --force-yes $EXTRA_PACKETS
+sudo php5enmod imagick

@@ -18,4 +18,4 @@ sudo mv chromedriver /usr/local/bin
 sudo mv selenium-server-standalone-2.47.1.jar /usr/local/bin/selenium.jar
 
 echo "---> Launching Selenium-Server-Standalone..."
-xvfb-run --server-args='-screen 0, 1024x768x16' java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -port 4444 > /dev/null &
+nohup xvfb-run --server-args='-screen 0, 1024x768x16' java -jar /usr/local/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -port 4444 > /dev/null &
