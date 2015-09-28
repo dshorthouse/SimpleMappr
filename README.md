@@ -69,7 +69,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download [http://mapserver.org/download.html](MapServer) 7.0.0 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz)
+3. Download [MapServer](http://mapserver.org/download.html) 7.0.0 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 
@@ -90,7 +90,7 @@ Homebrew on Mac OSX
 Unix-based Server
 ------------------
 
-See the useful guide on [http://mapserver.org/installation/unix.html](MapServer).
+See the useful guide on [MapServer](http://mapserver.org/installation/unix.html).
 
 Internationalization
 --------------------
@@ -108,7 +108,7 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
 Dependencies
 ------------
 
-Install all necessary dependencies using [https://getcomposer.org/](composer) and update them as required.
+Install all necessary dependencies using [composer](https://getcomposer.org) and update them as required.
 
     $ composer install
     $ composer update
@@ -116,7 +116,7 @@ Install all necessary dependencies using [https://getcomposer.org/](composer) an
 Database
 --------
 
-SimpleMappr uses MySQL and [http://docs.phinx.org/](phinx) for migrations. A sample schema is included in /db and migrations are stored in /db/migrations.
+SimpleMappr uses MySQL and [phinx](http://docs.phinx.org) for migrations. A sample schema is included in /db and migrations are stored in /db/migrations.
 Create databases simplemappr, simplemappr\_development and simplemappr\_testing. Adjust your /config/phinx.yml as necessary.
 
     $ ./vendor/bin/phinx migrate -c config/phinx.yml -e development
