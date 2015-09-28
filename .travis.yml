@@ -62,7 +62,6 @@ before_script:
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
-  - sh -e .travis/scripts/xvfb.sh
   - sleep 3
 
 script:
