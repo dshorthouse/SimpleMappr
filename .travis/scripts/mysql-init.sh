@@ -31,3 +31,4 @@ mysql -u$USERNAME $PASSWORD -e "DROP DATABASE IF EXISTS $DBNAME; CREATE DATABASE
 
 echo "---> Loading default schema"
 mysql -u$USERNAME $PASSWORD $DBNAME < db/sample.db.sql
+mysql -e "SET GLOBAL wait_timeout=300;"
