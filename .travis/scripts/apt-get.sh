@@ -29,6 +29,7 @@ libcairo2-dev \
 libghc-svgcairo-dev \
 libfribidi-dev \
 phpunit \
+imagemagick \
 php-pear \
 php5-imagick \
 gtk2-engines-pixbuf \
