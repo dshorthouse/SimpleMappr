@@ -38,7 +38,7 @@ libgtk2.0-0 \
 xvfb \
 unzip \
 openjdk-7-jre \
-pecl \
+php-pear \
 cmake"
 
 if [ "$1" ]
