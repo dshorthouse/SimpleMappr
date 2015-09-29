@@ -58,7 +58,7 @@ before_script:
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
 
   # Restart Apache
-  - sudo service apache2 restart
+  - sudo service apache2 reload
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
