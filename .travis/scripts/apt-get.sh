@@ -29,6 +29,7 @@ libcairo2-dev \
 libghc-svgcairo-dev \
 libfribidi-dev \
 phpunit \
+libmagickwand-dev \
 imagemagick \
 php-pear \
 php5-imagick \
@@ -37,6 +38,7 @@ libgtk2.0-0 \
 xvfb \
 unzip \
 openjdk-7-jre \
+pecl \
 cmake"
 
 if [ "$1" ]
@@ -49,3 +51,4 @@ echo "---> Packets to install : $(tput bold ; tput setaf 3)$EXTRA_PACKETS$(tput 
 
 sudo apt-get update
 sudo apt-get install -y --force-yes $EXTRA_PACKETS
+sudo pecl install imagick
