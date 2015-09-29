@@ -38,7 +38,6 @@ libgtk2.0-0 \
 xvfb \
 unzip \
 openjdk-7-jre \
-php-pear \
 cmake"
 
 if [ "$1" ]
@@ -51,4 +50,4 @@ echo "---> Packets to install : $(tput bold ; tput setaf 3)$EXTRA_PACKETS$(tput 
 
 sudo apt-get update
 sudo apt-get install -y --force-yes $EXTRA_PACKETS
-sudo pecl install imagick
+printf "\n" | sudo pecl install imagick
