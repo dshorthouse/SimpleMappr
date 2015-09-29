@@ -79,10 +79,14 @@ function loader()
     switchConf();
     requireFiles();
     flushCaches();
-    $opts = array('http' => array('header' => "User-Agent:MyAgent/1.0\r\n"));
-    $context = stream_context_create($opts);
+    $curl_handle = curl_init();
+    curl_setopt($curl_handle, CURLOPT_URL,"http://".MAPPR_DOMAIN);
+    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'SimpleMappr');
+    $query = curl_exec($curl_handle);
+    curl_close($curl_handle);
     ob_start();
-    file_get_contents("http://".MAPPR_DOMAIN, false, $context);
     new \SimpleMappr\Header;
 }
 
