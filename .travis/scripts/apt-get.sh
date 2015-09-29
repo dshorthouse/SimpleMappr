@@ -51,3 +51,4 @@ echo "---> Packets to install : $(tput bold ; tput setaf 3)$EXTRA_PACKETS$(tput 
 sudo apt-get update
 sudo apt-get install -y --force-yes $EXTRA_PACKETS
 printf "\n" | sudo pecl install imagick
+sudo ln -s /usr/lib/php5/20090626/imagick.so /home/travis/.phpenv/versions/5.5.21/lib/php/extensions/no-debug-zts-20121212/imagick.so
