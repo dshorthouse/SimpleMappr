@@ -4,7 +4,7 @@ echo "---> Starting ImageMagick installation"
 
 wget http://www.imagemagick.org/download/ImageMagick.tar.gz
 tar -zxvf ImageMagick.tar.gz
-cd ImageMagick
+cd ImageMagick-6.9.2-3
 ./configure
 sudo make
 sudo make install
