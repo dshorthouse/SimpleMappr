@@ -22,6 +22,9 @@ install:
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
 
+  # ImageMagick installation
+  - sh -e .travis/scripts/imagemagick.sh
+
   # Install maps
   - sh -e .travis/scripts/maps.sh
 
