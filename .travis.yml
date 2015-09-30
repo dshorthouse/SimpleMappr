@@ -35,7 +35,7 @@ install:
 before_script:
   # Create files
   - sudo touch log/logger.log
-  - sudo touch config/conf.php
+  - sudo cp config/conf.test.php config/conf.php
 
   # Directory permissions
   - sh -e .travis/scripts/permissions.sh
@@ -61,7 +61,6 @@ before_script:
   # Restart Apache
   - sudo service apache2 reload
   - curl "http://www.simplemappr.local"
-  - sudo tail -n100 /var/log/apache2/error.log
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
@@ -72,3 +71,4 @@ script:
 
 after_script:
   - ./vendor/bin/coveralls -c .coveralls.yml -v
+  - sudo tail -n200 /var/log/apache2/error.log
