@@ -59,7 +59,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
-  - sh -e .travis/scripts/echo-site-html.sh
+  - curl "http://www.simplemappr.local"
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
