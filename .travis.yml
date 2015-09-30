@@ -61,7 +61,7 @@ before_script:
   - sudo service apache2 reload
 
   # Echo contents of page
-  - wget -O - http://www.simplemappr.local
+  - wget -qO- http://www.simplemappr.local
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
