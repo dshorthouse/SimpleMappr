@@ -11,3 +11,4 @@ cmake -DWITH_KML=1 -DWITH_PHP=1 -DWITH_FCGI=0 -DWITH_SVGCAIRO=0 -DWITH_HARFBUZZ=
 make
 sudo make install
 cd ../../
+mapserv -v

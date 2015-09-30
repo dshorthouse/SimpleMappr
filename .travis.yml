@@ -53,6 +53,7 @@ before_script:
 
   # PHP config
   - phpenv config-add .travis/travis.php.ini
+  - php -i
 
   # MySQL
   - sudo cp config/phinx.yml.sample config/phinx.yml
@@ -60,8 +61,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
-  - curl "http://www.simplemappr.local"
-  - sudo tail -n100 /var/log/apache2/error.log
+  - 
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
@@ -72,4 +72,3 @@ script:
 
 after_script:
   - ./vendor/bin/coveralls -c .coveralls.yml -v
-  - sudo tail -n200 /var/log/apache2/error.log

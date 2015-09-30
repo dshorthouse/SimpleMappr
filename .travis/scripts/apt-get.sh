@@ -35,6 +35,7 @@ libgtk2.0-0 \
 xvfb \
 unzip \
 openjdk-7-jre \
+libmagickwand-dev \
 curl \
 cmake"
 
