@@ -42,10 +42,10 @@ before_script:
 
   # Apache config
   # enable php-fpm because Travis doesn't do libapache2-mod-php5
-  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - #sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sh -e .travis/scripts/apache2-configure.sh
-  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - #echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - #~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
