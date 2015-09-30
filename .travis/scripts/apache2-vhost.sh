@@ -26,5 +26,3 @@ echo "127.0.0.1    $VHOSTNAME" | sudo tee -a /etc/hosts
 
 echo "---> Creating site $VHOSTNAME"
 sudo a2ensite $VHOSTNAME
-
-sudo service apache2 reload

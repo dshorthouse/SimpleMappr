@@ -47,6 +47,7 @@ before_script:
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Apache web server config for vhosts
+  - curl "http://localhost"
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
 
