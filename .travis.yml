@@ -47,7 +47,6 @@ before_script:
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Apache web server config for vhosts
-  - curl "http://localhost"
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
 
@@ -60,7 +59,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
-  - curl "http://www.simplemappr.local"
+  - curl -X HEAD -i http://www.simplemappr.local
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
