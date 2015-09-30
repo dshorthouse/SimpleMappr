@@ -49,7 +49,6 @@ before_script:
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
-  - wget -qO- "http://www.simplemappr.local"
 
   # PHP config
   - phpenv config-add .travis/travis.php.ini
@@ -60,6 +59,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
+  - sh -e .travis/scripts/echo-site-html.sh
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
