@@ -60,6 +60,10 @@ before_script:
   # Restart Apache
   - sudo service apache2 reload
 
+  # Echo contents of page
+  - page="$(wget -O - http://www.simplemappr.local)"
+  - echo "$page"
+
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
   - sleep 3
