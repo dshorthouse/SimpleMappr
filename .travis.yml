@@ -33,8 +33,9 @@ install:
   - composer install
 
 before_script:
-  # Create log file
+  # Create files
   - sudo touch log/logger.log
+  - sudo touch config/conf.php
 
   # Directory permissions
   - sh -e .travis/scripts/permissions.sh
