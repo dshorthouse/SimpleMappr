@@ -59,7 +59,7 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
-  - wget "http://www.simplemappr.local"
+  - curl "http://www.simplemappr.local"
   - sudo less /var/log/apache2/error.log
 
   # Chrome Driver & Framebuffer
