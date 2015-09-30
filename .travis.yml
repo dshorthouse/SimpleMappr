@@ -60,7 +60,7 @@ before_script:
   # Restart Apache
   - sudo service apache2 reload
   - curl "http://www.simplemappr.local"
-  - sudo less /var/log/apache2/error.log
+  - sudo tail -n100 /var/log/apache2/error.log
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
