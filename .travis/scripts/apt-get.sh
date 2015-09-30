@@ -10,6 +10,7 @@ php5 \
 php5-cli \
 php5-common \
 php5-dev \
+php5-fpm \
 php5-gd \
 php5-mysql \
 php5-curl \

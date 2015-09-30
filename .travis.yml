@@ -61,7 +61,6 @@ before_script:
 
   # Restart Apache
   - sudo service apache2 reload
-  - 
 
   # Chrome Driver & Framebuffer
   - sh -e .travis/scripts/chrome.sh
