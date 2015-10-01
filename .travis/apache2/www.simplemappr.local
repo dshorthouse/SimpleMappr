@@ -31,7 +31,6 @@
    </IfModule>
 </Directory>
 <Directory "%basedir%/config">
-  Order deny,allow
-  Deny from all
+  Require all denied
 </Directory>
 </VirtualHost>
