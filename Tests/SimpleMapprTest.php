@@ -426,10 +426,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         $image1 = new \Imagick($fn1);
         $image2 = new \Imagick($fn2);
         $result = $image1->compareImages($image2, Imagick::METRIC_MEANSQUAREERROR);
-        if ($result[1] == 0) {
+        if ($result[1] < 0.0001) {
             $same = true;
         }
-        print_r($result[1]);
         return $same;
     }
 
