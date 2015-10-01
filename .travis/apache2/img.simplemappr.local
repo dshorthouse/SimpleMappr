@@ -3,7 +3,7 @@
   ServerAdmin davidpshorthouse@gmail.com
   DocumentRoot %basedir%/public/tmp
   Options -Indexes
-  Alias "/error" "/var/www/SimpleMappr/error/"
+  Alias "/error" "%basedir%/error/"
   ErrorDocument 404 "/error/404.html"
   ErrorDocument 403 "/error/403.html"
 <Directory "%basedir%/public/tmp">
