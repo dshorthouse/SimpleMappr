@@ -128,8 +128,8 @@ class UsermapTest extends SimpleMapprTest
         $map_link = $this->webDriver->findElement(WebDriverBy::linkText($map_title));
         $map_link->click();
         parent::waitOnAjax();
-        sleep(1);
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        echo "\n" . $new_img . "\n";
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('mapTitle'))->getText(), $map_title);
         $this->assertNotEquals($default_img, $new_img);
     }
