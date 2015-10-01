@@ -40,7 +40,9 @@ class ToolbarTest extends SimpleMapprTest
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRefresh'))[0];
         $link->click();
+        $link->click();
         parent::waitOnAjax();
+        sleep(5);
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
         $this->assertNotEquals($default_img, $new_img);
