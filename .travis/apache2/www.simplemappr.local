@@ -15,8 +15,7 @@
 <Directory "%basedir%">
    Options -Indexes +FollowSymlinks +MultiViews +ExecCGI
    AllowOverride All
-   Order deny,allow
-   Allow from all
+   Require all granted
    DirectoryIndex index.php
    RewriteEngine on
    RewriteBase /

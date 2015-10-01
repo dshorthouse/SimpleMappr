@@ -9,8 +9,7 @@
 <Directory "%basedir%/public/tmp">
   Options -Indexes +FollowSymlinks
   AllowOverride None
-  Order allow,deny
-  Allow from all
+  Require all granted
   DirectoryIndex index.html
   FileEtag None
   <IfModule mod_headers.c>
