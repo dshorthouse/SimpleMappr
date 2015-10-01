@@ -180,7 +180,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_ecoregions()
     {
-        if (!array_key_exists('TRAVIS', $GLOBALS)) {
+        if (!array_key_exists('TRAVIS', $_SERVER)) {
             $_REQUEST = array(
                 'layers' => 'ecoregions'
             );

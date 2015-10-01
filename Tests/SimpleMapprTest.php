@@ -429,7 +429,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         if ($result[1] == 0) {
             $same = true;
         }
-
+        print_r($result[1]);
         return $same;
     }
 
