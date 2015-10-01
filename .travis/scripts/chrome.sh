@@ -13,9 +13,10 @@ echo "---> Getting ChromeDriver and Selenium..."
 wget "http://chromedriver.storage.googleapis.com/2.19/chromedriver_linux64.zip"
 wget "http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar"
 unzip chromedriver_linux64.zip
-sudo chmod 755 chromedriver
+sudo chmod 775 chromedriver
 sudo mv chromedriver /usr/bin
 sudo mv selenium-server-standalone-2.47.1.jar /usr/bin/selenium.jar
 
 echo "---> Launching Selenium-Server-Standalone..."
-xvfb-run --server-args='-screen 0, 1024x768x16' java -jar /usr/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/bin/chromedriver -port 4444 > /dev/null &
+#xvfb-run --server-args='-screen 0, 1024x768x16' java -jar /usr/bin/selenium.jar -Dwebdriver.chrome.bin=/usr/bin/google-chrome-stable -Dwebdriver.chrome.driver=/usr/bin/chromedriver -port 4444 > /dev/null &
+xvfb-run --server-args='-screen 0, 1024x768x16' java -jar /usr/bin/selenium.jar -port 4444 > /dev/null &
