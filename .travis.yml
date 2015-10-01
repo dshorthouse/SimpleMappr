@@ -15,7 +15,7 @@ addons:
     - www.simplemappr.local
     - img.simplemappr.local
 
-install:
+before_script:
   # Install server dependencies
   - sh -e .travis/scripts/apt-get.sh
 
@@ -32,7 +32,6 @@ install:
   - composer self-update
   - composer install
 
-before_script:
   # Create files
   - sudo touch log/logger.log
   - sudo cp config/conf.test.php config/conf.php
@@ -42,10 +41,7 @@ before_script:
 
   # Apache config
   # enable php-fpm because Travis doesn't do libapache2-mod-php5
-  - #sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sh -e .travis/scripts/apache2-configure.sh
-  - #echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - #~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
