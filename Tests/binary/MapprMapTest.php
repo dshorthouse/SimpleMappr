@@ -85,10 +85,14 @@ class MapprMapTest extends SimpleMapprTest
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
-        $file = ROOT."/public/tmp/map_svg.svg";
-        file_put_contents($file, $output);
+        $svgfile = ROOT."/public/tmp/map_svg.svg";
+        file_put_contents($svgfile, $output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_svg.svg'));
+        $image1 = new \Imagick($svgfile);
+        $image1->setImageFormat('png');
+        $file = ROOT.'/public/tmp/map_svg.png';
+        $image1->writeImage($file);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.png'));
     }
 
     /**
