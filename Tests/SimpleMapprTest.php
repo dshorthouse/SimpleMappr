@@ -465,11 +465,11 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Wait on spinner then fall back to a sleep.
+     * Wait on jQuery ajax then fall back to a sleep.
      */
-    public function waitOnAjax()
+    public function waitOnAjax($timeout = 5, $interval = 200)
     {
-        $this->webDriver->wait()->until(function() {
+        $this->webDriver->wait($timeout, $interval)->until(function() {
             $condition = 'return ($.active == 0);';
             return $this->webDriver->executeScript($condition);
         });
@@ -481,10 +481,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     public function waitOnSpinner()
     {
         $this->webDriver->wait()->until(
-            WebDriverExpectedCondition::refreshed(
-                WebDriverExpectedCondition::invisibilityOfElementLocated(
-                    WebDriverBy::id('map-loader')
-                )            )
+            WebDriverExpectedCondition::invisibilityOfElementLocated(
+                WebDriverBy::id('map-loader')
+            )
         );
     }
 
