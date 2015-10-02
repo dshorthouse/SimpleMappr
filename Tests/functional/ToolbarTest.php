@@ -40,8 +40,8 @@ class ToolbarTest extends SimpleMapprTest
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRefresh'))[0];
         $link->click();
+        parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        echo "\n" . $new_img . "\n";
         $this->assertNotEquals($default_img, $new_img);
     }
 
@@ -58,7 +58,6 @@ class ToolbarTest extends SimpleMapprTest
         $link->click();
         parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        echo "\n" . $new_img . "\n";
         $this->assertNotEquals($default_img, $new_img);
     }
 
@@ -75,7 +74,6 @@ class ToolbarTest extends SimpleMapprTest
         $link->click();
         parent::waitOnAjax();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        echo "\n" . $new_img . "\n";
         $this->assertNotEquals($default_img, $new_img);
     }
 

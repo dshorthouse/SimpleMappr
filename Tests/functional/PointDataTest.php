@@ -42,7 +42,7 @@ class PointDataTest extends SimpleMapprTest
         $this->shape = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][shape]'));
         $this->size = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][size]'));
         $this->color = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][color]'));
-        
+
         $this->title->sendKeys('My Layer');
         $this->data->sendKeys('45, -120');
         $selected_shape = new WebDriverSelect($this->shape);

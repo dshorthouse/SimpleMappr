@@ -61,6 +61,8 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertArrayHasKey("imageURL", $decoded);
         $this->assertArrayHasKey("expiry", $decoded);
+        $image = file_get_contents($decoded["imageURL"]);
+        $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
     }
 
     /**
