@@ -40,7 +40,7 @@ class ToolbarTest extends SimpleMapprTest
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRefresh'))[0];
         $link->click();
-        parent::waitOnAjax();
+        parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
     }
@@ -56,7 +56,7 @@ class ToolbarTest extends SimpleMapprTest
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsRebuild'))[0];
         $link->click();
-        parent::waitOnAjax();
+        parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
     }
@@ -72,7 +72,7 @@ class ToolbarTest extends SimpleMapprTest
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsZoomOut'))[0];
         $link->click();
-        parent::waitOnAjax();
+        parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
     }
