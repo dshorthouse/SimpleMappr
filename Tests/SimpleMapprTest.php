@@ -467,7 +467,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     /**
      * Wait on jQuery ajax then fall back to a sleep.
      */
-    public function waitOnAjax($timeout = 5, $interval = 200)
+    public function waitOnAjax($timeout = 10, $interval = 200)
     {
         $this->webDriver->wait($timeout, $interval)->until(function() {
             $condition = 'return ($.active == 0);';
@@ -478,13 +478,24 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     /**
      * Wait on spinner then fall back to a sleep.
      */
-    public function waitOnSpinner()
+    public function waitOnSpinner($timeout = 10, $interval = 200)
     {
-        $this->webDriver->wait()->until(
+        $this->webDriver->wait($timeout, $interval)->until(
             WebDriverExpectedCondition::invisibilityOfElementLocated(
                 WebDriverBy::id('map-loader')
             )
         );
+    }
+
+    /**
+     * Wait on spinner then fall back to a sleep.
+     */
+    public function waitOnMap($timeout = 10, $interval = 200)
+    {
+        $this->webDriver->wait($timeout, $interval)->until(function() {
+            $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+            return (strpos($src, MAPPR_MAPS_URL));
+        });
     }
 
     /**

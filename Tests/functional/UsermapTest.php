@@ -131,5 +131,6 @@ class UsermapTest extends SimpleMapprTest
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('mapTitle'))->getText(), $map_title);
         $this->assertNotEquals($default_img, $new_img);
+        $this->assertContains(MAPPR_MAPS_URL, $new_img);
     }
 }

@@ -11,6 +11,7 @@ env:
     - BROWSER=firefox
 
 addons:
+  firefox: "41.0.1"
   hosts:
     - www.simplemappr.local
     - img.simplemappr.local
