@@ -494,7 +494,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     {
         $this->webDriver->wait($timeout, $interval)->until(function() {
             $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-            return (strpos($src, MAPPR_MAPS_URL));
+            return (strpos($src, MAPPR_MAPS_URL) !== false) ? true : false;
         });
     }
 

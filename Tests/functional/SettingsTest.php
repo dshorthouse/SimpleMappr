@@ -39,7 +39,7 @@ class SettingsTest extends SimpleMapprTest
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('stateprovinces'))->click();
-        parent::waitOnAjax();
+        parent::waitOnMap();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
@@ -55,7 +55,7 @@ class SettingsTest extends SimpleMapprTest
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('stateprovnames'))->click();
-        parent::waitOnAjax();
+        parent::waitOnMap();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
@@ -71,7 +71,7 @@ class SettingsTest extends SimpleMapprTest
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('graticules'))->click();
-        parent::waitOnAjax();
+        parent::waitOnMap();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
