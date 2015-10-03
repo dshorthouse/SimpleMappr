@@ -325,6 +325,16 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test file is accessible from web server
+     */
+     public function test_file_accessible()
+     {
+         $this->assertContains(MAPPR_MAPS_URL, $this->output["mapOutputImage"]);
+         $image = file_get_contents($this->output["mapOutputImage"]);
+         $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
+     }
+
+    /**
      * Test that the indicated size in the application response is 900X450.
      */
     public function test_mapserver_default_size()

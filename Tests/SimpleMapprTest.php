@@ -490,11 +490,10 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     /**
      * Wait on spinner then fall back to a sleep.
      */
-    public function waitOnMap($timeout = 15, $interval = 200)
+    public function waitOnMap($timeout = 10, $interval = 200)
     {
         $this->webDriver->wait($timeout, $interval)->until(function() {
             $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-            echo "\n" . $src . "\n";
             return (strpos($src, MAPPR_MAPS_URL) !== false) ? true : false;
         });
     }
