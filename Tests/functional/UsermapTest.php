@@ -119,7 +119,7 @@ class UsermapTest extends SimpleMapprTest
     {
         parent::setUpPage();
         parent::setSession();
-
+echo file_get_contents('/var/log/apache2/error.log');
         $map_title = "Sample Map User";
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
@@ -127,7 +127,6 @@ class UsermapTest extends SimpleMapprTest
         $link->click();
         $map_link = $this->webDriver->findElement(WebDriverBy::linkText($map_title));
         $map_link->click();
-        echo file_get_contents('/var/log/apache2/error.log');
         parent::waitOnMap();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('mapTitle'))->getText(), $map_title);
