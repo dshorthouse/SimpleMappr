@@ -58,8 +58,9 @@ before_script:
   - sudo cp config/phinx.yml.sample config/phinx.yml
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
 
-  # Restart Apache
-  - sudo service apache2 reload
+  # Restart PHP-FCGI and Apache
+  - sudo service php5-fpm restart
+  - sudo service apache2 restart
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
