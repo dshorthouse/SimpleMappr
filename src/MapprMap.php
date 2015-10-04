@@ -60,7 +60,7 @@ class MapprMap extends Mappr
      *
      * @return void
      */
-    function __construct($id, $extension)
+    public function __construct($id, $extension)
     {
         parent::__construct();
         $this->_id = (int)$id;
@@ -78,7 +78,7 @@ class MapprMap extends Mappr
             $this->_setNotFound();
             exit();
         }
-        $db = new Database();
+        $db = Database::getInstance();
         $sql = "SELECT map FROM maps WHERE mid=:mid";
         $db->prepare($sql);
         $db->bindParam(":mid", $this->_id, 'integer');

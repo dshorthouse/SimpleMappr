@@ -51,6 +51,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Database
 {
+    static $_instance;
     private $_link;
     private $_handle;
 
@@ -59,12 +60,20 @@ class Database
      *
      * @return void
      */
-    public function __construct()
+    private function __construct()
     {
         $creds = $this->_credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
         $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);
         $this->_link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);
+    }
+
+    public static function getInstance()
+    {
+        if (!(self::$_instance instanceof self)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
     }
 
     /**

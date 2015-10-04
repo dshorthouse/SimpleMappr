@@ -23,7 +23,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
 
-        self::$db = new \SimpleMappr\Database();
+        self::$db = \SimpleMappr\Database::getInstance();
         self::dropTables();
 
         $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (

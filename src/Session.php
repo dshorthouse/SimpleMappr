@@ -144,7 +144,7 @@ class Session
 
         self::writeSession($cookie);
 
-        $db = new Database();
+        $db = Database::getInstance();
         $db->queryUpdate('users', array('access' => time()), 'uid='.$_SESSION["simplemappr"]["uid"]);
     }
 
@@ -326,7 +326,7 @@ class Session
                 'email'       => $email
             );
 
-            $db = new Database();
+            $db = Database::getInstance();
 
             $sql = "SELECT
                         u.uid,

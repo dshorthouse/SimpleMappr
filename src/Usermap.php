@@ -69,7 +69,7 @@ class Usermap implements RestMethods
     {
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-        $this->_db = new Database();
+        $this->_db = Database::getInstance();
     }
 
     /**

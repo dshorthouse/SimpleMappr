@@ -97,7 +97,7 @@ class User implements RestMethods
     public function __construct()
     {
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
-        $this->_db = new Database();
+        $this->_db = Database::getInstance();
     }
 
     /**
