@@ -43,6 +43,7 @@ class SettingsTest extends SimpleMapprTest
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
+        echo file_get_contents('/var/log/apache2/error.log');
     }
 
     /**
