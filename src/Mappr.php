@@ -422,9 +422,7 @@ abstract class Mappr
      */
     function __construct()
     {
-        if (extension_loaded("MapScript")) {
-            $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
-        }
+        $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
     }
 
     /**
