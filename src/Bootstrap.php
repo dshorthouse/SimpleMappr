@@ -113,16 +113,16 @@ class Bootstrap
             return $this->_tailLog();
         }, array('before' => 'checkPermission'));
 
-        $router->post('/application', function () {
-            $klass = $this->_klass("MapprApplication");
-            return $this->_setupMap($klass)->execute()->createOutput();
-        });
-
         $router->post('/application.json', function () {
             Header::setHeader('json');
             $klass = $this->_klass("MapprApplication");
             $output = $this->_setupMap($klass)->execute()->createOutput();
             return json_encode($output);
+        });
+
+        $router->post('/application', function () {
+            $klass = $this->_klass("MapprApplication");
+            return $this->_setupMap($klass)->execute()->createOutput();
         });
 
         $router->group(array('before' => 'check_role_administrator'), function ($router) {
