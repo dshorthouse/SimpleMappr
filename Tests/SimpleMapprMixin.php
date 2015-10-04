@@ -74,16 +74,20 @@ trait SimpleMapprMixin
         }
         rtrim($postData, '&');
 
-        $ch = curl_init();  
+        $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_HEADER, false); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_POST, count($postData));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
 
-        $output = curl_exec($ch);
-
+        $response = curl_exec($ch);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $body = substr($response, $header_size);
         curl_close($ch);
-        return $output;
+
+        return array('header' => $header, 'body' => $body);
     }
 }
