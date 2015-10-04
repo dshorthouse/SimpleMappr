@@ -68,6 +68,11 @@ class Database
         $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);
     }
 
+    /**
+     * Get the database instance
+     *
+     * @return instance
+     */
     public static function getInstance()
     {
         if (!(self::$_instance instanceof self)) {
