@@ -119,9 +119,9 @@ class Bootstrap
         });
 
         $router->post('/application.json', function () {
+            echo "Made it here";
             Header::setHeader('json');
             $klass = $this->_klass("MapprApplication");
-            print_r($klass);
             $output = $this->_setupMap($klass)->execute()->createOutput();
             return json_encode($output);
         });
