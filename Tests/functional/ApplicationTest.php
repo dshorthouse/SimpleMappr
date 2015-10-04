@@ -36,7 +36,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
     {
         $fields = array();
         $response = $this->httpPost("http://" . MAPPR_DOMAIN . "/application.json", $fields);
-        print_r($response['header']);
+        echo file_get_contents('/var/log/apache2/error.log');
         $body = json_decode($response['body'], true);
         $this->assertContains(MAPPR_MAPS_URL, $body["mapOutputImage"]);
         $image = file_get_contents($body["mapOutputImage"]);
