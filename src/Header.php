@@ -272,7 +272,7 @@ class Header
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
         $this->_makeHash()
             ->_addRemoteJs()

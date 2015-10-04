@@ -58,7 +58,7 @@ class Logger
      *
      * @return void
      */
-    function __construct($filename)
+    public function __construct($filename)
     {
         $this->_filename = $filename;
     }

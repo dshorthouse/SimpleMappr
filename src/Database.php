@@ -59,7 +59,7 @@ class Database
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
         $creds = $this->_credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
         $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);

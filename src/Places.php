@@ -59,7 +59,7 @@ class Places implements RestMethods
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
         $this->_db = new Database();
         $this->results = new \stdClass();

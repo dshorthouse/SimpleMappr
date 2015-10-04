@@ -225,7 +225,7 @@ class Session
      *
      * @return void
      */
-    function __construct($new_session)
+    public function __construct($new_session)
     {
         if ($new_session) {
             $this->_execute();

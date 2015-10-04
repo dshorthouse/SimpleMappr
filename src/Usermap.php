@@ -65,7 +65,7 @@ class Usermap implements RestMethods
     /**
      * Class constructor
      */
-    function __construct()
+    public function __construct()
     {
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
         $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;

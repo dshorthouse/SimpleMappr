@@ -420,7 +420,7 @@ abstract class Mappr
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
         $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
     }

@@ -62,7 +62,7 @@ class Share implements RestMethods
      *
      * @return void
      */
-    function __construct()
+    public function __construct()
     {
         $this->_db = new Database();
         $this->_uid = (int)$_SESSION['simplemappr']['uid'];
