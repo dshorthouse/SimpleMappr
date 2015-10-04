@@ -10,25 +10,24 @@
    AddHandler php5-fcgi .php
    Action php5-fcgi /php5-fcgi
    Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
-   FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+   FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
    <Directory /usr/lib/cgi-bin>
      Require all granted
+     Require env REDIRECT_STATUS
    </Directory>
   </IfModule>
   <Directory "%basedir%">
-     Options -Indexes +FollowSymlinks +MultiViews +ExecCGI
+     Options -Indexes +FollowSymlinks -MultiViews +ExecCGI
      AllowOverride All
      Require all granted
      DirectoryIndex index.php
-     <IfModule mod_rewrite.c>
-       RewriteEngine on
-       RewriteBase /
-       RewriteRule ^(public|favicon.ico|sitemap.xml|robots.txt)($|/) - [L]
-       RewriteRule ^php5.fcgi(.*) - [L]
-       RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
-       RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
-       RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-     </IfModule>
+     RewriteEngine on
+     RewriteBase /
+     RewriteRule ^(public|favicon.ico|sitemap.xml|robots.txt)($|/) - [L]
+     RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+     RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
+     RewriteCond %{REQUEST_URI} !^/php5-fcgi/*
+     RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
      <IfModule mod_expires.c>
       <FilesMatch "\.(jpe?g|png|gif|js|css|ico|php|htm|html)$">
         ExpiresActive On
