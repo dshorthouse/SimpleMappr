@@ -42,4 +42,13 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
     }
 
+    /**
+     * Test that js files are served from /public/javascript/.
+     */
+    public function test_jsAccessible()
+    {
+        $expected = "/*\n 2013 David P. Shorthouse";
+        $response = file_get_contents("http://" . MAPPR_DOMAIN . "/public/javascript/simplemappr.min.js");
+        $this->assertEquals($expected, substr($response,0,28));
+    }
 }

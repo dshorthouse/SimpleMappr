@@ -16,7 +16,6 @@
      RewriteRule ^(public|favicon.ico|sitemap.xml|robots.txt)($|/) - [L]
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
-     RewriteCond %{REQUEST_URI} !^/php5-fcgi/*
      RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
      <IfModule mod_expires.c>
       <FilesMatch "\.(jpe?g|png|gif|js|css|ico|php|htm|html)$">
