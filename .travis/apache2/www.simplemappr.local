@@ -13,6 +13,7 @@
      DirectoryIndex index.php
      RewriteEngine on
      RewriteBase /
+     RewriteRule ^php5-fcgi - [L]
      RewriteRule ^(public|favicon.ico|sitemap.xml|robots.txt)($|/) - [L]
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
