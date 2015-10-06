@@ -13,7 +13,7 @@
      DirectoryIndex index.php
      RewriteEngine on
      RewriteBase /
-     RewriteRule ^php5-fcgi - [L]
+#     RewriteRule ^php5-fcgi - [L]
      RewriteRule ^(public|favicon.ico|sitemap.xml|robots.txt)($|/) - [L]
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
      RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
@@ -28,14 +28,14 @@
   <Directory "%basedir%/config">
     Require all denied
   </Directory>
-  <IfModule mod_fastcgi.c>
-   AddType application/x-httpd-fastphp5 .php
-   Action application/x-httpd-fastphp5 /php5-fcgi
-   Alias /php5-fcgi /usr/lib/cgi-bin/php5.fcgi
-   FastCgiExternalServer /usr/lib/cgi-bin/php5.fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
-   <Directory /usr/lib/cgi-bin>
-     Require all granted
-     Require env REDIRECT_STATUS
-   </Directory>
-  </IfModule>
+#  <IfModule mod_fastcgi.c>
+#   AddType application/x-httpd-fastphp5 .php
+#   Action application/x-httpd-fastphp5 /php5-fcgi
+#   Alias /php5-fcgi /usr/lib/cgi-bin/php5.fcgi
+#   FastCgiExternalServer /usr/lib/cgi-bin/php5.fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+#   <Directory /usr/lib/cgi-bin>
+#     Require all granted
+#     Require env REDIRECT_STATUS
+#   </Directory>
+#  </IfModule>
 </VirtualHost>
