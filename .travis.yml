@@ -46,7 +46,6 @@ before_script:
   # Apache config
   # enable php-fpm because Travis doesn't do libapache2-mod-php5
   - sh -e .travis/scripts/apache2-configure.sh
-  - sh -e .travis/scripts/php5-fpm-configure.sh
 
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
