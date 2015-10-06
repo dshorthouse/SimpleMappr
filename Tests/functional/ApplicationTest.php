@@ -51,4 +51,13 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $response = file_get_contents("http://" . MAPPR_DOMAIN . "/public/javascript/simplemappr.min.js");
         $this->assertEquals($expected, substr($response,0,28));
     }
+
+    /**
+     * Test that 404 is served when route is not found.
+     */
+    public function test_404()
+    {
+        $headers = get_headers("http://" . MAPPR_DOMAIN . "/doesnotexist");
+        $this->assertEquals(404, substr($headers[0], 9, 3));
+    }
 }
