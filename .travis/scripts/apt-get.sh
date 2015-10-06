@@ -14,7 +14,6 @@ php5-fpm \
 php5-gd \
 php5-mysql \
 php5-curl \
-libapache2-mod-php5 \
 locales \
 gettext \
 autoconf \
