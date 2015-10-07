@@ -79,10 +79,10 @@ before_script:
   - sh -e .travis/scripts/permissions.sh
 
   # Apache web server config for vhosts
-  - sudo cp -f .travis/apache2/www.simplemappr.local.conf /etc/apache2/sites-available/
-  - sudo cp -f .travis/apache2/img.simplemappr.local.conf /etc/apache2/sites-available/
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.simplemappr.local.conf
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/img.simplemappr.local.conf
+  - sudo cp -f .travis/apache2/www_simplemappr_local.conf /etc/apache2/sites-available/www_simplemappr_local.conf
+  - sudo cp -f .travis/apache2/img_simplemappr_local.conf /etc/apache2/sites-available/img_simplemappr_local.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www_simplemappr_local.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/img_simplemappr_local.conf
   - sudo a2ensite www.simplemappr.local
   - sudo a2ensite img.simplemappr.local
   - sudo a2enmod actions rewrite expires headers
