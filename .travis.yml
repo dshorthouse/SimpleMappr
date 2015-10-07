@@ -71,3 +71,4 @@ script:
 
 after_script:
   - ./vendor/bin/coveralls -c .coveralls.yml -v
+  - sudo cat /var/log/apache2/error.log
