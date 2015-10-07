@@ -21,6 +21,7 @@ libjpeg-dev \
 libpng12-dev \
 libagg-dev \
 freetype* \
+libfcgi-dev \
 libgdal1-dev \
 libgdal-dev \
 libproj-dev \
