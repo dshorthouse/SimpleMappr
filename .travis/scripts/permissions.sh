@@ -7,4 +7,3 @@ sudo chmod -R 777 public/stylesheets/cache/
 sudo chmod -R 777 config/
 sudo chmod -R 777 mapserver/
 sudo chmod -R 777 log/
-sudo chmod 666 /var/run/php5-fpm.sock
