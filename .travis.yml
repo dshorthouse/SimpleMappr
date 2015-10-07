@@ -83,8 +83,14 @@ before_script:
   - sh -e .travis/scripts/apache2-configure.sh
 
   # Apache web server config for vhosts
-  - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
-  - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
+  - sudo cp -f apache2/www.simplemappr.local.conf /etc/apache2/sites-available/
+  - sudo cp -f apache2/img.simplemappr.local.conf /etc/apache2/sites-available/
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.simplemappr.local.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/img.simplemappr.local.conf
+  - sudo a2ensite www.simplemappr.local
+  - sudo a2ensite img.simplemappr.local
+  - sudo a2enmod actions rewrite expires headers
+  - sudo touch /usr/lib/cgi-bin/php5.fcgi
 
   # MySQL
   - sudo cp config/phinx.yml.sample config/phinx.yml
