@@ -78,10 +78,6 @@ before_script:
   # Directory permissions
   - sh -e .travis/scripts/permissions.sh
 
-  # Apache config
-  # enable php-fpm because Travis doesn't do libapache2-mod-php5
-  - sh -e .travis/scripts/apache2-configure.sh
-
   # Apache web server config for vhosts
   - sudo cp -f apache2/www.simplemappr.local.conf /etc/apache2/sites-available/
   - sudo cp -f apache2/img.simplemappr.local.conf /etc/apache2/sites-available/
