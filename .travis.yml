@@ -57,6 +57,7 @@ addons:
 install:
   # PHP config
   - phpenv config-add .travis/travis.php.ini
+  - printf "\n" | pecl install imagick
   - phpenv rehash
 
 before_script:
