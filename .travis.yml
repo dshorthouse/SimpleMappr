@@ -1,7 +1,7 @@
 language: php
 
 php:
-  - 5.5
+  - 5.6
 
 env:
   global:
@@ -18,9 +18,13 @@ addons:
 
 before_script:
   # Install server dependencies
-  - sudo add-apt-repository -y ppa:ondrej/php5
-  - sudo add-apt-repository -y ppa:ondrej/apache2
-  - sudo apt-get update -q
+#  - sudo add-apt-repository -y ppa:ondrej/php5
+#  - sudo add-apt-repository -y ppa:ondrej/apache2
+#  - sudo apt-get update -q
+
+  # PHP config
+  - phpenv global 5.6
+  - phpenv config-add .travis/travis.php.ini
   - sh -e .travis/scripts/apt-get.sh
 
   # MapServer installation
@@ -50,9 +54,6 @@ before_script:
   # Apache web server config for vhosts
   - sh -e .travis/scripts/apache2-vhost.sh "$HOST"
   - sh -e .travis/scripts/apache2-vhost.sh "$IMGHOST"
-
-  # PHP config
-  - phpenv config-add .travis/travis.php.ini
 
   # MySQL
   - sudo cp config/phinx.yml.sample config/phinx.yml
