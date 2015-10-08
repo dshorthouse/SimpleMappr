@@ -88,7 +88,7 @@ before_script:
 
   # Restart PHP-FCGI and Apache
   - phpenv rehash
-  - sudo service php-fpm restart
+  - sudo service php5-fpm restart
   - sudo service apache2 restart
 
   # Selenium
