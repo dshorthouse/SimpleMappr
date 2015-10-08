@@ -60,14 +60,14 @@ install:
   - phpenv config-add .travis/travis.php.ini
   - phpenv rehash
 
+  # Translations
+  - sh -e .travis/scripts/locales.sh
+
   # PHP-FPM configuration
   - sh -e .travis/scripts/php-fpm.sh
 
   # Install maps
   - sh -e .travis/scripts/maps.sh
-
-  # Translations
-  - sh -e .travis/scripts/locales.sh
 
   # Install Composer dependencies
   - composer self-update
