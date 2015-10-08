@@ -22,5 +22,6 @@ sed -i "s|@PATH@|$PATH|g" ".travis/php-fpm.ini"
 
 # Start daemon
 echo "Starting php-fpm"
+sudo ls -R "~/.phpenv/versions/$(phpenv version-name)"
 sudo $PHP_FPM_BIN --fpm-config ".travis/php-fpm.ini"
 sudo chown www-data:www-data /var/run/php-fpm.sock
