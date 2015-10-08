@@ -15,13 +15,13 @@ echo "php-fpm user = $USER"
 sudo touch "$PHP_FPM_LOG"
 
 # Adjust php-fpm.ini
-sed -i "s/@USER@/$USER/g" ".travis/php-fpm.ini"
-sed -i "s|@PHP_FPM_SOCK@|$PHP_FPM_SOCK|g" ".travis/php-fpm.ini"
-sed -i "s|@PHP_FPM_LOG@|$PHP_FPM_LOG|g" ".travis/php-fpm.ini"
-sed -i "s|@PATH@|$PATH|g" ".travis/php-fpm.ini"
+sed -i "s/@USER@/$USER/g" "$TRAVIS_BUILD_DIR/.travis/php-fpm.ini"
+sed -i "s|@PHP_FPM_SOCK@|$PHP_FPM_SOCK|g" "$TRAVIS_BUILD_DIR/.travis/php-fpm.ini"
+sed -i "s|@PHP_FPM_LOG@|$PHP_FPM_LOG|g" "$TRAVIS_BUILD_DIR/.travis/php-fpm.ini"
+sed -i "s|@PATH@|$PATH|g" "$TRAVIS_BUILD_DIR/.travis/php-fpm.ini"
 
 # Start daemon
 echo "Starting php-fpm"
-sudo ls -R "~/travis/.phpenv/versions/$(phpenv version-name)/"
-sudo $PHP_FPM_BIN --fpm-config ".travis/php-fpm.ini"
+sudo ls -R "~/.phpenv/versions/$(phpenv version-name)/"
+sudo $PHP_FPM_BIN --fpm-config "$TRAVIS_BUILD_DIR/.travis/php-fpm.ini"
 sudo chown www-data:www-data /var/run/php-fpm.sock
