@@ -11,4 +11,3 @@ sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-availa
 sudo a2ensite www_simplemappr_local.conf
 
 sudo a2enmod actions rewrite expires headers
-sudo touch /usr/lib/cgi-bin/php5.fcgi

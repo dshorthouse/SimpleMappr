@@ -59,6 +59,7 @@ install:
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
   - phpenv rehash
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
 
   # Install maps
   - sh -e .travis/scripts/maps.sh
@@ -87,7 +88,7 @@ before_script:
 
   # Restart PHP-FCGI and Apache
   - phpenv rehash
-  - sudo service php5-fpm restart
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   - sudo service apache2 restart
 
   # Selenium
