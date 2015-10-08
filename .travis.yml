@@ -60,6 +60,8 @@ install:
   - phpenv config-add .travis/travis.php.ini
   - phpenv rehash
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo cat ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
   # Install maps
   - sh -e .travis/scripts/maps.sh
