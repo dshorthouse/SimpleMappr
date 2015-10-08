@@ -387,15 +387,15 @@ abstract class Mappr
             return;
         }
         // parts: 0 = degree, 1 = minutes, 2 = seconds
-        $d = isset($parts[0]) ? (float)$parts[0] : 0;
-        $m = isset($parts[1]) ? (float)$parts[1] : 0;
+        $deg = isset($parts[0]) ? (float)$parts[0] : 0;
+        $min = isset($parts[1]) ? (float)$parts[1] : 0;
         if (strpos($dms, ".") > 1 && isset($parts[2])) {
-            $m = (float)($parts[1] . '.' . $parts[2]);
+            $min = (float)($parts[1] . '.' . $parts[2]);
             unset($parts[2]);
         }
-        $s = isset($parts[2]) ? (float)$parts[2] : 0;
-        if ($m >= 0 && $m < 60 && $s >= 0 && $s < 60) {
-            $dec = ($d + ($m/60) + ($s/3600))*$neg;
+        $sec = isset($parts[2]) ? (float)$parts[2] : 0;
+        if ($min >= 0 && $min < 60 && $sec >= 0 && $sec < 60) {
+            $dec = ($deg + ($min/60) + ($sec/3600))*$neg;
         }
         return $dec;
     }
@@ -793,49 +793,45 @@ abstract class Mappr
     }
 
     /**
+     * Create a symbol
+     *
+     * @return void
+     */
+    private function _createSymbol($name, $fill, $vertices)
+    {
+        $nId = ms_newSymbolObj($this->map_obj, $name);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $type = (strpos($name, 'circle') !== FALSE) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
+        $symbol->set("type", $type);
+        $symbol->set("filled", $fill);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->setpoints($vertices);
+    }
+
+    /**
      * Load-up all the symbols
      *
      * @return void
      */
     private function _loadSymbols()
     {
-        //plus
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[0]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $plus = array(
             0.5, 0,
             0.5, 1,
             -99, -99,
             0, 0.5,
             1, 0.5
         );
-        $symbol->setpoints($spoints);
 
-        //cross
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[1]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $cross = array(
             0, 0,
             1, 1,
             -99, -99,
             0, 1,
             1, 0
         );
-        $symbol->setpoints($spoints);
 
-        //asterisk
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[2]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $asterisk = array(
             0, 0,
             1, 1,
             -99, -99,
@@ -848,26 +844,12 @@ abstract class Mappr
             0, 0.5,
             1, 0.5
         );
-        $symbol->setpoints($spoints);
 
-        //opencircle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[3]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_ELLIPSE);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $circle = array(
             1, 1
         );
-        $symbol->setpoints($spoints);
 
-        //openstar
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[4]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $star = array(
             0, 0.375,
             0.35, 0.365,
             0.5, 0,
@@ -880,58 +862,30 @@ abstract class Mappr
             0.25, 0.625,
             0, 0.375
         );
-        $symbol->setpoints($spoints);
 
-        //opensquare
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[5]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $square = array(
             0, 1,
             0, 0,
             1, 0,
             1, 1,
             0, 1
         );
-        $symbol->setpoints($spoints);
 
-        //opentriangle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[6]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $triangle = array(
             0, 1,
             0.5, 0,
             1, 1,
             0, 1
         );
-        $symbol->setpoints($spoints);
 
-        //inverseopentriangle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[7]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $inversetriangle = array(
             0, 0,
             1, 0,
             0.5, 1,
             0, 0
         );
-        $symbol->setpoints($spoints);
 
-        //openhexagon
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[8]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_FALSE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
+        $hexagon = array(
             0.23, 0,
             0, 0.5,
             0.23, 1,
@@ -940,105 +894,22 @@ abstract class Mappr
             0.77, 0,
             0.23, 0
         );
-        $symbol->setpoints($spoints);
 
-        //circle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[9]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_ELLIPSE);
-        $symbol->set("transparent", 100);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
-            1, 1
-        );
-        $symbol->setpoints($spoints);
-
-        //star
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[10]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $symbol->set("transparent", 100);
-        $spoints = array(
-            0, 0.375,
-            0.35, 0.365,
-            0.5, 0,
-            0.65, 0.375,
-            1, 0.375,
-            0.75, 0.625,
-            0.875, 1,
-            0.5, 0.75,
-            0.125, 1,
-            0.25, 0.625,
-            0, 0.375
-        );
-        $symbol->setpoints($spoints);
-
-        //square
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[11]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $symbol->set("transparent", 100);
-        $spoints = array(
-            0, 1,
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1
-        );
-        $symbol->setpoints($spoints);
-
-        //triangle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[12]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $symbol->set("transparent", 100);
-        $spoints = array(
-            0, 1,
-            0.5, 0,
-            1, 1,
-            0, 1
-        );
-        $symbol->setpoints($spoints);
-
-        //inversetriangle
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[13]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $symbol->set("transparent", 100);
-        $spoints = array(
-            0, 0,
-            1, 0,
-            0.5, 1,
-            0, 0
-        );
-        $symbol->setpoints($spoints);
-
-        //hexagon
-        $nId = ms_newSymbolObj($this->map_obj, self::$accepted_shapes[14]);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $symbol->set("type", MS_SYMBOL_VECTOR);
-        $symbol->set("transparent", 100);
-        $symbol->set("filled", MS_TRUE);
-        $symbol->set("inmapfile", MS_TRUE);
-        $spoints = array(
-            0.23, 0,
-            0, 0.5,
-            0.23, 1,
-            0.77, 1,
-            1, 0.5,
-            0.77, 0,
-            0.23, 0
-        );
-        $symbol->setpoints($spoints);
+        $this->_createSymbol(self::$accepted_shapes[0], MS_FALSE, $plus);
+        $this->_createSymbol(self::$accepted_shapes[1], MS_FALSE, $cross);
+        $this->_createSymbol(self::$accepted_shapes[2], MS_FALSE, $asterisk);
+        $this->_createSymbol(self::$accepted_shapes[3], MS_FALSE, $circle);
+        $this->_createSymbol(self::$accepted_shapes[9], MS_TRUE, $circle);
+        $this->_createSymbol(self::$accepted_shapes[4], MS_FALSE, $star);
+        $this->_createSymbol(self::$accepted_shapes[10], MS_TRUE, $star);
+        $this->_createSymbol(self::$accepted_shapes[5], MS_FALSE, $square);
+        $this->_createSymbol(self::$accepted_shapes[11], MS_TRUE, $square);
+        $this->_createSymbol(self::$accepted_shapes[6], MS_FALSE, $triangle);
+        $this->_createSymbol(self::$accepted_shapes[12], MS_TRUE, $triangle);
+        $this->_createSymbol(self::$accepted_shapes[7], MS_FALSE, $inversetriangle);
+        $this->_createSymbol(self::$accepted_shapes[13], MS_TRUE, $inversetriangle);
+        $this->_createSymbol(self::$accepted_shapes[8], MS_FALSE, $hexagon);
+        $this->_createSymbol(self::$accepted_shapes[14], MS_TRUE, $hexagon);
     }
 
     /**
@@ -1394,18 +1265,7 @@ abstract class Mappr
                         $style->outlinecolor->setRGB(0, 0, 0);
                     }
 
-                    $width = 1.25;
-                    if (isset($this->border_thickness)) {
-                        $width = $this->border_thickness;
-                        if ($this->_isResize() 
-                            && $this->_download_factor > 1
-                            && array_key_exists('scalelinethickness', $this->options)
-                            && $this->options['scalelinethickness']
-                        ) {
-                            $width = $this->border_thickness*$this->_download_factor/2;
-                        }
-                    }
-                    $style->set("width", $width);
+                    $style->set("width", $this->_determineWidth());
 
                     $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
                     $new_line = ms_newLineObj();
@@ -1518,18 +1378,7 @@ abstract class Mappr
                     }
                     $style->outlinecolor->setRGB(30, 30, 30);
                     $style->set("opacity", 75);
-                    $width = 1.25;
-                    if (isset($this->border_thickness)) {
-                        $width = $this->border_thickness;
-                        if ($this->_isResize() 
-                            && $this->_download_factor > 1
-                            && array_key_exists('scalelinethickness', $this->options)
-                            && $this->options['scalelinethickness']
-                        ) {
-                            $width = $this->border_thickness*$this->_download_factor/2;
-                        }
-                    }
-                    $style->set("width", $width);
+                    $style->set("width", $this->_determineWidth());
                     $layer->set("status", MS_ON);
                 }
 
@@ -1619,7 +1468,6 @@ abstract class Mappr
                     $this->_legend_required = true;
                     break;
 
-
                 case 'rivernames':
                 case 'lakenames':
                     $layer->set("tolerance", 1);
@@ -1634,18 +1482,7 @@ abstract class Mappr
                 case 'stateprovinces':
                     $class = ms_newClassObj($layer);
                     $style = ms_newStyleObj($class);
-                    $width = 1.25;
-                    if (isset($this->border_thickness)) {
-                        $width = $this->border_thickness;
-                        if ($this->_isResize() 
-                            && $this->_download_factor > 1
-                            && array_key_exists('scalelinethickness', $this->options)
-                            && $this->options['scalelinethickness']
-                        ) {
-                            $width = $this->border_thickness*$this->_download_factor/2;
-                        }
-                    }
-                    $style->set("width", $width);
+                    $style->set("width", $this->_determineWidth());
                     $style->color->setRGB(10, 10, 10);
                     break;
 
@@ -1679,13 +1516,6 @@ abstract class Mappr
                     break;
 
                 case 'physicalLabels':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, $this->shapes[$name]['encoding']));
-                    break;
-
                 case 'marineLabels':
                     $layer->set("tolerance", 5);
                     $layer->set("toleranceunits", "pixels");
@@ -2040,16 +1870,16 @@ abstract class Mappr
     {
         $hex = str_replace("#", "", $hex);
 
+        $red = hexdec(substr($hex, 0, 2));
+        $green = hexdec(substr($hex, 2, 2));
+        $blue = hexdec(substr($hex, 4, 2));
+
         if (strlen($hex) == 3) {
-            $r = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
-            $g = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
-            $b = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
-        } else {
-            $r = hexdec(substr($hex, 0, 2));
-            $g = hexdec(substr($hex, 2, 2));
-            $b = hexdec(substr($hex, 4, 2));
+            $red = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
+            $green = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
+            $blue = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
         }
-        return array($r, $g, $b);
+        return array($red, $green, $blue);
     }
 
     /**
@@ -2072,6 +1902,22 @@ abstract class Mappr
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
         }
+    }
+
+    private function _determineWidth()
+    {
+        $width = 1.25;
+        if (isset($this->border_thickness)) {
+            $width = $this->border_thickness;
+            if ($this->_isResize() 
+                && $this->_download_factor > 1
+                && array_key_exists('scalelinethickness', $this->options)
+                && $this->options['scalelinethickness']
+            ) {
+                $width = $this->border_thickness*$this->_download_factor/2;
+            }
+        }
+        return $width;
     }
 
 }
