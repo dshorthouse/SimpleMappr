@@ -15,7 +15,7 @@ echo "php-fpm user = $USER"
 sudo touch "$PHP_FPM_LOG"
 
 # Adjust php-fpm.ini
-sed -i "s/@USER@/$USER/g" "$DIR/php-fpm.ini"
+sed -i "s/@USER@/$USER/g" ".travis/php-fpm.ini"
 sed -i "s|@PHP_FPM_SOCK@|$PHP_FPM_SOCK|g" ".travis/php-fpm.ini"
 sed -i "s|@PHP_FPM_LOG@|$PHP_FPM_LOG|g" ".travis/php-fpm.ini"
 sed -i "s|@PATH@|$PATH|g" ".travis/php-fpm.ini"
