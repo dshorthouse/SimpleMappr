@@ -37,11 +37,12 @@
  */
 namespace SimpleMappr;
 
-use \PhpOffice\PhpPowerpoint\Autoloader;
-use \PhpOffice\PhpPowerpoint\PhpPowerpoint;
-use \PhpOffice\PhpPowerpoint\Slide\Layout;
-use \PhpOffice\PhpPowerpoint\Style\Alignment;
-use \PhpOffice\PhpPowerpoint\IOFactory;
+use \PhpOffice\PhpPresentation\Autoloader;
+use \PhpOffice\PhpPresentation\PhpPresentation;
+use \PhpOffice\PhpPresentation\IOFactory;
+use \PhpOffice\PhpPresentation\Slide\Layout;
+use \PhpOffice\PhpPresentation\Style\Color;
+use \PhpOffice\PhpPresentation\Style\Alignment;
 
 /**
  * PPTX handler for SimpleMappr
@@ -64,7 +65,7 @@ class MapprPptx extends Mappr
      */
     public function createOutput()
     {
-        $objPHPPowerPoint = new PhpPowerpoint();
+        $objPHPPowerPoint = new PhpPresentation();
 
         $clean_filename = parent::cleanFilename($this->file_name);
 

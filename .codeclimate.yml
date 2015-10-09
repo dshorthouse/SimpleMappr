@@ -1,0 +1,10 @@
+languages:
+  JavaScript: true
+  PHP: true
+exclude_paths:
+  - ".travis"
+  - "config"
+  - "db"
+  - "I18n"
+  - "scripts"
+  - "Tests"
