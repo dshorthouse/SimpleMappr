@@ -813,30 +813,6 @@ msgid "Bug fixes: Point Data layers incorrectly loaded from saved map when there
 msgstr "Corrections: Les couches de données Point incorrectement chargés quand il ya des couches blanches suivies par des couches avec des données. Rapporté par Chandra Venables."
 
 #: .tabs/about.php:11
-msgid "May 9, 2013"
-msgstr "9 mai, 2013"
-
-#: .tabs/about.php:11
-msgid "Improvements: Added an option for a greyscale ocean layer and asterisk as a marker option."
-msgstr "Améliorations: ajouté une option pour une couche océan gris et une astérisque pour les points de données."
-
-#: .tabs/about.php:11
-msgid "May 19, 2013"
-msgstr "19 mai, 2013"
-
-#: .tabs/about.php:11
-msgid "Improvements: Added 1 degree option for spacing of graticules. Requested by Michael Tessler."
-msgstr "Améliorations: ajouté l'option de spécifié 1 degré pour l'espacement des réticules. Demandé par Michael Tessler."
-
-#: .tabs/about.php:11
-msgid "April 12, 2013"
-msgstr "12 avril, 2013"
-
-#: .tabs/about.php:11
-msgid "Improvements: Added the ability to specify the longitude of natural origin in Lambert projections. Requested by Tim Dickinson."
-msgstr "Améliorations: ajouté la possibilité de spécifier la longitude d'origine naturelle dans les projections Lambert. Demandé par Tim Dickinson."
-
-#: .tabs/about.php:11
 msgid "February 27, 2013"
 msgstr "27 février, 2013"
 
