@@ -45,10 +45,11 @@ class WfsTest extends PHPUnit_Framework_TestCase
         ob_start();
         echo $this->wfs->createOutput();
         $output = ob_get_contents();
-        $file = ROOT."/public/tmp/wfs.xml";
-        file_put_contents($file, $output);
+        $xml = simplexml_load_string($output);
         ob_end_clean();
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/wfs.xml'));
+        $layers = $xml->FeatureTypeList->FeatureType;
+        $this->assertEquals(2, count($layers));
+        $this->assertEquals("lakes", $layers[0]->Title);
     }
 
 }
