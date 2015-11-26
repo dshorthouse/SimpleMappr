@@ -64,7 +64,7 @@ class MapprWms extends Mappr
         'rivers' => 'on',
         'oceans' => 'on',
         'conservation' => 'on',
-        'stateprovinces_polygon' => 'on',
+        'stateprovinces' => 'on',
         'relief' => 'on',
         'reliefgrey' => 'on',
         'ecoregions' => 'on'
@@ -125,7 +125,7 @@ class MapprWms extends Mappr
     }
 
     /**
-     * Set the simplification filter for a WFS request
+     * Set the simplification filter for a WMS request
      *
      * @param int $int The maximum number of features
      *
@@ -147,7 +147,7 @@ class MapprWms extends Mappr
     }
 
     /**
-     * Construct metadata for WFS
+     * Construct metadata for WMS
      *
      * @return object $this
      */
