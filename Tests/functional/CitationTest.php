@@ -37,7 +37,7 @@ class CitationTest extends SimpleMapprTest
         parent::setUpPage();
         parent::setSession('administrator');
 
-        $ch = curl_init($this->url . "citation.json");
+        $ch = curl_init(MAPPR_URL . "/citation.json");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

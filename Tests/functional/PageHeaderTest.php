@@ -55,7 +55,7 @@ class PageHeaderTest extends SimpleMapprTest
      */
     public function testLanguageFrancais()
     {
-        $this->webDriver->get($this->url . "/?locale=fr_FR");
+        $this->webDriver->get(MAPPR_URL . "/?locale=fr_FR");
         $lang = $this->webDriver->findElement(WebDriverBy::xpath("//html"))->getAttribute('lang');
         $this->assertEquals('fr', $lang);
     }
@@ -110,8 +110,8 @@ class PageHeaderTest extends SimpleMapprTest
         $this->assertContains("Create free point maps for publications and presentations", $og_description);
         $this->assertContains("en_US", $og_locale);
         $this->assertContains("website", $og_type);
-        $this->assertContains("http://" . MAPPR_DOMAIN, $og_url);
-        $this->assertContains("http://" . MAPPR_DOMAIN . "/public/images/logo_og.png", $og_image);
+        $this->assertContains(MAPPR_URL, $og_url);
+        $this->assertContains(MAPPR_URL . "/public/images/logo_og.png", $og_image);
     }
 
     /**

@@ -33,7 +33,7 @@ class PlacesTest extends SimpleMapprTest
      */
     public function test_PlacesIndex()
     {
-        $ch = curl_init($this->url . "places");
+        $ch = curl_init(MAPPR_URL . "/places");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -71,7 +71,7 @@ class PlacesTest extends SimpleMapprTest
      */
     public function test_PlacesSearch()
     {
-        $ch = curl_init($this->url . "places.json/?term=Canada");
+        $ch = curl_init(MAPPR_URL . "/places.json/?term=Canada");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

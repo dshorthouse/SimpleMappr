@@ -35,7 +35,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
     public function test_postRequest()
     {
         $fields = array();
-        $response = $this->httpPost("http://" . MAPPR_DOMAIN . "/application.json", $fields);
+        $response = $this->httpPost(MAPPR_URL . "/application.json", $fields);
         $body = json_decode($response, true);
         $this->assertContains(MAPPR_MAPS_URL, $body["mapOutputImage"]);
         $image = file_get_contents($body["mapOutputImage"]);
@@ -48,7 +48,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
     public function test_jsAccessible()
     {
         $expected = "/*\n 2013 David P. Shorthouse";
-        $response = file_get_contents("http://" . MAPPR_DOMAIN . "/public/javascript/simplemappr.min.js");
+        $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
         $this->assertEquals($expected, substr($response,0,28));
     }
 
@@ -57,7 +57,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_404()
     {
-        $headers = get_headers("http://" . MAPPR_DOMAIN . "/doesnotexist");
+        $headers = get_headers(MAPPR_URL . "/doesnotexist");
         $this->assertEquals(404, substr($headers[0], 9, 3));
     }
 }

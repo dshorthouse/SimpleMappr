@@ -49,7 +49,6 @@ namespace SimpleMappr;
  */
 class Header
 {
-
     private $_js_header = array();
     private $_css_header = array();
     private $_hash = "";
@@ -495,7 +494,7 @@ class Header
         }
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
-        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"http://".MAPPR_DOMAIN."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
+        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
         if ($this->_isAdministrator()) {
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }
@@ -544,7 +543,7 @@ class Header
 if (typeof w.janrain !== 'object') { w.janrain = {}; }
 w.janrain.settings = {};
 w.janrain.settings.language = '" . Session::$accepted_locales[$locale]['canonical'] . "';
-w.janrain.settings.tokenUrl = 'http://" . MAPPR_DOMAIN . "/session/" . $locale_q . "';
+w.janrain.settings.tokenUrl = '" . MAPPR_URL . "/session/" . $locale_q . "';
 function isJanrainReady() { janrain.ready = true; };
 if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
 else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
@@ -563,12 +562,13 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     {
         $analytics = "";
         if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+            $host = parse_url(MAPPR_URL);
             $analytics  = "<script>" . "\n";
             $analytics .= "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');" . "\n";
-            $analytics .= "ga('create', '".GOOGLE_ANALYTICS."', '".MAPPR_DOMAIN."');" . "\n";
+            $analytics .= "ga('create', '".GOOGLE_ANALYTICS."', '".$host["host"]."');" . "\n";
             $analytics .= "ga('send', 'pageview');" . "\n";
             $analytics .= "</script>" . "\n";
         }

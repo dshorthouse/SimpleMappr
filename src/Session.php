@@ -104,8 +104,8 @@ class Session
         $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
         session_unset();
         session_destroy();
-        setcookie("simplemappr", "", time() - 3600, "/", MAPPR_DOMAIN);
-        self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($locale));
+        setcookie("simplemappr", "", time() - 3600, "/", Utilities::parsedURL()['host']);
+        self::redirect(MAPPR_URL . self::makeLocaleParam($locale));
     }
 
     /**
@@ -124,13 +124,13 @@ class Session
         $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
 
         if (!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
-            self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($cookie["locale"]));
+            self::redirect(MAPPR_URL . self::makeLocaleParam($cookie["locale"]));
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
             if (isset($_COOKIE["simplemappr"])) {
                 $cookie["locale"] = "en_US";
-                setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
+                setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
             }
-            self::redirect("http://" . MAPPR_DOMAIN);
+            self::redirect(MAPPR_URL);
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
             $cookie["locale"] = $_REQUEST["locale"];
         } else {
@@ -215,7 +215,7 @@ class Session
         self::setSession();
         $_SESSION["simplemappr"] = $data;
         self::closeSession();
-        setcookie("simplemappr", json_encode($data), COOKIE_TIMEOUT, "/", MAPPR_DOMAIN);
+        setcookie("simplemappr", json_encode($data), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
     }
 
     /**
@@ -270,7 +270,7 @@ class Session
         if ($this->_token) {
             return $this;
         } else {
-            self::redirect("http://" . MAPPR_DOMAIN);
+            self::redirect(MAPPR_URL);
         }
     }
 
@@ -351,7 +351,7 @@ class Session
             $db->queryUpdate('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
 
             self::writeSession($user);
-            self::redirect("http://" . MAPPR_DOMAIN . self::makeLocaleParam($user['locale']));
+            self::redirect(MAPPR_URL . self::makeLocaleParam($user['locale']));
 
         } else {
             echo 'An error occured: ' . $this->_auth_info['err']['msg'];

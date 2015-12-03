@@ -80,7 +80,7 @@ function loader()
     requireFiles();
     flushCaches();
     $curl_handle = curl_init();
-    curl_setopt($curl_handle, CURLOPT_URL,"http://".MAPPR_DOMAIN);
+    curl_setopt($curl_handle, CURLOPT_URL, MAPPR_URL);
     curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl_handle, CURLOPT_USERAGENT, 'SimpleMappr');

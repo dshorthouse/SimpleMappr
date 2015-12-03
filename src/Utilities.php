@@ -114,4 +114,14 @@ class Utilities
         return $arr_r;
     }
 
+    /**
+     * Parse the configured URL to the application in the config
+     *
+     * @return array
+     */
+    public static function parsedURL()
+    {
+        return parse_url(MAPPR_URL);
+    }
+
 }

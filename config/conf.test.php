@@ -18,7 +18,7 @@ defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", dirname(__
 defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.local");
 
 // Domain for setting cookies in sessions
-defined("MAPPR_DOMAIN") || define("MAPPR_DOMAIN", "www.simplemappr.local");
+defined("MAPPR_URL") || define("MAPPR_URL", "http://www.simplemappr.local");
 
 // Number of textarea boxes for user data entry
 defined("NUMTEXTAREA") || define("NUMTEXTAREA", 3);

@@ -437,7 +437,6 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->url = "http://" . MAPPR_DOMAIN . "/";
         $host = 'http://localhost:4444/wd/hub';
         $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => BROWSER, WebDriverCapabilityType::HANDLES_ALERTS => true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
@@ -460,7 +459,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     public function setUpPage()
     {
         new \SimpleMappr\Header;
-        $this->webDriver->get($this->url);
+        $this->webDriver->get(MAPPR_URL);
         $this->waitOnSpinner();
     }
 

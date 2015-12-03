@@ -393,7 +393,7 @@ class Bootstrap
     {
         $host = explode(".", $_SERVER['HTTP_HOST']);
         if (ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
-            header('Location: http://'.MAPPR_DOMAIN);
+            header('Location: '.MAPPR_URL);
             exit();
         } else {
             Session::updateActivity();
