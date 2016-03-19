@@ -85,34 +85,39 @@ class Usermap implements RestMethods
         $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
         $this->search = (property_exists($params, 'search')) ? $params->search : "";
         $this->filter_uid = (property_exists($params, 'uid')) ? (int)$params->uid : null;
+        $this->filter_username = "";
 
-        $sql = "SELECT
-                    u.username, COUNT(m.mid) AS total
-                FROM
-                    maps m
-                INNER JOIN
-                    users u ON (m.uid = u.uid)";
-        $where = array();
+        $username = "u.username, ";
+        $where['user'] = " WHERE m.uid = :uid";
         $limit = "";
-        if (User::$roles[$this->_role] !== 'administrator') {
-            $sql .=  " WHERE m.uid = :uid";
-            $where['user'] = " WHERE m.uid = :uid";
-            $this->_db->prepare($sql);
-            $this->_db->bindParam(":uid", $this->_uid);
-        } else {
+
+        if (User::$roles[$this->_role] == 'administrator') {
             if ($this->filter_uid) {
-                $sql .= " WHERE m.uid = :uid_q";
                 $where['user'] = " WHERE m.uid = :uid_q";
-                $this->_db->prepare($sql);
-                $this->_db->bindParam(":uid_q", $this->filter_uid);        
             } else {
+                $username = "";
+                $where['user'] = "";
                 $limit = " LIMIT 100";
-                $this->_db->prepare($sql);
             }
         }
 
+        $sql = "SELECT
+                    {$username} COUNT(m.mid) AS total
+                FROM
+                     maps m
+                INNER JOIN
+                     users u ON (m.uid = u.uid)
+                {$where['user']}";
+
+        $this->_db->prepare($sql);
+        if (User::$roles[$this->_role] !== 'administrator') {
+          $this->_db->bindParam(":uid", $this->_uid);
+        }
+        if ($this->filter_uid) {
+          $this->_db->bindParam(":uid_q", $this->filter_uid);
+          $this->filter_username = $this->_db->fetchFirstObject()->username;
+        }
         $this->total = $this->_db->fetchFirstObject()->total;
-        $this->filter_username = $this->_db->fetchFirstObject()->username;
 
         $order = "m.created {$this->dir}";
 
@@ -120,6 +125,7 @@ class Usermap implements RestMethods
         if (!empty($this->search)) {
             if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
                 $b = " WHERE ";
+                unset($where['user']);
             }
             $where['where'] = $b."LOWER(m.title) LIKE :search";
             if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
