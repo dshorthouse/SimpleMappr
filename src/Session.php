@@ -128,7 +128,7 @@ class Session
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
             if (isset($_COOKIE["simplemappr"])) {
                 $cookie["locale"] = "en_US";
-                setcookie("simplemappr", json_encode($cookie), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
+                setcookie("simplemappr", json_encode($cookie, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
             }
             self::redirect(MAPPR_URL);
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
@@ -215,7 +215,7 @@ class Session
         self::setSession();
         $_SESSION["simplemappr"] = $data;
         self::closeSession();
-        setcookie("simplemappr", json_encode($data), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
+        setcookie("simplemappr", json_encode($data, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
     }
 
     /**
