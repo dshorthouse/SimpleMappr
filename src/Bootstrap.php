@@ -40,6 +40,7 @@ namespace SimpleMappr;
 use \Phroute\Phroute\Autoloader;
 use \Phroute\Phroute\RouteCollector;
 use \Phroute\Phroute\Dispatcher;
+use AccptedProjections;
 
 /**
  * Bootstrapper for SimpleMappr
@@ -98,7 +99,7 @@ class Bootstrap
 
         $router->get('/apidoc', function () {
             Session::selectLocale();
-            array_walk(Mappr::$accepted_projections, function ($val, $key) use (&$projections) {
+            array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
                 $projections[] = $key . " (" . $val['name'] . ")";
             });
             $config = array(
@@ -422,7 +423,7 @@ class Bootstrap
 
         $twig->addGlobal('locales', Session::$accepted_locales);
         $twig->addGlobal('roles', User::$roles);
-        $twig->addGlobal('projections', Mappr::$accepted_projections);
+        $twig->addGlobal('projections', AcceptedProjections::$projections);
         $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
         $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
         $twig->addGlobal('stylesheet', $header->getCSSHeader());

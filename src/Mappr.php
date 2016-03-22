@@ -38,6 +38,7 @@
 namespace SimpleMappr;
 
 use \ForceUTF8\Encoding;
+use AccptedProjections;
 
 /**
  * Main Mappr class for SimpleMappr
@@ -204,40 +205,6 @@ abstract class Mappr
 
     /* base download factor to rescale the resultant image */
     private $_download_factor = 1;
-
-    /**
-     * Acceptable projections in PROJ format
-     * Included here for performance reasons AND each has 'over' switch to prevent line wraps
-     */
-    public static $accepted_projections = array(
-        'epsg:4326'   => array(
-            'name' => 'Geographic',
-            'proj' => 'proj=longlat,ellps=WGS84,datum=WGS84,no_defs'),
-        'esri:102009' => array(
-            'name' => 'North America Lambert',
-            'proj' => 'proj=lcc,lat_1=20,lat_2=60,lat_0=40,lon_0=-96,x_0=0,y_0=0,ellps=GRS80,datum=NAD83,units=m,over,no_defs'),
-        'esri:102015' => array(
-            'name' => 'South America Lambert',
-            'proj' => 'proj=lcc,lat_1=-5,lat_2=-42,lat_0=-32,lon_0=-60,x_0=0,y_0=0,ellps=aust_SA,units=m,over,no_defs'),
-        'esri:102014' => array(
-            'name' => 'Europe Lambert',
-            'proj' => 'proj=lcc,lat_1=43,lat_2=62,lat_0=30,lon_0=10,x_0=0,y_0=0,ellps=intl,units=m,over,no_defs'),
-        'esri:102012' => array(
-            'name' => 'Asia Lambert',
-            'proj' => 'proj=lcc,lat_1=30,lat_2=62,lat_0=0,lon_0=105,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
-        'esri:102024' => array(
-            'name' => 'Africa Lambert',
-            'proj' => 'proj=lcc,lat_1=20,lat_2=-23,lat_0=0,lon_0=25,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
-        'epsg:3112'   => array(
-            'name' => 'Australia Lambert',
-            'proj' => 'proj=lcc,lat_1=-18,lat_2=-36,lat_0=0,lon_0=134,x_0=0,y_0=0,ellps=GRS80,towgs84=0,0,0,0,0,0,0,units=m,over,no_defs'),
-        'epsg:102017' => array(
-            'name' => 'North Pole Azimuthal',
-            'proj' => 'proj=laea,lat_0=90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'),
-        'epsg:102019' => array(
-            'name' => 'South Pole Azimuthal',
-            'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs')
-      );
 
     /* acceptable shapes */ 
     public static $accepted_shapes = array(
@@ -409,10 +376,10 @@ abstract class Mappr
      */
     public static function getProjection($projection)
     {
-        if (!array_key_exists($projection, self::$accepted_projections)) {
+        if (!array_key_exists($projection, AcceptedProjections::$projections)) {
             $projection = 'epsg:4326';
         }
-        return self::$accepted_projections[$projection]['proj'];
+        return AcceptedProjections::$projections[$projection]['proj'];
     }
 
     /**
@@ -612,7 +579,7 @@ abstract class Mappr
      */
     private function _loadProjection()
     {
-        $this->map_obj->setProjection(self::$accepted_projections[$this->default_projection]['proj']);
+        $this->map_obj->setProjection(AcceptedProjections::$projections[$this->default_projection]['proj']);
     }
 
     /**
@@ -1407,7 +1374,7 @@ abstract class Mappr
         }
         array_multisort($sort, SORT_ASC, $this->layers);
 
-        $srs_projections = implode(array_keys(self::$accepted_projections), " ");
+        $srs_projections = implode(array_keys(AcceptedProjections::$projections), " ");
 
         foreach ($this->layers as $name => $status) {
             //make the layer
@@ -1855,7 +1822,7 @@ abstract class Mappr
     {
         $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
         if (in_array($this->projection, $lambert_projections) && $this->origin && ($this->origin >= -180) && ($this->origin <= 180)) {
-            self::$accepted_projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::getProjection($output_projection));
+            AcceptedProjections::$projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->origin.',', self::getProjection($output_projection));
         }
     }
 

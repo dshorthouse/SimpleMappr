@@ -157,7 +157,7 @@ class MapprWms extends Mappr
         $this->map_obj->setMetaData("wms_title", "SimpleMappr Web Map Service");
         $this->map_obj->setMetaData("wms_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wms/?");
 
-        $srs_projections = implode(array_keys(Mappr::$accepted_projections), " ");
+        $srs_projections = implode(array_keys(AcceptedProjections::$projections), " ");
 
         $this->map_obj->setMetaData("wms_srs", $srs_projections);
         $this->map_obj->setMetaData("wms_abstract", "SimpleMappr Web Map Service");

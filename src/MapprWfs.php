@@ -150,7 +150,7 @@ class MapprWfs extends Mappr
         $this->map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
         $this->map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
 
-        $srs_projections = strtoupper(implode(array_keys(Mappr::$accepted_projections), " "));
+        $srs_projections = strtoupper(implode(array_keys(AcceptedProjections::$projections), " "));
 
         $this->map_obj->setMetaData("wfs_srs", $srs_projections);
         $this->map_obj->setMetaData("wfs_abstract", "SimpleMappr Web Feature Service");
