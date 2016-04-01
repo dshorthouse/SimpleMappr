@@ -133,7 +133,7 @@ class Usermap implements RestMethods
             }
         }
         if (!empty($this->sort)) {
-            if ($this->sort == "created" || $this->sort == "updated") {
+            if ($this->sort == "title" || $this->sort == "created" || $this->sort == "updated") {
                 $order = "m.".$this->sort . " {$this->dir}";
             }
         }

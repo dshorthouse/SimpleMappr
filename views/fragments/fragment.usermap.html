@@ -6,7 +6,10 @@
         {% if filter_uid %}
             {% set data_uid = " data-uid=" ~ filter_uid %}
         {% endif %}
-    <th class="left-align">{% trans "Title" %} <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"{{ data_uid }} />
+        {% set sort_dir = (sort == "title") ? " " ~ dir : "" %}
+    <th class="left-align">
+        <a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="title" href="#">{% trans "Title" %}</a>
+        <input type="text" id="filter-mymaps" size="25" maxlength="35" value="" name="filter-mymap"{{ data_uid }} />
         {% if filter_uid %}
             {% trans %}
                 {{ row_count}} of {{ total }} for {{ filter_username }}
