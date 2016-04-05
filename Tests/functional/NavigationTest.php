@@ -51,7 +51,7 @@ class NavigationTest extends SimpleMapprTest
         $link->click();
         parent::waitOnAjax();
         $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
-        $this->assertEquals('cartes de points gratuits pour publications et présentations', $tagline->getText());
+        $this->assertEquals('créez gratuitement des cartes de répartition pour publications et présentations', $tagline->getText());
     }
 
     /**
