@@ -29,7 +29,7 @@ msgstr "Région %d"
 
 #: .index.php:11
 msgid "Create free point maps for publications and presentations"
-msgstr "Créez des cartes de points gratuits pour les publications et des présentations"
+msgstr "créez gratuitement des cartes de répartition pour publications et présentations"
 
 #: .index.php:12
 msgid "publication,presentation,map,georeference"
@@ -37,7 +37,7 @@ msgstr "publication,présentation,carte,géoréférencer"
 
 #: .index.php:11
 msgid "create free point maps for publications and presentations"
-msgstr "cartes de points gratuits pour publications et présentations"
+msgstr "créez gratuitement des cartes de répartition pour publications et présentations"
 
 #: .index.php:27
 msgid "Sign Out"
