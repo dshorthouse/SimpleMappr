@@ -67,6 +67,7 @@ class MapprWms extends Mappr
         'stateprovinces' => 'on',
         'relief' => 'on',
         'reliefgrey' => 'on',
+        'blueMarble' => 'on',
         'ecoregions' => 'on'
     );
 

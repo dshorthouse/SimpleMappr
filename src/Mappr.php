@@ -589,7 +589,14 @@ abstract class Mappr
      */
     private function _loadShapes()
     {
-        //shaded relief
+        //GeoTiff of MODIS
+        $this->shapes['blueMarble'] = array(
+            'shape'    => $this->shape_path . "/blue_marble/land_shallow_topo_21600.tif",
+            'type'     => MS_LAYER_RASTER,
+            'encoding' => "UTF-8",
+            'sort'     => 1
+        );
+
         $this->shapes['relief'] = array(
             'shape'    => $this->shape_path . "/HYP_HR_SR_OB_DR/HYP_HR_SR_OB_DR.tif",
             'type'     => MS_LAYER_RASTER,
@@ -938,7 +945,7 @@ abstract class Mappr
             $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
             if ($output == 'pptx' || $output == 'docx') {
                 $output = 'pnga_transparent';
-                if (isset($this->layers['relief']) || isset($this->layers['reliefgrey'])) {
+                if (isset($this->layers['relief']) || isset($this->layers['reliefgrey']) || isset($this->layers['blueMarble'])) {
                     $output = 'png_download';
                 }
             }
@@ -1366,7 +1373,7 @@ abstract class Mappr
         unset($this->layers['grid']);
 
         if (isset($this->output) && $this->output == 'svg') {
-            unset($this->layers['relief'], $this->layers['reliefgrey']);
+            unset($this->layers['relief'], $this->layers['reliefgrey'], $this->layers['blueMarble']);
         }
 
         foreach ($this->layers as $key => $row) {

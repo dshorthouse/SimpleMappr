@@ -299,6 +299,11 @@ msgstr "relief (gris)"
 
 #: .index.php:134
 #: .tabs/help.php:86
+msgid "Blue Marble"
+msgstr "Blue Marble"
+
+#: .index.php:134
+#: .tabs/help.php:86
 msgid "biodiv. hotspots"
 msgstr "hotspot de biodiv."
 
@@ -677,8 +682,8 @@ msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github"
 
 #: .tabs/about.php:40
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and terrestrial ecoregions from the %urls_wwf%."
-msgstr "Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_wwf%."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and terrestrial ecoregions from the %urls_wwf%. Blue Marble from %urls_nasa%."
+msgstr "Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_wwf%. Blue Marble à partir de NASA."
 
 #: .tabs/about.php:7
 msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
@@ -703,6 +708,10 @@ msgstr "Mises à jour direct"
 #: .tabs/about.php:11
 msgid "September 5, 2015"
 msgstr "6 septembre, 2015"
+
+#: .tabs/about.php:11
+msgid "April 6, 2016"
+msgstr "6 avril, 2016"
 
 #: .tabs/about.php:11
 msgid "February 27, 2015"
@@ -755,6 +764,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added NASA's Blue Marble raster layer as an option. Requested by François Génier."
+msgstr "Améliorations: Ajouté une couche pour Blue Marble, NASA . Demandé par François Génier."
 
 #: .tabs/about.php:11
 msgid "Improvements: Upgraded to MapServer 7.0.0. Regions overlay selected layers. Blank colours for Regions result in transparency. Requested by Ryan St Laurent."
