@@ -99,7 +99,6 @@ function unloader()
 {
     switchConf('restore');
     flushCaches();
-    ob_end_clean();
 }
 
 spl_autoload_register(__NAMESPACE__.'\loader');
