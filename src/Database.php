@@ -62,7 +62,7 @@ class Database
      */
     private function __construct()
     {
-        $creds = $this->_credentials(Yaml::parse(ROOT . '/config/phinx.yml'));
+        $creds = $this->_credentials(Yaml::parse(file_get_contents(ROOT . '/config/phinx.yml')));
         $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);
         $this->_link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);

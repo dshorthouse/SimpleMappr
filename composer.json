@@ -25,9 +25,9 @@
     "require": {
       "natxet/CssMin"             : "dev-master",
       "neitanod/forceutf8"        : "dev-master",
-      "phpoffice/phppresentation" : "dev-master",
-      "phpoffice/phpword"         : "dev-master",
-      "phayes/geophp"             : "dev-master",
+      "phpoffice/phppresentation" : "~0.6.0",
+      "phpoffice/phpword"         : "~0.12.1",
+      "phayes/geophp"             : "~1.2",
       "phroute/phroute"           : "2.*",
       "symfony/yaml"              : "*",
       "robmorgan/phinx"           : "*",
@@ -35,7 +35,7 @@
       "twig/extensions"           : "~1.1.0"
     },
     "require-dev": {
-      "phpunit/phpunit"               : "4.0.*",
+      "phpunit/phpunit"               : "~5.3",
       "facebook/webdriver"            : "dev-master",
       "codeclimate/php-test-reporter" : "dev-master"
     }

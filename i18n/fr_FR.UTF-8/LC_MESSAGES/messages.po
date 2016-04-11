@@ -767,7 +767,7 @@ msgstr "25 juin, 2013"
 
 #: .tabs/about.php:11
 msgid "Improvements: Added NASA's Blue Marble raster layer as an option. Requested by François Génier."
-msgstr "Améliorations: Ajouté une couche pour Blue Marble, NASA . Demandé par François Génier."
+msgstr "Améliorations: Ajouté une couche pour Blue Marble, NASA. Demandé par François Génier."
 
 #: .tabs/about.php:11
 msgid "Improvements: Upgraded to MapServer 7.0.0. Regions overlay selected layers. Blank colours for Regions result in transparency. Requested by Ryan St Laurent."
