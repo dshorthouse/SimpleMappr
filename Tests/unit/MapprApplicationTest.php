@@ -67,14 +67,6 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that the mappr object returns the declared shape path.
-     */
-    public function test_shape_path()
-    {
-        $this->assertEquals($this->mappr->get_shape_path(), ROOT."/mapserver/maps");
-    }
-
-    /**
      * Test that the mappr object returns the declared font file path.
      */
     public function test_font_file()

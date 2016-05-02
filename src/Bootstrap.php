@@ -40,7 +40,6 @@ namespace SimpleMappr;
 use \Phroute\Phroute\Autoloader;
 use \Phroute\Phroute\RouteCollector;
 use \Phroute\Phroute\Dispatcher;
-use AccptedProjections;
 
 /**
  * Bootstrapper for SimpleMappr
@@ -60,6 +59,12 @@ class Bootstrap
      */
     public function __construct()
     {
+        mb_internal_encoding("UTF-8");
+        mb_http_output("UTF-8");
+
+        //set the default timezone
+        date_default_timezone_set("America/New_York");
+        
         $this->_setRoutes();
     }
 
@@ -303,7 +308,6 @@ class Bootstrap
 
         try {
             $dispatcher = new Dispatcher($router->getData());
-            //replace colon, parse_url mis-interprets query param with them as port
             $parsed_url = parse_url(str_replace(":", "%3A", $_SERVER['REQUEST_URI']), PHP_URL_PATH);
             $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $parsed_url);
             echo $response;
@@ -337,8 +341,7 @@ class Bootstrap
      */
     private function _setupMap($data)
     {
-        return $data->set_shape_path(ROOT."/mapserver/maps")
-            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
+        return $data->set_font_file(ROOT."/mapserver/fonts/fonts.list")
             ->set_tmp_path(ROOT."/public/tmp/")
             ->set_tmp_url(MAPPR_MAPS_URL)
             ->set_default_projection("epsg:4326")
@@ -424,6 +427,9 @@ class Bootstrap
         $twig->addGlobal('locales', Session::$accepted_locales);
         $twig->addGlobal('roles', User::$roles);
         $twig->addGlobal('projections', AcceptedProjections::$projections);
+        $twig->addGlobal('marker_shapes', AcceptedShapes::$shapes);
+        $twig->addGlobal('labels', "");
+        $twig->addGlobal('layers', "");
         $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
         $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
         $twig->addGlobal('stylesheet', $header->getCSSHeader());

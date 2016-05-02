@@ -57,8 +57,7 @@ trait SimpleMapprMixin
 
     public function setMapprDefaults($class)
     {
-        $class->set_shape_path(ROOT."/mapserver/maps")
-            ->set_font_file(ROOT."/mapserver/fonts/fonts.list")
+        $class->set_font_file(ROOT."/mapserver/fonts/fonts.list")
             ->set_tmp_path(ROOT."/public/tmp/")
             ->set_tmp_url(MAPPR_MAPS_URL)
             ->set_default_projection("epsg:4326")

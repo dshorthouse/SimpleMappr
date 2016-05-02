@@ -181,7 +181,7 @@ class MapprApi extends Mappr
             $class->set("name", isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
 
             $style = ms_newStyleObj($class);
-            $style->set("symbolname", (array_key_exists($col, $this->shape) && in_array($this->shape[$col], parent::$accepted_shapes)) ? $this->shape[$col] : 'circle');
+            $style->set("symbolname", (array_key_exists($col, $this->shape) && in_array($this->shape[$col], AcceptedShapes::$shapes)) ? $this->shape[$col] : 'circle');
             $style->set("size", (array_key_exists($col, $this->size)) ? $this->size[$col] : 8);
 
             if (array_key_exists($col, $this->color)) {
@@ -237,7 +237,7 @@ class MapprApi extends Mappr
         if ($this->regions['data']) {            
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", "stateprovinces_polygon");
-            $layer->set("data", $this->shapes['stateprovinces_polygon']['shape']);
+            $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);
             $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
             $layer->set("template", "template.html");
             $layer->setProjection(parent::getProjection($this->default_projection));

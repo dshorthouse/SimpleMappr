@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 use \ForceUTF8\Encoding;
-use AccptedProjections;
+use \Symfony\Component\Yaml\Yaml;
 
 /**
  * Main Mappr class for SimpleMappr
@@ -61,9 +61,6 @@ abstract class Mappr
 
     /* the base map object */
     protected $map_obj;
-
-    /* path to shapefiles */
-    protected $shape_path;
 
     /* path to the font file */
     protected $font_file;
@@ -205,25 +202,6 @@ abstract class Mappr
 
     /* base download factor to rescale the resultant image */
     private $_download_factor = 1;
-
-    /* acceptable shapes */ 
-    public static $accepted_shapes = array(
-        'plus',
-        'cross',
-        'asterisk',
-        'opencircle',
-        'openstar',
-        'opensquare',
-        'opentriangle',
-        'inverseopentriangle',
-        'openhexagon',
-        'circle',
-        'star',
-        'square',
-        'triangle',
-        'inversetriangle',
-        'hexagon'
-    );
 
     /**
      * Remove empty lines from a string.
@@ -589,197 +567,26 @@ abstract class Mappr
      */
     private function _loadShapes()
     {
-        //GeoTiff of MODIS
-        $this->shapes['blueMarble'] = array(
-            'shape'    => $this->shape_path . "/blue_marble/land_shallow_topo_21600.tif",
-            'type'     => MS_LAYER_RASTER,
-            'encoding' => "UTF-8",
-            'sort'     => 1
-        );
-
-        $this->shapes['relief'] = array(
-            'shape'    => $this->shape_path . "/HYP_HR_SR_OB_DR/HYP_HR_SR_OB_DR.tif",
-            'type'     => MS_LAYER_RASTER,
-            'encoding' => "UTF-8",
-            'sort'     => 1
-        );
-
-        // Geotiff created by David P. Shorthouse using above file.
-        $this->shapes['reliefgrey'] = array(
-            'shape'    => $this->shape_path . "/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif",
-            'type'     => MS_LAYER_RASTER,
-            'encoding' => "UTF-8",
-            'sort'     => 1
-        );
-
-        //lakes outline
-        $this->shapes['lakesOutline'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_lakes",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 2
-        );
-
-        //lakes
-        $this->shapes['lakes'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_lakes",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 3
-        );
-
-        //oceans
-        $this->shapes['oceans'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_ocean",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 3
-        );
-
-        //conservation
-        $this->shapes['conservation'] = array(
-            'shape'    => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 3
-        );
-
-        //ecoregions
-        $this->shapes['ecoregions'] = array(
-            'shape'    => $this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 3
-        );
-
-        //base map
-        $this->shapes['base'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_land",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 4
-        );
-
-        //base map
-        $this->shapes['countries'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_0_map_units",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 4
-        );
-
-        //stateprovinces_polygon
-        $this->shapes['stateprovinces_polygon'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 5
-        );
-
-        //stateprovinces
-        $this->shapes['stateprovinces'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 6
-        );
-
-        //lake names
-        $this->shapes['lakenames'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_lakes",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 7
-        );
-
-        //rivers
-        $this->shapes['rivers'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_rivers_lake_centerlines",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 8
-        );
-
-        //rivers
-        $this->shapes['rivernames'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_rivers_lake_centerlines",
-            'type'     => MS_LAYER_LINE,
-            'encoding' => "CP1252",
-            'sort'     => 9
-        );
-
-        //placename
-        $this->shapes['placenames'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_populated_places_simple",
-            'type'     => MS_LAYER_POINT,
-            'encoding' => "CP1252",
-            'sort'     => 10
-        );
-
-        //State/Provincial labels
-        $this->shapes['stateprovnames'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "UTF-8",
-            'sort'     => 11
-        );
-
-        //Country labels
-        $this->shapes['countrynames'] = array(
-            'shape'    => $this->shape_path . "/10m_cultural/10m_cultural/ne_10m_admin_0_map_units",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 12
-        );
-
-        //physicalLabels
-        $this->shapes['physicalLabels'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_geography_regions_polys",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 13
-        );
-
-        //marineLabels
-        $this->shapes['marineLabels'] = array(
-            'shape'    => $this->shape_path . "/10m_physical/ne_10m_geography_marine_polys",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 14
-        );
-
-        //hotspotLabels
-        $this->shapes['hotspotLabels'] = array(
-            'shape'    => $this->shape_path . "/conservation_international/hotspots_2011_polygons",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "UTF-8",
-            'sort'     => 14
-        );
-
-        //ecoregions
-        $this->shapes['ecoregionLabels'] = array(
-            'shape'    => $this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos",
-            'type'     => MS_LAYER_POLYGON,
-            'encoding' => "CP1252",
-            'sort'     => 14
-        );
-
+        $config_file = file_get_contents(ROOT . "/config/shapefiles.yml");
+        $this->shapes = $this->_tokenize_shapefile_config(Yaml::parse($config_file));
     }
 
     /**
-     * Create a symbol
+     * Tokenize shapefile.yml config
      *
-     * @return void
+     * @return array of config
      */
-    private function _createSymbol($name, $fill, $vertices)
+    private function _tokenize_shapefile_config($config)
     {
-        $nId = ms_newSymbolObj($this->map_obj, $name);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
-        $type = (strpos($name, 'circle') !== FALSE) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
-        $symbol->set("type", $type);
-        $symbol->set("filled", $fill);
-        $symbol->set("inmapfile", MS_TRUE);
-        $symbol->setpoints($vertices);
+        $config = array_merge($config['layers'], $config['labels']);
+        foreach($config as $shape => $values) {
+            foreach($values as $key => $value) {
+                if (strpos($value, "%%") !== FALSE) {
+                    $config[$shape][$key] = constant(str_replace("%", "", $value));
+                }
+            }
+        }
+        return $config;
     }
 
     /**
@@ -789,101 +596,30 @@ abstract class Mappr
      */
     private function _loadSymbols()
     {
-        $plus = array(
-            0.5, 0,
-            0.5, 1,
-            -99, -99,
-            0, 0.5,
-            1, 0.5
-        );
+        foreach(AcceptedShapes::$shapes as $type => $style) {
+            $fill = MS_FALSE;
+            if ($type == 'closed') { $fill = MS_TRUE; }
+            foreach($style as $name => $settings) {
+                $type = (strpos($name, 'circle') !== FALSE) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
+                $vertices = AcceptedShapes::vertices($settings['style']);
+                $this->_createSymbol($name, $type, $fill, $vertices);
+            }
+        }
+    }
 
-        $cross = array(
-            0, 0,
-            1, 1,
-            -99, -99,
-            0, 1,
-            1, 0
-        );
-
-        $asterisk = array(
-            0, 0,
-            1, 1,
-            -99, -99,
-            0, 1,
-            1, 0,
-            -99, -99,
-            0.5, 0,
-            0.5, 1,
-            -99, -99,
-            0, 0.5,
-            1, 0.5
-        );
-
-        $circle = array(
-            1, 1
-        );
-
-        $star = array(
-            0, 0.375,
-            0.35, 0.365,
-            0.5, 0,
-            0.65, 0.375,
-            1, 0.375,
-            0.75, 0.625,
-            0.875, 1,
-            0.5, 0.75,
-            0.125, 1,
-            0.25, 0.625,
-            0, 0.375
-        );
-
-        $square = array(
-            0, 1,
-            0, 0,
-            1, 0,
-            1, 1,
-            0, 1
-        );
-
-        $triangle = array(
-            0, 1,
-            0.5, 0,
-            1, 1,
-            0, 1
-        );
-
-        $inversetriangle = array(
-            0, 0,
-            1, 0,
-            0.5, 1,
-            0, 0
-        );
-
-        $hexagon = array(
-            0.23, 0,
-            0, 0.5,
-            0.23, 1,
-            0.77, 1,
-            1, 0.5,
-            0.77, 0,
-            0.23, 0
-        );
-
-        $this->_createSymbol(self::$accepted_shapes[0], MS_FALSE, $plus);
-        $this->_createSymbol(self::$accepted_shapes[1], MS_FALSE, $cross);
-        $this->_createSymbol(self::$accepted_shapes[2], MS_FALSE, $asterisk);
-        $this->_createSymbol(self::$accepted_shapes[3], MS_FALSE, $circle);
-        $this->_createSymbol(self::$accepted_shapes[9], MS_TRUE, $circle);
-        $this->_createSymbol(self::$accepted_shapes[4], MS_FALSE, $star);
-        $this->_createSymbol(self::$accepted_shapes[10], MS_TRUE, $star);
-        $this->_createSymbol(self::$accepted_shapes[5], MS_FALSE, $square);
-        $this->_createSymbol(self::$accepted_shapes[11], MS_TRUE, $square);
-        $this->_createSymbol(self::$accepted_shapes[6], MS_FALSE, $triangle);
-        $this->_createSymbol(self::$accepted_shapes[12], MS_TRUE, $triangle);
-        $this->_createSymbol(self::$accepted_shapes[7], MS_FALSE, $inversetriangle);
-        $this->_createSymbol(self::$accepted_shapes[13], MS_TRUE, $inversetriangle);
-        $this->_createSymbol(self::$accepted_shapes[8], MS_FALSE, $hexagon);
-        $this->_createSymbol(self::$accepted_shapes[14], MS_TRUE, $hexagon);
+    /**
+     * Create a symbol
+     *
+     * @return void
+     */
+    private function _createSymbol($name, $type, $fill, $vertices)
+    {
+        $nId = ms_newSymbolObj($this->map_obj, $name);
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", $type);
+        $symbol->set("filled", $fill);
+        $symbol->set("inmapfile", MS_TRUE);
+        $symbol->setpoints($vertices);
     }
 
     /**
@@ -945,12 +681,29 @@ abstract class Mappr
             $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
             if ($output == 'pptx' || $output == 'docx') {
                 $output = 'pnga_transparent';
-                if (isset($this->layers['relief']) || isset($this->layers['reliefgrey']) || isset($this->layers['blueMarble'])) {
+                if ($this->_layersContainRaster() == TRUE) {
                     $output = 'png_download';
                 }
             }
             $this->map_obj->selectOutputFormat($output);
         }
+    }
+
+    /**
+     * Test presence of raster in layers
+     *
+     * @return Boolean
+     */
+    private function _layersContainRaster()
+    {
+        $raster_active = false;
+        foreach ($this->layers as $layer => $status) {
+            if ($this->shapes[$layer]['type'] == MS_LAYER_RASTER) {
+                $raster_active = true;
+                break;
+            }
+        }
+        return $raster_active;
     }
 
     /**
@@ -1329,10 +1082,10 @@ abstract class Mappr
                     $layer->set("name", "query_layer_".$j);
 
                     if ($baselayer) {
-                        $layer->set("data", $this->shapes['countries']['shape']);
+                        $layer->set("data", $this->shapes['countries']['path']);
                         $layer->set("type", MS_LAYER_POLYGON);
                     } else {
-                        $layer->set("data", $this->shapes['stateprovinces_polygon']['shape']);
+                        $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);
                         $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
                     }
 
@@ -1377,7 +1130,7 @@ abstract class Mappr
         }
 
         foreach ($this->layers as $key => $row) {
-            $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
+            $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort_order'] : $row;
         }
         array_multisort($sort, SORT_ASC, $this->layers);
 
@@ -1400,7 +1153,7 @@ abstract class Mappr
                 $layer->set("type", $this->shapes[$name]['type']);
                 $layer->set("status", MS_ON);
                 $layer->setConnectionType(MS_SHAPEFILE);
-                $layer->set("data", $this->shapes[$name]['shape']);
+                $layer->set("data", $this->shapes[$name]['path']);
                 $layer->setProjection(self::getProjection($this->default_projection));
                 $layer->set("template", "template.html");
                 $layer->set("dump", true);
@@ -1865,7 +1618,7 @@ abstract class Mappr
      */
     private function _setEcoregionClasses($layer)
     {
-        $xml = simplexml_load_file($this->shape_path . "/wwf_terr_ecos/wwf_terr_ecos.sld");
+        $xml = simplexml_load_file(ROOT."/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos.sld");
         $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
         $xml->registerXPathNamespace('ogc', 'http://www.opengis.net/ogc');
         foreach ($xml->xpath('//sld:Rule') as $rule) {

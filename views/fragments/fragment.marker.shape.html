@@ -1,20 +1,22 @@
 <option value="">{% trans "--select--" %}</option>
-<option value="plus">{% trans "plus" %}</option>
-<option value="cross">{% trans "cross" %}</option>
-<option value="asterisk">{% trans "asterisk" %}</option>
-<optgroup label="{% trans "solid" %}">
-<option value="circle" selected="selected">{% trans "circle (s)" %}</option>
-<option value="star">{% trans "star (s)" %}</option>
-<option value="square">{% trans "square (s)" %}</option>
-<option value="triangle">{% trans "triangle (s)" %}</option>
-<option value="inversetriangle">{% trans "inverse triangle (s)" %}</option>
-<option value="hexagon">{% trans "hexagon (s)" %}</option>
-</optgroup>
-<optgroup label='{% trans "open" %}'>
-<option value="opencircle">{% trans "circle (o)" %}</option>
-<option value="openstar">{% trans "star (o)" %}</option>
-<option value="opensquare">{% trans "square (o)" %}</option>
-<option value="opentriangle">{% trans "triangle (o)" %}</option>
-<option value="inverseopentriangle">{% trans "inverse triangle (o)" %}</option>
-<option value="openhexagon">{% trans "hexagon (o)" %}</option>
-</optgroup>
+{% for key,value in marker_shapes %}
+    {% if key == "general" %}
+        {% for key1,value1 in value %}
+        <option value="{{ key1 }}">{{ value1['name']|trans }}</option>
+        {% endfor %}
+    {% endif %}
+    {% if key == "closed" %}
+    <optgroup label='{% trans "solid" %}'>
+        {% for key1,value1 in value %}
+        <option value="{{ key1 }}">{{ value1['name']|trans }}</option>
+        {% endfor %}
+    </optgroup>
+    {% endif %}
+    {% if key == "open" %}
+    <optgroup label='{% trans "open" %}'>
+        {% for key1,value1 in value %}
+        <option value="{{ key1 }}">{{ value1['name']|trans }}</option>
+        {% endfor %}
+    </optgroup>
+    {% endif %}
+{% endfor %}
