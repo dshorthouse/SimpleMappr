@@ -3,7 +3,7 @@
 /**
  * Set-up of database & switching config files for use in tests
  *
- * PHP Version 5.5
+ * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr

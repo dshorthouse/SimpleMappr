@@ -3,7 +3,7 @@
 /**
  * Unit tests for static methods and set-up of MapprApi class
  *
- * PHP Version 5.5
+ * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr

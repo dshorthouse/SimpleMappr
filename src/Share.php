@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr

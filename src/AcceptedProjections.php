@@ -3,7 +3,7 @@
 /**
  * AcceptedProjections trait
  *
- * PHP Version 5.5
+ * PHP Version >= 5.5
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse

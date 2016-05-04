@@ -4,7 +4,7 @@
  * Integration tests for settings on the Map Preview panel
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  *
- * PHP Version 5.5
+ * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr

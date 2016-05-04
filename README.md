@@ -143,7 +143,7 @@ Likewise, if you wish to use a headless webdriver such as [PhantomJS](http://pha
 Copyright
 ---------
 
-    Copyright (c) 2010 David P. Shorthouse
+    Copyright (c) 2010-2016 David P. Shorthouse
 
     Released under MIT License
 

@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -78,18 +78,18 @@ class MapprWms extends Mappr
      */
     public function getRequest()
     {
-        $this->params['VERSION']      = $this->loadParam('VERSION', '1.1.1');
-        $this->params['REQUEST']      = $this->loadParam('REQUEST', 'GetCapabilities');
-        $this->params['LAYERS']       = $this->loadParam('LAYERS', "");
-        $this->params['MAXFEATURES']  = $this->loadParam('MAXFEATURES', $this->_getMaxFeatures());
-        $this->params['FORMAT']       = $this->loadParam('FORMAT', 'image/png');
-        $this->params['FILTER']       = $this->loadParam('FILTER', null);
-        $this->params['SRS']          = $this->loadParam('SRS', 'epsg:4326');
-        $this->params['CRS']          = $this->loadParam('CRS', 'CRS:84');
-        $this->params['BBOX']         = $this->loadParam('BBOX', '-180,-90,180,90');
-        $this->params['WIDTH']        = $this->loadParam('WIDTH', '200');
-        $this->params['HEIGHT']       = $this->loadParam('HEIGHT', '100');
-        $this->params['TRANSPARENT']  = $this->loadParam('TRANSPARENT', true);
+        $this->params['VERSION']      = Utilities::loadParam('VERSION', '1.1.1');
+        $this->params['REQUEST']      = Utilities::loadParam('REQUEST', 'GetCapabilities');
+        $this->params['LAYERS']       = Utilities::loadParam('LAYERS', "");
+        $this->params['MAXFEATURES']  = Utilities::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['FORMAT']       = Utilities::loadParam('FORMAT', 'image/png');
+        $this->params['FILTER']       = Utilities::loadParam('FILTER', null);
+        $this->params['SRS']          = Utilities::loadParam('SRS', 'epsg:4326');
+        $this->params['CRS']          = Utilities::loadParam('CRS', 'CRS:84');
+        $this->params['BBOX']         = Utilities::loadParam('BBOX', '-180,-90,180,90');
+        $this->params['WIDTH']        = Utilities::loadParam('WIDTH', '200');
+        $this->params['HEIGHT']       = Utilities::loadParam('HEIGHT', '100');
+        $this->params['TRANSPARENT']  = Utilities::loadParam('TRANSPARENT', true);
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -117,7 +117,7 @@ class MapprWms extends Mappr
         }
 
         $this->layers     = $this->wms_layers;
-        $this->bbox_map   = $this->loadParam('bbox', '-180,-90,180,90');
+        $this->bbox_map   = Utilities::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
         $this->image_size = array(900,450);

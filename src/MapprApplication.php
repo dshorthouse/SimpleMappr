@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -61,7 +61,7 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            $clean_filename = self::cleanFilename($this->file_name, $this->output);
+            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
             Header::setHeader('tif', $clean_filename, $filesize);
             ob_clean();
@@ -73,7 +73,7 @@ class MapprApplication extends Mappr
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            $clean_filename = self::cleanFilename($this->file_name, $this->output);
+            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
             $filesize = filesize($this->tmp_path.$image_filename);
             Header::setHeader('png', $clean_filename, $filesize);
             ob_clean();
@@ -82,7 +82,7 @@ class MapprApplication extends Mappr
             break;
 
         case 'svg':
-            $clean_filename = self::cleanFilename($this->file_name, $this->output);
+            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
             Header::setHeader('svg', $clean_filename);
             $this->image->saveImage("");
             break;

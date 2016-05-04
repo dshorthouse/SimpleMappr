@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -60,7 +60,7 @@ class MapprApi extends Mappr
     public function getRequest()
     {
         //ping API to return JSON
-        $this->ping             = $this->loadParam('ping', false);
+        $this->ping             = Utilities::loadParam('ping', false);
 
         $this->method           = $_SERVER['REQUEST_METHOD'];
 
@@ -70,12 +70,12 @@ class MapprApi extends Mappr
 
         $this->url              = false;
         $this->url_content      = "";
-        $url                    = urldecode($this->loadParam('url', false));
+        $url                    = urldecode(Utilities::loadParam('url', false));
 
         if ($this->method == "POST" && $_FILES) {
             $file = $this->_moveFile();
         } else {
-            $file = urldecode($this->loadParam('file', false));
+            $file = urldecode(Utilities::loadParam('file', false));
         }
 
         if ($url) {
@@ -85,32 +85,32 @@ class MapprApi extends Mappr
             $this->url = $file;
         }
 
-        $this->points           = $this->loadParam('points', array());
-        $this->legend           = $this->loadParam('legend', array());
-        $this->shape            = (is_array($this->loadParam('shape', array()))) ? $this->loadParam('shape', array()) : array($this->loadParam('shape', array()));
-        $this->size             = (is_array($this->loadParam('size', array()))) ? $this->loadParam('size', array()) : array($this->loadParam('size', array()));
-        $this->color            = (is_array($this->loadParam('color', array()))) ? $this->loadParam('color', array()) : array($this->loadParam('color', array()));
+        $this->points           = Utilities::loadParam('points', array());
+        $this->legend           = Utilities::loadParam('legend', array());
+        $this->shape            = (is_array(Utilities::loadParam('shape', array()))) ? Utilities::loadParam('shape', array()) : array(Utilities::loadParam('shape', array()));
+        $this->size             = (is_array(Utilities::loadParam('size', array()))) ? Utilities::loadParam('size', array()) : array(Utilities::loadParam('size', array()));
+        $this->color            = (is_array(Utilities::loadParam('color', array()))) ? Utilities::loadParam('color', array()) : array(Utilities::loadParam('color', array()));
 
-        $this->outlinecolor     = $this->loadParam('outlinecolor', null);
-        $this->border_thickness = (float)$this->loadParam('thickness', 1.25);
+        $this->outlinecolor     = Utilities::loadParam('outlinecolor', null);
+        $this->border_thickness = (float)Utilities::loadParam('thickness', 1.25);
 
-        $shaded = $this->loadParam('shade', array());
+        $shaded = Utilities::loadParam('shade', array());
         $this->regions = array(
             'data' => (array_key_exists('places', $shaded)) ? $shaded['places'] : "",
             'title' => (array_key_exists('title', $shaded)) ? $shaded['title'] : "",
             'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ", $shaded['color']) : "120 120 120"
         );
 
-        $this->output           = $this->loadParam('output', 'pnga');
-        $this->projection       = $this->loadParam('projection', 'epsg:4326');
+        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
         $this->projection_map   = 'epsg:4326';
-        $this->origin           = (int)$this->loadParam('origin', false);
+        $this->origin           = (int)Utilities::loadParam('origin', false);
 
-        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
-        $this->zoom             = (int)$this->loadParam('zoom', false);
+        $this->bbox_map         = Utilities::loadParam('bbox', '-180,-90,180,90');
+        $this->zoom             = (int)Utilities::loadParam('zoom', false);
 
         //convert layers as comma-separated values to an array
-        $_layers                = explode(',', $this->loadParam('layers', ""));
+        $_layers                = explode(',', Utilities::loadParam('layers', ""));
         $layers = array();
         $layers['countries']    = true;
         foreach ($_layers as $_layer) {
@@ -119,23 +119,23 @@ class MapprApi extends Mappr
             }
         }
         $this->layers           = $layers;
-        $this->graticules       = $this->loadParam('graticules', false);
-        $this->gridspace        = $this->loadParam('spacing', false);
-        $this->gridlabel        = $this->loadParam('gridlabel', "true");
+        $this->graticules       = Utilities::loadParam('graticules', false);
+        $this->gridspace        = Utilities::loadParam('spacing', false);
+        $this->gridlabel        = Utilities::loadParam('gridlabel', "true");
 
-        if ($this->loadParam('border', false)) {
+        if (Utilities::loadParam('border', false)) {
             $this->options['border'] = true;
         }
-        if ($this->loadParam('legend', false)) {
+        if (Utilities::loadParam('legend', false)) {
             $this->options['legend'] = true;
         }
-        if ($this->loadParam('scalebar', false)) {
+        if (Utilities::loadParam('scalebar', false)) {
             $this->options['scalebar'] = true;
         }
 
         //set the image size from width & height to array(width, height)
-        $this->width            = (float)$this->loadParam('width', 900);
-        $this->height           = (float)$this->loadParam('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
+        $this->width            = (float)Utilities::loadParam('width', 900);
+        $this->height           = (float)Utilities::loadParam('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $this->width/2 : 450);
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 900; $this->height = 450;
         }
@@ -248,7 +248,7 @@ class MapprApi extends Mappr
 
             //grab the data for regions & split
             $whole = trim($this->regions['data']);
-            $rows = explode("\n", parent::removeEmptyLines($whole));
+            $rows = explode("\n", Utilities::removeEmptyLines($whole));
             $qry = array();
             foreach ($rows as $row) {
                 $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -487,7 +487,7 @@ class MapprApi extends Mappr
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
         $coord_array = array();
         foreach ($this->points as $rows) {
-            $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(parent::removeEmptyLines($rows)));
+            $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(Utilities::removeEmptyLines($rows)));
             foreach (str_replace("\\", "", $row) as $point) {
                 $this->_coord_cols[$num_cols][] = parent::makeCoordinates($point);
             }

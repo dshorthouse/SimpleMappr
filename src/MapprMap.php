@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -109,27 +109,27 @@ class MapprMap extends Mappr
             $this->bbox_map = '-180,-90,180,90';
         }
         if (!isset($this->origin)) {
-            $this->origin = (int)$this->loadParam('origin', false);
+            $this->origin = (int)Utilities::loadParam('origin', false);
         }
 
         $this->download         = true;
         $this->watermark        = true;
 
         unset($this->options['border']);
-        $this->width            = (float)$this->loadParam('width', 800);
-        $this->height           = (float)$this->loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+        $this->width            = (float)Utilities::loadParam('width', 800);
+        $this->height           = (float)Utilities::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 800; $this->height = 400;
         }
 
-        if ($this->loadParam('legend', false) == "true") {
+        if (Utilities::loadParam('legend', false) == "true") {
             $this->options['legend'] = true;
-        } elseif ($this->loadParam('legend', false) == "false") {
+        } elseif (Utilities::loadParam('legend', false) == "false") {
             $this->options['legend'] = false;
         }
 
         $this->image_size       = array($this->width, $this->height);
-        $this->callback         = $this->loadParam('callback', null);
+        $this->callback         = Utilities::loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
 
         return $this;
@@ -269,7 +269,7 @@ class MapprMap extends Mappr
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);
-                $row = explode("\n", $this->removeEmptyLines($whole));
+                $row = explode("\n", Utilities::removeEmptyLines($whole));
 
                 $point_key = 0;
                 foreach ($row as $loc) {

@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -63,7 +63,7 @@ class MapprDocx extends Mappr
     {
         $objPHPWord = new PhpWord();
 
-        $clean_filename = parent::cleanFilename($this->file_name);
+        $clean_filename = Utilities::cleanFilename($this->file_name);
 
         // Set properties
         $properties = $objPHPWord->getDocumentProperties();

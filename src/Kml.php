@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -100,7 +100,7 @@ class Kml
      */
     public function createOutput()
     {
-        $clean_filename = Mappr::cleanFilename($this->file_name);
+        $clean_filename = Utilities::cleanFilename($this->file_name);
 
         $this->setMetadata("name", "SimpleMappr: " . $clean_filename);
 
@@ -234,7 +234,7 @@ class Kml
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-                $row = explode("\n", Mappr::removeEmptyLines($whole));  //split the lines that have data
+                $row = explode("\n", Utilities::removeEmptyLines($whole));  //split the lines that have data
 
                 $point_key = 0;
                 foreach ($row as $loc) {

@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -63,18 +63,18 @@ class MapprQuery extends Mappr
         $this->download         = false;
         $this->options          = array();
         $this->border_thickness = 1.25;
-        $this->width            = (float)$this->loadParam('width', 900);
-        $this->height           = (float)$this->loadParam('height', $this->width/2);
+        $this->width            = (float)Utilities::loadParam('width', 900);
+        $this->height           = (float)Utilities::loadParam('height', $this->width/2);
         $this->image_size       = array($this->width, $this->height);
-        $this->output           = $this->loadParam('output', 'pnga');
-        $this->projection       = $this->loadParam('projection', 'epsg:4326');
-        $this->projection_map   = $this->loadParam('projection_map', 'epsg:4326');
-        $this->origin           = (int)$this->loadParam('origin', false);
-        $this->bbox_map         = $this->loadParam('bbox', '-180,-90,180,90');
-        $this->layers           = $this->loadParam('layers', array());
-        $this->graticules       = $this->loadParam('graticules', false);
-        $this->bbox_query       = $this->loadParam('bbox_query', '0,0,0,0');
-        $this->queryLayer       = $this->loadParam('qlayer', 'countries');
+        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
+        $this->projection_map   = Utilities::loadParam('projection_map', 'epsg:4326');
+        $this->origin           = (int)Utilities::loadParam('origin', false);
+        $this->bbox_map         = Utilities::loadParam('bbox', '-180,-90,180,90');
+        $this->layers           = Utilities::loadParam('layers', array());
+        $this->graticules       = Utilities::loadParam('graticules', false);
+        $this->bbox_query       = Utilities::loadParam('bbox_query', '0,0,0,0');
+        $this->queryLayer       = Utilities::loadParam('qlayer', 'countries');
 
         return $this;
     }

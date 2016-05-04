@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -75,12 +75,12 @@ class MapprWfs extends Mappr
      */
     public function getRequest()
     {
-        $this->params['VERSION']      = $this->loadParam('VERSION', '1.0.0');
-        $this->params['REQUEST']      = $this->loadParam('REQUEST', 'GetCapabilities');
-        $this->params['TYPENAME']     = $this->loadParam('TYPENAME', "");
-        $this->params['MAXFEATURES']  = $this->loadParam('MAXFEATURES', $this->_getMaxFeatures());
-        $this->params['OUTPUTFORMAT'] = $this->loadParam('OUTPUTFORMAT', 'gml2');
-        $this->params['FILTER']       = $this->loadParam('FILTER', null);
+        $this->params['VERSION']      = Utilities::loadParam('VERSION', '1.0.0');
+        $this->params['REQUEST']      = Utilities::loadParam('REQUEST', 'GetCapabilities');
+        $this->params['TYPENAME']     = Utilities::loadParam('TYPENAME', "");
+        $this->params['MAXFEATURES']  = Utilities::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['OUTPUTFORMAT'] = Utilities::loadParam('OUTPUTFORMAT', 'gml2');
+        $this->params['FILTER']       = Utilities::loadParam('FILTER', null);
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -108,7 +108,7 @@ class MapprWfs extends Mappr
         }
 
         $this->layers     = $this->wfs_layers;
-        $this->bbox_map   = $this->loadParam('bbox', '-180,-90,180,90');
+        $this->bbox_map   = Utilities::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
         $this->image_size = array(900,450);

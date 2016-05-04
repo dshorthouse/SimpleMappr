@@ -2,7 +2,7 @@
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
  * @category  Class
  * @package   SimpleMappr
@@ -37,7 +37,6 @@
  */
 namespace SimpleMappr;
 
-use \ForceUTF8\Encoding;
 use \Symfony\Component\Yaml\Yaml;
 
 /**
@@ -204,55 +203,6 @@ abstract class Mappr
     private $_download_factor = 1;
 
     /**
-     * Remove empty lines from a string.
-     *
-     * @param string $text String of characters
-     *
-     * @return string cleansed string with empty lines removed
-     */
-    public static function removeEmptyLines($text)
-    {
-        return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $text);
-    }
-
-    /**
-     * Add slashes to either a string or an array.
-     *
-     * @param array $arr_r Array that needs addslashes.
-     *
-     * @return string/array
-     */
-    public static function addSlashesExtended(&$arr_r)
-    {
-        if (is_array($arr_r)) {
-            foreach ($arr_r as &$val) {
-                is_array($val) ? self::addSlashesExtended($val) : $val = addslashes($val);
-            }
-            unset($val);
-        } else {
-            $arr_r = addslashes($arr_r);
-        }
-        return $arr_r;
-    }
-
-    /**
-     * Get a user-defined file name, cleaned of illegal characters.
-     *
-     * @param string $file_name String that should be a file name.
-     * @param string $extension File extension.
-     *
-     * @return string Cleaned string that can be a file name.
-     */
-    public static function cleanFilename($file_name, $extension = "")
-    {
-        $clean_filename = preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $file_name);
-        if ($extension) {
-            return $clean_filename . "." . $extension;
-        }
-        return $clean_filename;
-    }
-
-    /**
      * Clean extraneous materials in coordinate that should (in theory) be DD.
      *
      * @param string $coord Dirty string that should be an real number
@@ -414,52 +364,52 @@ abstract class Mappr
      */
     public function getRequest()
     {
-        $this->coords           = $this->loadParam('coords', array());
-        $this->regions          = $this->loadParam('regions', array());
+        $this->coords           = Utilities::loadParam('coords', array());
+        $this->regions          = Utilities::loadParam('regions', array());
 
-        $this->output           = $this->loadParam('output', 'pnga');
-        $this->width            = (float)$this->loadParam('width', 900);
-        $this->height           = (float)$this->loadParam('height', $this->width/2);
+        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->width            = (float)Utilities::loadParam('width', 900);
+        $this->height           = (float)Utilities::loadParam('height', $this->width/2);
 
         $this->image_size       = array($this->width, $this->height);
 
-        $this->projection       = $this->loadParam('projection', 'epsg:4326');
-        $this->projection_map   = $this->loadParam('projection_map', 'epsg:4326');
-        $this->origin           = (int)$this->loadParam('origin', false);
+        $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
+        $this->projection_map   = Utilities::loadParam('projection_map', 'epsg:4326');
+        $this->origin           = (int)Utilities::loadParam('origin', false);
 
-        $this->bbox_map         = $this->loadParam('bbox_map', '-180,-90,180,90');
+        $this->bbox_map         = Utilities::loadParam('bbox_map', '-180,-90,180,90');
 
-        $this->bbox_rubberband  = $this->loadParam('bbox_rubberband', array());
+        $this->bbox_rubberband  = Utilities::loadParam('bbox_rubberband', array());
 
-        $this->pan              = $this->loadParam('pan', false);
+        $this->pan              = Utilities::loadParam('pan', false);
 
-        $this->layers           = $this->loadParam('layers', array());
+        $this->layers           = Utilities::loadParam('layers', array());
 
         $this->graticules       = (array_key_exists('grid', $this->layers)) ? true : false;
 
-        $this->watermark        = $this->loadParam('watermark', false);
+        $this->watermark        = Utilities::loadParam('watermark', false);
 
-        $this->gridspace        = $this->loadParam('gridspace', false);
+        $this->gridspace        = Utilities::loadParam('gridspace', false);
 
-        $this->gridlabel        = (int)$this->loadParam('gridlabel', 1);
+        $this->gridlabel        = (int)Utilities::loadParam('gridlabel', 1);
 
-        $this->download         = $this->loadParam('download', false);
+        $this->download         = Utilities::loadParam('download', false);
 
-        $this->crop             = $this->loadParam('crop', false);
+        $this->crop             = Utilities::loadParam('crop', false);
 
-        $this->options          = $this->loadParam('options', array()); //scalebar, legend, border, linethickness
+        $this->options          = Utilities::loadParam('options', array()); //scalebar, legend, border, linethickness
 
-        $this->border_thickness = (float)$this->loadParam('border_thickness', 1.25);
+        $this->border_thickness = (float)Utilities::loadParam('border_thickness', 1.25);
 
-        $this->rotation         = (int)$this->loadParam('rotation', 0);
-        $this->zoom_in          = $this->loadParam('zoom_in', false);
-        $this->zoom_out         = $this->loadParam('zoom_out', false);
+        $this->rotation         = (int)Utilities::loadParam('rotation', 0);
+        $this->zoom_in          = Utilities::loadParam('zoom_in', false);
+        $this->zoom_out         = Utilities::loadParam('zoom_out', false);
 
-        $this->_download_factor = (int)$this->loadParam('download_factor', 1);
+        $this->_download_factor = (int)Utilities::loadParam('download_factor', 1);
 
-        $this->file_name        = $this->loadParam('file_name', time());
+        $this->file_name        = Utilities::loadParam('file_name', time());
 
-        $this->download_token   = $this->loadParam('download_token', md5(time()));
+        $this->download_token   = Utilities::loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
 
         return $this;
@@ -497,28 +447,6 @@ abstract class Mappr
     }
 
     /**
-     * Get a case insensitive request parameter.
-     *
-     * @param string $name    Name of the parameter.
-     * @param string $default Default value for the parameter.
-     *
-     * @return string The parameter value or empty string if null.
-     */
-    public function loadParam($name, $default = "")
-    {
-        $grep_key = $this->_pregGrepKeys("/\b(?<!-)$name(?!-)\b/i", $_REQUEST);
-        if (!$grep_key || !array_values($grep_key)[0]) {
-            return $default;
-        }
-        $value = array_values($grep_key)[0];
-        $value = Encoding::fixUTF8($value);
-        if (get_magic_quotes_gpc() != 1) {
-            $value = self::addSlashesExtended($value);
-        }
-        return $value;
-    }
-
-    /**
      * Convert image coordinates to map coordinates
      *
      * @param obj $point (x,y) coordinates in pixels
@@ -534,20 +462,6 @@ abstract class Mappr
         $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
         $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
         return $newPoint;
-    }
-
-    /**
-     * Grep on array keys.
-     *
-     * @param string $pattern A regex.
-     * @param array  $input   An associative array.
-     * @param int    $flags   Preg grep flags.
-     *
-     * @return array of matched keys.
-     */
-    private function _pregGrepKeys($pattern, $input, $flags = 0)
-    {
-        return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
     }
 
     /**
@@ -997,7 +911,7 @@ abstract class Mappr
                     $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
                     $new_line = ms_newLineObj();
 
-                    $rows = explode("\n", self::removeEmptyLines($data));  //split the lines that have data
+                    $rows = explode("\n", Utilities::removeEmptyLines($data));  //split the lines that have data
                     $points = array(); //create an array to hold unique locations
 
                     foreach ($rows as $row) {
@@ -1052,7 +966,7 @@ abstract class Mappr
                     $this->_legend_required = true;
                     $baselayer = true;
                     //grab the textarea for regions & split
-                    $rows = explode("\n", self::removeEmptyLines($data));
+                    $rows = explode("\n", Utilities::removeEmptyLines($data));
                     $qry = array();
                     foreach ($rows as $row) {
                         $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
@@ -1587,29 +1501,6 @@ abstract class Mappr
     }
 
     /**
-     * Convert hex colour (eg for css) to RGB
-     *
-     * @param string $hex The hexidecimal string for the colour.
-     *
-     * @return array of RGB
-     */
-    private function _hex2Rgb($hex)
-    {
-        $hex = str_replace("#", "", $hex);
-
-        $red = hexdec(substr($hex, 0, 2));
-        $green = hexdec(substr($hex, 2, 2));
-        $blue = hexdec(substr($hex, 4, 2));
-
-        if (strlen($hex) == 3) {
-            $red = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
-            $green = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
-            $blue = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
-        }
-        return array($red, $green, $blue);
-    }
-
-    /**
      * Build ecoregion layer classes from SLD file
      *
      * @param obj $layer The MapScript layer object.
@@ -1625,7 +1516,7 @@ abstract class Mappr
             $class = ms_newClassObj($layer);
             $class->setExpression("([ECO_SYM] = ".$rule->xpath('.//sld:Name')[0].")");
             $style = ms_newStyleObj($class);
-            $color = $this->_hex2Rgb($rule->xpath('.//sld:CssParameter')[0]);
+            $color = Utilities::hex2Rgb($rule->xpath('.//sld:CssParameter')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
         }

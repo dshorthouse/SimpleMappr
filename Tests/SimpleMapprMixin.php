@@ -3,7 +3,7 @@
 /**
  * SimpleMapprMixin trait functions used to simplify tests
  *
- * PHP Version 5.5
+ * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2013 David P. Shorthouse
