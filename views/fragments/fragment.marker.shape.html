@@ -8,7 +8,7 @@
     {% if key == "closed" %}
     <optgroup label='{% trans "solid" %}'>
         {% for key1,value1 in value %}
-        <option value="{{ key1 }}">{{ value1['name']|trans }}</option>
+        <option value="{{ key1 }}"{% if key1 == "circle" %} selected = "selected"{% endif %}>{{ value1['name']|trans }}</option>
         {% endfor %}
     </optgroup>
     {% endif %}

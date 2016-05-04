@@ -47,14 +47,6 @@ trait AcceptedMarkerShapes
             'cross' => array('style' => 'cross', 'name' => 'cross'),
             'asterisk' => array('style'=> 'asterisk', 'name' => 'asterisk')
         ),
-        'open' => array(
-            'opencircle' => array('style' => 'circle', 'name' => 'circle (o)'),
-            'openstar' => array('style' => 'star', 'name' => 'star (o)'),
-            'opensquare' => array('style' => 'square', 'name' => 'square (o)'),
-            'opentriangle' => array('style' => 'triangle', 'name' => 'triangle (o)'),
-            'openhexagon' => array('style' => 'hexagon', 'name' => 'hexagon (o)'),
-            'inverseopentriangle' => array('style' => 'inversetriangle', 'name' => 'inverse triangle (o)')
-        ),
         'closed' => array(
             'circle' => array('style' => 'circle', 'name' => 'circle (s)'),
             'star' => array('style' => 'star', 'name' => 'star (s)'),
@@ -62,6 +54,14 @@ trait AcceptedMarkerShapes
             'triangle' => array('style' => 'triangle', 'name' => 'triangle (s)'),
             'hexagon' => array('style' => 'hexagon', 'name' => 'hexagon (s)'),
             'inversetriangle' => array('style' => 'inversetriangle', 'name' => 'inverse triangle (s)')
+        ),
+        'open' => array(
+            'opencircle' => array('style' => 'circle', 'name' => 'circle (o)'),
+            'openstar' => array('style' => 'star', 'name' => 'star (o)'),
+            'opensquare' => array('style' => 'square', 'name' => 'square (o)'),
+            'opentriangle' => array('style' => 'triangle', 'name' => 'triangle (o)'),
+            'openhexagon' => array('style' => 'hexagon', 'name' => 'hexagon (o)'),
+            'inverseopentriangle' => array('style' => 'inversetriangle', 'name' => 'inverse triangle (o)')
         )
     );
 
