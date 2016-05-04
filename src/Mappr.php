@@ -493,11 +493,16 @@ abstract class Mappr
     private function _tokenize_shapefile_config($config)
     {
         $config = array_merge($config['layers'], $config['labels']);
+        $pattern = '/%%(.+)%%(.+)?/';
         foreach($config as $shape => $values) {
             foreach($values as $key => $value) {
-                if (strpos($value, "%%") !== FALSE) {
-                    $config[$shape][$key] = constant(str_replace("%", "", $value));
-                }
+                $config[$shape][$key] = preg_replace_callback($pattern, function($matches) {
+                    if(isset($matches[2])) {
+                        return constant($matches[1]) . $matches[2];
+                    } else {
+                        return constant($matches[1]);
+                    }
+                }, $value);
             }
         }
         return $config;
