@@ -1,5 +1,6 @@
 # Ignore configuration files
 config/phinx.yml
+config/shapefiles.yml
 config/conf.php
 config/conf.php.old
 
