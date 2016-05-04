@@ -60,8 +60,9 @@ class Header
      * An array of javascript files that remain uncombined
      */
     public $local_js_uncombined = array(
-        'jquery'      => 'public/javascript/jquery-1.11.2.min.js',
-        'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js'
+        'jquery'      => 'public/javascript/jquery-1.12.3.min.js',
+        'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
+        'janrain'     => 'public/javascript/janrain.engage.min.js'
      );
 
     /**
@@ -91,8 +92,7 @@ class Header
     );
 
     public $remote_js = array(
-        'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js',
-        'janrain'   => '//widget-cdn.rpxnow.com/js/lib/simplemappr/engage.js'
+        'jquery'    => '//code.jquery.com/jquery-1.12.3.min.js'
     );
 
     /**
@@ -307,7 +307,7 @@ class Header
      */
     private function _makeHash()
     {
-        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+        if (ENVIRONMENT != "development") {
             $this->_hash = substr(md5(microtime()), 0, 8);
         }
         return $this;
@@ -335,6 +335,9 @@ class Header
     private function _addUncombinedJs()
     {
         foreach ($this->local_js_uncombined as $key => $js_file) {
+            if ($key == "janrain" && isset($_SESSION['simplemappr'])) {
+                continue;
+            }
             $this->_addJs($key, $js_file);
         }
         return $this;
@@ -347,7 +350,14 @@ class Header
      */
     private function _addCombinedJs()
     {
-        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+        if (ENVIRONMENT == "development") {
+            foreach ($this->local_js_combined as $key => $js_file) {
+                if ($key == "simplemappr") {
+                    $js_file = str_replace(".min", "", $js_file);
+                }
+                $this->_addJs($key, $js_file);
+            }
+        } else {
             $cached_js = $this->_filesCached(dirname(__DIR__) . self::$_js_cache_path);
 
             if (!$cached_js) {
@@ -367,23 +377,13 @@ class Header
                     $this->_addJs("compiled", self::$_js_cache_path . $js);
                 }
             }
-        } else {
-            foreach ($this->local_js_combined as $key => $js_file) {
-                if ($key == "simplemappr") {
-                    $js_file = str_replace(".min", "", $js_file);
-                }
-                $this->_addJs($key, $js_file);
-            }
-        }
-        if (!isset($_SESSION['simplemappr']) && ENVIRONMENT !== "testing") {
-            $this->_addJs("janrain", $this->remote_js["janrain"]);
         }
         if ($this->_isAdministrator()) {
             foreach ($this->admin_js as $key => $js_file) {
-                if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
-                    $this->_addJs($key, $js_file);
-                } else {
+                if (ENVIRONMENT == "development") {
                     $this->_addJs($key, str_replace(".min", "", $js_file));
+                } else {
+                    $this->_addJs($key, $js_file);
                 }
             }
         }
@@ -397,7 +397,11 @@ class Header
      */
     private function _addCombinedCss()
     {
-        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+        if (ENVIRONMENT == "development") {
+            foreach ($this->local_css as $css_file) {
+                $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
+            }
+        } else {
             $cached_css = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
 
             if (!$cached_css) {
@@ -415,11 +419,6 @@ class Header
                 foreach ($cached_css as $css) {
                     $this->_addCss('<link type="text/css" href="/public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
                 }
-            }
-
-        } else {
-            foreach ($this->local_css as $css_file) {
-                $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
             }
         }
         return $this;
@@ -486,7 +485,7 @@ class Header
         $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
         $header .= "<script>";
         $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-        $namespace = (ENVIRONMENT == "production" || ENVIRONMENT == "testing") ? "compiled" : "simplemappr";
+        $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
         $header .= "head.js(";
         $headjs = array();
         foreach ($this->_js_header as $key => $file) {
@@ -561,7 +560,7 @@ else if (w.onLoad) { w.onload = isJanrainReady; }
     private function _getAnalytics()
     {
         $analytics = "";
-        if (ENVIRONMENT == "production" || ENVIRONMENT == "testing") {
+        if (ENVIRONMENT == "production") {
             $analytics  = "<script>" . "\n";
             $analytics .= "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
