@@ -70,7 +70,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download [MapServer](http://mapserver.org/download.html) 7.0.0 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.0.tar.gz)
+3. Download [MapServer](http://mapserver.org/download.html) 7.0.1 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.1.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 

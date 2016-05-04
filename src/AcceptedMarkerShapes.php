@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AcceptedShapes trait
+ * AcceptedMarkerShapes trait
  *
  * PHP Version 5.5
  *
@@ -36,7 +36,7 @@
  */
 namespace SimpleMappr;
 
-trait AcceptedShapes
+trait AcceptedMarkerShapes
 {
     /**
      * Accepted marker shapes

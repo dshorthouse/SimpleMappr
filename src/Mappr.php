@@ -596,12 +596,12 @@ abstract class Mappr
      */
     private function _loadSymbols()
     {
-        foreach(AcceptedShapes::$shapes as $type => $style) {
+        foreach(AcceptedMarkerShapes::$shapes as $type => $style) {
             $fill = MS_FALSE;
             if ($type == 'closed') { $fill = MS_TRUE; }
             foreach($style as $name => $settings) {
                 $type = (strpos($name, 'circle') !== FALSE) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
-                $vertices = AcceptedShapes::vertices($settings['style']);
+                $vertices = AcceptedMarkerShapes::vertices($settings['style']);
                 $this->_createSymbol($name, $type, $fill, $vertices);
             }
         }

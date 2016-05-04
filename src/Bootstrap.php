@@ -326,10 +326,10 @@ class Bootstrap
      *
      * @return class $klass  The instance of class.
      */
-    private function _klass($klass, $param1 = "", $param2 = "")
+    private function _klass($klass, ...$params)
     {
         $class = __NAMESPACE__ . '\\' . $klass;
-        return new $class($param1, $param2);
+        return new $class(...$params);
     }
 
     /**
@@ -427,9 +427,7 @@ class Bootstrap
         $twig->addGlobal('locales', Session::$accepted_locales);
         $twig->addGlobal('roles', User::$roles);
         $twig->addGlobal('projections', AcceptedProjections::$projections);
-        $twig->addGlobal('marker_shapes', AcceptedShapes::$shapes);
-        $twig->addGlobal('labels', "");
-        $twig->addGlobal('layers', "");
+        $twig->addGlobal('marker_shapes', AcceptedMarkerShapes::$shapes);
         $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
         $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
         $twig->addGlobal('stylesheet', $header->getCSSHeader());

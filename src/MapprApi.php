@@ -181,7 +181,11 @@ class MapprApi extends Mappr
             $class->set("name", isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
 
             $style = ms_newStyleObj($class);
-            $style->set("symbolname", (array_key_exists($col, $this->shape) && in_array($this->shape[$col], AcceptedShapes::$shapes)) ? $this->shape[$col] : 'circle');
+            $symbol = 'circle';
+            if (array_key_exists($col, $this->shape) && in_array($this->shape[$col], AcceptedMarkerShapes::$shapes)) {
+                $symbol = $this->shape[$col];
+            }
+            $style->set("symbolname", $symbol);
             $style->set("size", (array_key_exists($col, $this->size)) ? $this->size[$col] : 8);
 
             if (array_key_exists($col, $this->color)) {
