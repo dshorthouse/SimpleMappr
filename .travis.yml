@@ -88,6 +88,9 @@ before_script:
   - sudo cp config/phinx.yml.sample config/phinx.yml
   - sh -e .travis/scripts/mysql-init.sh "$DBNAME"
 
+  # Map files
+  - sudo cp config/shapefiles.yml.sample config/shapefiles.yml
+
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
