@@ -924,7 +924,7 @@ abstract class Mappr
                         $coord = new \stdClass();
                         $coord->x = ($coord_array[1]) ? self::cleanCoord($coord_array[1]) : null;
                         $coord->y = ($coord_array[0]) ? self::cleanCoord($coord_array[0]) : null;
-                        //only add point when data are good & a title
+                        //only add point when data are good & have a title
                         if (self::checkOnEarth($coord) && !empty($title)) {
                             if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
                                 $new_point = ms_newPointObj();
@@ -1044,20 +1044,20 @@ abstract class Mappr
         $this->layers['base'] = 'on';
         unset($this->layers['grid']);
 
-        if (isset($this->output) && $this->output == 'svg') {
-            unset($this->layers['relief'], $this->layers['reliefgrey'], $this->layers['blueMarble']);
-        }
-
         foreach ($this->layers as $key => $row) {
-            $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort_order'] : $row;
+            if(isset($this->output) && $this->output == 'svg' && $this->shapes[$key]['type'] == MS_LAYER_RASTER) {
+                unset($this->layers[$key]);
+            } else {
+                $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
+            }
         }
         array_multisort($sort, SORT_ASC, $this->layers);
 
         $srs_projections = implode(array_keys(AcceptedProjections::$projections), " ");
 
         foreach ($this->layers as $name => $status) {
-            //make the layer
             if (array_key_exists($name, $this->shapes)) {
+
                 $layer = ms_newLayerObj($this->map_obj);
                 $layer->set("name", $name);
                 $layer->setMetaData("wfs_title", $name);
@@ -1077,117 +1077,63 @@ abstract class Mappr
                 $layer->set("template", "template.html");
                 $layer->set("dump", true);
 
-                switch ($name) {
-                case 'lakesOutline':
-                    $class = ms_newClassObj($layer);
-                    $style = ms_newStyleObj($class);
-                    $style->color->setRGB(80, 80, 80);
-                    break;
-
-                case 'rivers':
-                case 'lakes':
-                    $class = ms_newClassObj($layer);
-                    $style = ms_newStyleObj($class);
-                    $style->color->setRGB(120, 120, 120);
-                    break;
-
-                case 'oceans':
-                    $class = ms_newClassObj($layer);
-                    $style = ms_newStyleObj($class);
-                    $style->color->setRGB(220, 220, 220);
-                    break;
-
-                case 'conservation':
-                    $layer->set("opacity", 75);
-                    $class = ms_newClassObj($layer);
-                    $class->set("name", "Conservation International 2011 Hotspots");
-                    $style = ms_newStyleObj($class);
-                    $style->color->setRGB(200, 200, 200);
-                    $style->outlinecolor->setRGB(30, 30, 30);
-                    $this->_legend_required = true;
-                    break;
-
-                case 'ecoregions':
-                    $layer->set("opacity", 75);
-                    $layer->set("classitem", "ECO_SYM");
-                    $this->_setEcoregionClasses($layer);
-                    $this->_legend_required = true;
-                    break;
-
-                case 'rivernames':
-                case 'lakenames':
-                    $layer->set("tolerance", 1);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, $this->shapes[$name]['encoding']));
-                    break;
-
-                case 'base':
-                case 'countries':
-                case 'stateprovinces':
-                    $class = ms_newClassObj($layer);
-                    $style = ms_newStyleObj($class);
-                    $style->set("width", $this->_determineWidth());
-                    $style->color->setRGB(10, 10, 10);
-                    break;
-
-                case 'countrynames':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(12, MS_CC, $this->shapes[$name]['encoding']));
-                    break;
-
-                case 'stateprovnames':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(10, MS_CC, $this->shapes[$name]['encoding']));
-                    break;
-
-                case 'placenames':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, $this->shapes[$name]['encoding']));
-
-                    $style = ms_newStyleObj($class);
-                    $style->set("symbolname", "circle");
-                    $style->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*7 : 6);
-                    $style->color->setRGB(100, 100, 100);
-                    break;
-
-                case 'physicalLabels':
-                case 'marineLabels':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "name");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, $this->shapes[$name]['encoding']));
-                    break;
-
-                case 'hotspotLabels':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "NAME");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, "UTF-8"));
-                    break;
-
-                case 'ecoregionLabels':
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", "pixels");
-                    $layer->set("labelitem", "ECO_NAME");
-                    $class = ms_newClassObj($layer);
-                    $class->addLabel($this->_createLabel(8, MS_UR, "UTF-8"));
-                    break;
-
-                default:
+                if(isset($this->shapes[$name]['opacity'])) {
+                    $layer->set("opacity", (int)$this->shapes[$name]['opacity']);
                 }
+
+                if(isset($this->shapes[$name]['class'])) {
+                    $classitem = $this->shapes[$name]['class']['item'];
+                    $layer->set("classitem", $classitem);
+                    $this->_setSLDClasses($layer, $this->shapes[$name]['class']['sld'], $classitem);
+                    $this->_legend_required = true;
+                }
+
+                if(isset($this->shapes[$name]['tolerance'])) {
+                    $layer->set("tolerance", (int)$this->shapes[$name]['tolerance']);
+                }
+
+                if(isset($this->shapes[$name]['tolerance_units'])) {
+                    $layer->set("toleranceunits", $this->shapes[$name]['tolerance_units']);
+                }
+
+                if(isset($this->shapes[$name]['label'])) {
+                    $layer->set("labelitem", $this->shapes[$name]['label']['item']);
+                }
+
+                $class = ms_newClassObj($layer);
+                $style = ms_newStyleObj($class);
+
+                if(isset($this->shapes[$name]['legend'])) {
+                    $class->set("name", $this->shapes[$name]['legend']);
+                    $this->_legend_required = true;
+                }
+
+                if(isset($this->shapes[$name]['outline_color'])) {
+                    $color = explode(",",$this->shapes[$name]['outline_color']);
+                    $style->outlinecolor->setRGB($color[0], $color[1], $color[2]);
+                }
+
+                if(isset($this->shapes[$name]['color'])) {
+                    $color = explode(",",$this->shapes[$name]['color']);
+                    $style->color->setRGB($color[0], $color[1], $color[2]);
+                }
+
+                if(isset($this->shapes[$name]['dynamic_width'])) {
+                    $style->set("width", $this->_determineWidth());
+                }
+
+                if(isset($this->shapes[$name]['label'])) {
+                    $class->addLabel($this->_createLabel((int)$this->shapes[$name]['label']['size'], $this->shapes[$name]['label']['position'], $this->shapes[$name]['encoding']));
+                }
+
+                if(isset($this->shapes[$name]['symbol'])) {
+                    $style->set("symbolname", $this->shapes[$name]['symbol']['shape']);
+                    $size = $this->shapes[$name]['symbol']['size'];
+                    $style->set("size", ($this->_isResize() && $this->_download_factor > 1) ? $this->_download_factor*($size+1) : $size);
+                    $color = explode(",",$this->shapes[$name]['symbol']['color']);
+                    $style->color->setRGB($color[0], $color[1], $color[2]);
+                }
+
             }
         }
     }
@@ -1231,7 +1177,7 @@ abstract class Mappr
             $layer->set("sizeunits", MS_PIXELS);
 
             $class = ms_newClassObj($layer);
-            $class->settext("http://www.simplemappr.net");
+            $class->settext(MAPPR_URL);
 
             $label = new \labelObj();
             $label->set("font", "arial");
@@ -1509,17 +1455,19 @@ abstract class Mappr
      * Build ecoregion layer classes from SLD file
      *
      * @param obj $layer The MapScript layer object.
+     * @param string $sld The full path to an SLD file
+     * @param string $item The term filtered on in the SLD
      *
      * @return void
      */
-    private function _setEcoregionClasses($layer)
+    private function _setSLDClasses($layer, $sld, $item)
     {
-        $xml = simplexml_load_file(ROOT."/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos.sld");
+        $xml = simplexml_load_file($sld);
         $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
         $xml->registerXPathNamespace('ogc', 'http://www.opengis.net/ogc');
         foreach ($xml->xpath('//sld:Rule') as $rule) {
             $class = ms_newClassObj($layer);
-            $class->setExpression("([ECO_SYM] = ".$rule->xpath('.//sld:Name')[0].")");
+            $class->setExpression("([".$item."] = ".$rule->xpath('.//sld:Name')[0].")");
             $style = ms_newStyleObj($class);
             $color = Utilities::hex2Rgb($rule->xpath('.//sld:CssParameter')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
@@ -1527,6 +1475,11 @@ abstract class Mappr
         }
     }
 
+    /**
+     * Get the scaled width for a layer's line
+     *
+     * @return $width
+     */
     private function _determineWidth()
     {
         $width = 1.25;

@@ -1,155 +1,233 @@
 layers:
+
+    #special 'always on' layer
+    base:
+        name: base
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_land
+        type: %%MS_LAYER_LINE%%
+        encoding: CP1252
+        sort: 4
+        color: "10,10,10"
+        dynamic_width: true
+
     blueMarble:
-        name: "Blue Marble"
-        path: "%%ROOT%%/mapserver/maps/blue_marble/land_shallow_topo_21600.tif"
+        name: Blue Marble
+        path: %%ROOT%%/mapserver/maps/blue_marble/land_shallow_topo_21600.tif
         type: %%MS_LAYER_RASTER%%
-        encoding: "UTF-8"
-        sort_order: 1
+        encoding: UTF-8
+        sort: 1
 
     relief:
-        name: "relief"
-        path: "%%ROOT%%/mapserver/maps/HYP_HR_SR_OB_DR/HYP_HR_SR_OB_DR.tif"
+        name: relief
+        path: %%ROOT%%/mapserver/maps/HYP_HR_SR_OB_DR/HYP_HR_SR_OB_DR.tif
         type: %%MS_LAYER_RASTER%%
-        encoding: "UTF-8"
-        sort_order: 1
+        encoding: UTF-8
+        sort: 1
 
     reliefgrey:
-        name: "relief (grescale)"
-        path: "%%ROOT%%/mapserver/maps/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif"
+        name: relief (grescale)
+        path: %%ROOT%%/mapserver/maps/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif
         type: %%MS_LAYER_RASTER%%
-        encoding: "UTF-8"
-        sort_order: 1
+        encoding: UTF-8
+        sort: 1
 
     lakesOutline:
-        name: "lakes (outline)"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes"
+        name: lakes (outline)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
         type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 2
+        encoding: CP1252
+        sort: 2
+        outline_color: "80,80,80"
 
     lakes:
-        name: "lakes (greyscale)"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes"
+        name: lakes (greyscale)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 3
+        encoding: CP1252
+        sort: 3
+        color: "120,120,120"
 
     oceans:
-        name: "oceans (greyscale)"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_ocean"
+        name: oceans (greyscale)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_ocean
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 3
+        encoding: CP1252
+        sort: 3
+        color: "220,220,220"
 
     conservation:
-        name: "biodiv. hotspots"
-        path: "%%ROOT%%/mapserver/maps/conservation_international/hotspots_2011_polygons"
+        name: biodiv. hotspots
+        path: %%ROOT%%/mapserver/maps/conservation_international/hotspots_2011_polygons
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 3
+        encoding: CP1252
+        sort: 3
+        legend: Conservation International 2011 Hotspots
+        opacity: 75
+        color: "200,200,200"
+        outline_color: "30,30,30"
 
     ecoregions:
-        name: "ecoregions"
-        path: "%%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos"
+        name: ecoregions
+        path: %%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 3
-
-    base:
-        name: "base"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_land"
-        type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 4
+        encoding: CP1252
+        sort: 3
+        opacity: 75
+        class:
+            sld: %%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos.sld
+            item: ECO_SYM
 
     countries:
-        name: "Countries"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units"
+        name: Countries
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units
         type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 4
+        encoding: CP1252
+        sort: 4
+        color: "10,10,10"
+        dynamic_width: true
 
     stateprovinces_polygon:
-        name: "State/Provinces"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces"
+        name: State/Provinces
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 5
+        encoding: CP1252
+        sort: 5
 
     stateprovinces:
-        name: "State/Provinces"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp"
+        name: State/Provinces
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
         type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 6
+        encoding: CP1252
+        sort: 6
+        color: "10,10,10"
+        dynamic_width: true
 
     rivers:
-        name: "rivers"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines"
+        name: rivers
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines
         type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 8
+        encoding: CP1252
+        sort: 8
+        color: "120,120,120"
 
 labels:
     lakenames:
-        name: "lakes"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes"
+        name: lakes
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
         type:  %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 7
+        encoding: CP1252
+        sort: 7
+        tolerance: 1
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 8
+            position: %%MS_UR%%
 
     rivernames:
-        name: "rivers"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines"
+        name: rivers
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines
         type: %%MS_LAYER_LINE%%
-        encoding: "CP1252"
-        sort_order: 9
+        encoding: CP1252
+        sort: 9
+        tolerance: 1
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 8
+            position: %%MS_UR%%
 
     placenames:
-        name: "places"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_populated_places_simple"
+        name: places
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_populated_places_simple
         type: %%MS_LAYER_POINT%
-        encoding: "CP1252"
-        sort_order: 10
+        encoding: CP1252
+        sort: 10
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 8
+            position: %%MS_UR%%
+        symbol:
+            shape: circle
+            size: 6
+            color: "100,100,100"
 
     stateprovnames:
-        name: "State/Provinces"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces"
+        name: State/Provinces
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces
         type: %%MS_LAYER_POLYGON%%
-        encoding: "UTF-8"
-        sort_order: 11
+        encoding: UTF-8
+        sort: 11
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 10
+            position: %%MS_CC%%
 
     countrynames:
-        name: "Countries"
-        path: "%%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units"
+        name: Countries
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 12
+        encoding: CP1252
+        sort: 12
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 12
+            position: %%MS_CC%%
 
     physicalLabels:
-        name: "physical"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_geography_regions_polys"
+        name: physical
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_geography_regions_polys
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 13
+        encoding: CP1252
+        sort: 13
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 8
+            position: %%MS_UR%%
 
     marineLabels:
-        name: "marine"
-        path: "%%ROOT%%/mapserver/maps/10m_physical/ne_10m_geography_marine_polys"
+        name: marine
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_geography_marine_polys
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 14
+        encoding: CP1252
+        sort: 14
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 8
+            position: %%MS_UR%%
 
     hotspotLabels:
-        name: "biodiv. hotspots"
-        path: "%%ROOT%%/mapserver/maps/conservation_international/hotspots_2011_polygons"
+        name: biodiv. hotspots
+        path: %%ROOT%%/mapserver/maps/conservation_international/hotspots_2011_polygons
         type: %%MS_LAYER_POLYGON%%
-        encoding: "UTF-8"
-        sort_order: 14
+        encoding: UTF-8
+        sort: 14
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: NAME
+            size: 8
+            position: %%MS_UR%%
 
     ecoregionLabels:
-        name: "ecoregions"
-        path: "%%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos"
+        name: ecoregions
+        path: %%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos
         type: %%MS_LAYER_POLYGON%%
-        encoding: "CP1252"
-        sort_order: 14
+        encoding: UTF-8
+        sort: 14
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: ECO_NAME
+            size: 8
+            position: %%MS_UR%%
