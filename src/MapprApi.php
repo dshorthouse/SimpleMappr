@@ -214,10 +214,10 @@ class MapprApi extends Mappr
             //add all the points
             foreach ($coords as $coord) {
                 $_coord = new \stdClass();
-                $_coord->x = array_key_exists(1, $coord) ? parent::cleanCoord($coord[1]) : null;
-                $_coord->y = array_key_exists(0, $coord) ? parent::cleanCoord($coord[0]) : null;
+                $_coord->x = array_key_exists(1, $coord) ? Utilities::cleanCoord($coord[1]) : null;
+                $_coord->y = array_key_exists(0, $coord) ? Utilities::cleanCoord($coord[0]) : null;
                 //only add point when data are good
-                if (parent::checkOnEarth($_coord)) {
+                if (Utilities::onEarth($_coord)) {
                     $mcoord_point = ms_newPointObj();
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);
@@ -489,7 +489,7 @@ class MapprApi extends Mappr
         foreach ($this->points as $rows) {
             $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(Utilities::removeEmptyLines($rows)));
             foreach (str_replace("\\", "", $row) as $point) {
-                $this->_coord_cols[$num_cols][] = parent::makeCoordinates($point);
+                $this->_coord_cols[$num_cols][] = Utilities::makeCoordinates($point);
             }
             $num_cols++;
         }

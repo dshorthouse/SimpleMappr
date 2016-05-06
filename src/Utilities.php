@@ -194,4 +194,96 @@ class Utilities
         return array($red, $green, $blue);
     }
 
+    /**
+     * Split DDMMSS or DD coordinate pair string into an array
+     *
+     * @param string $point A string purported to be a coordinate
+     *
+     * @return array(latitude, longitude) in DD
+     */
+    public static function makeCoordinates($point)
+    {
+        $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ""), $point);
+        if (preg_match('/[NSEWO]/', $loc) != 0) {
+            $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
+            if (count($coord) != 2 || empty($coord[1])) {
+                return array(null, null);
+            }
+            $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
+            return array(self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1])));
+        } else {
+            $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc))); //split by space, comma, or semicolon
+            if (count($coord) != 2 || empty($coord[1])) {
+                return array(null, null);
+            }
+            return $coord;
+        }
+    }
+
+    /**
+     * Convert a coordinate in dms to deg
+     *
+     * @param string $dms coordinate
+     *
+     * @return float
+     */
+    public static function dmsToDeg($dms)
+    {
+        $dec = null;
+        $dms = stripslashes($dms);
+        $neg = (preg_match('/[SWO]/i', $dms) == 0) ? 1 : -1;
+        $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/i', "", $dms);
+        $pattern = "/(\\d*\\.?\\d+)(?:[°ºd: ]+)(\\d*\\.?\\d+)*(?:['m′: ])*(\\d*\\.?\\d+)*[\"s″ ]?/i";
+        $parts = preg_split($pattern, $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+        if (!$parts) {
+            return;
+        }
+        // parts: 0 = degree, 1 = minutes, 2 = seconds
+        $deg = isset($parts[0]) ? (float)$parts[0] : 0;
+        $min = isset($parts[1]) ? (float)$parts[1] : 0;
+        if (strpos($dms, ".") > 1 && isset($parts[2])) {
+            $min = (float)($parts[1] . '.' . $parts[2]);
+            unset($parts[2]);
+        }
+        $sec = isset($parts[2]) ? (float)$parts[2] : 0;
+        if ($min >= 0 && $min < 60 && $sec >= 0 && $sec < 60) {
+            $dec = ($deg + ($min/60) + ($sec/3600))*$neg;
+        }
+        return $dec;
+    }
+
+    /**
+     * Clean extraneous materials in coordinate that should (in theory) be DD.
+     *
+     * @param string $coord Dirty string that should be a real number
+     *
+     * @return real Cleaned coordinate
+     */
+    public static function cleanCoord($coord)
+    {
+        return preg_replace('/[^\d.-]/i', "", $coord);
+    }
+
+    /**
+     * Check a DD coordinate object and return true if it fits on globe, false if not
+     *
+     * @param obj $coord (x,y) coordinates
+     *
+     * @return bool
+     */
+    public static function onEarth($coord)
+    {
+        if ($coord->x 
+            && $coord->y 
+            && is_numeric($coord->x) 
+            && is_numeric($coord->y) 
+            && $coord->y <= 90 
+            && $coord->y >= -90 
+            && $coord->x <= 180 
+            && $coord->x >= -180
+        ) {
+            return true;
+        }
+        return false;
+    }
 }

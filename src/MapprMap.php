@@ -273,11 +273,11 @@ class MapprMap extends Mappr
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = parent::makeCoordinates($loc);
+                    $coord_array = Utilities::makeCoordinates($loc);
                     $coord = new \stdClass();
                     $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
                     $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
-                    if (parent::checkOnEarth($coord) && $title != "") {
+                    if (Utilities::onEarth($coord) && $title != "") {
                         $output[] = array(
                             'type' => 'Feature',
                             'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),

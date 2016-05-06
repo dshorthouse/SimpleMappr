@@ -238,11 +238,11 @@ class Kml
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = Mappr::makeCoordinates($loc);
+                    $coord_array = Utilities::makeCoordinates($loc);
                     $coord = new \stdClass();
-                    $coord->x = ($coord_array[1]) ? Mappr::cleanCoord($coord_array[1]) : null;
-                    $coord->y = ($coord_array[0]) ? Mappr::cleanCoord($coord_array[0]) : null;
-                    if (Mappr::checkOnEarth($coord) && $title != "") {  //only add point when data are good & a title
+                    $coord->x = ($coord_array[1]) ? Utilities::cleanCoord($coord_array[1]) : null;
+                    $coord->y = ($coord_array[0]) ? Utilities::cleanCoord($coord_array[0]) : null;
+                    if (Utilities::onEarth($coord) && $title != "") {  //only add point when data are good & a title
                         $this->setPlacemark($j, $point_key, "name", $title);
                         $this->setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;
