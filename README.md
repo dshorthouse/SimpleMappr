@@ -12,7 +12,7 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
 
 Requirements
 --------------------------
-PHP5.5+, Apache2.2.24+, MySQL 5.5.27+, MapServer 7.0.0 & its dependencies, Composer
+PHP5.6+, Apache2.2.24+, MySQL 5.5.27+, MapServer 7.0.1 & its dependencies, Composer
 
 Configuration Instructions
 --------------------------
@@ -50,7 +50,7 @@ Configuration Instructions
 
 Homebrew on Mac OSX
 -------------------
-1. Install PHP5.5. See [https://github.com/homebrew/homebrew-php](https://github.com/homebrew/homebrew-php)
+1. Install PHP5.6. See [https://github.com/homebrew/homebrew-php](https://github.com/homebrew/homebrew-php)
 2. Execute from command line:
 
         $ brew install \
