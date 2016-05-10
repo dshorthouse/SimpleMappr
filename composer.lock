@@ -486,7 +486,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -539,7 +539,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -599,7 +599,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -707,7 +707,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -869,12 +869,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeclimate/php-test-reporter.git",
-                "reference": "3a2d3ebdc1df5acf372458c15041af240a6fc016"
+                "reference": "4b1c90815243ff3849544f8fc4378b6b0587eee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeclimate/php-test-reporter/zipball/3a2d3ebdc1df5acf372458c15041af240a6fc016",
-                "reference": "3a2d3ebdc1df5acf372458c15041af240a6fc016",
+                "url": "https://api.github.com/repos/codeclimate/php-test-reporter/zipball/4b1c90815243ff3849544f8fc4378b6b0587eee3",
+                "reference": "4b1c90815243ff3849544f8fc4378b6b0587eee3",
                 "shasum": ""
             },
             "require": {
@@ -919,7 +919,7 @@
                 "codeclimate",
                 "coverage"
             ],
-            "time": "2016-04-19 16:54:33"
+            "time": "2016-05-09 23:28:52"
         },
         {
             "name": "doctrine/instantiator",
@@ -2246,16 +2246,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.5",
+            "version": "v2.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6"
+                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
-                "reference": "81c4c51f7fd6d0d40961bd53dd60cade32db6ed6",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a158f13992a3147d466af7a23b564ac719a4ddd8",
+                "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8",
                 "shasum": ""
             },
             "require": {
@@ -2302,11 +2302,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-05 16:36:54"
+            "time": "2016-05-03 18:59:18"
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
