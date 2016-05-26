@@ -8,13 +8,13 @@
     <const name="BROWSER" value="chrome"/>
   </php>
   <testsuites>
-    <testsuite name="SimpleMappr Unit Test Suite">
+    <testsuite name="Unit">
       <directory>./unit</directory>
     </testsuite>
-    <testsuite name="SimpleMappr Functional Test Suite">
+    <testsuite name="Functional">
       <directory>./functional</directory>
     </testsuite>
-    <testsuite name="SimpleMappr Binary Test Suite">
+    <testsuite name="Binary">
       <directory>./binary</directory>
     </testsuite>
   </testsuites>

@@ -140,6 +140,10 @@ Likewise, if you wish to use a headless webdriver such as [PhantomJS](http://pha
     $ java -jar selenium-server-standalone-2.47.1 -Dphantomjs.binary.path=/usr/local/bin/phantomjs
     $ ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml --verbose --stderr
 
+Tests are split into suites entitled, "Unit", "Functional", "Binary"
+
+    $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --testsuite "Unit" --stderr
+
 Copyright
 ---------
 
