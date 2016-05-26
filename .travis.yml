@@ -71,6 +71,7 @@ install:
 
   # Install Composer dependencies
   - composer self-update
+  - composer global require hirak/prestissimo
   - composer install
 
 before_script:
