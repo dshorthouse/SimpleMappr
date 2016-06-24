@@ -103,5 +103,5 @@ before_script:
 script:
   - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
-after_script:
+after_success:
   - ./vendor/bin/coveralls -c .coveralls.yml -v

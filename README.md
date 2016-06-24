@@ -78,7 +78,8 @@ Homebrew on Mac OSX
             -DWITH_KML=1 \
             -DWITH_PHP=1 \
             -DWITH_FCGI=0 \
-            -DWITH_SVGCAIRO=1
+            -DWITH_SVGCAIRO=1 \
+            -DFRIBIDI_INCLUDE_DIR="/usr/local/include/glib-2.0;/usr/local/lib/glib-2.0/include;/usr/local/include/fribidi"
 
           $ make && make install
 

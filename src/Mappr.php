@@ -1172,12 +1172,11 @@ abstract class Mappr
             $maxinterval = ($this->gridspace) ? $this->gridspace : $maxarcs;
             $maxsubdivide = 2;
 
-            $string  = 'LAYER name "grid"' . "\n";
-            $string .= 'GRID' . "\n";
-            $string .= 'labelformat "'.$labelformat.'" maxarcs '.$maxarcs.' maxinterval '.$maxinterval.' maxsubdivide '.$maxsubdivide . "\n";
-            $string .= 'END' . "\n";
-            $string .= 'END' . "\n";
-            $layer->updateFromString($string);
+            ms_newGridObj($layer);
+            $layer->grid->set("labelformat", $labelformat);
+            $layer->grid->set("maxarcs", $maxarcs);
+            $layer->grid->set("maxinterval", $maxinterval);
+            $layer->grid->set("maxsubdivide", $maxsubdivide);
         }
     }
 

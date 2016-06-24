@@ -2,3 +2,4 @@ src_dir: src
 exclude_no_stmt: true
 coverage_clover: Tests/build/logs/clover.xml
 json_path: Tests/build/logs/coveralls-upload.json
+service_name: travis-ci
