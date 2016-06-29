@@ -292,9 +292,10 @@ class Session
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
         $raw_json = curl_exec($curl);
+
         if ($raw_json == false) {
-            echo "\n".'Curl error: ' . curl_error($curl);
-            echo "\n".'HTTP code: ' . curl_errno($curl);
+            echo "\nCurl error: " . curl_error($curl);
+            echo "\nHTTP code: " . curl_errno($curl);
         }
         curl_close($curl);
 
