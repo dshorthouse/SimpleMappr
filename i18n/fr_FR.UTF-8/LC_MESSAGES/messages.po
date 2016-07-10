@@ -672,8 +672,8 @@ msgid "API Usage"
 msgstr "Utilisation de l'API"
 
 #: .tabs/about.php:36
-msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %urls_tropicos% and The Encyclopedia of Life's %urls_lifedesks% as a custom %urls_drupal% module."
-msgstr "L'API est utilisée par %urls_tropicos% de Le Missouri Botanical Garden et %urls_lifedesks% de Encyclopedia of Life comme un module %urls_drupal%."
+msgid "The SimpleMappr API is used by The Missouri Botanical Garden's %urls_tropicos%."
+msgstr "L'API est utilisée par %urls_tropicos% de Le Missouri Botanical Garden."
 
 #: .tabs/about.php:36
 #, php-format
