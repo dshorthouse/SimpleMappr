@@ -714,6 +714,10 @@ msgid "April 6, 2016"
 msgstr "6 avril, 2016"
 
 #: .tabs/about.php:11
+msgid "July 10, 2016"
+msgstr "10 juillet, 2016"
+
+#: .tabs/about.php:11
 msgid "February 27, 2015"
 msgstr "27 février, 2015"
 
@@ -764,6 +768,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added shadow option for points."
+msgstr "Améliorations: Ajouté la possibilité de mettre les ombres sous les points."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added NASA's Blue Marble raster layer as an option. Requested by François Génier."
