@@ -145,6 +145,13 @@ Tests are split into suites entitled, "Unit", "Functional", "Binary"
 
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --testsuite "Unit" --stderr
 
+JavaScript Minification
+-----------------------
+
+JavaScript files are minified using Google's [Closure Compiler](https://developers.google.com/closure/compiler/docs/gettingstarted_app) as follows:
+
+    $ java -jar compiler.jar --js simplemappr.js --js_output_file simplemappr.min.js
+
 Copyright
 ---------
 

@@ -839,7 +839,8 @@ var SimpleMappr = (function($, window, document) {
       var self = this,
           shape_picker = zone.find('select.m-mapShape'),
           size_picker = zone.find('select.m-mapSize'),
-          color_picker = zone.find('input.colorPicker');
+          color_picker = zone.find('input.colorPicker'),
+          shadow_check = zone.find('input.m-mapShadow');
 
       $.each(['input.m-mapTitle', 'textarea'], function(key, value) {
         self.unusedVariables(key);
@@ -847,6 +848,7 @@ var SimpleMappr = (function($, window, document) {
       });
       if(shape_picker.length > 0) { shape_picker[0].selectedIndex = 4; }
       if(size_picker.length > 0) { size_picker[0].selectedIndex = 3; }
+      if(shadow_check.length > 0) { shadow_check.prop('checked', false); }
       $.each(zone, function() {
         if($(this).hasClass("fieldset-points")) {
           color_picker.val('0 0 0');
@@ -1154,6 +1156,7 @@ var SimpleMappr = (function($, window, document) {
             color = $(this).val().split(" ");
             $(this).ColorPickerSetColor(self.RGBtoHex(color[0], color[1], color[2]));
           });
+          clone.find("input.m-mapShadow").attr("name", data_type + "["+num.toString()+"][shadow]").prop("checked", false);
 
           children = button.parent().prev().append(clone).children("div");
 
@@ -1195,13 +1198,16 @@ var SimpleMappr = (function($, window, document) {
       var button = $("button.addmore[data-type='" + data_type + "']");
 
       clone.nextAll().each(function() {
-        var num = parseInt($(this).find("h3 a").text().split(" ")[1],10);
+        var num = parseInt($(this).find("h3 a").text().split(" ")[1],10),
+        name_prefix = data_type + "["+(num-2).toString()+"]";
+ 
         $(this).find("h3 a").text($(this).find("h3 a").text().split(" ")[0] + " " + (num-1).toString());
-        $(this).find("input.m-mapTitle").attr("name", data_type + "["+(num-2).toString()+"][title]");
-        $(this).find("textarea").attr("name", data_type + "["+(num-2).toString()+"][data]");
-        $(this).find("select.m-mapShape").attr("name", data_type + "["+(num-2).toString()+"][shape]");
-        $(this).find("select.m-mapSize").attr("name", data_type + "["+(num-2).toString()+"][size]");
-        $(this).find("input.colorPicker").attr("name", data_type + "["+(num-2).toString()+"][color]");
+        $(this).find("input.m-mapTitle").attr("name", name_prefix + "[title]");
+        $(this).find("textarea").attr("name", name_prefix + "[data]");
+        $(this).find("select.m-mapShape").attr("name", name_prefix + "[shape]");
+        $(this).find("select.m-mapSize").attr("name", name_prefix + "[size]");
+        $(this).find("input.colorPicker").attr("name", name_prefix + "[color]");
+        $(this).find("input.m-mapShadow").attr("name", name_prefix + "[shadow]");
       });
       clone.remove();
       button.prop("disabled", false);
@@ -1646,6 +1652,7 @@ var SimpleMappr = (function($, window, document) {
           coord_title = "",
           coord_data  = "",
           coord_color = "",
+          coord_shadow = false,
           pattern     = /[?*{}\\]+/g;
 
       $.each(coords, function(i) {
@@ -1654,11 +1661,13 @@ var SimpleMappr = (function($, window, document) {
         coord_title = coords[i].title || "";
         coord_data  = coords[i].data.replace(pattern, "")  || "";
         coord_color = coords[i].color || "0 0 0";
+        coord_shadow = (coords[i].hasOwnProperty("shadow")) ? true : false; 
 
         self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
         self.vars.fieldSetsPoints.find('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
         self.loadShapeSize(i, coords);
         self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
+        self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][shadow]"]').prop("checked", coord_shadow);
       });
     },
 

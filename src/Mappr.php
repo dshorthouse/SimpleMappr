@@ -771,14 +771,18 @@ abstract class Mappr
                 //clear out previous loop's selection
                 $size = "";
                 $shape = "";
+                $shadow = false;
+                $offset = 2;
                 $color = array();
 
                 $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
                 $size = ($this->coords[$j]['size']) ? $this->coords[$j]['size'] : 8;
                 if ($this->_isResize() && $this->_download_factor > 1) {
                     $size = $this->_download_factor*$size;
+                    $offset = $this->_download_factor;
                 }
-                $shape = ($this->coords[$j]['shape']) ? $this->coords[$j]['shape'] : 'circle';
+                $shape = (isset($this->coords[$j]['shape'])) ? $this->coords[$j]['shape'] : 'circle';
+                $shadow = (array_key_exists('shadow', $this->coords[$j])) ? true : false;
                 if ($this->coords[$j]['color']) {
                     $color = explode(" ", $this->coords[$j]['color']);
                     if (count($color) != 3) {
@@ -801,6 +805,15 @@ abstract class Mappr
                     $class = ms_newClassObj($layer);
                     if ($title != "") {
                         $class->set("name", $title);
+                    }
+
+                    if ($shadow) {
+                      $bstyle = ms_newStyleObj($class);
+                      $bstyle->set("symbolname", $shape);
+                      $bstyle->set("size", $size);
+                      $bstyle->set("offsetx", $offset);
+                      $bstyle->set("offsety", $offset);
+                      $bstyle->color->setRGB(180,180,180);
                     }
 
                     $style = ms_newStyleObj($class);
