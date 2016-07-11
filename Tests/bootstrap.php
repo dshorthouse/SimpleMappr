@@ -69,6 +69,16 @@ function flushCaches()
     }
 }
 
+function warningOff()
+{
+  error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+}
+
+function warningOn()
+{
+  error_reporting(-1);
+}
+
 /**
  * Loader function executed before all tests
  *
@@ -79,13 +89,7 @@ function loader()
     switchConf();
     requireFiles();
     flushCaches();
-    $curl_handle = curl_init();
-    curl_setopt($curl_handle, CURLOPT_URL, MAPPR_URL);
-    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'SimpleMappr');
-    $query = curl_exec($curl_handle);
-    curl_close($curl_handle);
+    warningOff();
     ob_start();
     new \SimpleMappr\Header;
 }
@@ -99,6 +103,7 @@ function unloader()
 {
     switchConf('restore');
     flushCaches();
+    warningOn();
 }
 
 spl_autoload_register(__NAMESPACE__.'\loader');

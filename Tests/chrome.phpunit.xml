@@ -22,6 +22,8 @@
     <whitelist>
       <directory>./</directory>
       <exclude>
+        <file>bootstrap.php</file>
+        <file>SimpleMapprMixin.php</file>
         <file>SimpleMapprTest.php</file>
       </exclude>
     </whitelist>

@@ -35,7 +35,7 @@
       "twig/extensions"           : "~1.1.0"
     },
     "require-dev": {
-      "phpunit/phpunit"               : "~5.3",
+      "phpunit/phpunit"               : "5.4.*",
       "facebook/webdriver"            : "dev-master",
       "codeclimate/php-test-reporter" : "dev-master"
     }

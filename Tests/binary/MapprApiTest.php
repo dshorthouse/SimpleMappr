@@ -46,6 +46,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         $decoded = json_decode(ob_get_contents(), true);
         ob_end_clean();
         $this->assertArrayHasKey("status", $decoded);
+        unset($_REQUEST);
     }
 
     /**

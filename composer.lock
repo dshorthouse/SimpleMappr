@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "df319153fe437c24cb98da741876816d",
-    "content-hash": "2001f97354ba6c71e17342726b92580d",
+    "hash": "19eb397f06d7bf12628f793db29da0f3",
+    "content-hash": "a09628f39d12503fd93389aed76e900c",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -1114,6 +1114,7 @@
                 "rest",
                 "web service"
             ],
+            "abandoned": "guzzlehttp/guzzle",
             "time": "2015-03-18 18:23:50"
         },
         {
