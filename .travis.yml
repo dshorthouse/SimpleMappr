@@ -101,7 +101,7 @@ before_script:
   - sleep 3
 
 script:
-  - ./vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
 after_success:
-  - ./vendor/bin/coveralls -c .coveralls.yml -v
+  - travis_retry php vendor/bin/coveralls -c .coveralls.yml -v
