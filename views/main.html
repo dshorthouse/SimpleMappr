@@ -1,24 +1,11 @@
 {% extends "base.html" %}
 
 {% block meta %}
-<meta name="description" content="{% trans "Create free point maps for publications and presentations" %}" />
-<meta name="keywords" content="{% trans "publication,presentation,map,georeference" %}" />
-<meta name="author" content="David P. Shorthouse" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:site" content="@SimpleMappr" />
-<meta name="twitter:description" content="{% trans "Create free point maps for publications and presentations" %}" />
-<meta name="twitter:creator" content="@dpsSpiders" />
-<meta name="twitter:image" content="{{ og_logo }}" />
-<meta property="og:title" content="SimpleMappr" />
-<meta property="og:description" content="{% trans "Create free point maps for publications and presentations" %}" />
-<meta property="og:locale" content="{{ locale }}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="{{ og_url }}" />
-<meta property="og:image" content="{{ og_logo }}" />
+{% include "fragments/fragment.meta.html" %}
 {% endblock meta %}
 
 {% block stylesheet %}
-    {% include "fragments/fragment.stylesheet.html" %}
+{% include "fragments/fragment.stylesheet.html" %}
 {% endblock stylesheet%}
 
 {% block pageheader %}

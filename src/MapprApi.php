@@ -223,7 +223,6 @@ class MapprApi extends Mappr
                     $mcoord_line->add($mcoord_point);
                 }
             }
-
             $mcoord_shape->add($mcoord_line);
             $mlayer->addFeature($mcoord_shape);
 
@@ -543,9 +542,9 @@ class MapprApi extends Mappr
                                 $coord = preg_split("/[,;]/", $cols[$i]);
                                 $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
                                 $this->_coord_cols[$i][] = array(
-                                    parent::dmsToDeg(trim($coord[0])),
-                                    parent::dmsToDeg(trim($coord[1]))
-                                );
+                                    Utilities::dmsToDeg(trim($coord[0])),
+                                    Utilities::dmsToDeg(trim($coord[1]))
+                              );
                             } else {
                                 $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $cols[$i])));
                             }
