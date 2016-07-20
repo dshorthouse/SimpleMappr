@@ -46,7 +46,7 @@
 </div>
 {% endif %}
 </div>
-<div class="header"><h2>{% trans "In the Wild" %}</h2></div>
+<div class="header"><h2>{% trans "In the Wild" %} ({{ citations['citations']|length }})</h2></div>
 {% for citation in citations['citations'] %}
     {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
     {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
