@@ -62,6 +62,8 @@ class MapprApi extends Mappr
         //ping API to return JSON
         $this->ping             = Utilities::loadParam('ping', false);
 
+        $this->parameters       = Utilities::loadParam('parameters', false);
+
         $this->method           = $_SERVER['REQUEST_METHOD'];
 
         $this->download         = true;
@@ -182,7 +184,7 @@ class MapprApi extends Mappr
 
             $style = ms_newStyleObj($class);
             $symbol = 'circle';
-            if (array_key_exists($col, $this->shape) && in_array($this->shape[$col], AcceptedMarkerShapes::$shapes)) {
+            if (array_key_exists($col, $this->shape) && in_array($this->shape[$col], AcceptedMarkerShapes::shapes())) {
                 $symbol = $this->shape[$col];
             }
             $style->set("symbolname", $symbol);
@@ -395,6 +397,10 @@ class MapprApi extends Mappr
         if ($this->ping) {
             Header::setHeader("json");
             return json_encode(array("status" => "ok"));
+        }
+        else if ($this->parameters) {
+            Header::setHeader("json");
+            return json_encode($this->_apiParameters());
         } else {
             if ($this->method == 'GET') {
                 Header::setHeader($this->output);
@@ -410,6 +416,117 @@ class MapprApi extends Mappr
                 return json_encode($output);
             }
         }
+    }
+
+    /**
+     * Get the API parameters and their definitions
+     *
+     * @return array of API parameters
+     */
+    private function _apiParameters()
+    {
+      array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
+          $projections[] = $key . " (" . $val['name'] . ")";
+      });
+      $params = array(
+        'ping'       => array(
+          'definitiion' => 'if ping=true is included, a JSON response will be produced in place of an image.',
+          'example' => 'ping=true'
+        ),
+        'parameters' => array(
+          'definition' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their definitions.',
+          'example' => 'parameters=true'
+        ),
+        'url' => array(
+          'definition' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
+          'example' => 'url=' . urlencode(MAPPR_URL . '/public/files/demo.txt')
+        ),
+        'file' => array(
+          'definition' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
+          'example' => 'file= FILE OBJECT'
+        ),
+        'points[x]' => array(
+          'definition' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
+          'example' => 'points[0]=45,-120\n45,-110\n45,-125\n42,-100&points[1]=44,-100'
+        ),
+        'shape[x]' => array(
+          'definition' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
+          'example' => 'shape[0]=circle&shape[1]=square'
+        ),
+        'size[x]' => array(
+          'definition' => 'integer-based point size of marker in column x',
+          'example' => 'size[0]=10&size[1]=14'
+        ),
+        'color[x]' => array(
+          'definition' => 'comma-separated RGB colors for marker in column x',
+          'example' => 'color[0]=255,0,0&color[1]=0,255,0'
+        ),
+        'outlinecolor' => array(
+          'definition' => 'comma-separated RGB colors for halo around all solid markers',
+          'example' => 'outlinecolor=10,10,10'
+        ),
+        'zoom' => array(
+          'definition' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
+          'example' => '8'
+        ),
+        'bbox' => array(
+          'definition' => 'comma-separated bounding box in decimal degrees',
+          'example' => 'bbox=-130,40,-60,50'
+        ),
+        'shade[places]' => array(
+          'definition' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
+          'example' => 'shade[places]=Alberta,USA[MT|WA]'
+        ),
+        'shade[title]' => array(
+          'definition' => 'the title for the shaded places',
+          'example' => ''
+        ),
+        'shade[color]' => array(
+          'definition' => 'comma-separated RGB fill colors for shaded places',
+          'example' => ''
+        ),
+        'layers' => array(
+          'definition' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
+          'example' => ''
+        ),
+        'projection' => array(
+          'definition' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
+          'example' => ''
+        ),
+        'origin' => array(
+          'definition' => 'longitude of natural origin used in Lambert projections',
+          'example' => ''
+        ),
+        'graticules' => array(
+          'definition' => 'display the graticules',
+          'example' => ''
+        ),
+        'spacing' => array(
+          'definition' => 'display the graticules with defined spacing in degrees',
+          'example' => ''
+        ),
+        'width' => array(
+          'definition' => 'integer-based output width in pixels',
+          'example' => ''
+        ),
+        'height' => array(
+          'definition' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
+          'example' => ''
+        ),
+        'output' => array(
+          'definition' => 'file format of the image or vector produced; options are png, jpg, svg',
+          'example' => ''
+        ),
+        'scalebar' => array(
+          'definition' => 'embed a scalebar in the lower right of the image',
+          'example' => ''
+        ),
+        'legend[x]'  => array(
+          'definition' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
+          'example' => ''
+        ),
+      );
+      return $params;
     }
 
     /**

@@ -38,6 +38,10 @@
       <span class="api-output"><em>e.g.</em> {"status" : "ok"}</span>
     </dd>
 
+    <dt>parameters</dt>
+    <dd>{% trans "if parameters=true is included, a JSON response will be produced containing all accepted parameters and their definitions." %}
+    </dd>
+
     <dt>url</dt>
     <dd>{% trans "a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points." %}
       <span class="api-example"><em>e.g.</em> url=<a href="{{ og_url }}/public/files/demo.txt">{{ og_url }}/public/files/demo.txt</a></span>
@@ -85,7 +89,7 @@
     <dd>{% trans "comma-separated RGB fill colors for shaded places" %} <span class="api-example"><em>e.g.</em> shade[color]=150,150,150</span></dd>
 
     <dt>layers</dt>
-    <dd>{% trans "comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions" %} <span class="api-example"><em>e.g.</em> layers=lakes,stateprovinces</span></dd>
+    <dd>{% trans "comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble" %} <span class="api-example"><em>e.g.</em> layers=lakes,stateprovinces</span></dd>
 
     <dt>projection</dt>
     {% set urls_spatial = '<a href="http://spatialreference.org/">http://spatialreference.org/</a>' %}
