@@ -24,6 +24,13 @@ layers:
         encoding: UTF-8
         sort: 1
 
+    reliefalt:
+        name: relief (alternate)
+        path: %%ROOT%%/mapserver/maps/NE2_HR_LC_SR_W_DR/NE2_HR_LC_SR_W_DR.tif
+        type: %%MS_LAYER_RASTER%%
+        encoding: UTF-8
+        sort: 1
+
     reliefgrey:
         name: relief (grescale)
         path: %%ROOT%%/mapserver/maps/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif

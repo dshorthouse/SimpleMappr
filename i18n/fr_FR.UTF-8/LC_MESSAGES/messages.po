@@ -299,6 +299,11 @@ msgstr "relief (gris)"
 
 #: .index.php:134
 #: .tabs/help.php:86
+msgid "relief (alternate)"
+msgstr "relief (suppléant)"
+
+#: .index.php:134
+#: .tabs/help.php:86
 msgid "Blue Marble"
 msgstr "Blue Marble"
 
