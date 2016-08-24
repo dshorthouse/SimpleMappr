@@ -430,7 +430,7 @@ class MapprApi extends Mappr
       });
       $params = array(
         'ping'       => array(
-          'definitiion' => 'if ping=true is included, a JSON response will be produced in place of an image.',
+          'definition' => 'if ping=true is included, a JSON response will be produced in place of an image.',
           'example' => 'ping=true'
         ),
         'parameters' => array(
