@@ -239,7 +239,6 @@ class Header
             break;
 
         case 'tif':
-        case 'tiff':
             header("Content-Type: image/tiff");
             header("Content-Transfer-Encoding: binary");
             break;
@@ -249,13 +248,11 @@ class Header
             break;
 
         case 'jpg':
-        case 'jpga':
             header("Content-Type: image/jpeg");
             header("Content-Transfer-Encoding: binary");
             break;
 
         case 'png':
-        case 'pnga':
             header("Content-Type: image/png");
             header("Content-Transfer-Encoding: binary");
             break;

@@ -69,7 +69,7 @@ class MapprDocx extends Mappr
         $properties = $objPHPWord->getDocumentProperties();
         $properties->setCreator('SimpleMappr');
         $properties->setTitle($clean_filename);
-        $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+        $properties->setDescription($clean_filename . ", generated on SimpleMappr, " . MAPPR_URL);
         $properties->setLastModifiedBy("SimpleMappr");
         $properties->setSubject($clean_filename . " point map");
         $properties->setKeywords($clean_filename. ", SimpleMappr");

@@ -50,6 +50,21 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that a parameters request is produced.
+     */
+    public function test_api_parameters()
+    {
+        $_REQUEST = array('parameters' => true);
+        $this->mappr_api->getRequest()->execute();
+        ob_start();
+        echo $this->mappr_api->createOutput();
+        $decoded = json_decode(ob_get_contents(), true);
+        ob_end_clean();
+        $this->assertArrayHasKey("zoom", $decoded);
+        unset($_REQUEST);
+    }
+
+    /**
      * Test that a simple POST request is handled.
      */
     public function test_apioutput_post()
@@ -197,6 +212,48 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
             ob_end_clean();
             $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
         }
+    }
+
+    /**
+     * Test API response to ensure that a tif can be produced.
+     */
+    public function test_apioutput_tif()
+    {
+        $_REQUEST = array(
+            'output' => 'tif',
+            'shade' => array(
+                'places' => 'Alberta,USA[MT|WA]'
+            )
+        );
+        $this->mappr_api->getRequest()->execute();
+        ob_start();
+        echo $this->mappr_api->createOutput();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/apioutput_tif.tif';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_tif.tif'));
+    }
+
+    /**
+     * Test API response to ensure that a tif can be produced.
+     */
+    public function test_apioutput_svg()
+    {
+        $_REQUEST = array(
+            'output' => 'svg',
+            'shade' => array(
+                'places' => 'Alberta,USA[MT|WA]'
+            )
+        );
+        $this->mappr_api->getRequest()->execute();
+        ob_start();
+        echo $this->mappr_api->createOutput();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/apioutput_svg.svg';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
 
 }

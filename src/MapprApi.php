@@ -50,7 +50,6 @@ namespace SimpleMappr;
 class MapprApi extends Mappr
 {
     private $_coord_cols = array();
-    private $_accepted_output = array('png', 'jpg', 'svg');
 
     /**
      * Override get_request method in parent class
@@ -103,7 +102,7 @@ class MapprApi extends Mappr
             'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ", $shaded['color']) : "120 120 120"
         );
 
-        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->output           = Utilities::loadParam('output', 'png');
         $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
         $this->projection_map   = 'epsg:4326';
         $this->origin           = (int)Utilities::loadParam('origin', false);
@@ -143,7 +142,7 @@ class MapprApi extends Mappr
         }
         $this->image_size       = array($this->width, $this->height);
 
-        if (!in_array($this->output, $this->_accepted_output)) {
+        if (!in_array($this->output, AcceptedOutputs::outputList())) {
             $this->output = 'png';
         }
 
@@ -404,7 +403,14 @@ class MapprApi extends Mappr
         } else {
             if ($this->method == 'GET') {
                 Header::setHeader($this->output);
-                $this->image->saveImage("");
+                if ($this->output == 'tif') {
+                  error_reporting(0);
+                  $this->image_url = $this->image->saveWebImage();
+                  $image_filename = basename($this->image_url);
+                  readfile($this->tmp_path.$image_filename);
+                } else {
+                  $this->image->saveImage("");
+                }
             } else if ($this->method == 'OPTIONS') { //For CORS requests
                 http_response_code(204);
             } else {
@@ -487,11 +493,11 @@ class MapprApi extends Mappr
         ),
         'layers' => array(
           'definition' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
-          'example' => ''
+          'example' => 'layers=stateprovinces,lakes'
         ),
         'projection' => array(
           'definition' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
-          'example' => ''
+          'example' => 'projection=EPSG:4326'
         ),
         'origin' => array(
           'definition' => 'longitude of natural origin used in Lambert projections',
@@ -499,27 +505,27 @@ class MapprApi extends Mappr
         ),
         'graticules' => array(
           'definition' => 'display the graticules',
-          'example' => ''
+          'example' => 'graticules=true'
         ),
         'spacing' => array(
           'definition' => 'display the graticules with defined spacing in degrees',
-          'example' => ''
+          'example' => 'spacing=10'
         ),
         'width' => array(
           'definition' => 'integer-based output width in pixels',
-          'example' => ''
+          'example' => 'width=400'
         ),
         'height' => array(
           'definition' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
-          'example' => ''
+          'example' => 'height=400'
         ),
         'output' => array(
-          'definition' => 'file format of the image or vector produced; options are png, jpg, svg',
-          'example' => ''
+          'definition' => 'file format of the image or vector produced; options are ' . implode(", ", AcceptedOutputs::outputList()),
+          'example' => 'output=png'
         ),
         'scalebar' => array(
           'definition' => 'embed a scalebar in the lower right of the image',
-          'example' => ''
+          'example' => 'scalebar=true'
         ),
         'legend[x]'  => array(
           'definition' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',

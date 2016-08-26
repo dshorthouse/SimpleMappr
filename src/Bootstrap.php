@@ -63,7 +63,7 @@ class Bootstrap
         mb_http_output("UTF-8");
 
         //set the default timezone
-        date_default_timezone_set("America/New_York");
+        date_default_timezone_set("America/Toronto");
         
         $this->_setRoutes();
     }

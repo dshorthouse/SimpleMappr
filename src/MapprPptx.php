@@ -75,7 +75,7 @@ class MapprPptx extends Mappr
         $properties->setLastModifiedBy("SimpleMappr");
         $properties->setTitle($clean_filename);
         $properties->setSubject($clean_filename . " point map");
-        $properties->setDescription($clean_filename . ", generated on SimpleMappr, http://www.simplemappr.net");
+        $properties->setDescription($clean_filename . ", generated on SimpleMappr, " . MAPPR_URL);
         $properties->setKeywords($clean_filename . " SimpleMappr");
 
         // Create slide
@@ -134,7 +134,7 @@ class MapprPptx extends Mappr
         $alignment = $shape->getActiveParagraph()->getAlignment();
         $alignment->setHorizontal(Alignment::HORIZONTAL_RIGHT);
         $alignment->setVertical(Alignment::VERTICAL_CENTER);
-        $textRun = $shape->createTextRun(_("Created with SimpleMappr, http://www.simplemappr.net"));
+        $textRun = $shape->createTextRun(_("Created with SimpleMappr, " . MAPPR_URL));
         $textRun->getFont()->setBold(true);
         $textRun->getFont()->setSize(12);
 

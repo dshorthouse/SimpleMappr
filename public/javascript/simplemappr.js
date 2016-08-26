@@ -2030,7 +2030,7 @@ var SimpleMappr = (function($, window, document) {
 
       self.destroyJcrop();
 
-      $('#output').val('pnga');        // set the preview and output values
+      $('#output').val('png');        // set the preview and output values
       $('#badRecordsWarning').hide();  // hide the bad records warning
       $('#download_token').val(token); // set a token to be used for cookie
 
@@ -2155,7 +2155,7 @@ var SimpleMappr = (function($, window, document) {
           if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
           formData = $("form").serialize();
           $('body').download("/pptx/" + self.getLanguage(), formData, 'post');
-          $('#output').val('pnga');
+          $('#output').val('png');
         break;
 
         case 'docx':
@@ -2163,7 +2163,7 @@ var SimpleMappr = (function($, window, document) {
           if(self.vars.jcropAPI) { $('#crop').val(1); } else { self.resetJbbox(); }
           formData = $("form").serialize();
           $('body').download("/docx/" + self.getLanguage(), formData, 'post');
-          $('#output').val('pnga');
+          $('#output').val('png');
         break;
 
         case 'kml':
@@ -2178,7 +2178,7 @@ var SimpleMappr = (function($, window, document) {
           formData = $("form").serialize();
           $('body').download("/application/", formData, 'post');
           $('#download').val('');
-          $('#output').val('pnga');
+          $('#output').val('png');
       }
 
       self.vars.fileDownloadTimer = window.setInterval(function() {

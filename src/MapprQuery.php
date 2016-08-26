@@ -66,7 +66,7 @@ class MapprQuery extends Mappr
         $this->width            = (float)Utilities::loadParam('width', 900);
         $this->height           = (float)Utilities::loadParam('height', $this->width/2);
         $this->image_size       = array($this->width, $this->height);
-        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->output           = Utilities::loadParam('output', 'png');
         $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
         $this->projection_map   = Utilities::loadParam('projection_map', 'epsg:4326');
         $this->origin           = (int)Utilities::loadParam('origin', false);

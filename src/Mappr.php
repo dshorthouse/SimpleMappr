@@ -100,102 +100,6 @@ abstract class Mappr
     /* holding bin for any geographic coordinates that fall outside extent of Earth */
     protected $bad_points = array();
 
-    /* Initial mapfile as string */
-    protected $mapfile_string = "
-        MAP
-
-            OUTPUTFORMAT
-                NAME png
-                DRIVER AGG/PNG
-                IMAGEMODE RGB
-                MIMETYPE 'image/png'
-                EXTENSION 'png'
-                FORMATOPTION 'INTERLACE=OFF'
-                FORMATOPTION 'COMPRESSION=9'
-            END
-
-            OUTPUTFORMAT
-                NAME png_download
-                DRIVER AGG/PNG
-                IMAGEMODE RGB
-                MIMETYPE 'image/png'
-                EXTENSION 'png'
-                FORMATOPTION 'INTERLACE=OFF'
-                FORMATOPTION 'COMPRESSION=9'
-            END
-
-            OUTPUTFORMAT
-                NAME pnga
-                DRIVER AGG/PNG
-                IMAGEMODE RGB
-                MIMETYPE 'image/png'
-                EXTENSION 'png'
-                FORMATOPTION 'INTERLACE=OFF'
-                FORMATOPTION 'COMPRESSION=9'
-            END
-
-            OUTPUTFORMAT
-                NAME pnga_download
-                DRIVER AGG/PNG
-                IMAGEMODE RGB
-                MIMETYPE 'image/png'
-                EXTENSION 'png'
-                FORMATOPTION 'INTERLACE=OFF'
-                FORMATOPTION 'COMPRESSION=9'
-            END
-
-            OUTPUTFORMAT
-                NAME pnga_transparent
-                DRIVER AGG/PNG
-                IMAGEMODE RGBA
-                MIMETYPE 'image/png'
-                EXTENSION 'png'
-                TRANSPARENT ON
-                FORMATOPTION 'INTERLACE=OFF'
-                FORMATOPTION 'COMPRESSION=9'
-            END
-
-            OUTPUTFORMAT
-                NAME jpg
-                DRIVER AGG/JPEG
-                IMAGEMODE RGB
-                MIMETYPE 'image/jpeg'
-                EXTENSION 'jpg'
-                FORMATOPTION 'QUALITY=95'
-            END
-
-            OUTPUTFORMAT
-                NAME jpga
-                DRIVER AGG/JPEG
-                IMAGEMODE RGB
-                MIMETYPE 'image/jpeg'
-                EXTENSION 'jpg'
-                FORMATOPTION 'QUALITY=95'
-            END
-
-            OUTPUTFORMAT
-                NAME tif
-                DRIVER GDAL/GTiff
-                IMAGEMODE RGB
-                MIMETYPE 'image/tiff'
-                EXTENSION 'tif'
-                FORMATOPTION 'COMPRESS=JPEG'
-                FORMATOPTION 'JPEG_QUALITY=100'
-                FORMATOPTION 'PHOTOMETRIC=YCBCR'
-            END
-
-            OUTPUTFORMAT
-                NAME svg
-                DRIVER CAIRO/SVG
-                MIMETYPE 'image/svg+xml'
-                EXTENSION 'svg'
-                FORMATOPTION 'COMPRESSED_OUTPUT=FALSE'
-                FORMATOPTION 'FULL_RESOLUTION=TRUE'
-            END
-
-        END
-  ";
-
     /* placeholder for presence of anything that might need a legend */
     private $_legend_required = false;
 
@@ -224,7 +128,7 @@ abstract class Mappr
      */
     public function __construct()
     {
-        $this->map_obj = ms_newMapObjFromString($this->mapfile_string);
+        $this->map_obj = ms_newMapObjFromString("MAP END");
     }
 
     /**
@@ -274,7 +178,7 @@ abstract class Mappr
         $this->coords           = Utilities::loadParam('coords', array());
         $this->regions          = Utilities::loadParam('regions', array());
 
-        $this->output           = Utilities::loadParam('output', 'pnga');
+        $this->output           = Utilities::loadParam('output', 'png');
         $this->width            = (float)Utilities::loadParam('width', 900);
         $this->height           = (float)Utilities::loadParam('height', $this->width/2);
 
@@ -329,6 +233,7 @@ abstract class Mappr
      */
     public function execute()
     {
+        $this->_loadOutputFormats();
         $this->_loadProjection();
         $this->_loadShapes();
         $this->_loadSymbols();
@@ -369,6 +274,24 @@ abstract class Mappr
         $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
         $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
         return $newPoint;
+    }
+
+    private function _loadOutputFormats()
+    {
+      foreach(AcceptedOutputs::$outputs as $output) {
+          $format = new \outputFormatObj($output["driver"], $output["name"]);
+          foreach($output as $key => $value) {
+              if ($key != "formatoptions") {
+                  $format->set($key, $value);
+              } else {
+                  foreach($value as $options) {
+                      $option = explode("=", $options);
+                      $format->setOption($option[0], $option[1]);
+                  }
+              }
+          }
+          $this->map_obj->appendOutputFormat($format);
+      }
     }
 
     /**
@@ -503,15 +426,11 @@ abstract class Mappr
      */
     private function _setOutputFormat()
     {
+        $this->map_obj->selectOutputFormat('png');
         if (isset($this->output) && $this->output) {
-            $output = (($this->output == 'png' || $this->output == 'pnga') && $this->download) ? $this->output . "_download" : $this->output;
-            if ($output == 'pptx' || $output == 'docx') {
-                $output = 'pnga_transparent';
-                if ($this->_layersContainRaster() == TRUE) {
-                    $output = 'png_download';
-                }
-            }
-            $this->map_obj->selectOutputFormat($output);
+          $output = ($this->output == 'pptx' || $this->output == 'docx') ? 'pnga' : $this->output;
+          $output = (in_array($output, AcceptedOutputs::outputList())) ? $output : 'png';
+          $this->map_obj->selectOutputFormat($output);
         }
     }
 

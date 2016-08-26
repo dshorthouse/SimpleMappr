@@ -64,7 +64,7 @@ class MapprMap extends Mappr
     {
         parent::__construct();
         $this->_id = (int)$id;
-        $this->_extension = ($extension) ? $extension : "pnga";
+        $this->_extension = ($extension) ? $extension : "png";
     }
 
     /**
@@ -144,7 +144,7 @@ class MapprMap extends Mappr
     {
         http_response_code(404);
         switch ($this->_extension) {
-        case 'pnga':
+        case 'png':
             header("Content-Type: image/png");
             $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/logo.png");
             imagepng($im);
@@ -168,7 +168,7 @@ class MapprMap extends Mappr
      */
     public function execute()
     {
-        if (in_array($this->_extension, array('png', 'pnga', 'svg'))) {
+        if (in_array($this->_extension, AcceptedOutputs::outputList())) {
             parent::execute();
         }
         return $this;
@@ -298,7 +298,6 @@ class MapprMap extends Mappr
     {
         switch($this->_extension) {
         case 'png':
-        case 'pnga':
             header("Content-Type: image/png");
             $this->image->saveImage("");
             break;

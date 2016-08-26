@@ -70,15 +70,19 @@ class MapprApplication extends Mappr
             break;
 
         case 'png':
-            error_reporting(0);
-            $this->image_url = $this->image->saveWebImage();
-            $image_filename = basename($this->image_url);
-            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
-            $filesize = filesize($this->tmp_path.$image_filename);
-            Header::setHeader('png', $clean_filename, $filesize);
-            ob_clean();
-            flush();
-            readfile($this->tmp_path.$image_filename);
+            if($this->download) {
+                error_reporting(0);
+                $this->image_url = $this->image->saveWebImage();
+                $image_filename = basename($this->image_url);
+                $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
+                $filesize = filesize($this->tmp_path.$image_filename);
+                Header::setHeader('png', $clean_filename, $filesize);
+                ob_clean();
+                flush();
+                readfile($this->tmp_path.$image_filename);
+            } else {
+              return $this->_defaultOutput();
+            }
             break;
 
         case 'svg':
@@ -88,29 +92,34 @@ class MapprApplication extends Mappr
             break;
 
         default:
-            $this->image_url = $this->image->saveWebImage();
-
-            $bbox = array(
-                sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
-                sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
-                sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
-                sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
-            );
-
-            $output = array(
-                'mapOutputImage'      => $this->image_url,
-                'size'                => $this->image_size,
-                'rendered_bbox'       => implode(",", $bbox),
-                'rendered_rotation'   => $this->rotation,
-                'rendered_projection' => $this->projection,
-                'legend_url'          => $this->legend_url,
-                'scalebar_url'        => $this->scalebar_url,
-                'bad_points'          => $this->getBadPoints()
-            );
-
-            return $output;
+            $this->_defaultOutput();
         }
 
+    }
+
+    private function _defaultOutput()
+    {
+      $this->image_url = $this->image->saveWebImage();
+
+      $bbox = array(
+          sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
+          sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
+          sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
+          sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
+      );
+
+      $output = array(
+          'mapOutputImage'      => $this->image_url,
+          'size'                => $this->image_size,
+          'rendered_bbox'       => implode(",", $bbox),
+          'rendered_rotation'   => $this->rotation,
+          'rendered_projection' => $this->projection,
+          'legend_url'          => $this->legend_url,
+          'scalebar_url'        => $this->scalebar_url,
+          'bad_points'          => $this->getBadPoints()
+      );
+
+      return $output;
     }
 
 }

@@ -124,11 +124,11 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that the default output format is pnga.
+     * Test that the default output format is png.
      */
     public function test_default_output()
     {
-        $this->assertEquals($this->mappr->output, "pnga");
+        $this->assertEquals($this->mappr->output, "png");
     }
 
     /**
