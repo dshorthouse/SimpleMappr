@@ -22,12 +22,6 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_wfs = new \SimpleMappr\MapprWfs();
-        $this->mappr_wfs->wfs_layers = array(
-            'lakes' => 'on',
-            'stateprovinces_polygon' => 'on'
-        );
-        $this->mappr_wfs = $this->setMapprDefaults($this->mappr_wfs);
     }
 
     /**
@@ -38,18 +32,28 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
         $this->clearRequest();
     }
 
+    private function makeWFS()
+    {
+        $mappr_wfs = new \SimpleMappr\MapprWfs();
+        $mappr_wfs->wfs_layers = array(
+            'lakes' => 'on',
+            'stateprovinces_polygon' => 'on'
+        );
+        return $mappr_wfs;
+    }
+
     /**
      * Test a GetCapabilities WFS response.
      */
     public function test_GetCapabilities()
     {
-        $mappr_wfs = $this->mappr_wfs->getRequest()->makeService()->execute();
+        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs->makeService()->execute();
         ob_start();
         echo $mappr_wfs->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
-        $this->assertEquals(3, count($xml->FeatureTypeList->FeatureType));
     }
 
     /**
@@ -62,7 +66,8 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10'
         );
-        $mappr_wfs = $this->mappr_wfs->getRequest()->makeService()->execute();
+        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs->makeService()->execute();
         ob_start();
         echo $mappr_wfs->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
@@ -82,7 +87,8 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
             'MAXFEATURES' => '10',
             'SRSNAME' => 'EPSG:4326'
         );
-        $mappr_wfs = $this->mappr_wfs->getRequest()->makeService()->execute();
+        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs->makeService()->execute();
         ob_start();
         echo $mappr_wfs->createOutput();
         $xml = simplexml_load_string(ob_get_contents());

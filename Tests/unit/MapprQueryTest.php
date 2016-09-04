@@ -22,7 +22,6 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_query = $this->setMapprDefaults(new \SimpleMappr\MapprQuery());
     }
 
     /**
@@ -39,8 +38,9 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     public function testCountry()
     {
         $_REQUEST['bbox_query'] = '176,83,176,83';
-        $this->mappr_query->getRequest()->execute()->queryLayer();
-        $output = $this->mappr_query->data;
+        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query->execute()->queryLayer();
+        $output = $mappr_query->data;
         $this->assertEquals('Canada', $output[0]);
     }
 
@@ -50,8 +50,9 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     public function testManyCountries()
     {
         $_REQUEST['bbox_query'] = '786,272,900,358';
-        $this->mappr_query->getRequest()->execute()->queryLayer();
-        $output = $this->mappr_query->data;
+        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query->execute()->queryLayer();
+        $output = $mappr_query->data;
         $this->assertTrue(in_array("Australia",$output));
         $this->assertTrue(in_array("New Zealand",$output));
     }
@@ -63,8 +64,9 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     {
         $_REQUEST['bbox_query'] = '176,83,176,83';
         $_REQUEST['qlayer'] = 'stateprovinces_polygon';
-        $this->mappr_query->getRequest()->execute()->queryLayer();
-        $output = $this->mappr_query->data;
+        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query->execute()->queryLayer();
+        $output = $mappr_query->data;
         $this->assertEquals('CAN[SK]', $output[0]);
     }
 

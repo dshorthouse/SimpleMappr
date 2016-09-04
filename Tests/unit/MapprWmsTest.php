@@ -22,12 +22,6 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_wms = new \SimpleMappr\MapprWms();
-        $this->mappr_wms->wms_layers = array(
-            'lakes' => 'on',
-            'stateprovinces_polygon' => 'on'
-        );
-        $this->mappr_wms = $this->setMapprDefaults($this->mappr_wms);
     }
 
     /**
@@ -38,18 +32,28 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
         $this->clearRequest();
     }
 
+    private function makeWMS()
+    {
+        $mappr_wms = new \SimpleMappr\MapprWms();
+        $mappr_wms->wms_layers = array(
+            'lakes' => 'on',
+            'stateprovinces_polygon' => 'on'
+        );
+        return $mappr_wms;
+    }
+
     /**
      * Test a GetCapabilities WMS response.
      */
     public function test_GetCapabilities()
     {
-        $mappr_wms = $this->mappr_wms->getRequest()->makeService()->execute();
+        $mappr_wms = $this->makeWMS();
+        $mappr_wms->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
-        $this->assertEquals(3, count($xml->Capability->Layer->Layer));
     }
 
     /**
@@ -65,7 +69,8 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
             'WIDTH' => 400,
             'HEIGHT' => 200
         );
-        $mappr_wms = $this->mappr_wms->getRequest()->makeService()->execute();
+        $mappr_wms = $this->makeWMS();
+        $mappr_wms->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
         $image = imagecreatefromstring(ob_get_contents());
@@ -87,15 +92,15 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
           'width' => 400,
           'height' => 200
         );
-        $mappr_wms = $this->mappr_wms->getRequest();
-        $this->assertEquals($this->mappr_wms->params['REQUEST'], $_REQUEST['request']);
-        $this->assertEquals($this->mappr_wms->params['LAYERS'], $_REQUEST['layers']);
-        $this->assertEquals($this->mappr_wms->params['BBOX'], $_REQUEST['bbox']);
-        $this->assertEquals($this->mappr_wms->params['SRS'], $_REQUEST['srs']);
-        $this->assertEquals($this->mappr_wms->params['WIDTH'], $_REQUEST['width']);
-        $this->assertEquals($this->mappr_wms->params['HEIGHT'], $_REQUEST['height']);
-        $this->assertEquals($this->mappr_wms->params['VERSION'], '1.1.1');
-        $this->assertEquals($this->mappr_wms->params['FORMAT'], 'image/png');
+        $mappr_wms = $this->makeWMS();
+        $this->assertEquals($mappr_wms->request->params['REQUEST'], $_REQUEST['request']);
+        $this->assertEquals($mappr_wms->request->params['LAYERS'], $_REQUEST['layers']);
+        $this->assertEquals($mappr_wms->request->params['BBOX'], $_REQUEST['bbox']);
+        $this->assertEquals($mappr_wms->request->params['SRS'], $_REQUEST['srs']);
+        $this->assertEquals($mappr_wms->request->params['WIDTH'], $_REQUEST['width']);
+        $this->assertEquals($mappr_wms->request->params['HEIGHT'], $_REQUEST['height']);
+        $this->assertEquals($mappr_wms->request->params['VERSION'], '1.1.1');
+        $this->assertEquals($mappr_wms->request->params['FORMAT'], 'image/png');
     }
 
 }

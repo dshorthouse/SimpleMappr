@@ -69,18 +69,18 @@ class MapprWfs extends Mappr
     );
 
     /**
-     * Override the method in the parent class
+     * Implement getRequest method
      *
      * @return object $this
      */
     public function getRequest()
     {
-        $this->params['VERSION']      = Utilities::loadParam('VERSION', '1.0.0');
-        $this->params['REQUEST']      = Utilities::loadParam('REQUEST', 'GetCapabilities');
-        $this->params['TYPENAME']     = Utilities::loadParam('TYPENAME', "");
-        $this->params['MAXFEATURES']  = Utilities::loadParam('MAXFEATURES', $this->_getMaxFeatures());
-        $this->params['OUTPUTFORMAT'] = Utilities::loadParam('OUTPUTFORMAT', 'gml2');
-        $this->params['FILTER']       = Utilities::loadParam('FILTER', null);
+        $this->params['VERSION']      = Utility::loadParam('VERSION', '1.0.0');
+        $this->params['REQUEST']      = Utility::loadParam('REQUEST', 'GetCapabilities');
+        $this->params['TYPENAME']     = Utility::loadParam('TYPENAME', "");
+        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['OUTPUTFORMAT'] = Utility::loadParam('OUTPUTFORMAT', 'gml2');
+        $this->params['FILTER']       = Utility::loadParam('FILTER', null);
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -108,10 +108,9 @@ class MapprWfs extends Mappr
         }
 
         $this->layers     = $this->wfs_layers;
-        $this->bbox_map   = Utilities::loadParam('bbox', '-180,-90,180,90');
+        $this->bbox_map   = Utility::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
-        $this->image_size = array(900,450);
 
         return $this;
     }
@@ -171,23 +170,23 @@ class MapprWfs extends Mappr
     {
         $this->_req = ms_newOwsRequestObj();
         $this->_req->setParameter("SERVICE", "WFS");
-        $this->_req->setParameter("VERSION", $this->params['VERSION']);
-        $this->_req->setParameter("REQUEST", $this->params['REQUEST']);
-        $this->_req->setParameter("TYPENAME", $this->params['TYPENAME']);
-        $this->_req->setParameter("MAXFEATURES", $this->params['MAXFEATURES']);
+        $this->_req->setParameter("VERSION", $this->request->params['VERSION']);
+        $this->_req->setParameter("REQUEST", $this->request->params['REQUEST']);
+        $this->_req->setParameter("TYPENAME", $this->request->params['TYPENAME']);
+        $this->_req->setParameter("MAXFEATURES", $this->request->params['MAXFEATURES']);
 
-        if ($this->params["REQUEST"] != 'DescribeFeatureType') {
-            $this->_req->setParameter('OUTPUTFORMAT', $this->params['OUTPUTFORMAT']);
+        if ($this->request->params["REQUEST"] != 'DescribeFeatureType') {
+            $this->_req->setParameter('OUTPUTFORMAT', $this->request->params['OUTPUTFORMAT']);
         }
-        if ($this->params["FILTER"]) {
-            $this->_req->setParameter('FILTER', $this->params['FILTER']);
+        if ($this->request->params["FILTER"]) {
+            $this->_req->setParameter('FILTER', $this->request->params['FILTER']);
         }
 
         return $this;
     }
 
     /**
-     * Implement method in parent class to createOutput
+     * Implement createOutput method
      *
      * @return string The buffer content
      */

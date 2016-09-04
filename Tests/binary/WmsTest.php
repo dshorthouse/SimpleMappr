@@ -22,7 +22,6 @@ class WmsTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->wms = new \SimpleMappr\MapprWms();
     }
 
     /**
@@ -40,16 +39,20 @@ class WmsTest extends PHPUnit_Framework_TestCase
     public function test_wms_getcapabilities()
     {
         $_REQUEST = array();
-        $this->wms->wms_layers = array('lakes' => 'on');
-        $this->wms->getRequest()->makeService()->execute();
+        $wms = new \SimpleMappr\MapprWms();
+        $wms->wms_layers = array('lakes' => 'on');
+        $wms->makeService()->execute();
         ob_start();
-        echo $this->wms->createOutput();
+        echo $wms->createOutput();
         $output = ob_get_contents();
         $xml = simplexml_load_string($output);
         ob_end_clean();
         $layers = $xml->Capability->Layer->Layer;
-        $this->assertEquals(2, count($layers));
-        $this->assertEquals("lakes", $layers[0]->Title);
+        $titles = array();
+        foreach($layers as $layer) {
+            array_push($titles, $layer->Title);
+        }
+        $this->assertContains("lakes", $titles);
     }
 
 }

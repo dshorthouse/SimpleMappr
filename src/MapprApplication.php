@@ -49,19 +49,30 @@ namespace SimpleMappr;
  */
 class MapprApplication extends Mappr
 {
+
     /**
-    * Set the headers and create the output
+    * Implement getRequest method
+    *
+    * @return obj
+    */
+    public function getRequest()
+    {
+        return Request::getRequest();
+    }
+
+    /**
+    * Implement createOutput method
     *
     * @return void
     */
     public function createOutput()
     {
-        switch($this->output) {
+        switch($this->request->output) {
         case 'tif':
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
             $image_filename = basename($this->image_url);
-            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
+            $clean_filename = Utility::cleanFilename($this->request->file_name, $this->request->output);
             $filesize = filesize($this->tmp_path.$image_filename);
             Header::setHeader('tif', $clean_filename, $filesize);
             ob_clean();
@@ -70,11 +81,11 @@ class MapprApplication extends Mappr
             break;
 
         case 'png':
-            if($this->download) {
+            if($this->request->download) {
                 error_reporting(0);
                 $this->image_url = $this->image->saveWebImage();
                 $image_filename = basename($this->image_url);
-                $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
+                $clean_filename = Utility::cleanFilename($this->request->file_name, $this->request->output);
                 $filesize = filesize($this->tmp_path.$image_filename);
                 Header::setHeader('png', $clean_filename, $filesize);
                 ob_clean();
@@ -86,7 +97,7 @@ class MapprApplication extends Mappr
             break;
 
         case 'svg':
-            $clean_filename = Utilities::cleanFilename($this->file_name, $this->output);
+            $clean_filename = Utility::cleanFilename($this->request->file_name, $this->request->output);
             Header::setHeader('svg', $clean_filename);
             $this->image->saveImage("");
             break;
@@ -97,6 +108,11 @@ class MapprApplication extends Mappr
 
     }
 
+    /**
+    * Produce an array for the default output
+    *
+    * @return array
+    */
     private function _defaultOutput()
     {
       $this->image_url = $this->image->saveWebImage();
@@ -112,8 +128,8 @@ class MapprApplication extends Mappr
           'mapOutputImage'      => $this->image_url,
           'size'                => $this->image_size,
           'rendered_bbox'       => implode(",", $bbox),
-          'rendered_rotation'   => $this->rotation,
-          'rendered_projection' => $this->projection,
+          'rendered_rotation'   => $this->request->rotation,
+          'rendered_projection' => $this->request->projection,
           'legend_url'          => $this->legend_url,
           'scalebar_url'        => $this->scalebar_url,
           'bad_points'          => $this->getBadPoints()

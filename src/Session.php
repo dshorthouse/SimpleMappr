@@ -104,7 +104,7 @@ class Session
         $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
         session_unset();
         session_destroy();
-        setcookie("simplemappr", "", time() - 3600, "/", Utilities::parsedURL()['host']);
+        setcookie("simplemappr", "", time() - 3600, "/", Utility::parsedURL()['host']);
         self::redirect(MAPPR_URL . self::makeLocaleParam($locale));
     }
 
@@ -128,7 +128,7 @@ class Session
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
             if (isset($_COOKIE["simplemappr"])) {
                 $cookie["locale"] = "en_US";
-                setcookie("simplemappr", json_encode($cookie, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
+                setcookie("simplemappr", json_encode($cookie, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utility::parsedURL()['host']);
             }
             self::redirect(MAPPR_URL);
         } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
@@ -215,7 +215,7 @@ class Session
         self::setSession();
         $_SESSION["simplemappr"] = $data;
         self::closeSession();
-        setcookie("simplemappr", json_encode($data, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utilities::parsedURL()['host']);
+        setcookie("simplemappr", json_encode($data, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utility::parsedURL()['host']);
     }
 
     /**
@@ -254,7 +254,7 @@ class Session
      */
     private function _getLocale()
     {
-        $this->_locale = Utilities::loadParam('locale', 'en_US');
+        $this->_locale = Utility::loadParam('locale', 'en_US');
         $this->_locale_code = (array_key_exists($this->_locale, self::$accepted_locales)) ? self::$accepted_locales[$this->_locale]['code'] : 'en_US.UTF-8';
         return $this;
     }
@@ -266,7 +266,7 @@ class Session
      */
     private function _getToken()
     {
-        $this->_token = Utilities::loadParam('token', null);
+        $this->_token = Utility::loadParam('token', null);
         if ($this->_token) {
             return $this;
         } else {
@@ -316,9 +316,9 @@ class Session
             $profile = $this->_auth_info['profile'];
 
             $identifier  = $profile['identifier'];
-            $email       = (isset($profile['email'])) ? Utilities::checkPlain($profile['email']) : "";
-            $username    = (isset($profile['preferredUsername'])) ? Utilities::checkPlain($profile['preferredUsername']) : $email;
-            $displayname = (isset($profile['displayName'])) ? Utilities::checkPlain($profile['displayName']) : "";
+            $email       = (isset($profile['email'])) ? Utility::checkPlain($profile['email']) : "";
+            $username    = (isset($profile['preferredUsername'])) ? Utility::checkPlain($profile['preferredUsername']) : $email;
+            $displayname = (isset($profile['displayName'])) ? Utility::checkPlain($profile['displayName']) : "";
 
             $user = array(
                 'identifier'  => $identifier,

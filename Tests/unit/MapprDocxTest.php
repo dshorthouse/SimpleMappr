@@ -22,7 +22,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_docx = $this->setMapprDefaults(new \SimpleMappr\MapprDocx());
+        $this->mappr_docx = new \SimpleMappr\MapprDocx();
     }
 
     /**
@@ -39,7 +39,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
      */
     public function test_docx_mime()
     {
-        $this->mappr_docx->getRequest()->execute();
+        $this->mappr_docx->execute();
         ob_start();
         $this->mappr_docx->createOutput();
         $output = ob_get_contents();

@@ -59,7 +59,17 @@ class MapprPptx extends Mappr
     private $_slidepadding = 25;
 
     /**
-     * Implemented createOutput method
+    * Implement getRequest method
+    *
+    * @return obj
+    */
+    public function getRequest()
+    {
+        return Request::getRequest();
+    }
+
+    /**
+     * Implement createOutput method
      *
      * @return void
      */
@@ -67,7 +77,7 @@ class MapprPptx extends Mappr
     {
         $objPHPPowerPoint = new PhpPresentation();
 
-        $clean_filename = Utilities::cleanFilename($this->file_name);
+        $clean_filename = Utility::cleanFilename($this->request->file_name);
 
         // Set properties
         $properties = $objPHPPowerPoint->getProperties();

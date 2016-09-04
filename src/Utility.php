@@ -40,7 +40,7 @@ namespace SimpleMappr;
 use \ForceUTF8\Encoding;
 
 /**
- * Utilities for SimpleMappr
+ * Utility:: for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr
@@ -49,7 +49,7 @@ use \ForceUTF8\Encoding;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class Utilities
+class Utility
 {
     /**
      * Convert a string to HTML entities.

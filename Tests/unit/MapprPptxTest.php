@@ -22,7 +22,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_pptx = $this->setMapprDefaults(new \SimpleMappr\MapprPptx());
+        $this->mappr_pptx = new \SimpleMappr\MapprPptx();
     }
 
     /**
@@ -37,7 +37,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
      * Test that PPTX output has the correct MIME type.
      */
     public function test_pptx_mime() {
-        $this->mappr_pptx->getRequest()->execute();
+        $this->mappr_pptx->execute();
         ob_start();
         $this->mappr_pptx->createOutput();
         $output = ob_get_contents();

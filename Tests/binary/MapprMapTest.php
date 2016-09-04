@@ -40,7 +40,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     private function setUpMap($ext = "png")
     {
-        $this->mappr_map = $this->setMapprDefaults(new \SimpleMappr\MapprMap(1, $ext));
+        $this->mappr_map = new \SimpleMappr\MapprMap(1, $ext);
     }
 
     /**
@@ -49,7 +49,7 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_png()
     {
         $this->setUpMap();
-        $this->mappr_map->getRequest()->execute();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
@@ -65,7 +65,7 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_json()
     {
         $this->setUpMap('json');
-        $this->mappr_map->getRequest()->execute();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
@@ -81,7 +81,7 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_svg()
     {
         $this->setUpMap('svg');
-        $this->mappr_map->getRequest()->execute();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
@@ -101,7 +101,7 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_kml()
     {
         $this->setUpMap('kml');
-        $this->mappr_map->getRequest()->execute();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
@@ -118,9 +118,9 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_legend()
     {
         $this->setRequest();
-        $this->setUpMap();
         $_REQUEST = array('legend' => 'true');
-        $this->mappr_map->getRequest()->execute();
+        $this->setUpMap();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();
@@ -136,9 +136,9 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_nolegend()
     {
         $this->setRequest();
-        $this->setUpMap();
         $_REQUEST = array('legend' => 'false');
-        $this->mappr_map->getRequest()->execute();
+        $this->setUpMap();
+        $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_contents();

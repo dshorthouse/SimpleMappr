@@ -55,7 +55,17 @@ class MapprDocx extends Mappr
 {
 
     /**
-     * Implemented createOutput
+    * Implement getRequest method
+    *
+    * @return obj
+    */
+    public function getRequest()
+    {
+        return Request::getRequest();
+    }
+
+    /**
+     * Implement createOutput method
      *
      * @return void
      */
@@ -63,7 +73,7 @@ class MapprDocx extends Mappr
     {
         $objPHPWord = new PhpWord();
 
-        $clean_filename = Utilities::cleanFilename($this->file_name);
+        $clean_filename = Utility::cleanFilename($this->request->file_name);
 
         // Set properties
         $properties = $objPHPWord->getDocumentProperties();

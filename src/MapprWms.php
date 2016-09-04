@@ -72,24 +72,24 @@ class MapprWms extends Mappr
     );
 
     /**
-     * Override the method in the parent class
+     * Implement getRequest method
      *
      * @return object $this
      */
     public function getRequest()
     {
-        $this->params['VERSION']      = Utilities::loadParam('VERSION', '1.1.1');
-        $this->params['REQUEST']      = Utilities::loadParam('REQUEST', 'GetCapabilities');
-        $this->params['LAYERS']       = Utilities::loadParam('LAYERS', "");
-        $this->params['MAXFEATURES']  = Utilities::loadParam('MAXFEATURES', $this->_getMaxFeatures());
-        $this->params['FORMAT']       = Utilities::loadParam('FORMAT', 'image/png');
-        $this->params['FILTER']       = Utilities::loadParam('FILTER', null);
-        $this->params['SRS']          = Utilities::loadParam('SRS', 'epsg:4326');
-        $this->params['CRS']          = Utilities::loadParam('CRS', 'CRS:84');
-        $this->params['BBOX']         = Utilities::loadParam('BBOX', '-180,-90,180,90');
-        $this->params['WIDTH']        = Utilities::loadParam('WIDTH', '200');
-        $this->params['HEIGHT']       = Utilities::loadParam('HEIGHT', '100');
-        $this->params['TRANSPARENT']  = Utilities::loadParam('TRANSPARENT', true);
+        $this->params['VERSION']      = Utility::loadParam('VERSION', '1.1.1');
+        $this->params['REQUEST']      = Utility::loadParam('REQUEST', 'GetCapabilities');
+        $this->params['LAYERS']       = Utility::loadParam('LAYERS', "");
+        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['FORMAT']       = Utility::loadParam('FORMAT', 'image/png');
+        $this->params['FILTER']       = Utility::loadParam('FILTER', null);
+        $this->params['SRS']          = Utility::loadParam('SRS', 'epsg:4326');
+        $this->params['CRS']          = Utility::loadParam('CRS', 'CRS:84');
+        $this->params['BBOX']         = Utility::loadParam('BBOX', '-180,-90,180,90');
+        $this->params['WIDTH']        = Utility::loadParam('WIDTH', '200');
+        $this->params['HEIGHT']       = Utility::loadParam('HEIGHT', '100');
+        $this->params['TRANSPARENT']  = Utility::loadParam('TRANSPARENT', true);
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -117,7 +117,7 @@ class MapprWms extends Mappr
         }
 
         $this->layers     = $this->wms_layers;
-        $this->bbox_map   = Utilities::loadParam('bbox', '-180,-90,180,90');
+        $this->bbox_map   = Utility::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
         $this->image_size = array(900,450);
@@ -178,27 +178,27 @@ class MapprWms extends Mappr
     {
         $this->_req = ms_newOwsRequestObj();
         $this->_req->setParameter("SERVICE", "wms");
-        $this->_req->setParameter("VERSION", $this->params['VERSION']);
-        $this->_req->setParameter("REQUEST", $this->params['REQUEST']);
-        $this->_req->setParameter("BBOX", $this->params['BBOX']);
-        $this->_req->setParameter("LAYERS", $this->params['LAYERS']);
-        $this->_req->setParameter("SRS", $this->params['SRS']);
-        $this->_req->setParameter("WIDTH", $this->params['WIDTH']);
-        $this->_req->setParameter("HEIGHT", $this->params['HEIGHT']);
-        $this->_req->setParameter("TRANSPARENT", $this->params['TRANSPARENT']);
+        $this->_req->setParameter("VERSION", $this->request->params['VERSION']);
+        $this->_req->setParameter("REQUEST", $this->request->params['REQUEST']);
+        $this->_req->setParameter("BBOX", $this->request->params['BBOX']);
+        $this->_req->setParameter("LAYERS", $this->request->params['LAYERS']);
+        $this->_req->setParameter("SRS", $this->request->params['SRS']);
+        $this->_req->setParameter("WIDTH", $this->request->params['WIDTH']);
+        $this->_req->setParameter("HEIGHT", $this->request->params['HEIGHT']);
+        $this->_req->setParameter("TRANSPARENT", $this->request->params['TRANSPARENT']);
 
         if ($this->params["REQUEST"] != 'DescribeFeatureType') {
-            $this->_req->setParameter('FORMAT', $this->params['FORMAT']);
+            $this->_req->setParameter('FORMAT', $this->request->params['FORMAT']);
         }
         if ($this->params["FILTER"]) {
-            $this->_req->setParameter('FILTER', $this->params['FILTER']);
+            $this->_req->setParameter('FILTER', $this->request->params['FILTER']);
         }
 
         return $this;
     }
 
     /**
-     * Implement the createOutput method from the parent class
+     * Implement createOutput method
      *
      * @return void
      */
@@ -207,10 +207,10 @@ class MapprWms extends Mappr
         ms_ioinstallstdouttobuffer();
         $this->map_obj->owsDispatch($this->_req);
         $contenttype = ms_iostripstdoutbuffercontenttype();
-        if (strtolower($this->params['REQUEST']) == 'getcapabilities') {
+        if (strtolower($this->request->params['REQUEST']) == 'getcapabilities') {
             Header::setHeader("xml");
             echo ms_iogetstdoutbufferstring();
-        } else if (strtolower($this->params['REQUEST']) == 'getmap' || strtolower($this->params['REQUEST']) == 'getlegendgraphic') {
+        } else if (strtolower($this->request->params['REQUEST']) == 'getmap' || strtolower($this->request->params['REQUEST']) == 'getlegendgraphic') {
             Header::setHeader();
             header('Content-type: ' . $contenttype);
             ms_iogetstdoutbufferbytes();

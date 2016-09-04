@@ -22,8 +22,8 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $mappr = $this->setMapprDefaults(new \SimpleMappr\MapprApplication());
-        $this->mappr = $mappr->getRequest()->execute();
+        $mappr = new \SimpleMappr\MapprApplication();
+        $this->mappr = $mappr->execute();
         $this->output = $this->mappr->createOutput();
     }
 
@@ -42,7 +42,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_removeEmptyLines()
     {
         $data = "\n\n45.0\t-120.0\n\n\n\n\n55.0\t-110.0\n\n\n60.0 -100.0\n\n\n";
-        $removed_lines = \SimpleMappr\Utilities::removeEmptyLines($data);
+        $removed_lines = \SimpleMappr\Utility::removeEmptyLines($data);
         $this->assertEquals($removed_lines, "\n45.0\t-120.0\n55.0\t-110.0\n60.0 -100.0\n");
     }
 
@@ -52,7 +52,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_addSlashesExtended()
     {
         $data = array(array('title' => 'my "title"'));
-        $add_slashes = \SimpleMappr\Utilities::addSlashesExtended($data);
+        $add_slashes = \SimpleMappr\Utility::addSlashesExtended($data);
         $this->assertEquals($add_slashes[0]['title'], "my \\\"title\\\"");
     }
 
@@ -62,7 +62,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_clean_filename()
     {
         $name = "My %!  <>  .  Map";
-        $clean = \SimpleMappr\Utilities::cleanFilename($name);
+        $clean = \SimpleMappr\Utility::cleanFilename($name);
         $this->assertEquals($clean, "My_Map");
     }
 
@@ -128,7 +128,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_output()
     {
-        $this->assertEquals($this->mappr->output, "png");
+        $this->assertEquals($this->mappr->request->output, "png");
     }
 
     /**
@@ -136,7 +136,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_width()
     {
-        $this->assertEquals($this->mappr->width, 900);
+        $this->assertEquals($this->mappr->request->width, 900);
     }
 
     /**
@@ -144,7 +144,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_height()
     {
-        $this->assertEquals($this->mappr->height, 450);
+        $this->assertEquals($this->mappr->request->height, 450);
     }
 
     /**
@@ -152,7 +152,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_projection_map()
     {
-        $this->assertEquals($this->mappr->projection_map, "epsg:4326");
+        $this->assertEquals($this->mappr->request->projection_map, "epsg:4326");
     }
 
     /**
@@ -160,7 +160,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_origin()
     {
-        $this->assertEquals($this->mappr->origin, 0);
+        $this->assertEquals($this->mappr->request->origin, 0);
     }
 
     /**
@@ -168,7 +168,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_bbox_rubberband()
     {
-        $this->assertEmpty($this->mappr->bbox_rubberband);
+        $this->assertEmpty($this->mappr->request->bbox_rubberband);
     }
 
     /**
@@ -176,7 +176,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_pan()
     {
-        $this->assertEquals($this->mappr->pan, "");
+        $this->assertEquals($this->mappr->request->pan, "");
     }
 
     /**
@@ -193,7 +193,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_graticules()
     {
-        $this->assertEquals($this->mappr->graticules, "");
+        $this->assertEquals($this->mappr->request->graticules, "");
     }
 
     /**
@@ -201,7 +201,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_watermark()
     {
-        $this->assertEquals($this->mappr->watermark, "");
+        $this->assertEquals($this->mappr->request->watermark, "");
     }
 
     /**
@@ -209,7 +209,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_gridspace()
     {
-        $this->assertEquals($this->mappr->gridspace, "");
+        $this->assertEquals($this->mappr->request->gridspace, "");
     }
 
     /**
@@ -217,7 +217,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_gridlabel()
     {
-        $this->assertEquals($this->mappr->gridlabel, 1);
+        $this->assertEquals($this->mappr->request->gridlabel, 1);
     }
 
     /**
@@ -225,7 +225,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_download()
     {
-        $this->assertEquals($this->mappr->download, "");
+        $this->assertEquals($this->mappr->request->download, "");
     }
 
     /**
@@ -233,7 +233,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_crop()
     {
-        $this->assertEquals($this->mappr->crop, "");
+        $this->assertEquals($this->mappr->request->crop, "");
     }
 
     /**
@@ -241,7 +241,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_options()
     {
-        $this->assertEmpty($this->mappr->options);
+        $this->assertEmpty($this->mappr->request->options);
     }
 
     /**
@@ -249,7 +249,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_border_thickness()
     {
-        $this->assertEquals($this->mappr->border_thickness, 1.25);
+        $this->assertEquals($this->mappr->request->border_thickness, 1.25);
     }
 
     /**
@@ -257,7 +257,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_rotation()
     {
-        $this->assertEquals($this->mappr->rotation, 0);
+        $this->assertEquals($this->mappr->request->rotation, 0);
     }
 
     /**
@@ -265,7 +265,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_default_zoom_out()
     {
-        $this->assertEquals($this->mappr->zoom_out, "");
+        $this->assertEquals($this->mappr->request->zoom_out, "");
     }
 
     /**

@@ -99,7 +99,7 @@ class Bootstrap
 
         $router->any('/api', function () {
             $klass = $this->_klass("MapprApi");
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         }, array('after' => 'logAPI'));
 
         $router->get('/apidoc', function () {
@@ -121,13 +121,13 @@ class Bootstrap
 
         $router->post('/application', function () {
             $klass = $this->_klass("MapprApplication");
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         });
 
         $router->post('/application.json', function () {
             Header::setHeader('json');
             $klass = $this->_klass("MapprApplication");
-            $output = $this->_setupMap($klass)->execute()->createOutput();
+            $output = $klass->execute()->createOutput();
             return json_encode($output);
         });
 
@@ -152,7 +152,7 @@ class Bootstrap
         $router->post('/docx', function () {
             Session::selectLocale();
             $klass = $this->_klass("MapprDocx");
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         });
 
         $router->get('/feedback', function () {
@@ -186,12 +186,12 @@ class Bootstrap
 
         $router->get('/map/{id:i}', function ($id) {
             $klass = $this->_klass("MapprMap", $id, 'png');
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         });
 
         $router->get('/map/{id:i}.{ext:[kml|svg|json]+}', function ($id, $ext) {
             $klass = $this->_klass("MapprMap", $id, $ext);
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         });
 
         $router->get('/places', function () {
@@ -211,13 +211,13 @@ class Bootstrap
         $router->post('/pptx', function () {
             Session::selectLocale();
             $klass = $this->_klass("MapprPptx");
-            return $this->_setupMap($klass)->execute()->createOutput();
+            return $klass->execute()->createOutput();
         });
 
         $router->post('/query', function () {
             Header::setHeader("json");
             $klass = $this->_klass("MapprQuery");
-            return json_encode($this->_setupMap($klass)->execute()->queryLayer()->data);
+            return json_encode($klass->execute()->queryLayer()->data);
         });
 
         $router->post('/session', function () {
@@ -297,13 +297,13 @@ class Bootstrap
         $router->any('/wfs', function () {
             Header::setHeader("xml");
             $klass = $this->_klass("MapprWfs");
-            return $this->_setupMap($klass)->makeService()->execute()->createOutput();
+            return $klass->makeService()->execute()->createOutput();
         }, array('after' => 'logWFS'));
 
         $router->any('/wms', function () {
             //Headers are set in WMS class
             $klass = $this->_klass("MapprWms");
-            return $this->_setupMap($klass)->makeService()->execute()->createOutput();
+            return $klass->makeService()->execute()->createOutput();
         }, array('after' => 'logWMS'));
 
         try {
@@ -330,23 +330,6 @@ class Bootstrap
     {
         $class = __NAMESPACE__ . '\\' . $klass;
         return new $class(...$params);
-    }
-
-    /**
-     * Shortcut function for Mappr class methods.
-     *
-     * @param object $data Instance of a Mappr class.
-     *
-     * @return object $data Loaded instance of a Mappr class.
-     */
-    private function _setupMap($data)
-    {
-        return $data->set_font_file(ROOT."/mapserver/fonts/fonts.list")
-            ->set_tmp_path(ROOT."/public/tmp/")
-            ->set_tmp_url(MAPPR_MAPS_URL)
-            ->set_default_projection("epsg:4326")
-            ->setMaxExtent("-180,-90,180,90")
-            ->getRequest();
     }
 
     /**

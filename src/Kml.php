@@ -86,9 +86,9 @@ class Kml
      */
     public function getRequest($file_name = "", $coords = array())
     {
-        $this->coords         = ($coords) ? $coords : Utilities::loadParam('coords', array());
-        $this->file_name      = ($file_name) ? $file_name : Utilities::loadParam('file_name', time());
-        $this->download_token = Utilities::loadParam('download_token', md5(time()));
+        $this->coords         = ($coords) ? $coords : Utility::loadParam('coords', array());
+        $this->file_name      = ($file_name) ? $file_name : Utility::loadParam('file_name', time());
+        $this->download_token = Utility::loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
         return $this;
     }
@@ -100,7 +100,7 @@ class Kml
      */
     public function createOutput()
     {
-        $clean_filename = Utilities::cleanFilename($this->file_name);
+        $clean_filename = Utility::cleanFilename($this->file_name);
 
         $this->setMetadata("name", "SimpleMappr: " . $clean_filename);
 
@@ -234,15 +234,15 @@ class Kml
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-                $row = explode("\n", Utilities::removeEmptyLines($whole));  //split the lines that have data
+                $row = explode("\n", Utility::removeEmptyLines($whole));  //split the lines that have data
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = Utilities::makeCoordinates($loc);
+                    $coord_array = Utility::makeCoordinates($loc);
                     $coord = new \stdClass();
-                    $coord->x = ($coord_array[1]) ? Utilities::cleanCoord($coord_array[1]) : null;
-                    $coord->y = ($coord_array[0]) ? Utilities::cleanCoord($coord_array[0]) : null;
-                    if (Utilities::onEarth($coord) && $title != "") {  //only add point when data are good & a title
+                    $coord->x = ($coord_array[1]) ? Utility::cleanCoord($coord_array[1]) : null;
+                    $coord->y = ($coord_array[0]) ? Utility::cleanCoord($coord_array[0]) : null;
+                    if (Utility::onEarth($coord) && $title != "") {  //only add point when data are good & a title
                         $this->setPlacemark($j, $point_key, "name", $title);
                         $this->setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;

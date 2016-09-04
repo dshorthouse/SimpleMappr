@@ -22,7 +22,6 @@ class WfsTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->wfs = new \SimpleMappr\MapprWfs();
     }
 
     /**
@@ -40,16 +39,20 @@ class WfsTest extends PHPUnit_Framework_TestCase
     public function test_wfs_getcapabilities()
     {
         $_REQUEST = array();
-        $this->wfs->wfs_layers = array('lakes' => 'on');
-        $this->wfs->getRequest()->makeService()->execute();
+        $wfs = new \SimpleMappr\MapprWfs();
+        $wfs->wfs_layers = array('lakes' => 'on');
+        $wfs->makeService()->execute();
         ob_start();
-        echo $this->wfs->createOutput();
+        echo $wfs->createOutput();
         $output = ob_get_contents();
         $xml = simplexml_load_string($output);
         ob_end_clean();
         $layers = $xml->FeatureTypeList->FeatureType;
-        $this->assertEquals(2, count($layers));
-        $this->assertEquals("lakes", $layers[0]->Title);
+        $titles = array();
+        foreach($layers as $layer) {
+            array_push($titles, $layer->Title);
+        }
+        $this->assertContains("lakes", $titles);
     }
 
 }

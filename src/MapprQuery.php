@@ -54,29 +54,30 @@ class MapprQuery extends Mappr
     public $data = array();
 
     /**
-     * Override get_request method in parent class
+     * Implement getRequest method
      *
      * @return object $this
      */
     public function getRequest()
     {
-        $this->download         = false;
-        $this->options          = array();
-        $this->border_thickness = 1.25;
-        $this->width            = (float)Utilities::loadParam('width', 900);
-        $this->height           = (float)Utilities::loadParam('height', $this->width/2);
-        $this->image_size       = array($this->width, $this->height);
-        $this->output           = Utilities::loadParam('output', 'png');
-        $this->projection       = Utilities::loadParam('projection', 'epsg:4326');
-        $this->projection_map   = Utilities::loadParam('projection_map', 'epsg:4326');
-        $this->origin           = (int)Utilities::loadParam('origin', false);
-        $this->bbox_map         = Utilities::loadParam('bbox', '-180,-90,180,90');
-        $this->layers           = Utilities::loadParam('layers', array());
-        $this->graticules       = Utilities::loadParam('graticules', false);
-        $this->bbox_query       = Utilities::loadParam('bbox_query', '0,0,0,0');
-        $this->queryLayer       = Utilities::loadParam('qlayer', 'countries');
+        $attr = new \stdClass();
+        $attr->download         = false;
+        $attr->options          = array();
+        $attr->border_thickness = 1.25;
+        $attr->width            = (float)Utility::loadParam('width', 900);
+        $attr->height           = (float)Utility::loadParam('height', $attr->width/2);
+        $attr->image_size       = array($attr->width, $attr->height);
+        $attr->output           = Utility::loadParam('output', 'png');
+        $attr->projection       = Utility::loadParam('projection', 'epsg:4326');
+        $attr->projection_map   = Utility::loadParam('projection_map', 'epsg:4326');
+        $attr->origin           = (int)Utility::loadParam('origin', false);
+        $attr->bbox_map         = Utility::loadParam('bbox', '-180,-90,180,90');
+        $attr->layers           = Utility::loadParam('layers', array());
+        $attr->graticules       = Utility::loadParam('graticules', false);
+        $attr->bbox_query       = Utility::loadParam('bbox_query', '0,0,0,0');
+        $attr->queryLayer       = Utility::loadParam('qlayer', 'countries');
 
-        return $this;
+        return $attr;
     }
 
     /**
@@ -86,10 +87,10 @@ class MapprQuery extends Mappr
      */
     public function queryLayer()
     {
-        $bbox_query = explode(',', $this->bbox_query);
+        $bbox_query = explode(',', $this->request->bbox_query);
 
-        if (!array_key_exists($this->queryLayer, $this->shapes)) {
-            $this->queryLayer = 'countries';
+        if (!array_key_exists($this->request->queryLayer, $this->shapes)) {
+            $this->request->queryLayer = 'countries';
         }
 
         //lower-left coordinate
@@ -106,8 +107,8 @@ class MapprQuery extends Mappr
 
         $layer = ms_newLayerObj($this->map_obj);
         $layer->set("name", "stateprovinces_polygon_query");
-        $layer->set("data", $this->shapes[$this->queryLayer]['path']);
-        $layer->set("type", $this->shapes[$this->queryLayer]['type']);
+        $layer->set("data", $this->shapes[$this->request->queryLayer]['path']);
+        $layer->set("type", $this->shapes[$this->request->queryLayer]['type']);
         $layer->set("template", "template.html");
         $layer->setProjection(parent::getProjection($this->default_projection));
 
@@ -121,7 +122,7 @@ class MapprQuery extends Mappr
                 $items = array();
                 for ($i = 0; $i < $layer->getNumResults(); $i++) {
                     $shape = $layer->getShape($layer->getResult($i));
-                    if ($this->queryLayer == 'stateprovinces_polygon') {
+                    if ($this->request->queryLayer == 'stateprovinces_polygon') {
                         $hasc = explode(".", $shape->values['code_hasc']);
                         if (isset($shape->values['adm0_a3']) && isset($hasc[1])) {
                             $items[$shape->values['adm0_a3']][$hasc[1]] = array();
@@ -131,7 +132,7 @@ class MapprQuery extends Mappr
                         $this->data[] = (isset($shape->values['geounit'])) ? Encoding::fixUTF8($shape->values['geounit']) : Encoding::fixUTF8($shape->values['GEOUNIT']);
                     }
                 }
-                if ($this->queryLayer == 'stateprovinces_polygon') {
+                if ($this->request->queryLayer == 'stateprovinces_polygon') {
                     foreach ($items as $key => $value) {
                         $this->data[] = $key . "[" . implode(" ", array_keys($value)) . "]";
                     }
@@ -144,7 +145,7 @@ class MapprQuery extends Mappr
     }
 
     /**
-     * Implemented createOutput method
+     * Implement createOutput method
      *
      * @return void
      */

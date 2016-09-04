@@ -62,13 +62,13 @@ class MapprMap extends Mappr
      */
     public function __construct($id, $extension)
     {
-        parent::__construct();
         $this->_id = (int)$id;
         $this->_extension = ($extension) ? $extension : "png";
+        parent::__construct();
     }
 
     /**
-     * Override the method in the parent class
+     * Implement getRequest
      *
      * @return object $this
      */
@@ -109,27 +109,27 @@ class MapprMap extends Mappr
             $this->bbox_map = '-180,-90,180,90';
         }
         if (!isset($this->origin)) {
-            $this->origin = (int)Utilities::loadParam('origin', false);
+            $this->origin = (int)Utility::loadParam('origin', false);
         }
 
         $this->download         = true;
         $this->watermark        = true;
 
         unset($this->options['border']);
-        $this->width            = (float)Utilities::loadParam('width', 800);
-        $this->height           = (float)Utilities::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+        $this->width            = (float)Utility::loadParam('width', 800);
+        $this->height           = (float)Utility::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
         if ($this->width == 0 || $this->height == 0) {
             $this->width = 800; $this->height = 400;
         }
 
-        if (Utilities::loadParam('legend', false) == "true") {
+        if (Utility::loadParam('legend', false) == "true") {
             $this->options['legend'] = true;
-        } elseif (Utilities::loadParam('legend', false) == "false") {
+        } elseif (Utility::loadParam('legend', false) == "false") {
             $this->options['legend'] = false;
         }
 
         $this->image_size       = array($this->width, $this->height);
-        $this->callback         = Utilities::loadParam('callback', null);
+        $this->callback         = Utility::loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
 
         return $this;
@@ -268,15 +268,15 @@ class MapprMap extends Mappr
 
             if (trim($this->coords[$j]['data'])) {
                 $whole = trim($this->coords[$j]['data']);
-                $row = explode("\n", Utilities::removeEmptyLines($whole));
+                $row = explode("\n", Utility::removeEmptyLines($whole));
 
                 $point_key = 0;
                 foreach ($row as $loc) {
-                    $coord_array = Utilities::makeCoordinates($loc);
+                    $coord_array = Utility::makeCoordinates($loc);
                     $coord = new \stdClass();
                     $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
                     $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
-                    if (Utilities::onEarth($coord) && $title != "") {
+                    if (Utility::onEarth($coord) && $title != "") {
                         $output[] = array(
                             'type' => 'Feature',
                             'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),

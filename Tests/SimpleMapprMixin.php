@@ -55,16 +55,6 @@ trait SimpleMapprMixin
         }
     }
 
-    public function setMapprDefaults($class)
-    {
-        $class->set_font_file(ROOT."/mapserver/fonts/fonts.list")
-            ->set_tmp_path(ROOT."/public/tmp/")
-            ->set_tmp_url(MAPPR_MAPS_URL)
-            ->set_default_projection("epsg:4326")
-            ->setMaxExtent("-180,-90,180,90");
-        return $class;
-    }
-
     public function httpPost($url, $params)
     {
         $postData = '';
