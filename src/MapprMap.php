@@ -68,7 +68,7 @@ class MapprMap extends Mappr
     }
 
     /**
-     * Implement getRequest
+     * Implement getRequest method
      *
      * @return object $this
      */
@@ -290,7 +290,7 @@ class MapprMap extends Mappr
     }
 
     /**
-     * Implemented createOutput method
+     * Implement createOutput method
      *
      * @return void
      */

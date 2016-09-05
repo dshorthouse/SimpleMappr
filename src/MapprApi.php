@@ -52,7 +52,7 @@ class MapprApi extends Mappr
     private $_coord_cols = array();
 
     /**
-     * Implement the request
+     * Implement getRequest method
      *
      * @return object
      */
