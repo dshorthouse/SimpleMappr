@@ -39,8 +39,7 @@ class WmsTest extends PHPUnit_Framework_TestCase
     public function test_wms_getcapabilities()
     {
         $_REQUEST = array();
-        $wms = new \SimpleMappr\MapprWms();
-        $wms->wms_layers = array('lakes' => 'on');
+        $wms = new \SimpleMappr\MapprWms(['lakes']);
         $wms->makeService()->execute();
         ob_start();
         echo $wms->createOutput();

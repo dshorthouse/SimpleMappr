@@ -59,6 +59,7 @@ class MapprWfs extends Mappr
     private $_filter_columns = array();
 
     /* layers */
+    //TODO: get these from shapefiles.yml
     private $_default_wfs_layers = array(
         'lakes' => 'on',
         'rivers' => 'on',

@@ -39,8 +39,7 @@ class WfsTest extends PHPUnit_Framework_TestCase
     public function test_wfs_getcapabilities()
     {
         $_REQUEST = array();
-        $wfs = new \SimpleMappr\MapprWfs();
-        $wfs->wfs_layers = array('lakes' => 'on');
+        $wfs = new \SimpleMappr\MapprWfs(['lakes']);
         $wfs->makeService()->execute();
         ob_start();
         echo $wfs->createOutput();
