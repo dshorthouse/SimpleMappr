@@ -147,7 +147,7 @@ labels:
     placenames:
         name: places
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_populated_places_simple
-        type: %%MS_LAYER_POINT%
+        type: %%MS_LAYER_POINT%%
         encoding: CP1252
         sort: 10
         tolerance: 5

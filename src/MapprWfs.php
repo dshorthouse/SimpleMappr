@@ -58,29 +58,24 @@ class MapprWfs extends Mappr
     /* columns to filter on */ 
     private $_filter_columns = array();
 
-    /* layers */
-    //TODO: get these from shapefiles.yml
-    private $_default_wfs_layers = array(
-        'lakes' => 'on',
-        'rivers' => 'on',
-        'oceans' => 'on',
-        'conservation' => 'on',
-        'stateprovinces' => 'on',
-        'ecoregions' => 'on'
-    );
-
+    /* WFS layers */
     private $_wfs_layers = array();
 
     public function __construct($layers = array())
     {
+        $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
             foreach($layers as $layer) {
-                if (in_array($layer, array_keys($this->_default_wfs_layers))) {
+                if (in_array($layer, array_keys($shapes)) && $shapes[$layer]['type'] !== MS_LAYER_RASTER) {
                     $this->_wfs_layers[$layer] = 'on';
                 }
             }
         } else {
-            $this->_wfs_layers = $this->_default_wfs_layers;
+            foreach($shapes as $key => $shape) {
+                if($shape['type'] !== MS_LAYER_RASTER) {
+                    $this->_wfs_layers[$key] = 'on';
+                }
+            }
         }
         parent::__construct();
     }

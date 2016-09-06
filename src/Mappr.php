@@ -65,14 +65,14 @@ abstract class Mappr
      */
     abstract function createOutput();
 
+    /* path to the shapefile config */
+    static protected $shapefile_config = ROOT.'/config/shapefiles.yml';
+
     /* the base map object */
     protected $map_obj;
 
     /* path to the font file */
     protected $font_file = ROOT.'/mapserver/fonts/fonts.list';
-
-    /* path to the shapefile config */
-    protected $shapefile_config = ROOT.'/config/shapefiles.yml';
 
     /* file system temp path to store files produced */ 
     protected $tmp_path = ROOT.'/public/tmp/';
@@ -126,6 +126,17 @@ abstract class Mappr
             $projection = 'epsg:4326';
         }
         return AcceptedProjections::$projections[$projection]['proj'];
+    }
+
+    /**
+     * Get shapefile config
+     *
+     * @return array shapefile config
+     */
+    public static function getShapefileConfig()
+    {
+        $config_file = file_get_contents(self::$shapefile_config);
+        return self::_tokenize_shapefile_config(Yaml::parse($config_file));
     }
 
     private function _defaultAttributes()
@@ -280,8 +291,7 @@ abstract class Mappr
      */
     private function _loadShapes()
     {
-        $config_file = file_get_contents($this->shapefile_config);
-        $this->shapes = $this->_tokenize_shapefile_config(Yaml::parse($config_file));
+        $this->shapes = self::getShapefileConfig();
     }
 
     /**
@@ -289,7 +299,7 @@ abstract class Mappr
      *
      * @return array of config
      */
-    private function _tokenize_shapefile_config($config)
+    private static function _tokenize_shapefile_config($config)
     {
         $config = array_merge($config['layers'], $config['labels']);
         $pattern = '/%%(.+)%%(.+)?/';

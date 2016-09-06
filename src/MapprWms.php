@@ -58,32 +58,21 @@ class MapprWms extends Mappr
     /* columns to filter on */ 
     private $_filter_columns = array();
 
-    /* layers */
-    //TODO: get these from shapefiles.yml
-    private $_default_wms_layers = array(
-        'lakes' => 'on',
-        'rivers' => 'on',
-        'oceans' => 'on',
-        'conservation' => 'on',
-        'stateprovinces' => 'on',
-        'relief' => 'on',
-        'reliefgrey' => 'on',
-        'blueMarble' => 'on',
-        'ecoregions' => 'on'
-    );
-
     private $_wms_layers = array();
 
     public function __construct($layers = array())
     {
+        $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
             foreach($layers as $layer) {
-                if (in_array($layer, array_keys($this->_default_wms_layers))) {
+                if (in_array($layer, array_keys($shapes))) {
                     $this->_wms_layers[$layer] = 'on';
                 }
             }
         } else {
-            $this->_wms_layers = $this->_default_wms_layers;
+            foreach($shapes as $key => $shape) {
+                $this->_wms_layers[$key] = 'on';
+            }
         }
         parent::__construct();
     }
