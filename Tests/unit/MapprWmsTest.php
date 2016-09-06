@@ -34,11 +34,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
 
     private function makeWMS()
     {
-        $mappr_wms = new \SimpleMappr\MapprWms();
-        $mappr_wms->wms_layers = array(
-            'lakes' => 'on',
-            'stateprovinces_polygon' => 'on'
-        );
+        $mappr_wms = new \SimpleMappr\MapprWms(['lakes', 'stateprovinces']);
         return $mappr_wms;
     }
 
@@ -54,6 +50,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
+        $this->assertEquals(3, count($xml->Capability->Layer->Layer));
     }
 
     /**

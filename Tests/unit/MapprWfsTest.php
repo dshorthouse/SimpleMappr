@@ -34,11 +34,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
 
     private function makeWFS()
     {
-        $mappr_wfs = new \SimpleMappr\MapprWfs();
-        $mappr_wfs->wfs_layers = array(
-            'lakes' => 'on',
-            'stateprovinces_polygon' => 'on'
-        );
+        $mappr_wfs = new \SimpleMappr\MapprWfs(['lakes', 'stateprovinces']);
         return $mappr_wfs;
     }
 
@@ -54,6 +50,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
         $xml = simplexml_load_string(ob_get_contents());
         ob_end_clean();
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
+        $this->assertEquals(3, count($xml->FeatureTypeList->FeatureType));
     }
 
     /**

@@ -59,7 +59,7 @@ class MapprWfs extends Mappr
     private $_filter_columns = array();
 
     /* layers */
-    public $wfs_layers = array(
+    private $_default_wfs_layers = array(
         'lakes' => 'on',
         'rivers' => 'on',
         'oceans' => 'on',
@@ -67,6 +67,22 @@ class MapprWfs extends Mappr
         'stateprovinces' => 'on',
         'ecoregions' => 'on'
     );
+
+    private $_wfs_layers = array();
+
+    public function __construct($layers = array())
+    {
+        if (!empty($layers)) {
+            foreach($layers as $layer) {
+                if (in_array($layer, array_keys($this->_default_wfs_layers))) {
+                    $this->_wfs_layers[$layer] = 'on';
+                }
+            }
+        } else {
+            $this->_wfs_layers = $this->_default_wfs_layers;
+        }
+        parent::__construct();
+    }
 
     /**
      * Implement getRequest method
@@ -107,7 +123,7 @@ class MapprWfs extends Mappr
             }
         }
 
-        $this->layers     = $this->wfs_layers;
+        $this->layers     = $this->_wfs_layers;
         $this->bbox_map   = Utility::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;

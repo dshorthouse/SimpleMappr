@@ -59,7 +59,7 @@ class MapprWms extends Mappr
     private $_filter_columns = array();
 
     /* layers */
-    public $wms_layers = array(
+    private $_default_wms_layers = array(
         'lakes' => 'on',
         'rivers' => 'on',
         'oceans' => 'on',
@@ -70,6 +70,22 @@ class MapprWms extends Mappr
         'blueMarble' => 'on',
         'ecoregions' => 'on'
     );
+
+    private $_wms_layers = array();
+
+    public function __construct($layers = array())
+    {
+        if (!empty($layers)) {
+            foreach($layers as $layer) {
+                if (in_array($layer, array_keys($this->_default_wms_layers))) {
+                    $this->_wms_layers[$layer] = 'on';
+                }
+            }
+        } else {
+            $this->_wms_layers = $this->_default_wms_layers;
+        }
+        parent::__construct();
+    }
 
     /**
      * Implement getRequest method
@@ -116,7 +132,7 @@ class MapprWms extends Mappr
             }
         }
 
-        $this->layers     = $this->wms_layers;
+        $this->layers     = $this->_wms_layers;
         $this->bbox_map   = Utility::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
