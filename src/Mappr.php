@@ -81,7 +81,7 @@ abstract class Mappr
     protected $map_obj;
 
     /* default extent when map first loaded */
-    protected $max_extent = array(-180,-90,180,90);
+    protected $max_extent = [-180,-90,180,90];
 
     /* default projection when map first loaded */
     protected $default_projection = 'epsg:4326';
@@ -93,7 +93,7 @@ abstract class Mappr
     protected $legend;
 
     /* shapes and their mapfile configurations */
-    protected $shapes = array();
+    protected $shapes = [];
 
     /* post-draw padding for longitude extent used as a correction factor on front-end */
     protected $ox_pad = 0;
@@ -108,7 +108,7 @@ abstract class Mappr
     protected $scalebar_url;
 
     /* holding bin for any geographic coordinates that fall outside extent of Earth */
-    protected $bad_points = array();
+    protected $bad_points = [];
 
     /* placeholder for presence of anything that might need a legend */
     private $_legend_required = false;
@@ -142,8 +142,8 @@ abstract class Mappr
     private function _defaultAttributes()
     {
       $attr = new \stdClass();
-      $attr->coords           = array();
-      $attr->regions          = array();
+      $attr->coords           = [];
+      $attr->regions          = [];
       $attr->output           = 'png';
       $attr->width            = 900;
       $attr->height           = $attr->width/2;
@@ -151,16 +151,16 @@ abstract class Mappr
       $attr->projection_map   = 'epsg:4326';
       $attr->origin           = false;
       $attr->bbox_map         = '-180,-90,180,90';
-      $attr->bbox_rubberband  = array();
+      $attr->bbox_rubberband  = [];
       $attr->pan              = false;
-      $attr->layers           = array();
+      $attr->layers           = [];
       $attr->graticules       = false;
       $attr->watermark        = false;
       $attr->gridspace        = false;
       $attr->gridlabel        = 1;
       $attr->download         = false;
       $attr->crop             = false;
-      $attr->options          = array(); //scalebar, legend, border, linethickness
+      $attr->options          = []; //scalebar, legend, border, linethickness
       $attr->border_thickness = 1.25;
       $attr->rotation         = 0;
       $attr->zoom_in          = false;
@@ -180,7 +180,7 @@ abstract class Mappr
     {
         $this->map_obj = ms_newMapObjFromString("MAP END");
         $this->request = (object)array_merge((array)$this->_defaultAttributes(), (array)$this->getRequest());
-        $this->image_size = array($this->request->width, $this->request->height);
+        $this->image_size = [$this->request->width, $this->request->height];
     }
 
     /**
@@ -193,7 +193,6 @@ abstract class Mappr
      */
     public function __call($name, $arguments)
     {
-        // set a property
         $property_prefix = substr($name, 0, 4);
         $property = substr($name, 4);
         if ($property_prefix == 'set_') {
@@ -670,7 +669,7 @@ abstract class Mappr
      */
     public function addCoordinates()
     {
-        $this->bad_points = array();
+        $this->bad_points = [];
         if (isset($this->request->coords) && $this->request->coords) {
             //do this in reverse order because the legend will otherwise be presented in reverse order
             for ($j=count($this->request->coords)-1; $j>=0; $j--) {
@@ -678,7 +677,7 @@ abstract class Mappr
                 $size = 8;
                 $shape = "circle";
                 $shadow = false;
-                $color = array();
+                $color = [];
                 $offset = 2;
 
                 if ($this->request->coords[$j]['title']) {
@@ -700,7 +699,7 @@ abstract class Mappr
                 if ($this->request->coords[$j]['color']) {
                     $color = explode(" ", $this->request->coords[$j]['color']);
                     if (count($color) != 3) {
-                        $color = array();
+                        $color = [];
                     }
                 }
 
@@ -751,7 +750,7 @@ abstract class Mappr
                     $new_line = ms_newLineObj();
 
                     $rows = explode("\n", Utility::removeEmptyLines($data));  //split the lines that have data
-                    $points = array(); //create an array to hold unique locations
+                    $points = []; //create an array to hold unique locations
 
                     foreach ($rows as $row) {
                         $coord_array = Utility::makeCoordinates($row);
@@ -764,7 +763,7 @@ abstract class Mappr
                                 $new_point = ms_newPointObj();
                                 $new_point->setXY($coord->x, $coord->y);
                                 $new_line->add($new_point);
-                                $points[$coord->x.$coord->y] = array();
+                                $points[$coord->x.$coord->y] = [];
                             }
                         } else {
                             $this->bad_points[] = stripslashes($this->request->coords[$j]['title'] . ' : ' . $row);
@@ -790,12 +789,12 @@ abstract class Mappr
         if (isset($this->request->regions) && $this->request->regions) {  
             for ($j=count($this->request->regions)-1; $j>=0; $j--) {
                 //clear out previous loop's selection
-                $color = array();
+                $color = [];
                 $title = ($this->request->regions[$j]['title']) ? stripslashes($this->request->regions[$j]['title']) : "";
                 if ($this->request->regions[$j]['color']) {
                     $color = explode(" ", $this->request->regions[$j]['color']);
                     if (count($color) != 3) {
-                        $color = array();
+                        $color = [];
                     }
                 }
 
@@ -806,7 +805,7 @@ abstract class Mappr
                     $baselayer = true;
                     //grab the textarea for regions & split
                     $rows = explode("\n", Utility::removeEmptyLines($data));
-                    $qry = array();
+                    $qry = [];
                     foreach ($rows as $row) {
                         $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
                         foreach ($regions as $region) {
@@ -816,7 +815,7 @@ abstract class Mappr
                                     $baselayer = false;
                                     $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
                                     $states = preg_split("/[\s|]+/", $split[1]);
-                                    $statekey = array();
+                                    $statekey = [];
                                     foreach ($states as $state) {
                                         $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
                                     }
@@ -873,7 +872,7 @@ abstract class Mappr
      */
     private function _addLayers()
     {
-        $sort = array();
+        $sort = [];
 
         $this->request->layers['base'] = 'on';
         unset($this->request->layers['grid']);
@@ -1297,7 +1296,7 @@ abstract class Mappr
      */
     private function _setOrigin($output_projection)
     {
-        $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
+        $lambert_projections = ['esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112'];
         if (in_array($this->request->projection, $lambert_projections) && 
             $this->request->origin && 
             $this->request->origin >= -180 &&

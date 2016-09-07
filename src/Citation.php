@@ -115,13 +115,13 @@ class Citation implements RestMethods
             exit();
         }
 
-        $data = array(
+        $data = [
             'year' => $year,
             'reference' => $reference,
             'doi' => $doi,
             'link' => $link,
             'first_author_surname' => $author
-        );
+        ];
 
         $data['id'] = $this->_db->queryInsert('citations', $data);
         $this->_citations = $data;
@@ -172,9 +172,9 @@ class Citation implements RestMethods
     private function _response($type = null)
     {
         if ($type == 'error') {
-            return array("status" => "error");
+            return ["status" => "error"];
         } else {
-            return array("status" => "ok", "citations" => $this->_citations);
+            return ["status" => "ok", "citations" => $this->_citations];
         }
     }
 

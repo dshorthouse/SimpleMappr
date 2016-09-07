@@ -51,7 +51,7 @@ use \ForceUTF8\Encoding;
  */
 class MapprQuery extends Mappr
 {
-    public $data = array();
+    public $data = [];
 
     /**
      * Implement getRequest method
@@ -62,17 +62,17 @@ class MapprQuery extends Mappr
     {
         $attr = new \stdClass();
         $attr->download         = false;
-        $attr->options          = array();
+        $attr->options          = [];
         $attr->border_thickness = 1.25;
         $attr->width            = (float)Utility::loadParam('width', 900);
         $attr->height           = (float)Utility::loadParam('height', $attr->width/2);
-        $attr->image_size       = array($attr->width, $attr->height);
+        $attr->image_size       = [$attr->width, $attr->height];
         $attr->output           = Utility::loadParam('output', 'png');
         $attr->projection       = Utility::loadParam('projection', 'epsg:4326');
         $attr->projection_map   = Utility::loadParam('projection_map', 'epsg:4326');
         $attr->origin           = (int)Utility::loadParam('origin', false);
         $attr->bbox_map         = Utility::loadParam('bbox', '-180,-90,180,90');
-        $attr->layers           = Utility::loadParam('layers', array());
+        $attr->layers           = Utility::loadParam('layers', []);
         $attr->graticules       = Utility::loadParam('graticules', false);
         $attr->bbox_query       = Utility::loadParam('bbox_query', '0,0,0,0');
         $attr->queryLayer       = Utility::loadParam('qlayer', 'countries');
@@ -119,13 +119,13 @@ class MapprQuery extends Mappr
         if ($return == MS_SUCCESS) {
             if ($layer->getNumResults() > 0) {
                 $layer->open();
-                $items = array();
+                $items = [];
                 for ($i = 0; $i < $layer->getNumResults(); $i++) {
                     $shape = $layer->getShape($layer->getResult($i));
                     if ($this->request->queryLayer == 'stateprovinces_polygon') {
                         $hasc = explode(".", $shape->values['code_hasc']);
                         if (isset($shape->values['adm0_a3']) && isset($hasc[1])) {
-                            $items[$shape->values['adm0_a3']][$hasc[1]] = array();
+                            $items[$shape->values['adm0_a3']][$hasc[1]] = [];
                         }
                     } else {
                         //DigitalEarth ne_10m_admin_0_map_units is inconsistent

@@ -56,11 +56,11 @@ class MapprWms extends Mappr
     private $_filter_simplify;
 
     /* columns to filter on */ 
-    private $_filter_columns = array();
+    private $_filter_columns = [];
 
-    private $_wms_layers = array();
+    private $_wms_layers = [];
 
-    public function __construct($layers = array())
+    public function __construct($layers = [])
     {
         $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
@@ -126,7 +126,7 @@ class MapprWms extends Mappr
         $this->bbox_map   = Utility::loadParam('bbox', '-180,-90,180,90');
         $this->download   = false;
         $this->output     = false;
-        $this->image_size = array(900,450);
+        $this->image_size = [900,450];
 
         return $this;
     }

@@ -89,8 +89,8 @@ class MapprDocx extends Mappr
 
         $width = $section->getSettings()->getPageSizeW() - $section->getSettings()->getMarginLeft() - $section->getSettings()->getMarginRight();
 
-        $files = array();
-        $images = array('image', 'scale', 'legend');
+        $files = [];
+        $images = ['image', 'scale', 'legend'];
         foreach ($images as $image) {
             if ($this->{$image}) {
                 $image_filename = basename($this->{$image}->saveWebImage());
@@ -104,9 +104,9 @@ class MapprDocx extends Mappr
 
         foreach ($files as $type => $values) {
             if ($type == 'image') {
-                $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'center'));
+                $section->addImage($values['file'], ['width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'center']);
             } else {
-                $section->addImage($values['file'], array('width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'right'));
+                $section->addImage($values['file'], ['width' => $values['size'][0]/$scale, 'height' => $values['size'][1]/$scale, 'align' => 'right']);
             }
         }
 

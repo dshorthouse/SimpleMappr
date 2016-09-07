@@ -56,10 +56,10 @@ class User implements RestMethods
     private $_role;
     private $_db;
 
-    public static $roles = array(
+    public static $roles = [
         1 => 'user',
         2 => 'administrator'
-    );
+    ];
 
     /**
      * Check permissions, used in router
@@ -110,7 +110,7 @@ class User implements RestMethods
     public function index($params)
     {
         $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
         $order = "u.access {$this->dir}";
 
         if (!empty($this->sort)) {
@@ -196,7 +196,7 @@ class User implements RestMethods
         $this->_db->bindParam(":uid", $id, 'integer');
         $this->_db->execute();
 
-        return array("status" => "ok");
+        return ["status" => "ok"];
     }
 
 }

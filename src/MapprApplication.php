@@ -117,14 +117,14 @@ class MapprApplication extends Mappr
     {
       $this->image_url = $this->image->saveWebImage();
 
-      $bbox = array(
+      $bbox = [
           sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
           sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
           sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
           sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
-      );
+      ];
 
-      $output = array(
+      $output = [
           'mapOutputImage'      => $this->image_url,
           'size'                => $this->image_size,
           'rendered_bbox'       => implode(",", $bbox),
@@ -133,7 +133,7 @@ class MapprApplication extends Mappr
           'legend_url'          => $this->legend_url,
           'scalebar_url'        => $this->scalebar_url,
           'bad_points'          => $this->getBadPoints()
-      );
+      ];
 
       return $output;
     }

@@ -88,12 +88,12 @@ class UsermapTest extends SimpleMapprTest
 
         $cookie = json_decode(urldecode($this->webDriver->manage()->getCookieNamed('simplemappr')['value']));
         $title = 'Another Sample Map User';
-        $mid = parent::$db->queryInsert("maps", array(
+        $mid = parent::$db->queryInsert("maps", [
             'uid' => $cookie->uid,
             'title' => $title,
-            'map' => json_encode(array('save' => array('title' => $title))),
+            'map' => json_encode(['save' => ['title' => $title]]),
             'created' => time()
-        ));
+        ]);
         $this->webDriver->navigate()->refresh();
         $this->waitOnAjax();
         $delete_links = $this->webDriver->findElements(WebDriverBy::cssSelector("#usermaps > .grid-usermaps > tbody > tr > .actions > .map-delete"));

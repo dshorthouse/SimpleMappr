@@ -49,7 +49,7 @@ namespace SimpleMappr;
  */
 class Kml
 {
-    public static $pushpins = array(
+    public static $pushpins = [
         'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
         'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png',
         'http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png',
@@ -60,11 +60,11 @@ class Kml
         'http://maps.google.com/mapfiles/ms/micons/pink-pushpin.png',
         'http://maps.google.com/mapfiles/ms/micons/purple-pushpin.png',
         'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
-    );
+    ];
 
     private $_kml = "";
-    private $_metadata = array();
-    private $_placemark = array();
+    private $_metadata = [];
+    private $_placemark = [];
 
     /**
      * The constructor
@@ -84,9 +84,9 @@ class Kml
      *
      * @return object $this
      */
-    public function getRequest($file_name = "", $coords = array())
+    public function getRequest($file_name = "", $coords = [])
     {
-        $this->coords         = ($coords) ? $coords : Utility::loadParam('coords', array());
+        $this->coords         = ($coords) ? $coords : Utility::loadParam('coords', []);
         $this->file_name      = ($file_name) ? $file_name : Utility::loadParam('file_name', time());
         $this->download_token = Utility::loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");

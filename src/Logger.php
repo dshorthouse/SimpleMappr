@@ -96,14 +96,14 @@ class Logger
 
         $fp = fopen($this->_filename, 'r');
         if (!$fp) { 
-            return array();
+            return [];
         }
 
         fseek($fp, 0, SEEK_END);
         $pos = ftell($fp);
 
         if (!$pos) {
-            return array();
+            return [];
         }
 
         while ($line_count < $n + 1) {

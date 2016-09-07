@@ -41,29 +41,29 @@ trait AcceptedMarkerShapes
     /**
      * Accepted marker shapes
      */
-    public static $shapes = array(
-        'general' => array(
-            'plus' => array('style' => 'plus', 'name' => 'plus'),
-            'cross' => array('style' => 'cross', 'name' => 'cross'),
-            'asterisk' => array('style'=> 'asterisk', 'name' => 'asterisk')
-        ),
-        'closed' => array(
-            'circle' => array('style' => 'circle', 'name' => 'circle (s)'),
-            'star' => array('style' => 'star', 'name' => 'star (s)'),
-            'square' => array('style' => 'square', 'name' => 'square (s)'),
-            'triangle' => array('style' => 'triangle', 'name' => 'triangle (s)'),
-            'hexagon' => array('style' => 'hexagon', 'name' => 'hexagon (s)'),
-            'inversetriangle' => array('style' => 'inversetriangle', 'name' => 'inverse triangle (s)')
-        ),
-        'open' => array(
-            'opencircle' => array('style' => 'circle', 'name' => 'circle (o)'),
-            'openstar' => array('style' => 'star', 'name' => 'star (o)'),
-            'opensquare' => array('style' => 'square', 'name' => 'square (o)'),
-            'opentriangle' => array('style' => 'triangle', 'name' => 'triangle (o)'),
-            'openhexagon' => array('style' => 'hexagon', 'name' => 'hexagon (o)'),
-            'inverseopentriangle' => array('style' => 'inversetriangle', 'name' => 'inverse triangle (o)')
-        )
-    );
+    public static $shapes = [
+        'general' => [
+            'plus' => ['style' => 'plus', 'name' => 'plus'],
+            'cross' => ['style' => 'cross', 'name' => 'cross'],
+            'asterisk' => ['style'=> 'asterisk', 'name' => 'asterisk']
+        ],
+        'closed' => [
+            'circle' => ['style' => 'circle', 'name' => 'circle (s)'],
+            'star' => ['style' => 'star', 'name' => 'star (s)'],
+            'square' => ['style' => 'square', 'name' => 'square (s)'],
+            'triangle' => ['style' => 'triangle', 'name' => 'triangle (s)'],
+            'hexagon' => ['style' => 'hexagon', 'name' => 'hexagon (s)'],
+            'inversetriangle' => ['style' => 'inversetriangle', 'name' => 'inverse triangle (s)']
+        ],
+        'open' => [
+            'opencircle' => ['style' => 'circle', 'name' => 'circle (o)'],
+            'openstar' => ['style' => 'star', 'name' => 'star (o)'],
+            'opensquare' => ['style' => 'square', 'name' => 'square (o)'],
+            'opentriangle' => ['style' => 'triangle', 'name' => 'triangle (o)'],
+            'openhexagon' => ['style' => 'hexagon', 'name' => 'hexagon (o)'],
+            'inverseopentriangle' => ['style' => 'inversetriangle', 'name' => 'inverse triangle (o)']
+        ]
+    ];
 
     public static function shapes()
     {
@@ -72,30 +72,30 @@ trait AcceptedMarkerShapes
 
     public static function vertices($type)
     {
-        $vertices = array();
+        $vertices = [];
         switch ($type) {
             case 'plus':
-                $vertices = array(
+                $vertices = [
                     0.5, 0,
                     0.5, 1,
                     -99, -99,
                     0, 0.5,
                     1, 0.5
-                );
+                ];
                 break;
 
             case 'cross':
-                $vertices = array(
+                $vertices = [
                     0, 0,
                     1, 1,
                     -99, -99,
                     0, 1,
                     1, 0
-                );
+                ];
                 break;
 
             case 'asterisk':
-                $vertices = array(
+                $vertices = [
                     0, 0,
                     1, 1,
                     -99, -99,
@@ -107,17 +107,17 @@ trait AcceptedMarkerShapes
                     -99, -99,
                     0, 0.5,
                     1, 0.5
-                );
+                ];
                 break;
 
             case 'circle':
-                $vertices = array(
+                $vertices = [
                     1, 1
-                );
+                ];
                 break;
 
             case 'star':
-                $vertices = array(
+                $vertices = [
                     0, 0.375,
                     0.35, 0.365,
                     0.5, 0,
@@ -129,39 +129,39 @@ trait AcceptedMarkerShapes
                     0.125, 1,
                     0.25, 0.625,
                     0, 0.375
-                );
+                ];
                 break;
 
             case 'square':
-                $vertices = array(
+                $vertices = [
                     0, 1,
                     0, 0,
                     1, 0,
                     1, 1,
                     0, 1
-                );
+                ];
                 break;
 
             case 'triangle':
-                $vertices = array(
+                $vertices = [
                     0, 1,
                     0.5, 0,
                     1, 1,
                     0, 1
-                );
+                ];
                 break;
 
             case 'inversetriangle':
-                $vertices = array(
+                $vertices = [
                     0, 0,
                     1, 0,
                     0.5, 1,
                     0, 0
-                );
+                ];
                 break;
 
             case 'hexagon':
-                $vertices = array(
+                $vertices = [
                     0.23, 0,
                     0, 0.5,
                     0.23, 1,
@@ -169,7 +169,7 @@ trait AcceptedMarkerShapes
                     1, 0.5,
                     0.77, 0,
                     0.23, 0
-                );
+                ];
                 break;
         }
 

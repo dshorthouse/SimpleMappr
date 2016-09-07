@@ -77,12 +77,12 @@ class CitationTest extends SimpleMapprTest
      */
     public function testDeleteCitation()
     {
-        $citation_id = parent::$db->queryInsert("citations", array(
+        $citation_id = parent::$db->queryInsert("citations", [
             'year' => 2015,
             'reference' => 'Aaarnoldson, Peter. 2015. Here be a new citation. [Retrieved from http://www.simplemappr.net. Accessed 01 January, 2015].',
             'doi' => '10.XXXX/XXXXXX',
             'first_author_surname' => 'Aaarnoldson'
-        ));
+        ]);
 
         parent::setUpPage();
         parent::setSession('administrator');

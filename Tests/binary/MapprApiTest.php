@@ -38,7 +38,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_api_ping()
     {
-        $_REQUEST = array('ping' => true);
+        $_REQUEST = ['ping' => true];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -54,7 +54,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_api_parameters()
     {
-        $_REQUEST = array('parameters' => true);
+        $_REQUEST = ['parameters' => true];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -89,7 +89,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_get()
     {
-        $_REQUEST = array();
+        $_REQUEST = [];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -106,12 +106,12 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_get_params()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'bbox' => '-130,40,-60,50',
             'projection' => 'esri:102009',
             'width' => 600,
             'graticules' => true
-        );
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -128,9 +128,9 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_no_coords()
     {
-        $_REQUEST = array(
-            'points' => array()
-        );
+        $_REQUEST = [
+            'points' => []
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -147,9 +147,9 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_coords()
     {
-        $_REQUEST = array(
-            'points' => array("45, -120\n52, -100")
-        );
+        $_REQUEST = [
+            'points' => ["45, -120\n52, -100"]
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -166,10 +166,10 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_encoding()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
             'layers' => 'stateprovnames'
-        );
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -186,11 +186,11 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_country()
     {
-        $_REQUEST = array(
-            'shade' => array(
+        $_REQUEST = [
+            'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
-            )
-        );
+            ]
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -208,9 +208,9 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     public function test_apioutput_ecoregions()
     {
         if (!array_key_exists('TRAVIS', $_SERVER)) {
-            $_REQUEST = array(
+            $_REQUEST = [
                 'layers' => 'ecoregions'
-            );
+            ];
             $mappr_api = new \SimpleMappr\MapprApi();
             $mappr_api->execute();
             ob_start();
@@ -228,12 +228,12 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_tif()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'output' => 'tif',
-            'shade' => array(
+            'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
-            )
-        );
+            ]
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();
@@ -250,12 +250,12 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_svg()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'output' => 'svg',
-            'shade' => array(
+            'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
-            )
-        );
+            ]
+        ];
         $mappr_api = new \SimpleMappr\MapprApi();
         $mappr_api->execute();
         ob_start();

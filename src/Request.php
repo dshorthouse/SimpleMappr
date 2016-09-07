@@ -52,8 +52,8 @@ class Request
     public static function getRequest()
     {
         $attr = new \stdClass();
-        $attr->coords           = Utility::loadParam('coords', array());
-        $attr->regions          = Utility::loadParam('regions', array());
+        $attr->coords           = Utility::loadParam('coords', []);
+        $attr->regions          = Utility::loadParam('regions', []);
         $attr->output           = Utility::loadParam('output', 'png');
         $attr->width            = (float)Utility::loadParam('width', 900);
         $attr->height           = (float)Utility::loadParam('height', $attr->width/2);
@@ -61,16 +61,16 @@ class Request
         $attr->projection_map   = Utility::loadParam('projection_map', 'epsg:4326');
         $attr->origin           = (int)Utility::loadParam('origin', false);
         $attr->bbox_map         = Utility::loadParam('bbox_map', '-180,-90,180,90');
-        $attr->bbox_rubberband  = Utility::loadParam('bbox_rubberband', array());
+        $attr->bbox_rubberband  = Utility::loadParam('bbox_rubberband', []);
         $attr->pan              = Utility::loadParam('pan', false);
-        $attr->layers           = Utility::loadParam('layers', array());
+        $attr->layers           = Utility::loadParam('layers', []);
         $attr->graticules       = (array_key_exists('grid', $attr->layers)) ? true : false;
         $attr->watermark        = Utility::loadParam('watermark', false);
         $attr->gridspace        = Utility::loadParam('gridspace', false);
         $attr->gridlabel        = (int)Utility::loadParam('gridlabel', 1);
         $attr->download         = Utility::loadParam('download', false);
         $attr->crop             = Utility::loadParam('crop', false);
-        $attr->options          = Utility::loadParam('options', array()); //scalebar, legend, border, linethickness
+        $attr->options          = Utility::loadParam('options', []); //scalebar, legend, border, linethickness
         $attr->border_thickness = (float)Utility::loadParam('border_thickness', 1.25);
         $attr->rotation         = (int)Utility::loadParam('rotation', 0);
         $attr->zoom_in          = Utility::loadParam('zoom_in', false);

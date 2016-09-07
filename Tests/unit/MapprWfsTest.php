@@ -58,11 +58,11 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetFeature1()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'REQUEST' => 'GetFeature',
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10'
-        );
+        ];
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
         ob_start();
@@ -78,12 +78,12 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetFeature2()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'REQUEST' => 'GetFeature',
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10',
             'SRSNAME' => 'EPSG:4326'
-        );
+        ];
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
         ob_start();

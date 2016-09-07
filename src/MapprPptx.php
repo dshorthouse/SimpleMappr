@@ -95,8 +95,8 @@ class MapprPptx extends Mappr
         $width = 950;
         $height = 720;
 
-        $files = array();
-        $images = array('image', 'scale', 'legend');
+        $files = [];
+        $images = ['image', 'scale', 'legend'];
         foreach ($images as $image) {
             if ($this->{$image}) {
                 $image_filename = basename($this->{$image}->saveWebImage());

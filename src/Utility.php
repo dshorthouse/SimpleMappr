@@ -72,7 +72,7 @@ class Utility
     {
         Header::setHeader('json');
         http_response_code(401);
-        echo json_encode(array("error" => "access denied"));
+        echo json_encode(["error" => "access denied"]);
         exit();
     }
 
@@ -191,7 +191,7 @@ class Utility
             $green = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
             $blue = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
         }
-        return array($red, $green, $blue);
+        return [$red, $green, $blue];
     }
 
     /**
@@ -199,22 +199,22 @@ class Utility
      *
      * @param string $point A string purported to be a coordinate
      *
-     * @return array(latitude, longitude) in DD
+     * @return [latitude, longitude] in DD
      */
     public static function makeCoordinates($point)
     {
-        $loc = preg_replace(array('/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'), array(' ', ""), $point);
+        $loc = preg_replace(['/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'], [' ', ""], $point);
         if (preg_match('/[NSEWO]/', $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
-                return array(null, null);
+                return [null, null];
             }
             $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-            return array(self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1])));
+            return [self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1]))];
         } else {
             $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc))); //split by space, comma, or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
-                return array(null, null);
+                return [null, null];
             }
             return $coord;
         }

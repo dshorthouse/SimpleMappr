@@ -40,22 +40,22 @@ class KmlTest extends PHPUnit_Framework_TestCase
      */
     public function test_kml()
     {
-        $coords = array(
-            array(
+        $coords = [
+            [
                 'title' => 'Sample Data',
                 'data' => "55, -115\n65, -110",
                 'shape' => 'star',
                 'size' => 14,
                 'color' => '255 32 3'
-            ),
-            array(
+            ],
+            [
                 'title' => 'Sample Data2',
                 'data' => "35, -120\n70, -80",
                 'shape' => 'circle',
                 'size' => 14,
                 'color' => '255 32 3'
-            )
-        );
+            ]
+        ];
         $this->kml->getRequest("My Map", $coords);
         ob_start();
         $this->kml->createOutput();

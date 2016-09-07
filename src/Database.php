@@ -205,7 +205,7 @@ class Database
      *
      * @return int The last inserted id.
      */
-    public function queryInsert($table, $data = array())
+    public function queryInsert($table, $data = [])
     {
         if (empty($data)) {
             return;
@@ -247,7 +247,7 @@ class Database
         }
         $sql .= rtrim($updates, ', ');
 
-        $where_parts = array();
+        $where_parts = [];
         if ($where) {
             $sql .= " WHERE ";
             $where_parts = explode("=", $where);
@@ -278,11 +278,11 @@ class Database
         $db = $config['environments'][ENVIRONMENT]['name'];
         $charset = $config['environments'][ENVIRONMENT]['charset'];
 
-        return array(
+        return [
             'conn' => $adapter . ':host=' . $host . ';dbname=' . $db . ';charset=' . $charset,
             'user' =>  $config['environments'][ENVIRONMENT]['user'],
             'pass' => $config['environments'][ENVIRONMENT]['pass']
-        );
+        ];
     }
 
     /**

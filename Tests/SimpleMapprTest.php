@@ -91,90 +91,90 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         self::$db->exec($stateprovinces_table);
         self::$db->exec($shares_table);
 
-        $user1 = self::$db->queryInsert('users', array(
+        $user1 = self::$db->queryInsert('users', [
           'uid' => 1,
           'identifier' => 'administrator',
           'username' => 'administrator',
           'displayname' => 'John Smith',
           'email' => 'nowhere@example.com',
           'role' => 2
-        ));
+        ]);
 
-        $user2 = self::$db->queryInsert('users', array(
+        $user2 = self::$db->queryInsert('users', [
           'uid' => 2,
           'identifier' => 'user',
           'username' => 'user',
           'displayname' => 'Jack Johnson',
           'email' => 'nowhere@example.com',
           'role' => 1
-        ));
+        ]);
 
-        $map_data1 = array (
+        $map_data1 = [
           'coords' => 
-          array (
+            [
             0 => 
-            array (
+            [
               'title' => 'Sample Data',
               'data' => '55, -115',
               'shape' => 'star',
               'size' => '14',
               'color' => '255 32 3',
-            ),
+            ],
             1 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'shape' => 'circle',
               'size' => '10',
               'color' => '0 0 0',
-            ),
+            ],
             2 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'shape' => 'circle',
               'size' => '10',
               'color' => '0 0 0',
-            ),
-          ),
+            ],
+          ],
           'regions' => 
-          array (
+          [
             0 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
+            ],
             1 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
+            ],
             2 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
-          ),
+            ],
+          ],
           'layers' => 
-          array (
+          [
             'countries' => 'on',
             'stateprovinces' => 'on',
-          ),
+          ],
           'gridspace' => '',
           'projection' => 'epsg:4326',
           'origin' => '',
           'filter-mymap' => '',
           'citation' => 
-          array (
+          [
             'reference' => '',
             'first_author_surname' => '',
             'year' => '',
             'doi' => '',
             'link' => '',
-          ),
+          ],
           'download-filetype' => 'svg',
           'download-factor' => '1',
           'download' => '',
@@ -189,9 +189,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'crop' => '',
           'rotation' => '0',
           'save' => 
-          array (
+          [
             'title' => 'Sample Map Administrator',
-          ),
+          ],
           'file_name' => '',
           'download_factor' => '1',
           'width' => '',
@@ -199,85 +199,85 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'download_filetype' => 'svg',
           'grid_space' => '',
           'options' => 
-          array (
+          [
             'border' => '',
             'legend' => '',
             'scalebar' => '',
             'scalelinethickness' => '',
-          ),
+          ],
           'border_thickness' => '',
           'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
           'rendered_rotation' => '0',
           'rendered_projection' => 'epsg:4326',
           'bad_points' => '',
-        );
+        ];
 
-        $map_data2 = array (
+        $map_data2 = [
           'coords' => 
-          array (
+          [
             0 => 
-            array (
+            [
               'title' => 'More Sample Data',
               'data' => '45, -115',
               'shape' => 'circle',
               'size' => '14',
               'color' => '255 32 3',
-            ),
+            ],
             1 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'shape' => 'circle',
               'size' => '10',
               'color' => '0 0 0',
-            ),
+            ],
             2 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'shape' => 'circle',
               'size' => '10',
               'color' => '0 0 0',
-            ),
-          ),
+            ],
+          ],
           'regions' => 
-          array (
+          [
             0 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
+            ],
             1 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
+            ],
             2 => 
-            array (
+            [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
-            ),
-          ),
+            ],
+          ],
           'layers' => 
-          array (
+          [
             'countries' => 'on',
             'stateprovinces' => 'on',
-          ),
+          ],
           'gridspace' => '',
           'projection' => 'epsg:4326',
           'origin' => '',
           'filter-mymap' => '',
           'citation' => 
-          array (
+          [
             'reference' => '',
             'first_author_surname' => '',
             'year' => '',
             'doi' => '',
             'link' => '',
-          ),
+          ],
           'download-filetype' => 'svg',
           'download-factor' => '1',
           'download' => '',
@@ -292,9 +292,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'crop' => '',
           'rotation' => '0',
           'save' => 
-          array (
+          [
             'title' => 'Sample Map User',
-          ),
+          ],
           'file_name' => '',
           'download_factor' => '1',
           'width' => '',
@@ -302,51 +302,51 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'download_filetype' => 'svg',
           'grid_space' => '',
           'options' => 
-          array (
+          [
             'border' => '',
             'legend' => '',
             'scalebar' => '',
             'scalelinethickness' => '',
-          ),
+          ],
           'border_thickness' => '',
           'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
           'rendered_rotation' => '0',
           'rendered_projection' => 'epsg:4326',
           'bad_points' => '',
-        );
+        ];
 
-        $map1 = self::$db->queryInsert('maps', array(
+        $map1 = self::$db->queryInsert('maps', [
           'uid' => $user1,
           'title' => 'Sample Map Administrator',
           'map' => json_encode($map_data1),
           'created' => time()-(7 * 24 * 60 * 60)
-        ));
+        ]);
 
-        $map2 = self::$db->queryInsert('maps', array(
+        $map2 = self::$db->queryInsert('maps', [
           'uid' => $user2,
           'title' => 'Sample Map User',
           'map' => json_encode($map_data2),
           'created' => time()
-        ));
+        ]);
 
-        self::$db->queryInsert('shares', array(
+        self::$db->queryInsert('shares', [
             'mid' => $map1,
             'created' => time()
-        ));
+        ]);
 
-        self::$db->queryInsert('citations', array(
+        self::$db->queryInsert('citations', [
           'year' => 2010,
           'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
           'doi' => '10.XXXX/XXXXXX',
           'first_author_surname' => 'Shorthouse'
-        ));
+        ]);
 
-        self::$db->queryInsert('stateprovinces', array(
+        self::$db->queryInsert('stateprovinces', [
           'country' => 'Canada',
           'country_iso' => 'CAN',
           'stateprovince' => 'Alberta',
           'stateprovince_code' => 'AB'
-        ));
+        ]);
     }
 
     /**
@@ -438,7 +438,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $host = 'http://localhost:4444/wd/hub';
-        $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => BROWSER, WebDriverCapabilityType::HANDLES_ALERTS => true);
+        $capabilities = [WebDriverCapabilityType::BROWSER_NAME => BROWSER, WebDriverCapabilityType::HANDLES_ALERTS => true];
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
@@ -506,23 +506,23 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
      */
     public function setSession($username = "user", $locale = 'en_US')
     {
-        $user = array(
+        $user = [
             "identifier" => $username,
             "username" => $username,
             "email" => "nowhere@example.com",
             "locale" => $locale
-        );
+        ];
         if ($username == 'administrator') {
-            $role = array("role" => "2", "uid" => "1", "displayname" => "John Smith");
+            $role = ["role" => "2", "uid" => "1", "displayname" => "John Smith"];
         } else {
-            $role = array("role" => "1", "uid" => "2", "displayname" => "Jack Johnson");
+            $role = ["role" => "1", "uid" => "2", "displayname" => "Jack Johnson"];
         }
         $user = array_merge($user, $role);
-        $cookie = array(
+        $cookie = [
             "name" => "simplemappr",
             "value" => urlencode(json_encode($user)),
             "path" => "/"
-        );
+        ];
         $this->webDriver->manage()->addCookie($cookie);
         session_cache_limiter('nocache');
         session_start();

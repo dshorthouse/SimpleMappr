@@ -49,7 +49,7 @@ namespace SimpleMappr;
  */
 class MapprApi extends Mappr
 {
-    private $_coord_cols = array();
+    private $_coord_cols = [];
 
     /**
      * Implement getRequest method
@@ -66,7 +66,7 @@ class MapprApi extends Mappr
         $attr->method           = $_SERVER['REQUEST_METHOD'];
         $attr->download         = true;
         $attr->watermark        = true;
-        $attr->options          = array();
+        $attr->options          = [];
         $attr->url              = false;
         $attr->url_content      = "";
         $url                    = urldecode(Utility::loadParam('url', false));
@@ -84,21 +84,21 @@ class MapprApi extends Mappr
             $attr->url = $file;
         }
 
-        $attr->points           = Utility::loadParam('points', array());
-        $attr->legend           = Utility::loadParam('legend', array());
-        $attr->shape            = (is_array(Utility::loadParam('shape', array()))) ? Utility::loadParam('shape', array()) : array(Utility::loadParam('shape', array()));
-        $attr->size             = (is_array(Utility::loadParam('size', array()))) ? Utility::loadParam('size', array()) : array(Utility::loadParam('size', array()));
-        $attr->color            = (is_array(Utility::loadParam('color', array()))) ? Utility::loadParam('color', array()) : array(Utility::loadParam('color', array()));
+        $attr->points           = Utility::loadParam('points', []);
+        $attr->legend           = Utility::loadParam('legend', []);
+        $attr->shape            = (is_array(Utility::loadParam('shape', []))) ? Utility::loadParam('shape', []) : [Utility::loadParam('shape', [])];
+        $attr->size             = (is_array(Utility::loadParam('size', []))) ? Utility::loadParam('size', []) : [Utility::loadParam('size', [])];
+        $attr->color            = (is_array(Utility::loadParam('color', []))) ? Utility::loadParam('color', []) : [Utility::loadParam('color', [])];
 
         $attr->outlinecolor     = Utility::loadParam('outlinecolor', null);
         $attr->border_thickness = (float)Utility::loadParam('thickness', 1.25);
 
-        $shaded = Utility::loadParam('shade', array());
-        $attr->regions = array(
+        $shaded = Utility::loadParam('shade', []);
+        $attr->regions = [
             'data' => (array_key_exists('places', $shaded)) ? $shaded['places'] : "",
             'title' => (array_key_exists('title', $shaded)) ? $shaded['title'] : "",
             'color' => (array_key_exists('color', $shaded)) ? str_replace(",", " ", $shaded['color']) : "120 120 120"
-        );
+        ];
 
         $attr->output           = Utility::loadParam('output', 'png');
         $attr->projection       = Utility::loadParam('projection', 'epsg:4326');
@@ -109,7 +109,7 @@ class MapprApi extends Mappr
 
         //convert layers as comma-separated values to an array
         $_layers                = explode(',', Utility::loadParam('layers', ""));
-        $layers = array();
+        $layers = [];
         $layers['countries']    = true;
         foreach ($_layers as $_layer) {
             if ($_layer) {
@@ -245,7 +245,7 @@ class MapprApi extends Mappr
             //grab the data for regions & split
             $whole = trim($this->request->regions['data']);
             $rows = explode("\n", Utility::removeEmptyLines($whole));
-            $qry = array();
+            $qry = [];
             foreach ($rows as $row) {
                 $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
                 foreach ($regions as $region) {
@@ -253,7 +253,7 @@ class MapprApi extends Mappr
                     if ($pos !== false) {
                         $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
                         $states = preg_split("/[\s|]+/", $split[1]);
-                        $statekey = array();
+                        $statekey = [];
                         foreach ($states as $state) {
                             $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
                         }
@@ -391,7 +391,7 @@ class MapprApi extends Mappr
     {
         if ($this->request->ping) {
             Header::setHeader("json");
-            return json_encode(array("status" => "ok"));
+            return json_encode(["status" => "ok"]);
         }
         else if ($this->request->parameters) {
             Header::setHeader("json");
@@ -411,10 +411,10 @@ class MapprApi extends Mappr
                 http_response_code(204);
             } else {
                 Header::setHeader("json");
-                $output = array(
+                $output = [
                     'imageURL' => $this->image->saveWebImage(),
                     'expiry'   => date('c', time() + (6 * 60 * 60))
-                );
+                ];
                 return json_encode($output);
             }
         }
@@ -430,104 +430,104 @@ class MapprApi extends Mappr
       array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
           $projections[] = $key . " (" . $val['name'] . ")";
       });
-      $params = array(
-        'ping'       => array(
+      $params = [
+        'ping'       => [
           'definition' => 'if ping=true is included, a JSON response will be produced in place of an image.',
           'example' => 'ping=true'
-        ),
-        'parameters' => array(
+        ],
+        'parameters' => [
           'definition' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their definitions.',
           'example' => 'parameters=true'
-        ),
-        'url' => array(
+        ],
+        'url' => [
           'definition' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
           'example' => 'url=' . urlencode(MAPPR_URL . '/public/files/demo.txt')
-        ),
-        'file' => array(
+        ],
+        'file' => [
           'definition' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
           'example' => 'file= FILE OBJECT'
-        ),
-        'points[x]' => array(
+        ],
+        'points[x]' => [
           'definition' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
           'example' => 'points[0]=45,-120\n45,-110\n45,-125\n42,-100&points[1]=44,-100'
-        ),
-        'shape[x]' => array(
+        ],
+        'shape[x]' => [
           'definition' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
           'example' => 'shape[0]=circle&shape[1]=square'
-        ),
-        'size[x]' => array(
+        ],
+        'size[x]' => [
           'definition' => 'integer-based point size of marker in column x',
           'example' => 'size[0]=10&size[1]=14'
-        ),
-        'color[x]' => array(
+        ],
+        'color[x]' => [
           'definition' => 'comma-separated RGB colors for marker in column x',
           'example' => 'color[0]=255,0,0&color[1]=0,255,0'
-        ),
-        'outlinecolor' => array(
+        ],
+        'outlinecolor' => [
           'definition' => 'comma-separated RGB colors for halo around all solid markers',
           'example' => 'outlinecolor=10,10,10'
-        ),
-        'zoom' => array(
+        ],
+        'zoom' => [
           'definition' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
           'example' => '8'
-        ),
-        'bbox' => array(
+        ],
+        'bbox' => [
           'definition' => 'comma-separated bounding box in decimal degrees',
           'example' => 'bbox=-130,40,-60,50'
-        ),
-        'shade[places]' => array(
+        ],
+        'shade[places]' => [
           'definition' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
           'example' => 'shade[places]=Alberta,USA[MT|WA]'
-        ),
-        'shade[title]' => array(
+        ],
+        'shade[title]' => [
           'definition' => 'the title for the shaded places',
           'example' => ''
-        ),
-        'shade[color]' => array(
+        ],
+        'shade[color]' => [
           'definition' => 'comma-separated RGB fill colors for shaded places',
           'example' => ''
-        ),
-        'layers' => array(
+        ],
+        'layers' => [
           'definition' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
           'example' => 'layers=stateprovinces,lakes'
-        ),
-        'projection' => array(
+        ],
+        'projection' => [
           'definition' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
           'example' => 'projection=EPSG:4326'
-        ),
-        'origin' => array(
+        ],
+        'origin' => [
           'definition' => 'longitude of natural origin used in Lambert projections',
           'example' => ''
-        ),
-        'graticules' => array(
+        ],
+        'graticules' => [
           'definition' => 'display the graticules',
           'example' => 'graticules=true'
-        ),
-        'spacing' => array(
+        ],
+        'spacing' => [
           'definition' => 'display the graticules with defined spacing in degrees',
           'example' => 'spacing=10'
-        ),
-        'width' => array(
+        ],
+        'width' => [
           'definition' => 'integer-based output width in pixels',
           'example' => 'width=400'
-        ),
-        'height' => array(
+        ],
+        'height' => [
           'definition' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
           'example' => 'height=400'
-        ),
-        'output' => array(
+        ],
+        'output' => [
           'definition' => 'file format of the image or vector produced; options are ' . implode(", ", AcceptedOutputs::outputList()),
           'example' => 'output=png'
-        ),
-        'scalebar' => array(
+        ],
+        'scalebar' => [
           'definition' => 'embed a scalebar in the lower right of the image',
           'example' => 'scalebar=true'
-        ),
-        'legend[x]'  => array(
+        ],
+        'legend[x]'  => [
           'definition' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
           'example' => ''
-        ),
-      );
+        ],
+      ];
       return $params;
     }
 
@@ -572,11 +572,11 @@ class MapprApi extends Mappr
      *
      * @param array $array Array of coordinates
      *
-     * @return array(long,lat)
+     * @return [long,lat]
      */
     private function _getMidpoint($array)
     {
-        $x = $y = $z = array();
+        $x = $y = $z = [];
         foreach ($array as $coords) {
             foreach ($coords as $coord) {
                 if (isset($coord[0]) && isset($coord[1])) {
@@ -591,7 +591,7 @@ class MapprApi extends Mappr
         $X = array_sum($x)/count($x);
         $Y = array_sum($y)/count($y);
         $Z = array_sum($z)/count($z);
-        return array(rad2deg(atan2($Y, $X)), rad2deg(atan2($Z, sqrt(pow($X, 2) + pow($Y, 2)))));
+        return [rad2deg(atan2($Y, $X)), rad2deg(atan2($Z, sqrt(pow($X, 2) + pow($Y, 2))))];
     }
 
     /**
@@ -602,7 +602,7 @@ class MapprApi extends Mappr
     private function _parsePoints()
     {
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-        $coord_array = array();
+        $coord_array = [];
         foreach ($this->request->points as $rows) {
             $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(Utility::removeEmptyLines($rows)));
             foreach (str_replace("\\", "", $row) as $point) {
@@ -660,10 +660,10 @@ class MapprApi extends Mappr
                             if (preg_match('/[NSEWO]/', $cols[$i]) != 0) {
                                 $coord = preg_split("/[,;]/", $cols[$i]);
                                 $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-                                $this->_coord_cols[$i][] = array(
+                                $this->_coord_cols[$i][] = [
                                     Utility::dmsToDeg(trim($coord[0])),
                                     Utility::dmsToDeg(trim($coord[1]))
-                              );
+                                ];
                             } else {
                                 $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $cols[$i])));
                             }

@@ -78,7 +78,7 @@ class Share implements RestMethods
      */
     public function index($params)
     {
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
         $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
 
         $order = "m.created {$this->dir}";
@@ -133,16 +133,16 @@ class Share implements RestMethods
         $mid = (property_exists($params, 'mid')) ? $params->mid : null;
 
         if (empty($mid)) {
-            return array("status" => "error");
+            return ["status" => "error"];
             exit();
         }
 
-        $data = array(
+        $data = [
             'mid' => $mid,
             'created' => time(),
-        );
+        ];
         $this->_db->queryInsert('shares', $data);
-        return array("status" => "ok");
+        return ["status" => "ok"];
     }
 
     /**
@@ -186,7 +186,7 @@ class Share implements RestMethods
             $this->_db->bindParam(":uid", $this->_uid, 'integer');
         }
         $this->_db->execute();
-        return array("status" => "ok");
+        return ["status" => "ok"];
     }
 
 }

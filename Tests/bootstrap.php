@@ -23,10 +23,10 @@ function switchConf($restore = false)
 {
     $config_dir = dirname(__DIR__) . '/config/';
 
-    $conf = array(
+    $conf = [
         'prod' => $config_dir . 'conf.php',
         'test' => $config_dir . 'conf.test.php'
-    );
+    ];
 
     if (!$restore) {
         if (!file_exists($conf['prod'] . ".old")) {

@@ -41,49 +41,49 @@ trait AcceptedOutputs
     /**
      * Acceptable outputs
      */
-    public static $outputs = array(
-      'png' => array(
+    public static $outputs = [
+      'png' => [
         "name" => "png",
         "driver" => "AGG/PNG",
         "imagemode" => MS_IMAGEMODE_RGB,
         "mimetype" => "image/png",
         "extension" => "png",
-        "formatoptions" => array("INTERLACE=OFF", "COMPRESSION=9")
-      ),
-      'pnga' => array(
+        "formatoptions" => ["INTERLACE=OFF", "COMPRESSION=9"]
+      ],
+      'pnga' => [
         "name" => "pnga",
         "driver" => "AGG/PNG",
         "imagemode" => MS_IMAGEMODE_RGBA,
         "mimetype" => "image/png",
         "extension" => "png",
         "transparent" => MS_TRUE,
-        "formatoptions" => array("INTERLACE=OFF", "COMPRESSION=9")
-      ),
-      'jpg' => array(
+        "formatoptions" => ["INTERLACE=OFF", "COMPRESSION=9"]
+      ],
+      'jpg' => [
         "name" => "jpg",
         "driver" => "AGG/JPEG",
         "imagemode" => MS_IMAGEMODE_RGB,
         "mimetype" => "image/jpeg",
         "extension" => "jpg",
-        "formatoptions" => array("QUALITY=95")
-      ),
-      'tif' => array(
+        "formatoptions" => ["QUALITY=95"]
+      ],
+      'tif' => [
         "name" => "tif",
         "driver" => "GDAL/GTiff",
         "imagemode" => MS_IMAGEMODE_RGB,
         "mimetype" => "image/tiff",
         "extension" => "tif",
-        "formatoptions" => array("COMPRESS=JPEG", "JPEG_QUALITY=100", "PHOTOMETRIC=YCBCR")
-      ),
-      'svg' => array(
+        "formatoptions" => ["COMPRESS=JPEG", "JPEG_QUALITY=100", "PHOTOMETRIC=YCBCR"]
+      ],
+      'svg' => [
         "name" => "svg",
         "driver" => "CAIRO/SVG",
         "imagemode" => MS_IMAGEMODE_RGB,
         "mimetype" => "image/svg+xml",
         "extension" => "svg",
-        "formatoptions" => array("COMPRESSED_OUTPUT=FALSE", "FULL_RESOLUTION=TRUE")
-      ),
-    );
+        "formatoptions" => ["COMPRESSED_OUTPUT=FALSE", "FULL_RESOLUTION=TRUE"]
+      ],
+    ];
     
     public static function outputList()
     {

@@ -48,16 +48,16 @@ class LoggerTest extends PHPUnit_Framework_TestCase
     {
         $username = 'administrator';
         $locale = 'en_US';
-        $user = array(
+        $user = [
             "identifier" => $username,
             "username" => $username,
             "email" => "nowhere@example.com",
             "locale" => $locale
-        );
+        ];
         if ($username == 'administrator') {
-            $role = array("role" => "2", "uid" => "1", "displayname" => "John Smith");
+            $role = ["role" => "2", "uid" => "1", "displayname" => "John Smith"];
         } else {
-            $role = array("role" => "1", "uid" => "2", "displayname" => "Jack Johnson");
+            $role = ["role" => "1", "uid" => "2", "displayname" => "Jack Johnson"];
         }
         $user = array_merge($user, $role);
         session_cache_limiter('nocache');

@@ -49,8 +49,8 @@ namespace SimpleMappr;
  */
 class Header
 {
-    private $_js_header = array();
-    private $_css_header = array();
+    private $_js_header = [];
+    private $_css_header = [];
     private $_hash = "";
 
     private static $_css_cache_path = "/public/stylesheets/cache/";
@@ -59,16 +59,16 @@ class Header
     /**
      * An array of javascript files that remain uncombined
      */
-    public $local_js_uncombined = array(
+    public $local_js_uncombined = [
         'jquery'      => 'public/javascript/jquery-1.12.3.min.js',
         'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
         'janrain'     => 'public/javascript/janrain.engage.min.js'
-     );
+     ];
 
     /**
      * An array of all javascript files to be combined
      */
-    public $local_js_combined = array(
+    public $local_js_combined = [
         'color'       => 'public/javascript/jquery.colorpicker.min.js',
         'jcrop'       => 'public/javascript/jquery.Jcrop.min.js',
         'textarea'    => 'public/javascript/jquery.textarearesizer.min.js',
@@ -85,22 +85,22 @@ class Header
         'toggle'      => 'public/javascript/jquery.toggleClick.min.js',
         'parse'       => 'public/javascript/papaparse.min.js',
         'simplemappr' => 'public/javascript/simplemappr.min.js'
-    );
+    ];
 
-    public $admin_js = array(
+    public $admin_js = [
         'admin' => 'public/javascript/simplemappr.admin.min.js'
-    );
+    ];
 
-    public $remote_js = array(
+    public $remote_js = [
         'jquery'    => '//code.jquery.com/jquery-1.12.3.min.js'
-    );
+    ];
 
     /**
      * An array of all css files to be minified
      */
-    public $local_css = array(
+    public $local_css = [
         'public/stylesheets/raw/styles.css'
-    );
+    ];
 
     /**
      * Flush the caches
@@ -125,10 +125,10 @@ class Header
 
         if ($output) {
             self::setHeader("json");
-            $response = array(
+            $response = [
                 "files" => true,
                 "cloudflare" => $cloudflare_flush
-            );
+            ];
             echo json_encode($response);
         }
     }
@@ -142,13 +142,13 @@ class Header
     {
         $URL = "https://www.cloudflare.com/api_json.html";
 
-        $data = array(
+        $data = [
             "a" => "fpurge_ts",
             "z" => CLOUDFLARE_DOMAIN,
             "email" => CLOUDFLARE_EMAIL,
             "tkn" => CLOUDFLARE_KEY,
             "v" => 1
-        );
+        ];
 
         $ch = curl_init();
 
@@ -287,8 +287,8 @@ class Header
      */
     private function _filesCached($dir, $x='js')
     {
-        $allfiles = array_diff(@scandir($dir), array(".", "..", ".DS_Store"));
-        $results = array();
+        $allfiles = array_diff(@scandir($dir), [".", "..", ".DS_Store"]);
+        $results = [];
         foreach ($allfiles as $file) {
             if (($x) ? preg_match('/\.'.$x.'$/i', $file) : 1) {
                 $results[] = $file;
@@ -484,7 +484,7 @@ class Header
         $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
         $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
         $header .= "head.js(";
-        $headjs = array();
+        $headjs = [];
         foreach ($this->_js_header as $key => $file) {
             $headjs[] = "{".$key." : \"".$file."\"}";
         }

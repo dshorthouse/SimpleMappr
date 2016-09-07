@@ -128,7 +128,7 @@ class MapprMap extends Mappr
             $this->options['legend'] = false;
         }
 
-        $this->image_size       = array($this->width, $this->height);
+        $this->image_size       = [$this->width, $this->height];
         $this->callback         = Utility::loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
 
@@ -153,7 +153,7 @@ class MapprMap extends Mappr
 
         case 'json':
             header("Content-Type: application/json");
-            echo json_encode(array("error" => "not found"));
+            echo json_encode(["error" => "not found"]);
             break;
 
         default:
@@ -262,7 +262,7 @@ class MapprMap extends Mappr
      */
     private function _getCoordinates()
     {
-        $output = array();
+        $output = [];
         for ($j=0; $j<=count($this->coords)-1; $j++) {
             $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
 
@@ -277,11 +277,11 @@ class MapprMap extends Mappr
                     $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
                     $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
                     if (Utility::onEarth($coord) && $title != "") {
-                        $output[] = array(
+                        $output[] = [
                             'type' => 'Feature',
-                            'geometry' => array('type' => 'Point', 'coordinates' => array($coord->x,$coord->y)),
-                            'properties' => array('title' => $title)
-                        );
+                            'geometry' => ['type' => 'Point', 'coordinates' => [$coord->x,$coord->y]],
+                            'properties' => ['title' => $title]
+                        ];
                     }
                 }
             }
@@ -307,10 +307,10 @@ class MapprMap extends Mappr
             $output = new \stdClass;
             $output->type = 'FeatureCollection';
             $output->features = $this->_getCoordinates();
-            $output->crs = array(
+            $output->crs = [
                 'type'       => 'name',
-                'properties' => array('name' => 'urn:ogc:def:crs:OGC:1.3:CRS84')
-            );
+                'properties' => ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84']
+            ];
             $output = json_encode($output);
             if (isset($this->callback) && $this->callback) {
                 $output = $this->callback . '(' . $output . ');';

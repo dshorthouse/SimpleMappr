@@ -56,12 +56,12 @@ class MapprWfs extends Mappr
     private $_filter_simplify;
 
     /* columns to filter on */ 
-    private $_filter_columns = array();
+    private $_filter_columns = [];
 
     /* WFS layers */
-    private $_wfs_layers = array();
+    private $_wfs_layers = [];
 
-    public function __construct($layers = array())
+    public function __construct($layers = [])
     {
         $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {

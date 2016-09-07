@@ -49,27 +49,27 @@ namespace SimpleMappr;
  */
 class Session
 {
-    public static $accepted_locales = array(
-        'en_US' => array(
+    public static $accepted_locales = [
+        'en_US' => [
             'canonical' => 'en',
             'locale' => 'en_US',
             'hreflang' => 'en-us',
             'native' => 'English',
-            'code'   => 'en_US.UTF-8'),
-        'fr_FR' => array(
+            'code'   => 'en_US.UTF-8'],
+        'fr_FR' => [
             'canonical' => 'fr',
             'hreflang' => 'fr-fr',
             'locale' => 'fr_FR',
             'native' => 'Français',
-            'code'   => 'fr_FR.UTF-8'),
-        );
+            'code'   => 'fr_FR.UTF-8'],
+        ];
 
     public static $domain = "messages";
 
     private $_token;
     private $_locale;
     private $_locale_code;
-    private $_auth_info = array();
+    private $_auth_info = [];
 
     /**
      * Create a user's session
@@ -121,7 +121,7 @@ class Session
             exit();
         }
 
-        $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : array("locale" => "en_US");
+        $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : ["locale" => "en_US"];
 
         if (!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
             self::redirect(MAPPR_URL . self::makeLocaleParam($cookie["locale"]));
@@ -145,7 +145,7 @@ class Session
         self::writeSession($cookie);
 
         $db = Database::getInstance();
-        $db->queryUpdate('users', array('access' => time()), 'uid='.$_SESSION["simplemappr"]["uid"]);
+        $db->queryUpdate('users', ['access' => time()], 'uid='.$_SESSION["simplemappr"]["uid"]);
     }
 
     /**
@@ -281,7 +281,7 @@ class Session
      */
     private function _makeCall()
     {
-        $post_data = array('token' => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json');
+        $post_data = ['token' => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json'];
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -320,12 +320,12 @@ class Session
             $username    = (isset($profile['preferredUsername'])) ? Utility::checkPlain($profile['preferredUsername']) : $email;
             $displayname = (isset($profile['displayName'])) ? Utility::checkPlain($profile['displayName']) : "";
 
-            $user = array(
+            $user = [
                 'identifier'  => $identifier,
                 'username'    => $username,
                 'displayname' => $displayname,
                 'email'       => $email
-            );
+            ];
 
             $db = Database::getInstance();
 
@@ -349,7 +349,7 @@ class Session
             $user['locale'] = $this->_locale;
             $user['role'] = (!$result->role) ? 1 : $result->role;
 
-            $db->queryUpdate('users', array('email' => $email, 'displayname' => $displayname, 'access' => time()), "uid=".$user['uid']);
+            $db->queryUpdate('users', ['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
 
             self::writeSession($user);
             self::redirect(MAPPR_URL . self::makeLocaleParam($user['locale']));

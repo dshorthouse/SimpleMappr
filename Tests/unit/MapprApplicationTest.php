@@ -51,7 +51,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     public function test_addSlashesExtended()
     {
-        $data = array(array('title' => 'my "title"'));
+        $data = [['title' => 'my "title"']];
         $add_slashes = \SimpleMappr\Utility::addSlashesExtended($data);
         $this->assertEquals($add_slashes[0]['title'], "my \\\"title\\\"");
     }
@@ -185,7 +185,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_default_layers()
     {
         $layers = $this->mappr->layers;
-        $this->assertEmpty(array_diff($layers, array('base' => 'on')));
+        $this->assertEmpty(array_diff($layers, ['base' => 'on']));
     }
 
     /**

@@ -81,7 +81,7 @@ class Usermap implements RestMethods
      */
     public function index($params)
     {
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), array("asc", "desc"))) ? $params->dir : "desc";
+        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
         $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
         $this->search = (property_exists($params, 'search')) ? $params->search : "";
         $this->filter_uid = (property_exists($params, 'uid')) ? (int)$params->uid : null;
@@ -209,13 +209,13 @@ class Usermap implements RestMethods
      */
     public function create($params)
     {
-        $data = array(
+        $data = [
             'uid' => $this->_uid,
             'title' => $params['save']['title'],
             'map' => json_encode($params),
             'created' => time(),
             'updated' => time()
-        );
+        ];
 
         //see if user's map by same title already exists
         $sql = "SELECT
@@ -229,7 +229,7 @@ class Usermap implements RestMethods
         $this->_db->bindParam(":title", $data['title'], 'string');
         $record = $this->_db->fetchFirstObject($sql);
 
-        $output = array();
+        $output = [];
         $output['status'] = "ok";
 
         if ($record) {
@@ -278,7 +278,7 @@ class Usermap implements RestMethods
             $this->_db->bindParam(":uid", $this->_uid, 'integer');
         }
         $this->_db->execute();
-        return array("status" => "ok");
+        return ["status" => "ok"];
     }
 
 }

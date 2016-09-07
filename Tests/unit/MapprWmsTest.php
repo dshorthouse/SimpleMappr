@@ -58,14 +58,14 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetMap()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
             'REQUEST' => 'GetMap',
             'LAYERS' => 'lakes',
             'BBOX' => '-120,45,-70,70',
             'SRS' => 'epsg:4326',
             'WIDTH' => 400,
             'HEIGHT' => 200
-        );
+        ];
         $mappr_wms = $this->makeWMS();
         $mappr_wms->makeService()->execute();
         ob_start();
@@ -81,14 +81,14 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_CaseInsensitiveRequest()
     {
-        $_REQUEST = array(
+        $_REQUEST = [
           'request' => 'GetMap',
           'layers' => 'lakes',
           'bbox' => '-120,45,-70,70',
           'srs' => 'epsg:4326',
           'width' => 400,
           'height' => 200
-        );
+        ];
         $mappr_wms = $this->makeWMS();
         $this->assertEquals($mappr_wms->request->params['REQUEST'], $_REQUEST['request']);
         $this->assertEquals($mappr_wms->request->params['LAYERS'], $_REQUEST['layers']);
