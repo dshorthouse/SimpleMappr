@@ -87,7 +87,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .panel a.help:before{background-position:-220px -264px;display:inline-block;float:none;vertical-align:middle;}
 .submit{text-align:left;margin-top:15px;margin-left:20px;}
 .header{border-bottom:1px solid #aaa;width:50%;margin-top:20px;}
-.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:12em;font-size:1em;}
+.header h2{border-bottom:2px solid #bbb;margin:0px;padding:3px 0px;width:13em;font-size:1em;}
 #map-preview{padding:1em 0.3em;background-color:#fff;height:510px;}
 #map-preview p{font-size:0.75em;}
 #mapWrapper{position:relative;height:455px;width:100%;}

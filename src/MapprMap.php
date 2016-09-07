@@ -146,7 +146,7 @@ class MapprMap extends Mappr
         switch ($this->_extension) {
         case 'png':
             header("Content-Type: image/png");
-            $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/logo.png");
+            $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/404.png");
             imagepng($im);
             imagedestroy($im);
             break;
@@ -256,7 +256,7 @@ class MapprMap extends Mappr
     }
 
     /**
-     * Get all coordinates in KML format
+     * Get all coordinates in GeoJSON format
      *
      * @return array $output
      */

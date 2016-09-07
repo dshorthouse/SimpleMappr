@@ -360,8 +360,10 @@ class Bootstrap
         $logger = new Logger(ROOT."/log/logger.log");
         $logs = $logger->tail();
         if ($logs) {
+            $ip4 = '/(?:\d{1,3}\.){3}\d{1,3}/';
+            $ip6 = '/(?:[a-z0-9]{4}\:){7}[a-z0-9]{4}/';
             foreach ($logs as $key => $log) {
-                if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $log, $match)) {
+                if (preg_match($ip4, $log, $match) || preg_match($ip6, $log, $match)) {
                     if (filter_var($match[0], FILTER_VALIDATE_IP)) {
                         $logs[$key] = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
                     }

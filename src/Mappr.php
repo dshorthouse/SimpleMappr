@@ -68,9 +68,6 @@ abstract class Mappr
     /* path to the shapefile config */
     static protected $shapefile_config = ROOT.'/config/shapefiles.yml';
 
-    /* the base map object */
-    protected $map_obj;
-
     /* path to the font file */
     protected $font_file = ROOT.'/mapserver/fonts/fonts.list';
 
@@ -79,6 +76,9 @@ abstract class Mappr
 
     /* url temp path to retrieve files produced */
     protected $tmp_url = MAPPR_MAPS_URL;
+
+    /* the base map object */
+    protected $map_obj;
 
     /* default extent when map first loaded */
     protected $max_extent = array(-180,-90,180,90);
@@ -95,10 +95,10 @@ abstract class Mappr
     /* shapes and their mapfile configurations */
     protected $shapes = array();
 
-    /* post-draw padding for longitude extent to be used as a correction factor on front-end */
+    /* post-draw padding for longitude extent used as a correction factor on front-end */
     protected $ox_pad = 0;
 
-    /* post-draw padding for latitude extent to be used as a correction factor on front-end */
+    /* post-draw padding for latitude extent used as a correction factor on front-end */
     protected $oy_pad = 0;
 
     /* url for legend image if produced */
@@ -281,7 +281,8 @@ abstract class Mappr
      */
     private function _loadProjection()
     {
-        $this->map_obj->setProjection(AcceptedProjections::$projections[$this->default_projection]['proj']);
+        $projection = AcceptedProjections::$projections[$this->default_projection]['proj'];
+        $this->map_obj->setProjection($projection);
     }
 
     /**
@@ -384,7 +385,11 @@ abstract class Mappr
      */
     private function _setUnits()
     {
-        $units = (isset($this->request->projection) && $this->request->projection == $this->default_projection) ? MS_DD : MS_METERS;
+        $units = MS_METERS;
+        if (isset($this->request->projection) && 
+            $this->request->projection == $this->default_projection) {
+            $units = MS_DD;
+        }
         $this->map_obj->set("units", $units);
     }
 
@@ -437,13 +442,17 @@ abstract class Mappr
      */
     private function _addLegendScalebar()
     {
-        if ($this->request->download && array_key_exists('legend', $this->request->options) && $this->request->options['legend']) {
-            $this->addLegend();
+        if ($this->request->download && 
+            array_key_exists('legend', $this->request->options) &&
+            $this->request->options['legend']) {
+                $this->addLegend();
         } else if (!$this->request->download) {
             $this->addLegend();
         }
-        if ($this->request->download && array_key_exists('scalebar', $this->request->options) && $this->request->options['scalebar']) {
-            $this->addScalebar();
+        if ($this->request->download && 
+            array_key_exists('scalebar', $this->request->options) && 
+            $this->request->options['scalebar']) {
+                $this->addScalebar();
         } else if (!$this->request->download) {
             $this->addScalebar();
         }
@@ -665,22 +674,29 @@ abstract class Mappr
         if (isset($this->request->coords) && $this->request->coords) {
             //do this in reverse order because the legend will otherwise be presented in reverse order
             for ($j=count($this->request->coords)-1; $j>=0; $j--) {
-
-                //clear out previous loop's selection
-                $size = "";
-                $shape = "";
+                $title = "";
+                $size = 8;
+                $shape = "circle";
                 $shadow = false;
-                $offset = 2;
                 $color = array();
+                $offset = 2;
 
-                $title = ($this->request->coords[$j]['title']) ? stripslashes($this->request->coords[$j]['title']) : "";
-                $size = ($this->request->coords[$j]['size']) ? $this->request->coords[$j]['size'] : 8;
+                if ($this->request->coords[$j]['title']) {
+                    $title = stripslashes($this->request->coords[$j]['title']);
+                }
+                if ($this->request->coords[$j]['size']) {
+                    $size = $this->request->coords[$j]['size'];
+                }
                 if ($this->_isResize() && $this->request->download_factor > 1) {
                     $size = $this->request->download_factor*$size;
                     $offset = $this->request->download_factor;
                 }
-                $shape = (isset($this->request->coords[$j]['shape'])) ? $this->request->coords[$j]['shape'] : 'circle';
-                $shadow = (array_key_exists('shadow', $this->request->coords[$j])) ? true : false;
+                if (isset($this->request->coords[$j]['shape'])) {
+                    $shape = $this->request->coords[$j]['shape'];
+                }
+                if (array_key_exists('shadow', $this->request->coords[$j])) {
+                    $shadow = true;
+                }
                 if ($this->request->coords[$j]['color']) {
                     $color = explode(" ", $this->request->coords[$j]['color']);
                     if (count($color) != 3) {
@@ -863,7 +879,9 @@ abstract class Mappr
         unset($this->request->layers['grid']);
 
         foreach ($this->request->layers as $key => $row) {
-            if(isset($this->request->output) && $this->request->output == 'svg' && $this->shapes[$key]['type'] == MS_LAYER_RASTER) {
+            if(isset($this->request->output) && 
+            $this->request->output == 'svg' && 
+            $this->shapes[$key]['type'] == MS_LAYER_RASTER) {
                 unset($this->request->layers[$key]);
             } else {
                 $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
@@ -1099,15 +1117,23 @@ abstract class Mappr
     public function addLegend()
     {
         if ($this->_legend_required) {
-            $this->map_obj->legend->set("keysizex", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*15 : 20);
-            $this->map_obj->legend->set("keysizey", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*15 : 20);
-            $this->map_obj->legend->set("keyspacingx", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*3 : 5);
-            $this->map_obj->legend->set("keyspacingy", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*3 : 5);
+            $keysize = 20;
+            $keyspacing = 5;
+            $size = 10;
+            if ($this->_isResize() && $this->request->download_factor > 1) {
+                $keysize = $this->request->download_factor*15;
+                $keyspacing = $this->request->download_factor*3;
+                $size = $this->request->download_factor*8;
+            }
+            $this->map_obj->legend->set("keysizex", $keysize);
+            $this->map_obj->legend->set("keysizey", $keysize);
+            $this->map_obj->legend->set("keyspacingx", $keyspacing);
+            $this->map_obj->legend->set("keyspacingy", $keyspacing);
             $this->map_obj->legend->set("postlabelcache", 1);
             $this->map_obj->legend->label->set("font", "arial");
             $this->map_obj->legend->label->set("encoding", "UTF-8");
             $this->map_obj->legend->label->set("position", 1);
-            $this->map_obj->legend->label->set("size", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*8 : 10);
+            $this->map_obj->legend->label->set("size", $size);
             $this->map_obj->legend->label->color->setRGB(0, 0, 0);
 
             //svg format cannot do legends in MapServer
@@ -1131,7 +1157,9 @@ abstract class Mappr
      */
     private function _isResize()
     {
-        if ($this->request->download || $this->request->output == 'pptx' || $this->request->output == 'docx') {
+        if ($this->request->download || 
+            $this->request->output == 'pptx' || 
+            $this->request->output == 'docx') {
             return true;
         }
         return false;
@@ -1144,16 +1172,24 @@ abstract class Mappr
      */
     public function addScalebar()
     {
+        $height = 8;
+        $width = 200;
+        $size = 8;
+        if ($this->_isResize() && $this->request->download_factor > 1) {
+            $height = $this->request->download_factor*4;
+            $width = $this->request->download_factor*100;
+            $size = $this->request->download_factor*5;
+        }
         $this->map_obj->scalebar->set("style", 0);
         $this->map_obj->scalebar->set("intervals", 3);
-        $this->map_obj->scalebar->set("height", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*4 : 8);
-        $this->map_obj->scalebar->set("width", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*100 : 200);
+        $this->map_obj->scalebar->set("height", $height);
+        $this->map_obj->scalebar->set("width", $width);
         $this->map_obj->scalebar->color->setRGB(30, 30, 30);
         $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
         $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
         $this->map_obj->scalebar->label->set("font", "arial");
         $this->map_obj->scalebar->label->set("encoding", "UTF-8");
-        $this->map_obj->scalebar->label->set("size", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*5 : 8);
+        $this->map_obj->scalebar->label->set("size", $size);
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do scalebar in MapServer
@@ -1248,7 +1284,6 @@ abstract class Mappr
 
         $oRect = $this->map_obj->extent;
         $oRect->project($origProjObj, $newProjObj);
-        //TODO: failing for http://www.simplemappr.net/map/2962
         $this->map_obj->setExtent($oRect->minx, $oRect->miny, $oRect->maxx, $oRect->maxy);
         $this->map_obj->setProjection(self::getProjection($output_projection));
     }
@@ -1263,7 +1298,10 @@ abstract class Mappr
     private function _setOrigin($output_projection)
     {
         $lambert_projections = array('esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112');
-        if (in_array($this->request->projection, $lambert_projections) && $this->request->origin && ($this->request->origin >= -180) && ($this->request->origin <= 180)) {
+        if (in_array($this->request->projection, $lambert_projections) && 
+            $this->request->origin && 
+            $this->request->origin >= -180 &&
+            $this->request->origin <= 180) {
             AcceptedProjections::$projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->request->origin.',', self::getProjection($output_projection));
         }
     }
