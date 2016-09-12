@@ -80,7 +80,6 @@ class Session
     {
         session_cache_limiter('nocache');
         session_start();
-        session_regenerate_id();
     }
 
     /**

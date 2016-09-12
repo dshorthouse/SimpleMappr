@@ -672,7 +672,8 @@ abstract class Mappr
         $this->bad_points = [];
         if (isset($this->request->coords) && $this->request->coords) {
             //do this in reverse order because the legend will otherwise be presented in reverse order
-            for ($j=count($this->request->coords)-1; $j>=0; $j--) {
+            $count = count($this->request->coords)-1;
+            for ($j=$count; $j>=0; $j--) {
                 $title = "";
                 $size = 8;
                 $shape = "circle";
@@ -786,8 +787,9 @@ abstract class Mappr
      */
     public function addRegions()
     {
-        if (isset($this->request->regions) && $this->request->regions) {  
-            for ($j=count($this->request->regions)-1; $j>=0; $j--) {
+        if (isset($this->request->regions) && $this->request->regions) {
+            $count = count($this->request->regions)-1;
+            for ($j=$count; $j>=0; $j--) {
                 //clear out previous loop's selection
                 $color = [];
                 $title = ($this->request->regions[$j]['title']) ? stripslashes($this->request->regions[$j]['title']) : "";

@@ -73,11 +73,7 @@ class Logger
     public function write($message)
     {
         $fd = fopen($this->_filename, 'a');
-        if (is_array($message)) {
-            $this->_writeArray($message, $fd);
-        } else {
-            $this->_writeString($message, $fd);
-        }
+        fwrite($fd, $message."\n");
         fclose($fd);
     }
 
@@ -124,41 +120,6 @@ class Logger
 
         fclose($fp);
         return array_slice(explode("\n", rtrim($input)), -$n);
-    }
-
-    /**
-     * Write a string to the log file.
-     *
-     * @param string $message The message to write.
-     * @param object $fd      The file handle.
-     *
-     * @return void
-     */
-    private function _writeString($message, $fd)
-    {
-        fwrite($fd, $message."\n");
-    }
-
-    /**
-     * Write array to the log file.
-     *
-     * @param string $message The message to write.
-     * @param object $fd      The file handle.
-     *
-     * @return void
-     */
-    private function _writeArray($message, $fd)
-    {
-        foreach ($message as $key => $value) {
-            if (is_array($value)) {
-                fwrite($fd, $key."{ ");
-                $this->_writeArray($value, $fd);
-                fwrite($fd, " }\n");
-            } else {
-                $string =  "\t {".$key.': '.$value."}\n ";
-                fwrite($fd, $string);
-            }
-        }
     }
 
 }

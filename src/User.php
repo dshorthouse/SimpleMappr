@@ -74,16 +74,20 @@ class User implements RestMethods
             session_start();
         }
         if (!isset($_SESSION['simplemappr'])) {
+            session_write_close();
             header('Location: /');
             return false;
         }
         elseif ($role == 'user' && (self::$roles[$_SESSION['simplemappr']['role']] == 'user' || self::$roles[$_SESSION['simplemappr']['role']] == 'administrator')) {
+            session_write_close();
             return true;
         }
         elseif ($role == 'administrator' && self::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
+            session_write_close();
             return true;
         }
         else {
+            session_write_close();
             header('Location: /');
             return false;
         }

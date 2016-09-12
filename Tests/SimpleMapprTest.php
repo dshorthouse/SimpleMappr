@@ -347,6 +347,9 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'stateprovince' => 'Alberta',
           'stateprovince_code' => 'AB'
         ]);
+
+          session_cache_limiter('nocache');
+          session_start();
     }
 
     /**
@@ -356,6 +359,8 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     {
         self::dropTables();
         self::$db = null;
+
+        session_write_close();
     }
 
     /**
@@ -524,11 +529,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
             "path" => "/"
         ];
         $this->webDriver->manage()->addCookie($cookie);
-        session_cache_limiter('nocache');
-        session_start();
-        session_regenerate_id();
         $_SESSION["simplemappr"] = $user;
-        session_write_close();
         $this->webDriver->navigate()->refresh();
         $this->waitOnAjax();
     }

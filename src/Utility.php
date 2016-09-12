@@ -107,9 +107,9 @@ class Utility
      */
     public static function addSlashesExtended(&$arr_r)
     {
-        if (is_array($arr_r)) {
+        if ((array)$arr_r === $arr_r) {
             foreach ($arr_r as &$val) {
-                is_array($val) ? self::addSlashesExtended($val) : $val = addslashes($val);
+                ((array)$val === $val) ? self::addSlashesExtended($val) : $val = addslashes($val);
             }
             unset($val);
         } else {

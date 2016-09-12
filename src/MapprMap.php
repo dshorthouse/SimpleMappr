@@ -263,7 +263,8 @@ class MapprMap extends Mappr
     private function _getCoordinates()
     {
         $output = [];
-        for ($j=0; $j<=count($this->coords)-1; $j++) {
+        $count = count($this->coords)-1;
+        for ($j=0; $j<=$count; $j++) {
             $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
 
             if (trim($this->coords[$j]['data'])) {

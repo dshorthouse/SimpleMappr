@@ -203,10 +203,10 @@ class Header
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false);
         if ($filename) {
-            header("Content-Disposition: attachment; filename=\"" . $filename  . "\";");
+            header("Content-Disposition: attachment; filename=\"{$filename}\";");
         }
         if ($filesize) {
-            header("Content-Length: " . $filesize);
+            header("Content-Length: {$filesize}");
         }
         switch($mime) {
         case "":

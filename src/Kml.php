@@ -77,6 +77,16 @@ class Kml
     }
 
     /**
+     * The destructor
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        session_write_close();
+    }
+
+    /**
      * Get the request parameter coords.
      *
      * @param string $file_name A name for a file to be downloaded.
@@ -121,7 +131,8 @@ class Kml
         $this->_kml->writeElement('name', $this->getMetadata('name'));
 
         //Style elements
-        for ($i=0; $i<=count($this->_getAllPlacemarks())-1; $i++) {
+        $count = count($this->_getAllPlacemarks())-1;
+        for ($i=0; $i<=$count; $i++) {
             $this->_kml->startElement('Style');
             $this->_kml->writeAttribute('id', 'pushpin'.$i);
             $this->_kml->startElement('IconStyle');
@@ -229,7 +240,8 @@ class Kml
      */
     public function addCoordinates()
     {
-        for ($j=0; $j<=count($this->coords)-1; $j++) {
+        $count = count($this->coords)-1;
+        for ($j=0; $j<=$count; $j++) {
             $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : "";
 
             if (trim($this->coords[$j]['data'])) {

@@ -62,7 +62,6 @@ class LoggerTest extends PHPUnit_Framework_TestCase
         $user = array_merge($user, $role);
         session_cache_limiter('nocache');
         session_start();
-        session_regenerate_id();
         $_SESSION["simplemappr"] = $user;
         session_write_close();
     }

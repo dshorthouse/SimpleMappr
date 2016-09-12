@@ -84,11 +84,19 @@ class MapprApi extends Mappr
             $attr->url = $file;
         }
 
-        $attr->points           = Utility::loadParam('points', []);
+        $points = Utility::loadParam('points', []);
+        $attr->points = ((array)$points === $points) ? $points : [$points];
+        
         $attr->legend           = Utility::loadParam('legend', []);
-        $attr->shape            = (is_array(Utility::loadParam('shape', []))) ? Utility::loadParam('shape', []) : [Utility::loadParam('shape', [])];
-        $attr->size             = (is_array(Utility::loadParam('size', []))) ? Utility::loadParam('size', []) : [Utility::loadParam('size', [])];
-        $attr->color            = (is_array(Utility::loadParam('color', []))) ? Utility::loadParam('color', []) : [Utility::loadParam('color', [])];
+
+        $shape = Utility::loadParam('shape', []);
+        $attr->shape = ((array)$shape === $shape) ? $shape : [$shape];
+
+        $size = Utility::loadParam('size', []);
+        $attr->size = ((array)$size === $size) ? $size : [$size];
+
+        $color = Utility::loadParam('color', []);
+        $attr->color = ((array)$color === $color) ? $color : [$color];
 
         $attr->outlinecolor     = Utility::loadParam('outlinecolor', null);
         $attr->border_thickness = (float)Utility::loadParam('thickness', 1.25);
@@ -133,7 +141,11 @@ class MapprApi extends Mappr
 
         //set the image size from width & height to array(width, height)
         $attr->width            = (float)Utility::loadParam('width', 900);
-        $attr->height           = (float)Utility::loadParam('height', (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) ? $attr->width/2 : 450);
+        $height = 450;
+        if (isset($_REQUEST['width']) && !isset($_REQUEST['height'])) {
+            $height = $attr->width/2;
+        }
+        $attr->height           = (float)Utility::loadParam('height', $height);
         if ($attr->width == 0 || $attr->height == 0) {
             $attr->width = 900; $attr->height = 450;
         }
@@ -270,7 +282,10 @@ class MapprApi extends Mappr
             $class->set("name", stripslashes($this->request->regions['title']));
 
             $style = ms_newStyleObj($class);
-            $color = ($this->request->regions['color']) ? explode(' ', $this->request->regions['color']) : explode(" ", "0 0 0");
+            $color = explode(" ", "0 0 0");
+            if ($this->request->regions['color']) {
+                $color = explode(" ", $this->request->regions['color']);
+            }
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
 
