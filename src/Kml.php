@@ -66,10 +66,12 @@ class Kml
     private $_metadata = [];
     private $_placemark = [];
 
+    public $coords;
+    public $file_name;
+    public $download_token;
+
     /**
      * The constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -78,8 +80,6 @@ class Kml
 
     /**
      * The destructor
-     *
-     * @return void
      */
     public function __destruct()
     {
@@ -106,7 +106,7 @@ class Kml
     /**
      * Generate the kml file.
      *
-     * @return xml The xml file.
+     * @return void
      */
     public function createOutput()
     {
@@ -226,7 +226,7 @@ class Kml
     /**
      * Helper function to get all placemarks
      *
-     * @return void
+     * @return Array
      */
     private function _getAllPlacemarks()
     {

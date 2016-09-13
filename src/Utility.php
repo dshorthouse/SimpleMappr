@@ -199,7 +199,7 @@ class Utility
      *
      * @param string $point A string purported to be a coordinate
      *
-     * @return [latitude, longitude] in DD
+     * @return array [latitude, longitude] in DD
      */
     public static function makeCoordinates($point)
     {

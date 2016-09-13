@@ -35,5 +35,3 @@ defined("CLOUDFLARE_DOMAIN") || define("CLOUDFLARE_DOMAIN", "");
 defined("CLOUDFLARE_EMAIL") || define("CLOUDFLARE_EMAIL", "");
 
 defined("COOKIE_TIMEOUT") || define("COOKIE_TIMEOUT", time() + (2 * 7 * 24 * 60 * 60)); //two week cookie lifetime
-
-?>

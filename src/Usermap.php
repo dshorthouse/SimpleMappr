@@ -177,7 +177,7 @@ class Usermap implements RestMethods
      *
      * @param int $id The map identifier.
      *
-     * @return void
+     * @return array $data
      */
     public function show($id)
     {
@@ -259,7 +259,7 @@ class Usermap implements RestMethods
      *
      * @param int $id The map identifier.
      *
-     * @return void
+     * @return array status
      */
     public function destroy($id)
     {

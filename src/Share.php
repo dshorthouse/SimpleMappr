@@ -59,8 +59,6 @@ class Share implements RestMethods
 
     /**
      * Constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -126,7 +124,7 @@ class Share implements RestMethods
      *
      * @param object $params The parameters from the router.
      *
-     * @return array Status
+     * @return array status
      */
     public function create($params)
     {
@@ -134,15 +132,15 @@ class Share implements RestMethods
 
         if (empty($mid)) {
             return ["status" => "error"];
-            exit();
+        } else {
+            $data = [
+                'mid' => $mid,
+                'created' => time(),
+            ];
+            $this->_db->queryInsert('shares', $data);
+            return ["status" => "ok"];            
         }
 
-        $data = [
-            'mid' => $mid,
-            'created' => time(),
-        ];
-        $this->_db->queryInsert('shares', $data);
-        return ["status" => "ok"];
     }
 
     /**
@@ -161,7 +159,7 @@ class Share implements RestMethods
      *
      * @param int $id The User identifier
      *
-     * @return void
+     * @return array status
      */
     public function destroy($id)
     {

@@ -221,8 +221,6 @@ class Session
      * Constructor
      *
      * @param bool $new_session Create a new session or destroy one
-     *
-     * @return void
      */
     public function __construct($new_session)
     {

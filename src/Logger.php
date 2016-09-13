@@ -55,8 +55,6 @@ class Logger
      * Constructor
      *
      * @param string $filename The filename
-     *
-     * @return void
      */
     public function __construct($filename)
     {

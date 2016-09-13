@@ -57,8 +57,6 @@ class MapprMap extends Mappr
      *
      * @param int    $id        Identifier for the map
      * @param string $extension File extension
-     *
-     * @return void
      */
     public function __construct($id, $extension)
     {
@@ -271,7 +269,6 @@ class MapprMap extends Mappr
                 $whole = trim($this->coords[$j]['data']);
                 $row = explode("\n", Utility::removeEmptyLines($whole));
 
-                $point_key = 0;
                 foreach ($row as $loc) {
                     $coord_array = Utility::makeCoordinates($loc);
                     $coord = new \stdClass();

@@ -54,8 +54,6 @@ class Citation implements RestMethods
 
     /**
      * Constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -144,7 +142,7 @@ class Citation implements RestMethods
      *
      * @param int $id The citation identifier
      *
-     * @return response array
+     * @return array
      */
     public function destroy($id)
     {
@@ -167,7 +165,7 @@ class Citation implements RestMethods
      *
      * @param string $type The type of response
      *
-     * @return void
+     * @return array
      */
     private function _response($type = null)
     {

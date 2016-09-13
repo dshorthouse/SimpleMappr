@@ -322,7 +322,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'created' => time()-(7 * 24 * 60 * 60)
         ]);
 
-        $map2 = self::$db->queryInsert('maps', [
+        self::$db->queryInsert('maps', [
           'uid' => $user2,
           'title' => 'Sample Map User',
           'map' => json_encode($map_data2),

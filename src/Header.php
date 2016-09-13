@@ -107,7 +107,7 @@ class Header
      *
      * @param bool $output If output is required
      *
-     * @return echo json_encoded $response
+     * @return void
      */
     public static function flushCache($output = true)
     {
@@ -160,8 +160,8 @@ class Header
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
-        $http_result = curl_exec($ch);
-        $error = curl_error($ch);
+        curl_exec($ch);
+        curl_error($ch);
 
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -265,8 +265,6 @@ class Header
 
     /**
      * The constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -455,11 +453,10 @@ class Header
     {
         $cache = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
         if ($cache) {
-            list($hash, $extension) = explode(".", $cache[0]);
+            return explode(".", $cache[0])[0];
         } else {
-            $hash = "1";
+            return "1";
         }
-        return $hash;
     }
 
     /**

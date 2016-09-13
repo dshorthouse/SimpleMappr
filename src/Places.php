@@ -56,8 +56,6 @@ class Places implements RestMethods
 
     /**
      * Constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -103,7 +101,7 @@ class Places implements RestMethods
      *
      * @param int $id identifier for places.
      *
-     * @return void
+     * @return obj result   A single resultset
      */
     public function show($id)
     {

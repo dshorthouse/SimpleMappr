@@ -173,8 +173,6 @@ abstract class Mappr
 
     /**
      * Constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -297,6 +295,8 @@ abstract class Mappr
     /**
      * Tokenize shapefile.yml config
      *
+     * @param array $config
+     *
      * @return array of config
      */
     private static function _tokenize_shapefile_config($config)
@@ -337,6 +337,11 @@ abstract class Mappr
 
     /**
      * Create a symbol
+     *
+     * @param string $name      The name of the symbol
+     * @param string $type      The type of the symbol
+     * @param string $fill      MS_TRUE or MS_FALSE 
+     * @param array $vertices   The vertices
      *
      * @return void
      */
@@ -415,23 +420,6 @@ abstract class Mappr
           $output = (in_array($output, AcceptedOutputs::outputList())) ? $output : 'png';
           $this->map_obj->selectOutputFormat($output);
         }
-    }
-
-    /**
-     * Test presence of raster in layers
-     *
-     * @return Boolean
-     */
-    private function _layersContainRaster()
-    {
-        $raster_active = false;
-        foreach ($this->request->layers as $layer => $status) {
-            if ($this->shapes[$layer]['type'] == MS_LAYER_RASTER) {
-                $raster_active = true;
-                break;
-            }
-        }
-        return $raster_active;
     }
 
     /**
@@ -1334,7 +1322,7 @@ abstract class Mappr
     /**
      * Get the scaled width for a layer's line
      *
-     * @return $width
+     * @return number $width
      */
     private function _determineWidth()
     {

@@ -176,7 +176,6 @@ class MapprApi extends Mappr
             }
         }
 
-        $col = 0;
         foreach ($this->_coord_cols as $col => $coords) {
             $mlayer = ms_newLayerObj($this->map_obj);
             $mlayer->set("name", isset($this->legend[$col]) ? $this->legend[$col] : "");
@@ -234,8 +233,6 @@ class MapprApi extends Mappr
             }
             $mcoord_shape->add($mcoord_line);
             $mlayer->addFeature($mcoord_shape);
-
-            $col++;
         }
     }
 
@@ -587,7 +584,7 @@ class MapprApi extends Mappr
      *
      * @param array $array Array of coordinates
      *
-     * @return [long,lat]
+     * @return array [long,lat]
      */
     private function _getMidpoint($array)
     {
@@ -617,7 +614,6 @@ class MapprApi extends Mappr
     private function _parsePoints()
     {
         $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
-        $coord_array = [];
         foreach ($this->request->points as $rows) {
             $row = preg_split("/[\r\n]|(\\\[rn])/", urldecode(Utility::removeEmptyLines($rows)));
             foreach (str_replace("\\", "", $row) as $point) {

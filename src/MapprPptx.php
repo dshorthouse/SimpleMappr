@@ -80,7 +80,7 @@ class MapprPptx extends Mappr
         $clean_filename = Utility::cleanFilename($this->request->file_name);
 
         // Set properties
-        $properties = $objPHPPowerPoint->getProperties();
+        $properties = $objPHPPowerPoint->getDocumentProperties();
         $properties->setCreator("SimpleMappr");
         $properties->setLastModifiedBy("SimpleMappr");
         $properties->setTitle($clean_filename);
@@ -113,7 +113,6 @@ class MapprPptx extends Mappr
         }
 
         foreach ($files as $type => $value) {
-            $size = getimagesize($value['file']);
             $shape = $currentSlide->createDrawingShape();
             $shape->setName('SimpleMappr ' . $clean_filename);
             $shape->setDescription('SimpleMappr ' . $clean_filename);

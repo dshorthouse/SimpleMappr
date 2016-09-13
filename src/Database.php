@@ -57,8 +57,6 @@ class Database
 
     /**
      * Constructor
-     *
-     * @return void
      */
     private function __construct()
     {
@@ -125,7 +123,7 @@ class Database
      * @param string $value The value to be set.
      * @param string $type  The type of data.
      *
-     * @return object The connection handle.
+     * @return void
      */
     public function bindParam($key, $value, $type = 'integer')
     {

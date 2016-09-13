@@ -95,8 +95,6 @@ class User implements RestMethods
 
     /**
      * The constructor
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -184,7 +182,7 @@ class User implements RestMethods
      *
      * @param int $id The User identifier
      *
-     * @return void
+     * @return array status
      */
     public function destroy($id)
     {

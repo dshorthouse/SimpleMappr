@@ -321,8 +321,7 @@ class Bootstrap
      * Instantiates a new class and passes parameters.
      *
      * @param string $klass  The class name.
-     * @param string $param1 First optional parameter.
-     * @param string $param2 Second optional parameter.
+     * @param array $params Splat array.
      *
      * @return class $klass  The instance of class.
      */
@@ -353,7 +352,7 @@ class Bootstrap
     /**
      * Instantiate the Logger class and execute its tail method
      *
-     * @return void
+     * @return String
      */
     private function _tailLog()
     {
@@ -428,7 +427,7 @@ class Bootstrap
     /**
      * Render a 404 document
      *
-     * @return void
+     * @return String
      */
     private function _render404()
     {

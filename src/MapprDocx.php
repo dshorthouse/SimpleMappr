@@ -76,7 +76,7 @@ class MapprDocx extends Mappr
         $clean_filename = Utility::cleanFilename($this->request->file_name);
 
         // Set properties
-        $properties = $objPHPWord->getDocumentProperties();
+        $properties = $objPHPWord->getDocInfo();
         $properties->setCreator('SimpleMappr');
         $properties->setTitle($clean_filename);
         $properties->setDescription($clean_filename . ", generated on SimpleMappr, " . MAPPR_URL);
@@ -84,10 +84,10 @@ class MapprDocx extends Mappr
         $properties->setSubject($clean_filename . " point map");
         $properties->setKeywords($clean_filename. ", SimpleMappr");
 
-        // Create section
-        $section = $objPHPWord->createSection();
+        // Add section
+        $section = $objPHPWord->addSection();
 
-        $width = $section->getSettings()->getPageSizeW() - $section->getSettings()->getMarginLeft() - $section->getSettings()->getMarginRight();
+        $width = $section->getStyle()->getPageSizeW() - $section->getStyle()->getMarginLeft() - $section->getStyle()->getMarginRight();
 
         $files = [];
         $images = ['image', 'scale', 'legend'];
