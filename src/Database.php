@@ -51,8 +51,13 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Database
 {
+    /** @var object $_instance Database instance of self for static retrieval */
     static $_instance;
+
+    /** @var object $_link Database connection */
     private $_link;
+
+    /** @var object $_handle Handle for prepared statements */
     private $_handle;
 
     /**
@@ -69,7 +74,7 @@ class Database
     /**
      * Get the database instance
      *
-     * @return instance
+     * @return object
      */
     public static function getInstance()
     {

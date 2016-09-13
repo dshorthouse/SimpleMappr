@@ -51,6 +51,9 @@ use \ForceUTF8\Encoding;
  */
 class MapprQuery extends Mappr
 {
+    /**
+     * @var array $data Regions on shapefile that match a query
+     */
     public $data = [];
 
     /**

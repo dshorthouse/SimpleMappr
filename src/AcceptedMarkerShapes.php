@@ -36,10 +36,20 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Accepted marker shapes for SimpleMappr
+ *
+ * @category  Trait
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2016 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 trait AcceptedMarkerShapes
 {
     /**
-     * Accepted marker shapes
+     * @var array $shapes Accepted marker shapes
      */
     public static $shapes = [
         'general' => [
@@ -65,11 +75,23 @@ trait AcceptedMarkerShapes
         ]
     ];
 
+    /**
+     * Return shapes
+     *
+     * @return array of shapes.
+     */
     public static function shapes()
     {
       return array_merge(array_keys(self::$shapes['general']), array_keys(self::$shapes['closed']), array_keys(self::$shapes['open']));
     }
 
+    /**
+     * Return vertices for a shape
+     *
+     * @param string $type   A shape, eg 'plus', 'cross'
+     *
+     * @return array Vertices for the shape
+     */
     public static function vertices($type)
     {
         $vertices = [];

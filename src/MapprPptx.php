@@ -56,6 +56,9 @@ use \PhpOffice\PhpPresentation\Style\Alignment;
  */
 class MapprPptx extends Mappr
 {
+    /**
+     * @var int $_slidepadding Padding around edges of slide
+     */
     private $_slidepadding = 25;
 
     /**

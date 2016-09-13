@@ -49,6 +49,11 @@ namespace SimpleMappr;
  */
 class Request
 {
+    /**
+     * Produce the default attributes for a request object
+     *
+     * @return object
+     */
     public static function getRequest()
     {
         $attr = new \stdClass();
@@ -80,7 +85,7 @@ class Request
         $attr->download_token   = Utility::loadParam('download_token', md5(time()));
         setcookie("fileDownloadToken", $attr->download_token, time()+3600, "/");
 
-        return $attr;   
+        return $attr;
     }
 
 }

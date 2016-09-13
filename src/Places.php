@@ -49,9 +49,19 @@ namespace SimpleMappr;
  */
 class Places implements RestMethods
 {
+    /**
+     * @var object $results Query result object
+     */
     public $results;
+
+    /**
+     * @var int $id Identifier for database query
+     */
     public $id;
 
+    /**
+     * @var object $_db Database connection instance
+     */
     protected $_db;
 
     /**

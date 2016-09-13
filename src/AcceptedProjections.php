@@ -36,11 +36,20 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Accepted projections for SimpleMappr
+ *
+ * @category  Trait
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2016 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 trait AcceptedProjections
 {
     /**
-     * Acceptable projections in PROJ format
-     * Included here for performance reasons AND each has 'over' switch to prevent line wraps
+     * @var array $projections Acceptable projections in PROJ format, with over switch
      */
     public static $projections = [
         'epsg:4326'   => [

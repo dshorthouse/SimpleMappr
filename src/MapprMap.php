@@ -49,7 +49,14 @@ namespace SimpleMappr;
  */
 class MapprMap extends Mappr
 {
+    /**
+     * @var int $_id Database identifer for a map
+     */
     private $_id;
+
+    /**
+     * @var string $_extension File extension for the output
+     */
     private $_extension;
 
     /**

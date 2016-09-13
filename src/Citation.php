@@ -49,7 +49,10 @@ namespace SimpleMappr;
  */
 class Citation implements RestMethods
 {
+    /** @var object $_db A database connection object */
     private $_db;
+
+    /** @var object $_citations Citations object produced from queries */
     private $_citations;
 
     /**
@@ -65,7 +68,7 @@ class Citation implements RestMethods
      *
      * @param object $params null
      *
-     * @return response array
+     * @return array
      */
     public function index($params = null)
     {
@@ -98,7 +101,7 @@ class Citation implements RestMethods
      *
      * @param object $params The parameters send from router
      *
-     * @return response array
+     * @return array
      */
     public function create($params)
     {

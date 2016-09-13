@@ -36,10 +36,20 @@
  */
 namespace SimpleMappr;
 
+/**
+ * Accepted output types for SimpleMappr
+ *
+ * @category  Trait
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2016 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 trait AcceptedOutputs
 {
     /**
-     * Acceptable outputs
+     * @var array $outputs Acceptable outputs
      */
     public static $outputs = [
       'png' => [
@@ -84,7 +94,12 @@ trait AcceptedOutputs
         "formatoptions" => ["COMPRESSED_OUTPUT=FALSE", "FULL_RESOLUTION=TRUE"]
       ],
     ];
-    
+
+    /**
+     * Return array of accepted outputs.
+     *
+     * @return array of outputs.
+     */
     public static function outputList()
     {
       return array_keys(self::$outputs);

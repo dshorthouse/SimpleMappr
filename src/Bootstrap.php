@@ -71,7 +71,7 @@ class Bootstrap
     /**
      * Set the controller for each route
      *
-     * @return views
+     * @return mixed
      */
     private function _setRoutes()
     {
@@ -323,7 +323,7 @@ class Bootstrap
      * @param string $klass  The class name.
      * @param array $params Splat array.
      *
-     * @return class $klass  The instance of class.
+     * @return object $klass  The instance of class.
      */
     private function _klass($klass, ...$params)
     {
@@ -352,7 +352,7 @@ class Bootstrap
     /**
      * Instantiate the Logger class and execute its tail method
      *
-     * @return String
+     * @return string
      */
     private function _tailLog()
     {
@@ -392,7 +392,7 @@ class Bootstrap
     /**
      * Load twig templating engine
      *
-     * @return twig object
+     * @return object
      */
     private function _twig()
     {
@@ -427,7 +427,7 @@ class Bootstrap
     /**
      * Render a 404 document
      *
-     * @return String
+     * @return string
      */
     private function _render404()
     {

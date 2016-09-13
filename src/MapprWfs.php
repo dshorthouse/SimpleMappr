@@ -49,18 +49,31 @@ namespace SimpleMappr;
  */
 class MapprWfs extends Mappr
 {
-    /* the request object for WFS and WMS */ 
+    /**
+     * @var object $_req Request object for WFS and WMS
+     */ 
     private $_req = "";
 
-    /* filter simplification */
+    /**
+     * @var int $_filter_simplify Filter simplification by number of features
+     */
     private $_filter_simplify;
 
-    /* columns to filter on */ 
+    /**
+     * @var array $_filter_columns Columns to filter on
+     */
     private $_filter_columns = [];
 
-    /* WFS layers */
+    /**
+     * @var array $_wfs_layers Layers to include in WFS request
+     */
     private $_wfs_layers = [];
 
+    /**
+     * Constructor
+     *
+     * @param array $layers The layers to set as on
+     */
     public function __construct($layers = [])
     {
         $shapes = parent::getShapefileConfig();

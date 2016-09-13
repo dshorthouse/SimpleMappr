@@ -49,18 +49,60 @@ namespace SimpleMappr;
  */
 class Usermap implements RestMethods
 {
+    /**
+     * @var int $total Total number of records
+     */
     public $total;
+
+    /**
+     * @var string $filter_username Filter results by username
+     */
     public $filter_username;
+
+    /**
+     * @var int $filter_uid Filter results by user identifier
+     */
     public $filter_uid;
-    public $results;
-    public $dir;
+
+    /**
+     * @var string $sort Database column upon which to sort
+     */
     public $sort;
+
+    /**
+     * @var string $dir Direction to sort: asc or desc
+     */
+    public $dir;
+
+    /**
+     * @var object $results Database query results
+     */
+    public $results;
+
+    /**
+     * @var string $search Search string
+     */
     public $search;
+
+    /**
+     * @var int $row_count Database query row count
+     */
     public $row_count;
 
-    private $_uid;
+    /**
+     * @var int $_role Role for user defined in $roles
+     */
     private $_role;
+
+    /**
+     * @var object $_db Database connection object
+     */
     private $_db;
+
+    /**
+     * @var object $_uid User identifier
+     */
+    private $_uid;
 
     /**
      * Class constructor

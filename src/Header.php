@@ -49,15 +49,33 @@ namespace SimpleMappr;
  */
 class Header
 {
+    /**
+     * @var array $_js_header Empty array to hold all js files for header
+     */
     private $_js_header = [];
+
+    /**
+     * @var array $_css_header Empty array to hold css files for header
+     */
     private $_css_header = [];
+
+    /**
+     * @var string $_hash Truncated MD5 hash for compiled css and js files
+     */
     private $_hash = "";
 
+    /**
+     * @var string $_css_cache_path Directory to put combined and minified css files
+     */
     private static $_css_cache_path = "/public/stylesheets/cache/";
+
+    /**
+     * @var string $_js_cache_path Directory to put combined and minified js files
+     */
     private static $_js_cache_path = "/public/javascript/cache/";
 
     /**
-     * An array of javascript files that remain uncombined
+     * @var array $local_js_uncombined js files that remain uncombined
      */
     public $local_js_uncombined = [
         'jquery'      => 'public/javascript/jquery-1.12.3.min.js',
@@ -66,7 +84,7 @@ class Header
      ];
 
     /**
-     * An array of all javascript files to be combined
+     * @var array $local_js_combined All js files to be combined
      */
     public $local_js_combined = [
         'color'       => 'public/javascript/jquery.colorpicker.min.js',
@@ -87,16 +105,22 @@ class Header
         'simplemappr' => 'public/javascript/simplemappr.min.js'
     ];
 
+    /**
+     * @var array $admin_js Array of all js files to be added in admin tab
+     */
     public $admin_js = [
         'admin' => 'public/javascript/simplemappr.admin.min.js'
     ];
 
+    /**
+     * @var array $remote_js Array of remote js files to be swapped in production
+     */
     public $remote_js = [
         'jquery'    => '//code.jquery.com/jquery-1.12.3.min.js'
     ];
 
     /**
-     * An array of all css files to be minified
+     * @var array $local_css Array of all css files to be minified
      */
     public $local_css = [
         'public/stylesheets/raw/styles.css'
@@ -279,7 +303,7 @@ class Header
      * Obtain a file name in the cache directory
      *
      * @param string $dir The fully qualified directory
-     * @param string $x   The file extension
+     * @param string $x   The file extension, default 'js'
      *
      * @return array An array of cached files
      */
@@ -296,7 +320,7 @@ class Header
     }
 
     /**
-     * Make an MD5 hash for the minified js and css files
+     * Make a truncated MD5 hash for minified js and css file names
      *
      * @return object $this
      */
@@ -496,7 +520,7 @@ class Header
     }
 
     /**
-     * Get all the js for the footer
+     * Get all the js files for the footer
      *
      * @return string $foot
      */

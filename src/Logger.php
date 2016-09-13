@@ -49,6 +49,9 @@ namespace SimpleMappr;
  */
 class Logger
 {
+    /**
+     * @var string $_filename Filename for logging
+     */
     private $_filename;
 
     /**

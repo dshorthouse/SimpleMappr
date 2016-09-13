@@ -49,13 +49,35 @@ namespace SimpleMappr;
  */
 class Share implements RestMethods
 {
+    /**
+     * @var string $sort Database column upon which to sort
+     */
     public $sort;
+
+    /**
+     * @var string $dir Direction to sort: asc or desc
+     */
     public $dir;
+
+    /**
+     * @var object $results Database query results
+     */
     public $results;
 
-    private $_db;
-    private $_uid;
+    /**
+     * @var int $_role Role for user defined in $roles
+     */
     private $_role;
+
+    /**
+     * @var object $_db Database connection object
+     */
+    private $_db;
+
+    /**
+     * @var object $_uid User identifier
+     */
+    private $_uid;
 
     /**
      * Constructor

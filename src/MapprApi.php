@@ -49,6 +49,9 @@ namespace SimpleMappr;
  */
 class MapprApi extends Mappr
 {
+    /**
+     * @var array $_coord_cols Coordinates for each column of data
+     */
     private $_coord_cols = [];
 
     /**

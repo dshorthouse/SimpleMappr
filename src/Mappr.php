@@ -65,52 +65,89 @@ abstract class Mappr
      */
     abstract function createOutput();
 
-    /* path to the shapefile config */
+    /**
+     * @var string $shapefile_config Path to the shapefile config
+     */
     static protected $shapefile_config = ROOT.'/config/shapefiles.yml';
 
-    /* path to the font file */
+    /**
+     * @var string $font_file Path to the font file
+     */
     protected $font_file = ROOT.'/mapserver/fonts/fonts.list';
 
-    /* file system temp path to store files produced */ 
+    /**
+     * @var string $tmp_path File system temp path to store files produced
+     */ 
     protected $tmp_path = ROOT.'/public/tmp/';
 
-    /* url temp path to retrieve files produced */
+    /**
+     * @var string $tmp_url URL temp path to retrieve files produced
+     */
     protected $tmp_url = MAPPR_MAPS_URL;
 
-    /* the base map object */
+    /**
+     * @var object $map_obj The base map object
+     */
     protected $map_obj;
 
-    /* default extent when map first loaded */
+    /**
+     * @var array $max_extent Default extent when map first loaded
+     */
     protected $max_extent = [-180,-90,180,90];
 
-    /* default projection when map first loaded */
+    /**
+     * @var string $default_projection Default projection when map first loaded
+     */
     protected $default_projection = 'epsg:4326';
 
+    /**
+     * @var object $image Image object produced from MapScript
+     */
     protected $image;
 
+    /**
+     * @var object $scale Scale object for scalebar produced from MapScript
+     */
     protected $scale;
 
+    /**
+     * @var object $legend Legend object produced from MapScript
+     */
     protected $legend;
 
-    /* shapes and their mapfile configurations */
+    /**
+     * @var array $shapes Shapes and their mapfile configurations
+     */
     protected $shapes = [];
 
-    /* post-draw padding for longitude extent used as a correction factor on front-end */
+    /**
+     * @var int $ox_pad Post-draw padding for longitude extent used as a correction factor on front-end
+     */
     protected $ox_pad = 0;
 
-    /* post-draw padding for latitude extent used as a correction factor on front-end */
+    /**
+     * @var int $oy_pad Post-draw padding for latitude extent used as a correction factor on front-end
+     */
     protected $oy_pad = 0;
 
-    /* url for legend image if produced */
+    /**
+     * @var string $legend_url URL for legend image if produced
+     */
     protected $legend_url;
 
-    /* url for scalebar image if produced */
+    /**
+     * @var string $scalebar_url URL for scalebar image if produced
+     */
     protected $scalebar_url;
 
-    /* holding bin for any geographic coordinates that fall outside extent of Earth */
+    /**
+     * @var array $bad_points Holding bin for coordinates outside extent of Earth
+     */
     protected $bad_points = [];
 
-    /* placeholder for presence of anything that might need a legend */
+    /**
+     * @var bool $_legend_required Placeholder for presence of anything that might need a legend
+     */
     private $_legend_required = false;
 
     /**
@@ -139,6 +176,11 @@ abstract class Mappr
         return self::_tokenize_shapefile_config(Yaml::parse($config_file));
     }
 
+    /**
+     * Default attributes for the request object
+     *
+     * @return obj
+     */
     private function _defaultAttributes()
     {
       $attr = new \stdClass();
@@ -253,6 +295,11 @@ abstract class Mappr
         return $newPoint;
     }
 
+    /**
+     * Load the accepted output formats from the AcceptedOutputs trait
+     *
+     * @return void
+     */
     private function _loadOutputFormats()
     {
       foreach(AcceptedOutputs::$outputs as $output) {

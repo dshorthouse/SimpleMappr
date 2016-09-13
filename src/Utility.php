@@ -40,7 +40,7 @@ namespace SimpleMappr;
 use \ForceUTF8\Encoding;
 
 /**
- * Utility:: for SimpleMappr
+ * Utility methods for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr
@@ -101,9 +101,9 @@ class Utility
     /**
      * Add slashes to either a string or an array
      *
-     * @param string $arr_r String or array to add slashes
+     * @param string|array $arr_r String or array to add slashes
      *
-     * @return string/array
+     * @return string|array
      */
     public static function addSlashesExtended(&$arr_r)
     {
@@ -203,16 +203,16 @@ class Utility
      */
     public static function makeCoordinates($point)
     {
-        $loc = preg_replace(['/[\p{Z}\s]/u', '/[^\d\s,;.\-NSEWO°ºdms\'"]/i'], [' ', ""], $point);
-        if (preg_match('/[NSEWO]/', $loc) != 0) {
+        $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms'\"]/i"], [" ", ""], $point);
+        if (preg_match("/[NSEWO]/", $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
                 return [null, null];
             }
-            $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
+            $coord = (preg_match("/[EWO]/", $coord[1]) != 0) ? $coord : array_reverse($coord);
             return [self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1]))];
         } else {
-            $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc))); //split by space, comma, or semicolon
+            $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc)));
             if (count($coord) != 2 || empty($coord[1])) {
                 return [null, null];
             }
@@ -257,11 +257,11 @@ class Utility
      *
      * @param string $coord Dirty string that should be a real number
      *
-     * @return real Cleaned coordinate
+     * @return float Cleaned coordinate
      */
     public static function cleanCoord($coord)
     {
-        return preg_replace('/[^\d.-]/i', "", $coord);
+        return preg_replace("/[^\d.-]+/", "", $coord);
     }
 
     /**

@@ -49,6 +49,9 @@ namespace SimpleMappr;
  */
 class Session
 {
+    /**
+     * @var array $accepted_locales Accepted locales for i18n
+     */
     public static $accepted_locales = [
         'en_US' => [
             'canonical' => 'en',
@@ -64,11 +67,29 @@ class Session
             'code'   => 'fr_FR.UTF-8'],
         ];
 
+    /**
+     * @var string $domain i18n domain
+     */
     public static $domain = "messages";
 
+    /**
+     * @var string $_token RPXNOW public token
+     */
     private $_token;
+
+    /**
+     * @var string $_locale PHP regionalized locale
+     */
     private $_locale;
+
+    /**
+     * @var string $_locale_code PHP regionalized locale with encoding
+     */
     private $_locale_code;
+
+    /**
+     * @var array $_auth_info RPXNOW authentication response
+     */
     private $_auth_info = [];
 
     /**

@@ -49,6 +49,9 @@ namespace SimpleMappr;
  */
 class Kml
 {
+    /**
+     * @var array $pushpins Array of default pushpins
+     */
     public static $pushpins = [
         'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
         'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png',
@@ -62,12 +65,34 @@ class Kml
         'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
     ];
 
-    private $_kml = "";
+    /**
+     * @var object $_kml XMLWriter object
+     */
+    private $_kml;
+
+    /**
+     * @var array $_metadata Metadata array
+     */
     private $_metadata = [];
+
+    /**
+     * @var array $_placemark Placemarkers for KML
+     */
     private $_placemark = [];
 
+    /**
+     * @var array $coords Coordinates to build a placemark
+     */
     public $coords;
+
+    /**
+     * @var string $file_name User-defined filename
+     */
     public $file_name;
+
+    /**
+     * @var string $download_token Download token used in session cookie
+     */
     public $download_token;
 
     /**
