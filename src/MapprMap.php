@@ -106,7 +106,10 @@ class MapprMap extends Mappr
             $this->crop = true;
         }
 
-        (isset($this->layers['grid'])) ? $this->graticules = true : $this->graticules = false;
+        $this->graticules = false;
+        if (isset($this->layers['grid'])) {
+            $this->graticules = true;
+        }
         if (!isset($this->projection_map) || empty($this->projection_map)) {
             $this->projection_map = 'epsg:4326';
         }
