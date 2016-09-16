@@ -131,7 +131,6 @@ class MapprMap extends Mappr
             $this->options['legend'] = false;
         }
 
-        //$this->image_size       = [$this->width, $this->height];
         $this->callback         = Utility::loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
         
@@ -193,15 +192,13 @@ class MapprMap extends Mappr
             $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
-            if (isset($this->gridlabel) && $this->gridlabel == 1) {
-                $label = new \labelObj();
-                $label->set("encoding", "UTF-8");
-                $label->set("font", "arial");
-                $label->set("size", 10);
-                $label->set("position", MS_UC);
-                $label->color->setRGB(30, 30, 30);
-                $class->addLabel($label);
-            }
+            $label = new \labelObj();
+            $label->set("encoding", "UTF-8");
+            $label->set("font", "arial");
+            $label->set("size", 10);
+            $label->set("position", MS_UC);
+            $label->color->setRGB(30, 30, 30);
+            $class->addLabel($label);
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200, 200, 200);
 
