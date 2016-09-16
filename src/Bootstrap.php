@@ -189,7 +189,7 @@ class Bootstrap
             return $klass->execute()->createOutput();
         });
 
-        $router->get('/map/{id:i}.{ext:[kml|svg|json]+}', function ($id, $ext) {
+        $router->get('/map/{id:i}.{ext:[kml|svg|json|png|jpg]+}', function ($id, $ext) {
             $klass = $this->_klass("MapprMap", $id, $ext);
             return $klass->execute()->createOutput();
         });

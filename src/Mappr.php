@@ -207,7 +207,7 @@ abstract class Mappr
       $attr->rotation         = 0;
       $attr->zoom_in          = false;
       $attr->zoom_out         = false;
-      $attr->download_factor = 1;
+      $attr->download_factor  = 1;
       $attr->file_name        = time();
 
       return $attr;

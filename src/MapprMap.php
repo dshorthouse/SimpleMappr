@@ -117,26 +117,24 @@ class MapprMap extends Mappr
             $this->origin = (int)Utility::loadParam('origin', false);
         }
 
-        $this->download         = true;
         $this->watermark        = true;
 
         unset($this->options['border']);
-        $this->width            = (float)Utility::loadParam('width', 800);
-        $this->height           = (float)Utility::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 400);
+        $this->width            = (float)Utility::loadParam('width', 900);
+        $this->height           = (float)Utility::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 450);
         if ($this->width == 0 || $this->height == 0) {
-            $this->width = 800; $this->height = 400;
+            $this->width = 900; $this->height = 450;
         }
 
-        if (Utility::loadParam('legend', false) == "true") {
-            $this->options['legend'] = true;
-        } elseif (Utility::loadParam('legend', false) == "false") {
+        $this->options['legend'] = true;
+        if (Utility::loadParam('legend', false) == "false") {
             $this->options['legend'] = false;
         }
 
-        $this->image_size       = [$this->width, $this->height];
+        //$this->image_size       = [$this->width, $this->height];
         $this->callback         = Utility::loadParam('callback', null);
         $this->output           = $this->_extension; //overwrite the output
-
+        
         return $this;
     }
 
@@ -149,6 +147,7 @@ class MapprMap extends Mappr
     {
         http_response_code(404);
         switch ($this->_extension) {
+        case 'jpg':
         case 'png':
             header("Content-Type: image/png");
             $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/404.png");
@@ -233,30 +232,54 @@ class MapprMap extends Mappr
     }
 
     /**
-     * Override the method in the parent class
+     * Override method in the parent class
      *
      * @return void
      */
     public function addScalebar()
     {
-        $this->map_obj->scalebar->set("style", 0);
-        $this->map_obj->scalebar->set("intervals", 3);
-        $this->map_obj->scalebar->set("height", 8);
-        $this->map_obj->scalebar->set("width", 200);
-        $this->map_obj->scalebar->color->setRGB(30, 30, 30);
-        $this->map_obj->scalebar->backgroundcolor->setRGB(255, 255, 255);
-        $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
-        $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-        $this->map_obj->scalebar->label->set("encoding", "UTF-8");
-        $this->map_obj->scalebar->label->set("font", "arial");
-        $this->map_obj->scalebar->label->set("size", 10);
-        $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
-
-        //svg format cannot do scalebar in MapServer
-        if ($this->_extension != 'svg') {
+        if ($this->_extension == 'png' || $this->_extension == 'jpg') {
+            $this->map_obj->scalebar->set("style", 0);
+            $this->map_obj->scalebar->set("intervals", 3);
+            $this->map_obj->scalebar->set("height", 8);
+            $this->map_obj->scalebar->set("width", 200);
+            $this->map_obj->scalebar->color->setRGB(30, 30, 30);
+            $this->map_obj->scalebar->backgroundcolor->setRGB(255, 255, 255);
+            $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
+            $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
+            $this->map_obj->scalebar->label->set("encoding", "UTF-8");
+            $this->map_obj->scalebar->label->set("font", "arial");
+            $this->map_obj->scalebar->label->set("size", 8);
+            $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
             $this->map_obj->scalebar->set("status", MS_EMBED);
             $this->map_obj->scalebar->set("position", MS_LR);
             $this->map_obj->drawScalebar();
+        }
+    }
+
+    /**
+     * Override method in the parent class
+     *
+     * @return void
+     */
+    public function addLegend()
+    {
+        if ($this->request->options['legend']) {
+            if ($this->request->output == 'png' || $this->request->output == 'jpg') {
+                $this->map_obj->legend->set("keysizex", 20);
+                $this->map_obj->legend->set("keysizey", 20);
+                $this->map_obj->legend->set("keyspacingx", 5);
+                $this->map_obj->legend->set("keyspacingy", 5);
+                $this->map_obj->legend->set("postlabelcache", 1);
+                $this->map_obj->legend->label->set("font", "arial");
+                $this->map_obj->legend->label->set("encoding", "UTF-8");
+                $this->map_obj->legend->label->set("position", 1);
+                $this->map_obj->legend->label->set("size", 10);
+                $this->map_obj->legend->label->color->setRGB(0, 0, 0);
+                $this->map_obj->legend->set("status", MS_EMBED);
+                $this->map_obj->legend->set("position", MS_UR);
+                $this->map_obj->drawLegend();
+            }
         }
     }
 
@@ -302,6 +325,11 @@ class MapprMap extends Mappr
     public function createOutput()
     {
         switch($this->_extension) {
+        case 'jpg':
+            header("Content-Type: image/jpeg");
+            $this->image->saveImage("");
+            break;
+
         case 'png':
             header("Content-Type: image/png");
             $this->image->saveImage("");
