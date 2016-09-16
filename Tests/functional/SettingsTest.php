@@ -70,7 +70,7 @@ class SettingsTest extends SimpleMapprTest
 
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-        $this->webDriver->findElement(WebDriverBy::id('graticules'))->click();
+        $this->webDriver->findElement(WebDriverBy::id('grid'))->click();
         parent::waitOnMap();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);

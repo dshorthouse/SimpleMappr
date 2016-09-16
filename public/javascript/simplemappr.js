@@ -694,7 +694,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindSettings: function() {
-      var self = this, graticules = $('#graticules');
+      var self = this, graticules = $('#grid');
 
       $('#mapOptions').on('click', '.layeropt', function(e) {
         self.hardResetShowMap(e);
