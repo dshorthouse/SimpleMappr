@@ -113,6 +113,28 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that a well-formed coordinate in DD with tab is parsed.
+     */
+    public function test_make_coordinates_6()
+    {
+        $coord = "-7.483333, - 36.283333";
+        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $this->assertEquals($dd[0], -7.483333);
+        $this->assertEquals($dd[1], -36.283333);
+    }
+
+    /**
+     * Test that a well-formed coordinate in DD with tab is parsed.
+     */
+    public function test_make_coordinates_7()
+    {
+        $coord = " - 7.483333, - 36.283333";
+        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $this->assertEquals($dd[0], -7.483333);
+        $this->assertEquals($dd[1], -36.283333);
+    }
+
+    /**
      * Test that a single coordinate in DMS with 'd' is converted.
      */
     public function test_dms_to_deg_1()

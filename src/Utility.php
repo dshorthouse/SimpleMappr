@@ -203,7 +203,7 @@ class Utility
      */
     public static function makeCoordinates($point)
     {
-        $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms'\"]/i"], [" ", ""], $point);
+        $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms'\"]/i", "/-\s+(?=\d)/"], [" ", "", "-"], $point);
         if (preg_match("/[NSEWO]/", $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
             if (count($coord) != 2 || empty($coord[1])) {
