@@ -225,6 +225,21 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that two single quotes are used in DMS to indicate secs.
+     */
+    public function test_dms_to_deg10()
+    {
+        $dms = "03º23'45''S";
+        $deg = 3;
+        $min = 23/60;
+        $sec = 45/3600;
+        $dd_raw = -($deg + $min + $sec);
+        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $this->assertEquals($dd, -3.3958333333333);
+        $this->assertEquals($dd, $dd_raw);
+    }
+
+    /**
      * Test that a dirty coordinate in DD is parsed.
      */
     public function test_dirty_deg()

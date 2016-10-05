@@ -129,7 +129,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapImage{position:relative;}
 #mapOutput{height:450px;}
 #mapOutputImage{background-color:#fff;}
-#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:1000;top:5px;left:5px}
+#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:99;top:5px;left:5px}
 #mapControls .controls{position:absolute;}
 #mapControls .sprites{width:16px;height:16px;}
 #mapControls .up{top:10px;left:22px;background-position:-160px -324px;}
