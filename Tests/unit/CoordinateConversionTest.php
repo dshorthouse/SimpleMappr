@@ -227,7 +227,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     /**
      * Test that two single quotes are used in DMS to indicate secs.
      */
-    public function test_dms_to_deg10()
+    public function test_dms_to_deg_10()
     {
         $dms = "03º23'45''S";
         $deg = 3;
