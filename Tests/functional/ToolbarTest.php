@@ -94,6 +94,6 @@ class ToolbarTest extends SimpleMapprTest
         $button->click();
         $message_box = $this->webDriver->findElement(WebDriverBy::id('mapper-message'));
         $this->assertTrue($message_box->isDisplayed());
-        $this->assertEquals("You are missing a legend for at least one of your Point Data or Regions layers.", $message_box->getText());
+        $this->assertEquals("You are missing a legend for at least one of your Point Data, Region, or Drawing layers.", $message_box->getText());
     }
 }
