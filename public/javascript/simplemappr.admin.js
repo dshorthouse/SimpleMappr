@@ -46,7 +46,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
       this.loadCitationList();
       this.bindCreateCitation();
       this.loadAPILogs();
-      sm.tabSelector(5);
+      sm.tabSelector(6);
     },
 
     getParameterByName: function(name) {
@@ -102,7 +102,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
               .on('click', 'a.user-load', function(e) {
                 e.preventDefault();
                 sm.loadMapList({ uid : $(this).attr("data-uid") });
-                sm.tabSelector(3);
+                sm.tabSelector(4);
             });
             sm.hideSpinner();
           }

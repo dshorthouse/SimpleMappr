@@ -27,6 +27,11 @@ msgstr "Dimension: %dim%"
 msgid "Region %d"
 msgstr "Région %d"
 
+#: .index.php:387
+#, php-format
+msgid "Drawing %d"
+msgstr "Dessin %d"
+
 #: .index.php:11
 msgid "Create free point maps for publications and presentations"
 msgstr "créez gratuitement des cartes de répartition pour publications et présentations"
@@ -66,6 +71,11 @@ msgstr "Aperçu"
 #: .tabs/help.php:138
 msgid "Point Data"
 msgstr "Points de Données"
+
+#: .index.php:38
+#: .tabs/help.php:157
+msgid "Drawings"
+msgstr "Dessins"
 
 #: .index.php:38
 #: .tabs/help.php:157
@@ -134,11 +144,19 @@ msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separat
 msgstr "Taper des pays comme Mexico, Venezuela et/ou des codes pour États/Provinces séparés par des espaces et préfixé par trois lettres de code national ISO <em>ex.</em> USA[VA], CAN[AB ON]."
 
 #: .index.php:67
+msgid "Type Well-Known Text (WKT). Try this {{wkt_url}} generator. <em>e.g.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
+msgstr "Taper Well-Known Text (WKT). Essayer ce {{wkt_url} outil. <em>ex.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
+
+#: .index.php:67
 msgid "codes"
 msgstr "codes"
 
 #: .index.php:72
 msgid "Add a region"
+msgstr "Ajouter"
+
+#: .index.php:72
+msgid "Add a drawing"
 msgstr "Ajouter"
 
 #: .index.php:81
@@ -226,7 +244,7 @@ msgid "pan left"
 msgstr "déplacer vers la gauche"
 
 #: .index.php:115
-msgid "Records Out of Range"
+msgid "Data Out of Range"
 msgstr "Données hors de portée"
 
 #: .index.php:116
@@ -487,8 +505,8 @@ msgid "Saving..."
 msgstr "Enregistrer..."
 
 #: .index.php:267
-msgid "You are missing a legend for at least one of your Point Data or Regions layers."
-msgstr "Il vous manque une légende pour au moins un de vos Points de Données ou des Régions."
+msgid "You are missing a legend for at least one of your Point Data, Region, or Drawing layers."
+msgstr "Il vous manque une légende pour au moins un de vos Points de Données, Régions, ou Dessins."
 
 #: .index.php:268
 msgid "Loading your maps..."
@@ -987,6 +1005,10 @@ msgstr "superposer les océans en polygones gris"
 msgid "select this checkbox to render a color, shaded relief layer"
 msgstr "rendre une couche relief ombré"
 
+#: .tabs/help.php:84
+msgid "select this checkbox to render an alternate color, shaded relief layer"
+msgstr "rendre une différente couche relief ombré"
+
 #: .tabs/help.php:87
 msgid "select this checkbox to render a greyscale, shaded relief layer"
 msgstr "rendre une couche relief ombré de gris"
@@ -994,6 +1016,10 @@ msgstr "rendre une couche relief ombré de gris"
 #: .tabs/help.php:87
 msgid "select this checkbox to render biodiversity hotspots known to Conservation International"
 msgstr "rendre une couche pour les hotspots de biodiversité selon l'organisme Conservation International"
+
+#: .tabs/help.php:87
+msgid "select this checkbox to render terrestrial ecoregions from the World Wildlife Fund"
+msgstr "rendre une couche pour les écorégions terrestres selon l'organisme World Wildlife Fund"
 
 #: .tabs/help.php:93
 msgid "label countries"
@@ -1026,6 +1052,10 @@ msgstr "étiquettes pour caractéristiques marines"
 #: .tabs/help.php:111
 msgid "label biodiversity hotspots"
 msgstr "étiquettes pour hotspots de biodiversité"
+
+#: .tabs/help.php:111
+msgid "label terrestrial ecoregions"
+msgstr "étiquettes pour les écorégions terrestres"
 
 #: .tabs/help.php:116
 msgid "graticules"
@@ -1098,6 +1128,10 @@ msgstr "configuré en utilisant le schéma de couleurs RGB et un sélecteur de c
 #: .tabs/help.php:160
 msgid "Use the Regions tab to list political regions you would like shaded and select the shade color. Separate each political region by a comma or semicolon. Alternatively, you may use State/Province codes such as USA[WY|WA|MT], CAN[AB BC] that will shade Wyoming, Washington, Montana, Alberta, and British Columbia. Notice that States or Provinces are separated by a space or a pipe and these are wrapped with square brackets, prefixed with the three-letter ISO country code."
 msgstr "Utiliser l'onglet Régions pour taper une liste des régions politiques que vous aimeriez ombragé et sélectionner la couleur d'ombre. Séparer chaque région politique par une virgule ou un point virgule. Alternativement, vous pouvez utiliser les codes de l'Etat/Province, comme USA[WY|WA|MT], CAN[AB BC] qui sera l'ombre du Wyoming, Washington, Montana, l'Alberta et la Colombie-Britannique. Noter que les États ou les provinces sont séparées par un espace ou un tuyau et ce sont enveloppés avec des crochets, précédée du code à trois lettres ISO du pays."
+
+#: .tabs/help.php:160
+msgid "Use the Drawings tab to paste well-known text (WKT). You can generate these using software capable of doing so or online such as this {{ url_wkt }} generator."
+msgstr "Utiliser l'onglet Dessins pour taper well-known text (WKT). Vous pouvez générer ce en utilisant un logiciel ou en ligne comme le {{url_wkt}} générateur."
 
 #: .tabs/help.php:165
 msgid "Country"

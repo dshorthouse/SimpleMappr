@@ -146,6 +146,11 @@ abstract class Mappr
     protected $bad_points = [];
 
     /**
+     * @var array $bad_drawings Holding bin for WKT that fail to render
+     */
+    protected $bad_drawings = [];
+
+    /**
      * @var bool $_legend_required Placeholder for presence of anything that might need a legend
      */
     private $_legend_required = false;
@@ -186,6 +191,7 @@ abstract class Mappr
       $attr = new \stdClass();
       $attr->coords           = [];
       $attr->regions          = [];
+      $attr->wkt              = [];
       $attr->output           = 'png';
       $attr->width            = 900;
       $attr->height           = $attr->width/2;
@@ -269,6 +275,7 @@ abstract class Mappr
         $this->_setCrop();
         $this->_addLayers();
         $this->addRegions();
+        $this->addWKT();
         $this->addGraticules();
         $this->addCoordinates();
         $this->_addWatermark();
@@ -816,6 +823,72 @@ abstract class Mappr
     }
 
     /**
+     * Add WKT layers to the map
+     *
+     * @return void
+     */
+    public function addWKT()
+    {
+        $this->bad_drawings = [];
+        if (isset($this->request->wkt) && $this->request->wkt) {
+            $count = count($this->request->wkt)-1;
+            for ($j=$count; $j>=0; $j--) {
+                $color = [];
+                $title = ($this->request->wkt[$j]['title']) ? stripslashes($this->request->wkt[$j]['title']) : "";
+                if ($this->request->wkt[$j]['color']) {
+                    $color = explode(" ", $this->request->wkt[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = [];
+                    }
+                }
+
+                $data = trim($this->request->wkt[$j]['data']);
+
+                if ($data) {
+                    $this->_legend_required = true;
+                    $rows = explode("\n", Utility::removeEmptyLines($data));
+                    foreach ($rows as $key => $row) {
+                        if (strpos($row, "POINT") !== false) {
+                            $type = MS_LAYER_POINT;
+                        } else if (strpos($row, "LINE") !== false) {
+                            $type = MS_LAYER_LINE;
+                        } else {
+                            $type = MS_LAYER_POLYGON;
+                        }
+                        $layer = ms_newLayerObj($this->map_obj);
+                        $layer->set("name", "wkt_layer_".$j.$key);
+                        $layer->set("status", MS_ON);
+                        $layer->set("type", $type);
+                        $layer->set("template", "template.html");
+                        $layer->setProjection(self::getProjection($this->default_projection));
+
+                        $class = ms_newClassObj($layer);
+                        $class->set("name", $title);
+                        $style = ms_newStyleObj($class);
+                        if ($type == MS_LAYER_POINT) {
+                            $style->set("symbolname", 'circle');
+                            $style->set("size", 8);
+                        }
+                        if (!empty($color)) {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                        }
+                        $style->set("opacity", 75);
+
+                        try {
+                            $shape = ms_shapeObjFromWkt($row);
+                            $layer->addFeature($shape);
+                        } catch(\Exception $e) {
+                            $this->bad_drawings[] = stripslashes($this->request->wkt[$j]['title'] . ' : ' . $row);
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
      * Add shaded regions to the map
      *
      * @return void
@@ -1249,6 +1322,16 @@ abstract class Mappr
     public function getBadPoints()
     {
         return implode('<br />', $this->bad_points);
+    }
+
+    /**
+     * Get all the coordinates that fall outside Earth's geographic extent in dd
+     *
+     * @return string
+     */
+    public function getBadDrawings()
+    {
+        return implode('<br />', $this->bad_drawings);
     }
 
     /**

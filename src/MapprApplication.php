@@ -132,7 +132,8 @@ class MapprApplication extends Mappr
           'rendered_projection' => $this->request->projection,
           'legend_url'          => $this->legend_url,
           'scalebar_url'        => $this->scalebar_url,
-          'bad_points'          => $this->getBadPoints()
+          'bad_points'          => $this->getBadPoints(),
+          'bad_drawings'        => $this->getBadDrawings()
       ];
 
       return $output;

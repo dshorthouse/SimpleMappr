@@ -59,6 +59,7 @@ class Request
         $attr = new \stdClass();
         $attr->coords           = Utility::loadParam('coords', []);
         $attr->regions          = Utility::loadParam('regions', []);
+        $attr->wkt              = Utility::loadParam('wkt', []);
         $attr->output           = Utility::loadParam('output', 'png');
         $attr->width            = (float)Utility::loadParam('width', 900);
         $attr->height           = (float)Utility::loadParam('height', $attr->width/2);

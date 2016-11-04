@@ -240,13 +240,23 @@ class MapprApi extends Mappr
     }
 
     /**
+     * Override addWKT method
+     *
+     * @return void
+     */
+    public function addWKT()
+    {
+        return;
+    }
+
+    /**
      * Override addRegions method
      *
      * @return void
      */
     public function addRegions()
     {
-        if ($this->request->regions['data']) {            
+        if ($this->request->regions['data']) {
             $layer = ms_newLayerObj($this->map_obj);
             $layer->set("name", "stateprovinces_polygon");
             $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);

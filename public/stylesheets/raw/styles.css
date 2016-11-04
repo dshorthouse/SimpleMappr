@@ -74,7 +74,7 @@ button.negative:active{background-color:#782c21 !important;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#ccc !important;border:1px solid #eee;cursor:not-allowed;}
 .fieldSets{margin-top:10px !important}
 .addFieldset{margin-left:20px;margin-top:20px;}
-.fieldset-points, .fieldset-regions{position:relative;width:672px !important;}
+.fieldset-points, .fieldset-regions, .fieldset-wkt{position:relative;width:672px !important;}
 .fieldset-taxon{margin-bottom:10px;}
 .fieldset-extras{margin:10px 0px;}
 .fieldset-title{font-size:0.85em;}
@@ -386,7 +386,7 @@ input.ui-button{padding:.4em 1em;}
 @media print{
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
-#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badFile,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
+#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-wkt,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badFile,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
 #mapScale{text-align: right;}
 #mapLegend p{display:none;}
 #mapLegend img{display:block;}

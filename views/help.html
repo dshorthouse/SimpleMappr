@@ -96,11 +96,17 @@
     <dt>{% trans "relief" %}:</dt>
     <dd>{% trans "select this checkbox to render a color, shaded relief layer" %}</dd>
 
+    <dt>{% trans "relief (alternate)" %}:</dt>
+    <dd>{% trans "select this checkbox to render an alternate color, shaded relief layer" %}</dd>
+
     <dt>{% trans "relief (greyscale)" %}:</dt>
     <dd>{% trans "select this checkbox to render a greyscale, shaded relief layer" %}</dd>
 
     <dt>{% trans "biodiv. hotspots" %}:</dt>
     <dd>{% trans "select this checkbox to render biodiversity hotspots known to Conservation International" %}</dd>
+
+    <dt>{% trans "ecoregions" %}:</dt>
+    <dd>{% trans "select this checkbox to render terrestrial ecoregions from the World Wildlife Fund" %}</dd>
   </dl>
 
   <h3>{% trans "Labels" %}</h3>
@@ -128,6 +134,9 @@
 
     <dt>{% trans "biodiv. hotspots" %}:</dt>
     <dd>{% trans "label biodiversity hotspots" %}</dd>
+
+    <dt>{% trans "ecoregions" %}:</dt>
+    <dd>{% trans "label terrestrial ecoregions" %}</dd>
   </dl>
 
   <h3>{% trans "Options" %}</h3>
@@ -166,6 +175,12 @@
       <dt>{% trans "Pushpin color" %}:</dt>
       <dd>{% trans "configured using the RGB color scheme and a color selector is provided. By default, \"0 0 0\" (black) is selected. Shades of gray may be configured by typing variations of identically numbered triples. For example, \"10 10 10\" is dark gray whereas \"100 100 100\" is a lighter shade of gray." %}</dd>
     </dl>
+
+    <div class="header">
+      <h2>{% trans "Drawings" %}</h2>
+    </div>
+    {% set url_wkt = '<a href="https://rawgit.com/dshorthouse/0afc690b83ed056f6762a96702c041e7/raw/190037de4152654a2e4b1e13394b40ba67249fd4/wkt.html" target="_blank">WKT</a>' %}
+    <p>{% trans %}Use the Drawings tab to paste well-known text (WKT). You can generate these using software capable of doing so or online such as this {{ url_wkt }} generator.{% endtrans %}</p>
 
     <div class="header">
       <h2>{% trans "Regions" %}</h2>

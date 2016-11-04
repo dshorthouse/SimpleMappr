@@ -21,6 +21,7 @@
     <ul class="navigation">
     <li><a href="#map-preview">{% trans "Preview" %}</a></li>
     <li><a href="#map-points">{% trans "Point Data" %}</a></li>
+    <li><a href="#map-wkt">{% trans "Drawings" %}</a></li>
     <li><a href="#map-regions">{% trans "Regions" %}</a></li>
     <li><a href="#map-mymaps" class="sprites-before map-mymaps">
         {% if session and roles[session['role']] == 'administrator' %}
@@ -57,10 +58,24 @@
     <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearLayers" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
     </div>
 
+    <div id="map-wkt">
+    <div id="wkt-introduction" class="panel ui-corner-all">
+    {% set wkt_url = '<a href="https://rawgit.com/dshorthouse/0afc690b83ed056f6762a96702c041e7/raw/190037de4152654a2e4b1e13394b40ba67249fd4/wkt.html" target="_blank">WKT</a>' %}
+    <p>{% trans %}Type Well-Known Text (WKT). Try this {{wkt_url}} generator. <em>e.g.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63)){% endtrans %}</p>
+    </div>
+
+    <div id="fieldSetsWKT" class="fieldSets">
+    {% include "fragments/fragment.layers.wkt.html" %}
+    </div>
+
+    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="wkt">{% trans "Add a drawing" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearWKT" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    </div>
+
     <div id="map-regions">
     <div id="regions-introduction" class="panel ui-corner-all">
 
-    {% set tabIndex = (session and roles[session['role']] == 'administrator') ? 5 : 4 %}
+    {% set tabIndex = (session and roles[session['role']] == 'administrator') ? 6 : 5 %}
 
     <p>{% trans "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separated State/Province codes prefixed by 3-letter ISO country code <em>e.g.</em>USA[VA], CAN[AB ON]." %} <a href="#" data-tab="{{ tabIndex }}" class="sprites-before help show-codes">{% trans "codes" %}</a></p>
     </div>
@@ -111,7 +126,7 @@
     </div>
     <div class="thumb ui-corner-all ui-widget-header"></div>
     </div>
-    <div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords">{% trans "Records Out of Range" %}</a></div>
+    <div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords">{% trans "Data Out of Range" %}</a></div>
     <div id="mapOutput"><img id="mapOutputImage" src="public/images/basemap.png" alt="" width="900" height="450" /></div>
     </div>
     <div id="mapScale"><img id="mapOutputScale" src="public/images/basemap-scalebar.png" alt="" width="200" height="27" /></div>
@@ -170,7 +185,7 @@
         {% include "fragments/fragment.admin.html" %}
     {% endif %}
 
-    <div id="badRecordsViewer" title="{% trans "Records out of range" %}"><div id="badRecords"></div></div>
+    <div id="badRecordsViewer" title="{% trans "Data out of range" %}"><div id="badRecords"></div></div>
     <div id="mapSave" title="{% trans "Save" %}">
     <p>
     <label for="m-mapSaveTitle">{% trans "Title" %}<span class="required">*</span></label>
@@ -233,7 +248,7 @@
     <div id="mapper-loading-error-message" class="hidden-message">{% trans "There was a problem loading your map." %}</div>
     <div id="mapper-saving-error-message" class="hidden-message">{% trans "There was a problem saving your map." %}</div>
     <div id="mapper-saving-message" class="hidden-message">{% trans "Saving..." %}</div>
-    <div id="mapper-missing-legend" class="hidden-message">{% trans "You are missing a legend for at least one of your Point Data or Regions layers." %}</div>
+    <div id="mapper-missing-legend" class="hidden-message">{% trans "You are missing a legend for at least one of your Point Data, Region, or Drawing layers." %}</div>
     <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="{% trans "Delete" %}">{% trans "Are you sure you want to delete" %} <span></span>?</div>
     <div id="mapper-legend-message" class="hidden-message">{% trans "legend will appear here" %}</div>
     <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="{% trans "Example Coordinates" %}"></div>

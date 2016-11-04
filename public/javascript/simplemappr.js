@@ -47,6 +47,7 @@ var SimpleMappr = (function($, window, document) {
     vars: {
       newPointCount      : 0,
       newRegionCount     : 0,
+      newWKTCount        : 0,
       zoom               : true,
       fileDownloadTimer  : {},
       fillColor          : "",
@@ -62,6 +63,7 @@ var SimpleMappr = (function($, window, document) {
       spinner            : $('#map-loader').find('span.mapper-loading-spinner'),
       fieldSetsPoints    : $('#fieldSetsPoints'),
       fieldSetsRegions   : $('#fieldSetsRegions'),
+      fieldSetsWKT       : $('#fieldSetsWKT'),
       mapOutput          : $('#mapOutput'),
       mapOutputImage     : $('#mapOutputImage')
     },
@@ -432,7 +434,7 @@ var SimpleMappr = (function($, window, document) {
       $('#actionsBar').find('a.toolsEmbed').css({display:'none'});
       $('#border_thickness').val(1.25);
       $('#border-slider').slider({value:1.25});
-      $('#clearLayers, #clearRegions').each(function() {
+      $('#clearLayers, #clearRegions', '#clearWKT').each(function() {
         self.clearZone($(this).parent().prev().prev().children());
       });
       this.resetJbbox();
@@ -474,7 +476,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     mapList: function() {
-      this.tabSelector(3);
+      this.tabSelector(4);
     },
 
     mapZoom: function(dir) {
@@ -797,7 +799,7 @@ var SimpleMappr = (function($, window, document) {
 
     bindColorPickers: function() {
       var self = this;
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function(){
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT], function(){
         $(this).find('input.colorPicker').ColorPicker({
           element : $(this),
           onBeforeShow: function() {
@@ -822,12 +824,12 @@ var SimpleMappr = (function($, window, document) {
     bindClearButtons: function() {
       var self = this;
 
-      $('#clearLayers, #clearRegions').on('click', function(e) {
+      $('#clearLayers, #clearRegions', '#clearWKT').on('click', function(e) {
         e.preventDefault();
         self.clearZone($(this).parent().prev().prev().children());
       });
 
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function() {
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT], function() {
         $(this).on('click', 'button.clearself', function(e) {
           e.preventDefault();
           self.clearZone($(this).parent().parent());
@@ -1081,6 +1083,8 @@ var SimpleMappr = (function($, window, document) {
               return vars.newPointCount;
             case 'regions':
               return vars.newRegionCount;
+            case 'wkt':
+              return vars.newWKTCount;
           }
           break;
 
@@ -1092,6 +1096,9 @@ var SimpleMappr = (function($, window, document) {
             case 'regions':
               vars.newRegionCount += 1;
               return vars.newRegionCount;
+            case 'wkt':
+              vars.newWKTCount += 1;
+              return vars.newWKTCount;
           }
           break;
 
@@ -1103,6 +1110,9 @@ var SimpleMappr = (function($, window, document) {
             case 'regions':
               vars.newRegionCount -= 1;
               return vars.newRegionCount;
+            case 'wkt':
+              vars.newWKTCount -= 1;
+              return vars.newWKTCount;
           }
           break;
       }
@@ -1240,7 +1250,7 @@ var SimpleMappr = (function($, window, document) {
     bindAddButtons: function() {
       var self = this;
 
-      $('#map-points, #map-regions').on('click', 'button.addmore', function(e) {
+      $('#map-points, #map-regions, #map-wkt').on('click', 'button.addmore', function(e) {
         var data_type = $(this).attr("data-type"), fieldsets = 0;
         e.preventDefault();
         self.addAccordionPanel(data_type);
@@ -1418,8 +1428,13 @@ var SimpleMappr = (function($, window, document) {
         if(i > 2) { $(this).remove(); }
       });
 
+      $.each(this.vars.fieldSetsWKT.find('.fieldset-wkt'), function(i) {
+        if(i > 2) { $(this).remove(); }
+      });
+
       self.vars.newPointCount = 0;
       self.vars.newRegionCount = 0;
+      self.vars.newWKTCount = 0;
     },
 
     prepareInputs: function(data) {
@@ -1433,6 +1448,7 @@ var SimpleMappr = (function($, window, document) {
 
       inputs.map.coords  = inputs.map.coords || [];
       inputs.map.regions = inputs.map.regions || [];
+      inputs.map.wkt     = inputs.map.wkt || [];
       inputs.map.layers  = inputs.map.layers || {};
       inputs.map.options = inputs.map.options || {};
 
@@ -1455,6 +1471,14 @@ var SimpleMappr = (function($, window, document) {
             if(inputs.map.regions[parseInt(item[0].clean(),10)] === undefined) { inputs.map.regions[parseInt(item[0].clean(),10)] = {}; }
             inputs.map.regions[parseInt(item[0].clean(),10)][item[1].clean()] = value;
             delete inputs.map["regions" + item[0] + item[1]];
+          }
+        }
+        if(key.indexOf("wkt") !== -1) {
+          item = key.match(/\[[A-Za-z0-9]*?\]/g);
+          if(item) {
+            if(inputs.map.wkt[parseInt(item[0].clean(),10)] === undefined) { inputs.map.wkt[parseInt(item[0].clean(),10)] = {}; }
+            inputs.map.wkt[parseInt(item[0].clean(),10)][item[1].clean()] = value;
+            delete inputs.map["wkt" + item[0] + item[1]];
           }
         }
         if(key.indexOf("layers") !== -1) {
@@ -1499,11 +1523,12 @@ var SimpleMappr = (function($, window, document) {
         self.unusedVariables(key);
         $('#'+value).val($('#'+value).val());
       });
-      $('#map-points, #map-regions').find('button.addmore').prop("disabled", false);
+      $('#map-points, #map-regions, #map-wkt').find('button.addmore').prop("disabled", false);
       $('#filter-mymaps').val(filter);
       $('#origin-selector').hide();
       this.loadCoordinates(data);
       this.loadRegions(data);
+      this.loadWKT(data);
       this.loadLayers(data);
       this.loadSettings(data);
     },
@@ -1668,6 +1693,26 @@ var SimpleMappr = (function($, window, document) {
         self.loadShapeSize(i, coords);
         self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
         self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][shadow]"]').prop("checked", coord_shadow);
+      });
+    },
+
+    loadWKT: function(data) {
+      var self      = this,
+          wkt       = data.map.wkt || [],
+          wkt_title = "",
+          wkt_data  = "",
+          wkt_color = "";
+
+      $.each(wkt, function(i) {
+        if(i > 2) { self.addAccordionPanel('wkt'); }
+
+        wkt_title = wkt[i].title || "";
+        wkt_data  = wkt[i].data  || "";
+        wkt_color = wkt[i].color || "";
+
+        self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][title]"]').val(wkt_title);
+        self.vars.fieldSetsWKT.find('textarea[name="wkt['+i.toString()+'][data]"]').val(wkt_data);
+        self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][color]"]').val(wkt_color);
       });
     },
 
@@ -1885,7 +1930,7 @@ var SimpleMappr = (function($, window, document) {
     bindSubmit: function() {
       var self = this;
 
-      $('#map-points, #map-regions').find('button.submitForm').on('click', function(e) {
+      $('#map-points, #map-regions, #map-wkt').find('button.submitForm').on('click', function(e) {
         e.preventDefault();
         if(!self.missingFieldSetTitle()) {
           self.destroyRedo();
@@ -1897,7 +1942,9 @@ var SimpleMappr = (function($, window, document) {
 
     missingFieldSetTitle: function() {
       var self = this,
-          fieldsets = $.makeArray(this.vars.fieldSetsPoints.children(), this.vars.fieldSetsRegions.children()),
+          fieldsets = $.makeArray(this.vars.fieldSetsPoints.children())
+                      .concat($.makeArray(this.vars.fieldSetsRegions.children()))
+                      .concat($.makeArray(this.vars.fieldSetsWKT.children())),
           title = "",
           missingTitle = false,
           fieldset = "",
@@ -1911,7 +1958,8 @@ var SimpleMappr = (function($, window, document) {
         if(fieldset.find('textarea.m-mapCoord').val() && title.val() === '') {
           missingTitle = true;
           title.addClass('ui-state-error');
-          if(fieldset.parent().attr("id") === self.vars.fieldSetsRegions.attr("id")) { tab = 2; }
+          if(fieldset.parent().attr("id") === self.vars.fieldSetsWKT.attr("id")) { tab = 2; }
+          if(fieldset.parent().attr("id") === self.vars.fieldSetsRegions.attr("id")) { tab = 3; }
           self.tabSelector(tab);
           self.showMessage($('#mapper-missing-legend').text());
           return false;
@@ -2004,6 +2052,16 @@ var SimpleMappr = (function($, window, document) {
       }
     },
 
+    showBadDrawings: function() {
+      var bad_drawings = $('#bad_drawings').val(),
+          bad_points = $('#bad_points').val();
+
+      if(bad_drawings) {
+        $('#badRecords').html([bad_points,bad_drawings].filter(String).join("<br />"));
+        $('#badRecordsWarning').show();
+      }
+    },
+
     showSpinner: function() {
       this.vars.spinner.show();
     },
@@ -2059,6 +2117,7 @@ var SimpleMappr = (function($, window, document) {
           self.drawLegend();
           self.drawScalebar();
           self.showBadPoints();
+          self.showBadDrawings();
           self.addBadRecordsViewer();
         },
         error    : function(xhr, ajaxOptions, thrownError) {
@@ -2072,7 +2131,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     resetFormValues: function(data) {
-      var ele = ["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points"];
+      var ele = ["rendered_bbox", "rendered_rotation", "rendered_projection", "legend_url", "scalebar_url", "bad_points", "bad_drawings"];
 
       $.each(this.vars.mapOutput.find('input'), function() { $(this).val(''); });
       $.each(ele, function() { $('#' + this).val(data[this]); });
@@ -2529,13 +2588,13 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindAccordions: function() {
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions], function() {
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT], function() {
         $(this).accordion({header : 'h3', collapsible : true, autoHeight : false});
       });
     },
 
     bindTextAreaResizers: function() {
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, '#map-admin'], function() {
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT, '#map-admin'], function() {
         $(this).find('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
       });
     },
@@ -2553,7 +2612,7 @@ var SimpleMappr = (function($, window, document) {
 
     bindSpecialClicks: function() {
       var self = this;
-      $('#site-session').find('a.login').on('click', function(e) { e.preventDefault(); self.tabSelector(3); });
+      $('#site-session').find('a.login').on('click', function(e) { e.preventDefault(); self.tabSelector(4); });
       $('#general-points').find('a.show-examples').on('click', function(e) { e.preventDefault(); self.showExamples(); });
       $('#regions-introduction').find('a.show-codes').on('click', function(e) { e.preventDefault(); self.showCodes(); });
       $('#actionsBar')
@@ -2569,7 +2628,7 @@ var SimpleMappr = (function($, window, document) {
       if($('#usermaps').length > 0) {
         this.loadMapList();
         this.loadShareList();
-        this.tabSelector(3);
+        this.tabSelector(4);
       }
     },
 
