@@ -318,6 +318,37 @@ class MapprMap extends Mappr
     }
 
     /**
+     * Get all drawings in GeoJSON format
+     *
+     * @return array $output
+     */
+    private function _getWKT()
+    {
+        $output = [];
+        $count = count($this->wkt)-1;
+        for ($j=0; $j<=$count; $j++) {
+            $title = ($this->wkt[$j]['title']) ? stripslashes($this->wkt[$j]['title']) : "";
+
+            if (trim($this->wkt[$j]['data'])) {
+                $whole = trim($this->wkt[$j]['data']);
+                $rows = explode("\n", Utility::removeEmptyLines($whole));
+
+                foreach ($rows as $row) {
+                    $shape = \geoPHP::load($row,'wkt');
+                    $geojson = new \GeoJSON();
+                    $geometry = $geojson->write($shape, TRUE);
+                    $output[] = [
+                        'type' => 'Feature',
+                        'geometry' => $geometry,
+                        'properties' => ['title' => $title]
+                    ];
+                }
+            }
+        }
+        return $output;
+    }
+
+    /**
      * Implement createOutput method
      *
      * @return void
@@ -339,7 +370,7 @@ class MapprMap extends Mappr
             Header::setHeader('json');
             $output = new \stdClass;
             $output->type = 'FeatureCollection';
-            $output->features = $this->_getCoordinates();
+            $output->features = array_merge($this->_getCoordinates(),$this->_getWKT());
             $output->crs = [
                 'type'       => 'name',
                 'properties' => ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84']
