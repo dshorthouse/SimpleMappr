@@ -89,7 +89,10 @@ class MapprApi extends Mappr
 
         $points = Utility::loadParam('points', []);
         $attr->points = ((array)$points === $points) ? $points : [$points];
-        
+
+        $wkt = Utility::loadParam('wkt', []);
+        $attr->wkt = ((array)$wkt === $wkt) ? $wkt : [$wkt];
+
         $attr->legend           = Utility::loadParam('legend', []);
 
         $shape = Utility::loadParam('shape', []);
@@ -246,7 +249,65 @@ class MapprApi extends Mappr
      */
     public function addWKT()
     {
-        return;
+        if ($this->request->wkt) {
+            $count = count($this->request->wkt)-1;
+            for ($j=$count; $j>=0; $j--) {
+                $color = [120,120,120];
+                $title = "";
+                if (array_key_exists('color',$this->request->wkt[$j])) {
+                    $color = explode(",", $this->request->wkt[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = [120,120,120];
+                    }
+                }
+                if (array_key_exists('title', $this->request->wkt[$j])) {
+                    $title = stripslashes($this->request->wkt[$j]['title']);
+                }
+
+                if (array_key_exists('data', $this->request->wkt[$j])) {
+                    $data = trim($this->request->wkt[$j]['data']);
+
+                    if ($data) {
+                        $this->_legend_required = true;
+                        $rows = explode("\n", Utility::removeEmptyLines($data));
+                        foreach ($rows as $key => $row) {
+                            if (strpos($row, "POINT") !== false) {
+                                $type = MS_LAYER_POINT;
+                            } else if (strpos($row, "LINE") !== false) {
+                                $type = MS_LAYER_LINE;
+                            } else {
+                                $type = MS_LAYER_POLYGON;
+                            }
+                            $layer = ms_newLayerObj($this->map_obj);
+                            $layer->set("name", "wkt_layer_".$j.$key);
+                            $layer->set("status", MS_ON);
+                            $layer->set("type", $type);
+                            $layer->set("template", "template.html");
+                            $layer->setProjection(self::getProjection($this->default_projection));
+
+                            $class = ms_newClassObj($layer);
+                            $class->set("name", $title);
+                            $style = ms_newStyleObj($class);
+                            if ($type == MS_LAYER_POINT) {
+                                $style->set("symbolname", 'circle');
+                                $style->set("size", 8);
+                            }
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                            $style->set("opacity", 75);
+
+                            try {
+                                $shape = ms_shapeObjFromWkt($row);
+                                $layer->addFeature($shape);
+                            } catch(\Exception $e) {
+                                $this->bad_drawings[] = stripslashes($this->request->wkt[$j]['title'] . ' : ' . $row);
+                            }
+
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     /**
@@ -475,6 +536,18 @@ class MapprApi extends Mappr
         'points[x]' => [
           'definition' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
           'example' => 'points[0]=45,-120\n45,-110\n45,-125\n42,-100&points[1]=44,-100'
+        ],
+        'wkt[x][data]' => [
+          'definition' => 'Data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
+          'example' => 'wkt[0][data]=POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
+        ],
+        'wkt[x][title]' => [
+          'definition' => 'Title for well-known text shape x',
+          'example' => 'wkt[0][title]=My shape'
+        ],
+        'wkt[x][color]' => [
+          'definition' => 'Color for well-known text shape x',
+          'example' => 'wkt[0][color]=255,255,0'
         ],
         'shape[x]' => [
           'definition' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
