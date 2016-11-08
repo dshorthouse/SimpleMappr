@@ -144,8 +144,8 @@ msgid "Type countries as Mexico, Venezuela AND/OR bracket pipe- or space-separat
 msgstr "Taper des pays comme Mexico, Venezuela et/ou des codes pour États/Provinces séparés par des espaces et préfixé par trois lettres de code national ISO <em>ex.</em> USA[VA], CAN[AB ON]."
 
 #: .index.php:67
-msgid "Type Well-Known Text (WKT). Try this {{wkt_url}} generator. <em>e.g.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
-msgstr "Taper Well-Known Text (WKT). Essayer ce {{wkt_url} outil. <em>ex.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
+msgid "Type Well-Known Text (WKT). Try this %wkt_url% generator. <em>e.g.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
+msgstr "Taper Well-Known Text (WKT). Essayer ce %wkt_url% outil. <em>ex.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))"
 
 #: .index.php:67
 msgid "codes"
@@ -414,12 +414,12 @@ msgid "Title"
 msgstr "Titre"
 
 #: .lib/mapprservice.usermaps.class.php:200
-msgid "%d of %d"
-msgstr "%d de %d"
+msgid "%row_count% of %total%"
+msgstr "%row_count% de %total%"
 
 #: .lib/mapprservice.usermaps.class.php:200
-msgid "%d of %d for %s"
-msgstr "%d de %d pour %s"
+msgid "%row_count% of %total% for %filter_username%"
+msgstr "%row_count% de %total% pour %filter_username%"
 
 #: .lib/mapprservice.usermaps.class.php:164
 msgid "Created"
@@ -704,8 +704,8 @@ msgstr "L'API est utilisée par %urls_tropicos% de Le Missouri Botanical Garden.
 
 #: .tabs/about.php:36
 #, php-format
-msgid "The code behind SimpleMappr may be obtained at %urls_github"
-msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github"
+msgid "The code behind SimpleMappr may be obtained at %urls_github%"
+msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github%"
 
 #: .tabs/about.php:40
 #, php-format

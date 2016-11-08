@@ -1,8 +1,8 @@
 {% for i in 0..2 %}
-    {% set index = loop.index %}
+    {% set d = loop.index %}
     <div class="form-item fieldset-regions">
     <button class="sprites-before removemore negative ui-corner-all" data-type="regions">{% trans "Remove" %}</button>
-    <h3><a href="#">{% trans %}Region {{ index }}{% endtrans %}</a></h3>
+    <h3><a href="#">{% trans %}Region {{ d }}{% endtrans %}</a></h3>
     <div>
     <div class="fieldset-taxon">
     <span class="fieldset-title">{% trans "Legend" %}<span class="required">*</span>:</span> <input type="text" class="m-mapTitle" size="60" maxlength="60" name="regions[{{ i }}][title]" />
