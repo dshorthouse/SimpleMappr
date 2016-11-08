@@ -538,15 +538,15 @@ class MapprApi extends Mappr
           'example' => 'points[0]=45,-120\n45,-110\n45,-125\n42,-100&points[1]=44,-100'
         ],
         'wkt[x][data]' => [
-          'definition' => 'Data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
+          'definition' => 'data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
           'example' => 'wkt[0][data]=POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
         ],
         'wkt[x][title]' => [
-          'definition' => 'Title for well-known text shape x',
+          'definition' => 'title for well-known text shape x',
           'example' => 'wkt[0][title]=My shape'
         ],
         'wkt[x][color]' => [
-          'definition' => 'Color for well-known text shape x',
+          'definition' => 'color for well-known text shape x',
           'example' => 'wkt[0][color]=255,255,0'
         ],
         'shape[x]' => [

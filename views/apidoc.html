@@ -63,6 +63,15 @@
     <dt>shape[x]</dt>
     <dd>{% trans "shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon" %} <span class="api-example"><em>e.g.</em> shape[0]=circle</span></dd>
 
+    <dt>wkt[x][data]</dt>
+    <dd>{% trans "data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON" %} <span class="api-example"><em>e.g.</em> wkt[0][data]=POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))</span></dd>
+
+    <dt>wkt[x][title]</dt>
+    <dd>{% trans "title for well-known text shape x" %} <span class="api-example"><em>e.g.</em> wkt[0][title]=Distribution of Canus lupus</span></dd>
+
+    <dt>wkt[x][color]</dt>
+    <dd>{% trans "color for well-known text shape x" %} <span class="api-example"><em>e.g.</em> wkt[0][color]=0,0,255</span></dd>
+
     <dt>size[x]</dt>
     <dd>{% trans "integer-based point size of marker in column x" %} <span class="api-example"><em>e.g.</em> size[1]=10</span></dd>
 
