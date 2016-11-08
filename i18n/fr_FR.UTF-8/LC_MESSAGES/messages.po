@@ -24,13 +24,13 @@ msgstr "Dimension: %dim%"
 
 #: .index.php:387
 #, php-format
-msgid "Region %d"
-msgstr "Région %d"
+msgid "Region %d%"
+msgstr "Région %d%"
 
 #: .index.php:387
 #, php-format
-msgid "Drawing %d"
-msgstr "Dessin %d"
+msgid "Drawing %d%"
+msgstr "Dessin %d%"
 
 #: .index.php:11
 msgid "Create free point maps for publications and presentations"
@@ -628,8 +628,8 @@ msgid "Remove"
 msgstr "Enlever"
 
 #: .index.php:357
-msgid "Layer %d"
-msgstr "Couche %d"
+msgid "Layer %d%"
+msgstr "Couche %d%"
 
 #: .index.php:357
 msgid "Shadow"
@@ -745,6 +745,10 @@ msgid "July 10, 2016"
 msgstr "10 juillet, 2016"
 
 #: .tabs/about.php:11
+msgid "November 7, 2016"
+msgstr "7 novembre, 2016"
+
+#: .tabs/about.php:11
 msgid "February 27, 2015"
 msgstr "27 février, 2015"
 
@@ -795,6 +799,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added a new tab to permit submission of well-known text (WKT)."
+msgstr "Améliorations: Ajouté un nouvel onglet pour permettre la présentation de well-known text (WKT)"
 
 #: .tabs/about.php:11
 msgid "Improvements: Added shadow option for points."
