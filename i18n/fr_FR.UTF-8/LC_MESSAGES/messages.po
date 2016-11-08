@@ -1142,8 +1142,8 @@ msgid "Use the Regions tab to list political regions you would like shaded and s
 msgstr "Utiliser l'onglet Régions pour taper une liste des régions politiques que vous aimeriez ombragé et sélectionner la couleur d'ombre. Séparer chaque région politique par une virgule ou un point virgule. Alternativement, vous pouvez utiliser les codes de l'Etat/Province, comme USA[WY|WA|MT], CAN[AB BC] qui sera l'ombre du Wyoming, Washington, Montana, l'Alberta et la Colombie-Britannique. Noter que les États ou les provinces sont séparées par un espace ou un tuyau et ce sont enveloppés avec des crochets, précédée du code à trois lettres ISO du pays."
 
 #: .tabs/help.php:160
-msgid "Use the Drawings tab to paste well-known text (WKT). You can generate these using software capable of doing so or online such as this {{ url_wkt }} generator."
-msgstr "Utiliser l'onglet Dessins pour taper well-known text (WKT). Vous pouvez générer ce en utilisant un logiciel ou en ligne comme le {{url_wkt}} générateur."
+msgid "Use the Drawings tab to paste well-known text (WKT). You can generate these using software capable of doing so or online such as this %url_wkt% generator."
+msgstr "Utiliser l'onglet Dessins pour taper well-known text (WKT). Vous pouvez générer ce en utilisant un logiciel ou en ligne comme le %url_wkt% générateur."
 
 #: .tabs/help.php:165
 msgid "Country"
