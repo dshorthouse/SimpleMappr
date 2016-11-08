@@ -74,7 +74,7 @@ button.negative:active{background-color:#782c21 !important;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#ccc !important;border:1px solid #eee;cursor:not-allowed;}
 .fieldSets{margin-top:10px !important}
 .addFieldset{margin-left:20px;margin-top:20px;}
-.fieldset-points, .fieldset-regions, .fieldset-wkt{position:relative;width:672px !important;}
+.fieldset-points, .fieldset-regions, .fieldset-wkt{position:relative;width:700px !important;}
 .fieldset-taxon{margin-bottom:10px;}
 .fieldset-extras{margin:10px 0px;}
 .fieldset-title{font-size:0.85em;}
@@ -82,7 +82,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .grippie:before{background-position:-212px -227px;width:30px;margin:0 45%;display:block;}
 .resizable-textarea{width:99%;}
 .resizable-textarea textarea{display:block;margin-bottom:0;width:100%;}
-.panel{padding:10px;border:1px solid #ccc;background-color:#e9e9e9;width:650px;margin-bottom:5px;}
+.panel{padding:10px;border:1px solid #ccc;background-color:#e9e9e9;width:678px;margin-bottom:5px;}
 .panel p{font-size:0.75em;}
 .panel a.help:before{background-position:-220px -264px;display:inline-block;float:none;vertical-align:middle;}
 .submit{text-align:left;margin-top:15px;margin-left:20px;}

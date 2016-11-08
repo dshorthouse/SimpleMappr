@@ -631,6 +631,10 @@ msgstr "Enlever"
 msgid "Layer %d"
 msgstr "Couche %d"
 
+#: .index.php:357
+msgid "Shadow"
+msgstr "Ombre"
+
 #: .index.php:367
 msgid "Shape"
 msgstr "Forme"
