@@ -210,6 +210,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'rendered_rotation' => '0',
           'rendered_projection' => 'epsg:4326',
           'bad_points' => '',
+          'bad_drawings' => ''
         ];
 
         $map_data2 = [
@@ -313,9 +314,126 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
           'rendered_rotation' => '0',
           'rendered_projection' => 'epsg:4326',
           'bad_points' => '',
+          'bad_drawings' => ''
+        ];
+
+        $map_data3 = [
+          'coords' => [
+              0 => 
+              [
+                'title' => '',
+                'data' => '',
+                'shape' => 'circle',
+                'size' => '10',
+                'color' => '0 0 0',
+              ],
+              1 => 
+              [
+                'title' => '',
+                'data' => '',
+                'shape' => 'circle',
+                'size' => '10',
+                'color' => '0 0 0',
+              ],
+              2 => 
+              [
+                'title' => '',
+                'data' => '',
+                'shape' => 'circle',
+                'size' => '10',
+                'color' => '0 0 0',
+              ],
+          ],
+          'regions' => [
+              0 => 
+              [
+                'title' => '',
+                'data' => '',
+                'color' => '150 150 150',
+              ],
+              1 => 
+              [
+                'title' => '',
+                'data' => '',
+                'color' => '150 150 150',
+              ],
+              2 => 
+              [
+                'title' => '',
+                'data' => '',
+                'color' => '150 150 150',
+              ],
+          ],
+          'wkt' => [
+              0 => 
+              [
+                'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))',
+                'color' => '255 0 0',
+                'title' => 'My Polygon'
+              ],
+              1 => 
+              [
+                'data' => '',
+                'title' => '',
+                'color' => '150 150 150'
+              ],
+              2 => 
+              [
+                'data' => '',
+                'title' => '',
+                'color' => '150 150 150'
+              ]
+          ],
+          'layers' => 
+          [
+            'countries' => 'on',
+            'stateprovinces' => 'on',
+          ],
+          'gridspace' => '',
+          'projection' => 'epsg:4326',
+          'origin' => '',
+          'filter-mymap' => '',
+          'citation' => [],
+          'download-filetype' => 'svg',
+          'download-factor' => '1',
+          'download' => '',
+          'output' => 'png',
+          'download_token' => '1398911053520',
+          'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+          'projection_map' => 'epsg:4326',
+          'bbox_rubberband' => '',
+          'bbox_query' => '',
+          'pan' => '',
+          'zoom_out' => '',
+          'crop' => '',
+          'rotation' => '0',
+          'save' => 
+          [
+            'title' => 'Second Sample Map User',
+          ],
+          'file_name' => '',
+          'download_factor' => '1',
+          'width' => '',
+          'height' => '',
+          'download_filetype' => 'svg',
+          'grid_space' => '',
+          'options' => 
+          [
+            'border' => '',
+            'legend' => '',
+            'scalebar' => '',
+            'scalelinethickness' => '',
+          ],
+          'border_thickness' => '',
+          'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+          'rendered_rotation' => '0',
+          'rendered_projection' => 'epsg:4326',
+          'bad_points' => '',
+          'bad_drawings' => ''
         ];
 
         $map1 = self::$db->queryInsert('maps', [
+          'mid' => 1,
           'uid' => $user1,
           'title' => 'Sample Map Administrator',
           'map' => json_encode($map_data1),
@@ -323,9 +441,18 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
         ]);
 
         self::$db->queryInsert('maps', [
+          'mid' => 2,
           'uid' => $user2,
           'title' => 'Sample Map User',
           'map' => json_encode($map_data2),
+          'created' => time()
+        ]);
+
+        self::$db->queryInsert('maps', [
+          'mid' => 3,
+          'uid' => $user2,
+          'title' => 'Second Sample Map User',
+          'map' => json_encode($map_data3),
           'created' => time()
         ]);
 

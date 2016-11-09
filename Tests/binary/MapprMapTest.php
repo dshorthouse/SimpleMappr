@@ -38,9 +38,9 @@ class MapprMapTest extends SimpleMapprTest
      *
      * @param string $ext The desired file extension for the output.
      */
-    private function setUpMap($ext = "png")
+    private function setUpMap($map = 1, $ext = "png")
     {
-        $this->mappr_map = new \SimpleMappr\MapprMap(1, $ext);
+        $this->mappr_map = new \SimpleMappr\MapprMap($map, $ext);
     }
 
     /**
@@ -64,7 +64,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_json()
     {
-        $this->setUpMap('json');
+        $this->setUpMap(1, 'json');
         $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
@@ -76,11 +76,27 @@ class MapprMapTest extends SimpleMapprTest
     }
 
     /**
+     * Test that the output is GeoJSON with polygon.
+     */
+    public function test_map_polygon_json()
+    {
+        $this->setUpMap(3, 'json');
+        $this->mappr_map->execute();
+        if (!ob_get_level()) { ob_start(); }
+        $this->mappr_map->createOutput();
+        $output = ob_get_contents();
+        $file = ROOT."/public/tmp/map_json_polygon.json";
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json_polygon.json'));
+    }
+
+    /**
      * Test that the output is SVG.
      */
     public function test_map_svg()
     {
-        $this->setUpMap('svg');
+        $this->setUpMap(1, 'svg');
         $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();
@@ -100,7 +116,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_kml()
     {
-        $this->setUpMap('kml');
+        $this->setUpMap(1, 'kml');
         $this->mappr_map->execute();
         ob_start();
         $this->mappr_map->createOutput();

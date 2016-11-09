@@ -289,6 +289,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey("legend_url", $this->output);
         $this->assertArrayHasKey("scalebar_url", $this->output);
         $this->assertArrayHasKey("bad_points", $this->output);
+        $this->assertArrayHasKey("bad_drawings", $this->output);
     }
 
     /**
@@ -365,6 +366,14 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_mapserver_default_bad_points()
     {
         $this->assertEquals($this->output["bad_points"], "");
+    }
+
+    /**
+     * Test that the default array of bad points is blank.
+     */
+    public function test_mapserver_default_bad_drawings()
+    {
+        $this->assertEquals($this->output["bad_drawings"], "");
     }
 
 }

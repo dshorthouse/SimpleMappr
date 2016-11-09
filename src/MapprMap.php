@@ -370,7 +370,7 @@ class MapprMap extends Mappr
             Header::setHeader('json');
             $output = new \stdClass;
             $output->type = 'FeatureCollection';
-            $output->features = array_merge($this->_getCoordinates(),$this->_getWKT());
+            $output->features = array_merge($this->_getCoordinates(), $this->_getWKT());
             $output->crs = [
                 'type'       => 'name',
                 'properties' => ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84']

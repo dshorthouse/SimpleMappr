@@ -878,7 +878,7 @@ abstract class Mappr
                             $shape = ms_shapeObjFromWkt($row);
                             $layer->addFeature($shape);
                         } catch(\Exception $e) {
-                            $this->bad_drawings[] = stripslashes($this->request->wkt[$j]['title'] . ' : ' . $row);
+                            $this->bad_drawings[] = $title;
                         }
 
                     }

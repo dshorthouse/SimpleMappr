@@ -54,6 +54,10 @@ class MapprApi extends Mappr
      */
     private $_coord_cols = [];
 
+    private $_bad_points = [];
+
+    private $_bad_drawings = [];
+
     /**
      * Implement getRequest method
      *
@@ -184,7 +188,8 @@ class MapprApi extends Mappr
 
         foreach ($this->_coord_cols as $col => $coords) {
             $mlayer = ms_newLayerObj($this->map_obj);
-            $mlayer->set("name", isset($this->legend[$col]) ? $this->legend[$col] : "");
+            $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
+            $mlayer->set("name", $title);
             $mlayer->set("status", MS_ON);
             $mlayer->set("type", MS_LAYER_POINT);
             $mlayer->set("tolerance", 5);
@@ -192,7 +197,7 @@ class MapprApi extends Mappr
             $mlayer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($mlayer);
-            $class->set("name", isset($this->legend[$col]) ? stripslashes($this->legend[$col]) : "");
+            $class->set("name", $title);
 
             $style = ms_newStyleObj($class);
             $symbol = 'circle';
@@ -235,6 +240,8 @@ class MapprApi extends Mappr
                     $mcoord_point = ms_newPointObj();
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);
+                } else {
+                    $this->_bad_points[] = ($title) ? join(":",[$title,join(",",$coord)]) : join(",",$coord);
                 }
             }
             $mcoord_shape->add($mcoord_line);
@@ -299,7 +306,7 @@ class MapprApi extends Mappr
                                 $shape = ms_shapeObjFromWkt($row);
                                 $layer->addFeature($shape);
                             } catch(\Exception $e) {
-                                $this->bad_drawings[] = stripslashes($this->request->wkt[$j]['title'] . ' : ' . $row);
+                                $this->_bad_drawings[] = ($title) ? join(":",[$title, $row]) : $row;
                             }
 
                         }
@@ -499,7 +506,9 @@ class MapprApi extends Mappr
                 Header::setHeader("json");
                 $output = [
                     'imageURL' => $this->image->saveWebImage(),
-                    'expiry'   => date('c', time() + (6 * 60 * 60))
+                    'expiry'   => date('c', time() + (6 * 60 * 60)),
+                    'bad_points' => $this->_bad_points,
+                    'bad_drawings' => $this->_bad_drawings
                 ];
                 return json_encode($output);
             }
