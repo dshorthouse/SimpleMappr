@@ -54,8 +54,14 @@ class MapprApi extends Mappr
      */
     private $_coord_cols = [];
 
+    /**
+     * @var array $_bad_points Coordinates that are not on Earth
+     */
     private $_bad_points = [];
 
+    /**
+     * @var array $_bad_drawings WKT that do not render
+     */
     private $_bad_drawings = [];
 
     /**
