@@ -266,4 +266,27 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
+
+    /**
+     * Test API response to ensure that json can be produced using WKT parameter.
+     */
+    public function test_apioutput_wkt()
+    {
+        $_REQUEST = [
+            'wkt' => [
+                0 => [
+                    'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
+                ]
+            ]
+        ];
+        $mappr_api = new \SimpleMappr\MapprApi();
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/apioutput_wkt.png';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
+    }
 }
