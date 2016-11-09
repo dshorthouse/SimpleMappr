@@ -38,7 +38,7 @@ class UsermapTest extends SimpleMapprTest
         parent::setSession();
 
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
-        $this->assertEquals(count($map_list), 1);
+        $this->assertEquals(count($map_list), 2);
     }
 
     /**
@@ -52,7 +52,7 @@ class UsermapTest extends SimpleMapprTest
         $link = $this->webDriver->findElement(WebDriverBy::linkText('All Maps'));
         $link->click();
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
-        $this->assertEquals(count($map_list), 2);
+        $this->assertEquals(count($map_list), 3);
     }
 
     /**
@@ -74,7 +74,7 @@ class UsermapTest extends SimpleMapprTest
         $saved_map_title = $this->webDriver->findElements(WebDriverBy::className('map-load'))[0];
         $this->assertEquals($title, $saved_map_title->getText());
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
-        $this->assertEquals(count($map_list), 2);
+        $this->assertEquals(count($map_list), 3);
         parent::$db->exec("DELETE FROM maps where title = '".$title."'");
     }
     
@@ -108,7 +108,7 @@ class UsermapTest extends SimpleMapprTest
         $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Delete']"))->click();
         parent::waitOnAjax();
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > .grid-usermaps > tbody > tr'));
-        $this->assertEquals(count($map_list), 1);
+        $this->assertEquals(count($map_list), 2);
         parent::$db->exec("DELETE FROM maps WHERE mid = ".$mid);
     }
 
