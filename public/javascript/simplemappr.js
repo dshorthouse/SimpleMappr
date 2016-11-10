@@ -824,7 +824,7 @@ var SimpleMappr = (function($, window, document) {
     bindClearButtons: function() {
       var self = this;
 
-      $('#clearLayers, #clearRegions', '#clearWKT').on('click', function(e) {
+      $('#clearLayers, #clearWKT, #clearRegions').on('click', function(e) {
         e.preventDefault();
         self.clearZone($(this).parent().prev().prev().children());
       });

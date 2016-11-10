@@ -268,7 +268,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test API response to ensure that json can be produced using WKT parameter.
+     * Test API response to ensure that image can be produced using WKT parameter.
      */
     public function test_apioutput_wkt()
     {
