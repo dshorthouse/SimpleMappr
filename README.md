@@ -12,7 +12,7 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
 
 Requirements
 --------------------------
-PHP5.6+, Apache2.2.24+, MySQL 5.5.27+, MapServer 7.0.1 & its dependencies, Composer
+PHP5.6+, Apache2.2.24+, MySQL 5.5.27+, MapServer 7.0.2 & its dependencies, Composer
 
 Configuration Instructions
 --------------------------
@@ -70,7 +70,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download [MapServer](http://mapserver.org/download.html) 7.0.1 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.1.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.1.tar.gz)
+3. Download [MapServer](http://mapserver.org/download.html) 7.0.2 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.2.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.2.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 
