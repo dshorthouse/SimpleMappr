@@ -517,7 +517,8 @@ class MapprApi extends Mappr
                       'image/png',
                       'image/jpeg',
                       'image/tiff',
-                      'image/svg+xml'
+                      'image/svg+xml',
+                      'application/json'
                     ],
                     'parameters' => $this->_apiParameters("GET"),
                     'responses' => [
@@ -645,9 +646,10 @@ class MapprApi extends Mappr
         [
           'name' => 'shape[x]',
           'in' => 'query',
-          'description' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
+          'description' => 'shape of marker for column x',
           'required' => false,
-          'type' => 'string'
+          'type' => 'string',
+          'enum' => AcceptedMarkerShapes::shapes()
         ],
         [
           'name' => 'size[x]',
@@ -656,6 +658,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
+          'default' => '',
           'minimum' => 1,
           'maximum' => 14
         ],
@@ -680,6 +683,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
+          'default' => '',
           'minimum' => 1,
           'maximum' => 10
         ],
@@ -721,9 +725,10 @@ class MapprApi extends Mappr
         [
           'name' => 'projection',
           'in' => 'query',
-          'description' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
+          'description' => 'the output projection in either EPSG or ESRI references',
           'required' => false,
-          'type' => 'string'
+          'type' => 'string',
+          'enum' => $projections
         ],
         [
           'name' => 'origin',
@@ -732,6 +737,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'number',
           'format' => 'float',
+          'default' => '',
           'minimum' => -180,
           'maximum' => 180
         ],
@@ -749,6 +755,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
+          'default' => '',
           'minimum' => 1,
           'maximum' => 50
         ],
@@ -759,7 +766,8 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'minimum' => 50,
+          'default' => '',
+          'minimum' => 200,
           'maximum' => 4500
         ],
         [
@@ -769,15 +777,17 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'minimum' => 50,
+          'default' => '',
+          'minimum' => 200,
           'maximum' => 4500
         ],
         [
           'name' => 'output',
           'in' => 'query',
-          'description' => 'file format of the image or vector produced; options are ' . implode(", ", AcceptedOutputs::outputList()),
+          'description' => 'file format of the image or vector produced',
           'required' => false,
-          'type' => 'string'
+          'type' => 'string',
+          'enum' => AcceptedOutputs::outputList()
         ],
         [
           'name' => 'scalebar',
