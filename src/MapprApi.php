@@ -493,8 +493,62 @@ class MapprApi extends Mappr
             return json_encode(["status" => "ok"]);
         }
         else if ($this->request->parameters) {
+            $url_parts = Utility::parsedURL();
             Header::setHeader("json");
-            return json_encode($this->_apiParameters());
+            $swagger = [
+              'swagger' => '2.0',
+              'info' => [
+                'title' => 'SimpleMappr API',
+                'description' => 'Create free point maps for publications and presentations',
+                'version' => '1.0.0',
+                'contact' => [
+                  'name' => 'David P. Shorthouse',
+                  'email' => 'davidpshorthouse@gmail.com'
+                ]
+              ],
+              'host' => $url_parts["host"],
+              'schemes' => [$url_parts["scheme"]],
+              'paths' => [
+                '/api' => [
+                  'get' => [
+                    'summary' => 'GET to /api',
+                    'description' => 'GET to /api to produce an image',
+                    'produces' => [
+                      'image/png',
+                      'image/jpeg',
+                      'image/tiff',
+                      'image/svg+xml'
+                    ],
+                    'parameters' => $this->_apiParameters("GET"),
+                    'responses' => [
+                      200 => [
+                        'description' => 'success'
+                      ]
+                    ]
+                  ],
+                  'post' => [
+                    'summary' => 'POST to /api',
+                    'description' => 'POST to /api to produce a JSON response containing URL to image',
+                    'consumes' => [
+                      'multipart/form-data'
+                    ],
+                    'produces' => [
+                      'application/json',
+                    ],
+                    'parameters' => $this->_apiParameters("POST"),
+                    'responses' => [
+                      200 => [
+                        'description' => 'success',
+                        'examples' => [
+                          'application/json' => "{'imageURL': 'http://img.simplemappr.net/50778960_464f_0.png','expiry': '2016-11-14T11:42:46-05:00','bad_points': [],'bad_drawings': []}"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ];
+            return json_encode($swagger);
         } else {
             if ($this->request->method == 'GET') {
                 Header::setHeader($this->request->output);
@@ -526,122 +580,229 @@ class MapprApi extends Mappr
      *
      * @return array of API parameters
      */
-    private function _apiParameters()
+    private function _apiParameters($request_method = "GET")
     {
       array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
           $projections[] = $key . " (" . $val['name'] . ")";
       });
       $params = [
-        'ping'       => [
-          'definition' => 'if ping=true is included, a JSON response will be produced in place of an image.',
-          'example' => 'ping=true'
+        [
+          'name' => 'ping',
+          'in' => 'query',
+          'description' => 'if ping=true is included, a JSON response will be produced in place of an image.',
+          'required' => false,
+          'type' => 'boolean'
         ],
-        'parameters' => [
-          'definition' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their definitions.',
-          'example' => 'parameters=true'
+        [
+          'name' => 'parameters',
+          'in' => 'query',
+          'description' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their descriptions.',
+          'required' => false,
+          'type' => 'boolean'
         ],
-        'url' => [
-          'definition' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
-          'example' => 'url=' . urlencode(MAPPR_URL . '/public/files/demo.txt')
+        [
+          'name' => 'url',
+          'in' => 'query',
+          'description' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
+          'required' => false,
+          'type' => 'string'
         ],
-        'file' => [
-          'definition' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
-          'example' => 'file= FILE OBJECT'
+        [
+          'name' => 'file',
+          'in' => 'formData',
+          'description' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
+          'required' => false,
+          'type' => 'file'
         ],
-        'points[x]' => [
-          'definition' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
-          'example' => 'points[0]=45,-120\n45,-110\n45,-125\n42,-100&points[1]=44,-100'
+        [
+          'name' => 'points[x]',
+          'in' => 'query',
+          'description' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
+          'required' => false,
+          'type' => 'string'
         ],
-        'wkt[x][data]' => [
-          'definition' => 'data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
-          'example' => 'wkt[0][data]=POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
+        [
+          'name' => 'wkt[x][data]',
+          'in' => 'query',
+          'description' => 'data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
+          'required' => false,
+          'type' => 'string'
         ],
-        'wkt[x][title]' => [
-          'definition' => 'title for well-known text shape x',
-          'example' => 'wkt[0][title]=My shape'
+        [
+          'name' => 'wkt[x][title]',
+          'in' => 'query',
+          'description' => 'title for well-known text shape x',
+          'required' => false,
+          'type' => 'string'
         ],
-        'wkt[x][color]' => [
-          'definition' => 'color for well-known text shape x',
-          'example' => 'wkt[0][color]=255,255,0'
+        [
+          'name' => 'wkt[x][color]',
+          'in' => 'query',
+          'description' => 'color for well-known text shape x',
+          'required' => false,
+          'type' => 'string'
         ],
-        'shape[x]' => [
-          'definition' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
-          'example' => 'shape[0]=circle&shape[1]=square'
+        [
+          'name' => 'shape[x]',
+          'in' => 'query',
+          'description' => 'shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon',
+          'required' => false,
+          'type' => 'string'
         ],
-        'size[x]' => [
-          'definition' => 'integer-based point size of marker in column x',
-          'example' => 'size[0]=10&size[1]=14'
+        [
+          'name' => 'size[x]',
+          'in' => 'query',
+          'description' => 'integer-based point size of marker in column x',
+          'required' => false,
+          'type' => 'integer',
+          'format' => 'int32',
+          'minimum' => 1,
+          'maximum' => 14
         ],
-        'color[x]' => [
-          'definition' => 'comma-separated RGB colors for marker in column x',
-          'example' => 'color[0]=255,0,0&color[1]=0,255,0'
+        [
+          'name' => 'color[x]',
+          'in' => 'query',
+          'description' => 'comma-separated RGB colors for marker in column x',
+          'required' => false,
+          'type' => 'string'
         ],
-        'outlinecolor' => [
-          'definition' => 'comma-separated RGB colors for halo around all solid markers',
-          'example' => 'outlinecolor=10,10,10'
+        [
+          'name' => 'outlinecolor',
+          'in' => 'query',
+          'description' => 'comma-separated RGB colors for halo around all solid markers',
+          'required' => false,
+          'type' => 'string'
         ],
-        'zoom' => [
-          'definition' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
-          'example' => '8'
+        [
+          'name' => 'zoom',
+          'in' => 'query',
+          'description' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
+          'required' => false,
+          'type' => 'integer',
+          'format' => 'int32',
+          'minimum' => 1,
+          'maximum' => 10
         ],
-        'bbox' => [
-          'definition' => 'comma-separated bounding box in decimal degrees',
-          'example' => 'bbox=-130,40,-60,50'
+        [
+          'name' => 'bbox',
+          'in' => 'query',
+          'description' => 'comma-separated bounding box in decimal degrees',
+          'required' => false,
+          'type' => 'string'
         ],
-        'shade[places]' => [
-          'definition' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
-          'example' => 'shade[places]=Alberta,USA[MT|WA]'
+        [
+          'name' => 'shade[places]',
+          'in' => 'query',
+          'description' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
+          'required' => false,
+          'type' => 'string'
         ],
-        'shade[title]' => [
-          'definition' => 'the title for the shaded places',
-          'example' => ''
+        [
+          'name' => 'shade[title]',
+          'in' => 'query',
+          'description' => 'the title for the shaded places',
+          'required' => false,
+          'type' => 'string'
         ],
-        'shade[color]' => [
-          'definition' => 'comma-separated RGB fill colors for shaded places',
-          'example' => ''
+        [
+          'name' => 'shade[color]',
+          'in' => 'query',
+          'description' => 'comma-separated RGB fill colors for shaded places',
+          'required' => false,
+          'type' => 'string'
         ],
-        'layers' => [
-          'definition' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
-          'example' => 'layers=stateprovinces,lakes'
+        [
+          'name' => 'layers',
+          'in' => 'query',
+          'description' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
+          'required' => false,
+          'type' => 'string'
         ],
-        'projection' => [
-          'definition' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
-          'example' => 'projection=EPSG:4326'
+        [
+          'name' => 'projection',
+          'in' => 'query',
+          'description' => 'the output projection in either EPSG or ESRI references. Accepted projections are ' . implode(", ", $projections),
+          'required' => false,
+          'type' => 'string'
         ],
-        'origin' => [
-          'definition' => 'longitude of natural origin used in Lambert projections',
-          'example' => ''
+        [
+          'name' => 'origin',
+          'in' => 'query',
+          'description' => 'longitude of natural origin used in Lambert projections',
+          'required' => false,
+          'type' => 'number',
+          'format' => 'float',
+          'minimum' => -180,
+          'maximum' => 180
         ],
-        'graticules' => [
-          'definition' => 'display the graticules',
-          'example' => 'graticules=true'
+        [
+          'name' => 'graticules',
+          'in' => 'query',
+          'description' => 'display the graticules',
+          'required' => false,
+          'type' => 'boolean'
         ],
-        'spacing' => [
-          'definition' => 'display the graticules with defined spacing in degrees',
-          'example' => 'spacing=10'
+        [
+          'name' => 'spacing',
+          'in' => 'query',
+          'description' => 'display the graticules with defined spacing in degrees',
+          'required' => false,
+          'type' => 'integer',
+          'format' => 'int32',
+          'minimum' => 1,
+          'maximum' => 50
         ],
-        'width' => [
-          'definition' => 'integer-based output width in pixels',
-          'example' => 'width=400'
+        [
+          'name' => 'width',
+          'in' => 'query',
+          'description' => 'integer-based output width in pixels',
+          'required' => false,
+          'type' => 'integer',
+          'format' => 'int32',
+          'minimum' => 50,
+          'maximum' => 4500
         ],
-        'height' => [
-          'definition' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
-          'example' => 'height=400'
+        [
+          'name' => 'height',
+          'in' => 'query',
+          'description' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
+          'required' => false,
+          'type' => 'integer',
+          'format' => 'int32',
+          'minimum' => 50,
+          'maximum' => 4500
         ],
-        'output' => [
-          'definition' => 'file format of the image or vector produced; options are ' . implode(", ", AcceptedOutputs::outputList()),
-          'example' => 'output=png'
+        [
+          'name' => 'output',
+          'in' => 'query',
+          'description' => 'file format of the image or vector produced; options are ' . implode(", ", AcceptedOutputs::outputList()),
+          'required' => false,
+          'type' => 'string'
         ],
-        'scalebar' => [
-          'definition' => 'embed a scalebar in the lower right of the image',
-          'example' => 'scalebar=true'
+        [
+          'name' => 'scalebar',
+          'in' => 'query',
+          'description' => 'embed a scalebar in the lower right of the image',
+          'required' => false,
+          'type' => 'boolean'
         ],
-        'legend[x]'  => [
-          'definition' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
-          'example' => ''
-        ],
+        [
+          'name' => 'legend[x]',
+          'in' => 'query',
+          'description' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
+          'required' => false,
+          'type' => 'string'
+        ]
       ];
-      return $params;
+      if ($request_method == "GET") {
+        foreach($params as $param => $value) {
+          if($value['name'] == 'file') {
+            unset($params[$param]);
+            break;
+          }
+        }
+      }
+      return array_values($params);
     }
 
     /**
