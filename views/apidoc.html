@@ -54,7 +54,7 @@
     <dd>{% trans %}Note: requires a POST request to {{ og_url }}/api/ with an enctype set to multipart/form-data.{% endtrans %}<br />
         {% trans "tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server." %}
     <span class="api-example"><a href="http://{{ og_url }}/public/files/demo.txt">Example file</a></span>
-    <span class="api-output"><em>e.g.</em> { "imageURL" : "{{ mappr_maps_url }}/50778960_464f_0.png", "expiry" : "{{ 'now'|date('c') }}" }</span>
+    <span class="api-output"><em>e.g.</em> { "imageURL" : "{{ mappr_maps_url }}/50778960_464f_0.png", "expiry" : "{{ 'now'|date('c') }}", "bad_points" : [], "bad_drawings" : [] }</span>
     </dd>
 
     <dt>points[x]</dt>

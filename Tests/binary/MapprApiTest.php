@@ -61,7 +61,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
         echo $mappr_api->createOutput();
         $decoded = json_decode(ob_get_contents(), true);
         ob_end_clean();
-        $this->assertArrayHasKey("zoom", $decoded);
+        $this->assertArrayHasKey("swagger", $decoded);
         unset($_REQUEST);
     }
 
