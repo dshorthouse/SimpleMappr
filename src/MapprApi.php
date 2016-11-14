@@ -584,7 +584,7 @@ class MapprApi extends Mappr
     private function _apiParameters($request_method = "GET")
     {
       array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
-          $projections[] = $key . " (" . $val['name'] . ")";
+          $projections[] = $key;
       });
       $params = [
         [
