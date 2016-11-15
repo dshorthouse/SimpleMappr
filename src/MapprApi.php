@@ -481,6 +481,66 @@ class MapprApi extends Mappr
         }
     }
 
+    public function generateSwagger()
+    {
+      $url_parts = Utility::parsedURL();
+      $swagger = [
+        'swagger' => '2.0',
+        'info' => [
+          'title' => 'SimpleMappr API',
+          'description' => 'Create free point maps for publications and presentations',
+          'version' => '1.0.0',
+          'contact' => [
+            'name' => 'David P. Shorthouse',
+            'email' => 'davidpshorthouse@gmail.com'
+          ]
+        ],
+        'host' => $url_parts["host"],
+        'schemes' => [$url_parts["scheme"]],
+        'paths' => [
+          '/api' => [
+            'get' => [
+              'summary' => 'GET to /api',
+              'description' => 'GET to /api to produce an image',
+              'produces' => [
+                'image/png',
+                'image/jpeg',
+                'image/tiff',
+                'image/svg+xml',
+                'application/json'
+              ],
+              'parameters' => $this->_apiParameters("GET"),
+              'responses' => [
+                200 => [
+                  'description' => 'success'
+                ]
+              ]
+            ],
+            'post' => [
+              'summary' => 'POST to /api',
+              'description' => 'POST to /api to produce a JSON response containing URL to image',
+              'consumes' => [
+                'multipart/form-data'
+              ],
+              'produces' => [
+                'application/json',
+              ],
+              'parameters' => $this->_apiParameters("POST"),
+              'responses' => [
+                200 => [
+                  'description' => 'success',
+                  'examples' => [
+                    'application/json' => "{'imageURL': 'http://img.simplemappr.net/50778960_464f_0.png','expiry': '2016-11-14T11:42:46-05:00','bad_points': [],'bad_drawings': []}"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ];
+      return $swagger;
+    }
+
     /**
      * Implement createOutput method
      *
@@ -493,63 +553,8 @@ class MapprApi extends Mappr
             return json_encode(["status" => "ok"]);
         }
         else if ($this->request->parameters) {
-            $url_parts = Utility::parsedURL();
             Header::setHeader("json");
-            $swagger = [
-              'swagger' => '2.0',
-              'info' => [
-                'title' => 'SimpleMappr API',
-                'description' => 'Create free point maps for publications and presentations',
-                'version' => '1.0.0',
-                'contact' => [
-                  'name' => 'David P. Shorthouse',
-                  'email' => 'davidpshorthouse@gmail.com'
-                ]
-              ],
-              'host' => $url_parts["host"],
-              'schemes' => [$url_parts["scheme"]],
-              'paths' => [
-                '/api' => [
-                  'get' => [
-                    'summary' => 'GET to /api',
-                    'description' => 'GET to /api to produce an image',
-                    'produces' => [
-                      'image/png',
-                      'image/jpeg',
-                      'image/tiff',
-                      'image/svg+xml',
-                      'application/json'
-                    ],
-                    'parameters' => $this->_apiParameters("GET"),
-                    'responses' => [
-                      200 => [
-                        'description' => 'success'
-                      ]
-                    ]
-                  ],
-                  'post' => [
-                    'summary' => 'POST to /api',
-                    'description' => 'POST to /api to produce a JSON response containing URL to image',
-                    'consumes' => [
-                      'multipart/form-data'
-                    ],
-                    'produces' => [
-                      'application/json',
-                    ],
-                    'parameters' => $this->_apiParameters("POST"),
-                    'responses' => [
-                      200 => [
-                        'description' => 'success',
-                        'examples' => [
-                          'application/json' => "{'imageURL': 'http://img.simplemappr.net/50778960_464f_0.png','expiry': '2016-11-14T11:42:46-05:00','bad_points': [],'bad_drawings': []}"
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ];
-            return json_encode($swagger);
+            return json_encode($this->generateSwagger());
         } else {
             if ($this->request->method == 'GET') {
                 Header::setHeader($this->request->output);

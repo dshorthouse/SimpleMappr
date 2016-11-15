@@ -224,6 +224,12 @@ class Bootstrap
             $this->_klass("Session", true);
         });
 
+        $router->get('/swagger.json', function () {
+          Header::setHeader("json");
+          $klass = $this->_klass("MapprApi");
+          return json_encode($klass->generateSwagger());
+        });
+
         $router->group(['before' => 'check_role_user'], function ($router) {
             $router->get('/share', function () {
                 Header::setHeader('html');

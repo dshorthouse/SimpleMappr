@@ -490,7 +490,7 @@ class Header
      */
     public function getCSSHeader()
     {
-        return implode("\n", $this->_css_header) . "\n";
+        return implode("\n", $this->_css_header);
     }
 
     /**
