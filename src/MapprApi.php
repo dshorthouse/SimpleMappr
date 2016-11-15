@@ -484,11 +484,12 @@ class MapprApi extends Mappr
     public function generateSwagger()
     {
       $url_parts = Utility::parsedURL();
+      $url_whole = implode("://", $url_parts);
       $swagger = [
         'swagger' => '2.0',
         'info' => [
           'title' => 'SimpleMappr API',
-          'description' => 'Create free point maps for publications and presentations',
+          'description' => 'Create free point maps for publications and presentations. Find out more at ['.$url_whole.']('.$url_whole.').',
           'version' => '1.0.0',
           'contact' => [
             'name' => 'David P. Shorthouse',
