@@ -148,4 +148,10 @@
   <div class="panel ui-corner-all general-base-ws">
     <p>$ gem install simple-mappr</p>
   </div>
+
+  <h3>Swagger</h3>
+  {% set oai_url = '<a href="https://www.openapis.org/">https://www.openapis.org/</a>' %}
+  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the Swagger Specification. The Swagger definition can be found at <a href="{{ og_url }}/swagger.json">{{ og_url }}/swagger.json</a>.{% endtrans %}</p>
+  <img src="//online.swagger.io/validator?url={{ og_url }}/swagger.json" title="Swagger Definition" />
+
 </div>
