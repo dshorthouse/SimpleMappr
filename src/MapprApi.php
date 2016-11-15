@@ -494,6 +494,10 @@ class MapprApi extends Mappr
           'contact' => [
             'name' => 'David P. Shorthouse',
             'email' => 'davidpshorthouse@gmail.com'
+          ],
+          'license' => [
+            'name' => 'CC0',
+            'url' => 'http://creativecommons.org/publicdomain/zero/1.0/'
           ]
         ],
         'host' => $url_parts["host"],
@@ -531,7 +535,12 @@ class MapprApi extends Mappr
                 200 => [
                   'description' => 'success',
                   'examples' => [
-                    'application/json' => "{'imageURL': 'http://img.simplemappr.net/50778960_464f_0.png','expiry': '2016-11-14T11:42:46-05:00','bad_points': [],'bad_drawings': []}"
+                    'application/json' => [
+                      'imageURL' => 'http://img.simplemappr.net/50778960_464f_0.png',
+                      'expiry' => '2016-11-14T11:42:46-05:00',
+                      'bad_points' => [],
+                      'bad_drawings' => []
+                    ]
                   ]
                 ]
               ]
@@ -595,21 +604,21 @@ class MapprApi extends Mappr
       $params = [
         [
           'name' => 'ping',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'if ping=true is included, a JSON response will be produced in place of an image.',
           'required' => false,
           'type' => 'boolean'
         ],
         [
           'name' => 'parameters',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their descriptions.',
           'required' => false,
           'type' => 'boolean'
         ],
         [
           'name' => 'url',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
           'required' => false,
           'type' => 'string'
@@ -623,35 +632,35 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'points[x]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'wkt[x][data]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'wkt[x][title]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'title for well-known text shape x',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'wkt[x][color]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'color for well-known text shape x',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'shape[x]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'shape of marker for column x',
           'required' => false,
           'type' => 'string',
@@ -659,7 +668,7 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'size[x]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'integer-based point size of marker in column x',
           'required' => false,
           'type' => 'integer',
@@ -670,21 +679,21 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'color[x]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB colors for marker in column x',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'outlinecolor',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB colors for halo around all solid markers',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'zoom',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
           'required' => false,
           'type' => 'integer',
@@ -695,42 +704,42 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'bbox',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated bounding box in decimal degrees',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'shade[places]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'shade[title]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'the title for the shaded places',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'shade[color]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB fill colors for shaded places',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'layers',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'projection',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'the output projection in either EPSG or ESRI references',
           'required' => false,
           'type' => 'string',
@@ -738,7 +747,7 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'origin',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'longitude of natural origin used in Lambert projections',
           'required' => false,
           'type' => 'number',
@@ -749,14 +758,14 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'graticules',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'display the graticules',
           'required' => false,
           'type' => 'boolean'
         ],
         [
           'name' => 'spacing',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'display the graticules with defined spacing in degrees',
           'required' => false,
           'type' => 'integer',
@@ -767,7 +776,7 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'width',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'integer-based output width in pixels',
           'required' => false,
           'type' => 'integer',
@@ -778,7 +787,7 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'height',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
           'required' => false,
           'type' => 'integer',
@@ -789,7 +798,7 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'output',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'file format of the image or vector produced',
           'required' => false,
           'type' => 'string',
@@ -797,14 +806,14 @@ class MapprApi extends Mappr
         ],
         [
           'name' => 'scalebar',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'embed a scalebar in the lower right of the image',
           'required' => false,
           'type' => 'boolean'
         ],
         [
           'name' => 'legend[x]',
-          'in' => 'query',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
           'required' => false,
           'type' => 'string'
