@@ -131,7 +131,6 @@ class MapprApi extends Mappr
         $attr->bbox_map         = Utility::loadParam('bbox', '-180,-90,180,90');
         $attr->zoom             = (int)Utility::loadParam('zoom', false);
 
-        //convert layers as comma-separated values to an array
         $_layers                = explode(',', Utility::loadParam('layers', ""));
         $layers = [];
         $layers['countries']    = true;
@@ -656,7 +655,15 @@ class MapprApi extends Mappr
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'color for well-known text shape x',
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'type' => 'string',
+          'items' => [
+            'type' => 'integer',
+            'format' => 'int32',
+            'minimum' => 0,
+            'maximum' => 255
+          ],
+          'collectionFormat' => 'csv'
         ],
         [
           'name' => 'shape[x]',
@@ -673,7 +680,6 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'default' => '',
           'minimum' => 1,
           'maximum' => 14
         ],
@@ -682,14 +688,28 @@ class MapprApi extends Mappr
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB colors for marker in column x',
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'items' => [
+            'type' => 'integer',
+            'format' => 'int32',
+            'minimum' => 0,
+            'maximum' => 255
+          ],
+          'collectionFormat' => 'csv'
         ],
         [
           'name' => 'outlinecolor',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB colors for halo around all solid markers',
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'items' => [
+            'type' => 'integer',
+            'format' => 'int32',
+            'minimum' => 0,
+            'maximum' => 255
+          ],
+          'collectionFormat' => 'csv'
         ],
         [
           'name' => 'zoom',
@@ -698,23 +718,36 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'default' => '',
           'minimum' => 1,
           'maximum' => 10
         ],
         [
           'name' => 'bbox',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'comma-separated bounding box in decimal degrees',
+          'description' => 'comma-separated bounding box in decimal degrees expressed as minx,miny,maxx,maxy',
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'default' => [-180,-90,180,90],
+          'minItems' => 4,
+          'maxItems' => 4,
+          'items' => [
+            'type' => 'integer',
+            'format' => 'int32',
+            'minimum' => -180,
+            'maximum' => 180
+          ],
+          'collectionFormat' => 'csv'
         ],
         [
           'name' => 'shade[places]',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
           'required' => false,
-          'type' => 'string'
+          'type' => 'string',
+          'items' => [
+            'type' => 'string'
+          ],
+          'collectionFormat' => 'csv'
         ],
         [
           'name' => 'shade[title]',
@@ -728,14 +761,25 @@ class MapprApi extends Mappr
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated RGB fill colors for shaded places',
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'items' => [
+            'type' => 'integer',
+            'format' => 'int32',
+            'minimum' => 0,
+            'maximum' => 255
+          ],
+          'collectionFormat' => 'csv',
         ],
         [
           'name' => 'layers',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble',
+          'description' => 'comma-separated cultural or physical layers: ' . implode(", ",array_keys(parent::getShapefileConfig())),
           'required' => false,
-          'type' => 'string'
+          'type' => 'array',
+          'items' => [
+            'type' => 'string'
+          ],
+          'collectionFormat' => 'csv',
         ],
         [
           'name' => 'projection',
@@ -752,7 +796,6 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'number',
           'format' => 'float',
-          'default' => '',
           'minimum' => -180,
           'maximum' => 180
         ],
@@ -770,7 +813,6 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'default' => '',
           'minimum' => 1,
           'maximum' => 50
         ],
@@ -781,8 +823,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'default' => '',
-          'minimum' => 200,
+          'minimum' => 400,
           'maximum' => 4500
         ],
         [
@@ -792,8 +833,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'default' => '',
-          'minimum' => 200,
+          'minimum' => 400,
           'maximum' => 4500
         ],
         [
