@@ -656,7 +656,9 @@ class MapprApi extends Mappr
           'description' => 'color for well-known text shape x',
           'required' => false,
           'type' => 'array',
-          'type' => 'string',
+          'default' => [80,80,80],
+          'minItems' => 3,
+          'maxItems' => 3,
           'items' => [
             'type' => 'integer',
             'format' => 'int32',
@@ -689,6 +691,9 @@ class MapprApi extends Mappr
           'description' => 'comma-separated RGB colors for marker in column x',
           'required' => false,
           'type' => 'array',
+          'default' => [0,0,0],
+          'minItems' => 3,
+          'maxItems' => 3,
           'items' => [
             'type' => 'integer',
             'format' => 'int32',
@@ -703,6 +708,9 @@ class MapprApi extends Mappr
           'description' => 'comma-separated RGB colors for halo around all solid markers',
           'required' => false,
           'type' => 'array',
+          'default' => [120,120,120],
+          'minItems' => 3,
+          'maxItems' => 3,
           'items' => [
             'type' => 'integer',
             'format' => 'int32',
@@ -743,7 +751,7 @@ class MapprApi extends Mappr
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
           'required' => false,
-          'type' => 'string',
+          'type' => 'array',
           'items' => [
             'type' => 'string'
           ],
@@ -762,6 +770,9 @@ class MapprApi extends Mappr
           'description' => 'comma-separated RGB fill colors for shaded places',
           'required' => false,
           'type' => 'array',
+          'default' => [80,80,80],
+          'minItems' => 3,
+          'maxItems' => 3,
           'items' => [
             'type' => 'integer',
             'format' => 'int32',
@@ -823,7 +834,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'minimum' => 400,
+          'minimum' => 600,
           'maximum' => 4500
         ],
         [
@@ -833,7 +844,7 @@ class MapprApi extends Mappr
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'minimum' => 400,
+          'minimum' => 300,
           'maximum' => 4500
         ],
         [
