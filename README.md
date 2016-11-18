@@ -12,20 +12,22 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
 
 Requirements
 --------------------------
-PHP5.6+, Apache2.2.24+, MySQL 5.5.27+, MapServer 7.0.2 & its dependencies, Composer
+
+See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https://travis-ci.org/)'s continuous integration of automated unit and functional testing.
+
+1. PHP5.6+ [with cli, PDO, PDO-MySQL, GD]
+2. Apache2.2.24+ [with rewrite]
+3. MySQL 5.5.27+
+4. [MapServer 7.0.2](http://www.mapserver.org/) [with PROJ, GEOS, Cairo]
+5. [Composer](https://getcomposer.org/)
 
 Configuration Instructions
 --------------------------
 
-1. Ensure /public/tmp, /public/javascript/cache, and /public/stylesheets/cache/ are readable & writable
-2. Create a logger.log file in /log and make it writeable
-3. Download map data from Natural Earth Data, [http://www.naturalearthdata.com/](http://www.naturalearthdata.com/)
-4. Extract Natural Earth shapefiles to /mapserver/maps/
-5. Use MapServer's included shptree utility to make *.qix index files (e.g. $ shptree 10m_admin_0_countries.shp) for better performance rendering shapefiles
-6. Make contents of /mapserver/fonts readable & executable
-7. Rename /config/conf.sample.php to /config/conf.php and phinx.yml.sample to phinx.yml. These set configuration and db constants, respectively.
-8. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.php
-9. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
+1. Download shapefiles from Natural Earth Data, [http://www.naturalearthdata.com/](http://www.naturalearthdata.com/) and extract into /mapserver/maps/. Adjust Apache read permissions as necessary.
+2. Rename /config/conf.sample.php to /config/conf.php, phinx.yml.sample to phinx.yml, and shapefiles.yml.sample to shapefiles.yml and configure as necessary.
+3. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.php
+4. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
 
 ### Apache Rewrite Configuration
 
@@ -87,7 +89,7 @@ Homebrew on Mac OSX
 
           $ mapserv -v
 
-7. Add extension=php_mapscript.so to php.ini and restart web server
+7. Add extension=php_mapscript.so to php.ini (if not already there) and restart web server
 
 Unix-based Server
 ------------------
@@ -119,7 +121,7 @@ Database
 --------
 
 SimpleMappr uses MySQL and [phinx](http://docs.phinx.org) for migrations. A sample schema is included in /db and migrations are stored in /db/migrations.
-Create databases simplemappr, simplemappr\_development and simplemappr\_testing. Adjust your /config/phinx.yml as necessary.
+Create MySQL databases simplemappr, simplemappr\_development and simplemappr\_testing. Use /db/sample.db.sql to create tables.
 
     $ ./vendor/bin/phinx migrate -c config/phinx.yml -e development
 
