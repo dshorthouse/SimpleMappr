@@ -10,7 +10,7 @@ SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based
 [![Coverage Status](https://coveralls.io/repos/dshorthouse/SimpleMappr/badge.svg?branch=master&service=github)](https://coveralls.io/github/dshorthouse/SimpleMappr?branch=master)
 [![Join the chat at https://gitter.im/dshorthouse/SimpleMappr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dshorthouse/SimpleMappr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Requirements
+Server Requirements
 --------------------------
 
 See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https://travis-ci.org/)'s continuous integration of automated unit and functional testing.
@@ -18,16 +18,20 @@ See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https:/
 1. PHP5.6+ [with cli, PDO, PDO-MySQL, GD]
 2. Apache2.2.24+ [with rewrite]
 3. MySQL 5.5.27+
-4. [MapServer 7.0.2](http://www.mapserver.org/) [with PROJ, GEOS, Cairo]
+4. [MapServer 7.0.2](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
 5. [Composer](https://getcomposer.org/)
 
 Configuration Instructions
 --------------------------
 
-1. Download shapefiles from Natural Earth Data, [http://www.naturalearthdata.com/](http://www.naturalearthdata.com/) and extract into /mapserver/maps/. Adjust Apache read permissions as necessary.
-2. Rename /config/conf.sample.php to /config/conf.php, phinx.yml.sample to phinx.yml, and shapefiles.yml.sample to shapefiles.yml and configure as necessary.
-3. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in your /config/conf.php
-4. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. If served from Apache, use mod_rewrite as follows:
+1. Download shapefiles from Natural Earth Data, [http://www.naturalearthdata.com/](http://www.naturalearthdata.com/) and extract into mapserver/maps/. Adjust Apache read permissions as necessary.
+2. Rename and adjust:
+  - [config/conf.php.sample](config/conf.php.sample) => config/conf.php
+  - [config/phinx.yml.sample](config/phinx.yml.sample) => config/phinx.yml
+  - [config/shapefiles.yml.sample](config/shapefiles.yml.sample) => config/shapefiles.yml
+3. Adjust [config/conf.test.php](config/conf.test.php) used during execution of tests
+4. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in config/conf.php
+5. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. Configure mod_rewrite as follows:
 
 ### Apache Rewrite Configuration
 
@@ -112,7 +116,7 @@ Alternatively, you can use the ruby utility, crawler.rb from the /i18n directory
 Dependencies
 ------------
 
-Install all necessary dependencies using [composer](https://getcomposer.org) and update them as required.
+Install all necessary application dependencies using [composer](https://getcomposer.org) and update them as required.
 
     $ composer install
     $ composer update
