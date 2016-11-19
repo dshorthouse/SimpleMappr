@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 /**
- * Places handler for SimpleMappr
+ * Place model for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr
@@ -47,7 +47,7 @@ namespace SimpleMappr;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class Places implements RestMethods
+class Place implements RestMethods
 {
     /**
      * @var object $results Query result object

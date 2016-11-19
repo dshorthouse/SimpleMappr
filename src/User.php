@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 /**
- * User handler for SimpleMappr
+ * User model for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr

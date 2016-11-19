@@ -198,14 +198,14 @@ class Bootstrap
             Header::setHeader("html");
             Session::selectLocale();
             $config = [
-                'rows' => $this->_klass("Places")->index((object)$_GET)->results
+                'rows' => $this->_klass("Place")->index((object)$_GET)->results
             ];
             return $this->_twig()->render("fragments/fragment.places.html", $config);
         });
 
         $router->get('/places.json', function () {
             Header::setHeader("json");
-            return json_encode($this->_klass("Places")->index((object)$_GET)->results);
+            return json_encode($this->_klass("Place")->index((object)$_GET)->results);
         });
 
         $router->post('/pptx', function () {
@@ -274,7 +274,7 @@ class Bootstrap
             $router->get('/usermap', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Usermap")->index((object)$_GET);
+                $results = $this->_klass("Map")->index((object)$_GET);
                 $config = [
                     'rows' => $results->results,
                     'total' => $results->total,
@@ -288,15 +288,15 @@ class Bootstrap
             })
             ->get('/usermap/{id:i}.json', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Usermap")->show($id));
+                return json_encode($this->_klass("Map")->show($id));
             })
             ->post('/usermap', function () {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Usermap")->create($_POST));
+                return json_encode($this->_klass("Map")->create($_POST));
             })
             ->delete('/usermap/{id:i}', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Usermap")->destroy($id));
+                return json_encode($this->_klass("Map")->destroy($id));
             });
         });
 

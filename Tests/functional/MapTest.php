@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for Usermap handling
+ * Unit tests for Map handling
  * REQUIREMENTS: web server running as specified in phpunit.xml + Selenium
  *
  * PHP Version >= 5.6
@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class UsermapTest extends SimpleMapprTest
+class MapTest extends SimpleMapprTest
 {
     /**
      * Parent setUp function executed before each test.
@@ -32,7 +32,7 @@ class UsermapTest extends SimpleMapprTest
     /**
      * Test view own maps.
      */
-    public function testIndexUserMaps()
+    public function testIndexMaps()
     {
         parent::setUpPage();
         parent::setSession();
@@ -58,7 +58,7 @@ class UsermapTest extends SimpleMapprTest
     /**
      * Test saving a map.
      */
-    public function testCreateUserMap()
+    public function testCreateMap()
     {
         parent::setUpPage();
         parent::setSession();
@@ -81,7 +81,7 @@ class UsermapTest extends SimpleMapprTest
     /**
      * Test deleting a map.
      */
-    public function testDeleteUserMap()
+    public function testDeleteMap()
     {
         parent::setUpPage();
         parent::setSession();
@@ -115,7 +115,7 @@ class UsermapTest extends SimpleMapprTest
     /**
      * Test load user map.
      */
-    public function testLoadUserMap()
+    public function testLoadMap()
     {
         parent::setUpPage();
         parent::setSession();

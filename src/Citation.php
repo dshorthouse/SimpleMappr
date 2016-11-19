@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 /**
- * Citation handler for SimpleMappr
+ * Citation model for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr

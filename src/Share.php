@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 /**
- * Share handler for SimpleMappr
+ * Share model for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr

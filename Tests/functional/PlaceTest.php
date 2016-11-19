@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for static methods and set-up of Places class
+ * Unit tests for static methods and set-up of Place class
  *
  * PHP Version >= 5.6
  *
@@ -10,7 +10,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class PlacesTest extends SimpleMapprTest
+class PlaceTest extends SimpleMapprTest
 {
     /**
      * Parent setUp function executed before each test.
@@ -31,7 +31,7 @@ class PlacesTest extends SimpleMapprTest
     /**
      * Test response to index of places URL.
      */
-    public function test_PlacesIndex()
+    public function test_PlaceIndex()
     {
         $ch = curl_init(MAPPR_URL . "/places");
 
@@ -69,7 +69,7 @@ class PlacesTest extends SimpleMapprTest
     /**
      * Test response to a places request for a named Country.
      */
-    public function test_PlacesSearch()
+    public function test_PlaceSearch()
     {
         $ch = curl_init(MAPPR_URL . "/places.json/?term=Canada");
 
