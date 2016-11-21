@@ -64,6 +64,10 @@ class Bootstrap
 
         //set the default timezone
         date_default_timezone_set("America/Toronto");
+
+        if (!ini_get("auto_detect_line_endings")) {
+            ini_set("auto_detect_line_endings", '1');
+        }
         
         $this->_setRoutes();
     }

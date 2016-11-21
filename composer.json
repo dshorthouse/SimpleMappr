@@ -23,14 +23,15 @@
       }
     },
     "require": {
+      "league/csv"                : "dev-master",
       "natxet/CssMin"             : "dev-master",
       "neitanod/forceutf8"        : "dev-master",
       "phpoffice/phppresentation" : "~0.6.0",
       "phpoffice/phpword"         : "~0.12.1",
       "phayes/geophp"             : "~1.2",
       "phroute/phroute"           : "2.*",
-      "symfony/yaml"              : "*",
       "robmorgan/phinx"           : "*",
+      "symfony/yaml"              : "*",
       "twig/twig"                 : "~1.0",
       "twig/extensions"           : "~1.1.0"
     },

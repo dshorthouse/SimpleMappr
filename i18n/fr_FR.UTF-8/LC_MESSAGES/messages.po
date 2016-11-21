@@ -745,6 +745,10 @@ msgid "July 10, 2016"
 msgstr "10 juillet, 2016"
 
 #: .tabs/about.php:11
+msgid "November 21, 2016"
+msgstr "21 novembre, 2016"
+
+#: .tabs/about.php:11
 msgid "November 7, 2016"
 msgstr "7 novembre, 2016"
 
@@ -799,6 +803,10 @@ msgstr "29 octobre, 2013"
 #: .tabs/about.php:11
 msgid "June 25, 2013"
 msgstr "25 juin, 2013"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Remote files incompletely parsed via the API. Reported by Larry Gall."
+msgstr "Correction: Fichiers incomplètement analysés via l'API. Rapporté par Larry Gall."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added a new tab to permit submission of well-known text (WKT)."

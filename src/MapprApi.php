@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr;
 
+use League\Csv\Reader;
+
 /**
  * API handler for SimpleMappr
  *
@@ -193,7 +195,13 @@ class MapprApi extends Mappr
 
         foreach ($this->_coord_cols as $col => $coords) {
             $mlayer = ms_newLayerObj($this->map_obj);
-            $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
+            $title = "";
+            if (is_string($col)) {
+              $title = $col;
+              $col = array_search($col, $this->legend);
+            } else {
+              $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
+            }
             $mlayer->set("name", $title);
             $mlayer->set("status", MS_ON);
             $mlayer->set("type", MS_LAYER_POINT);
@@ -993,33 +1001,24 @@ class MapprApi extends Mappr
      */
     private function _parseFile()
     {
-        if (@$fp = fopen($this->request->url, 'r')) {
-            while ($line = fread($fp, 1024)) {
-                $rows = preg_split("/[\r\n]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
-                $cols = explode("\t", $rows[0]);
-                $num_cols = count($cols);
-                $this->legend = explode("\t", $rows[0]);
-                unset($rows[0]);
-                foreach ($rows as $row) {
-                    $cols = explode("\t", $row);
-                    for ($i=0;$i<$num_cols;$i++) {
-                        if (array_key_exists($i, $cols)) {
-                            $cols[$i] = preg_replace('/[\p{Z}\s]/u', ' ', $cols[$i]);
-                            $cols[$i] = trim(preg_replace('/[^\d\s,;.\-NSEWO°dms\'"]/i', "", $cols[$i]));
-                            if (preg_match('/[NSEWO]/', $cols[$i]) != 0) {
-                                $coord = preg_split("/[,;]/", $cols[$i]);
-                                $coord = (preg_match('/[EWO]/', $coord[1]) != 0) ? $coord : array_reverse($coord);
-                                $this->_coord_cols[$i][] = [
-                                    Utility::dmsToDeg(trim($coord[0])),
-                                    Utility::dmsToDeg(trim($coord[1]))
-                                ];
-                            } else {
-                                $this->_coord_cols[$i][] = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $cols[$i])));
-                            }
-                        }
-                    }
-                }
-            }
+        $csv = Reader::createFromString($this->request->url_content);
+        $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"]);
+        if($delimiters_list["\t"] > 0) {
+          $csv->setDelimiter("\t");
+          $this->legend = $csv->fetchOne();
+          $results = $csv->setOffset(1)->fetchAssoc($this->legend);
+        } else {
+          $results = $csv->fetch(function($row) {
+            return [$row[0] => join(",",[$row[1], $row[2]])];
+          });
+        }
+        foreach($results as $row) {
+          foreach($row as $key => $value) {
+            $this->_coord_cols[$key][] = Utility::makeCoordinates($value);
+          }
+        }
+        if (empty($this->legend)) {
+          $this->legend = array_keys($this->_coord_cols);
         }
     }
 
