@@ -586,13 +586,18 @@ class MapprApi extends Mappr
             } else if ($this->request->method == 'OPTIONS') { //For CORS requests
                 http_response_code(204);
             } else {
+                $url = $this->image->saveWebImage();
+                $expiry = time() + (6 * 60 * 60);
                 Header::setHeader("json");
                 $output = [
                     'imageURL' => $this->image->saveWebImage(),
-                    'expiry'   => date('c', time() + (6 * 60 * 60)),
+                    'expiry'   => date('c', $expiry),
                     'bad_points' => $this->_bad_points,
                     'bad_drawings' => $this->_bad_drawings
                 ];
+                http_response_code(303);
+                header("Expires: " .gmdate("D, d M Y H:i:s", $expiry) . " GMT");
+                header("Location: {$url}");
                 return json_encode($output);
             }
         }
