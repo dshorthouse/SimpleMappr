@@ -37,6 +37,9 @@
  */
 namespace SimpleMappr;
 
+use geoPHP;
+use GeoJSON;
+
 /**
  * Map handler for SimpleMappr
  *
@@ -334,8 +337,8 @@ class MapprMap extends Mappr
                 $rows = explode("\n", Utility::removeEmptyLines($whole));
 
                 foreach ($rows as $row) {
-                    $shape = \geoPHP::load($row,'wkt');
-                    $geojson = new \GeoJSON();
+                    $shape = geoPHP::load($row,'wkt');
+                    $geojson = new GeoJSON();
                     $geometry = $geojson->write($shape, TRUE);
                     $output[] = [
                         'type' => 'Feature',

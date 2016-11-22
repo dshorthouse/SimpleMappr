@@ -38,6 +38,7 @@
 namespace SimpleMappr;
 
 use League\Csv\Reader;
+use geoPHP;
 
 /**
  * API handler for SimpleMappr
@@ -1006,6 +1007,9 @@ class MapprApi extends Mappr
      */
     private function _parseFile()
     {
+        if (!ini_get("auto_detect_line_endings")) {
+            ini_set("auto_detect_line_endings", '1');
+        }
         $csv = Reader::createFromString($this->request->url_content);
         $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"]);
         if($delimiters_list["\t"] > 0) {
@@ -1034,7 +1038,7 @@ class MapprApi extends Mappr
      */
     private function _parseGeo()
     {
-        $geometries = \geoPHP::load($this->request->url_content);
+        $geometries = geoPHP::load($this->request->url_content);
         if ($geometries) {
             $num_cols = (isset($num_cols)) ? $num_cols++ : 0;
             $this->legend[$num_cols] = $this->request->url;

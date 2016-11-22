@@ -37,6 +37,7 @@
  */
 namespace SimpleMappr;
 
+use PDO;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -66,9 +67,9 @@ class Database
     private function __construct()
     {
         $creds = $this->_credentials(Yaml::parse(file_get_contents(ROOT . '/config/phinx.yml')));
-        $this->_link = new \PDO($creds['conn'], $creds['user'], $creds['pass']);
-        $this->_link->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->_link->setAttribute(\PDO::ATTR_PERSISTENT, true);
+        $this->_link = new PDO($creds['conn'], $creds['user'], $creds['pass']);
+        $this->_link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->_link->setAttribute(PDO::ATTR_PERSISTENT, true);
     }
 
     /**
@@ -118,7 +119,7 @@ class Database
      */
     public function query($sql)
     {
-        return $this->_link->query($sql)->fetchAll(\PDO::FETCH_OBJ);
+        return $this->_link->query($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -132,7 +133,7 @@ class Database
      */
     public function bindParam($key, $value, $type = 'integer')
     {
-        $pdo_type = ($type == 'integer') ? \PDO::PARAM_INT : \PDO::PARAM_STR;
+        $pdo_type = ($type == 'integer') ? PDO::PARAM_INT : PDO::PARAM_STR;
         $this->_handle->bindParam($key, $value, $pdo_type);
     }
 
@@ -164,7 +165,7 @@ class Database
     public function fetchFirstObject()
     {
         $this->execute();
-        return $this->_handle->fetch(\PDO::FETCH_OBJ);
+        return $this->_handle->fetch(PDO::FETCH_OBJ);
     }
 
     /**
@@ -175,7 +176,7 @@ class Database
     public function fetchAllObject()
     {
         $this->execute();
-        return $this->_handle->fetchAll(\PDO::FETCH_OBJ);
+        return $this->_handle->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**

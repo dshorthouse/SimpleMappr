@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr;
 
+use XMLReader;
+
 /**
  * Web Feature Service (WFS) for SimpleMappr
  *
@@ -109,8 +111,8 @@ class MapprWfs extends Mappr
 
         $input = file_get_contents("php://input");
         if ($input) {
-            $xml = new \XMLReader();
-            $xml2 = new \XMLReader();
+            $xml = new XMLReader();
+            $xml2 = new XMLReader();
             $xml->XML($input);
             while ($xml->read()) {
                 if ($xml->name == 'wfs:Query') {

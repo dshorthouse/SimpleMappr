@@ -169,7 +169,7 @@ class Session
     }
 
     /**
-     * Redirect to a URL and set a 303 code
+     * Redirect to a URL and set a 302 code
      *
      * @param string $url The destination URL
      *
@@ -178,7 +178,7 @@ class Session
     public static function redirect($url)
     {
         Header::setHeader();
-        http_response_code(303);
+        http_response_code(302);
         header("Location: " . $url);
         exit();
     }

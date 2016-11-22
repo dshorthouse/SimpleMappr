@@ -40,6 +40,9 @@ namespace SimpleMappr;
 use \Phroute\Phroute\Autoloader;
 use \Phroute\Phroute\RouteCollector;
 use \Phroute\Phroute\Dispatcher;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use Twig_Extensions_Extension_I18n;
 
 /**
  * Bootstrapper for SimpleMappr
@@ -64,10 +67,6 @@ class Bootstrap
 
         //set the default timezone
         date_default_timezone_set("America/Toronto");
-
-        if (!ini_get("auto_detect_line_endings")) {
-            ini_set("auto_detect_line_endings", '1');
-        }
         
         $this->_setRoutes();
     }
@@ -406,11 +405,11 @@ class Bootstrap
      */
     private function _twig()
     {
-        $loader = new \Twig_Loader_Filesystem(ROOT. "/views");
+        $loader = new Twig_Loader_Filesystem(ROOT. "/views");
         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
         $reload = (ENVIRONMENT == "development") ? true : false;
-        $twig = new \Twig_Environment($loader, ['cache' => $cache, 'auto_reload' => $reload]);
-        $twig->addExtension(new \Twig_Extensions_Extension_I18n());
+        $twig = new Twig_Environment($loader, ['cache' => $cache, 'auto_reload' => $reload]);
+        $twig->addExtension(new Twig_Extensions_Extension_I18n());
         $twig->addGlobal('environment', ENVIRONMENT);
 
         $header = new Header;

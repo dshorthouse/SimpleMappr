@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr;
 
+use XMLWriter;
+
 /**
  * KML handler for SimpleMappr
  *
@@ -141,7 +143,7 @@ class Kml
 
         $this->addCoordinates();
 
-        $this->_kml = new \XMLWriter();
+        $this->_kml = new XMLWriter();
 
         Header::setHeader("kml", $clean_filename . ".kml");
         $this->_kml->openURI('php://output');

@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr;
 
+use CssMin;
+
 /**
  * Header handler for SimpleMappr
  *
@@ -426,7 +428,7 @@ class Header
             if (!$cached_css) {
                 $css_min = "";
                 foreach ($this->local_css as $css_file) {
-                    $css_min .= \CssMin::minify(file_get_contents($css_file)) . "\n";
+                    $css_min .= CssMin::minify(file_get_contents($css_file)) . "\n";
                 }
                 $css_min_file = $this->_hash . ".css";
                 $handle = fopen(dirname(__DIR__) . self::$_css_cache_path . $css_min_file, 'x+');
