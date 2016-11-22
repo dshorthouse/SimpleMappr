@@ -4,10 +4,7 @@
 #map-api dl{font-size:0.75em;}
 #map-api dt{font-weight:bold;}
 #map-api dd{margin-bottom:1.5em;}
-#map-api span.api-example{color:green;display:block;}
-#map-api span.api-example a{color:green;}
-#map-api span.api-output{color:red;display:block;}
-#map-api span.api-output a{color:red;}
+#map-api span.api-format{display:block;}
 #map-api div.general-base-ws{min-width:700px;}
 .long-url{word-wrap: break-word;}
 </style>
@@ -16,7 +13,7 @@
     <p>{% trans "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively." %}</p>
   </div>
   <h3>RESTful API</h3>
-  {% set url = swagger.schemes.0 ~ "://" ~ swagger.host %}
+  {% set url = [swagger.schemes.0, swagger.host]|join('://') %}
   {% set api_file = url ~ "/public/files/demo.txt" %}
   <p><em>e.g.</em> <span class="long-url">{{ url }}/api/?url={{ api_file|url_encode }}&shape[0]=square&size[0]=10&color[0]=20,20,20&shape[1]=triangle&size[1]=10&color[1]=40,40,40&shape[2]=star&size[2]=14&color[2]=60,60,60&width=500&height=300&bbox=-130,40,-60,50&layers=lakes,stateprovinces&graticules=true&projection=esri:102009&legend=true&shade[places]=Alberta,USA[MT|WA]&shade[title]=Selected Regions&shade[color]=150,150,150</span></p>
   <p><strong>{% trans "Produces" %}</strong></p>
@@ -37,9 +34,10 @@
   </div>
 
   <dl>
-    {% for params in swagger.paths["/api"].get.parameters -%}
+    {% for params in swagger.paths["/api"].post.parameters -%}
     <dt>{{ params.name }}</dt>
-    <dd>{{ params.description }}</dd>
+    <dd>{{ params.description }}<span class="api-format">Type: {{ params.type }}</span>
+    </dd>
     {% endfor -%}
   </dl>
 

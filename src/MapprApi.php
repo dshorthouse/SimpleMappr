@@ -118,8 +118,13 @@ class MapprApi extends Mappr
               ],
               'parameters' => self::apiParameters("POST"),
               'responses' => [
-                200 => [
-                  'description' => 'success',
+                303 => [
+                  'description' => 'redirect to image URL',
+                  'headers' => [
+                    'Location' => [
+                      'type' => 'string'
+                    ]
+                  ],
                   'examples' => [
                     'application/json' => [
                       'imageURL' => MAPPR_MAPS_URL . '/50778960_464f_0.png',
@@ -145,7 +150,7 @@ class MapprApi extends Mappr
     public static function apiParameters($request_method = "GET")
     {
       array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
-          $projections[] = $key;
+        $projections[] = $key . " (" . $val['name'] . ")";
       });
       $params = [
         [
@@ -158,21 +163,21 @@ class MapprApi extends Mappr
         [
           'name' => 'parameters',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'if parameters=true is included, a JSON response will be produced containing all accepted parameters and their descriptions.',
+          'description' => 'if parameters=true is included, a JSON document will be produced with the OpenAPI Specification.',
           'required' => false,
           'type' => 'boolean'
         ],
         [
           'name' => 'url',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points.',
+          'description' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points. It may also be a URL-encoded GeoRSS, GeoJSON, or KML feed.',
           'required' => false,
           'type' => 'string'
         ],
         [
           'name' => 'file',
           'in' => 'formData',
-          'description' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
+          'description' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. Send via POST with enctype "multipart/form-data". The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
           'required' => false,
           'type' => 'file'
         ],
@@ -217,7 +222,7 @@ class MapprApi extends Mappr
         [
           'name' => 'shape[x]',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'shape of marker for column x, accepted values are: ' . implode(", ", AcceptedMarkerShapes::shapes()),
+          'description' => 'shape of marker for column x, accepted values are one of: ' . implode(", ", AcceptedMarkerShapes::shapes()),
           'required' => false,
           'type' => 'string',
           'enum' => AcceptedMarkerShapes::shapes()
@@ -342,10 +347,10 @@ class MapprApi extends Mappr
         [
           'name' => 'projection',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'the output projection in either EPSG or ESRI references, accepted values are: ' . implode(", ", $projections),
+          'description' => 'the output projection in either EPSG or ESRI references, accepted values are one of ' . implode(", ", $projections),
           'required' => false,
           'type' => 'string',
-          'enum' => $projections
+          'enum' => array_keys(AcceptedProjections::$projections)
         ],
         [
           'name' => 'origin',
@@ -631,12 +636,11 @@ class MapprApi extends Mappr
      */
     public function addWKT()
     {
-        if ($this->request->wkt) {
-            $count = count($this->request->wkt)-1;
-            for ($j=$count; $j>=0; $j--) {
+        if ($this->request->wkt && is_array($this->request->wkt)) {
+            foreach($this->request->wkt as $j => $wkt) {
                 $color = [120,120,120];
                 $title = "";
-                if (array_key_exists('color',$this->request->wkt[$j])) {
+                if(array_key_exists('color', $this->request->wkt[$j])) {
                     $color = explode(",", $this->request->wkt[$j]['color']);
                     if (count($color) != 3) {
                         $color = [120,120,120];
@@ -645,7 +649,6 @@ class MapprApi extends Mappr
                 if (array_key_exists('title', $this->request->wkt[$j])) {
                     $title = stripslashes($this->request->wkt[$j]['title']);
                 }
-
                 if (array_key_exists('data', $this->request->wkt[$j])) {
                     $data = trim($this->request->wkt[$j]['data']);
 
@@ -683,11 +686,9 @@ class MapprApi extends Mappr
                             } catch(\Exception $e) {
                                 $this->_bad_drawings[] = ($title) ? join(":",[$title, $row]) : $row;
                             }
-
                         }
                     }
                 }
-
             }
         }
     }
