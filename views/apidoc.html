@@ -16,18 +16,20 @@
     <p>{% trans "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively." %}</p>
   </div>
   <h3>RESTful API</h3>
-  <p><em>e.g.</em> <span class="long-url">{{ og_url }}/api/?url={{ og_url ~ "/public/files/demo.txt&shape[0]=square&size[0]=10&color[0]=20,20,20&shape[1]=triangle&size[1]=10&color[1]=40,40,40&shape[2]=star&size[2]=14&color[2]=60,60,60&width=500&height=300&bbox=-130,40,-60,50&layers=lakes,stateprovinces&graticules=true&projection=esri:102009&legend=true&shade[places]=Alberta,USA[MT|WA]&shade[title]=Selected Regions&shade[color]=150,150,150" }}</span></p>
+  {% set url = swagger.schemes.0 ~ "://" ~ swagger.host %}
+  {% set api_file = url ~ "/public/files/demo.txt" %}
+  <p><em>e.g.</em> <span class="long-url">{{ url }}/api/?url={{ api_file|url_encode }}&shape[0]=square&size[0]=10&color[0]=20,20,20&shape[1]=triangle&size[1]=10&color[1]=40,40,40&shape[2]=star&size[2]=14&color[2]=60,60,60&width=500&height=300&bbox=-130,40,-60,50&layers=lakes,stateprovinces&graticules=true&projection=esri:102009&legend=true&shade[places]=Alberta,USA[MT|WA]&shade[title]=Selected Regions&shade[color]=150,150,150</span></p>
   <p><strong>{% trans "Produces" %}</strong></p>
-  <p><img src="{{ og_url }}/public/images/api.png" width="500" height="300" alt="{% trans "My Map" %}" /></p>
+  <p><img src="{{ url }}/public/images/api.png" width="500" height="300" alt="{% trans "My Map" %}" /></p>
 
-  <p>{% trans "Send GET or POST requests using the Base URL and Parameters below. A POST request returns a HTTP 303 response redirect to a URL for the map image. If you elect not to follow the redirect, JSON is returned in which you can find this same URL. An example can found in the description of the <em>file</em> parameter below." %}</p>
+  <p>{% trans "Send GET or POST requests using the Base URL and Parameters below. A POST request returns a HTTP 303 redirect to a URL for the map image. If you elect not to follow the redirect, JSON is returned in which you can find this same URL." %}</p>
 
   <div class="header">
     <h2>{% trans "Base URL" %}</h2>
   </div>
 
   <div id="general-base" class="panel ui-corner-all">
-    <p>{{ og_url }}/api/</p>
+    <p>{{ url }}/api</p>
   </div>
 
   <div class="header">
@@ -35,113 +37,22 @@
   </div>
 
   <dl>
-    <dt>ping</dt>
-    <dd>{% trans "if ping=true is included, a JSON response will be produced in place of an image." %}
-      <span class="api-output"><em>e.g.</em> {"status" : "ok"}</span>
-    </dd>
-
-    <dt>parameters</dt>
-    <dd>{% trans "if parameters=true is included, a JSON response will be produced containing all accepted parameters and their definitions." %}
-    </dd>
-
-    <dt>url</dt>
-    <dd>{% trans "a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points." %}
-      <span class="api-example"><em>e.g.</em> url=<a href="{{ og_url }}/public/files/demo.txt">{{ og_url }}/public/files/demo.txt</a></span>
-      <br>
-      {% trans "a URL-encoded, remote GeoRSS, GeoJSON, or KML feed." %} 
-      <span class="api-example"><em>e.g.</em> url=<a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom">{{ 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week.atom'|url_encode }}</a></span>
-    </dd>
-
-    <dt>file</dt>
-    <dd>{% trans %}Note: requires a POST request to {{ og_url }}/api/ with an enctype set to multipart/form-data.{% endtrans %}<br />
-        {% trans "tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server." %}
-    <span class="api-example"><a href="http://{{ og_url }}/public/files/demo.txt">Example file</a></span>
-    <span class="api-output"><em>e.g.</em> { "imageURL" : "{{ mappr_maps_url }}/50778960_464f_0.png", "expiry" : "{{ 'now'|date('c') }}", "bad_points" : [], "bad_drawings" : [] }</span>
-    </dd>
-
-    <dt>points[x]</dt>
-    <dd>{% trans "single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \\n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above." %} <span class="api-example"><em>e.g.</em> points[0]=45,-120 or points[0]=45°52'30"N,120W or points[0]=45°52.5N,120W, or points[0]=45,-120\n45,-110\n45,-125\n42,-100&amp;points[1]=44,-100</span></dd>
-
-    <dt>shape[x]</dt>
-    <dd>{% trans "shape of marker for column x; options are plus, cross, asterisk, circle, square, triangle, inversetriangle, star, hexagon, opencircle, opensquare, opentriangle, inverseopentriangle, openstar, openhexagon" %} <span class="api-example"><em>e.g.</em> shape[0]=circle</span></dd>
-
-    <dt>wkt[x][data]</dt>
-    <dd>{% trans "data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON" %} <span class="api-example"><em>e.g.</em> wkt[0][data]=POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))</span></dd>
-
-    <dt>wkt[x][title]</dt>
-    <dd>{% trans "title for well-known text shape x" %} <span class="api-example"><em>e.g.</em> wkt[0][title]=Distribution of Canus lupus</span></dd>
-
-    <dt>wkt[x][color]</dt>
-    <dd>{% trans "color for well-known text shape x" %} <span class="api-example"><em>e.g.</em> wkt[0][color]=0,0,255</span></dd>
-
-    <dt>size[x]</dt>
-    <dd>{% trans "integer-based point size of marker in column x" %} <span class="api-example"><em>e.g.</em> size[1]=10</span></dd>
-
-    <dt>color[x]</dt>
-    <dd>{% trans "comma-separated RGB colors for marker in column x" %} <span class="api-example"><em>e.g.</em> color[2]=255,0,0</span></dd>
-
-    <dt>outlinecolor</dt>
-    <dd>{% trans "comma-separated RGB colors for halo around all solid markers" %} <span class="api-example"><em>e.g.</em> outlinecolor=40,40,40</span></dd>
-
-    <dt>zoom</dt>
-    <dd>{% trans "integer from 1 to 10, centered on the geographic midpoint of all coordinates" %} <span class="api-example"><em>e.g.</em> zoom=8</span></dd>
-
-    <dt>bbox</dt>
-    {% set box = "(minx, miny, maxx, maxy)" %}
-    <dd>{% trans %}comma-separated bounding box in decimal degrees {{ box }}{% endtrans %} <span class="api-example"><em>e.g.</em> bbox=-130,40,-60,50</span></dd>
-
-    <dt>shade[places]</dt>
-    <dd>{% trans "comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets" %} <span class="api-example"><em>e.g.</em> shade[places]=Alberta,USA[MT|WA]</span></dd>
-
-    <dt>shade[title]</dt>
-    <dd>{% trans "the title for the shaded places" %} <span class="api-example"><em>e.g.</em> shade[title]=Occurrence</span></dd>
-
-    <dt>shade[color]</dt>
-    <dd>{% trans "comma-separated RGB fill colors for shaded places" %} <span class="api-example"><em>e.g.</em> shade[color]=150,150,150</span></dd>
-
-    <dt>layers</dt>
-    <dd>{% trans "comma-separated cultural or physical layers; options are relief, stateprovinces, lakes, rivers, oceans, placenames, ecoregions, conservation, blueMarble" %} <span class="api-example"><em>e.g.</em> layers=lakes,stateprovinces</span></dd>
-
-    <dt>projection</dt>
-    {% set urls_spatial = '<a href="http://spatialreference.org/">http://spatialreference.org/</a>' %}
-    {% set projection_list = projections|join(", ") %}
-    <dd>{% trans %}the output projection in either EPSG or ESRI references. See {{ urls_spatial }} for spatial references. Accepted projections are {{ projection_list }}{% endtrans %}<span class="api-example"><em>e.g.</em> projection=esri:102009</span></dd>
-
-    <dt>origin</dt>
-    <dd>{% trans "longitude of natural origin used in Lambert projections" %} <span class="api-example"><em>e.g.</em> origin=-120</span></dd>
-
-    <dt>graticules</dt>
-    <dd>{% trans "display the graticules" %} <span class="api-example"><em>e.g.</em> graticules=true</span></dd>
-
-    <dt>spacing</dt>
-    <dd>{% trans "display the graticules with defined spacing in degrees" %} <span class="api-example"><em>e.g.</em> spacing=5</span></dd>
-
-    <dt>width</dt>
-    <dd>{% trans "integer-based output width in pixels" %} <span class="api-example"><em>e.g.</em> width=400</span></dd>
-
-    <dt>height</dt>
-    <dd>{% trans "integer-based output height in pixels; if height is not provided, it will be half the width" %} <span class="api-example"><em>e.g.</em> height=400</span></dd>
-
-    <dt>output</dt>
-    <dd>{% trans "file format of the image or vector produced; options are png, jpg, tif, svg" %} <span class="api-example"><em>e.g.</em> output=png</span></dd>
-
-    <dt>scalebar</dt>
-    <dd>{% trans "embed a scalebar in the lower right of the image" %} <span class="api-example"><em>e.g.</em> scalebar=true</span></dd>
-
-    <dt>legend[x]</dt>
-    <dd>{% trans "URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead" %} <span class="api-example"><em>e.g.</em> legend[0]=Pardosa%20moesta or legend=true</span>
+    {% for params in swagger.paths["/api"].get.parameters -%}
+    <dt>{{ params.name }}</dt>
+    <dd>{{ params.description }}</dd>
+    {% endfor -%}
   </dl>
 
   <h3>Web Feature Service (WFS)</h3>
 
   <div class="panel ui-corner-all general-base-ws">
-    <p>{{ og_url }}/wfs/?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetCapabilities</p>
+    <p>{{ url }}/wfs/?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetCapabilities</p>
   </div>
 
   <h3>Web Map Service (WMS)</h3>
 
   <div class="panel ui-corner-all general-base-ws">
-    <p>{{ og_url }}/wms/?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities</p>
+    <p>{{ url }}/wms/?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities</p>
   </div>
 
   <h3>Ruby Gem</h3>
@@ -153,6 +64,6 @@
 
   <h3>OpenAPI Specification</h3>
   {% set oai_url = '<a href="https://www.openapis.org/">https://www.openapis.org/</a>' %}
-  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the OpenAPI Specification, formerly kmown as Swagger. The definition can be found at <a href="{{ og_url }}/swagger.json">{{ og_url }}/swagger.json</a>.{% endtrans %}</p>
+  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the OpenAPI Specification, formerly kmown as Swagger. The definition can be found at <a href="{{ url }}/swagger.json">{{ url }}/swagger.json</a>.{% endtrans %}</p>
 
 </div>

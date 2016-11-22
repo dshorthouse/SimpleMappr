@@ -107,13 +107,7 @@ class Bootstrap
 
         $router->get('/apidoc', function () {
             Session::selectLocale();
-            array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
-                $projections[] = $key . " (" . $val['name'] . ")";
-            });
-            $config = [
-                'mappr_maps_url' => MAPPR_MAPS_URL,
-                'projections' => $projections
-            ];
+            $config = ['swagger' => MapprApi::swaggerData()];
             return $this->_twig()->render("apidoc.html", $config);
         });
 
@@ -229,8 +223,7 @@ class Bootstrap
 
         $router->get('/swagger.json', function () {
           Header::setHeader("json");
-          $klass = $this->_klass("MapprApi");
-          return json_encode($klass->generateSwagger());
+          return json_encode(MapprApi::swaggerData());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {
