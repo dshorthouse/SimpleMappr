@@ -363,10 +363,16 @@ class Bootstrap
         if ($logs) {
             $ip4 = '/(?:\d{1,3}\.){3}\d{1,3}/';
             $ip6 = '/(?:[a-z0-9]{4}\:){7}[a-z0-9]{4}/';
+            $call = '/(\/api.*)/';
+
             foreach ($logs as $key => $log) {
                 if (preg_match($ip4, $log, $match) || preg_match($ip6, $log, $match)) {
                     if (filter_var($match[0], FILTER_VALIDATE_IP)) {
-                        $logs[$key] = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
+                        $whois = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
+                        $logs[$key] = preg_replace_callback($call, function($matches) {
+                            $text = (strlen($matches[0]) < 100) ? $matches[0] : substr($matches[0], 0, 100) . "...";
+                            return "<a href=\"${matches[0]}\">${text}</a>";
+                        }, $whois);
                     }
                 }
             }
