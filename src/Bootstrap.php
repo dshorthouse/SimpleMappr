@@ -371,7 +371,7 @@ class Bootstrap
                         $whois = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
                         $logs[$key] = preg_replace_callback($call, function($matches) {
                             $text = (strlen($matches[0]) < 100) ? $matches[0] : substr($matches[0], 0, 100) . "...";
-                            return "<a href=\"${matches[0]}\">${text}</a>";
+                            return "<a href=\"${matches[0]}\" target=\"_blank\">${text}</a>";
                         }, $whois);
                     }
                 }
