@@ -1840,7 +1840,7 @@ var SimpleMappr = (function($, window, document) {
       $('#mapSave').dialog({
         autoOpen      : true,
         height        : '175',
-        width         : '350',
+        width         : '365',
         dialogClass   : 'ui-dialog-title-mapSave',
         modal         : true,
         closeOnEscape : false,
