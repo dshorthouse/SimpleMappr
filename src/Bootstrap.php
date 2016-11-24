@@ -359,22 +359,21 @@ class Bootstrap
     private function _tailLog()
     {
         $logger = new Logger(ROOT."/log/logger.log");
-        $logs = $logger->tail();
+        $logs = $logger->tail(20);
         if ($logs) {
-            $ip4 = '/(?:\d{1,3}\.){3}\d{1,3}/';
-            $ip6 = '/(?:[a-z0-9]{4}\:){7}[a-z0-9]{4}/';
-            $call = '/(\/api.*)/';
+            $capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{4}\:){7}[a-z0-9]{4})(?:.*?)(?<url>\/api.*)$/';
 
             foreach ($logs as $key => $log) {
-                if (preg_match($ip4, $log, $match) || preg_match($ip6, $log, $match)) {
-                    if (filter_var($match[0], FILTER_VALIDATE_IP)) {
-                        $whois = str_replace($match, "<a href=\"https://who.is/whois-ip/ip-address/".$match[0]."\">".$match[0]."</a>", $log);
-                        $logs[$key] = preg_replace_callback($call, function($matches) {
-                            $text = (strlen($matches[0]) < 100) ? $matches[0] : substr($matches[0], 0, 100) . "...";
-                            return "<a href=\"${matches[0]}\" target=\"_blank\">${text}</a>";
-                        }, $whois);
+                $logs[$key] = preg_replace_callback($capture, function($matches) {
+                    if(isset($matches["ip"]) && isset($matches["url"])) {
+                        $url = (strlen($matches["url"]) < 100) ? $matches["url"] : substr($matches["url"], 0, 100) . "...";
+                        $string  = "<a href=\"https://who.is/whois-ip/ip-address/${matches['ip']}\" target=\"_blank\">${matches['ip']}</a>";
+                        $string .= " - ";
+                        $string .= "<a href=\"${matches['url']}\" target=\"_blank\">${url}</a>";
+                        return $string;
                     }
-                }
+                    return;
+                }, $log);
             }
         }
         return ($logs) ? implode("<br>", $logs) : "No log data";
