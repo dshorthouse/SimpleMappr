@@ -1008,19 +1008,20 @@ class MapprApi extends Mappr
      */
     private function _parseFile()
     {
-        if (!ini_get("auto_detect_line_endings")) {
-            ini_set("auto_detect_line_endings", '1');
-        }
         $csv = Reader::createFromString($this->request->url_content);
-        $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"]);
-        if($delimiters_list["\t"] > 0) {
-          $csv->setDelimiter("\t");
-          $this->legend = $csv->fetchOne();
-          $results = $csv->setOffset(1)->fetchAssoc($this->legend);
+        $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"],1);
+        $has_single_column = (count($csv->fetchOne()) == 1) ? true : false;
+
+        if($delimiters_list["\t"] > 0 || $has_single_column) {
+            $csv->setDelimiter("\t");
+            $this->legend = $csv->fetchOne();
+            $results = $csv->setOffset(1)->fetchAssoc($this->legend);
         } else {
-          $results = $csv->fetch(function($row) {
-            return [(string)$row[0] => join(",",$row)];
-          });
+            $results = $csv->fetch(function($row) {
+                $key = (string)$row[0];
+                array_shift($row);
+              return [$key => join(",", $row)];
+            });
         }
         foreach($results as $row) {
           foreach($row as $key => $value) {
