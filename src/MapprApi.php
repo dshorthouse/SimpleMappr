@@ -1019,7 +1019,7 @@ class MapprApi extends Mappr
           $results = $csv->setOffset(1)->fetchAssoc($this->legend);
         } else {
           $results = $csv->fetch(function($row) {
-            return [(string)$row[0] => join(",",[$row[1], $row[2]])];
+            return [(string)$row[0] => join(",",$row)];
           });
         }
         foreach($results as $row) {
