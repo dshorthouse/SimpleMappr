@@ -992,11 +992,13 @@ class MapprApi extends Mappr
                 $this->request->url = array_pop($headers['Location']);
             }
             $this->request->url_content = @file_get_contents($this->request->url);
-            preg_match_all('/[<>{}\[\]]/', $this->request->url_content, $match);
-            if (count($match[0]) >= 4) {
-                $this->_parseGeo();
-            } else {
-                $this->_parseFile();
+            if(strlen($this->request->url_content) > 0) {
+                preg_match_all('/[<>{}\[\]]/', $this->request->url_content, $match);
+                if (count($match[0]) >= 4) {
+                    $this->_parseGeo();
+                } else {
+                    $this->_parseFile();
+                }
             }
         }
     }
