@@ -45,21 +45,21 @@
     <form id="form-mapper" accept-charset="UTF-8" action="application/" method="post" autocomplete="off">
 
     <div id="map-points">
-    <div id="general-points" class="panel ui-corner-all">
+    <div id="general-points" class="panel">
     <p>{% trans "Type geographic coordinates on separate lines in decimal degrees (DD) or DD°MM'SS\" as latitude,longitude separated by a space (DD only), comma, or semicolon" %} <a href="#" class="sprites-before help show-examples">{% trans "examples" %}</a></p>
     </div>
-    <div id="upload-panel" class="panel ui-corner-all"><h3>{% trans "Upload text or csv file" %}</h3><p><input type="file" id="fileInput" /><a href="public/files/demo.txt">{% trans "Example 1" %}</a>, <a href="public/files/demo2.csv">{% trans "Example 2" %}</a></p></div>
+    <div id="upload-panel" class="panel"><h3>{% trans "Upload text or csv file" %}</h3><p><input type="file" id="fileInput" /><a href="public/files/demo.txt">{% trans "Example 1" %}</a>, <a href="public/files/demo2.csv">{% trans "Example 2" %}</a></p></div>
 
     <div id="fieldSetsPoints" class="fieldSets">
     {% include "fragments/fragment.layers.point.html" %}
     </div>
 
-    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="coords">{% trans "Add a layer" %}</button></div>
-    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearLayers" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    <div class="addFieldset"><button class="sprites-before addmore positive" data-type="coords">{% trans "Add a layer" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive">{% trans "Preview" %}</button><button id="clearLayers" class="sprites-before clear negative">{% trans "Clear all" %}</button></div>
     </div>
 
     <div id="map-wkt">
-    <div id="wkt-introduction" class="panel ui-corner-all">
+    <div id="wkt-introduction" class="panel">
     {% set wkt_url = '<a href="https://rawgit.com/dshorthouse/0afc690b83ed056f6762a96702c041e7/raw/190037de4152654a2e4b1e13394b40ba67249fd4/wkt.html" target="_blank">WKT</a>' %}
     <p>{% trans %}Type Well-Known Text (WKT). Try this {{wkt_url}} generator. <em>e.g.</em>POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63)){% endtrans %}</p>
     </div>
@@ -68,12 +68,12 @@
     {% include "fragments/fragment.layers.wkt.html" %}
     </div>
 
-    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="wkt">{% trans "Add a drawing" %}</button></div>
-    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearWKT" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    <div class="addFieldset"><button class="sprites-before addmore positive" data-type="wkt">{% trans "Add a drawing" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive">{% trans "Preview" %}</button><button id="clearWKT" class="sprites-before clear negative">{% trans "Clear all" %}</button></div>
     </div>
 
     <div id="map-regions">
-    <div id="regions-introduction" class="panel ui-corner-all">
+    <div id="regions-introduction" class="panel">
 
     {% set tabIndex = (session and roles[session['role']] == 'administrator') ? 6 : 5 %}
 
@@ -84,13 +84,13 @@
     {% include "fragments/fragment.layers.region.html" %}
     </div>
 
-    <div class="addFieldset"><button class="sprites-before addmore positive ui-corner-all" data-type="regions">{% trans "Add a region" %}</button></div>
-    <div class="submit"><button class="sprites-before submitForm positive ui-corner-all">{% trans "Preview" %}</button><button id="clearRegions" class="sprites-before clear negative ui-corner-all">{% trans "Clear all" %}</button></div>
+    <div class="addFieldset"><button class="sprites-before addmore positive" data-type="regions">{% trans "Add a region" %}</button></div>
+    <div class="submit"><button class="sprites-before submitForm positive">{% trans "Preview" %}</button><button id="clearRegions" class="sprites-before clear negative">{% trans "Clear all" %}</button></div>
     </div>
 
     <div id="map-preview">
     <div id="mapWrapper">
-    <div id="actionsBar" class="ui-widget-header ui-corner-all ui-helper-clearfix">
+    <div id="actionsBar" class="ui-widget-header ui-helper-clearfix">
     <ul>
     <li><a href="#" class="sprites tooltip toolsZoomIn" title="{% trans "zoom in +" %}"></a></li>
     <li class="divider"><a href="#" class="sprites tooltip toolsZoomOut" title="{% trans "zoom out -" %}"></a></li>
@@ -124,13 +124,13 @@
     <a href="#" class="sprites tooltip controls arrows down" data-pan="down" title="{% trans "pan down" %}"></a>
     <a href="#" class="sprites tooltip controls arrows left" data-pan="left" title="{% trans "pan left" %}"></a>
     </div>
-    <div class="thumb ui-corner-all ui-widget-header"></div>
+    <div class="thumb ui-widget-header"></div>
     </div>
     <div id="badRecordsWarning"><a href="#" class="sprites-before toolsBadRecords">{% trans "Data Out of Range" %}</a></div>
     <div id="mapOutput"><img id="mapOutputImage" src="public/images/basemap.png" alt="" width="900" height="450" /></div>
     </div>
     <div id="mapScale"><img id="mapOutputScale" src="public/images/basemap-scalebar.png" alt="" width="200" height="27" /></div>
-    <div id="mapToolsCollapse" class="mapTools-default ui-widget-header ui-corner-left"><a href="#" class="sprites tooltip" title="{% trans "expand/collapse ctrl+e" %}"></a></div>
+    <div id="mapToolsCollapse" class="mapTools-default ui-widget-header"><a href="#" class="sprites tooltip" title="{% trans "expand/collapse ctrl+e" %}"></a></div>
     </div>
     <div id="mapTools">
     <ul>
@@ -165,7 +165,7 @@
     {% if session %}
         <div id="usermaps"></div>
     {% else %}
-        <div class="panel ui-corner-all">
+        <div class="panel">
             <p>{% trans "Save and reload your map data or create a generic template." %}</p> 
         </div>
         <div id="janrainEngageEmbed"></div>

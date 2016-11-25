@@ -9,7 +9,7 @@
 .long-url{word-wrap: break-word;}
 </style>
 <div id="map-api">
-  <div id="general-api" class="panel ui-corner-all">
+  <div id="general-api" class="panel">
     <p>{% trans "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively." %}</p>
   </div>
   <h3>RESTful API</h3>
@@ -25,7 +25,7 @@
     <h2>{% trans "Base URL" %}</h2>
   </div>
 
-  <div id="general-base" class="panel ui-corner-all">
+  <div id="general-base" class="panel">
     <p>{{ url }}/api</p>
   </div>
 
@@ -43,20 +43,20 @@
 
   <h3>Web Feature Service (WFS)</h3>
 
-  <div class="panel ui-corner-all general-base-ws">
+  <div class="panel general-base-ws">
     <p>{{ url }}/wfs/?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetCapabilities</p>
   </div>
 
   <h3>Web Map Service (WMS)</h3>
 
-  <div class="panel ui-corner-all general-base-ws">
+  <div class="panel general-base-ws">
     <p>{{ url }}/wms/?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetCapabilities</p>
   </div>
 
   <h3>Ruby Gem</h3>
   {% set github_url = '<a href="https://github.com/dshorthouse/simple-mappr">https://github.com/dshorthouse/simple-mappr</a>' %}
   <p>{% trans %}Documentation found on the simple-mappr GitHub repository, {{ github_url }}{% endtrans %}</a>.
-  <div class="panel ui-corner-all general-base-ws">
+  <div class="panel general-base-ws">
     <p>$ gem install simple-mappr</p>
   </div>
 

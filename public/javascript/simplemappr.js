@@ -2071,7 +2071,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     showErrorMessage: function(content) {
-      var message = '<span class="mapper-message-error ui-corner-all ui-widget-content">' + content + '</span>';
+      var message = '<span class="mapper-message-error ui-widget-content">' + content + '</span>';
 
       this.vars.mapOutput.append(message);
     },

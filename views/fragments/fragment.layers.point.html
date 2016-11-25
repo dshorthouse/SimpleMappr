@@ -1,7 +1,7 @@
 {% for i in 0..2 %}
     {% set d = loop.index %}
      <div class="form-item fieldset-points"> 
-     <button class="sprites-before removemore negative ui-corner-all" data-type="coords">{% trans "Remove" %}</button>
+     <button class="sprites-before removemore negative" data-type="coords">{% trans "Remove" %}</button>
      <h3><a href="#">{% trans %}Layer {{ d }}{% endtrans %}</a></h3>
      <div>
      <div class="fieldset-taxon">
@@ -14,7 +14,7 @@
      <span class="fieldset-title">{% trans "Shape" %}</span> <select class="m-mapShape" name="coords[{{ i }}][shape]">{% include 'fragments/fragment.marker.shape.html' %}</select> <span class="fieldset-title">{% trans "Size" %}</span> <select class="m-mapSize" name="coords[{{ i }}][size]">{% include 'fragments/fragment.marker.size.html' %}</select>
      <span class="fieldset-title">{% trans "Color" %}</span> <input class="colorPicker" type="text" size="12" maxlength="11" name="coords[{{ i }}][color]" value="0 0 0" /> <span class="fieldset-title">{% trans "Shadow" %}</span> <input class="m-mapShadow" type="checkbox" name="coords[{{ i }}][shadow]">
      </div>
-     <button class="sprites-before clear clearself negative ui-corner-all">{% trans "Clear" %}</button>
+     <button class="sprites-before clear clearself negative">{% trans "Clear" %}</button>
      </div>
      </div>
 {% endfor %}

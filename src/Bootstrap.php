@@ -107,7 +107,7 @@ class Bootstrap
 
         $router->get('/apidoc', function () {
             Session::selectLocale();
-            $config = ['swagger' => MapprApi::swaggerData()];
+            $config = ['swagger' => OpenAPI::swaggerData()];
             return $this->_twig()->render("apidoc.html", $config);
         });
 
@@ -223,7 +223,7 @@ class Bootstrap
 
         $router->get('/swagger.json', function () {
           Header::setHeader("json");
-          return json_encode(MapprApi::swaggerData());
+          return json_encode(OpenAPI::swaggerData());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {
