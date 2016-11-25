@@ -48,31 +48,6 @@ class LoggerTest extends TestCase
     }
 
     /**
-     * Set a user session.
-     */
-    private function setSession()
-    {
-        $username = 'administrator';
-        $locale = 'en_US';
-        $user = [
-            "identifier" => $username,
-            "username" => $username,
-            "email" => "nowhere@example.com",
-            "locale" => $locale
-        ];
-        if ($username == 'administrator') {
-            $role = ["role" => "2", "uid" => "1", "displayname" => "John Smith"];
-        } else {
-            $role = ["role" => "1", "uid" => "2", "displayname" => "Jack Johnson"];
-        }
-        $user = array_merge($user, $role);
-        session_cache_limiter('nocache');
-        session_start();
-        $_SESSION["simplemappr"] = $user;
-        session_write_close();
-    }
-
-    /**
      * Get the contents of the log file.
      */
     private function readFile()
@@ -94,9 +69,8 @@ class LoggerTest extends TestCase
      */
     public function test_read()
     {
-        $this->setSession();
-        $this->logger->write("This is some content");
-        $this->assertStringStartsWith("This is some content", implode("", $this->logger->tail()));
+        $this->logger->write("This is some more content");
+        $this->assertStringStartsWith("This is some more content", implode("", $this->logger->tail()));
     }
 
 }
