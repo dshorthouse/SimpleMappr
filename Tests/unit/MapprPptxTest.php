@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprPptx;
 
-class MapprPptxTest extends PHPUnit_Framework_TestCase
+class MapprPptxTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
         $this->mappr_pptx = new MapprPptx;
     }
 
@@ -32,7 +33,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
      * Parent tearDown function executed after each test.
      */
     protected function tearDown() {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 

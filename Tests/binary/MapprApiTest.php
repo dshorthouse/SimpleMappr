@@ -10,7 +10,11 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class MapprApiTest extends PHPUnit_Framework_TestCase
+
+use PHPUnit\Framework\TestCase;
+use SimpleMappr\MapprApi;
+
+class MapprApiTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -21,7 +25,7 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
     }
 
     /**
@@ -29,7 +33,8 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
+        $this->setRequest([]);
         $this->clearTmpFiles();
     }
 
@@ -38,15 +43,14 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_api_ping()
     {
-        $_REQUEST = ['ping' => true];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest(['ping' => true]);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
         $decoded = json_decode(ob_get_contents(), true);
         ob_end_clean();
         $this->assertArrayHasKey("status", $decoded);
-        unset($_REQUEST);
     }
 
     /**
@@ -54,8 +58,8 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_post()
     {
-        $this->setRequest('POST');
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequestMethod('POST');
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -73,8 +77,8 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_get()
     {
-        $_REQUEST = [];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest([]);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -90,13 +94,14 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_get_params()
     {
-        $_REQUEST = [
+        $req = [
             'bbox' => '-130,40,-60,50',
             'projection' => 'esri:102009',
             'width' => 600,
             'graticules' => true
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -112,10 +117,11 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_no_coords()
     {
-        $_REQUEST = [
+        $req = [
             'points' => []
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -131,10 +137,11 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_coords()
     {
-        $_REQUEST = [
+        $req = [
             'points' => ["45, -120\n52, -100"]
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -150,11 +157,12 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_encoding()
     {
-        $_REQUEST = [
+        $req = [
             'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
             'layers' => 'stateprovnames'
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -170,12 +178,13 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_country()
     {
-        $_REQUEST = [
+        $req = [
             'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
             ]
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -192,10 +201,11 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     public function test_apioutput_ecoregions()
     {
         if (!array_key_exists('TRAVIS', $_SERVER)) {
-            $_REQUEST = [
+            $req = [
                 'layers' => 'ecoregions'
             ];
-            $mappr_api = new \SimpleMappr\MapprApi();
+            $this->setRequest($req);
+            $mappr_api = new MapprApi;
             $mappr_api->execute();
             ob_start();
             echo $mappr_api->createOutput();
@@ -212,13 +222,14 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_tif()
     {
-        $_REQUEST = [
+        $req = [
             'output' => 'tif',
             'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
             ]
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -234,13 +245,14 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_svg()
     {
-        $_REQUEST = [
+        $req = [
             'output' => 'svg',
             'shade' => [
                 'places' => 'Alberta,USA[MT|WA]'
             ]
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -256,14 +268,15 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
      */
     public function test_apioutput_wkt()
     {
-        $_REQUEST = [
+        $req = [
             'wkt' => [
                 0 => [
                     'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
                 ]
             ]
         ];
-        $mappr_api = new \SimpleMappr\MapprApi();
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();

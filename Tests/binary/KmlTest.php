@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\Kml;
 
-class KmlTest extends PHPUnit_Framework_TestCase
+class KmlTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequestMethod();
         $this->kml = new Kml;
     }
 
@@ -34,7 +35,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         session_destroy(); //req'd because Kml class sets a cookie
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 

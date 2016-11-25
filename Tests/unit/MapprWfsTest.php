@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprWfs;
 
-class MapprWfsTest extends PHPUnit_Framework_TestCase
+class MapprWfsTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
     }
 
     /**
@@ -32,7 +33,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
     }
 
     private function makeWFS()
@@ -61,11 +62,12 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetFeature1()
     {
-        $_REQUEST = [
+        $req = [
             'REQUEST' => 'GetFeature',
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10'
         ];
+        $this->setRequest($req);
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
         ob_start();
@@ -81,12 +83,13 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetFeature2()
     {
-        $_REQUEST = [
+        $req = [
             'REQUEST' => 'GetFeature',
             'TYPENAME' => 'lakes',
             'MAXFEATURES' => '10',
             'SRSNAME' => 'EPSG:4326'
         ];
+        $this->setRequest($req);
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
         ob_start();

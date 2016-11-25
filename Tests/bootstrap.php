@@ -13,6 +13,8 @@
 
 date_default_timezone_set("America/New_York");
 
+use SimpleMappr\Header;
+
 /**
  * Switch configuration files
  *
@@ -60,7 +62,7 @@ function requireFiles()
 
 function flushCaches()
 {
-    \SimpleMappr\Header::flushCache(false);
+    Header::flushCache(false);
     $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
     foreach (new RecursiveIteratorIterator($dirItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
         if ($file->isFile() && $file->getFilename()[0] !== ".") {
@@ -91,7 +93,7 @@ function loader()
     flushCaches();
     warningOff();
     ob_start();
-    new \SimpleMappr\Header;
+    new Header;
 }
 
 /**

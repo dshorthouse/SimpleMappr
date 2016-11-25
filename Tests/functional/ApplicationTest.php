@@ -10,7 +10,10 @@
  * @license Copyright (C) 2015 David P. Shorthouse
  *
  */
-class ApplicationTest extends PHPUnit_Framework_TestCase
+
+use PHPUnit\Framework\TestCase;
+
+class ApplicationTest extends TestCase
 {
     use SimpleMapprMixin;
 

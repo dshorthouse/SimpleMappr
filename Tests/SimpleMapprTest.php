@@ -11,10 +11,11 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\Database;
 use SimpleMappr\Header;
 
-abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
+abstract class SimpleMapprTest extends TestCase
 {
 
     protected static $db;

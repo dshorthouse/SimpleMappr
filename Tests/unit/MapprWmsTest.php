@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprWms;
 
-class MapprWmsTest extends PHPUnit_Framework_TestCase
+class MapprWmsTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
     }
 
     /**
@@ -32,7 +33,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
     }
 
     private function makeWMS()
@@ -61,7 +62,8 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_GetMap()
     {
-        $_REQUEST = [
+        
+        $req = [
             'REQUEST' => 'GetMap',
             'LAYERS' => 'lakes',
             'BBOX' => '-120,45,-70,70',
@@ -69,6 +71,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
             'WIDTH' => 400,
             'HEIGHT' => 200
         ];
+        $this->setRequest($req);
         $mappr_wms = $this->makeWMS();
         $mappr_wms->makeService()->execute();
         ob_start();
@@ -84,7 +87,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_CaseInsensitiveRequest()
     {
-        $_REQUEST = [
+        $req = [
           'request' => 'GetMap',
           'layers' => 'lakes',
           'bbox' => '-120,45,-70,70',
@@ -92,6 +95,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
           'width' => 400,
           'height' => 200
         ];
+        $this->setRequest($req);
         $mappr_wms = $this->makeWMS();
         $this->assertEquals($mappr_wms->request->params['REQUEST'], $_REQUEST['request']);
         $this->assertEquals($mappr_wms->request->params['LAYERS'], $_REQUEST['layers']);

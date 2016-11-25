@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprWms;
 
-class WmsTest extends PHPUnit_Framework_TestCase
+class WmsTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class WmsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequestMethod();
     }
 
     /**
@@ -32,7 +33,7 @@ class WmsTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 
@@ -41,7 +42,6 @@ class WmsTest extends PHPUnit_Framework_TestCase
      */
     public function test_wms_getcapabilities()
     {
-        $_REQUEST = [];
         $wms = new MapprWms(['lakes']);
         $wms->makeService()->execute();
         ob_start();

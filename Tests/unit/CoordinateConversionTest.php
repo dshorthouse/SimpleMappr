@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\Utility;
 
-class CoordinateConversionTest extends PHPUnit_Framework_TestCase
+class CoordinateConversionTest extends TestCase
 {
     /**
      * Test that coordinates are cleaned of extraneous materials.

@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprWfs;
 
-class WfsTest extends PHPUnit_Framework_TestCase
+class WfsTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class WfsTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->setRequestMethod();
     }
 
     /**
@@ -32,7 +33,7 @@ class WfsTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 
@@ -41,7 +42,6 @@ class WfsTest extends PHPUnit_Framework_TestCase
      */
     public function test_wfs_getcapabilities()
     {
-        $_REQUEST = [];
         $wfs = new MapprWfs(['lakes']);
         $wfs->makeService()->execute();
         ob_start();

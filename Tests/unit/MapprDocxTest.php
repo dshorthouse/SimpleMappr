@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprDocx;
 
-class MapprDocxTest extends PHPUnit_Framework_TestCase
+class MapprDocxTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
         $this->mappr_docx = new MapprDocx;
     }
 
@@ -33,7 +34,7 @@ class MapprDocxTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 

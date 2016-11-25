@@ -11,10 +11,11 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprApplication;
 use SimpleMappr\Utility;
 
-class MapprApplicationTest extends PHPUnit_Framework_TestCase
+class MapprApplicationTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -36,7 +37,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 

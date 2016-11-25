@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\OpenAPI;
 
-class OpenAPITest extends PHPUnit_Framework_TestCase
+class OpenAPITest extends TestCase
 {
     use SimpleMapprMixin;
 

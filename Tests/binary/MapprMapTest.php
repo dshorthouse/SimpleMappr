@@ -32,7 +32,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 
@@ -136,8 +136,9 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_legend()
     {
-        $this->setRequest();
-        $_REQUEST = ['legend' => 'true'];
+        $this->setRequestMethod();
+        $req = ['legend' => 'true'];
+        $this->setRequest($req);
         $this->setUpMap();
         $this->mappr_map->execute();
         ob_start();
@@ -146,6 +147,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $output);
         ob_end_clean();
+        $this->setRequest([]);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
 
@@ -154,8 +156,9 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_nolegend()
     {
-        $this->setRequest();
-        $_REQUEST = ['legend' => 'false'];
+        $this->setRequestMethod();
+        $req = ['legend' => 'false'];
+        $this->setRequest($req);
         $this->setUpMap();
         $this->mappr_map->execute();
         ob_start();
@@ -164,6 +167,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $output);
         ob_end_clean();
+        $this->setRequest([]);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 }

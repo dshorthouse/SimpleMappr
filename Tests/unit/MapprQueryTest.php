@@ -11,9 +11,10 @@
  *
  */
 
+use PHPUnit\Framework\TestCase;
 use SimpleMappr\MapprQuery;
 
-class MapprQueryTest extends PHPUnit_Framework_TestCase
+class MapprQueryTest extends TestCase
 {
     use SimpleMapprMixin;
 
@@ -24,7 +25,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->setRequest();
+        $this->setRequestMethod();
     }
 
     /**
@@ -32,7 +33,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->clearRequest();
+        $this->clearRequestMethod();
     }
 
     /**
@@ -40,7 +41,10 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testCountry()
     {
-        $_REQUEST['bbox_query'] = '176,83,176,83';
+        $req = [
+          'bbox_query' => '176,83,176,83'
+        ];
+        $this->setRequest($req);
         $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
@@ -52,7 +56,10 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testManyCountries()
     {
-        $_REQUEST['bbox_query'] = '786,272,900,358';
+        $req = [
+            'bbox_query' => '786,272,900,358'
+        ];
+        $this->setRequest($req);
         $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
@@ -65,8 +72,11 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
      */
     public function testStateProvince()
     {
-        $_REQUEST['bbox_query'] = '176,83,176,83';
-        $_REQUEST['qlayer'] = 'stateprovinces_polygon';
+        $req = [
+            'bbox_query' => '176,83,176,83',
+            'qlayer' => 'stateprovinces_polygon'
+        ];
+        $this->setRequest($req);
         $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;

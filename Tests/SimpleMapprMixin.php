@@ -37,14 +37,19 @@
 trait SimpleMapprMixin
 {
 
-    public function setRequest($type = 'GET')
+    public function setRequestMethod($type = 'GET')
     {
         $_SERVER['REQUEST_METHOD'] = $type;
     }
 
-    public function clearRequest()
+    public function clearRequestMethod()
     {
         unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
+    }
+
+    public function setRequest($array)
+    {
+        $_REQUEST = $array;
     }
 
     public function clearTmpFiles()
