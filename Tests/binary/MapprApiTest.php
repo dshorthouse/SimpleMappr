@@ -50,22 +50,6 @@ class MapprApiTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that a parameters request is produced.
-     */
-    public function test_api_parameters()
-    {
-        $_REQUEST = ['parameters' => true];
-        $mappr_api = new \SimpleMappr\MapprApi();
-        $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $decoded = json_decode(ob_get_contents(), true);
-        ob_end_clean();
-        $this->assertArrayHasKey("swagger", $decoded);
-        unset($_REQUEST);
-    }
-
-    /**
      * Test that a simple POST request is handled.
      */
     public function test_apioutput_post()

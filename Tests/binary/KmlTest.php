@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\Kml;
+
 class KmlTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -22,7 +25,7 @@ class KmlTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $this->kml = new \SimpleMappr\Kml();
+        $this->kml = new Kml;
     }
 
     /**

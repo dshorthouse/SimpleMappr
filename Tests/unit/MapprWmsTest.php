@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprWms;
+
 class MapprWmsTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -34,7 +37,7 @@ class MapprWmsTest extends PHPUnit_Framework_TestCase
 
     private function makeWMS()
     {
-        $mappr_wms = new \SimpleMappr\MapprWms(['lakes', 'stateprovinces']);
+        $mappr_wms = new MapprWms(['lakes', 'stateprovinces']);
         return $mappr_wms;
     }
 

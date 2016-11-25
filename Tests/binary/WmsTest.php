@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprWms;
+
 class WmsTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -39,7 +42,7 @@ class WmsTest extends PHPUnit_Framework_TestCase
     public function test_wms_getcapabilities()
     {
         $_REQUEST = [];
-        $wms = new \SimpleMappr\MapprWms(['lakes']);
+        $wms = new MapprWms(['lakes']);
         $wms->makeService()->execute();
         ob_start();
         echo $wms->createOutput();

@@ -10,6 +10,10 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprApplication;
+use SimpleMappr\Utility;
+
 class MapprApplicationTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -22,7 +26,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $mappr = new \SimpleMappr\MapprApplication();
+        $mappr = new MapprApplication;
         $this->mappr = $mappr->execute();
         $this->output = $this->mappr->createOutput();
     }
@@ -42,7 +46,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_removeEmptyLines()
     {
         $data = "\n\n45.0\t-120.0\n\n\n\n\n55.0\t-110.0\n\n\n60.0 -100.0\n\n\n";
-        $removed_lines = \SimpleMappr\Utility::removeEmptyLines($data);
+        $removed_lines = Utility::removeEmptyLines($data);
         $this->assertEquals($removed_lines, "\n45.0\t-120.0\n55.0\t-110.0\n60.0 -100.0\n");
     }
 
@@ -52,7 +56,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_addSlashesExtended()
     {
         $data = [['title' => 'my "title"']];
-        $add_slashes = \SimpleMappr\Utility::addSlashesExtended($data);
+        $add_slashes = Utility::addSlashesExtended($data);
         $this->assertEquals($add_slashes[0]['title'], "my \\\"title\\\"");
     }
 
@@ -62,7 +66,7 @@ class MapprApplicationTest extends PHPUnit_Framework_TestCase
     public function test_clean_filename()
     {
         $name = "My %!  <>  .  Map";
-        $clean = \SimpleMappr\Utility::cleanFilename($name);
+        $clean = Utility::cleanFilename($name);
         $this->assertEquals($clean, "My_Map");
     }
 

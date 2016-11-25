@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprWfs;
+
 class WfsTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -39,7 +42,7 @@ class WfsTest extends PHPUnit_Framework_TestCase
     public function test_wfs_getcapabilities()
     {
         $_REQUEST = [];
-        $wfs = new \SimpleMappr\MapprWfs(['lakes']);
+        $wfs = new MapprWfs(['lakes']);
         $wfs->makeService()->execute();
         ob_start();
         echo $wfs->createOutput();

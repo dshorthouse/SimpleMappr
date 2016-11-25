@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprMap;
+
 class MapprMapTest extends SimpleMapprTest
 {
     use SimpleMapprMixin;
@@ -40,7 +43,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     private function setUpMap($map = 1, $ext = "png")
     {
-        $this->mappr_map = new \SimpleMappr\MapprMap($map, $ext);
+        $this->mappr_map = new MapprMap($map, $ext);
     }
 
     /**

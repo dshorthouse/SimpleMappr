@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprQuery;
+
 class MapprQueryTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -38,7 +41,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     public function testCountry()
     {
         $_REQUEST['bbox_query'] = '176,83,176,83';
-        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertEquals('Canada', $output[0]);
@@ -50,7 +53,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     public function testManyCountries()
     {
         $_REQUEST['bbox_query'] = '786,272,900,358';
-        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertTrue(in_array("Australia",$output));
@@ -64,7 +67,7 @@ class MapprQueryTest extends PHPUnit_Framework_TestCase
     {
         $_REQUEST['bbox_query'] = '176,83,176,83';
         $_REQUEST['qlayer'] = 'stateprovinces_polygon';
-        $mappr_query = new \SimpleMappr\MapprQuery();
+        $mappr_query = new MapprQuery;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertEquals('CAN[SK]', $output[0]);

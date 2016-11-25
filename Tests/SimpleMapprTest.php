@@ -10,6 +10,10 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\Database;
+use SimpleMappr\Header;
+
 abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
 {
 
@@ -23,7 +27,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
 
-        self::$db = \SimpleMappr\Database::getInstance();
+        self::$db = Database::getInstance();
         self::dropTables();
 
         $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
@@ -557,7 +561,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
 
         $image1 = new \Imagick($fn1);
         $image2 = new \Imagick($fn2);
-        $result = $image1->compareImages($image2, Imagick::METRIC_MEANSQUAREERROR);
+        $result = $image1->compareImages($image2, \Imagick::METRIC_MEANSQUAREERROR);
         if ($result[1] < 0.01) {
             $same = true;
         }
@@ -590,7 +594,7 @@ abstract class SimpleMapprTest extends PHPUnit_Framework_TestCase
      */
     public function setUpPage()
     {
-        new \SimpleMappr\Header;
+        new Header;
         $this->webDriver->get(MAPPR_URL);
         $this->waitOnSpinner();
     }

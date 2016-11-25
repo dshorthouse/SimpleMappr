@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\Utility;
+
 class CoordinateConversionTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -18,7 +21,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_clean_coord()
     {
         $coord = "-45d.4dt5;0dds";
-        $clean = \SimpleMappr\Utility::cleanCoord($coord);
+        $clean = Utility::cleanCoord($coord);
         $this->assertEquals($clean, -45.450);
     }
 
@@ -30,7 +33,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $coord = new stdClass();
         $coord->x = -133;
         $coord->y = 5543;
-        $checked = \SimpleMappr\Utility::onEarth($coord);
+        $checked = Utility::onEarth($coord);
         $this->assertFalse($checked);
     }
 
@@ -42,7 +45,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $coord = new stdClass();
         $coord->x = -120;
         $coord->y = 43;
-        $checked = \SimpleMappr\Utility::onEarth($coord);
+        $checked = Utility::onEarth($coord);
         $this->assertTrue($checked);
     }
 
@@ -52,7 +55,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_0()
     {
         $coord = "52° 32' 25\" N,";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], null);
         $this->assertEquals($dd[1], null);
     }
@@ -63,7 +66,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_1()
     {
         $coord = "-120";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], null);
         $this->assertEquals($dd[1], null);
     }
@@ -74,7 +77,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_2()
     {
         $coord = "-120,";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], null);
         $this->assertEquals($dd[1], null);
     }
@@ -85,7 +88,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_3()
     {
         $coord = "52° 32' 25\" N, 89° 40' 31\" W";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], 52.540277777778);
         $this->assertEquals($dd[1], -89.675277777778);
     }
@@ -96,7 +99,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_4()
     {
         $coord = "52° 32' 25\" N; 89° 40' 31\" W";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], 52.540277777778);
         $this->assertEquals($dd[1], -89.675277777778);
     }
@@ -107,7 +110,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_5()
     {
         $coord = "52.5\t-89.0";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], 52.5);
         $this->assertEquals($dd[1], -89.0);
     }
@@ -118,7 +121,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_6()
     {
         $coord = "-7.483333, - 36.283333";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], -7.483333);
         $this->assertEquals($dd[1], -36.283333);
     }
@@ -129,7 +132,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_make_coordinates_7()
     {
         $coord = " - 7.483333, - 36.283333";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], -7.483333);
         $this->assertEquals($dd[1], -36.283333);
     }
@@ -140,7 +143,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_1()
     {
         $dms = "45d53'25\"W";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, -45.890277777778);
     }
 
@@ -150,7 +153,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_2()
     {
         $dms = "45° 53' 25\" W";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, -45.890277777778);
     }
 
@@ -160,7 +163,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_3()
     {
         $dms = "45º 53' 25\" W";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, -45.890277777778);
     }
 
@@ -170,7 +173,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_4()
     {
         $dms = "45d53'25\"E";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, 45.890277777778);
     }
 
@@ -180,7 +183,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_5()
     {
         $dms = "45º 53′ 25″ N";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, 45.890277777778);
     }
 
@@ -190,7 +193,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_6()
     {
         $dms = "45d 53m 25 N";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, 45.890277777778);
     }
 
@@ -200,7 +203,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_7()
     {
         $dms = "45d53'25\"S";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, -45.890277777778);
     }
 
@@ -210,7 +213,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_8()
     {
         $dms = "45º 70′ 25″ N";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, null);
     }
 
@@ -220,7 +223,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dms_to_deg_9()
     {
         $dms = "45º 40′ 85″ N";
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, null);
     }
 
@@ -234,7 +237,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
         $min = 23/60;
         $sec = 45/3600;
         $dd_raw = -($deg + $min + $sec);
-        $dd = \SimpleMappr\Utility::dmsToDeg($dms);
+        $dd = Utility::dmsToDeg($dms);
         $this->assertEquals($dd, -3.3958333333333);
         $this->assertEquals($dd, $dd_raw);
     }
@@ -245,7 +248,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dirty_deg()
     {
         $coord = "52.5g\t-89.0r";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], 52.5);
         $this->assertEquals($dd[1], -89.0);
     }
@@ -256,7 +259,7 @@ class CoordinateConversionTest extends PHPUnit_Framework_TestCase
     public function test_dd_symbols()
     {
         $coord = " 49.129774°  46.677716°";
-        $dd = \SimpleMappr\Utility::makeCoordinates($coord);
+        $dd = Utility::makeCoordinates($coord);
         $this->assertEquals($dd[0], 49.129774);
         $this->assertEquals($dd[1], 46.677716);
     }

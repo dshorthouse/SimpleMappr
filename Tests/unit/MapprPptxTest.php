@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprPptx;
+
 class MapprPptxTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -22,7 +25,7 @@ class MapprPptxTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->setRequest();
-        $this->mappr_pptx = new \SimpleMappr\MapprPptx();
+        $this->mappr_pptx = new MapprPptx;
     }
 
     /**

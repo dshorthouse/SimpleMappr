@@ -10,8 +10,13 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\Logger;
+
 class LoggerTest extends PHPUnit_Framework_TestCase
 {
+    use SimpleMapprMixin;
+
     protected $file;
     protected $logger;
 
@@ -22,7 +27,7 @@ class LoggerTest extends PHPUnit_Framework_TestCase
     {
         $this->file = ROOT."/log/logger.log";
         $this->clearFile();
-        $this->logger = new \SimpleMappr\Logger($this->file);
+        $this->logger = new Logger($this->file);
     }
 
     /**

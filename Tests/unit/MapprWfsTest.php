@@ -10,6 +10,9 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
+use SimpleMappr\MapprWfs;
+
 class MapprWfsTest extends PHPUnit_Framework_TestCase
 {
     use SimpleMapprMixin;
@@ -34,7 +37,7 @@ class MapprWfsTest extends PHPUnit_Framework_TestCase
 
     private function makeWFS()
     {
-        $mappr_wfs = new \SimpleMappr\MapprWfs(['lakes', 'stateprovinces']);
+        $mappr_wfs = new MapprWfs(['lakes', 'stateprovinces']);
         return $mappr_wfs;
     }
 
