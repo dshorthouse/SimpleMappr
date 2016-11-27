@@ -41,6 +41,10 @@
     {% endfor -%}
   </dl>
 
+  <h3>OpenAPI Specification</h3>
+  {% set oai_url = '<a href="https://www.openapis.org/">https://www.openapis.org/</a>' %}
+  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the OpenAPI Specification, formerly kmown as Swagger. The definition can be found at <a href="{{ url }}/swagger.json">{{ url }}/swagger.json</a>.{% endtrans %}</p>
+
   <h3>Web Feature Service (WFS)</h3>
 
   <div class="panel general-base-ws">
@@ -59,9 +63,5 @@
   <div class="panel general-base-ws">
     <p>$ gem install simple-mappr</p>
   </div>
-
-  <h3>OpenAPI Specification</h3>
-  {% set oai_url = '<a href="https://www.openapis.org/">https://www.openapis.org/</a>' %}
-  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the OpenAPI Specification, formerly kmown as Swagger. The definition can be found at <a href="{{ url }}/swagger.json">{{ url }}/swagger.json</a>.{% endtrans %}</p>
 
 </div>
