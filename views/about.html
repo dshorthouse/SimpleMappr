@@ -44,27 +44,7 @@
 </div>
 {% endif %}
 </div>
-<div class="header"><h2>{% trans "In the Wild" %} ({{ citations['citations']|length }})</h2></div>
-{% for citation in citations['citations'] %}
-    {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
-    {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
-    <p class="citation">{{ citation.reference|raw }}{{ link|raw }}{{ doi|raw }}</p>
-{% endfor %}
-<div class="header"><h2>{% trans "Applications" %}</h2></div>
-<h3>Microsoft Excel</h3>
-<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of
-taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. doi: <a href="http://dx.doi.org/10.11646/zootaxa.3683.3.8">10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
-<h3>Ruby 2+</h3>
-<p class="citation"><a href="https://rubygems.org/gems/simple-mappr">RubyGems</a></p>
-<p class="citation">SimpleMappr <a href="https://github.com/dshorthouse/SimpleMappr/wiki/Client-Example:-Ruby-1.9.3">wiki</a></p>
-<div class="header"><h2>{% trans "API Usage" %}</h2></div>
-{% set urls_tropicos = '<a href="http://www.tropicos.org/">Tropicos</a>' %}
-<p>{% trans %}The SimpleMappr API is used by The Missouri Botanical Garden's {{ urls_tropicos }}.{% endtrans %}</p>
-<div class="header"><h2>{% trans "Code" %}</h2></div>
-{% set urls_github = '<a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>' %}
-<p>{% trans %}The code behind SimpleMappr may be obtained at {{ urls_github }}{% endtrans %}</p>
-<div class="header"><h2>{% trans "History" %}</h2></div>
-<p>{% trans "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History." %}</p>
+
 <div class="header"><h2>{% trans "Acknowledgments" %}</h2></div>
 {% set urls_naturalearth = '<a href="http://www.naturalearthdata.com/" target="_blank">http://www.naturalearthdata.com/</a>' %}
 {% set urls_mapserver = '<a href="http://mapserver.org" target="_blank">http://mapserver.org</a>' %}
@@ -72,6 +52,27 @@ taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297
 {% set urls_wwf = '<a href="http://www.worldwildlife.org/pages/conservation-science-data-and-tools">World Wildlife Fund</a>' %}
 {% set urls_nasa = '<a href="http://visibleearth.nasa.gov/view.php?id=57752">NASA</a>' %}
 <p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }} and terrestrial ecoregions from the {{ urls_wwf }}. Blue Marble from {{ urls_nasa }}.{% endtrans %}</p>
+
+<div class="header"><h2>{% trans "History" %}</h2></div>
+<p>{% trans "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History." %}</p>
+
+<div class="header"><h2>{% trans "Applications" %}</h2></div>
+<h3>Microsoft Excel</h3>
+<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. doi: <a href="http://dx.doi.org/10.11646/zootaxa.3683.3.8">10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
+<h3>Ruby 2+</h3>
+<p class="citation"><a href="https://rubygems.org/gems/simple-mappr">simple-mappr</a> Ruby gem</p>
+
+<div class="header"><h2>{% trans "Code" %}</h2></div>
+{% set urls_github = '<a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>' %}
+<p>{% trans %}The code behind SimpleMappr may be obtained at {{ urls_github }}{% endtrans %}</p>
+
+<div class="header"><h2>{% trans "In the Wild" %} ({{ citations['citations']|length }})</h2></div>
+{% for citation in citations['citations'] %}
+    {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
+    {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
+    <p class="citation">{{ citation.reference|raw }}{{ link|raw }}{{ doi|raw }}</p>
+{% endfor %}
+
 </div>
 {% if environment == "production" %}
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
