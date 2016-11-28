@@ -15,7 +15,7 @@
   <h3>RESTful API</h3>
   {% set url = [swagger.schemes.0, swagger.host]|join('://') %}
   {% set api_file = url ~ "/public/files/demo.txt" %}
-  <p><em>e.g.</em> <span class="long-url">{{ url }}/api/?url={{ api_file|url_encode }}&shape[0]=square&size[0]=10&color[0]=20,20,20&shape[1]=triangle&size[1]=10&color[1]=40,40,40&shape[2]=star&size[2]=14&color[2]=60,60,60&width=500&height=300&bbox=-130,40,-60,50&layers=lakes,stateprovinces&graticules=true&projection=esri:102009&legend=true&shade[places]=Alberta,USA[MT|WA]&shade[title]=Selected Regions&shade[color]=150,150,150</span></p>
+  <p><em>e.g.</em> <span class="long-url">{{ url }}/api/?url={{ api_file|url_encode }}&amp;shape[0]=square&amp;size[0]=10&amp;color[0]=20,20,20&amp;shape[1]=triangle&amp;size[1]=10&amp;color[1]=40,40,40&amp;shape[2]=star&amp;size[2]=14&amp;color[2]=60,60,60&amp;width=500&amp;height=300&amp;bbox=-130,40,-60,50&amp;layers=lakes,stateprovinces&amp;graticules=true&amp;projection=esri:102009&amp;legend=true&amp;shade[places]=Alberta,USA[MT|WA]&amp;shade[title]=Selected Regions&amp;shade[color]=150,150,150</span></p>
   <p><strong>{% trans "Produces" %}</strong></p>
   <p><img src="{{ url }}/public/images/api.png" width="500" height="300" alt="{% trans "My Map" %}" /></p>
 

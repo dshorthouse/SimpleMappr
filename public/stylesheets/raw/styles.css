@@ -129,14 +129,14 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapImage{position:relative;}
 #mapOutput{height:450px;}
 #mapOutputImage{background-color:#fff;}
-#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:99;top:5px;left:5px}
+#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:99;top:5px;left:5px;}
 #mapControls .controls{position:absolute;}
 #mapControls .sprites{width:16px;height:16px;}
 #mapControls .up{top:10px;left:22px;background-position:-160px -324px;}
 #mapControls .down{bottom:10px;left:22px;background-position:-180px -324px;}
 #mapControls .right{top:22px;right:10px;background-position:-220px -324px;}
 #mapControls .left{top:22px;left:10px;background-position:-200px -324px;}
-#mapControls .viewport{height:60px;width:60px;position:relative;margin:0 auto;overflow:hidden;}
+#mapControls .viewport{height:60px;width:60px;position:relative;margin:0 auto;overflow:hidden;background-color:#fff;opacity:0.2;border-radius:30px;}
 #mapControls .overview{position: absolute; width:58px;list-style:none;margin:0;padding:0;left:0;top:0;}
 #mapControls li{height:60px;width:60px;float:left;position:relative;}
 #mapControls .thumb{cursor:pointer;width:12px;height:12px;position:absolute;cursor:pointer;}
