@@ -57,11 +57,6 @@ class MapprWfs extends Mappr
     private $_req = "";
 
     /**
-     * @var int $_filter_simplify Filter simplification by number of features
-     */
-    private $_filter_simplify;
-
-    /**
      * @var array $_filter_columns Columns to filter on
      */
     private $_filter_columns = [];
@@ -105,9 +100,11 @@ class MapprWfs extends Mappr
         $this->params['VERSION']      = Utility::loadParam('VERSION', '1.0.0');
         $this->params['REQUEST']      = Utility::loadParam('REQUEST', 'GetCapabilities');
         $this->params['TYPENAME']     = Utility::loadParam('TYPENAME', "");
-        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', 1000);
         $this->params['OUTPUTFORMAT'] = Utility::loadParam('OUTPUTFORMAT', 'gml2');
         $this->params['FILTER']       = Utility::loadParam('FILTER', null);
+        $this->params['BBOX']         = Utility::loadParam('BBOX', '-180,-90,180,90');
+        $this->params['SRSNAME']      = Utility::loadParam('SRSNAME', 'EPSG:4326');
 
         $input = file_get_contents("php://input");
         if ($input) {
@@ -143,28 +140,6 @@ class MapprWfs extends Mappr
     }
 
     /**
-     * Set the simplification filter for a WFS request
-     *
-     * @param int $int The maximum number of features
-     *
-     * @return void
-     */
-    public function setMaxFeatures($int)
-    {
-        $this->_filter_simplify = $int;
-    }
-
-    /**
-     * Get the maximum number of features
-     *
-     * @return int
-     */
-    private function _getMaxFeatures()
-    {
-        return $this->_filter_simplify;
-    }
-
-    /**
      * Construct metadata for WFS
      *
      * @return object $this
@@ -172,9 +147,9 @@ class MapprWfs extends Mappr
     public function makeService()
     {
         $this->map_obj->setMetaData("name", "SimpleMappr Web Feature Service");
-        $this->map_obj->setMetadata("wfs_encoding", "CP1252");
+        $this->map_obj->setMetadata("wfs_encoding", "UTF-8");
         $this->map_obj->setMetaData("wfs_title", "SimpleMappr Web Feature Service");
-        $this->map_obj->setMetaData("wfs_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wfs/?");
+        $this->map_obj->setMetaData("wfs_onlineresource", MAPPR_URL . "/wfs/?");
 
         $srs_projections = strtoupper(implode(array_keys(AcceptedProjections::$projections), " "));
 
@@ -199,13 +174,16 @@ class MapprWfs extends Mappr
         $this->_req->setParameter("SERVICE", "WFS");
         $this->_req->setParameter("VERSION", $this->request->params['VERSION']);
         $this->_req->setParameter("REQUEST", $this->request->params['REQUEST']);
+        $this->_req->setParameter("BBOX", $this->request->params['BBOX']);
         $this->_req->setParameter("TYPENAME", $this->request->params['TYPENAME']);
-        $this->_req->setParameter("MAXFEATURES", $this->request->params['MAXFEATURES']);
+        $max_features = ($this->request->params['MAXFEATURES'] > 1000) ? 1000 : $this->request->params['MAXFEATURES'];
+        $this->_req->setParameter("MAXFEATURES", $max_features);
+        $this->_req->setParameter("SRSNAME", $this->request->params['SRSNAME']);
 
-        if ($this->request->params["REQUEST"] != 'DescribeFeatureType') {
+        if (strtolower($this->request->params["REQUEST"]) != 'describefeaturetype') {
             $this->_req->setParameter('OUTPUTFORMAT', $this->request->params['OUTPUTFORMAT']);
         }
-        if ($this->request->params["FILTER"]) {
+        if ($this->request->params["FILTER"] != "") {
             $this->_req->setParameter('FILTER', $this->request->params['FILTER']);
         }
 
@@ -222,7 +200,7 @@ class MapprWfs extends Mappr
         ms_ioinstallstdouttobuffer();
         $this->map_obj->owsDispatch($this->_req);
         ms_iostripstdoutbuffercontenttype();
-        $buffer = ms_iogetstdoutbufferstring();
+        $buffer = mb_convert_encoding(ms_iogetstdoutbufferstring(), "UTF-8");
         ms_ioresethandlers();
         return $buffer;
     }

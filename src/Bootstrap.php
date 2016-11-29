@@ -303,7 +303,7 @@ class Bootstrap
         }, ['after' => 'logWFS']);
 
         $router->any('/wms', function () {
-            //Headers are set in WMS class
+            //Headers are set in MapprWms class
             $klass = $this->_klass("MapprWms");
             return $klass->makeService()->execute()->createOutput();
         }, ['after' => 'logWMS']);

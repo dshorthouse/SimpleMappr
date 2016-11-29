@@ -57,11 +57,6 @@ class MapprWms extends Mappr
     private $_req = "";
 
     /**
-     * @var int $_filter_simplify Filter simplification by number of features
-     */
-    private $_filter_simplify;
-
-    /**
      * @var array $_filter_columns Columns to filter on
      */
     private $_filter_columns = [];
@@ -103,7 +98,8 @@ class MapprWms extends Mappr
         $this->params['VERSION']      = Utility::loadParam('VERSION', '1.1.1');
         $this->params['REQUEST']      = Utility::loadParam('REQUEST', 'GetCapabilities');
         $this->params['LAYERS']       = Utility::loadParam('LAYERS', "");
-        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', $this->_getMaxFeatures());
+        $this->params['LAYER']        = Utility::loadParam('LAYER', "");
+        $this->params['MAXFEATURES']  = Utility::loadParam('MAXFEATURES', 1);
         $this->params['FORMAT']       = Utility::loadParam('FORMAT', 'image/png');
         $this->params['FILTER']       = Utility::loadParam('FILTER', null);
         $this->params['SRS']          = Utility::loadParam('SRS', 'epsg:4326');
@@ -121,7 +117,7 @@ class MapprWms extends Mappr
             while ($xml->read()) {
                 if ($xml->name == 'wms:Query') {
                     $this->params['REQUEST'] = 'GetMap';
-                    $this->params['LAYERS'] = str_replace("feature:", "",    $xml->getAttribute('typeName'));
+                    $this->params['LAYERS'] = str_replace("feature:", "", $xml->getAttribute('typeName'));
                 }
                 if ($xml->name == 'ogc:Filter') {
                     $filter = $xml->readOuterXML();
@@ -148,28 +144,6 @@ class MapprWms extends Mappr
     }
 
     /**
-     * Set the simplification filter for a WMS request
-     *
-     * @param int $int The maximum number of features
-     *
-     * @return void
-     */
-    public function setMaxFeatures($int)
-    {
-        $this->_filter_simplify = $int;
-    }
-
-    /**
-     * Get the maximum number of features
-     *
-     * @return int
-     */
-    private function _getMaxFeatures()
-    {
-        return $this->_filter_simplify;
-    }
-
-    /**
      * Construct metadata for WMS
      *
      * @return object $this
@@ -178,7 +152,7 @@ class MapprWms extends Mappr
     {
         $this->map_obj->setMetaData("name", "SimpleMappr Web Map Service");
         $this->map_obj->setMetaData("wms_title", "SimpleMappr Web Map Service");
-        $this->map_obj->setMetaData("wms_onlineresource", "http://" . $_SERVER['HTTP_HOST'] . "/wms/?");
+        $this->map_obj->setMetaData("wms_onlineresource", MAPPR_URL . "/wms/?");
 
         $srs_projections = implode(array_keys(AcceptedProjections::$projections), " ");
 
@@ -209,12 +183,16 @@ class MapprWms extends Mappr
         $this->_req->setParameter("HEIGHT", $this->request->params['HEIGHT']);
         $this->_req->setParameter("TRANSPARENT", $this->request->params['TRANSPARENT']);
 
-        if ($this->params["REQUEST"] != 'DescribeFeatureType') {
+        if (strtolower($this->params["REQUEST"]) != 'describefeaturetype') {
             $this->_req->setParameter('FORMAT', $this->request->params['FORMAT']);
         }
         if ($this->params["FILTER"]) {
             $this->_req->setParameter('FILTER', $this->request->params['FILTER']);
         }
+        if ($this->params['LAYER'] != "" && $this->params['LAYERS'] == "") {
+            $this->_req->setParameter("LAYERS", $this->params['LAYER']);
+        }
+
 
         return $this;
     }
@@ -229,10 +207,11 @@ class MapprWms extends Mappr
         ms_ioinstallstdouttobuffer();
         $this->map_obj->owsDispatch($this->_req);
         $contenttype = ms_iostripstdoutbuffercontenttype();
-        if (strtolower($this->request->params['REQUEST']) == 'getcapabilities') {
+        $req = strtolower($this->request->params['REQUEST']);
+        if ($req == 'getcapabilities') {
             Header::setHeader("xml");
             echo ms_iogetstdoutbufferstring();
-        } else if (strtolower($this->request->params['REQUEST']) == 'getmap' || strtolower($this->request->params['REQUEST']) == 'getlegendgraphic') {
+        } else if ($req == 'getmap' || $req == 'getlegendgraphic') {
             Header::setHeader();
             header('Content-type: ' . $contenttype);
             ms_iogetstdoutbufferbytes();
