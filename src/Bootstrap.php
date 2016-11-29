@@ -361,7 +361,7 @@ class Bootstrap
         $logger = new Logger(ROOT."/log/logger.log");
         $logs = $logger->tail(20);
         if ($logs) {
-            $capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{4}\:){7}[a-z0-9]{4})(?:.*?)(?<url>\/api.*)$/';
+            $capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{4}\:){7}[a-z0-9]{4})(?:.*?)(?<url>\/[api|wms|wfs].*)$/';
 
             foreach ($logs as $key => $log) {
                 $logs[$key] = preg_replace_callback($capture, function($matches) {
