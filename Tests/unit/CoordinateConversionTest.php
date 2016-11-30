@@ -229,19 +229,9 @@ class CoordinateConversionTest extends TestCase
     }
 
     /**
-     * Test that a single coordinate in DMS with seconds > 60 is not converted.
-     */
-    public function test_dms_to_deg_10()
-    {
-        $dms = "N44	2	60";
-        $dd = Utility::dmsToDeg($dms);
-        $this->assertEquals($dd, null);
-    }
-
-    /**
      * Test that two single quotes are used in DMS to indicate secs.
      */
-    public function test_dms_to_deg_11()
+    public function test_dms_to_deg_10()
     {
         $dms = "03º23'45''S";
         $deg = 3;
