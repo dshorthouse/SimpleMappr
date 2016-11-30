@@ -64,7 +64,8 @@
 
 <div class="header"><h2>{% trans "Code" %}</h2></div>
 {% set urls_github = '<a href="https://github.com/dshorthouse/SimpleMappr">https://github.com/dshorthouse/SimpleMappr</a>' %}
-<p>{% trans %}The code behind SimpleMappr may be obtained at {{ urls_github }}{% endtrans %}</p>
+<p>{% trans %}The opensource, MIT-licensed code for SimpleMappr may be obtained at {{ urls_github }}.{% endtrans %}</p><p><a href="https://travis-ci.org/dshorthouse/SimpleMappr"><img src="https://travis-ci.org/dshorthouse/SimpleMappr.svg?branch=master" alt="Continuous Integration status" /></a>&nbsp;<a href='https://coveralls.io/github/dshorthouse/SimpleMappr?branch=master'><img src='https://coveralls.io/repos/github/dshorthouse/SimpleMappr/badge.svg?branch=master' alt='Coverage Status' /></a>
+</p>
 
 <div class="header"><h2>{% trans "In the Wild" %} ({{ citations['citations']|length }})</h2></div>
 {% for citation in citations['citations'] %}

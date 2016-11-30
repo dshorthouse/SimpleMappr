@@ -704,8 +704,8 @@ msgstr "L'API est utilisée par %urls_tropicos% de Le Missouri Botanical Garden.
 
 #: .tabs/about.php:36
 #, php-format
-msgid "The code behind SimpleMappr may be obtained at %urls_github%"
-msgstr "Le code pour SimpleMappr peuvent être obtenus à %urls_github%"
+msgid "The opensource, MIT-licensed code for SimpleMappr may be obtained at %urls_github%."
+msgstr "Le code pour SimpleMappr peut être obtenu à %urls_github%."
 
 #: .tabs/about.php:40
 #, php-format
