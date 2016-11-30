@@ -122,7 +122,7 @@ layers:
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_roads
         type: %%MS_LAYER_LINE%%
         encoding: CP1252
-        sort: 8
+        sort: 9
         color: "60,60,60"
 
     railroads:
@@ -130,7 +130,7 @@ layers:
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_railroads
         type: %%MS_LAYER_LINE%%
         encoding: CP1252
-        sort: 8
+        sort: 9
         color: "100,100,100"
 
 labels:
