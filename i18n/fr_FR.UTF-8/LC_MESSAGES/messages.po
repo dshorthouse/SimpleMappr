@@ -335,6 +335,16 @@ msgstr "hotspot de biodiv."
 msgid "ecoregions"
 msgstr "écorégions"
 
+#: .index.php:134
+#: .tabs/help.php:86
+msgid "roads"
+msgstr "chemins"
+
+#: .index.php:134
+#: .tabs/help.php:86
+msgid "railroads"
+msgstr "chemins de fer"
+
 #: .index.php:136
 #: .tabs/help.php:90
 msgid "Labels"
