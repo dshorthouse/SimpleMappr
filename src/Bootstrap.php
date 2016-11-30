@@ -40,6 +40,7 @@ namespace SimpleMappr;
 use \Phroute\Phroute\Autoloader;
 use \Phroute\Phroute\RouteCollector;
 use \Phroute\Phroute\Dispatcher;
+use \Symfony\Component\Yaml\Yaml;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_Extensions_Extension_I18n;
@@ -392,7 +393,20 @@ class Bootstrap
             exit();
         } else {
             Session::updateActivity();
-            return $this->_twig()->render("main.html");
+            $shapes_file = file_get_contents(Mappr::$shapefile_config);
+            $shapes = Yaml::parse($shapes_file);
+            unset($shapes['layers']['base'], $shapes['layers']['stateprovinces_polygon']);
+            $config = [
+                'og_url' => MAPPR_URL,
+                'og_logo' => MAPPR_URL . '/public/images/logo_og.png',
+                'layers' => array_combine(array_keys($shapes['layers']), array_column($shapes['layers'], 'name')),
+                'labels' => array_combine(array_keys($shapes['labels']), array_column($shapes['labels'], 'name')),
+                'projections' => AcceptedProjections::$projections,
+                'marker_shapes' => AcceptedMarkerShapes::$shapes,
+                'locales' => Session::$accepted_locales,
+                'roles' => User::$roles
+            ];
+            return $this->_twig()->render("main.html", $config);
         }
     }
 
@@ -415,12 +429,6 @@ class Bootstrap
         $qlocale = "?v=" . $header->getHash();
         $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
 
-        $twig->addGlobal('locales', Session::$accepted_locales);
-        $twig->addGlobal('roles', User::$roles);
-        $twig->addGlobal('projections', AcceptedProjections::$projections);
-        $twig->addGlobal('marker_shapes', AcceptedMarkerShapes::$shapes);
-        $twig->addGlobal('og_url', 'http://' . $_SERVER['HTTP_HOST']);
-        $twig->addGlobal('og_logo', 'http://' . $_SERVER['HTTP_HOST'] . '/public/images/logo_og.png');
         $twig->addGlobal('stylesheet', $header->getCSSHeader());
         $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : []);
         $twig->addGlobal('qlocale', $qlocale);

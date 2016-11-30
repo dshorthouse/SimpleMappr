@@ -1,38 +1,8 @@
 <ul class="columns ui-helper-clearfix">
-    <li>
-        <input type="checkbox" id="countrynames" class="layeropt" name="layers[countrynames]" />
-        <label for="countrynames">{% trans "Countries" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="stateprovnames" class="layeropt" name="layers[stateprovnames]" />
-        <label for="stateprovnames">{% trans "State/Provinces" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="lakenames" class="layeropt" name="layers[lakenames]" />
-        <label for="lakenames">{% trans "lakes" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="rivernames" class="layeropt" name="layers[rivernames]" />
-        <label for="rivernames">{% trans "rivers" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="placenames" class="layeropt" name="layers[placenames]" />
-        <label for="placenames">{% trans "places" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="physicalLabels" class="layeropt" name="layers[physicalLabels]" />
-        <label for="physicalLabels">{% trans "physical" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="marineLabels" class="layeropt" name="layers[marineLabels]" />
-        <label for="marineLabels">{% trans "marine" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="hotspotLabels" class="layeropt" name="layers[hotspotLabels]" />
-        <label for="hotspotLabels">{% trans "biodiv. hotspots" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="ecoregionLabels" class="layeropt" name="layers[ecoregionLabels]" />
-        <label for="ecoregionLabels">{% trans "ecoregions" %}</label>
-    </li>
+  {% for key,value in labels %}
+      <li>
+          <input type="checkbox" id="{{ key }}" class="layeropt" name="layers[{{ key }}]" />
+          <label for="{{ key }}">{% trans value %}</label>
+      </li>
+  {% endfor %}
 </ul>

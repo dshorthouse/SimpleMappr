@@ -1,50 +1,9 @@
 <ul class="columns ui-helper-clearfix">
-    <li>
-        <input type="checkbox" id="countries" class="layeropt" name="layers[countries]" checked />
-        <label for="countries">{% trans "Countries" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="stateprovinces" class="layeropt" name="layers[stateprovinces]" />
-        <label for="stateprovinces">{% trans "State/Provinces" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="lakesOutline" class="layeropt" name="layers[lakesOutline]" />
-        <label for="lakesOutline">{% trans "lakes (outline)" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="lakes" class="layeropt" name="layers[lakes]" />
-        <label for="lakes">{% trans "lakes (greyscale)" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="rivers" class="layeropt" name="layers[rivers]" />
-        <label for="rivers">{% trans "rivers" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="oceans" class="layeropt" name="layers[oceans]" />
-        <label for="oceans">{% trans "oceans (greyscale)" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="relief" class="layeropt" name="layers[relief]" />
-        <label for="relief">{% trans "relief" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="reliefalt" class="layeropt" name="layers[reliefalt]" />
-        <label for="reliefalt">{% trans "relief (alternate)" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="reliefgrey" class="layeropt" name="layers[reliefgrey]" />
-        <label for="reliefgrey">{% trans "relief (greyscale)" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="blueMarble" class="layeropt" name="layers[blueMarble]" />
-        <label for="blueMarble">{% trans "Blue Marble" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="conservation" class="layeropt" name="layers[conservation]" />
-        <label for="conservation">{% trans "biodiv. hotspots" %}</label>
-    </li>
-    <li>
-        <input type="checkbox" id="ecoregions" class="layeropt" name="layers[ecoregions]" />
-        <label for="ecoregions">{% trans "ecoregions" %}</label>
-    </li>
+    {% for key,value in layers %}
+        {% set checked = (key == 'countries') ? " checked" : "" %}
+        <li>
+            <input type="checkbox" id="{{ key }}" class="layeropt" name="layers[{{ key }}]"{{ checked }} />
+            <label for="{{ key }}">{% trans value %}</label>
+        </li>
+    {% endfor %}
 </ul>

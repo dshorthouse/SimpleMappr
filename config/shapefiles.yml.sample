@@ -10,12 +10,63 @@ layers:
         color: "10,10,10"
         dynamic_width: true
 
-    blueMarble:
-        name: Blue Marble
-        path: %%ROOT%%/mapserver/maps/blue_marble/land_shallow_topo_21600.tif
-        type: %%MS_LAYER_RASTER%%
-        encoding: UTF-8
-        sort: 1
+    countries:
+        name: Countries
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units
+        type: %%MS_LAYER_LINE%%
+        encoding: CP1252
+        sort: 4
+        color: "10,10,10"
+        dynamic_width: true
+
+    stateprovinces:
+        name: State/Provinces
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
+        type: %%MS_LAYER_LINE%%
+        encoding: CP1252
+        sort: 6
+        color: "10,10,10"
+        dynamic_width: true
+
+    stateprovinces_polygon:
+        name: State/Provinces
+        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces
+        type: %%MS_LAYER_POLYGON%%
+        encoding: CP1252
+        sort: 5
+
+    lakesOutline:
+        name: lakes (outline)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
+        #path: /tmp/ne_l0m_lakes.shp
+        type: %%MS_LAYER_LINE%%
+        encoding: CP1252
+        sort: 2
+        outline_color: "80,80,80"
+
+    lakes:
+        name: lakes (greyscale)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
+        type: %%MS_LAYER_POLYGON%%
+        encoding: CP1252
+        sort: 3
+        color: "120,120,120"
+
+    rivers:
+        name: rivers
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines
+        type: %%MS_LAYER_LINE%%
+        encoding: CP1252
+        sort: 8
+        color: "120,120,120"
+
+    oceans:
+        name: oceans (greyscale)
+        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_ocean
+        type: %%MS_LAYER_POLYGON%%
+        encoding: CP1252
+        sort: 3
+        color: "220,220,220"
 
     relief:
         name: relief
@@ -32,35 +83,18 @@ layers:
         sort: 1
 
     reliefgrey:
-        name: relief (grescale)
+        name: relief (greyscale)
         path: %%ROOT%%/mapserver/maps/GRAY_HR_SR_OB_DR/GRAY_HR_SR_OB_DR.tif
         type: %%MS_LAYER_RASTER%%
         encoding: UTF-8
         sort: 1
 
-    lakesOutline:
-        name: lakes (outline)
-        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
-        type: %%MS_LAYER_LINE%%
-        encoding: CP1252
-        sort: 2
-        outline_color: "80,80,80"
-
-    lakes:
-        name: lakes (greyscale)
-        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
-        type: %%MS_LAYER_POLYGON%%
-        encoding: CP1252
-        sort: 3
-        color: "120,120,120"
-
-    oceans:
-        name: oceans (greyscale)
-        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_ocean
-        type: %%MS_LAYER_POLYGON%%
-        encoding: CP1252
-        sort: 3
-        color: "220,220,220"
+    blueMarble:
+        name: Blue Marble
+        path: %%ROOT%%/mapserver/maps/blue_marble/land_shallow_topo_21600.tif
+        type: %%MS_LAYER_RASTER%%
+        encoding: UTF-8
+        sort: 1
 
     conservation:
         name: biodiv. hotspots
@@ -84,40 +118,33 @@ layers:
             sld: %%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos.sld
             item: ECO_SYM
 
-    countries:
+labels:
+    countrynames:
         name: Countries
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units
-        type: %%MS_LAYER_LINE%%
+        type: %%MS_LAYER_POLYGON%%
         encoding: CP1252
-        sort: 4
-        color: "10,10,10"
-        dynamic_width: true
+        sort: 12
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 12
+            position: %%MS_CC%%
 
-    stateprovinces_polygon:
+    stateprovnames:
         name: State/Provinces
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces
         type: %%MS_LAYER_POLYGON%%
-        encoding: CP1252
-        sort: 5
+        encoding: UTF-8
+        sort: 11
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: name
+            size: 10
+            position: %%MS_CC%%
 
-    stateprovinces:
-        name: State/Provinces
-        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
-        type: %%MS_LAYER_LINE%%
-        encoding: CP1252
-        sort: 6
-        color: "10,10,10"
-        dynamic_width: true
-
-    rivers:
-        name: rivers
-        path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_rivers_lake_centerlines
-        type: %%MS_LAYER_LINE%%
-        encoding: CP1252
-        sort: 8
-        color: "120,120,120"
-
-labels:
     lakenames:
         name: lakes
         path: %%ROOT%%/mapserver/maps/10m_physical/ne_10m_lakes
@@ -160,32 +187,6 @@ labels:
             shape: circle
             size: 6
             color: "100,100,100"
-
-    stateprovnames:
-        name: State/Provinces
-        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces
-        type: %%MS_LAYER_POLYGON%%
-        encoding: UTF-8
-        sort: 11
-        tolerance: 5
-        tolerance_units: pixels
-        label:
-            item: name
-            size: 10
-            position: %%MS_CC%%
-
-    countrynames:
-        name: Countries
-        path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_0_map_units
-        type: %%MS_LAYER_POLYGON%%
-        encoding: CP1252
-        sort: 12
-        tolerance: 5
-        tolerance_units: pixels
-        label:
-            item: name
-            size: 12
-            position: %%MS_CC%%
 
     physicalLabels:
         name: physical

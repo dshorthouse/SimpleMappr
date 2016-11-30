@@ -68,7 +68,7 @@ abstract class Mappr
     /**
      * @var string $shapefile_config Path to the shapefile config
      */
-    static protected $shapefile_config = ROOT.'/config/shapefiles.yml';
+    public static $shapefile_config = ROOT.'/config/shapefiles.yml';
 
     /**
      * @var string $font_file Path to the font file
