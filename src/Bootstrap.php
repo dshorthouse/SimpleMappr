@@ -403,8 +403,7 @@ class Bootstrap
                 'labels' => array_combine(array_keys($shapes['labels']), array_column($shapes['labels'], 'name')),
                 'projections' => AcceptedProjections::$projections,
                 'marker_shapes' => AcceptedMarkerShapes::$shapes,
-                'locales' => Session::$accepted_locales,
-                'roles' => User::$roles
+                'locales' => Session::$accepted_locales
             ];
             return $this->_twig()->render("main.html", $config);
         }
@@ -434,6 +433,7 @@ class Bootstrap
         $twig->addGlobal('qlocale', $qlocale);
         $twig->addGlobal('locale', $locale);
         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
+        $twig->addGlobal('roles', User::$roles);
         $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
 
         return $twig;
