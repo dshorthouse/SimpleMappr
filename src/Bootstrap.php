@@ -396,6 +396,7 @@ class Bootstrap
             $shapes_file = file_get_contents(Mappr::$shapefile_config);
             $shapes = Yaml::parse($shapes_file);
             unset($shapes['layers']['base'], $shapes['layers']['stateprovinces_polygon']);
+
             $config = [
                 'og_url' => MAPPR_URL,
                 'og_logo' => MAPPR_URL . '/public/images/logo_og.png',
@@ -405,7 +406,7 @@ class Bootstrap
                 'marker_shapes' => AcceptedMarkerShapes::$shapes,
                 'locales' => Session::$accepted_locales
             ];
-            return $this->_twig()->render("main.html", $config);
+            return $this->_twig(true)->render("main.html", $config);
         }
     }
 
@@ -414,7 +415,7 @@ class Bootstrap
      *
      * @return object
      */
-    private function _twig()
+    private function _twig($include_page_elements = false)
     {
         $loader = new Twig_Loader_Filesystem(ROOT. "/views");
         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
@@ -423,18 +424,20 @@ class Bootstrap
         $twig->addExtension(new Twig_Extensions_Extension_I18n());
         $twig->addGlobal('environment', ENVIRONMENT);
 
-        $header = new Header;
-        $locale = isset($_GET["locale"]) ? $_GET["locale"] : 'en_US';
-        $qlocale = "?v=" . $header->getHash();
-        $qlocale .= isset($_GET['locale']) ? "&locale=" . $_GET["locale"] : "";
+        $locale = Utility::loadParam("locale", "en_US");
+        $qlocale = "?locale={$locale}";
 
-        $twig->addGlobal('stylesheet', $header->getCSSHeader());
         $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : []);
-        $twig->addGlobal('qlocale', $qlocale);
         $twig->addGlobal('locale', $locale);
+        $twig->addGlobal('qlocale', $qlocale);
         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
         $twig->addGlobal('roles', User::$roles);
-        $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
+
+        if($include_page_elements) {
+            $header = new Header;
+            $twig->addGlobal('stylesheet', $header->getCSSHeader());
+            $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
+        }
 
         return $twig;
     }
@@ -451,6 +454,6 @@ class Bootstrap
             'title' => ' - Not Found',
             'google_analytics' => GOOGLE_ANALYTICS
         ];
-        return $this->_twig()->render("404.html", $config);
+        return $this->_twig(true)->render("404.html", $config);
     }
 }
