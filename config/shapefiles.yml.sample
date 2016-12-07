@@ -117,6 +117,17 @@ layers:
             sld: %%ROOT%%/mapserver/maps/wwf_terr_ecos/wwf_terr_ecos.sld
             item: ECO_SYM
 
+    marine_ecoregions:
+        name: marine ecoregions
+        path: %%ROOT%%/mapserver/maps/wwf_meow/meow_ecos
+        type: %%MS_LAYER_POLYGON%%
+        encoding: CP1252
+        sort: 3
+        opacity: 75
+        class:
+            sld: %%ROOT%%/mapserver/maps/wwf_meow/meow_styles.sld
+            item: RLM_CODE
+
     roads:
         name: roads
         path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_roads
@@ -252,5 +263,18 @@ labels:
         tolerance_units: pixels
         label:
             item: ECO_NAME
+            size: 8
+            position: %%MS_UR%%
+
+    marineEcoregionLabels:
+        name: marine ecoregions
+        path: %%ROOT%%/mapserver/maps/wwf_meow/meow_ecos
+        type: %%MS_LAYER_POLYGON%%
+        encoding: UTF-8
+        sort: 14
+        tolerance: 5
+        tolerance_units: pixels
+        label:
+            item: ECOREGION
             size: 8
             position: %%MS_UR%%

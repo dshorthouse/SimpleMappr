@@ -1438,12 +1438,25 @@ abstract class Mappr
     {
         $xml = simplexml_load_file($sld);
         $xml->registerXPathNamespace('sld', 'http://www.opengis.net/sld');
+        $xml->registerXPathNamespace('se', 'http://www.opengis.net/se');
         $xml->registerXPathNamespace('ogc', 'http://www.opengis.net/ogc');
+
+        //version 1.0.0 of SLD
         foreach ($xml->xpath('//sld:Rule') as $rule) {
             $class = ms_newClassObj($layer);
             $class->setExpression("([".$item."] = ".$rule->xpath('.//sld:Name')[0].")");
             $style = ms_newStyleObj($class);
             $color = Utility::hex2Rgb($rule->xpath('.//sld:CssParameter')[0]);
+            $style->color->setRGB($color[0], $color[1], $color[2]);
+            $style->outlinecolor->setRGB(30, 30, 30);
+        }
+
+        //version 1.1.0 of SLD
+        foreach ($xml->xpath('//se:Rule') as $rule) {
+            $class = ms_newClassObj($layer);
+            $class->setExpression("([".$item."] = ".$rule->xpath('.//se:Name')[0].")");
+            $style = ms_newStyleObj($class);
+            $color = Utility::hex2Rgb($rule->xpath('.//se:SvgParameter')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
         }
