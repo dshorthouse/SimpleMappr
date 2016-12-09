@@ -244,6 +244,36 @@ class CoordinateConversionTest extends TestCase
     }
 
     /**
+     * Test that ddmmss with s in coord string is recognized as secs.
+     */
+    public function test_dms_to_deg_11()
+    {
+        $dms = "44d53m23sN";
+        $deg = 44;
+        $min = 53/60;
+        $sec = 23/3600;
+        $dd_raw = $deg + $min + $sec;
+        $dd = Utility::dmsToDeg($dms);
+        $this->assertEquals($dd, 44.889722222222218);
+        $this->assertEquals($dd, $dd_raw);
+    }
+
+    /**
+     * Test that ddmmss with s in coord string is recognized as secs.
+     */
+    public function test_dms_to_deg_12()
+    {
+        $dms = "44d53m23sS";
+        $deg = 44;
+        $min = 53/60;
+        $sec = 23/3600;
+        $dd_raw = -($deg + $min + $sec);
+        $dd = Utility::dmsToDeg($dms);
+        $this->assertEquals($dd, -44.889722222222218);
+        $this->assertEquals($dd, $dd_raw);
+    }
+
+    /**
      * Test that a dirty coordinate in DD is parsed.
      */
     public function test_dirty_deg()
