@@ -21,6 +21,7 @@
 <div id="recent-updates">
 <div class="header"><h2>{% trans "Recent Updates" %}</h2></div>
 <dl>
+<dt class="update">{% trans "December 9, 2016" %}</dt><dd>{% trans "Bug fixes: Coordinates in the form DDdMMmSSs were incorrectly transformed to DD. Reported by Lorenzo Gallo." %}</dd>
 <dt class="update">{% trans "November 21, 2016" %}</dt><dd>{% trans "Bug fixes: Remote files incompletely parsed via the API. Reported by Larry Gall." %}</dd>
 <dt class="update">{% trans "November 7, 2016" %}</dt><dd>{% trans "Improvements: Added a new tab to permit submission of well-known text (WKT)." %}</dd>
 <dt class="update">{% trans "July 10, 2016" %}</dt><dd>{% trans "Improvements: Added shadow option for points." %}</dd>
@@ -34,7 +35,6 @@
 <dt class="update">{% trans "December 4, 2014" %}</dt><dd>{% trans "Improvements: Added file upload for Point Layer data." %}</dd>
 <dt class="update">{% trans "August 14, 2014" %}</dt><dd>{% trans "Improvements: Added an icon in the toolbar to create a new empty map." %}</dd>
 <dt class="update">{% trans "July 27, 2014" %}</dt><dd>{% trans "Improvements: Recognize decimal degree coordinates with degree symbol." %}</dd>
-<dt class="update">{% trans "July 9, 2014" %}</dt><dd>{% trans "Improvements: Added ability to share and unshare maps with authenticated users. Requested by Tim Dickinson." %}</dd>
 </dl>
 </div>
 {% if environment == "production" %}
