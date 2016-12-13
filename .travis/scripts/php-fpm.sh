@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Setup PHP-FPM
 echo "---> Configuring $(tput bold ; tput setaf 2)php-fpm$(tput sgr0)"

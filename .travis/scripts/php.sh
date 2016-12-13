@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 phpenv config-add .travis/travis.php.ini
 phpenv rehash
