@@ -18,7 +18,7 @@ See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https:/
 1. PHP5.6+ [with cli, PDO, PDO-MySQL, GD]
 2. Apache2.2.24+ [with rewrite]
 3. MySQL 5.5.27+
-4. [MapServer 7.0.2](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
+4. [MapServer 7.0.3](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
 5. [Composer](https://getcomposer.org/)
 
 Configuration Instructions
@@ -76,7 +76,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download [MapServer](http://mapserver.org/download.html) 7.0.2 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.2.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.2.tar.gz)
+3. Download [MapServer](http://mapserver.org/download.html) 7.0.3 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.3.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.3.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 
