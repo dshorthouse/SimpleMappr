@@ -1,7 +1,7 @@
 language: php
 
 php:
-  - 5.6.29
+  - 5.6.24
 
 env:
   global:
@@ -95,8 +95,6 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
-
-  - php -m
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
