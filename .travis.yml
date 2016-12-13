@@ -51,7 +51,7 @@ addons:
 
 install:
   # ImageMagick
-  #- printf "\n" | pecl install imagick
+  - printf "\n" | pecl install imagick
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
