@@ -57,8 +57,7 @@ install:
   - sh -e .travis/scripts/mapserver.sh
 
   # PHP configuration
-  - phpenv config-add .travis/travis.php.ini
-  - phpenv rehash
+  - sh -e .travis/scripts/php.sh
 
   # Translations
   - sh -e .travis/scripts/locales.sh
