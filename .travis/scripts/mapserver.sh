@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mapserver="mapserver-7.0.3"
+mapserver="mapserver-7.0.2"
 
 echo "---> Starting $mapserver installation"
 
