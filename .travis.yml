@@ -51,7 +51,7 @@ addons:
 
 install:
   # ImageMagick
-  - printf "\n" | pecl install imagick
+  #- printf "\n" | pecl install imagick
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
@@ -59,7 +59,6 @@ install:
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
   - phpenv rehash
-  - php -m
 
   # Translations
   - sh -e .travis/scripts/locales.sh
@@ -96,6 +95,8 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
+
+  - php -m
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
