@@ -55,7 +55,6 @@ class ShareTest extends SimpleMapprTest
         $this->assertEquals("Share", $link->getText());
         $link->click();
         parent::waitOnAjax();
-
         $this->assertEquals("Unshare", $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"))->getText());
         $this->assertContains("Sample Map User", $this->shareContent());
     }

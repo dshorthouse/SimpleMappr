@@ -200,21 +200,19 @@ class MapprApiTest extends TestCase
      */
     public function test_apioutput_ecoregions()
     {
-        if (!array_key_exists('TRAVIS', $_SERVER)) {
-            $req = [
-                'layers' => 'ecoregions'
-            ];
-            $this->setRequest($req);
-            $mappr_api = new MapprApi;
-            $mappr_api->execute();
-            ob_start();
-            echo $mappr_api->createOutput();
-            $output = ob_get_contents();
-            $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
-            file_put_contents($file, $output);
-            ob_end_clean();
-            $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
-        }
+        $req = [
+            'layers' => 'ecoregions'
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_contents();
+        $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
+        file_put_contents($file, $output);
+        ob_end_clean();
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
     }
 
     /**
