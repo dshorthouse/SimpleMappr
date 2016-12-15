@@ -165,7 +165,7 @@ class Session
         self::writeSession($cookie);
 
         $db = Database::getInstance();
-        $db->queryUpdate('users', ['access' => time()], 'uid='.$_SESSION["simplemappr"]["uid"]);
+        $db->queryUpdate('users', ['access' => time()], 'hash='.$_SESSION["simplemappr"]["hash"]);
     }
 
     /**
@@ -349,6 +349,7 @@ class Session
 
             $sql = "SELECT
                         u.uid,
+                        u.hash,
                         u.identifier,
                         u.email,
                         u.username,
@@ -363,11 +364,14 @@ class Session
             $db->bindParam(":identifier", $identifier);
             $result = $db->fetchFirstObject();
 
+            $user['hash'] = (!$result) ? password_hash($identifier, PASSWORD_DEFAULT) : $result->hash;
             $user['uid'] = (!$result) ? $db->queryInsert('users', $user) : $result->uid;
             $user['locale'] = $this->_locale;
             $user['role'] = (!$result->role) ? 1 : $result->role;
 
             $db->queryUpdate('users', ['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
+
+            unset($user['uid'],$user['role']);
 
             self::writeSession($user);
             self::redirect(MAPPR_URL . self::makeLocaleParam($user['locale']));

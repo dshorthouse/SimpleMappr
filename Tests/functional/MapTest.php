@@ -84,12 +84,11 @@ class MapTest extends SimpleMapprTest
     public function testDeleteMap()
     {
         parent::setUpPage();
-        parent::setSession();
+        $user = parent::setSession();
 
-        $cookie = json_decode(urldecode($this->webDriver->manage()->getCookieNamed('simplemappr')['value']));
         $title = 'Another Sample Map User';
         $mid = parent::$db->queryInsert("maps", [
-            'uid' => $cookie->uid,
+            'uid' => $user['uid'],
             'title' => $title,
             'map' => json_encode(['save' => ['title' => $title]]),
             'created' => time()

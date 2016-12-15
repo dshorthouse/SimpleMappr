@@ -542,8 +542,11 @@ class Header
      */
     private function _isAdministrator()
     {
-        if (isset($_SESSION['simplemappr']) && User::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
-            return true;
+        if (isset($_SESSION['simplemappr']) && isset($_SESSION['simplemappr']['hash'])) {
+            $user = User::getByHash($_SESSION['simplemappr']['hash']);
+            if (User::$roles[$user->role] == 'administrator') {
+                return true;
+            }
         }
         return false;
     }

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.19, for osx10.9 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.16, for osx10.12 (x86_64)
 --
--- Host: localhost    Database: simplemappr_development
+-- Host: localhost    Database: simplemappr
 -- ------------------------------------------------------
--- Server version	5.6.19
+-- Server version	5.7.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `citations` (
   `first_author_surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `year` (`year`,`first_author_surname`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `maps` (
   KEY `title` (`title`),
   KEY `idx_created` (`created`),
   KEY `idx_updated` (`updated`)
-) ENGINE=InnoDB AUTO_INCREMENT=2813 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6515 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,8 +65,10 @@ DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
   `version` bigint(14) NOT NULL,
+  `migration_name` varchar(100) DEFAULT NULL,
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `end_time` timestamp NOT NULL DEFAULT '1970-01-01 05:00:01',
+  `breakpoint` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,8 +84,9 @@ CREATE TABLE `shares` (
   `mid` int(11) NOT NULL,
   `created` int(11) NOT NULL,
   PRIMARY KEY (`sid`),
-  KEY `mid` (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  KEY `mid` (`mid`),
+  KEY `created` (`created`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +104,7 @@ CREATE TABLE `stateprovinces` (
   `stateprovince_code` char(2) NOT NULL,
   UNIQUE KEY `OBJECTID` (`id`),
   KEY `index_on_country` (`country`)
-) ENGINE=InnoDB AUTO_INCREMENT=3566 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4651 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,6 +116,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `hash` varchar(60) NOT NULL,
   `identifier` varchar(255) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
   `displayname` varchar(125) DEFAULT NULL,
@@ -121,10 +125,11 @@ CREATE TABLE `users` (
   `created` int(11) DEFAULT NULL,
   `access` int(11) DEFAULT NULL,
   PRIMARY KEY (`uid`),
+  UNIQUE KEY `idx_users_hash` (`hash`),
   KEY `identifier` (`identifier`),
   KEY `idx_username` (`username`),
   KEY `idx_access` (`access`)
-) ENGINE=InnoDB AUTO_INCREMENT=544 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1150 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -136,4 +141,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-09  1:37:06
+-- Dump completed on 2016-12-15 13:03:17

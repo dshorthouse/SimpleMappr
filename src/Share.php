@@ -84,9 +84,10 @@ class Share implements RestMethods
      */
     public function __construct()
     {
+        $user = User::getByHash($_SESSION['simplemappr']['hash']);
+        $this->_uid = (int)$user->uid;
+        $this->_role = $user->role;
         $this->_db = Database::getInstance();
-        $this->_uid = (int)$_SESSION['simplemappr']['uid'];
-        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
     }
 
     /**

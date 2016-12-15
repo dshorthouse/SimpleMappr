@@ -65,9 +65,9 @@ class User implements RestMethods
     public $results;
 
     /**
-     * @var int $_role Role for user defined in $roles
+     * @var string $_hash Hash stored in cookie
      */
-    private $_role;
+    private $_hash;
 
     /**
      * @var object $_db Database connection object
@@ -83,6 +83,22 @@ class User implements RestMethods
     ];
 
     /**
+     * Get a user by passing a hash
+     *
+     * @param string $hash A hashed string
+     *
+     * @return object $this
+     */
+    public static function getByHash($hash)
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * from users u WHERE u.hash=:hash";
+        $db->prepare($sql);
+        $db->bindParam(":hash", $hash, 'string');
+        return $db->fetchFirstObject();
+    }
+
+    /**
      * Check permissions, used in router
      *
      * @param string $role The role
@@ -94,16 +110,19 @@ class User implements RestMethods
         if (!isset($_SESSION)) {
             session_start();
         }
+
         if (!isset($_SESSION['simplemappr'])) {
             session_write_close();
             header('Location: /');
             return false;
         }
-        elseif ($role == 'user' && (self::$roles[$_SESSION['simplemappr']['role']] == 'user' || self::$roles[$_SESSION['simplemappr']['role']] == 'administrator')) {
+
+        $user = self::getByHash($_SESSION['simplemappr']['hash']);
+        if ($role == 'user' && (self::$roles[$user->role] == 'user' || self::$roles[$user->role] == 'administrator')) {
             session_write_close();
             return true;
         }
-        elseif ($role == 'administrator' && self::$roles[$_SESSION['simplemappr']['role']] == 'administrator') {
+        elseif ($role == 'administrator' && self::$roles[$user->role] == 'administrator') {
             session_write_close();
             return true;
         }
@@ -119,7 +138,6 @@ class User implements RestMethods
      */
     public function __construct()
     {
-        $this->_role = (isset($_SESSION['simplemappr']['role'])) ? (int)$_SESSION['simplemappr']['role'] : 1;
         $this->_db = Database::getInstance();
     }
 
@@ -170,10 +188,15 @@ class User implements RestMethods
      *
      * @param int $id The User identifier
      *
-     * @return void
+     * @return object $this
      */
     public function show($id)
     {
+        $sql = "SELECT * from users u WHERE u.uid=:uid";
+        $this->_db->prepare($sql);
+        $this->_db->bindParam(":uid", $id, 'integer');
+        $this->results = $this->_db->fetchAllObject();
+        return $this;
     }
 
     /**

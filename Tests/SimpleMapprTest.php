@@ -47,6 +47,7 @@ abstract class SimpleMapprTest extends TestCase
 
         $users_table = 'CREATE TABLE IF NOT EXISTS `users` (
           `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+          `hash` varchar(60) NOT NULL,
           `identifier` varchar(255) NOT NULL,
           `username` varchar(50) DEFAULT NULL,
           `displayname` varchar(125) DEFAULT NULL,
@@ -55,6 +56,7 @@ abstract class SimpleMapprTest extends TestCase
           `created` int(11) DEFAULT NULL,
           `access` int(11) DEFAULT NULL,
           PRIMARY KEY (`uid`),
+          UNIQUE KEY `idx_users_hash` (`hash`),
           KEY `identifier` (`identifier`),
           KEY `idx_username` (`username`),
           KEY `idx_access` (`access`)
@@ -98,6 +100,7 @@ abstract class SimpleMapprTest extends TestCase
 
         $user1 = self::$db->queryInsert('users', [
           'uid' => 1,
+          'hash' => password_hash('administrator', PASSWORD_DEFAULT),
           'identifier' => 'administrator',
           'username' => 'administrator',
           'displayname' => 'John Smith',
@@ -107,6 +110,7 @@ abstract class SimpleMapprTest extends TestCase
 
         $user2 = self::$db->queryInsert('users', [
           'uid' => 2,
+          'hash' => password_hash('user', PASSWORD_DEFAULT),
           'identifier' => 'user',
           'username' => 'user',
           'displayname' => 'Jack Johnson',
@@ -643,27 +647,27 @@ abstract class SimpleMapprTest extends TestCase
      */
     public function setSession($username = "user", $locale = 'en_US')
     {
-        $user = [
-            "identifier" => $username,
-            "username" => $username,
-            "email" => "nowhere@example.com",
-            "locale" => $locale
-        ];
-        if ($username == 'administrator') {
-            $role = ["role" => "2", "uid" => "1", "displayname" => "John Smith"];
-        } else {
-            $role = ["role" => "1", "uid" => "2", "displayname" => "Jack Johnson"];
-        }
-        $user = array_merge($user, $role);
+        $db = Database::getInstance();
+        $sql = "SELECT * from users u WHERE u.username=:username";
+        $db->prepare($sql);
+        $db->bindParam(":username", $username, 'string');
+        $user = $db->fetchFirstArray();
+        $user['locale'] = $locale;
+
+        $clone = array_merge([], $user);
+        unset($clone['uid'], $clone['role']);
+
         $cookie = [
             "name" => "simplemappr",
-            "value" => urlencode(json_encode($user)),
+            "value" => urlencode(json_encode($clone)),
             "path" => "/"
         ];
         $this->webDriver->manage()->addCookie($cookie);
-        $_SESSION["simplemappr"] = $user;
+        $_SESSION["simplemappr"] = $clone;
         $this->webDriver->navigate()->refresh();
         $this->waitOnAjax();
+
+        return $user;
     }
 
 }

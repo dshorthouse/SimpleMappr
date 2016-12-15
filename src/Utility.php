@@ -150,7 +150,7 @@ class Utility
      */
     public static function cleanFilename($file_name, $extension = "")
     {
-        $clean_filename = preg_replace("/[?*:;{}\\ \"'\/@#!%^()<>.]+/", "_", $file_name);
+        $clean_filename = preg_replace("/[^\w\-]+/u", '_', $file_name);
         if ($extension) {
             return $clean_filename . "." . $extension;
         }

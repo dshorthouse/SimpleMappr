@@ -427,7 +427,11 @@ class Bootstrap
         $locale = Utility::loadParam("locale", "en_US");
         $qlocale = "?locale={$locale}";
 
-        $twig->addGlobal('session', (isset($_SESSION['simplemappr'])) ? $_SESSION['simplemappr'] : []);
+        $session = [];
+        if(isset($_SESSION['simplemappr'])) {
+            $session = (array)User::getByHash($_SESSION['simplemappr']['hash']);
+        }
+        $twig->addGlobal('session', $session);
         $twig->addGlobal('locale', $locale);
         $twig->addGlobal('qlocale', $qlocale);
         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
