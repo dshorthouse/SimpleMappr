@@ -1152,10 +1152,6 @@ msgid "Zoom in at the mouse position"
 msgstr "Zoom sur la position du pointeur"
 
 #: .tabs/help.php:134
-msgid "Zoom out"
-msgstr "Dézoomer"
-
-#: .tabs/help.php:134
 msgid "Initiate the crop tool"
 msgstr "Lancer l'outil pour recadrer"
 
@@ -1193,11 +1189,11 @@ msgstr "Élargir la carte pour remplir la fenêtre"
 
 #: .tabs/help.php:134
 msgid "Show your saved maps tab (when logged in)"
-msgstr ""
+msgstr "Afficher l'onglet des cartes enregistrées (lorsque vous êtes connecté)"
 
 #: .tabs/help.php:134
 msgid "arrow up/down/left/right"
-msgstr "Afficher l'onglet des cartes enregistrées (lorsque vous êtes connecté)"
+msgstr "flèche haut / bas / gauche / droite"
 
 #: .tabs/help.php:134
 msgid "Pan the map up/down/left/right"
