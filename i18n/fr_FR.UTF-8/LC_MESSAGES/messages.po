@@ -1059,6 +1059,14 @@ msgstr "rendre une couche pour les hotspots de biodiversité selon l'organisme C
 msgid "select this checkbox to render terrestrial ecoregions from the World Wildlife Fund"
 msgstr "rendre une couche pour les écorégions terrestres selon l'organisme World Wildlife Fund"
 
+#: .tabs/help.php:87
+msgid "select this checkbox to render major roadways"
+msgstr "rendre une couche pour les chemins majeurs"
+
+#: .tabs/help.php:87
+msgid "select this checkbox to render major railroad lines"
+msgstr "rendre une couche pour les chemins de fers majeurs"
+
 #: .tabs/help.php:93
 msgid "label countries"
 msgstr "étiquettes pour pays"
@@ -1131,6 +1139,70 @@ msgstr "une fois qu'une carte est enregistrée, cliquer sur cette icône pour ob
 msgid "choose from a web-friendly png, high resolution tif, pptx (PowerPoint), docx (Word), kml (Google Earth) or scalable vector graphic (svg). The latter is recommended for the preparation of figures in manuscripts because it is lossless. However, the svg download does not include a scalebar, legend, or shaded relief layer(s) because these are raster-based."
 msgstr "choisir png, tif à haute résolution, pptx (PowerPoint), docx (Word), kml (Google Earth) ou scalable vector graphic (svg). Ce dernier est recommandé pour la préparation des figures dans les manuscrits, car elle est sans perte. Toutefois, le téléchargement svg ne comprend pas une barre d'échelle, légende, ou une couche relief ombré car ce sont des raster."
 
+#: .tabs/help.php:134
+msgid "Shortcuts"
+msgstr "Raccourcis clavier"
+
+#: .tabs/help.php:134
+msgid "double-click"
+msgstr "double-clic"
+
+#: .tabs/help.php:134
+msgid "Zoom in at the mouse position"
+msgstr "Zoom sur la position du pointeur"
+
+#: .tabs/help.php:134
+msgid "Zoom out"
+msgstr "Dézoomer"
+
+#: .tabs/help.php:134
+msgid "Initiate the crop tool"
+msgstr "Lancer l'outil pour recadrer"
+
+#: .tabs/help.php:134
+msgid "Undo last selection"
+msgstr "Annuler la dernière action"
+
+#: .tabs/help.php:134
+msgid "Redo last selection"
+msgstr "Refaire la dernière action"
+
+#: .tabs/help.php:134
+msgid "New map with base layer"
+msgstr "Nouvelle carte"
+
+#: .tabs/help.php:134
+msgid "Refresh the map"
+msgstr "Régénérer la carte"
+
+#: .tabs/help.php:134
+msgid "Rebuild the map under geographic projection"
+msgstr "Reconstruire la carte sous la projection géographique"
+
+#: .tabs/help.php:134
+msgid "Show the Save Map dialog"
+msgstr "Enregistrer la carte"
+
+#: .tabs/help.php:134
+msgid "Show the Download Map dialog"
+msgstr "Télécharger la carte"
+
+#: .tabs/help.php:134
+msgid "Expand the map to fill the window"
+msgstr "Élargir la carte pour remplir la fenêtre"
+
+#: .tabs/help.php:134
+msgid "Show your saved maps tab (when logged in)"
+msgstr ""
+
+#: .tabs/help.php:134
+msgid "arrow up/down/left/right"
+msgstr "Afficher l'onglet des cartes enregistrées (lorsque vous êtes connecté)"
+
+#: .tabs/help.php:134
+msgid "Pan the map up/down/left/right"
+msgstr "Faites défiler la carte vers le haut / bas / gauche / droite"
+
 #: .tabs/help.php:140
 msgid "Use the Point Data tab to paste coordinates as latitude, longitude either in decimal degrees or as DD°MM'SS\" on separate lines and select the marker shape, size, and color."
 msgstr "Utiliser l'onglet Points de Données pour coller des coordonnées latitude, longitude en degrés décimaux ou DD°MM'SS\" sur des lignes séparées et sélectionner la forme de marqueur, la taille et la couleur."
@@ -1187,22 +1259,22 @@ msgstr "Exemple"
 msgid "Nothing found"
 msgstr "Rien trouvé"
 
-#: .tabs/main.php
+#: .tabs/main.php:171
 msgid "Unsupported file type"
 msgstr "Ce type de fichier n'est pas supporté"
 
-#: .tabs/main.php
+#: .tabs/main.php:171
 msgid "Only files of type text are accepted."
 msgstr "Seulements les fichiers de type texte sont acceptées."
 
-#: ./tabs/main.php
+#: ./tabs/main.php:171
 msgid "Upload text or csv file"
 msgstr "Téléverser un fichier texte or csv"
 
-#: ./tabs/main.php
+#: ./tabs/main.php:171
 msgid "Example 1"
 msgstr "Exemple 1"
 
-#: ./tabs/main.php
+#: ./tabs/main.php:171
 msgid "Example 2"
 msgstr "Exemple 2"

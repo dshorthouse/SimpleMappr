@@ -629,7 +629,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindHotkeys: function() {
-      var self = this,
+      var self = this,fxn,position,
 
       keys = {
         'ctrl+s'  : self.bindCallback(self, self.mapSave),
@@ -640,14 +640,13 @@ var SimpleMappr = (function($, window, document) {
         'ctrl+b'  : self.bindCallback(self, self.mapRebuild),
         'ctrl+x'  : self.bindCallback(self, self.mapCrop),
         'ctrl+e'  : self.bindCallback(self, self.mapToggleSettings),
-        '='       : self.bindCallback(self, self.mapZoom, "in-auto"),
-        '+'       : self.bindCallback(self, self.mapZoom, "in-auto"),
-        'shift+=' : self.bindCallback(self, self.mapZoom, "in-auto"),
-        '-'       : self.bindCallback(self, self.mapZoom, "out"),
         'esc'     : self.bindCallback(self, self.destroyJcrop),
         'ctrl+z'  : self.bindCallback(self, self.mapUndo),
-        'ctrl+y'  : self.bindCallback(self, self.mapRedo)
+        'ctrl+y'  : self.bindCallback(self, self.mapRedo),
+        '-'       : self.bindCallback(self, self.mapZoom, "out")
       },
+
+      zoom_in = ['=', '+', "shift+="],
 
       arrows = {
         'up'    : self.bindCallback(self, self.mapPan, "up"),
@@ -658,6 +657,8 @@ var SimpleMappr = (function($, window, document) {
 
       if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
 
+      fxn = function() { self.dblclickZoom(self.vars.mapOutputImage, position); };
+
       $.each(keys, function(key, value) {
         $(document).off('keydown', value).on('keydown', null, key, value);
       });
@@ -667,10 +668,15 @@ var SimpleMappr = (function($, window, document) {
           $.each(arrows, function(key, value) {
             $(document).on('keydown', null, key, value);
           });
-          self.vars.mapOutputImage.on('dblclick', function(e) {
+          self.vars.mapOutputImage.on('mousemove', function(e) {
+            position = e;
+          }).on('dblclick', function(e) {
             if(!self.missingFieldSetTitle()) {
               self.dblclickZoom(this, e);
             }
+          });
+          $.each(zoom_in, function() {
+            $(document).on('keydown', null, this, fxn);
           });
         },
         function() {
@@ -679,6 +685,9 @@ var SimpleMappr = (function($, window, document) {
             $(document).off('keydown', value);
           });
           self.vars.mapOutputImage.off('dblclick');
+          $.each(zoom_in, function() {
+            $(document).off('keydown', fxn);
+          });
         }
       );
     },
