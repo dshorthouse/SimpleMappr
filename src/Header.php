@@ -111,7 +111,8 @@ class Header
      * @var array $admin_js Array of all js files to be added in admin tab
      */
     public $admin_js = [
-        'admin' => 'public/javascript/simplemappr.admin.min.js'
+        'wysiwyg' => 'public/javascript/trumbowyg.min.js',
+        'admin'   => 'public/javascript/simplemappr.admin.min.js' 
     ];
 
     /**
@@ -126,6 +127,13 @@ class Header
      */
     public $local_css = [
         'public/stylesheets/raw/styles.css'
+    ];
+
+    /**
+     * @var array $local_css Array of all css files to be minified
+     */
+    public $admin_css = [
+        'public/stylesheets/raw/trumbowyg.css'
     ];
 
     /**
@@ -440,6 +448,11 @@ class Header
                 foreach ($cached_css as $css) {
                     $this->_addCss('<link type="text/css" href="/public/stylesheets/cache/' . $css . '" rel="stylesheet" media="screen,print" />');
                 }
+            }
+        }
+        if ($this->_isAdministrator()) {
+            foreach ($this->admin_css as $key => $css_file) {
+                $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
             }
         }
         return $this;

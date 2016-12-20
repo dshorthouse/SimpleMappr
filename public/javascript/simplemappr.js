@@ -2603,7 +2603,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     bindTextAreaResizers: function() {
-      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT, '#map-admin'], function() {
+      $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT], function() {
         $(this).find('textarea.resizable:not(.textarea-processed)').TextAreaResizer();
       });
     },

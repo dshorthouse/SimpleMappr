@@ -8,7 +8,7 @@ textarea{resize:none;padding:0;}
 .sprites-after:after{background-image:url("../../images/sprites.png");content:"";height:17px;width:16px;margin:0.45em 0.2em;display:inline-block;float:right;}
 .hidden-message{display:none;}
 #header,#tabs{min-width:1175px;}
-#header{color:#bababa;font-size:0.8em;position:fixed;z-index:100;top:0;left:0;right:0;height:2.5em;line-height:2.5em;width:100%;box-shadow:0 1px 2px rgba(0, 0, 0, 0.5);background-color: #333;}
+#header{color:#bababa;font-size:0.8em;height:2.5em;line-height:2.5em;background-color: #333;}
 #header a{color:#bababa;text-decoration:none;}
 #header a:hover{color:#fff;}
 #site-title{position:absolute;left:5px;margin:0 0.25em;color:#fff;font-size:1.5em;line-height:1.5em;}
@@ -25,7 +25,6 @@ textarea{resize:none;padding:0;}
 #site-languages ul{list-style:none;margin:0px;padding:0px;}
 #site-languages li{list-style:none;display:inline;margin:0px 5px;padding:0px;}
 #site-languages li a.selected{color:white;}
-#wrapper{position:absolute;width:100%;top:1.75em;}
 #tabs{min-height:520px;display:none;border:0px;}
 #error-message{margin:0;padding:1em;}
 ul.navigation{border-top:0px;border-left:0px;border-right:0px;}
@@ -207,7 +206,6 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-admin ul, #map-admin li{list-style:none;margin:0px;padding:0px;}
 #map-admin li{display:inline;margin:0px 5px;}
 #map-admin label, #map-admin input, #map-admin textarea {display:block;}
-#map-admin .resizable-textarea {width:600px;}
 #map-admin p.citation{text-indent:-2em;padding-left:2em;font-size:0.75em;}
 #admin-api-list {font-size:11px;}
 #map-admin a.citation-delete:before{background-position:-260px -284px;margin-top:0.2em;}

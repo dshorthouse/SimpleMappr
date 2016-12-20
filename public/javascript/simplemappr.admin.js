@@ -41,6 +41,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
     api_list: $('#admin-api-list'),
 
     init: function() {
+      this.loadWYSIWYG();
       this.loadUserList();
       this.bindTools();
       this.loadCitationList();
@@ -57,6 +58,16 @@ var SimpleMapprAdmin = (function($, window, sm) {
 
       if(results === null) { return ""; }
       return decodeURIComponent(results[1].replace(/\+/g, " "));
+    },
+
+    loadWYSIWYG: function() {
+      $.trumbowyg.svgPath = '/public/stylesheets/raw/icons.svg';
+      $('#citation-reference').trumbowyg({
+          removeformatPasted: true,
+          btns: [['bold', 'italic']],
+          autogrow: true,
+          semantic: false
+      });
     },
 
     loadUserList: function(object) {
@@ -122,19 +133,36 @@ var SimpleMapprAdmin = (function($, window, sm) {
       });
 
       $('#citation-doi').on('blur', function() {
-        var val = $(this).val();
+        var val = $(this).val(), citation = "", matches;
         if(val.length > 0 && $('#citation-reference').val().length === 0) {
           sm.showSpinner();
-          $.getJSON("http://search.crossref.org/dois?q=" + encodeURIComponent(val), function(data) {
-            if (data && data.length > 0) {
-              $.each(data[0], function(key, value) {
-                if(key === "fullCitation") {
-                  $('#citation-reference').val(value);
-                }
-                if(key === "year") {
-                  $('#citation-year').val(value);
-                }
-              });
+          $.ajax({
+            type: 'POST',
+            url: "https://doi.org/" + encodeURIComponent(val),
+            dataType: 'json',
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('Accept', 'application/vnd.citationstyles.csl+json;q=1.0');
+            },
+            success: function(data) {
+              $('#citation-surname').val(data.author[0].family);
+              $('#citation-year').val(data.issued["date-parts"][0][0]);
+            },
+            error: function() {
+            }
+          });
+          $.ajax({
+            type: 'POST',
+            url: "https://doi.org/" + encodeURIComponent(val),
+            dataType: 'text',
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('Accept', 'text/x-bibliography; style=american-journal-of-botany');
+            },
+            success: function(data) {
+              matches = data.match(/^(.*)(?:available at:)/i);
+              $("#citation-reference").val(matches[1].trim());
+              $(".trumbowyg-editor").text(matches[1].trim());
+            },
+            error: function() {
             }
           });
           sm.hideSpinner();
@@ -233,6 +261,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
             success     : function(data) {
               if(data.status === "ok") {
                 $('#map-admin').find(".citation").val("");
+                $('#citation-reference').trumbowyg('empty');
                 $.each(["reference", "surname", "year"], function() {
                   $('#citation-'+this).removeClass('ui-state-error');
                 });
