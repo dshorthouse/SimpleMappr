@@ -1,7 +1,7 @@
 SimpleMappr Installation and Configuration
 ==========================================
 
-SimpleMappr, [http://www.simplemappr](http://www.simplemappr.net) is a web-based application that produces publication-quality geographic maps. This source code is released under MIT license.
+SimpleMappr, [http://www.simplemappr.net](http://www.simplemappr.net) is a web-based application that produces publication-quality geographic maps. This source code is released under MIT license.
 
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
