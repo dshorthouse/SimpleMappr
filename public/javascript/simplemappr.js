@@ -657,11 +657,11 @@ var SimpleMappr = (function($, window, document) {
 
       if(self.settings.active === "false") { delete keys['ctrl+s']; delete keys['ctrl+l']; }
 
-      fxn = function() { self.dblclickZoom(self.vars.mapOutputImage, position); };
-
       $.each(keys, function(key, value) {
         $(document).off('keydown', value).on('keydown', null, key, value);
       });
+
+      fxn = function() { self.dblclickZoom(self.vars.mapOutputImage, position); }
 
       this.vars.mapOutput.hover(
         function() {
@@ -675,8 +675,8 @@ var SimpleMappr = (function($, window, document) {
               self.dblclickZoom(this, e);
             }
           });
-          $.each(zoom_in, function() {
-            $(document).on('keydown', null, this, fxn);
+          $.each(zoom_in, function(key, value) {
+            $(document).on('keydown', null, value, fxn);
           });
         },
         function() {
@@ -685,11 +685,12 @@ var SimpleMappr = (function($, window, document) {
             $(document).off('keydown', value);
           });
           self.vars.mapOutputImage.off('dblclick');
-          $.each(zoom_in, function() {
+          $.each(zoom_in, function(key, value) {
             $(document).off('keydown', fxn);
           });
         }
       );
+
     },
 
     hardResetShowMap: function(e) {
