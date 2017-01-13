@@ -453,6 +453,7 @@ var SimpleMappr = (function($, window, document) {
         self.unusedVariables(key);
         $('#' + value).val('');
       });
+      this.setRotation();
       $('#projection')[0].selectedIndex = 0;
       this.destroyRedo();
       this.showMap();
