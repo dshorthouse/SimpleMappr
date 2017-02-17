@@ -329,7 +329,8 @@ class MapprApplicationTest extends TestCase
      {
          $this->assertContains(MAPPR_MAPS_URL, $this->output["mapOutputImage"]);
          $image = file_get_contents($this->output["mapOutputImage"]);
-         $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
+         $finfo = new \finfo(FILEINFO_MIME_TYPE);
+         $this->assertEquals("image/png", $finfo->buffer($image));
      }
 
     /**
