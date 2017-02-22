@@ -115,7 +115,6 @@ class MapprApplication extends Mappr
     */
     private function _defaultOutput()
     {
-
       $this->image_url = $this->image->saveWebImage();
 
       $bbox = [

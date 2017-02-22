@@ -202,7 +202,7 @@ class MapprApi extends Mappr
             } else {
               $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
             }
-            $mlayer->set("name", $title);
+            $mlayer->set("name", trim(stripslashes($title)));
             $mlayer->set("status", MS_ON);
             $mlayer->set("type", MS_LAYER_POINT);
             $mlayer->set("tolerance", 5);
@@ -280,7 +280,7 @@ class MapprApi extends Mappr
                     }
                 }
                 if (array_key_exists('title', $this->request->wkt[$j])) {
-                    $title = stripslashes($this->request->wkt[$j]['title']);
+                    $title = $this->request->wkt[$j]['title'];
                 }
                 if (array_key_exists('data', $this->request->wkt[$j])) {
                     $data = trim($this->request->wkt[$j]['data']);
@@ -304,7 +304,7 @@ class MapprApi extends Mappr
                             $layer->setProjection(self::getProjection($this->default_projection));
 
                             $class = ms_newClassObj($layer);
-                            $class->set("name", $title);
+                            $class->set("name", trim(stripslashes($title)));
                             $style = ms_newStyleObj($class);
                             if ($type == MS_LAYER_POINT) {
                                 $style->set("symbolname", 'circle');
@@ -366,7 +366,7 @@ class MapprApi extends Mappr
 
             $layer->setFilter("(".implode(" || ", $qry).")");
             $class = ms_newClassObj($layer);
-            $class->set("name", stripslashes($this->request->regions['title']));
+            $class->set("name", trim(stripslashes($this->request->regions['title'])));
 
             $style = ms_newStyleObj($class);
             $color = explode(" ", "0 0 0");

@@ -724,7 +724,7 @@ abstract class Mappr
                 $offset = 2;
 
                 if ($this->request->coords[$j]['title']) {
-                    $title = stripslashes($this->request->coords[$j]['title']);
+                    $title = $this->request->coords[$j]['title'];
                 }
                 if ($this->request->coords[$j]['size']) {
                     $size = $this->request->coords[$j]['size'];
@@ -760,7 +760,7 @@ abstract class Mappr
 
                     $class = ms_newClassObj($layer);
                     if ($title != "") {
-                        $class->set("name", $title);
+                        $class->set("name", trim(stripslashes($title)));
                     }
 
                     if ($shadow) {
@@ -834,7 +834,7 @@ abstract class Mappr
             $count = count($this->request->wkt)-1;
             for ($j=$count; $j>=0; $j--) {
                 $color = [];
-                $title = ($this->request->wkt[$j]['title']) ? stripslashes($this->request->wkt[$j]['title']) : "";
+                $title = ($this->request->wkt[$j]['title']) ? $this->request->wkt[$j]['title'] : "";
                 if ($this->request->wkt[$j]['color']) {
                     $color = explode(" ", $this->request->wkt[$j]['color']);
                     if (count($color) != 3) {
@@ -863,7 +863,7 @@ abstract class Mappr
                         $layer->setProjection(self::getProjection($this->default_projection));
 
                         $class = ms_newClassObj($layer);
-                        $class->set("name", $title);
+                        $class->set("name", trim(stripslashes($title)));
                         $style = ms_newStyleObj($class);
                         if ($type == MS_LAYER_POINT) {
                             $style->set("symbolname", 'circle');
@@ -900,7 +900,7 @@ abstract class Mappr
             for ($j=$count; $j>=0; $j--) {
                 //clear out previous loop's selection
                 $color = [];
-                $title = ($this->request->regions[$j]['title']) ? stripslashes($this->request->regions[$j]['title']) : "";
+                $title = ($this->request->regions[$j]['title']) ? $this->request->regions[$j]['title'] : "";
                 if ($this->request->regions[$j]['color']) {
                     $color = explode(" ", $this->request->regions[$j]['color']);
                     if (count($color) != 3) {
@@ -959,7 +959,7 @@ abstract class Mappr
                     $layer->setFilter("(".implode(" || ", $query).")");
 
                     $class = ms_newClassObj($layer);
-                    $class->set("name", $title);
+                    $class->set("name", trim(stripslashes($title)));
 
                     $style = ms_newStyleObj($class);
                     if (!empty($color)) {
