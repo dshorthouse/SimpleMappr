@@ -23,9 +23,9 @@
       }
     },
     "require": {
-      "league/csv"                : "dev-master",
-      "natxet/CssMin"             : "dev-master",
-      "neitanod/forceutf8"        : "dev-master",
+      "league/csv"                : "~8.2.0",
+      "natxet/CssMin"             : "~3.0.4",
+      "neitanod/forceutf8"        : "~2.0",
       "phpoffice/phppresentation" : "~0.6.0",
       "phpoffice/phpword"         : "~0.12.1",
       "phayes/geophp"             : "~1.2",
