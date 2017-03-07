@@ -315,7 +315,7 @@ class Bootstrap
             $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $parsed_url);
             echo $response;
         } catch(\Exception $e) {
-            echo $this->_render404();
+            echo $this->_renderError(404);
         }
 
     }
@@ -388,7 +388,7 @@ class Bootstrap
     private function _main()
     {
         if (!isset($_SERVER['HTTP_HOST'])) {
-            exit();
+            echo $this->_renderError(400);
         }
 
         $host = explode(".", $_SERVER['HTTP_HOST']);
@@ -451,17 +451,34 @@ class Bootstrap
     }
 
     /**
-     * Render a 404 document
+     * Render an error document
+     *
+     * @param integer $code HTTP error code
      *
      * @return string
      */
-    private function _render404()
+    private function _renderError($code = 404)
     {
-        http_response_code(404);
+        http_response_code($code);
+        $title = " - ";
+        switch ($code) {
+            case 400:
+                $title .= "Bad Request";
+                break;
+            case 403:
+                $title .= "Forbidden";
+                break;
+            case 404:
+                $title .= "Not Found";
+                break;
+            default:
+                $title .= "Error";
+        }
         $config = [
-            'title' => ' - Not Found',
+            'title' => $title,
+            'og_url' => MAPPR_URL,
             'google_analytics' => GOOGLE_ANALYTICS
         ];
-        return $this->_twig(true)->render("404.html", $config);
+        return $this->_twig(true)->render("{$code}.html", $config);
     }
 }
