@@ -367,7 +367,7 @@ class Session
             $user['hash'] = (!$result) ? password_hash($identifier, PASSWORD_DEFAULT) : $result->hash;
             $user['uid'] = (!$result) ? $db->queryInsert('users', $user) : $result->uid;
             $user['locale'] = $this->_locale;
-            $user['role'] = (!$result->role) ? 1 : $result->role;
+            $user['role'] = (property_exists($result, 'role')) ? $result->role : 1;
 
             $db->queryUpdate('users', ['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
 

@@ -387,6 +387,10 @@ class Bootstrap
      */
     private function _main()
     {
+        if (!isset($_SERVER['HTTP_HOST'])) {
+            exit();
+        }
+
         $host = explode(".", $_SERVER['HTTP_HOST']);
         if (ENVIRONMENT == "production" && $host[0] !== "www" && !in_array("local", $host)) {
             header('Location: '.MAPPR_URL);
