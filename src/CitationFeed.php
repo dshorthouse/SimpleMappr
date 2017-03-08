@@ -7,7 +7,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2013 David P. Shorthouse
+ * @copyright 2017 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
@@ -47,7 +47,7 @@ use \Suin\RSSWriter\Item;
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2013 David P. Shorthouse
+ * @copyright 2017 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
@@ -60,19 +60,11 @@ class CitationFeed extends Citation
     private $_channel;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->_feed = new Feed();
-    }
-
-    /**
      * Make the Channel
      */
     public function makeChannel()
     {
+        $this->_feed = new Feed();
         $this->_channel = new Channel();
         $this->_channel
             ->title('SimpleMappr Recent Citations')
