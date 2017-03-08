@@ -69,6 +69,7 @@ abstract class SimpleMapprTest extends TestCase
           `doi` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
           `link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
           `first_author_surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+          `created` int(11) NOT NULL,
           PRIMARY KEY (`id`),
           KEY `year` (`year`,`first_author_surname`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
@@ -474,7 +475,8 @@ abstract class SimpleMapprTest extends TestCase
           'year' => 2010,
           'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
           'doi' => '10.XXXX/XXXXXX',
-          'first_author_surname' => 'Shorthouse'
+          'first_author_surname' => 'Shorthouse',
+          'created' => time()
         ]);
 
         self::$db->queryInsert('stateprovinces', [

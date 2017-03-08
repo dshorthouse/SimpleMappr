@@ -1,68 +1,58 @@
--- MySQL dump 10.13  Distrib 5.7.16, for osx10.12 (x86_64)
---
--- Host: localhost    Database: simplemappr
--- ------------------------------------------------------
--- Server version	5.7.16
+-- Host: localhost
+-- Generation Time: Mar 08, 2017 at 05:06 PM
+-- Server version: 5.7.16
+-- PHP Version: 5.6.29
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `simplemappr`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `citations`
 --
 
-DROP TABLE IF EXISTS `citations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `citations` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `year` int(11) NOT NULL,
   `reference` text COLLATE utf8_unicode_ci NOT NULL,
   `doi` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `first_author_surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `year` (`year`,`first_author_surname`)
-) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `created` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `maps`
 --
 
-DROP TABLE IF EXISTS `maps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `maps` (
-  `mid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) UNSIGNED NOT NULL,
   `uid` int(11) NOT NULL,
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `map` longtext CHARACTER SET utf8 COLLATE utf8_bin,
   `created` int(11) NOT NULL,
-  `updated` int(11) DEFAULT NULL,
-  PRIMARY KEY (`mid`),
-  KEY `uid` (`uid`),
-  KEY `title` (`title`),
-  KEY `idx_created` (`created`),
-  KEY `idx_updated` (`updated`)
-) ENGINE=InnoDB AUTO_INCREMENT=6515 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `updated` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
   `version` bigint(14) NOT NULL,
   `migration_name` varchar(100) DEFAULT NULL,
@@ -70,52 +60,41 @@ CREATE TABLE `migrations` (
   `end_time` timestamp NOT NULL DEFAULT '1970-01-01 05:00:01',
   `breakpoint` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `shares`
 --
 
-DROP TABLE IF EXISTS `shares`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shares` (
-  `sid` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) NOT NULL,
   `mid` int(11) NOT NULL,
-  `created` int(11) NOT NULL,
-  PRIMARY KEY (`sid`),
-  KEY `mid` (`mid`),
-  KEY `created` (`created`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `created` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `stateprovinces`
 --
 
-DROP TABLE IF EXISTS `stateprovinces`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stateprovinces` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) UNSIGNED NOT NULL,
   `country_iso` char(3) DEFAULT NULL,
   `country` varchar(128) DEFAULT NULL,
   `stateprovince` varchar(128) DEFAULT NULL,
-  `stateprovince_code` char(2) NOT NULL,
-  UNIQUE KEY `OBJECTID` (`id`),
-  KEY `index_on_country` (`country`)
-) ENGINE=InnoDB AUTO_INCREMENT=4651 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `stateprovince_code` char(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `uid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) UNSIGNED NOT NULL,
   `hash` varchar(60) NOT NULL,
   `identifier` varchar(255) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
@@ -123,22 +102,84 @@ CREATE TABLE `users` (
   `email` varchar(50) DEFAULT NULL,
   `role` int(11) DEFAULT '1',
   `created` int(11) DEFAULT NULL,
-  `access` int(11) DEFAULT NULL,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `idx_users_hash` (`hash`),
-  KEY `identifier` (`identifier`),
-  KEY `idx_username` (`username`),
-  KEY `idx_access` (`access`)
-) ENGINE=InnoDB AUTO_INCREMENT=1150 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+  `access` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `citations`
+--
+ALTER TABLE `citations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `year` (`year`,`first_author_surname`);
+
+--
+-- Indexes for table `maps`
+--
+ALTER TABLE `maps`
+  ADD PRIMARY KEY (`mid`),
+  ADD KEY `uid` (`uid`),
+  ADD KEY `title` (`title`),
+  ADD KEY `idx_created` (`created`),
+  ADD KEY `idx_updated` (`updated`);
+
+--
+-- Indexes for table `shares`
+--
+ALTER TABLE `shares`
+  ADD PRIMARY KEY (`sid`),
+  ADD KEY `mid` (`mid`),
+  ADD KEY `created` (`created`);
+
+--
+-- Indexes for table `stateprovinces`
+--
+ALTER TABLE `stateprovinces`
+  ADD UNIQUE KEY `OBJECTID` (`id`),
+  ADD KEY `index_on_country` (`country`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `idx_users_hash` (`hash`),
+  ADD KEY `identifier` (`identifier`),
+  ADD KEY `idx_username` (`username`),
+  ADD KEY `idx_access` (`access`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `citations`
+--
+ALTER TABLE `citations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+--
+-- AUTO_INCREMENT for table `maps`
+--
+ALTER TABLE `maps`
+  MODIFY `mid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6515;
+--
+-- AUTO_INCREMENT for table `shares`
+--
+ALTER TABLE `shares`
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+--
+-- AUTO_INCREMENT for table `stateprovinces`
+--
+ALTER TABLE `stateprovinces`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4651;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `uid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1150;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2016-12-15 13:03:17
