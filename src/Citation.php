@@ -121,7 +121,8 @@ class Citation implements RestMethods
             'reference' => $reference,
             'doi' => $doi,
             'link' => $link,
-            'first_author_surname' => $author
+            'first_author_surname' => $author,
+            'created' => time()
         ];
 
         $data['id'] = $this->_db->queryInsert('citations', $data);

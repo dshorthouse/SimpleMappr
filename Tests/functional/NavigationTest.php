@@ -13,6 +13,8 @@
  */
 class NavigationTest extends SimpleMapprTest
 {
+    use SimpleMapprMixin;
+
     /**
      * Parent setUp function executed before each test
      */
@@ -108,6 +110,16 @@ class NavigationTest extends SimpleMapprTest
         parent::waitOnAjax();
         $content = $this->webDriver->findElement(WebDriverBy::id('map-help'));
         $this->assertContains('This application makes heavy use of JavaScript.', $content->getText());
+    }
+
+    /**
+     * Test 404 page
+     */
+    public function test404Page()
+    {
+        $this->webDriver->get(MAPPR_URL . "/doesnotexist");
+        $content = $this->webDriver->findElement(WebDriverBy::id('error-message'));
+        $this->assertContains('The page you requested was not found', $content->getText());
     }
 
 }

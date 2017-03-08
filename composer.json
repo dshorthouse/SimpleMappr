@@ -33,7 +33,8 @@
       "robmorgan/phinx"           : "~0.8.0",
       "symfony/yaml"              : "*",
       "twig/twig"                 : "~1.0",
-      "twig/extensions"           : "~1.1.0"
+      "twig/extensions"           : "~1.1.0",
+      "suin/php-rss-writer"       : ">=1.0"
     },
     "require-dev": {
       "phpunit/phpunit"               : "5.4.*",

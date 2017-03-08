@@ -81,4 +81,26 @@ trait SimpleMapprMixin
 
         return $output;
     }
+
+    public function getHTTPResponseCode($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // The PHP doc indicates that CURLOPT_CONNECTTIMEOUT_MS constant is added in cURL 7.16.2
+        // available since PHP 5.2.3.
+        if (!defined(CURLOPT_CONNECTTIMEOUT_MS)) {
+            define('CURLOPT_CONNECTTIMEOUT_MS', 156);  // default value for CURLOPT_CONNECTTIMEOUT_MS
+        }
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 500);
+        $code = null;
+        try {
+            curl_exec($ch);
+            $info = curl_getinfo($ch);
+            $code = $info['http_code'];
+        } catch (Exception $e) {
+        }
+        curl_close($ch);
+        return $code;
+    }
 }

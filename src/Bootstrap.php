@@ -129,6 +129,13 @@ class Bootstrap
             return json_encode($output);
         });
 
+        $router->get('/citation.rss', function () {
+            Header::setHeader('xml');
+            $klass = $this->_klass("CitationFeed");
+            $feed = $klass->makeChannel()->addItems()->getFeed();
+            return $feed;
+        });
+
         $router->group(['before' => 'check_role_administrator'], function ($router) {
             $router->get('/citation.json', function () {
                 Header::setHeader("json");
