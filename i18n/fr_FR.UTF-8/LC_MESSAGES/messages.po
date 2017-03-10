@@ -819,6 +819,14 @@ msgid "June 25, 2013"
 msgstr "25 juin, 2013"
 
 #: .tabs/about.php:11
+msgid "March 9, 2017"
+msgstr "9 mars, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvments: Added World Robinson projection as an option."
+msgstr "Améliorations: Ajouté World Robinson comme nouvelle projection."
+
+#: .tabs/about.php:11
 msgid "Bug fixes: Coordinates in the form DDdMMmSSs were incorrectly transformed to DD. Reported by Lorenzo Gallo."
 msgstr "Correction: Coordonnées dans la forme DDdMMmSSs n'ont pas été transformés correctements en DD. Rapporté by Lorenzo Gallo."
 
