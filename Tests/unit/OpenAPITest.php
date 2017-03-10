@@ -88,7 +88,7 @@ class OpenAPITest extends TestCase
     public function test_projections()
     {
         $key = array_search("projection", array_column($this->parameters, "name"));
-        $this->assertCount(9, $this->parameters[$key]['enum']);
+        $this->assertCount(10, $this->parameters[$key]['enum']);
         $this->assertContains("epsg:4326", $this->parameters[$key]['enum']);
     }
 
