@@ -333,7 +333,7 @@ abstract class Mappr
     private function _loadProjection()
     {
         $projection = AcceptedProjections::$projections[$this->default_projection]['proj'];
-        $this->map_obj->setProjection($projection);
+        $this->map_obj->setProjection($projection, true);
     }
 
     /**
@@ -652,7 +652,7 @@ abstract class Mappr
         if (isset($this->request->rotation) && $this->request->rotation != 0) {
             $this->map_obj->setRotation($this->request->rotation);
             if ($this->request->projection == $this->default_projection) {
-                $this->_reproject($this->default_projection, $this->request->projection);
+                $this->_reproject($this->request->projection);
             }
         }
     }
@@ -1379,7 +1379,7 @@ abstract class Mappr
     private function _prepareOutput()
     {
         if (isset($this->request->projection)) {
-            $this->_reproject($this->request->projection_map, $this->request->projection);
+            $this->_reproject($this->request->projection);
             $this->_addLegendScalebar();
             $this->_addBorder();
             $this->image = $this->map_obj->drawQuery();
@@ -1389,22 +1389,14 @@ abstract class Mappr
     /**
      * Reproject a $map from one projection to another.
      *
-     * @param string $input_projection  The input projection.
      * @param string $output_projection The output projection.
      *
      * @return void
      */
-    private function _reproject($input_projection, $output_projection)
+    private function _reproject($output_projection)
     {
         $this->_setOrigin($output_projection);
-
-        $origProjObj = ms_newProjectionObj(self::getProjection($input_projection));
-        $newProjObj = ms_newProjectionObj(self::getProjection($output_projection));
-
-        $oRect = $this->map_obj->extent;
-        $oRect->project($origProjObj, $newProjObj);
-        $this->map_obj->setExtent($oRect->minx, $oRect->miny, $oRect->maxx, $oRect->maxy);
-        $this->map_obj->setProjection(self::getProjection($output_projection));
+        $this->map_obj->setProjection(self::getProjection($output_projection), true);
     }
 
     /**

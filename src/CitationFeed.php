@@ -79,13 +79,14 @@ class CitationFeed extends Citation
 
     public function addItems()
     {
+        $week_ago = time() - (7 * 24 * 60 * 60);
         $entries = $this->index();
         usort($entries['citations'], function ($a, $b) {
             return $b->year > $a->year;
         });
         foreach($entries['citations'] as $citation) {
             $url = ($citation->doi) ? "https://doi.org/{$citation->doi}" : $citation->link;
-            if ($citation->created && $url) {
+            if ($url && $citation->created >= $week_ago) {
                 $item = new Item();
                 $item
                     ->preferCdata(true)
