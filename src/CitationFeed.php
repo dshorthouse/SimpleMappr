@@ -69,7 +69,7 @@ class CitationFeed extends Citation
         $this->_channel
             ->title('SimpleMappr Recent Citations')
             ->description('Channel of recent publications that have used SimpleMappr')
-            ->url('http://www.simplemappr.net')
+            ->url(MAPPR_URL)
             ->language('en-US')
             ->pubDate(time())
             ->ttl(60)
