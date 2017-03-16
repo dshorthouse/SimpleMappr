@@ -415,7 +415,8 @@ class Bootstrap
                 'labels' => array_combine(array_keys($shapes['labels']), array_column($shapes['labels'], 'name')),
                 'projections' => AcceptedProjections::$projections,
                 'marker_shapes' => AcceptedMarkerShapes::$shapes,
-                'locales' => Session::$accepted_locales
+                'locales' => Session::$accepted_locales,
+                'num_textarea' => MAXNUMTEXTAREA
             ];
             return $this->_twig(true)->render("main.html", $config);
         }

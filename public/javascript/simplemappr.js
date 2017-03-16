@@ -1691,20 +1691,26 @@ var SimpleMappr = (function($, window, document) {
           coord_shadow = false,
           pattern     = /[?*{}\\]+/g;
 
-      $.each(coords, function(i) {
-        if(i > 2) { self.addAccordionPanel('coords'); }
+      if (coords.length > self.settings.maxTextareaCount) {
+        self.showTooMuchData();
+        return false;
+      } else {
+        $.each(coords, function(i) {
+          if(i > 2) { self.addAccordionPanel('coords'); }
 
-        coord_title = coords[i].title || "";
-        coord_data  = coords[i].data.replace(pattern, "")  || "";
-        coord_color = coords[i].color || "0 0 0";
-        coord_shadow = (coords[i].hasOwnProperty("shadow")) ? true : false; 
+          coord_title = coords[i].title || "";
+          coord_data  = coords[i].data.replace(pattern, "")  || "";
+          coord_color = coords[i].color || "0 0 0";
+          coord_shadow = (coords[i].hasOwnProperty("shadow")) ? true : false; 
 
-        self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
-        self.vars.fieldSetsPoints.find('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
-        self.loadShapeSize(i, coords);
-        self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
-        self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][shadow]"]').prop("checked", coord_shadow);
-      });
+          self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][title]"]').val(coord_title);
+          self.vars.fieldSetsPoints.find('textarea[name="coords['+i.toString()+'][data]"]').val(coord_data);
+          self.loadShapeSize(i, coords);
+          self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][color]"]').val(coord_color);
+          self.vars.fieldSetsPoints.find('input[name="coords['+i.toString()+'][shadow]"]').prop("checked", coord_shadow);
+        });
+        return true;
+      }
     },
 
     loadWKT: function(data) {
@@ -2477,7 +2483,7 @@ var SimpleMappr = (function($, window, document) {
     bindUpload: function() {
       var self = this,
           fileInput = $('#fileInput'),
-          file, textType, reader;
+          file, textType, reader, loaded;
 
       if(window.FileReader === "undefined") {
         $('#upload-panel').remove();
@@ -2493,8 +2499,13 @@ var SimpleMappr = (function($, window, document) {
             self.removeExtraElements();
             $('#map-points').find('button.addmore').prop("disabled", false);
             self.clearZone($('#clearLayers').parent().prev().prev().children());
-            self.loadCoordinates(self.parseFile(reader.result));
+            loaded = self.loadCoordinates(self.parseFile(reader.result));
             self.vars.fieldSetsPoints.accordion("activate", 0);
+            if (loaded) {
+              self.destroyRedo();
+              self.showMap();
+              self.tabSelector(0);
+            }
           };
           reader.readAsText(file);
         } else {
@@ -2509,6 +2520,29 @@ var SimpleMappr = (function($, window, document) {
         height        : '200',
         width         : '500',
         dialogClass   : 'ui-dialog-title-badFile',
+        position      : [200, 200],
+        modal         : true,
+        closeOnEscape : false,
+        draggable     : true,
+        resizable     : false,
+        buttons: [
+          {
+            "text"  : "OK",
+            "class" : "positive",
+            "click" : function() {
+              $(this).dialog("destroy");
+            }
+          }
+        ]
+      });
+    },
+
+    showTooMuchData: function() {
+      $('#tooMuchData').dialog({
+        autoOpen      : true,
+        height        : '200',
+        width         : '500',
+        dialogClass   : 'ui-dialog-title-tooMuchData',
         position      : [200, 200],
         modal         : true,
         closeOnEscape : false,

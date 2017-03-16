@@ -34,7 +34,7 @@ ul.navigation a.map-mymaps:before{background-position:-200px -284px;}
 ul.navigation a.map-users:before{background-position:-160px -264px;}
 ul.navigation a.map-myhelp:before{background-position:-220px -264px;}
 li.map-extras{float:right !important;}
-#mapSave, #mapExport, #mapEmbed, #badFile{display:none;}
+#mapSave, #mapExport, #mapEmbed, #badFile, #tooMuchData{display:none;}
 #mapEmbed .header{margin-top:5px;}
 #mapEmbed h2{font-size:0.9em;}
 #mapSave p, #mapExport p, #mapEmbed p{font-size:0.8em;margin:5px 0px;}
@@ -43,6 +43,7 @@ li.map-extras{float:right !important;}
 .ui-dialog-title-mapEmbed .ui-dialog-title:before{background-position:-220px -284px;}
 .ui-dialog-title-mapExport .ui-dialog-title:before{background-position:-160px -284px;}
 .ui-dialog-title-badFile .ui-dialog-title:before{background-position:-240px -264px;}
+.ui-dialog-title-tooMuchData .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-badRecordsViewer .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-mapper-message .ui-dialog-title:before{background-position:-240px -264px;}
 .ui-dialog-title-mapper-message-delete .ui-dialog-title:before{background-position:-260px -284px;}
@@ -381,7 +382,7 @@ input.ui-button{padding:.4em 1em;}
 @media print{
 html, body{border:none;}
 body{font-family:Verdana,Arial,Helvetica,sans-serif;margin:0px;}
-#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-wkt,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badFile,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
+#header,.navigation,#actionsBar,#mapControls,.ui-tabs-nav,#mapOptions,#mapToolsCollapse,#map-points,#map-regions,#map-wkt,#map-mymaps,#map-users,#map-admin,#map-help,#map-about,#map-api,#map-feedback,#badFile,#tooMuchData,#badRecordsViewer,#badRecordsWarning,#mapSave,#mapExport,.colorpicker,.hidden-message{display:none;}
 #mapScale{text-align: right;}
 #mapLegend p{display:none;}
 #mapLegend img{display:block;}

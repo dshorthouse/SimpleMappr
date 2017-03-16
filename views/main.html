@@ -237,36 +237,7 @@
     </div>
     </div>
 
-    <script type="text/template" id="dialog-template">
-    <div id="mapper-message" class="ui-state-error" title="{% trans "Warning" %}"></div>
-    <div id="button-titles" class="hidden-message">
-      <span class="save">{% trans "Save" %}</span>
-      <span class="cancel">{% trans "Cancel" %}</span>
-      <span class="download">{% trans "Download" %}</span>
-      <span class="delete">{% trans "Delete" %}</span>
-    </div>
-    <div id="mapper-loading-error-message" class="hidden-message">{% trans "There was a problem loading your map." %}</div>
-    <div id="mapper-saving-error-message" class="hidden-message">{% trans "There was a problem saving your map." %}</div>
-    <div id="mapper-saving-message" class="hidden-message">{% trans "Saving..." %}</div>
-    <div id="mapper-missing-legend" class="hidden-message">{% trans "You are missing a legend for at least one of your Point Data, Region, or Drawing layers." %}</div>
-    <div id="mapper-message-delete" class="ui-state-highlight hidden-message" title="{% trans "Delete" %}">{% trans "Are you sure you want to delete" %} <span></span>?</div>
-    <div id="mapper-legend-message" class="hidden-message">{% trans "legend will appear here" %}</div>
-    <div id="mapper-message-help" class="ui-state-highlight hidden-message" title="{% trans "Example Coordinates" %}"></div>
-    <div id="mapper-message-codes" class="ui-state-highlight hidden-message" title="{% trans "State/Province Codes" %}"></div>
-    <div id="mapEmbed" class="ui-state-highlight hidden-message" title="{% trans "Embed" %}">
-      <div class="header"><h2>{% trans 'Image' %}</h2></div>
-      <p><input id="embed-img" type="text" size="62" value="" /></p>
-      <p><strong>{% trans "Additional parameters" %}</strong>:<br><span class="indent">{% trans "width, height, legend" %} <br><em>e.g.</em> /map/<span class="mid"></span>?width=200&amp;height=150&amp;legend=true</span></p>
-      <div class="header"><h2>{% trans 'KML' %}</h2></div>
-      <p><input id="embed-kml" type="text" size="62" value="" /></p>
-      <div class="header"><h2>{% trans 'SVG' %}</h2></div>
-      <p><input id="embed-svg" type="text" size="62" value="" /></p>
-      <div class="header"><h2>{% trans 'GeoJSON' %}</h2></div>
-      <p><input id="embed-json" type="text" size="62" value="" /></p>
-      <p><strong>{% trans "Additional parameters" %}</strong>:<br><span class="indent">{% trans "callback" %} (<em>e.g.</em> /map/<span class="mid"></span>.json?callback=myCoolCallback)</span></p>
-    </div>
-    <div id="badFile" title="{% trans "Unsupported file type" %}">{% trans "Only files of type text are accepted." %}</div>
-    </script>
+    {% include "fragments/fragment.error-dialogs.html" %}
 
     <div id="colorpicker"><div class="colorpicker colorpicker_background"><div class="colorpicker_color"><div class="colorpicker"><div class="colorpicker"></div></div></div><div class="colorpicker_hue"><div class="colorpicker"></div></div><div class="colorpicker_new_color"></div><div class="colorpicker_current_color"></div><div class="colorpicker colorpicker_hex"><input type="text" maxlength="6" size="6" /></div><div class="colorpicker_rgb_r colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_g colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_rgb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_h colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_s colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="colorpicker_hsb_b colorpicker colorpicker_field"><input type="text" maxlength="3" size="3" /><span></span></div><div class="sprites-before colorpicker_submit">{% trans "Apply" %}</div></div></div>
 

@@ -1282,3 +1282,11 @@ msgstr "Exemple 1"
 #: ./tabs/main.php:171
 msgid "Example 2"
 msgstr "Exemple 2"
+
+#: ./tabs/main.php:171
+msgid "Too many fields of data"
+msgstr "Trop de champs de données"
+
+#: ./tabs/main.php:171
+msgid "A maximum of %num_textarea% data fields is supported."
+msgstr "Un maximum de %num_textarea% champs de données est supporté"
