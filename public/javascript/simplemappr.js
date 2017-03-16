@@ -2527,7 +2527,7 @@ var SimpleMappr = (function($, window, document) {
     },
 
     parseFile: function(content) {
-      var csv, data, headers, self = this, coords = {}, coord_arr = [], options = {};
+      var csv, data, headers, self = this, coords = {}, coord_arr = [], options = {}, shapes, shape, i = 0;
 
       if(content.indexOf("\t") !== -1) {
         $.extend(options, { "delimiter" : "\t" });
@@ -2537,11 +2537,15 @@ var SimpleMappr = (function($, window, document) {
       data = csv.data;
 
       if(data.length > 1) {
+        shapes = $("option", "select.m-mapShape:first").map(function() {
+          if (!["", "plus", "cross", "asterisk"].includes($(this).val())) { return $(this).val(); }
+        });
         headers = data[0];
         if(isNaN(headers[headers.length-1])) {
           data.shift();
           coord_arr = $.map(headers, function(name, i) {
-            return { "title" : name, "data" : $.map(data, function(coords) { return coords[i]; }).join("\n") };
+            shape = (i >= self.settings.maxTextareaCount) ? 0 : shapes[i];
+            return { "title" : name, "data" : $.map(data, function(coords) { return coords[i]; }).join("\n"), "shape" : shape };
           });
         } else {
           $.each(data, function(k,v) {
@@ -2555,7 +2559,9 @@ var SimpleMappr = (function($, window, document) {
             }
           });
           $.each(coords, function(k,v) {
-            coord_arr.push({ "title" : k, "data" : v.join("\n") });
+            shape = (i >= self.settings.maxTextareaCount) ? 0 : shapes[i];
+            coord_arr.push({ "title" : k, "data" : v.join("\n"), "shape" : shape });
+            i += 1;
           });
         }
       }
