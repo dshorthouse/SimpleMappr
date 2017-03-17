@@ -99,6 +99,9 @@ class FileUploadTest extends SimpleMapprTest
 
         sleep(2);
 
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
+        $link->click();
+
         $title1 = $this->webDriver->findElement(WebDriverBy::name('coords[0][title]'));
         $data1 = $this->webDriver->findElement(WebDriverBy::name('coords[0][data]'));
 
