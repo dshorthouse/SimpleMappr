@@ -81,7 +81,8 @@ class CitationTest extends SimpleMapprTest
             'year' => 2015,
             'reference' => 'Aaarnoldson, Peter. 2015. Here be a new citation. [Retrieved from http://www.simplemappr.net. Accessed 01 January, 2015].',
             'doi' => '10.XXXX/XXXXXX',
-            'first_author_surname' => 'Aaarnoldson'
+            'first_author_surname' => 'Aaarnoldson',
+            'created' => time()
         ]);
 
         parent::setUpPage();
