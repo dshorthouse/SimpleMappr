@@ -823,6 +823,14 @@ msgid "March 9, 2017"
 msgstr "9 mars, 2017"
 
 #: .tabs/about.php:11
+msgid "March 22, 2017"
+msgstr "22 mars, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvments: Automated selection of markers for text file uploads."
+msgstr "Améliorations: Automatisé la sélection des formes de points de données pour des fichers texte."
+
+#: .tabs/about.php:11
 msgid "Improvments: Added World Robinson projection as an option."
 msgstr "Améliorations: Ajouté World Robinson comme nouvelle projection."
 
