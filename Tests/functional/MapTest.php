@@ -94,7 +94,7 @@ class MapTest extends SimpleMapprTest
             'created' => time()
         ]);
         $this->webDriver->navigate()->refresh();
-        $this->waitOnAjax();
+        parent::waitOnAjax();
         $delete_links = $this->webDriver->findElements(WebDriverBy::cssSelector("#usermaps > .grid-usermaps > tbody > tr > .actions > .map-delete"));
         foreach($delete_links as $delete_link) {
             if($delete_link->getAttribute('data-id') == $mid) {
