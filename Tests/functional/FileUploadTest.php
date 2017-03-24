@@ -50,6 +50,23 @@ class FileUploadTest extends SimpleMapprTest
     }
 
     /**
+     * Test upload an unrecognized file.
+     */
+    public function testUploadLargeFile()
+    {
+        parent::setUpPage();
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
+        $link->click();
+
+        $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
+        $file_input->sendKeys($this->file_dir . "sample4.txt");
+
+        $message_box = $this->webDriver->findElement(WebDriverBy::id('tooMuchData'));
+        $this->assertTrue($message_box->isDisplayed());
+        $this->assertEquals("A maximum of " . MAXNUMTEXTAREA . " data fields is supported.", $message_box->getText());
+    }
+
+    /**
      * Test upload a text file.
      */
     public function testUploadTextFile()
