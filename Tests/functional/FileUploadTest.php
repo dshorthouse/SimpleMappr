@@ -42,7 +42,9 @@ class FileUploadTest extends SimpleMapprTest
         $link->click();
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
+        $file_input->setFileDetector(new LocalFileDetector());
         $file_input->sendKeys($this->file_dir . "sample3.docx");
+        $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
 
         $message_box = $this->webDriver->findElement(WebDriverBy::id('badFile'));
         $this->assertTrue($message_box->isDisplayed());
@@ -59,7 +61,9 @@ class FileUploadTest extends SimpleMapprTest
         $link->click();
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
+        $file_input->setFileDetector(new LocalFileDetector());
         $file_input->sendKeys($this->file_dir . "sample4.txt");
+        $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
 
         $message_box = $this->webDriver->findElement(WebDriverBy::id('tooMuchData'));
         $this->assertTrue($message_box->isDisplayed());
@@ -76,7 +80,9 @@ class FileUploadTest extends SimpleMapprTest
         $link->click();
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
+        $file_input->setFileDetector(new LocalFileDetector());
         $file_input->sendKeys($this->file_dir . "sample.txt");
+        $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
         parent::waitOnMap();
 
         $link->click();
@@ -110,7 +116,9 @@ class FileUploadTest extends SimpleMapprTest
         $link->click();
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
+        $file_input->setFileDetector(new LocalFileDetector());
         $file_input->sendKeys($this->file_dir . "sample2.txt");
+        $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
         parent::waitOnMap();
 
         $link->click();
