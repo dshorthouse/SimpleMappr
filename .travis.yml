@@ -8,10 +8,9 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
-    - BROWSER=firefox
+    - BROWSER=chrome
 
 addons:
-  firefox: "52.0.1"
   hosts:
     - www.simplemappr.local
     - img.simplemappr.local
@@ -19,6 +18,7 @@ addons:
     packages:
       - apache2
       - build-essential
+      - google-chrome-stable
       - libapache2-mod-fastcgi
       - php5-cli
       - php5-common
