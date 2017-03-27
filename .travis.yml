@@ -52,8 +52,8 @@ addons:
 
 before_install:
   #Google Chrome
-  - sudo apt-get -qq update
-  - sudo apt-get -qq upgrade
+  - sudo apt-get -qq -y update
+  - sudo apt-get -qq -y upgrade
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 
