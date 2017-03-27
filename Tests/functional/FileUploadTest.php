@@ -77,9 +77,6 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->sendKeys($this->file_dir . "sample.txt");
-
-        $preview_link = $this->webDriver->findElement(WebDriverBy::linkText('Preview'));
-        $preview_link->click();
         parent::waitOnMap();
 
         $link->click();
@@ -114,9 +111,6 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->sendKeys($this->file_dir . "sample2.txt");
-
-        $preview_link = $this->webDriver->findElement(WebDriverBy::linkText('Preview'));
-        $preview_link->click();
         parent::waitOnMap();
 
         $link->click();
