@@ -594,6 +594,7 @@ abstract class SimpleMapprTest extends TestCase
     public function tearDown()
     {
         if(method_exists($this->webDriver, 'quit')) {
+            $this->webDriver->close();
             $this->webDriver->quit();
         }
     }

@@ -135,21 +135,16 @@ Tests
 PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=3.3/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies. The Firefox Gecko driver can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
 
     $ java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar selenium-server-standalone-3.3.1.jar
-    $ ./vendor/bin/phpunit -c Tests/firefox.phpunit.xml
+    $ ./vendor/bin/phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
     $ java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.3.1.jar
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml
 
-Likewise, if you wish to use a headless webdriver such as [PhantomJS](http://phantomjs.org/):
-
-    $ java -Dphantomjs.binary.path=/usr/local/bin/phantomjs -jar selenium-server-standalone-3.3.1
-    $ ./vendor/bin/phpunit -c Tests/phantomjs.phpunit.xml
-
 Tests are split into suites entitled, "Unit", "Functional", "Binary"
 
-    $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --testsuite "Unit"
+    $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --testsuite "Unit" --stderr
 
 JavaScript Minification
 -----------------------
