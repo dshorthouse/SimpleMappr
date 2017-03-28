@@ -7,7 +7,13 @@ wget "https://github.com/mozilla/geckodriver/releases/download/v0.15.0/geckodriv
 sudo tar -xvzf geckodriver-v0.15.0-linux64.tar.gz
 sudo mv geckodriver /usr/local/bin/
 sudo chmod +x /usr/local/bin/geckodriver
-geckodriver -V
 
 echo "---> Launching Selenium-Server-Standalone..."
-xvfb-run --server-args='-screen 0, 1024x768x16' java -jar selenium.jar -port 4444 > /dev/null &
+sudo xvfb-run --server-args='-screen 0, 1024x768x16' java -jar selenium.jar -port 4444 > /dev/null &
+
+wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null http://localhost:4444/wd/hub/status -O /dev/null
+if [ ! $? -eq 0 ]; then
+    echo "Selenium Server not started"
+else
+    echo "Finished setup"
+fi
