@@ -3,9 +3,9 @@
 wget "http://selenium-release.storage.googleapis.com/3.3/selenium-server-standalone-3.3.1.jar"
 sudo mv selenium-server-standalone-3.3.1.jar /usr/bin/selenium.jar
 
-wget "https://chromedriver.storage.googleapis.com/2.28/chromedriver_linux64.zip"
-unzip chromedriver_linux64.zip
-sudo mv chromedriver /usr/bin/chromedriver
+wget "https://github.com/mozilla/geckodriver/releases/download/v0.15.0/geckodriver-v0.15.0-linux64.tar.gz"
+tar -xzf geckodriver-v0.15.0-linux64.tar.gz
+sudo mv geckodriver /usr/bin/geckodriver
 
 echo "---> Launching Selenium-Server-Standalone..."
-xvfb-run --server-args='-screen 0, 1024x768x16' java -Dwebdriver.chrome.driver=/usr/bin/chromedriver -jar /usr/bin/selenium.jar -port 4444 > /dev/null &
+xvfb-run --server-args='-screen 0, 1024x768x16' java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar /usr/bin/selenium.jar -port 4444 > /dev/null &

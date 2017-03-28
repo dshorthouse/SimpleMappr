@@ -581,7 +581,9 @@ abstract class SimpleMapprTest extends TestCase
     public function setUp()
     {
         $host = 'http://localhost:4444/wd/hub';
-        $capabilities = [WebDriverCapabilityType::BROWSER_NAME => BROWSER, WebDriverCapabilityType::HANDLES_ALERTS => true];
+        $browser = BROWSER;
+        $capabilities = DesiredCapabilities::$browser();
+        $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
@@ -591,8 +593,8 @@ abstract class SimpleMapprTest extends TestCase
      */
     public function tearDown()
     {
-        if(method_exists($this->webDriver, 'close')) {
-            $this->webDriver->close();
+        if(method_exists($this->webDriver, 'quit')) {
+            $this->webDriver->quit();
         }
     }
 
