@@ -45,7 +45,6 @@ addons:
       - oracle-java8-installer
       - xvfb
       - unzip
-      - openjdk-7-jre
       - libmagickwand-dev
       - curl
       - cmake
