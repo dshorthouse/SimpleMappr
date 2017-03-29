@@ -10,11 +10,3 @@ sudo chmod +x /usr/local/bin/geckodriver
 
 echo "---> Launching Selenium-Server-Standalone..."
 sudo xvfb-run --server-args='-screen 0, 1024x768x16' java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar /usr/local/bin/selenium.jar -port 4444 > /dev/null &
-
-echo "---> Test connection to Selenium..."
-wget --retry-connrefused --tries=5 --waitretry=1 --output-file=/dev/null --output-document=/dev/null "http://localhost:4444/wd/hub/status"
-if [ ! $? -eq 0 ]; then
-    echo "$(tput bold ; tput setaf 1)Selenium NOT running$(tput sgr0)"
-else
-    echo "$(tput bold ; tput setaf 2)Selenium running$(tput sgr0)"
-fi
