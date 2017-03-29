@@ -42,6 +42,7 @@ addons:
       - libfribidi-dev
       - imagemagick
       - libgtk2.0-0
+      - oracle-java8-installer
       - xvfb
       - unzip
       - openjdk-7-jre
