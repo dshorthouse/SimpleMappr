@@ -8,15 +8,18 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
-    - BROWSER=firefox
+    - BROWSER=chrome
 
 addons:
-  firefox: "latest"
+  firefox: latest
   hosts:
     - www.simplemappr.local
     - img.simplemappr.local
   apt:
+    sources:
+        google-chrome
     packages:
+      - google-chrome-stable fluxbox
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
