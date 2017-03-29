@@ -59,7 +59,7 @@
 
 <div class="header"><h2>{% trans "Applications" %}</h2></div>
 <h3>Microsoft Excel</h3>
-<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. doi: <a href="http://dx.doi.org/10.11646/zootaxa.3683.3.8">10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
+<p class="citation">Brown, Brian. V. 2013. Automating the "Material examined" section of taxonomic papers to speed up species descriptions. <em>Zootaxa</em> 3683(3): 297. <a href="https://doi.org/10.11646/zootaxa.3683.3.8">https://doi.org/10.11646/zootaxa.3683.3.8</a>, <a href="http://phorid.net/software/">http://phorid.net/software/</a>.</p>
 <h3>Ruby 2+</h3>
 <p class="citation"><a href="https://rubygems.org/gems/simple-mappr">simple-mappr</a> Ruby gem</p>
 <p>
@@ -76,7 +76,7 @@
 
 <div class="header"><h2>{% trans "In the Wild" %} ({{ citations['citations']|length }}) <a href="/citation.rss"><img width="16" height="16" alt="RSS Feed" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACGklEQVQ4T53TX0hTURzA8e/d3XbnxLUlpaOkFZW0IQqJkQ8t6GHuodAX3YOi/aGQeqgnrd4iCOrVpIdhovUWIiQsoX9oPkSFPdjIbGrDJ3Pq5pzc/bk3NuWWNkI7T4dzzu9zfr8f5wg/b5a6VUV4jMBBdjZmUWkV5jvs0/8RvH6Vyoww32lXs3PDgWr0ZcdRFn+QCn9EiS9sKx8NMJ++RqHn1oaskpoeIzH6iOTk639CGmAsP4Op2oe+pBxxz2EtKPn1JSvPbqCsRvJCGvDnrljsoKD2EgUnWkA0kFmeI+pvJBOZ/QvRAKmqAaniHOm5ceTxgVyQ3u7C0tKDaCsjsxRmucuLkljahOTvgZJmbcxPfPgeusLdWNufI1r3I38JEHtyMT8g7j2K8YgbyenBcKg2dyj57S3Rvlb0die29iHQiSz7G0mF3mlI3h5IzjqKmroQjGYSI92sBu5S1HAfU00zyclXRHtb8gCCgFRxFjJp5GAAyenF0uyHTIrIg5PoTEXYrr8BJc3CHReqvJJDfjexsh6Lrzu3GOs/jxwcxnplEIOjJpdBNpPijg/orPuI9vhITo1sAaoasDQ93AAuIAdfYHZfpbDuNvLEELGnl9nV1k/2vcQHO1l737cZIFtCZf16CRNDoKroS49hdHrILIaRPw8gubyIJeWkvo+SCn/SgBnAsa2Hv/WQIISyv/EU0LvjHykIIRTafgEZntfprlNojgAAAABJRU5ErkJggg==" /></a></h2></div>
 {% for citation in citations['citations'] %}
-    {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
+    {% set doi = (citation.doi) ? ' <a href="https://doi.org/' ~ citation.doi ~ '">https://doi.org/' ~ citation.doi ~ '</a>.' : "" %}
     {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
     <p class="citation">{{ citation.reference|raw }}{{ link|raw }}{{ doi|raw }}</p>
 {% endfor %}
