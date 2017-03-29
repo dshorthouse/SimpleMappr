@@ -43,6 +43,7 @@ addons:
       - imagemagick
       - libgtk2.0-0
       - oracle-java8-installer
+      - oracle-java8-set-default
       - xvfb
       - unzip
       - libmagickwand-dev
