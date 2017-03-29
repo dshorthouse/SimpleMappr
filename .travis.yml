@@ -103,8 +103,6 @@ before_script:
   - phpenv rehash
   - sudo service apache2 restart
 
-  - sudo wget -qO- www.simplemappr.local
-
   # Selenium
   - sh -e .travis/scripts/selenium.sh
   - sleep 3
