@@ -22,7 +22,7 @@ addons:
     sources:
       - google-chrome
     packages:
-      - google-chrome-stable fluxbox
+      - google-chrome-stable
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
@@ -102,6 +102,8 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
+
+  - sudo wget -qO- www.simplemappr.local
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
