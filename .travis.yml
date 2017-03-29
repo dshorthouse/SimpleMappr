@@ -1,5 +1,5 @@
-dist: trusty
-sudo: required
+#dist: trusty
+#sudo: required
 
 language: php
 
@@ -20,9 +20,9 @@ addons:
     - img.simplemappr.local
   apt:
     sources:
-      - google-chrome
+#      - google-chrome
     packages:
-      - google-chrome-stable
+#      - google-chrome-stable
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
