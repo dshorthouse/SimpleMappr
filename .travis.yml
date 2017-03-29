@@ -100,7 +100,7 @@ before_script:
   # Selenium
   - sh -e .travis/scripts/selenium.sh
   - sleep 3
-  # - sh -e .travis/scripts/selenium-test.sh
+  - sh -e .travis/scripts/selenium-test.sh
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
