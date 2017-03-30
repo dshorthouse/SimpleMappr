@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
+sudo a2enconf fqdn
+
 echo "---> Starting $(tput bold ; tput setaf 2)virtual host creation$(tput sgr0)"
 
 sudo cp -f .travis/apache2/www_simplemappr_local.conf /etc/apache2/sites-available/www_simplemappr_local.conf
