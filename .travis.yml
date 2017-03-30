@@ -22,7 +22,7 @@ addons:
     sources:
       - google-chrome
     packages:
-      - google-chrome-stable
+      - google-chrome-stable fluxbox
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
@@ -105,9 +105,8 @@ before_script:
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
-  - sleep 3
-  - wget -qO- "http://www.simplemappr.local"
-  #- sh -e .travis/scripts/selenium-test.sh
+  - sleep 5
+  - sh -e .travis/scripts/selenium-test.sh
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
