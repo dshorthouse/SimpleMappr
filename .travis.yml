@@ -1,5 +1,5 @@
-dist: trusty
-sudo: required
+#dist: trusty
+#sudo: required
 
 language: php
 
@@ -99,7 +99,6 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
-  - wget -qO- "http://localhost"
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
