@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
-sudo a2enconf fqdn
+#echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
+#sudo a2enconf fqdn
 
 echo "---> Starting $(tput bold ; tput setaf 2)virtual host creation$(tput sgr0)"
 
