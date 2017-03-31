@@ -585,6 +585,7 @@ abstract class SimpleMapprTest extends TestCase
         $capabilities = DesiredCapabilities::$browser();
         $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
         $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
+        $capabilities->setCapability("marionette", true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
