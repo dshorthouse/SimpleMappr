@@ -7,6 +7,7 @@ wget "https://github.com/mozilla/geckodriver/releases/download/v0.15.0/geckodriv
 sudo tar -xzf geckodriver-v0.15.0-linux64.tar.gz
 sudo chmod +x geckodriver
 sudo mv geckodriver /usr/local/bin/
+export PATH=$PATH:/usr/local/bin/geckodriver
 
 echo "---> Launching Selenium-Server-Standalone..."
 

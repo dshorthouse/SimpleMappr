@@ -583,6 +583,7 @@ abstract class SimpleMapprTest extends TestCase
         $host = 'http://localhost:4444/wd/hub';
         $browser = BROWSER;
         $capabilities = DesiredCapabilities::$browser();
+        $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
         $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
