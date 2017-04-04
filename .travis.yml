@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+
 language: php
 
 php:
@@ -101,6 +102,7 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
+  - wget -qO- http://www.simplemappr.local
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
