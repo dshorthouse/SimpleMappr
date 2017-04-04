@@ -14,7 +14,6 @@ env:
     - BROWSER=chrome
 
 addons:
-  firefox: latest
   hosts:
     - www.simplemappr.local
     - img.simplemappr.local
