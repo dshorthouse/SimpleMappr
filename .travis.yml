@@ -1,3 +1,5 @@
+sudo: required
+
 language: php
 
 php:
@@ -8,7 +10,7 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
-    - BROWSER=firefox
+    - BROWSER=chrome
 
 addons:
   firefox: latest
@@ -16,7 +18,10 @@ addons:
     - www.simplemappr.local
     - img.simplemappr.local
   apt:
+    sources:
+      - google-chrome
     packages:
+      - google-chrome-stable
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
