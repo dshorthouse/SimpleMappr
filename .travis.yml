@@ -104,7 +104,7 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
-  - php -i
+  - cat /etc/hosts
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
