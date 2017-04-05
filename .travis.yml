@@ -56,6 +56,8 @@ addons:
       - cmake
 
 install:
+  - chmod 775 $HOME
+
   # ImageMagick
   - printf "\n" | pecl install imagick
 
@@ -101,7 +103,7 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
-  - wget -qO- https://www.google.com
+  - wget -qO- http://www.simplemappr.local
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
