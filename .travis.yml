@@ -103,7 +103,6 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
-  - wget -qO- http://www.simplemappr.local
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
@@ -112,6 +111,11 @@ before_script:
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+
+after_failure:
+  - sudo cat /var/log/apache2/error.log
+  - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
+  - sudo php -i
 
 after_success:
   - travis_retry php vendor/bin/coveralls -c .coveralls.yml -v
