@@ -60,7 +60,7 @@ install:
   - chmod 775 $HOME
 
   # ImageMagick
-  #- printf "\n" | pecl install imagick
+  - printf "\n" | pecl install imagick
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
@@ -104,6 +104,7 @@ before_script:
   # Restart PHP-FCGI and Apache
   - phpenv rehash
   - sudo service apache2 restart
+  - php -i
 
   # Selenium
   - sh -e .travis/scripts/selenium.sh
@@ -116,7 +117,6 @@ script:
 after_failure:
   - sudo cat /var/log/apache2/error.log
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
-  - sudo php -i
 
 after_success:
   - travis_retry php vendor/bin/coveralls -c .coveralls.yml -v
