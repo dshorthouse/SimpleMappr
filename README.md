@@ -140,7 +140,7 @@ PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.go
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
     $ java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.3.1.jar
-    $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml
+    $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Tests are split into suites entitled, "Unit", "Functional", "Binary"
 

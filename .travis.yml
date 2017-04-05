@@ -32,6 +32,7 @@ addons:
       - php5-gd
       - php5-mysql
       - php5-curl
+      - php5-imagick
       - locales
       - gettext
       - autoconf
@@ -59,7 +60,7 @@ install:
   - chmod 775 $HOME
 
   # ImageMagick
-  - printf "\n" | pecl install imagick
+  #- printf "\n" | pecl install imagick
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
