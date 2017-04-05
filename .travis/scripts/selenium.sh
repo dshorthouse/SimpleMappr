@@ -18,4 +18,4 @@ echo "---> Launching Selenium-Server-Standalone..."
 
 #sudo xvfb-run --server-args='-screen 0, 1024x768x16' java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dwebdriver.chrome.logfile=$TRAVIS_BUILD_DIR/chrome.log -jar /usr/local/bin/selenium.jar -port 4444 > /dev/null &
 
-sudo xvfb-run --server-args='-screen 0, 1024x768x16' java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar /usr/local/bin/selenium.jar -port 4444 > /dev/null &
+sudo xvfb-run --error-file="$TRAVIS_BUILD_DIR/xvfb-error.log" --server-args="-screen 0, 1024x768x16" java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar /usr/local/bin/selenium.jar -port 4444 > /dev/null &
