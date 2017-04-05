@@ -109,7 +109,7 @@ before_script:
   - sh -e .travis/scripts/selenium.sh
   - sleep 5
   - sh -e .travis/scripts/selenium-test.sh
-  - wget -qO- http://www.simplemappr.local/swagger.json
+  - wget -qO- http://www.simplemappr.local/
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
