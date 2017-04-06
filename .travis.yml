@@ -11,7 +11,7 @@ env:
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
-    - BROWSER=firefox
+    - BROWSER=chrome
 
 addons:
   firefox: latest
