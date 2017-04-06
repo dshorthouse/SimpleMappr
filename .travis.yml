@@ -119,6 +119,7 @@ after_failure:
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
   - sudo cat $TRAVIS_BUILD_DIR/chrome.log
   - sudo cat $TRAVIS_BUILD_DIR/xvfb-error.log
+  - sudo cat $TRAVIS_BUILD_DIR/selenium.log
 
 after_success:
   - travis_retry php vendor/bin/coveralls -c .coveralls.yml -v
