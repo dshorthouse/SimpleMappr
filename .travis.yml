@@ -8,6 +8,7 @@ php:
 
 env:
   global:
+    - DBUS_SESSION_BUS_ADDRESS=/dev/null
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
