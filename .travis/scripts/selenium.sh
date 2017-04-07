@@ -12,4 +12,4 @@ export CHROME_BIN=/usr/bin/google-chrome
 
 echo "---> Launching Selenium-Server-Standalone..."
 
-java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium.jar > /dev/null &
+java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium.jar > /dev/null 2>/dev/null &
