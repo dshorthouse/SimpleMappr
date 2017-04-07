@@ -13,6 +13,7 @@ env:
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
     - BROWSER=chrome
+    - DISPLAY=:99.0
 
 addons:
   firefox: latest
@@ -84,6 +85,9 @@ install:
   - composer self-update
   - composer global require hirak/prestissimo
   - composer install
+ 
+  # Screen
+  - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
 
 before_script:
   # Create files
@@ -111,6 +115,7 @@ before_script:
   - sh -e .travis/scripts/selenium.sh
   - sleep 5
   - sh -e .travis/scripts/selenium-test.sh
+  - sudo whereis google-chrome
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
