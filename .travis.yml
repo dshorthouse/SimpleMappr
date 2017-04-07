@@ -8,15 +8,12 @@ php:
 
 env:
   global:
-    - DBUS_SESSION_BUS_ADDRESS=/dev/null
     - HOST=www.simplemappr.local
     - IMGHOST=img.simplemappr.local
     - DBNAME=simplemappr_testing
     - BROWSER=chrome
-    - DISPLAY=:99.0
 
 addons:
-  firefox: latest
   hosts:
     - www.simplemappr.local
     - img.simplemappr.local
@@ -87,7 +84,10 @@ install:
   - composer install
  
   # Screen
-  - Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
+  - export CHROME_BIN=/usr/bin/google-chrome
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  #- Xvfb :99 -screen 0 1280x1024x16 +extension RANDR > /dev/null 2>&1 &
 
 before_script:
   # Create files
@@ -115,7 +115,6 @@ before_script:
   - sh -e .travis/scripts/selenium.sh
   - sleep 5
   - sh -e .travis/scripts/selenium-test.sh
-  - sudo whereis google-chrome
 
 script:
   - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
@@ -123,9 +122,6 @@ script:
 after_failure:
   - sudo cat /var/log/apache2/error.log
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
-  - sudo cat $TRAVIS_BUILD_DIR/chrome.log
-  - sudo cat $TRAVIS_BUILD_DIR/xvfb-error.log
-  - sudo cat $TRAVIS_BUILD_DIR/selenium.log
 
 after_success:
   - travis_retry php vendor/bin/coveralls -c .coveralls.yml -v
