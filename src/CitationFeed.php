@@ -73,6 +73,7 @@ class CitationFeed extends Citation
             ->language('en-US')
             ->pubDate(time())
             ->ttl(60)
+            ->pubsubhubbub(MAPPR_URL . "/citation.rss", "https://pubsubhubbub.appspot.com/")
             ->appendTo($this->_feed);
         return $this;
     }
