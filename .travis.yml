@@ -116,7 +116,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "Unit" --stderr
+  - travis_retry php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
