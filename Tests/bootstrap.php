@@ -16,6 +16,19 @@ date_default_timezone_set("America/New_York");
 use SimpleMappr\Header;
 
 /**
+ * Switch xdebug to speed up text execution
+ *
+ * @param string $dir Enable/disable flag
+ * @return void
+ */
+function switchXdebug($dir = 'disable')
+{
+    if ( function_exists('xdebug_'.$dir) ) { 
+        call_user_func('xdebug_'.$dir); 
+    }
+}
+
+/**
  * Switch configuration files
  *
  * @param bool $restore Flag to toggle swap and replacement of config files
@@ -88,6 +101,7 @@ function warningOn()
  */
 function loader()
 {
+    switchXdebug();
     switchConf();
     requireFiles();
     flushCaches();
@@ -106,6 +120,7 @@ function unloader()
     switchConf('restore');
     flushCaches();
     warningOn();
+    switchXdebug('enable');
 }
 
 spl_autoload_register(__NAMESPACE__.'\loader');
