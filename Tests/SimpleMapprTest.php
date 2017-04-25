@@ -585,6 +585,7 @@ abstract class SimpleMapprTest extends TestCase
         $capabilities = DesiredCapabilities::$browser();
         $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
         $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
+        $capabilities->setCapability(WebDriverCapabilityType::WEB_STORAGE_ENABLED, true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
@@ -613,7 +614,7 @@ abstract class SimpleMapprTest extends TestCase
     /**
      * Wait on jQuery ajax then fall back to a sleep.
      */
-    public function waitOnAjax($timeout = 10, $interval = 200)
+    public function waitOnAjax($timeout = 20, $interval = 1000)
     {
         $this->webDriver->wait($timeout, $interval)->until(function() {
             $condition = 'return ($.active == 0);';
@@ -624,7 +625,7 @@ abstract class SimpleMapprTest extends TestCase
     /**
      * Wait on spinner then fall back to a sleep.
      */
-    public function waitOnSpinner($timeout = 10, $interval = 200)
+    public function waitOnSpinner($timeout = 20, $interval = 1000)
     {
         $this->webDriver->wait($timeout, $interval)->until(
             WebDriverExpectedCondition::invisibilityOfElementLocated(
@@ -636,7 +637,7 @@ abstract class SimpleMapprTest extends TestCase
     /**
      * Wait on spinner then fall back to a sleep.
      */
-    public function waitOnMap($timeout = 10, $interval = 200)
+    public function waitOnMap($timeout = 20, $interval = 1000)
     {
         $this->webDriver->wait($timeout, $interval)->until(function() {
             $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
