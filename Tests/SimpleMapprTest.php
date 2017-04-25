@@ -587,6 +587,7 @@ abstract class SimpleMapprTest extends TestCase
         $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
         $capabilities->setCapability(WebDriverCapabilityType::WEB_STORAGE_ENABLED, true);
         $this->webDriver = RemoteWebDriver::create($host, $capabilities);
+        $this->webDriver->manage()->deleteAllCookies();
         $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
     }
 
@@ -595,10 +596,8 @@ abstract class SimpleMapprTest extends TestCase
      */
     public function tearDown()
     {
-        if(method_exists($this->webDriver, 'quit')) {
-            $this->webDriver->close();
-            $this->webDriver->quit();
-        }
+        $this->webDriver->quit();
+        unset($this->webDriver);
     }
 
     /**
