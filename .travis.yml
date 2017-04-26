@@ -67,6 +67,7 @@ install:
 
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
+  - phpenv config-rm xdebug.ini
   - phpenv rehash
 
   # Translations
@@ -118,11 +119,11 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - phpdbg -qrr vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --coverage-clover Tests/build/logs/clover.xml --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
 
 after_success:
-  #- php vendor/bin/coveralls -c .coveralls.yml -v
+  - php vendor/bin/coveralls -c .coveralls.yml -v
