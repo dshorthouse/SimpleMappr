@@ -126,4 +126,4 @@ after_failure:
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
 
 after_success:
-  - php vendor/bin/coveralls -c .coveralls.yml -v
+  #- php vendor/bin/coveralls -c .coveralls.yml -v
