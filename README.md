@@ -156,7 +156,7 @@ JavaScript files are minified using Google's [Closure Compiler](https://develope
 Copyright
 ---------
 
-    Copyright (c) 2010-2016 David P. Shorthouse
+    Copyright (c) 2010-2017 David P. Shorthouse
 
     Released under MIT License
 

@@ -23,7 +23,7 @@ use SimpleMappr\Header;
  */
 function switchXdebug($dir = 'disable')
 {
-    if ( function_exists('xdebug_'.$dir) ) { 
+    if (function_exists('xdebug_'.$dir)) { 
         call_user_func('xdebug_'.$dir); 
     }
 }
