@@ -132,14 +132,14 @@ Create MySQL databases simplemappr, simplemappr\_development and simplemappr\_te
 Tests
 -----
 
-PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=3.3/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies. The Firefox Gecko driver can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
+PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=3.4/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies. The Firefox Gecko driver can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
 
-    $ java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar selenium-server-standalone-3.3.1.jar
+    $ java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar selenium-server-standalone-3.4.0.jar
     $ ./vendor/bin/phpunit -c Tests/firefox.phpunit.xml --stderr
 
 If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
 
-    $ java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.3.1.jar
+    $ java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar selenium-server-standalone-3.4.0.jar
     $ ./vendor/bin/phpunit -c Tests/chrome.phpunit.xml --stderr
 
 Tests are split into suites entitled, "Unit", "Functional", "Binary"
