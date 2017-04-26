@@ -119,7 +119,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr --debug --verbose --no-coverage
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
