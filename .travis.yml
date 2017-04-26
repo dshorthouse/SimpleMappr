@@ -87,6 +87,7 @@ install:
   - sudo chmod 777 /usr/bin/google-chrome
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
+  - export DBUS_SESSION_BUS_ADDRESS=/dev/null
   - Xvfb :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
 
 before_script:
@@ -124,4 +125,4 @@ after_failure:
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
 
 after_success:
-  #- php vendor/bin/coveralls -c .coveralls.yml -v
+  - php vendor/bin/coveralls -c .coveralls.yml -v
