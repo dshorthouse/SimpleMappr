@@ -117,7 +117,7 @@ class MapprApplicationTest extends TestCase
      */
     public function test_default_coords()
     {
-        $this->assertEmpty($this->mappr->coords);
+        $this->assertEmpty($this->mappr->request->coords);
     }
 
     /**
@@ -125,7 +125,15 @@ class MapprApplicationTest extends TestCase
      */
     public function test_default_regions()
     {
-        $this->assertEmpty($this->mappr->regions);
+        $this->assertEmpty($this->mappr->request->regions);
+    }
+
+    /**
+     * Test that the default set of wkt is an empty array.
+     */
+    public function test_default_wkt()
+    {
+        $this->assertEmpty($this->mappr->request->wkt);
     }
 
     /**
@@ -189,7 +197,7 @@ class MapprApplicationTest extends TestCase
      */
     public function test_default_layers()
     {
-        $layers = $this->mappr->layers;
+        $layers = $this->mappr->request->layers;
         $this->assertEmpty(array_diff($layers, ['base' => 'on']));
     }
 

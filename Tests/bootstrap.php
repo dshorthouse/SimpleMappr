@@ -84,16 +84,6 @@ function flushCaches()
     }
 }
 
-function warningOff()
-{
-  error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
-}
-
-function warningOn()
-{
-  error_reporting(-1);
-}
-
 /**
  * Loader function executed before all tests
  *
@@ -105,7 +95,6 @@ function loader()
     switchConf();
     requireFiles();
     flushCaches();
-    warningOff();
     ob_start();
     new Header;
 }
@@ -119,7 +108,6 @@ function unloader()
 {
     switchConf('restore');
     flushCaches();
-    warningOn();
     switchXdebug('enable');
 }
 
