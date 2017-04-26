@@ -5,8 +5,8 @@ sudo mv selenium-server-standalone-3.3.1.jar /usr/local/bin/selenium.jar
 
 wget "https://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip"
 sudo unzip chromedriver_linux64.zip
-sudo chmod +x chromedriver
 sudo mv chromedriver /usr/local/bin/chromedriver
+sudo chmod 777 /usr/local/bin/chromedriver
 export PATH=$PATH:/usr/local/bin/chromedriver
 export CHROME_BIN=/usr/bin/google-chrome
 
