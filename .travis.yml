@@ -67,8 +67,9 @@ install:
   
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
+  - php --version
   - phpenv rehash
-  - sudo php -i
+  - php --version
 
   # Translations
   - sh -e .travis/scripts/locales.sh
