@@ -62,12 +62,13 @@ install:
   # ImageMagick
   - printf "\n" | pecl install imagick
 
-  # MapServer installation
-  - sh -e .travis/scripts/mapserver.sh
-
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
+  - phpenv config-rm xdebug.ini
   - phpenv rehash
+
+  # MapServer installation
+  - sh -e .travis/scripts/mapserver.sh
 
   # Translations
   - sh -e .travis/scripts/locales.sh
