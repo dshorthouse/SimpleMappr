@@ -74,6 +74,7 @@ install:
 
   # PHP-FPM configuration
   - sh -e .travis/scripts/php-fpm.sh
+  - sudo ldd -r /home/travis/.phpenv/versions/5.6.30/lib/php/extensions/no-debug-zts-20131226/php_mapscript.so
 
   # Install maps
   - sh -e .travis/scripts/maps.sh
