@@ -1,10 +1,10 @@
 sudo: required
-dist: trusty
+#dist: trusty
 
 language: php
 
 php:
-  - 5.6.30
+  - 5.6
 
 env:
   global:
