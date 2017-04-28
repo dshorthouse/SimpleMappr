@@ -21,36 +21,40 @@ addons:
     sources:
       - google-chrome
     packages:
-      - google-chrome-stable
+      - autoconf
       - apache2
       - build-essential
+      - curl
       - libapache2-mod-fastcgi
-      - locales
       - gettext
-      - autoconf
+      - google-chrome-stable
+      - imagemagick
       - libjpeg-dev
       - libpng12-dev
       - libfcgi-dev
       - libgdal1-dev
       - libgdal-dev
       - libproj-dev
+      - libmagickwand-dev
       - libxml2-dev
       - libgeos-dev
       - libcairo2-dev
       - libfribidi-dev
-      - imagemagick
       - libgtk2.0-0
+      - locales
       - oracle-java8-installer
       - oracle-java8-set-default
-      - xvfb
+      - php5-cli
+      - php5-common
+      - php5-curl
+      - php5-dev
+      - php5-fpm
+      - php5-gd
+      - php5-imagick
+      - php5-mysql
       - unzip
-      - libmagickwand-dev
-      - curl
+      - xvfb
       - cmake
-
-before_install:
-  - sudo apt-get install php5-cli php5-common php5-dev php5-fpm php5-gd php5-mysql php5-curl php5-imagick
-  - php -i
 
 install:
   - chmod 775 $HOME
