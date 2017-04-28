@@ -57,6 +57,7 @@ addons:
       - cmake
 
 before_install:
+  - sudo apt-get -y remove --purge postgresql-*
   - sudo apt-get -qq update
   - sudo apt-get upgrade
 
