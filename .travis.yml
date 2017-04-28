@@ -4,7 +4,7 @@ dist: trusty
 language: php
 
 php:
-  - 5.6.29
+  - 5.6.30
 
 env:
   global:
@@ -55,6 +55,10 @@ addons:
       - libmagickwand-dev
       - curl
       - cmake
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -qq upgrade
 
 install:
   - chmod 775 $HOME
