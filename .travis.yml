@@ -58,7 +58,7 @@ addons:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq upgrade
+  - sudo apt-get upgrade
 
 install:
   - chmod 775 $HOME
