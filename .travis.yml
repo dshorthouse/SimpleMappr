@@ -25,14 +25,6 @@ addons:
       - apache2
       - build-essential
       - libapache2-mod-fastcgi
-      - php5-cli
-      - php5-common
-      - php5-dev
-      - php5-fpm
-      - php5-gd
-      - php5-mysql
-      - php5-curl
-      - php5-imagick
       - locales
       - gettext
       - autoconf
@@ -55,6 +47,9 @@ addons:
       - libmagickwand-dev
       - curl
       - cmake
+
+before_install:
+  - sudo apt-get install php5-cli php5-common php5-dev php5-fpm php5-gd php5-mysql php5-curl php5-imagick
 
 install:
   - chmod 775 $HOME
