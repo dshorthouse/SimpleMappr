@@ -4,7 +4,7 @@ dist: trusty
 language: php
 
 php:
-  - 5.6
+  - 5.6.24
 
 env:
   global:
@@ -60,7 +60,7 @@ install:
   - chmod 775 $HOME
 
   # ImageMagick
-  #- printf "\n" | pecl install imagick
+  - printf "\n" | pecl install imagick
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
