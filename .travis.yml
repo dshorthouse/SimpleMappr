@@ -44,20 +44,15 @@ addons:
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
-      - php5-cli
-      - php5-common
-      - php5-curl
-      - php5-dev
-      - php5-fpm
-      - php5-gd
-      - php5-imagick
-      - php5-mysql
       - unzip
       - xvfb
       - cmake
 
 install:
   - chmod 775 $HOME
+  
+  # Install PHP packages
+  - sh -e .travis/scripts/php.sh
 
   # ImageMagick
   - printf "\n" | pecl install imagick
