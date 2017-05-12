@@ -46,8 +46,7 @@ class MapprDocxTest extends TestCase
         $this->mappr_docx->execute();
         ob_start();
         $this->mappr_docx->createOutput();
-        $output = ob_get_contents();
-        ob_end_clean();
+        $output = ob_get_clean();
         $finfo = new finfo(FILEINFO_MIME);
         $mime = $finfo->buffer($output);
         $this->assertEquals("application/zip; charset=binary", $mime);

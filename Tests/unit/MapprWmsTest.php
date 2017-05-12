@@ -51,8 +51,7 @@ class MapprWmsTest extends TestCase
         $mappr_wms->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
-        $xml = simplexml_load_string(ob_get_contents());
-        ob_end_clean();
+        $xml = simplexml_load_string(ob_get_clean());
         $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
         $this->assertEquals(3, count($xml->Capability->Layer->Layer));
     }
@@ -76,8 +75,7 @@ class MapprWmsTest extends TestCase
         $mappr_wms->makeService()->execute();
         ob_start();
         $mappr_wms->createOutput();
-        $image = imagecreatefromstring(ob_get_contents());
-        ob_end_clean();
+        $image = imagecreatefromstring(ob_get_clean());
         $this->assertEquals(imagesx($image), 400);
         $this->assertEquals(imagesy($image), 200);
     }

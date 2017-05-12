@@ -102,7 +102,9 @@ class Kml
      */
     public function __construct()
     {
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     /**
@@ -110,7 +112,9 @@ class Kml
      */
     public function __destruct()
     {
-        session_write_close();
+        if (session_status() != PHP_SESSION_NONE) {
+            session_write_close();
+        }
     }
 
     /**

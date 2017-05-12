@@ -44,8 +44,7 @@ class MapprPptxTest extends TestCase
         $this->mappr_pptx->execute();
         ob_start();
         $this->mappr_pptx->createOutput();
-        $output = ob_get_contents();
-        ob_end_clean();
+        $output = ob_get_clean();
         $finfo = new finfo(FILEINFO_MIME);
         $mime = $finfo->buffer($output);
         $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);

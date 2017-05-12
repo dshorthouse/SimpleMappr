@@ -294,25 +294,27 @@ class MapprMap extends Mappr
     private function _getCoordinates()
     {
         $output = [];
-        $count = count($this->coords)-1;
-        for ($j=0; $j<=$count; $j++) {
-            $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
+        if (property_exists($this, 'coords')) {
+            $count = count($this->coords)-1;
+            for ($j=0; $j<=$count; $j++) {
+                $title = ($this->coords[$j]['title']) ? stripslashes($this->coords[$j]['title']) : "";
 
-            if (trim($this->coords[$j]['data'])) {
-                $whole = trim($this->coords[$j]['data']);
-                $row = explode("\n", Utility::removeEmptyLines($whole));
+                if (trim($this->coords[$j]['data'])) {
+                    $whole = trim($this->coords[$j]['data']);
+                    $row = explode("\n", Utility::removeEmptyLines($whole));
 
-                foreach ($row as $loc) {
-                    $coord_array = Utility::makeCoordinates($loc);
-                    $coord = new \stdClass();
-                    $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
-                    $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
-                    if (Utility::onEarth($coord) && $title != "") {
-                        $output[] = [
-                            'type' => 'Feature',
-                            'geometry' => ['type' => 'Point', 'coordinates' => [$coord->x,$coord->y]],
-                            'properties' => ['title' => $title]
-                        ];
+                    foreach ($row as $loc) {
+                        $coord_array = Utility::makeCoordinates($loc);
+                        $coord = new \stdClass();
+                        $coord->x = array_key_exists(1, $coord_array) ? (float)trim($coord_array[1]) : "nil";
+                        $coord->y = array_key_exists(0, $coord_array) ? (float)trim($coord_array[0]) : "nil";
+                        if (Utility::onEarth($coord) && $title != "") {
+                            $output[] = [
+                                'type' => 'Feature',
+                                'geometry' => ['type' => 'Point', 'coordinates' => [$coord->x,$coord->y]],
+                                'properties' => ['title' => $title]
+                            ];
+                        }
                     }
                 }
             }
@@ -328,23 +330,25 @@ class MapprMap extends Mappr
     private function _getWKT()
     {
         $output = [];
-        $count = count($this->wkt)-1;
-        for ($j=0; $j<=$count; $j++) {
-            $title = ($this->wkt[$j]['title']) ? stripslashes($this->wkt[$j]['title']) : "";
+        if (property_exists($this, 'wkt')) {
+            $count = count($this->wkt)-1;
+            for ($j=0; $j<=$count; $j++) {
+                $title = ($this->wkt[$j]['title']) ? stripslashes($this->wkt[$j]['title']) : "";
 
-            if (trim($this->wkt[$j]['data'])) {
-                $whole = trim($this->wkt[$j]['data']);
-                $rows = explode("\n", Utility::removeEmptyLines($whole));
+                if (trim($this->wkt[$j]['data'])) {
+                    $whole = trim($this->wkt[$j]['data']);
+                    $rows = explode("\n", Utility::removeEmptyLines($whole));
 
-                foreach ($rows as $row) {
-                    $shape = geoPHP::load($row,'wkt');
-                    $geojson = new GeoJSON();
-                    $geometry = $geojson->write($shape, TRUE);
-                    $output[] = [
-                        'type' => 'Feature',
-                        'geometry' => $geometry,
-                        'properties' => ['title' => $title]
-                    ];
+                    foreach ($rows as $row) {
+                        $shape = geoPHP::load($row,'wkt');
+                        $geojson = new GeoJSON();
+                        $geometry = $geojson->write($shape, TRUE);
+                        $output[] = [
+                            'type' => 'Feature',
+                            'geometry' => $geometry,
+                            'properties' => ['title' => $title]
+                        ];
+                    }
                 }
             }
         }

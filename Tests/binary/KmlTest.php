@@ -34,7 +34,9 @@ class KmlTest extends TestCase
      */
     protected function tearDown()
     {
-        session_destroy(); //req'd because Kml class sets a cookie
+        if (session_status() != PHP_SESSION_NONE) {
+            session_destroy();
+        }
         $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
@@ -63,10 +65,9 @@ class KmlTest extends TestCase
         $this->kml->getRequest("My Map", $coords);
         ob_start();
         $this->kml->createOutput();
-        $output = ob_get_contents();
+        $output = ob_get_clean();
         $file = ROOT."/public/tmp/kml.kml";
         file_put_contents($file, $output);
-        ob_end_clean();
         $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/kml.kml'));
     }
 
