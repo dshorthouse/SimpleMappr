@@ -91,7 +91,7 @@ function flushCaches()
  */
 function loader()
 {
-    //switchXdebug();
+    switchXdebug();
     switchConf();
     requireFiles();
     flushCaches();
@@ -108,7 +108,7 @@ function unloader()
 {
     switchConf('restore');
     flushCaches();
-    //switchXdebug('enable');
+    switchXdebug('enable');
 }
 
 spl_autoload_register(__NAMESPACE__.'\loader');

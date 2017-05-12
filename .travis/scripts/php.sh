@@ -12,4 +12,5 @@ php5.6-dev \
 php5.6-fpm \
 php5.6-gd \
 php5.6-imagick \
-php5.6-mysql
+php5.6-mysql \
+php-xdebug
