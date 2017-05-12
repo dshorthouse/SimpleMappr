@@ -18,8 +18,6 @@ class WmsTest extends TestCase
 {
     use SimpleMapprMixin;
 
-    protected $wms;
-
     /**
      * Parent setUp function executed before each test.
      */
@@ -48,7 +46,6 @@ class WmsTest extends TestCase
         echo $wms->createOutput();
         $output = ob_get_contents();
         $xml = simplexml_load_string($output);
-        ob_end_clean();
         $layers = $xml->Capability->Layer->Layer;
         $titles = [];
         foreach($layers as $layer) {

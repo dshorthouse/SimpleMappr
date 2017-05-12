@@ -18,8 +18,6 @@ class WfsTest extends TestCase
 {
     use SimpleMapprMixin;
 
-    protected $wfs;
-
     /**
      * Parent setUp function executed before each test.
      */
@@ -46,9 +44,8 @@ class WfsTest extends TestCase
         $wfs->makeService()->execute();
         ob_start();
         echo $wfs->createOutput();
-        $output = ob_get_contents();
+        $output = ob_get_clean();
         $xml = simplexml_load_string($output);
-        ob_end_clean();
         $layers = $xml->FeatureTypeList->FeatureType;
         $titles = [];
         foreach($layers as $layer) {
