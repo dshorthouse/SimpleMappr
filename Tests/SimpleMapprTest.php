@@ -568,7 +568,6 @@ abstract class SimpleMapprTest extends TestCase
      */
     public static function imagesSimilar($fn1, $fn2)
     {
-        /*
         $same = false;
 
         $image1 = new \Imagick($fn1);
@@ -578,8 +577,6 @@ abstract class SimpleMapprTest extends TestCase
             $same = true;
         }
         return $same;
-        */
-        return true;
     }
 
     /**
