@@ -108,10 +108,9 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml
 
 after_failure:
-  - sudo cat /home/travis/.travis/job_stages
   - sudo cat /var/log/apache2/error.log
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
 
