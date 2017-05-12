@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository ppa:ondrej/php -y
 sudo apt-get update
 
 sudo apt-get install -y \
