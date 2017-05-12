@@ -83,7 +83,6 @@ class MapprMapTest extends SimpleMapprTest
     {
         $this->setUpMap(3, 'json');
         $this->mappr_map->execute();
-        if (ob_get_level()) { ob_end_clean(); }
         ob_start();
         $this->mappr_map->createOutput();
         $output = ob_get_clean();
