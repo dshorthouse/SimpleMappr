@@ -44,7 +44,7 @@ class WmsTest extends TestCase
         $wms->makeService()->execute();
         ob_start();
         echo $wms->createOutput();
-        $output = ob_get_contents();
+        $output = ob_get_clean();
         $xml = simplexml_load_string($output);
         $layers = $xml->Capability->Layer->Layer;
         $titles = [];

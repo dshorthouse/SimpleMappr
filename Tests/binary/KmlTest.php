@@ -26,7 +26,6 @@ class KmlTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
-        $this->kml = new Kml;
     }
 
     /**
@@ -62,9 +61,10 @@ class KmlTest extends TestCase
                 'color' => '255 32 3'
             ]
         ];
-        $this->kml->getRequest("My Map", $coords);
+        $kml = new Kml;
+        $kml->getRequest("My Map", $coords);
         ob_start();
-        $this->kml->createOutput();
+        $kml->createOutput();
         $output = ob_get_clean();
         $file = ROOT."/public/tmp/kml.kml";
         file_put_contents($file, $output);

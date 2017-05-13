@@ -22,7 +22,7 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function setUp()
     {
-        $this->mappr_map = "";
+        $this->setRequestMethod();
     }
 
     /**
@@ -67,7 +67,6 @@ class MapprMapTest extends SimpleMapprTest
     /**
      * Test that the output is GeoJSON with polygon.
      */
-/*
     public function test_map_polygon_json()
     {
         $mappr_map = new MapprMap(3, "json");
@@ -79,7 +78,7 @@ class MapprMapTest extends SimpleMapprTest
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json_polygon.json'));
     }
-*/
+
     /**
      * Test that the output is SVG.
      */
