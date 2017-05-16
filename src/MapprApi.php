@@ -38,7 +38,7 @@
 namespace SimpleMappr;
 
 use League\Csv\Reader;
-//use geoPHP;
+use geoPHP;
 
 /**
  * API handler for SimpleMappr
