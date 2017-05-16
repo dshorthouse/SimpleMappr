@@ -71,7 +71,7 @@ install:
   # Install Composer dependencies
   - composer self-update
   - composer global require hirak/prestissimo
-  - composer install
+  - composer install -o
  
   # Screen
   - sudo chmod 777 /usr/bin/google-chrome
