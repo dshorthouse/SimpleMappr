@@ -34,18 +34,25 @@ class MapprMapTest extends SimpleMapprTest
         $this->clearTmpFiles();
     }
 
+    public function getOutputBuffer($mappr)
+    {
+        $mappr->execute();
+        $level = ob_get_level();
+        ob_start();
+        $mappr->createOutput();
+        $output = ob_get_clean();
+        if (ob_get_level() > $level) { ob_end_clean(); }
+        return $output;
+    }
+
     /**
      * Test that the output is png.
      */
     public function test_map_png()
     {
         $mappr_map = new MapprMap(1, "png");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT."/public/tmp/map_png.png";
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 
@@ -55,12 +62,8 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_json()
     {
         $mappr_map = new MapprMap(1, "json");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT."/public/tmp/map_json.json";
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json.json'));
     }
 
@@ -70,12 +73,8 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_polygon_json()
     {
         $mappr_map = new MapprMap(3, "json");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT."/public/tmp/map_json_polygon.json";
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json_polygon.json'));
     }
 
@@ -85,12 +84,8 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_svg()
     {
         $mappr_map = new MapprMap(1, "svg");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $svgfile = ROOT."/public/tmp/map_svg.svg";
-        file_put_contents($svgfile, $output);
+        file_put_contents($svgfile, $this->getOutputBuffer($mappr_map));
         $image1 = new \Imagick($svgfile);
         $image1->setImageFormat('png');
         $file = ROOT.'/public/tmp/map_svg.png';
@@ -104,12 +99,8 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_kml()
     {
         $mappr_map = new MapprMap(1, "kml");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT."/public/tmp/map_kml.kml";
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_kml.kml'));
     }
 
@@ -122,12 +113,8 @@ class MapprMapTest extends SimpleMapprTest
         $req = ['legend' => 'true'];
         $this->setRequest($req);
         $mappr_map = new MapprMap(1, "png");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/map_png_legend.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
@@ -141,12 +128,8 @@ class MapprMapTest extends SimpleMapprTest
         $req = ['legend' => 'false'];
         $this->setRequest($req);
         $mappr_map = new MapprMap(1, "png");
-        $mappr_map->execute();
-        ob_start();
-        $mappr_map->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }

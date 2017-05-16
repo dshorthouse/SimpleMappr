@@ -36,6 +36,17 @@ class MapprApiTest extends TestCase
         $this->clearTmpFiles();
     }
 
+    public function getOutputBuffer($mappr)
+    {
+        $mappr->execute();
+        $level = ob_get_level();
+        ob_start();
+        $mappr->createOutput();
+        $output = ob_get_clean();
+        if (ob_get_level() > $level) { ob_end_clean(); }
+        return $output;
+    }
+
     /**
      * Test that a ping request is produced.
      */
@@ -44,9 +55,8 @@ class MapprApiTest extends TestCase
         $this->setRequest(['ping' => true]);
         $mappr_api = new MapprApi;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $decoded = json_decode(ob_get_clean(), true);
+        $output = $mappr_api->createOutput();
+        $decoded = json_decode($output, true);
         $this->assertArrayHasKey("status", $decoded);
     }
 
@@ -58,9 +68,8 @@ class MapprApiTest extends TestCase
         $this->setRequestMethod('POST');
         $mappr_api = new MapprApi;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $decoded = json_decode(ob_get_clean(), true);
+        $output = $mappr_api->createOutput();
+        $decoded = json_decode($output, true);
         $this->assertArrayHasKey("imageURL", $decoded);
         $this->assertArrayHasKey("expiry", $decoded);
         $this->assertContains(MAPPR_MAPS_URL, $decoded["imageURL"]);
