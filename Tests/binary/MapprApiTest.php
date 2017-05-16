@@ -36,17 +36,6 @@ class MapprApiTest extends TestCase
         $this->clearTmpFiles();
     }
 
-    public function getOutputBuffer($mappr)
-    {
-        $mappr->execute();
-        $level = ob_get_level();
-        ob_start();
-        $mappr->createOutput();
-        $output = ob_get_clean();
-        if (ob_get_level() > $level) { ob_end_clean(); }
-        return $output;
-    }
-
     /**
      * Test that a ping request is produced.
      */
