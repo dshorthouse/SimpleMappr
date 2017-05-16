@@ -15,6 +15,7 @@ addons:
   apt:
     sources:
       - google-chrome
+      - sourceline: 'ppa:ondrej/php'
     packages:
       - autoconf
       - apache2
@@ -42,12 +43,22 @@ addons:
       - unzip
       - xvfb
       - cmake
+      - php5.6
+      - php5.6-cli
+      - php5.6-common
+      - php5.6-curl
+      - php5.6-dev
+      - php5.6-fpm
+      - php5.6-gd
+      - php5.6-imagick
+      - php5.6-mysql
+      - php-xdebug
 
 install:
   - chmod 775 $HOME
   
   # Install PHP packages
-  - sh -e .travis/scripts/php.sh
+  #- sh -e .travis/scripts/php.sh
 
   # ImageMagick
   - printf "\n" | pecl install imagick

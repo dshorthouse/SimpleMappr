@@ -12,14 +12,5 @@ php5.6-dev \
 php5.6-fpm \
 php5.6-gd \
 php5.6-imagick \
-php5.6-mysql
-
-wget https://xdebug.org/files/xdebug-2.5.4.tgz
-tar -xzf xdebug-2.5.4.tgz
-cd xdebug-2.5.4
-phpize
-./configure --enable-xdebug
-make && make install
-cd ../
-sudo apt-get install -y php-xdebug
-php -i
+php5.6-mysql \
+php-xdebug
