@@ -91,7 +91,7 @@ function flushCaches()
  */
 function loader()
 {
-    //switchXdebug();
+    switchXdebug();
     switchConf();
     requireFiles();
     flushCaches();
