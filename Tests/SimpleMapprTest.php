@@ -579,7 +579,7 @@ abstract class SimpleMapprTest extends TestCase
     /**
      * Parent setUp function executed before each test.
      */
-    public function setUp()
+    protected function setUp()
     {
         $host = 'http://localhost:4444/wd/hub';
         $browser = BROWSER;
@@ -595,7 +595,7 @@ abstract class SimpleMapprTest extends TestCase
     /**
      * Parent tearDown function executed after each test.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         if(method_exists($this->webDriver, 'quit')) {
             $this->webDriver->quit();

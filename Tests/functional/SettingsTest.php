@@ -14,22 +14,6 @@
 class SettingsTest extends SimpleMapprTest
 {
     /**
-     * Parent setUp function executed before each test.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
-    /**
      * Test that selecting the State/Provinces layer makes a new image.
      */
     public function testLayerSelection()

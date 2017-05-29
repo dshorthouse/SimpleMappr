@@ -20,7 +20,7 @@ class MapprMapTest extends SimpleMapprTest
     /**
      * Parent setUp function executed before each test.
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->setRequestMethod();
     }
@@ -28,7 +28,7 @@ class MapprMapTest extends SimpleMapprTest
     /**
      * Parent tearDown function executed after each test.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         $this->clearRequestMethod();
         $this->clearTmpFiles();

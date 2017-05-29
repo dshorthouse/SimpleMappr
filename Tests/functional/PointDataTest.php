@@ -19,22 +19,6 @@ class PointDataTest extends SimpleMapprTest
     protected $size;
     protected $color;
 
-    /**
-     * Parent setUp function executed before each test.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     private function setLayerContent($id)
     {
         $this->title = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][title]'));

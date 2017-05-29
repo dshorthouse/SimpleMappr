@@ -14,22 +14,6 @@
 class PageHeaderTest extends SimpleMapprTest
 {
     /**
-     * Parent setUp function executed before each test.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
-    /**
      * test page title.
      */
     public function testPageTitle()

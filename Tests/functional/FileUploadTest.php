@@ -13,24 +13,6 @@
  */
 class FileUploadTest extends SimpleMapprTest
 {
-    protected $file_dir;
-
-    /**
-     * Parent setUp function executed before each test.
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->file_dir = dirname(__DIR__) . "/files/";
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
 
     /**
      * Test upload an unrecognized file.
@@ -43,7 +25,7 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->setFileDetector(new LocalFileDetector());
-        $file_input->sendKeys($this->file_dir . "sample3.docx");
+        $file_input->sendKeys(dirname(__DIR__) . "/files/sample3.docx");
         $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
 
         $message_box = $this->webDriver->findElement(WebDriverBy::id('badFile'));
@@ -62,7 +44,7 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->setFileDetector(new LocalFileDetector());
-        $file_input->sendKeys($this->file_dir . "sample4.txt");
+        $file_input->sendKeys(dirname(__DIR__) . "/files/sample4.txt");
         $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
 
         $message_box = $this->webDriver->findElement(WebDriverBy::id('tooMuchData'));
@@ -81,7 +63,7 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->setFileDetector(new LocalFileDetector());
-        $file_input->sendKeys($this->file_dir . "sample.txt");
+        $file_input->sendKeys(dirname(__DIR__) . "/files/sample.txt");
         $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
         parent::waitOnMap();
 
@@ -117,7 +99,7 @@ class FileUploadTest extends SimpleMapprTest
 
         $file_input = $this->webDriver->findElement(WebDriverBy::id('fileInput'));
         $file_input->setFileDetector(new LocalFileDetector());
-        $file_input->sendKeys($this->file_dir . "sample2.txt");
+        $file_input->sendKeys(dirname(__DIR__) . "/files/sample2.txt");
         $this->webDriver->executeScript("$('#fileInput').trigger('change');", array());
         parent::waitOnMap();
 

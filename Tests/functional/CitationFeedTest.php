@@ -20,9 +20,8 @@ class CitationFeedTest extends SimpleMapprTest
     /**
      * Parent setUp function executed before each test.
      */
-    public function setUp()
+    protected function setUp()
     {
-        parent::setUp();
         $ch = curl_init(MAPPR_URL . "/citation.rss");
 
         curl_setopt($ch, CURLOPT_HEADER, false);
@@ -31,14 +30,6 @@ class CitationFeedTest extends SimpleMapprTest
         $this->rss = simplexml_load_string(curl_exec($ch));
         $this->type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
     }
 
     /**
