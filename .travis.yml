@@ -120,7 +120,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "Unit" --stderr
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml Tests/binary/KmlTest.php --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
