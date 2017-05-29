@@ -60,9 +60,6 @@ addons:
 
 install:
   - chmod 775 $HOME
-  
-  # Install PHP packages
-  #- sh -e .travis/scripts/php.sh
 
   # ImageMagick
   - printf "\n" | pecl install imagick
@@ -123,8 +120,11 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml Tests/binary/MapprApiTest.php --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
   - sudo cat $TRAVIS_BUILD_DIR/php-fpm.log
+
+after_success:
+  - php vendor/bin/coveralls -c .coveralls.yml -v
