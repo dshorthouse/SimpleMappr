@@ -32,7 +32,6 @@ class MapprApiTest extends TestCase
     protected function tearDown()
     {
         $this->clearRequestMethod();
-        $this->setRequest([]);
         $this->clearTmpFiles();
     }
 

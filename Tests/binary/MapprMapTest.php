@@ -109,7 +109,6 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_legend()
     {
-        $this->setRequestMethod();
         $req = ['legend' => 'true'];
         $this->setRequest($req);
         $mappr_map = new MapprMap(1, "png");
@@ -124,7 +123,6 @@ class MapprMapTest extends SimpleMapprTest
      */
     public function test_map_nolegend()
     {
-        $this->setRequestMethod();
         $req = ['legend' => 'false'];
         $this->setRequest($req);
         $mappr_map = new MapprMap(1, "png");
