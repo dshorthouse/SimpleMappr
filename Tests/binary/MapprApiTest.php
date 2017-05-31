@@ -197,7 +197,6 @@ class MapprApiTest extends TestCase
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
     }
 
-
     /**
      * Test API response to ensure that a tif can be produced.
      */
