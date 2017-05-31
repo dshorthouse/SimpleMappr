@@ -60,4 +60,20 @@ class MapprApiTest extends TestCase
         $this->assertArrayHasKey("expiry", $decoded);
         $this->assertContains(MAPPR_MAPS_URL, $decoded["imageURL"]);
     }
+
+    /**
+     * Test that a simple GET request is handled.
+     */
+    public function test_apioutput_get()
+    {
+        $this->setRequest([]);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_get.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
+    }
 }
