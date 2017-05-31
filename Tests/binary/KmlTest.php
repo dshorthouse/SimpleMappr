@@ -63,12 +63,9 @@ class KmlTest extends TestCase
         ];
         $kml = new Kml;
         $kml->getRequest("My Map", $coords);
-        ob_start();
-        $kml->createOutput();
-        $output = ob_get_clean();
-        $file = ROOT."/public/tmp/kml.kml";
-        file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/kml.kml'));
+        $output = $kml->createOutput();
+        $test_file = file_get_contents(ROOT.'/Tests/files/kml.kml');
+        $this->assertEquals($output, $test_file);
     }
 
 }

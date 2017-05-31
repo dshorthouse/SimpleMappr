@@ -139,7 +139,7 @@ class Kml
      *
      * @return void
      */
-    public function createOutput()
+    public function createOutput($file_download = false)
     {
         $clean_filename = Utility::cleanFilename($this->file_name);
 
@@ -149,8 +149,10 @@ class Kml
 
         $this->_kml = new XMLWriter();
 
-        Header::setHeader("kml", $clean_filename . ".kml");
-        $this->_kml->openURI('php://output');
+        if ($file_download) {
+            Header::setHeader("kml", $clean_filename . ".kml");
+        }
+        $this->_kml->openMemory();
 
         $this->_kml->startDocument('1.0', 'UTF-8');
         $this->_kml->setIndent(4);
@@ -197,7 +199,8 @@ class Kml
         $this->_kml->endElement(); //end Document
         $this->_kml->endElement(); //end kml
         $this->_kml->endDocument();
-        $this->_kml->flush();
+
+        return $this->_kml->outputMemory();
     }
 
     /**

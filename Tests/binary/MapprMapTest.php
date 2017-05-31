@@ -62,9 +62,9 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_json()
     {
         $mappr_map = new MapprMap(1, "json");
-        $file = ROOT."/public/tmp/map_json.json";
-        file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json.json'));
+        $output = $mappr_map->execute()->createOutput();
+        $test_file = file_get_contents(ROOT.'/Tests/files/map_json.json');
+        $this->assertEquals($output, $test_file);
     }
 
     /**
@@ -73,9 +73,12 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_polygon_json()
     {
         $mappr_map = new MapprMap(3, "json");
-        $file = ROOT."/public/tmp/map_json_polygon.json";
-        file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_json_polygon.json'));
+        //get outputbuffer level because geoPHP::load in MapprMap creates an unwanted stream
+        $level = ob_get_level();
+        $output = $mappr_map->execute()->createOutput();
+        if (ob_get_level() > $level) { ob_end_clean(); }
+        $test_file = file_get_contents(ROOT.'/Tests/files/map_json_polygon.json');
+        $this->assertEquals($output, $test_file);
     }
 
     /**
@@ -99,9 +102,9 @@ class MapprMapTest extends SimpleMapprTest
     public function test_map_kml()
     {
         $mappr_map = new MapprMap(1, "kml");
-        $file = ROOT."/public/tmp/map_kml.kml";
-        file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::filesIdentical($file, ROOT.'/Tests/files/map_kml.kml'));
+        $output = $mappr_map->execute()->createOutput();
+        $test_file = file_get_contents(ROOT.'/Tests/files/map_kml.kml');
+        $this->assertEquals($output, $test_file);
     }
 
     /**

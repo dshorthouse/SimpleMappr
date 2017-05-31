@@ -101,12 +101,18 @@ class Bootstrap
             return $this->_twig()->render("about.html", $config);
         });
 
+        $router->options('/api', function () {
+            http_response_code(204);
+        });
+
         $router->any('/api', function () {
+            //headers are set in MapprApi class
             $klass = $this->_klass("MapprApi");
             return $klass->execute()->createOutput();
         }, ['after' => 'logAPI']);
 
         $router->get('/apidoc', function () {
+            Header::setHeader('html');
             Session::selectLocale();
             $config = ['swagger' => OpenAPI::swaggerData()];
             return $this->_twig()->render("apidoc.html", $config);
@@ -118,6 +124,7 @@ class Bootstrap
         }, ['before' => 'checkPermission']);
 
         $router->post('/application', function () {
+            //headers are set in MapprApplication class
             $klass = $this->_klass("MapprApplication");
             return $klass->execute()->createOutput();
         });
@@ -155,6 +162,7 @@ class Bootstrap
         });
 
         $router->post('/docx', function () {
+            //headers are set in MapprDocx class
             Session::selectLocale();
             $klass = $this->_klass("MapprDocx");
             return $klass->execute()->createOutput();
@@ -181,8 +189,9 @@ class Bootstrap
         });
 
         $router->post('/kml', function () {
+            //headers set in Kml class
             $kml = $this->_klass("Kml");
-            return $kml->getRequest()->createOutput();
+            return $kml->getRequest()->createOutput(true);
         });
 
         $router->get('/logout', function () {
@@ -190,11 +199,13 @@ class Bootstrap
         });
 
         $router->get('/map/{id:i}', function ($id) {
+            Header::setHeader('png');
             $klass = $this->_klass("MapprMap", $id, 'png');
             return $klass->execute()->createOutput();
         });
 
         $router->get('/map/{id:i}.{ext:[kml|svg|json|png|jpg]+}', function ($id, $ext) {
+            Header::setHeader($ext);
             $klass = $this->_klass("MapprMap", $id, $ext);
             return $klass->execute()->createOutput();
         });
@@ -214,6 +225,7 @@ class Bootstrap
         });
 
         $router->post('/pptx', function () {
+            //headers set in MapprPptx class
             Session::selectLocale();
             $klass = $this->_klass("MapprPptx");
             return $klass->execute()->createOutput();
@@ -311,7 +323,7 @@ class Bootstrap
         }, ['after' => 'logWFS']);
 
         $router->any('/wms', function () {
-            //Headers are set in MapprWms class
+            //headers are set in MapprWms class
             $klass = $this->_klass("MapprWms");
             return $klass->makeService()->execute()->createOutput();
         }, ['after' => 'logWMS']);

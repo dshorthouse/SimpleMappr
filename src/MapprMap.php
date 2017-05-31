@@ -364,17 +364,12 @@ class MapprMap extends Mappr
     {
         switch($this->_extension) {
         case 'jpg':
-            header("Content-Type: image/jpeg");
-            $this->image->saveImage("");
-            break;
-
         case 'png':
-            header("Content-Type: image/png");
+        case 'svg':
             $this->image->saveImage("");
             break;
 
         case 'json':
-            Header::setHeader('json');
             $output = new \stdClass;
             $output->type = 'FeatureCollection';
             $output->features = array_merge($this->_getCoordinates(), $this->_getWKT());
@@ -386,18 +381,13 @@ class MapprMap extends Mappr
             if (isset($this->callback) && $this->callback) {
                 $output = $this->callback . '(' . $output . ');';
             }
-            echo $output;
+            return $output;
             break;
 
         case 'kml':
-            Header::setHeader('kml');
             $kml = new Kml;
-            $kml->getRequest($this->_id, $this->coords)->createOutput();
-            break;
-
-        case 'svg':
-            Header::setHeader('svg');
-            $this->image->saveImage("");
+            $output = $kml->getRequest($this->_id, $this->coords)->createOutput();
+            return $output;
             break;
 
         default:

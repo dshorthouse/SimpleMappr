@@ -505,8 +505,6 @@ class MapprApi extends Mappr
                 } else {
                   $this->image->saveImage("");
                 }
-            } else if ($this->request->method == 'OPTIONS') { //For CORS requests
-                http_response_code(204);
             } else {
                 $url = $this->image->saveWebImage();
                 $expiry = time() + (6 * 60 * 60);
