@@ -42,9 +42,22 @@ class MapprApiTest extends TestCase
     {
         $this->setRequest(['ping' => true]);
         $mappr_api = new MapprApi;
-        $mappr_api->execute();
-        $output = $mappr_api->createOutput();
+        $output = $mappr_api->execute()->createOutput();
         $decoded = json_decode($output, true);
         $this->assertArrayHasKey("status", $decoded);
+    }
+
+    /**
+     * Test that a simple POST request is handled.
+     */
+    public function test_apioutput_post()
+    {
+        $this->setRequestMethod('POST');
+        $mappr_api = new MapprApi;
+        $output = $mappr_api->execute()->createOutput();
+        $decoded = json_decode($output, true);
+        $this->assertArrayHasKey("imageURL", $decoded);
+        $this->assertArrayHasKey("expiry", $decoded);
+        $this->assertContains(MAPPR_MAPS_URL, $decoded["imageURL"]);
     }
 }
