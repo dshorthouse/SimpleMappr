@@ -196,4 +196,49 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
     }
+
+
+    /**
+     * Test API response to ensure that a tif can be produced.
+     */
+    public function test_apioutput_tif()
+    {
+        $req = [
+            'output' => 'tif',
+            'shade' => [
+                'places' => 'Alberta,USA[MT|WA]'
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_tif.tif';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_tif.tif'));
+    }
+
+    /**
+     * Test API response to ensure that a tif can be produced.
+     */
+    public function test_apioutput_svg()
+    {
+        $req = [
+            'output' => 'svg',
+            'shade' => [
+                'places' => 'Alberta,USA[MT|WA]'
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_svg.svg';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
+    }
 }
