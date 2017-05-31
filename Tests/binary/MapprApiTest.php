@@ -223,6 +223,7 @@ class MapprApiTest extends TestCase
     /**
      * Test API response to ensure that a tif can be produced.
      */
+/*
     public function test_apioutput_svg()
     {
         $req = [
@@ -241,4 +242,31 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
+*/
+    /**
+     * Test API response to ensure that image can be produced using WKT parameter.
+     */
+/*
+    public function test_apioutput_wkt()
+    {
+        $req = [
+            'wkt' => [
+                0 => [
+                    'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))'
+                ]
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        $level = ob_get_level();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        if (ob_get_level() > $level) { ob_end_clean(); }
+        $file = ROOT.'/public/tmp/apioutput_wkt.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
+    }
+*/
 }
