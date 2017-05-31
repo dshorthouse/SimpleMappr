@@ -76,4 +76,45 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
+
+    /**
+     * Test that a few API request parameters are handled.
+     */
+    public function test_apioutput_get_params()
+    {
+        $req = [
+            'bbox' => '-130,40,-60,50',
+            'projection' => 'esri:102009',
+            'width' => 600,
+            'graticules' => true
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_get_params.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get_params.png'));
+    }
+
+    /**
+     * Test API response in produced when coordinates are not supplied.
+     */
+    public function test_apioutput_no_coords()
+    {
+        $req = [
+            'points' => []
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_no_coords.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
+    }
 }
