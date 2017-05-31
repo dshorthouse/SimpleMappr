@@ -246,6 +246,7 @@ class MapprApiTest extends TestCase
     /**
      * Test API response to ensure that image can be produced using WKT parameter.
      */
+/*
     public function test_apioutput_wkt()
     {
         $req = [
@@ -265,4 +266,5 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
     }
+*/
 }
