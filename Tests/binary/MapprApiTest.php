@@ -117,4 +117,43 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
     }
+
+    /**
+     * Test API response when coordinates are supplied.
+     */
+    public function test_apioutput_coords()
+    {
+        $req = [
+            'points' => ["45, -120\n52, -100"]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_coords.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_coords.png'));
+    }
+
+    /**
+     * Test API response to ensure that "Québec" is properly encoded.
+     */
+    public function test_apioutput_encoding()
+    {
+        $req = [
+            'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
+            'layers' => 'stateprovnames'
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT."/public/tmp/apioutput_encoding.png";
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
+    }
 }
