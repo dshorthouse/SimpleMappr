@@ -62,7 +62,7 @@ class DrawingsTest extends SimpleMapprTest
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Drawings'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a drawing']"))->click();
-        sleep(1);
+        sleep(2);
 
         $layer_id = 3;
         $this->setLayerContent($layer_id);
