@@ -156,4 +156,44 @@ class MapprApiTest extends TestCase
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
     }
+
+    /**
+     * Test API response to ensure that regions get shaded.
+     */
+    public function test_apioutput_country()
+    {
+        $req = [
+            'shade' => [
+                'places' => 'Alberta,USA[MT|WA]'
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_places.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_places.png'));
+    }
+
+    /**
+     * Test API response to ensure that ecoregions get shaded.
+     */
+    public function test_apioutput_ecoregions()
+    {
+        $req = [
+            'layers' => 'ecoregions'
+        ];
+        $this->setRequest($req);
+        $mappr_api = new MapprApi;
+        $mappr_api->execute();
+        ob_start();
+        echo $mappr_api->createOutput();
+        $output = ob_get_clean();
+        $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
+        file_put_contents($file, $output);
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
+    }
 }
