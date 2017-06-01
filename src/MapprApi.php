@@ -80,7 +80,7 @@ class MapprApi extends Mappr
         $attr->ping             = Utility::loadParam('ping', false);
         $attr->method           = $_SERVER['REQUEST_METHOD'];
         $attr->download         = true;
-        $attr->watermark        = true;
+        $attr->watermark        = Utility::loadParam('watermark', true);
         $attr->options          = [];
         $attr->url              = false;
         $attr->url_content      = "";

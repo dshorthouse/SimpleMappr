@@ -84,6 +84,7 @@ class MapprMapTest extends SimpleMapprTest
     /**
      * Test that the output is SVG.
      */
+/*
     public function test_map_svg()
     {
         $mappr_map = new MapprMap(1, "svg");
@@ -95,7 +96,7 @@ class MapprMapTest extends SimpleMapprTest
         $image1->writeImage($file);
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.png'));
     }
-
+*/
     /**
      * Test that the output is KML.
      */

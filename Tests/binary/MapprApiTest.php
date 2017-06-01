@@ -227,19 +227,23 @@ class MapprApiTest extends TestCase
         $req = [
             'output' => 'svg',
             'shade' => [
-                'places' => 'Alberta,USA[MT|WA]'
-            ]
+                'places' => 'CAN[SK]'
+            ],
+            'bbox' => '-109,50,-105,58',
+            'width' => 200,
+            'height' => 275,
+            'watermark' => false
         ];
+
         $this->setRequest($req);
         $mappr_api = new MapprApi;
         $mappr_api->execute();
+
         ob_start();
-        echo $mappr_api->createOutput();
+        $mappr_api->createOutput();
         $output = ob_get_clean();
         $svgfile = ROOT.'/public/tmp/apioutput_svg.svg';
         file_put_contents($svgfile, $output);
-
-        print_r(file_get_contents($svgfile));
 
         $image1 = new \Imagick($svgfile);
         $image1->setImageFormat('png');

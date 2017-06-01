@@ -95,6 +95,8 @@ class Utility
         if (get_magic_quotes_gpc() != 1) {
             $value = self::addSlashesExtended($value);
         }
+        if ($value == "false") { $value = false; }
+        if ($value == "true") { $value = true; }
         return $value;
     }
 
