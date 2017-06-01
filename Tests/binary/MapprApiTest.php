@@ -244,17 +244,13 @@ class MapprApiTest extends TestCase
         $output = ob_get_clean();
         $svgfile = ROOT.'/public/tmp/apioutput_svg.svg';
         file_put_contents($svgfile, $output);
-        
-        $this->assertEquals(1,1);
 
-/*
         $image1 = new \Imagick($svgfile);
         $image1->setImageFormat('png');
         $file = ROOT.'/public/tmp/apioutput_svg.png';
         $image1->writeImage($file);
 
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.png'));
-*/
     }
 
     /**

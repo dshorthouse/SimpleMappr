@@ -61,9 +61,6 @@ addons:
 install:
   - chmod 775 $HOME
 
-  # ImageMagick
-  - printf "\n" | pecl install imagick
-
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
   
