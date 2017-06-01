@@ -65,8 +65,8 @@ install:
   
   # PHP configuration
   - phpenv config-add .travis/travis.php.ini
-  - sudo php5enmod imagick
   - phpenv rehash
+  - php -i
 
   # Translations
   - sh -e .travis/scripts/locales.sh
