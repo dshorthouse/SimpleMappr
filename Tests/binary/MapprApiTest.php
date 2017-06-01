@@ -239,6 +239,8 @@ class MapprApiTest extends TestCase
         $svgfile = ROOT.'/public/tmp/apioutput_svg.svg';
         file_put_contents($svgfile, $output);
 
+        print_r(file_get_contents($svgfile));
+
         $image1 = new \Imagick($svgfile);
         $image1->setImageFormat('png');
         $file = ROOT.'/public/tmp/apioutput_svg.png';
