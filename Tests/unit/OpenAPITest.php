@@ -69,7 +69,7 @@ class OpenAPITest extends TestCase
      */
     public function test_number_parameters()
     {
-        $this->assertCount(25, $this->parameters);
+        $this->assertCount(26, $this->parameters);
     }
 
     /**

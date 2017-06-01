@@ -408,7 +408,14 @@ class OpenAPI
           'description' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
           'required' => false,
           'type' => 'string'
-        ]
+        ],
+        [
+          'name' => 'watermark',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'description' => 'if watermark=false is included, the SimpleMappr .',
+          'required' => false,
+          'type' => 'boolean'
+        ],
       ];
       if ($request_method == "GET") {
         foreach($params as $param => $value) {
