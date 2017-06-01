@@ -232,7 +232,7 @@ class MapprApiTest extends TestCase
             'bbox' => '-109,50,-105,58',
             'width' => 200,
             'height' => 275,
-            'watermark' => false
+            'watermark' => 'false'
         ];
 
         $this->setRequest($req);
