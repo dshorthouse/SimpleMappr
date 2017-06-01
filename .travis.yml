@@ -20,6 +20,7 @@ addons:
     sources:
       - google-chrome
       - sourceline: 'ppa:ondrej/php'
+      - sourceline: 'ppa:moti-p/cc'
     packages:
       - autoconf
       - apache2
@@ -59,6 +60,9 @@ addons:
 
 install:
   - chmod 775 $HOME
+
+  # ImageMagick via PECL
+  - printf "\n" | pecl install imagick-beta
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
