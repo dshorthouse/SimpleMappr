@@ -220,7 +220,7 @@ class MapprApiTest extends TestCase
     }
 
     /**
-     * Test API response to ensure that a tif can be produced.
+     * Test API response to ensure that svg can be produced.
      */
     public function test_apioutput_svg()
     {
@@ -236,9 +236,15 @@ class MapprApiTest extends TestCase
         ob_start();
         echo $mappr_api->createOutput();
         $output = ob_get_clean();
-        $file = ROOT.'/public/tmp/apioutput_svg.svg';
-        file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
+        $svgfile = ROOT.'/public/tmp/apioutput_svg.svg';
+        file_put_contents($svgfile, $output);
+
+        $image1 = new \Imagick($svgfile);
+        $image1->setImageFormat('png');
+        $file = ROOT.'/public/tmp/apioutput_svg.png';
+        $image1->writeImage($file);
+
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.png'));
     }
 
     /**

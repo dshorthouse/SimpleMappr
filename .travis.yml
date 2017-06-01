@@ -41,7 +41,6 @@ addons:
       - libcairo2-dev
       - libfribidi-dev
       - libgtk2.0-0
-      - librsvg2-dev
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
