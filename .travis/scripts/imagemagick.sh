@@ -21,5 +21,4 @@ tar -zxvf $imagick.tgz
 cd $imagick
 phpize
 ./configure
-sudo php5enmod imagick
 cd ../
