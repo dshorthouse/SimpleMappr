@@ -20,7 +20,6 @@ addons:
     sources:
       - google-chrome
       - sourceline: 'ppa:ondrej/php'
-      - sourceline: 'ppa:moti-p/cc'
     packages:
       - autoconf
       - apache2
@@ -29,7 +28,6 @@ addons:
       - libapache2-mod-fastcgi
       - gettext
       - google-chrome-stable
-      - imagemagick
       - libjpeg-dev
       - libpng12-dev
       - libfcgi-dev
@@ -54,15 +52,14 @@ addons:
       - php5.6-dev
       - php5.6-fpm
       - php5.6-gd
-      - php5-imagick
       - php5.6-mysql
       - php-xdebug
 
 install:
   - chmod 775 $HOME
 
-  # ImageMagick via PECL
-  - printf "\n" | pecl install imagick-beta
+  # ImageMagick installation
+  - sh -e .travis/scripts/imagemagick.sh
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
