@@ -14,7 +14,9 @@ sudo make install
 sudo ldconfig /usr/local/lib
 cd ../
 
-#echo "---> Starting $(tput bold ; tput setaf 2)$imagick installation$(tput sgr0)"
+echo "---> Starting $(tput bold ; tput setaf 2)$imagick installation$(tput sgr0)"
+
+printf "\n" | pecl install imagick
 
 #wget https://pecl.php.net/get/$imagick.tgz
 #tar -zxvf $imagick.tgz
