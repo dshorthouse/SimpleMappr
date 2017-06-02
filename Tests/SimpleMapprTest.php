@@ -565,15 +565,16 @@ abstract class SimpleMapprTest extends TestCase
      */
     public static function imagesSimilar($fn1, $fn2)
     {
-        $same = false;
+        $similar = false;
 
         $image1 = new \Imagick($fn1);
         $image2 = new \Imagick($fn2);
         $result = $image1->compareImages($image2, \Imagick::METRIC_MEANSQUAREERROR);
+        print_r($result);
         if ($result[1] < 0.01) {
-            $same = true;
+            $similar = true;
         }
-        return $same;
+        return $similar;
     }
 
     /**

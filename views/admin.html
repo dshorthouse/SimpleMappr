@@ -70,7 +70,7 @@
 
     <div id="admin-citations-list">
     {% for citation in citations['citations'] %}
-        {% set doi = (citation.doi) ? ' doi:<a href="http://doi.org/' ~ citation.doi ~ '">' ~ citation.doi ~ '</a>.' : "" %}
+        {% set doi = (citation.doi) ? ' <a href="https://doi.org/' ~ citation.doi ~ '">https://doi.org/' ~ citation.doi ~ '</a>.' : "" %}
         {% set link = (citation.link) ? ' (<a href="' ~ citation.link ~ '">link</a>)' : "" %}
         <p class="citation">{{ citation.reference|raw }}{{ link|raw }}{{ doi|raw }} <a class="sprites-before citation-delete" data-id="{{ citation.id }}" href="#">{% trans "Delete" %}</a></p>
     {% endfor %}
