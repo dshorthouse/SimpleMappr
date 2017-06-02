@@ -17,10 +17,3 @@ cd ../
 echo "---> Starting $(tput bold ; tput setaf 2)$imagick installation$(tput sgr0)"
 
 printf "\n" | pecl install imagick-beta
-
-#wget https://pecl.php.net/get/$imagick.tgz
-#tar -zxvf $imagick.tgz
-#cd $imagick
-#phpize
-#./configure
-#cd ../
