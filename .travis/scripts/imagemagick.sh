@@ -6,7 +6,7 @@ echo "---> Starting $(tput bold ; tput setaf 2)$imagemagick installation$(tput s
 
 wget https://github.com/ImageMagick/ImageMagick/archive/$imagemagick.tar.gz
 tar -zxvf $imagemagick.tar.gz
-cd $imagemagick
+cd ImageMagick-$imagemagick
 ./configure
 make
 sudo make install
