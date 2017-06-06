@@ -118,7 +118,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml Tests/binary/MappMapTest.php --stderr
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml Tests/binary/MapprMapTest.php --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
