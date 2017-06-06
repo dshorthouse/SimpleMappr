@@ -5,7 +5,7 @@ imagemagick="7.0.5-10"
 echo "---> Starting $(tput bold ; tput setaf 2)$imagemagick installation$(tput sgr0)"
 
 wget https://github.com/ImageMagick/ImageMagick/archive/$imagemagick.tar.gz
-tar -zxvf ImageMagick-$imagemagick.tar.gz
+tar -zxvf $imagemagick.tar.gz
 cd $imagemagick
 ./configure
 make
