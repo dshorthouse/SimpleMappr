@@ -15,4 +15,5 @@ cd ../
 
 echo "---> Starting $(tput bold ; tput setaf 2)Imagick installation$(tput sgr0)"
 
+sudo pecl channel-update pecl.php.net
 printf "\n" | pecl install imagick-beta
