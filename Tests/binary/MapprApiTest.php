@@ -222,7 +222,6 @@ class MapprApiTest extends TestCase
     /**
      * Test API response to ensure that svg can be produced.
      */
-/*
     public function test_apioutput_svg()
     {
         $req = [
@@ -243,17 +242,11 @@ class MapprApiTest extends TestCase
         ob_start();
         $mappr_api->createOutput();
         $output = ob_get_clean();
-        $svgfile = ROOT.'/public/tmp/apioutput_svg.svg';
-        file_put_contents($svgfile, $output);
+        $file = ROOT.'/public/tmp/apioutput_svg.svg';
+        file_put_contents($file, $output);
 
-        $image1 = new \Imagick($svgfile);
-        $image1->setImageFormat('png');
-        $file = ROOT.'/public/tmp/apioutput_svg.png';
-        $image1->writeImage($file);
-
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.png'));
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
-*/
 
     /**
      * Test API response to ensure that image can be produced using WKT parameter.
