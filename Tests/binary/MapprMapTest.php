@@ -83,6 +83,7 @@ class MapprMapTest extends SimpleMapprTest
 
     /**
      * Test that the output is JPG.
+     * NOTE: svg/Imagick tests fail on Travis because they cause a core dump with large SVG files
      */
     public function test_map_jpg()
     {
