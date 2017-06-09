@@ -15,4 +15,6 @@ cd ../
 
 echo "---> Starting $(tput bold ; tput setaf 2)Imagick installation$(tput sgr0)"
 
-printf "\n" | pecl install imagick
+sudo apt-get install libmagickwand-dev php-imagick
+
+#printf "\n" | pecl install imagick

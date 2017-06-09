@@ -25,7 +25,6 @@ addons:
       - apache2
       - build-essential
       - curl
-      - imagemagick
       - libapache2-mod-fastcgi
       - gettext
       - google-chrome-stable
@@ -40,7 +39,6 @@ addons:
       - libcairo2-dev
       - libfribidi-dev
       - libgtk2.0-0
-      - libmagickwand-dev
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
@@ -56,13 +54,12 @@ addons:
       - php5.6-gd
       - php5.6-mysql
       - php-xdebug
-      - php-imagick
 
 install:
   - chmod 775 $HOME
 
   # ImageMagick installation
-  #- sh -e .travis/scripts/imagemagick.sh
+  - sh -e .travis/scripts/imagemagick.sh
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
