@@ -83,7 +83,6 @@ class MapprMapTest extends SimpleMapprTest
 
     /**
      * Test that the output is JPG.
-     * NOTE: svg/Imagick tests fail on Travis because they cause a core dump with large SVG files
      */
     public function test_map_jpg()
     {
@@ -103,6 +102,20 @@ class MapprMapTest extends SimpleMapprTest
         $test_file = file_get_contents(ROOT.'/Tests/files/map_kml.kml');
         $this->assertEquals($output, $test_file);
     }
+
+    /**
+     * Test that the output is SVG.
+     * NOTE: svg/Imagick tests fail on Travis because they cause a core dump with large SVG files
+     */
+/*
+    public function test_map_svg()
+    {
+        $mappr_map = new MapprMap(1, "svg");
+        $file = ROOT."/public/tmp/map_svg.svg";
+        file_put_contents($file, $this->getOutputBuffer($mappr_map));
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
+    }
+*/
 
     /**
      * Test that the output has a legend.
