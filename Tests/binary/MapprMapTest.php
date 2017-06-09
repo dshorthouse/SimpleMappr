@@ -82,17 +82,15 @@ class MapprMapTest extends SimpleMapprTest
     }
 
     /**
-     * Test that the output is SVG.
+     * Test that the output is JPG.
      */
-/*
-    public function test_map_svg()
+    public function test_map_jpg()
     {
-        $mappr_map = new MapprMap(1, "svg");
-        $file = ROOT."/public/tmp/map_svg.svg";
+        $mappr_map = new MapprMap(1, "jpg");
+        $file = ROOT."/public/tmp/map_jpg.jpg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
+        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
     }
-*/
 
     /**
      * Test that the output is KML.
