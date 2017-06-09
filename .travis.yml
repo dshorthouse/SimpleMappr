@@ -28,6 +28,7 @@ addons:
       - libapache2-mod-fastcgi
       - gettext
       - google-chrome-stable
+      - imagemagick
       - libjpeg-dev
       - libpng12-dev
       - libfcgi-dev
@@ -55,12 +56,16 @@ addons:
       - php5.6-gd
       - php5.6-mysql
       - php-xdebug
+      - php-imagick
 
 install:
   - chmod 775 $HOME
+ 
+  # ImageMagick
+  - printf "\n" | pecl install imagick
 
   # ImageMagick installation
-  - sh -e .travis/scripts/imagemagick.sh
+  #- sh -e .travis/scripts/imagemagick.sh
 
   # MapServer installation
   - sh -e .travis/scripts/mapserver.sh
