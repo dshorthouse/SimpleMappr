@@ -24,7 +24,6 @@ addons:
       - autoconf
       - apache2
       - build-essential
-      - cairo
       - curl
       - libapache2-mod-fastcgi
       - gettext
