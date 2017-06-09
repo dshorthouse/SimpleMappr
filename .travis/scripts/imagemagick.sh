@@ -7,10 +7,11 @@ echo "---> Starting $(tput bold ; tput setaf 2)$imagemagick installation$(tput s
 wget https://github.com/ImageMagick/ImageMagick/archive/$imagemagick.tar.gz
 tar -zxvf $imagemagick.tar.gz
 cd ImageMagick-$imagemagick
-./configure --with-rsvg=yes
+./configure --with-rsvg=yes --disable-openmp
 make
 sudo make install
 sudo ldconfig /usr/local/lib
+convert -version
 cd ../
 
 echo "---> Starting $(tput bold ; tput setaf 2)Imagick installation$(tput sgr0)"
