@@ -222,6 +222,7 @@ class MapprApiTest extends TestCase
     /**
      * Test API response to ensure that svg can be produced.
      */
+/*
     public function test_apioutput_svg()
     {
         $req = [
@@ -252,6 +253,7 @@ class MapprApiTest extends TestCase
 
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.png'));
     }
+*/
 
     /**
      * Test API response to ensure that image can be produced using WKT parameter.

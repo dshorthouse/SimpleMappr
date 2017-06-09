@@ -39,7 +39,6 @@ addons:
       - libcairo2-dev
       - libfribidi-dev
       - libgtk2.0-0
-      - libmagickwand-dev
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
@@ -119,7 +118,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --testsuite "Binary" --stderr
+  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log
