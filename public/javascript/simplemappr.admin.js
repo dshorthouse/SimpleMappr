@@ -201,7 +201,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
           if(data.status === 'ok') {
             citations += "<h2>Total: " + data.citations.length + "</h2>";
             $.each(data.citations, function() {
-              doi = (this.doi) ? ' doi:<a href="http://doi.org/' + this.doi + '">' + this.doi + '</a>.' : "";
+              doi = (this.doi) ? ' <a href="https://doi.org/' + this.doi + '">https://doi.org/' + this.doi + '</a>.' : "";
               link = (this.link) ? ' (<a href="' + this.link + '">link</a>)' : "";
               citations += '<p class="citation">' + this.reference + link + doi + '<a class="sprites-before citation-delete" data-id="' + this.id + '" href="#">Delete</a></p>';
             });
