@@ -83,6 +83,20 @@ class User implements RestMethods
     ];
 
     /**
+     * Get user count
+     *
+     * @return integer count
+     */
+    public static function count()
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT count(*) as num FROM users";
+        $db->prepare($sql);
+        $count = $db->fetchFirstObject();
+        return $count->num;
+    } 
+
+    /**
      * Get a user by passing a hash
      *
      * @param string $hash A hashed string
@@ -92,7 +106,7 @@ class User implements RestMethods
     public static function getByHash($hash)
     {
         $db = Database::getInstance();
-        $sql = "SELECT * from users u WHERE u.hash=:hash";
+        $sql = "SELECT * FROM users u WHERE u.hash=:hash";
         $db->prepare($sql);
         $db->bindParam(":hash", $hash, 'string');
         return $db->fetchFirstObject();
@@ -192,7 +206,7 @@ class User implements RestMethods
      */
     public function show($id)
     {
-        $sql = "SELECT * from users u WHERE u.uid=:uid";
+        $sql = "SELECT * FROM users u WHERE u.uid=:uid";
         $this->_db->prepare($sql);
         $this->_db->bindParam(":uid", $id, 'integer');
         $this->results = $this->_db->fetchAllObject();

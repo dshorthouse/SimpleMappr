@@ -3,7 +3,7 @@
 <thead>
 <tr>
 {% set sort_dir = (sort == 'title') ? " " ~ dir : "" %}
-<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{sort_dir}}" data-sort="title" href="#">{% trans "Title" %}</a></th>
+<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{sort_dir}}" data-sort="title" href="#">{% trans "Title" %}</a> {{ rows|length }}</th>
 {% set sort_dir = (sort == 'username') ? " " ~ dir : "" %}
 <th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{sort_dir}}" data-sort="username" href="#">{% trans "Username" %}</a></th>
 {% set sort_dir = (sort == 'created') ? " " ~ dir : "" %}

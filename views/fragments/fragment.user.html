@@ -2,7 +2,7 @@
 <thead>
 <tr>
 {% set sort_dir = (sort == 'username') ? " " ~ dir : "" %}
-<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="username" href="#">{% trans "Username" %}</a></th>
+<th class="left-align"><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="username" href="#">{% trans "Username" %}</a> {{ rows|length }} of {{ total }}</th>
 <th class="left-align">{% trans "Email" %}</th>
 {% set sort_dir = (sort == 'num') ? " " ~ dir : "" %}
 <th><a class="sprites-after ui-icon-triangle-sort{{ sort_dir }}" data-sort="num" href="#">{% trans "Maps" %}</a></th>

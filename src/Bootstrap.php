@@ -254,7 +254,7 @@ class Bootstrap
                 $config = [
                     'rows' => $results->results,
                     'sort' => $results->sort,
-                    'dir' => $results->dir
+                    'dir'  => $results->dir
                 ];
                 return $this->_twig()->render("fragments/fragment.share.html", $config);
             })
@@ -274,9 +274,10 @@ class Bootstrap
                 Session::selectLocale();
                 $results = $this->_klass("User")->index((object)$_GET);
                 $config = [
-                    'rows' => $results->results,
-                    'sort' => $results->sort,
-                    'dir' => $results->dir
+                    'total' => User::count(),
+                    'rows'  => $results->results,
+                    'sort'  => $results->sort,
+                    'dir'   => $results->dir
                 ];
                 return $this->_twig()->render("fragments/fragment.user.html", $config);
             })
