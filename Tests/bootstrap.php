@@ -69,8 +69,8 @@ function requireFiles()
 
     require_once $root . '/config/conf.php';
     require_once $root . '/vendor/autoload.php';
-    require_once $root . '/Tests/SimpleMapprTest.php';
     require_once $root . '/Tests/SimpleMapprMixin.php';
+    require_once $root . '/Tests/SimpleMapprTest.php';
 }
 
 function flushCaches()

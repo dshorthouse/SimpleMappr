@@ -14,9 +14,9 @@
 class Administration extends SimpleMapprTest
 {
     /**
-     * Test presence of admin pages.
+     * Test count of users in Users table.
      */
-    public function testAdminUserCount()
+    public function testUserCountTable()
     {
         parent::setUpPage();
         parent::setSession('administrator');
@@ -26,6 +26,20 @@ class Administration extends SimpleMapprTest
         $this->assertEquals($this->webDriver->findElement(WebDriverBy::id('site-user'))->getText(), 'John Smith');
         $users = $this->webDriver->findElements(WebDriverBy::cssSelector('#userdata > .grid-users > tbody > tr'));
         $this->assertEquals(count($users), 2);
+    }
+
+    /**
+     * Test count of users in Users header.
+     */
+    public function testUserCountHeader()
+    {
+        parent::setUpPage();
+        parent::setSession('administrator');
+
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
+        $link->click();
+        $text = $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='userdata']/table/thead/tr[1]/th[1]"))->getText();
+        $this->assertEquals("Username 2 of 2", $text);
     }
 
     /**

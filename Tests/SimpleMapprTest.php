@@ -497,7 +497,6 @@ abstract class SimpleMapprTest extends TestCase
     {
         self::dropTables();
         self::$db = null;
-
         session_write_close();
     }
 

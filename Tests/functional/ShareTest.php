@@ -25,7 +25,21 @@ class ShareTest extends SimpleMapprTest
         $link->click();
         $this->assertContains("Sample Map Administrator", $this->shareContent());
     }
-    
+
+    /**
+     * Test share count
+     */
+    public function testShareCount()
+    {
+        parent::setUpPage();
+        parent::setSession();
+
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'));
+        $link->click();
+        $text = $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='sharedmaps']/table/thead/tr[1]/th[1]"))->getText();
+        $this->assertEquals("Title 1", $text);
+    }
+
     /**
      * Test creation of share
      */
