@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class NavigationTest extends SimpleMapprTest
+class NavigationTest extends SimpleMapprTestCase
 {
     use SimpleMapprMixin;
 

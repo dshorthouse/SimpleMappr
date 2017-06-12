@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class DrawingsTest extends SimpleMapprTest
+class DrawingsTest extends SimpleMapprTestCase
 {
     protected $title;
     protected $data;

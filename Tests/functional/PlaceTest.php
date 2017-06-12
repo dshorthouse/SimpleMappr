@@ -10,7 +10,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class PlaceTest extends SimpleMapprTest
+class PlaceTest extends SimpleMapprTestCase
 {
     /**
      * Test response to index of places URL.

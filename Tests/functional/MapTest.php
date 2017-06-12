@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class MapTest extends SimpleMapprTest
+class MapTest extends SimpleMapprTestCase
 {
     /**
      * Test view own maps.

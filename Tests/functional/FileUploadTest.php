@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class FileUploadTest extends SimpleMapprTest
+class FileUploadTest extends SimpleMapprTestCase
 {
 
     /**

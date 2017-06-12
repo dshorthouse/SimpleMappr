@@ -11,7 +11,7 @@
  * @license Copyright (C) 2015 David P. Shorthouse
  *
  */
-class SettingsTest extends SimpleMapprTest
+class SettingsTest extends SimpleMapprTestCase
 {
     /**
      * Test that selecting the State/Provinces layer makes a new image.

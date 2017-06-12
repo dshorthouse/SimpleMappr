@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class ToolbarTest extends SimpleMapprTest
+class ToolbarTest extends SimpleMapprTestCase
 {
     /**
      * Test that refreshing the map makes a new image.

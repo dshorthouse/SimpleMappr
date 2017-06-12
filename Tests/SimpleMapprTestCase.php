@@ -14,8 +14,9 @@
 use \PHPUnit\Framework\TestCase;
 use \SimpleMappr\Database;
 use \SimpleMappr\Header;
+use \SimpleMappr\Session;
 
-abstract class SimpleMapprTest extends TestCase
+abstract class SimpleMapprTestCase extends TestCase
 {
 
     protected static $db;
@@ -596,6 +597,7 @@ abstract class SimpleMapprTest extends TestCase
      */
     protected function tearDown()
     {
+        $this->destroySession();
         if(method_exists($this->webDriver, 'quit')) {
             $this->webDriver->quit();
         }
@@ -677,5 +679,20 @@ abstract class SimpleMapprTest extends TestCase
 
         return $user;
     }
+
+    /**
+     * Destroy user session
+     *
+     * @return void
+     */
+    public function destroySession()
+    {
+        $this->webDriver->manage()->deleteAllCookies();
+        if (session_id() !== "") {
+            session_unset();
+            session_destroy();
+        }
+    }
+
 
 }

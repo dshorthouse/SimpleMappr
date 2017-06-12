@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class PointDataTest extends SimpleMapprTest
+class PointDataTest extends SimpleMapprTestCase
 {
     protected $title;
     protected $data;

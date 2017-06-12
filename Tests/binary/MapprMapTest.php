@@ -13,7 +13,7 @@
 
 use SimpleMappr\MapprMap;
 
-class MapprMapTest extends SimpleMapprTest
+class MapprMapTest extends SimpleMapprTestCase
 {
     use SimpleMapprMixin;
 
@@ -53,7 +53,7 @@ class MapprMapTest extends SimpleMapprTest
         $mappr_map = new MapprMap(1, "png");
         $file = ROOT."/public/tmp/map_png.png";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 
     /**
@@ -89,7 +89,7 @@ class MapprMapTest extends SimpleMapprTest
         $mappr_map = new MapprMap(1, "jpg");
         $file = ROOT."/public/tmp/map_jpg.jpg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
+        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
     }
 
     /**
@@ -128,7 +128,7 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
+        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
 
     /**
@@ -142,6 +142,6 @@ class MapprMapTest extends SimpleMapprTest
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 }

@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class LayerDataTest extends SimpleMapprTest
+class LayerDataTest extends SimpleMapprTestCase
 {
     protected $title;
     protected $data;

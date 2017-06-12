@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class PageHeaderTest extends SimpleMapprTest
+class PageHeaderTest extends SimpleMapprTestCase
 {
     /**
      * test page title.

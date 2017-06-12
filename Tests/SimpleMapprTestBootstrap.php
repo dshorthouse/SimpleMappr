@@ -13,7 +13,7 @@
 
 require_once dirname(__DIR__) . '/Tests/SimpleMapprMixin.php';
 
-class TestBootstrap
+class SimpleMapprTestBootstrap
 {
     use SimpleMapprMixin;
 
@@ -114,7 +114,7 @@ class TestBootstrap
     private function requireFiles()
     {
         require_once $this->root_dir . '/config/conf.php';
-        require_once $this->root_dir . '/Tests/SimpleMapprTest.php';
+        require_once $this->root_dir . '/Tests/SimpleMapprTestCase.php';
         require_once $this->root_dir . '/vendor/autoload.php';
     }
 
@@ -130,4 +130,4 @@ class TestBootstrap
     }
 }
 
-$autoloader = new TestBootstrap(dirname(__DIR__));
+$autoloader = new SimpleMapprTestBootstrap(dirname(__DIR__));

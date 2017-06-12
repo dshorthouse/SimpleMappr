@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
   colors="true"
-  bootstrap="TestBootstrap.php" >
+  bootstrap="SimpleMapprTestBootstrap.php" >
   <php>
     <server name="HTTP_HOST" value="www.simplemappr.local"/>
     <server name="REMOTE_ADDR" value="000.000.000"/>
@@ -22,9 +22,9 @@
     <whitelist>
       <directory>./</directory>
       <exclude>
-        <file>bootstrap.php</file>
+        <file>SimpleMapprTestBootstrap.php</file>
         <file>SimpleMapprMixin.php</file>
-        <file>SimpleMapprTest.php</file>
+        <file>SimpleMapprTestCase.php</file>
       </exclude>
     </whitelist>
   </filter>

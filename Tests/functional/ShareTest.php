@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class ShareTest extends SimpleMapprTest
+class ShareTest extends SimpleMapprTestCase
 {
     /**
      * Test content of share list

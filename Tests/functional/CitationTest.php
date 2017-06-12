@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class CitationTest extends SimpleMapprTest
+class CitationTest extends SimpleMapprTestCase
 {
     /**
      * Test response from index is JSON with one record.
