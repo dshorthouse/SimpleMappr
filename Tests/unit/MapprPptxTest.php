@@ -16,7 +16,7 @@ use SimpleMappr\MapprPptx;
 
 class MapprPptxTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $mappr_pptx;
 

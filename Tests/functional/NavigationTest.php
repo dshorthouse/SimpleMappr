@@ -13,7 +13,7 @@
  */
 class NavigationTest extends SimpleMapprTestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     /**
      * Test presence of tag line.

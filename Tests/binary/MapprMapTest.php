@@ -15,7 +15,7 @@ use SimpleMappr\MapprMap;
 
 class MapprMapTest extends SimpleMapprTestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     /**
      * Parent setUp function executed before each test.

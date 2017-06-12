@@ -16,7 +16,7 @@ use SimpleMappr\OpenAPI;
 
 class OpenAPITest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $swagger;
 

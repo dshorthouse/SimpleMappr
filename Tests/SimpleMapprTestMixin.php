@@ -35,7 +35,7 @@
  *
  */
 
-trait SimpleMapprMixin
+trait SimpleMapprTestMixin
 {
 
     public function setRequestMethod($type = 'GET')

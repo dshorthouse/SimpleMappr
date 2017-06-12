@@ -16,7 +16,7 @@ use SimpleMappr\Utility;
 
 class UtilityTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     /**
      * Test that a hex color is properly converted to array of RGB.

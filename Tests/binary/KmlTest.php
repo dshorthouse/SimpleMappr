@@ -16,7 +16,7 @@ use SimpleMappr\Kml;
 
 class KmlTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $kml;
 

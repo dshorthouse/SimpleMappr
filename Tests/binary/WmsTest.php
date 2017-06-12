@@ -16,7 +16,7 @@ use SimpleMappr\MapprWms;
 
 class WmsTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     /**
      * Parent setUp function executed before each test.

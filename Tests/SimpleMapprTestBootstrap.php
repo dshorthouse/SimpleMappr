@@ -11,11 +11,11 @@
  *
  */
 
-require_once dirname(__DIR__) . '/Tests/SimpleMapprMixin.php';
+require_once dirname(__DIR__) . '/Tests/SimpleMapprTestMixin.php';
 
 class SimpleMapprTestBootstrap
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     private $root_dir;
 

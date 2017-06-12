@@ -16,7 +16,7 @@ use SimpleMappr\MapprWms;
 
 class MapprWmsTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $mappr_wms;
 

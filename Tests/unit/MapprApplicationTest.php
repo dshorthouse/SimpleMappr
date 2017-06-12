@@ -17,7 +17,7 @@ use SimpleMappr\Utility;
 
 class MapprApplicationTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $mappr;
     protected $output;

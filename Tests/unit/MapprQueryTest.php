@@ -16,7 +16,7 @@ use SimpleMappr\MapprQuery;
 
 class MapprQueryTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $mappr_query;
 

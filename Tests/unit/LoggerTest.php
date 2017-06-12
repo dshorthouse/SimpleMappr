@@ -16,7 +16,7 @@ use SimpleMappr\Logger;
 
 class LoggerTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $file;
     protected $logger;

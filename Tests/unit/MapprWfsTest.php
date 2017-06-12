@@ -16,7 +16,7 @@ use SimpleMappr\MapprWfs;
 
 class MapprWfsTest extends TestCase
 {
-    use SimpleMapprMixin;
+    use SimpleMapprTestMixin;
 
     protected $mappr_wfs;
 
