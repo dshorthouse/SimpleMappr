@@ -11,6 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
+
 class Administration extends SimpleMapprTest
 {
     /**

@@ -11,9 +11,9 @@
  *
  */
 
-use PHPUnit\Framework\TestCase;
-use SimpleMappr\Database;
-use SimpleMappr\Header;
+use \PHPUnit\Framework\TestCase;
+use \SimpleMappr\Database;
+use \SimpleMappr\Header;
 
 abstract class SimpleMapprTest extends TestCase
 {

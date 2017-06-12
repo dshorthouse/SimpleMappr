@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
   colors="true"
-  bootstrap="bootstrap.php" >
+  bootstrap="TestBootstrap.php" >
   <php>
     <server name="HTTP_HOST" value="www.simplemappr.local"/>
     <server name="REMOTE_ADDR" value="000.000.000"/>

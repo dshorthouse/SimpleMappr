@@ -34,6 +34,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
+
 trait SimpleMapprMixin
 {
 
@@ -54,8 +55,8 @@ trait SimpleMapprMixin
 
     public function clearTmpFiles()
     {
-        $dirItr = new RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
-        foreach (new RecursiveIteratorIterator($dirItr, RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
+        $dirItr = new \RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
+        foreach (new \RecursiveIteratorIterator($dirItr, \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
             if ($file->isFile() && $file->getFilename()[0] !== ".") {
                 @unlink($file->getPathname());
             }
