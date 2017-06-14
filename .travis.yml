@@ -7,15 +7,15 @@ php:
 
 env:
   global:
-    - HOST=www.simplemappr.local
-    - IMGHOST=img.simplemappr.local
+    - HOST=www.simplemappr.test
+    - IMGHOST=img.simplemappr.test
     - DBNAME=simplemappr_testing
     - BROWSER=chrome
 
 addons:
   hosts:
-    - www.simplemappr.local
-    - img.simplemappr.local
+    - www.simplemappr.test
+    - img.simplemappr.test
   apt:
     sources:
       - google-chrome

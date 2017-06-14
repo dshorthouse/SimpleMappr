@@ -2,7 +2,7 @@
 
 mapserver="mapserver-7.0.5"
 
-echo "---> Starting $mapserver installation"
+echo "---> Starting $(tput bold ; tput setaf 2)Starting $mapserver installation$(tput sgr0)"
 
 wget http://download.osgeo.org/mapserver/$mapserver.tar.gz
 tar -zxvf $mapserver.tar.gz
