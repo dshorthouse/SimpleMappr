@@ -8,10 +8,10 @@ defined("ROOT") || define("ROOT", dirname(__DIR__));
 defined("MAPPR_UPLOAD_DIRECTORY") || define("MAPPR_UPLOAD_DIRECTORY", dirname(__DIR__)."/public/uploads");
 
 // Domain from where images will be served served, without a trailing slash
-defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.local");
+defined("MAPPR_MAPS_URL") || define("MAPPR_MAPS_URL", "http://img.simplemappr.test");
 
 // Domain for setting cookies in sessions
-defined("MAPPR_URL") || define("MAPPR_URL", "http://www.simplemappr.local");
+defined("MAPPR_URL") || define("MAPPR_URL", "http://www.simplemappr.test");
 
 // Number of textarea boxes for user data entry
 defined("NUMTEXTAREA") || define("NUMTEXTAREA", 3);

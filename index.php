@@ -1,7 +1,8 @@
 <?php
+
 require __DIR__.'/config/conf.php';
 require __DIR__.'/vendor/autoload.php';
 
-use SimpleMappr\Bootstrap;
+use SimpleMappr\Router;
 
-new Bootstrap;
+new Router;

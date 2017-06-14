@@ -310,6 +310,71 @@ class Header
     }
 
     /**
+     * Get the hash created from existing file name
+     *
+     * @return string $hash
+     */
+    public function getHash()
+    {
+        $cache = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
+        if ($cache) {
+            return explode(".", $cache[0])[0];
+        } else {
+            return "1";
+        }
+    }
+
+    /**
+     * Create the css header
+     *
+     * @return string
+     */
+    public function getCSSHeader()
+    {
+        return implode("\n", $this->_css_header);
+    }
+
+    /**
+     * Create the javascript header
+     *
+     * @return string The header
+     */
+    public function getJSFooter()
+    {
+        $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+        $header .= "<script>";
+        $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
+        $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
+        $header .= "head.js(";
+        $headjs = [];
+        foreach ($this->_js_header as $key => $file) {
+            $headjs[] = "{".$key." : \"".$file."\"}";
+        }
+        $header .= join(",", $headjs);
+        $header .= ");" . "\n";
+        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
+        if ($this->_isAdministrator()) {
+            $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
+        }
+        $header .= "</script>" . "\n";
+        return $header;
+    }
+
+    /**
+     * Get all the js files for the footer
+     *
+     * @return string $foot
+     */
+    public function getJSVars()
+    {
+        $foot = $this->_getAnalytics();
+        if (!isset($_SESSION['simplemappr'])) {
+            $foot .= $this->_getJanrain();
+        }
+        return $foot;
+    }
+
+    /**
      * Obtain a file name in the cache directory
      *
      * @param string $dir The fully qualified directory
@@ -481,71 +546,6 @@ class Header
     private function _addCss($css)
     {
         $this->_css_header[] = $css;
-    }
-
-    /**
-     * Get the hash created from existing file name
-     *
-     * @return string $hash
-     */
-    public function getHash()
-    {
-        $cache = $this->_filesCached(dirname(__DIR__) . self::$_css_cache_path, "css");
-        if ($cache) {
-            return explode(".", $cache[0])[0];
-        } else {
-            return "1";
-        }
-    }
-
-    /**
-     * Create the css header
-     *
-     * @return string
-     */
-    public function getCSSHeader()
-    {
-        return implode("\n", $this->_css_header);
-    }
-
-    /**
-     * Create the javascript header
-     *
-     * @return string The header
-     */
-    public function getJSFooter()
-    {
-        $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
-        $header .= "<script>";
-        $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
-        $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
-        $header .= "head.js(";
-        $headjs = [];
-        foreach ($this->_js_header as $key => $file) {
-            $headjs[] = "{".$key." : \"".$file."\"}";
-        }
-        $header .= join(",", $headjs);
-        $header .= ");" . "\n";
-        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
-        if ($this->_isAdministrator()) {
-            $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
-        }
-        $header .= "</script>" . "\n";
-        return $header;
-    }
-
-    /**
-     * Get all the js files for the footer
-     *
-     * @return string $foot
-     */
-    public function getJSVars()
-    {
-        $foot = $this->_getAnalytics();
-        if (!isset($_SESSION['simplemappr'])) {
-            $foot .= $this->_getJanrain();
-        }
-        return $foot;
     }
 
     /**

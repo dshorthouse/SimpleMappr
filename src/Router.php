@@ -46,7 +46,7 @@ use Twig_Environment;
 use Twig_Extensions_Extension_I18n;
 
 /**
- * Bootstrapper for SimpleMappr
+ * Router for SimpleMappr
  *
  * @category  Class
  * @package   SimpleMappr
@@ -55,7 +55,7 @@ use Twig_Extensions_Extension_I18n;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class Bootstrap
+class Router
 {
 
     /**

@@ -144,33 +144,6 @@ class MapprMap extends Mappr
     }
 
     /**
-     * Set default not found image and 404
-     *
-     * @return void
-     */
-    private function _setNotFound()
-    {
-        http_response_code(404);
-        switch ($this->_extension) {
-        case 'jpg':
-        case 'png':
-            header("Content-Type: image/png");
-            $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/404.png");
-            imagepng($im);
-            imagedestroy($im);
-            break;
-
-        case 'json':
-            header("Content-Type: application/json");
-            echo json_encode(["error" => "not found"]);
-            break;
-
-        default:
-            readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
-        }
-    }
-
-    /**
      * Override the method in the parent class
      *
      * @return object $this
@@ -287,6 +260,73 @@ class MapprMap extends Mappr
     }
 
     /**
+     * Implement createOutput method
+     *
+     * @return void
+     */
+    public function createOutput()
+    {
+        switch($this->_extension) {
+        case 'jpg':
+        case 'png':
+        case 'svg':
+            $this->image->saveImage("");
+            break;
+
+        case 'json':
+            $output = new \stdClass;
+            $output->type = 'FeatureCollection';
+            $output->features = array_merge($this->_getCoordinates(), $this->_getWKT());
+            $output->crs = [
+                'type'       => 'name',
+                'properties' => ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84']
+            ];
+            $output = json_encode($output);
+            if (isset($this->callback) && $this->callback) {
+                $output = $this->callback . '(' . $output . ');';
+            }
+            return $output;
+            break;
+
+        case 'kml':
+            $kml = new Kml;
+            $output = $kml->getRequest($this->_id, $this->coords)->createOutput();
+            return $output;
+            break;
+
+        default:
+            $this->_setNotFound();
+        }
+    }
+
+    /**
+     * Set default not found image and 404
+     *
+     * @return void
+     */
+    private function _setNotFound()
+    {
+        http_response_code(404);
+        switch ($this->_extension) {
+        case 'jpg':
+        case 'png':
+            header("Content-Type: image/png");
+            $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"] . "/public/images/404.png");
+            imagepng($im);
+            imagedestroy($im);
+            break;
+
+        case 'json':
+            header("Content-Type: application/json");
+            echo json_encode(["error" => "not found"]);
+            break;
+
+        default:
+            readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
+        }
+    }
+
+    /**
      * Get all coordinates in GeoJSON format
      *
      * @return array $output
@@ -353,46 +393,6 @@ class MapprMap extends Mappr
             }
         }
         return $output;
-    }
-
-    /**
-     * Implement createOutput method
-     *
-     * @return void
-     */
-    public function createOutput()
-    {
-        switch($this->_extension) {
-        case 'jpg':
-        case 'png':
-        case 'svg':
-            $this->image->saveImage("");
-            break;
-
-        case 'json':
-            $output = new \stdClass;
-            $output->type = 'FeatureCollection';
-            $output->features = array_merge($this->_getCoordinates(), $this->_getWKT());
-            $output->crs = [
-                'type'       => 'name',
-                'properties' => ['name' => 'urn:ogc:def:crs:OGC:1.3:CRS84']
-            ];
-            $output = json_encode($output);
-            if (isset($this->callback) && $this->callback) {
-                $output = $this->callback . '(' . $output . ');';
-            }
-            return $output;
-            break;
-
-        case 'kml':
-            $kml = new Kml;
-            $output = $kml->getRequest($this->_id, $this->coords)->createOutput();
-            return $output;
-            break;
-
-        default:
-            $this->_setNotFound();
-        }
     }
 
 }

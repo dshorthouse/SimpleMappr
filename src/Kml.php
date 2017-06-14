@@ -244,30 +244,6 @@ class Kml
     }
 
     /**
-     * Get a placemark.
-     *
-     * @param int    $key  An index for a group of placemarks.
-     * @param int    $mark An index for the placemark.
-     * @param string $name The name of the placemark.
-     *
-     * @return string The placemark.
-     */
-    private function _getPlacemark($key, $mark, $name)
-    {
-        return $this->_placemark[$key][$mark][$name];
-    }
-
-    /**
-     * Helper function to get all placemarks
-     *
-     * @return Array
-     */
-    private function _getAllPlacemarks()
-    {
-        return $this->_placemark;
-    }
-
-    /**
      * Helper function to add coordinates to placemarks
      *
      * @return void
@@ -296,6 +272,30 @@ class Kml
                 }
             }
         }
+    }
+
+    /**
+     * Get a placemark.
+     *
+     * @param int    $key  An index for a group of placemarks.
+     * @param int    $mark An index for the placemark.
+     * @param string $name The name of the placemark.
+     *
+     * @return string The placemark.
+     */
+    private function _getPlacemark($key, $mark, $name)
+    {
+        return $this->_placemark[$key][$mark][$name];
+    }
+
+    /**
+     * Helper function to get all placemarks
+     *
+     * @return Array
+     */
+    private function _getAllPlacemarks()
+    {
+        return $this->_placemark;
     }
 
 }

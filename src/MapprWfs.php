@@ -164,6 +164,21 @@ class MapprWfs extends Mappr
     }
 
     /**
+     * Implement createOutput method
+     *
+     * @return string The buffer content
+     */
+    public function createOutput()
+    {
+        ms_ioinstallstdouttobuffer();
+        $this->map_obj->owsDispatch($this->_req);
+        ms_iostripstdoutbuffercontenttype();
+        $buffer = mb_convert_encoding(ms_iogetstdoutbufferstring(), "UTF-8");
+        ms_ioresethandlers();
+        return $buffer;
+    }
+
+    /**
      * Make the request
      *
      * @return object $this
@@ -188,21 +203,6 @@ class MapprWfs extends Mappr
         }
 
         return $this;
-    }
-
-    /**
-     * Implement createOutput method
-     *
-     * @return string The buffer content
-     */
-    public function createOutput()
-    {
-        ms_ioinstallstdouttobuffer();
-        $this->map_obj->owsDispatch($this->_req);
-        ms_iostripstdoutbuffercontenttype();
-        $buffer = mb_convert_encoding(ms_iogetstdoutbufferstring(), "UTF-8");
-        ms_ioresethandlers();
-        return $buffer;
     }
 
 }

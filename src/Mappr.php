@@ -182,44 +182,6 @@ abstract class Mappr
     }
 
     /**
-     * Default attributes for the request object
-     *
-     * @return obj
-     */
-    private function _defaultAttributes()
-    {
-      $attr = new \stdClass();
-      $attr->coords           = [];
-      $attr->regions          = [];
-      $attr->wkt              = [];
-      $attr->output           = 'png';
-      $attr->width            = 900;
-      $attr->height           = $attr->width/2;
-      $attr->projection       = 'epsg:4326';
-      $attr->projection_map   = 'epsg:4326';
-      $attr->origin           = false;
-      $attr->bbox_map         = '-180,-90,180,90';
-      $attr->bbox_rubberband  = [];
-      $attr->pan              = false;
-      $attr->layers           = [];
-      $attr->graticules       = false;
-      $attr->watermark        = false;
-      $attr->gridspace        = false;
-      $attr->gridlabel        = 1;
-      $attr->download         = false;
-      $attr->crop             = false;
-      $attr->options          = []; //scalebar, legend, border, linethickness
-      $attr->border_thickness = 1.25;
-      $attr->rotation         = 0;
-      $attr->zoom_in          = false;
-      $attr->zoom_out         = false;
-      $attr->download_factor  = 1;
-      $attr->file_name        = time();
-
-      return $attr;
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -300,6 +262,500 @@ abstract class Mappr
         $newPoint->x = $this->map_obj->extent->minx + ($point->x*$deltaX)/(float)$this->image_size[0];
         $newPoint->y = $this->map_obj->extent->miny + (((float)$this->image_size[1] - $point->y)*$deltaY)/(float)$this->image_size[1];
         return $newPoint;
+    }
+
+    /**
+     * Get all the shapes
+     *
+     * @return object
+     */
+    public function getShapes()
+    {
+        return $this->shapes;
+    }
+
+    /**
+     * Add all coordinates to the map
+     *
+     * @return void
+     */
+    public function addCoordinates()
+    {
+        $this->bad_points = [];
+        if (isset($this->request->coords) && $this->request->coords) {
+            //do this in reverse order because the legend will otherwise be presented in reverse order
+            $count = count($this->request->coords)-1;
+            for ($j=$count; $j>=0; $j--) {
+                $title = "";
+                $size = 8;
+                $shape = "circle";
+                $shadow = false;
+                $color = [];
+                $offset = 2;
+
+                if ($this->request->coords[$j]['title']) {
+                    $title = $this->request->coords[$j]['title'];
+                }
+                if ($this->request->coords[$j]['size']) {
+                    $size = $this->request->coords[$j]['size'];
+                }
+                if ($this->_isResize() && $this->request->download_factor > 1) {
+                    $size = $this->request->download_factor*$size;
+                    $offset = $this->request->download_factor;
+                }
+                if (isset($this->request->coords[$j]['shape'])) {
+                    $shape = $this->request->coords[$j]['shape'];
+                }
+                if (array_key_exists('shadow', $this->request->coords[$j])) {
+                    $shadow = true;
+                }
+                if ($this->request->coords[$j]['color']) {
+                    $color = explode(" ", $this->request->coords[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = [];
+                    }
+                }
+
+                $data = trim($this->request->coords[$j]['data']);
+
+                if ($data) {
+                    $this->_legend_required = true;
+                    $layer = ms_newLayerObj($this->map_obj);
+                    $layer->set("name", "layer_".$j);
+                    $layer->set("status", MS_ON);
+                    $layer->set("type", MS_LAYER_POINT);
+                    $layer->set("tolerance", 5);
+                    $layer->set("toleranceunits", 6);
+                    $layer->setProjection(self::getProjection($this->default_projection));
+
+                    $class = ms_newClassObj($layer);
+                    if ($title != "") {
+                        $class->set("name", trim(stripslashes($title)));
+                    }
+
+                    if ($shadow) {
+                      $bstyle = ms_newStyleObj($class);
+                      $bstyle->set("symbolname", $shape);
+                      $bstyle->set("size", $size);
+                      $bstyle->set("offsetx", $offset);
+                      $bstyle->set("offsety", $offset);
+                      $bstyle->color->setRGB(180,180,180);
+                    }
+
+                    $style = ms_newStyleObj($class);
+                    $style->set("symbolname", $shape);
+                    $style->set("size", $size);
+
+                    if (!empty($color)) {
+                        if (substr($shape, 0, 4) == 'open') {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                        } else {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                            $style->outlinecolor->setRGB(85, 85, 85);
+                        }
+                    } else {
+                        $style->outlinecolor->setRGB(0, 0, 0);
+                    }
+
+                    $style->set("width", $this->_determineWidth());
+
+                    $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
+                    $new_line = ms_newLineObj();
+
+                    $rows = explode("\n", Utility::removeEmptyLines($data));  //split the lines that have data
+                    $points = []; //create an array to hold unique locations
+
+                    foreach ($rows as $row) {
+                        $coord_array = Utility::makeCoordinates($row);
+                        $coord = new \stdClass();
+                        $coord->x = ($coord_array[1]) ? Utility::cleanCoord($coord_array[1]) : null;
+                        $coord->y = ($coord_array[0]) ? Utility::cleanCoord($coord_array[0]) : null;
+                        //only add point when data are good & have a title
+                        if (Utility::onEarth($coord) && !empty($title)) {
+                            if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
+                                $new_point = ms_newPointObj();
+                                $new_point->setXY($coord->x, $coord->y);
+                                $new_line->add($new_point);
+                                $points[$coord->x.$coord->y] = [];
+                            }
+                        } else {
+                            $this->bad_points[] = stripslashes($this->request->coords[$j]['title'] . ' : ' . $row);
+                        }
+                        unset($coord);
+                    }
+
+                    unset($points);
+                    $new_shape->add($new_line);
+                    $layer->addFeature($new_shape);
+                }
+            }
+        }
+    }
+
+    /**
+     * Add WKT layers to the map
+     *
+     * @return void
+     */
+    public function addWKT()
+    {
+        $this->bad_drawings = [];
+        if (isset($this->request->wkt) && $this->request->wkt) {
+            $count = count($this->request->wkt)-1;
+            for ($j=$count; $j>=0; $j--) {
+                $color = [];
+                $title = ($this->request->wkt[$j]['title']) ? $this->request->wkt[$j]['title'] : "";
+                if ($this->request->wkt[$j]['color']) {
+                    $color = explode(" ", $this->request->wkt[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = [];
+                    }
+                }
+
+                $data = trim($this->request->wkt[$j]['data']);
+
+                if ($data) {
+                    $this->_legend_required = true;
+                    $rows = explode("\n", Utility::removeEmptyLines($data));
+                    foreach ($rows as $key => $row) {
+                        if (strpos($row, "POINT") !== false) {
+                            $type = MS_LAYER_POINT;
+                        } else if (strpos($row, "LINE") !== false) {
+                            $type = MS_LAYER_LINE;
+                        } else {
+                            $type = MS_LAYER_POLYGON;
+                        }
+                        $layer = ms_newLayerObj($this->map_obj);
+                        $layer->set("name", "wkt_layer_".$j.$key);
+                        $layer->set("status", MS_ON);
+                        $layer->set("type", $type);
+                        $layer->set("template", "template.html");
+                        $layer->setProjection(self::getProjection($this->default_projection));
+
+                        $class = ms_newClassObj($layer);
+                        $class->set("name", trim(stripslashes($title)));
+                        $style = ms_newStyleObj($class);
+                        if ($type == MS_LAYER_POINT) {
+                            $style->set("symbolname", 'circle');
+                            $style->set("size", 8);
+                        }
+                        if (!empty($color)) {
+                            $style->color->setRGB($color[0], $color[1], $color[2]);
+                        }
+                        $style->set("opacity", 75);
+
+                        try {
+                            $shape = ms_shapeObjFromWkt($row);
+                            $layer->addFeature($shape);
+                        } catch(\Exception $e) {
+                            $this->bad_drawings[] = $title;
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Add shaded regions to the map
+     *
+     * @return void
+     */
+    public function addRegions()
+    {
+        if (isset($this->request->regions) && $this->request->regions) {
+            $count = count($this->request->regions)-1;
+            for ($j=$count; $j>=0; $j--) {
+                //clear out previous loop's selection
+                $color = [];
+                $title = ($this->request->regions[$j]['title']) ? $this->request->regions[$j]['title'] : "";
+                if ($this->request->regions[$j]['color']) {
+                    $color = explode(" ", $this->request->regions[$j]['color']);
+                    if (count($color) != 3) {
+                        $color = [];
+                    }
+                }
+
+                $data = trim($this->request->regions[$j]['data']);
+
+                if ($data) {
+                    $this->_legend_required = true;
+                    $baselayer = true;
+                    //grab the textarea for regions & split
+                    $rows = explode("\n", Utility::removeEmptyLines($data));
+                    $qry = [];
+                    foreach ($rows as $row) {
+                        $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
+                        foreach ($regions as $region) {
+                            if ($region) {
+                                $pos = strpos($region, '[');
+                                if ($pos !== false) {
+                                    $baselayer = false;
+                                    $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
+                                    $states = preg_split("/[\s|]+/", $split[1]);
+                                    $statekey = [];
+                                    foreach ($states as $state) {
+                                        $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
+                                    }
+                                    $qry['stateprovince'][] = "'[adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
+                                    $qry['country'][] = "'[iso_a3]' = '".trim($split[0])."'";
+                                } else {
+                                    $region = addslashes(trim($region));
+                                    $qry['stateprovince'][] = "'[name]' ~* '".$region."$'";
+                                    $qry['country'][] = "'[NAME]' ~* '".$region."$' || '[NAME_LONG]' ~* '".$region."$' || '[GEOUNIT]' ~* '".$region."$' || '[FORMAL_EN]' ~* '".$region."$'";
+                                }
+                            }
+                        }
+                    }
+
+                    $layer = ms_newLayerObj($this->map_obj);
+                    $layer->set("name", "query_layer_".$j);
+
+                    if ($baselayer) {
+                        $layer->set("data", $this->shapes['countries']['path']);
+                        $layer->set("type", MS_LAYER_POLYGON);
+                    } else {
+                        $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);
+                        $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
+                    }
+
+                    $layer->set("template", "template.html");
+                    $layer->setProjection(self::getProjection($this->default_projection));
+
+                    $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
+
+                    $layer->setFilter("(".implode(" || ", $query).")");
+
+                    $class = ms_newClassObj($layer);
+                    $class->set("name", trim(stripslashes($title)));
+
+                    $style = ms_newStyleObj($class);
+                    if (!empty($color)) {
+                        $style->color->setRGB($color[0], $color[1], $color[2]);
+                    }
+                    $style->outlinecolor->setRGB(30, 30, 30);
+                    $style->set("opacity", 75);
+                    $style->set("width", $this->_determineWidth());
+                    $layer->set("status", MS_ON);
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Add graticules (or grid lines) to map
+     *
+     * @return void
+     */
+    public function addGraticules()
+    {
+        if (isset($this->request->graticules) && $this->request->graticules) {
+            $layer = ms_newLayerObj($this->map_obj);
+            $layer->set("name", 'grid');
+            $layer->set("type", MS_LAYER_LINE);
+            $layer->set("status", MS_ON);
+            $layer->setProjection(self::getProjection($this->default_projection));
+
+            $class = ms_newClassObj($layer);
+
+            if ($this->request->gridlabel != 0) {
+                $label = new \labelObj();
+                $label->set("font", "arial");
+                $label->set("encoding", "UTF-8");
+                $label->set("size", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*9 : 10);
+                $label->set("position", MS_CC);
+                $label->color->setRGB(30, 30, 30);
+                $class->addLabel($label);
+            }
+
+            $style = ms_newStyleObj($class);
+            $style->color->setRGB(200, 200, 200);
+
+            $minx = $this->map_obj->extent->minx;
+            $maxx = $this->map_obj->extent->maxx;
+
+            //project the extent back to default such that we can work with proper tick marks
+            if ($this->request->projection != $this->default_projection && $this->request->projection == $this->request->projection_map) {
+                $origProjObj = ms_newProjectionObj(self::getProjection($this->request->projection));
+                $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
+
+                $poPoint1 = ms_newPointObj();
+                $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
+
+                $poPoint2 = ms_newPointObj();
+                $poPoint2->setXY($this->map_obj->extent->maxx, $this->map_obj->extent->maxy);
+
+                $poPoint1->project($origProjObj, $newProjObj);
+                $poPoint2->project($origProjObj, $newProjObj);
+
+                $minx = $poPoint1->x;
+                $maxx = $poPoint2->x;
+            }
+
+            $maxarcs = abs($maxx-$minx)/24;
+
+            if ($maxarcs >= 5) {
+                $labelformat = "DD";
+            }
+            if ($maxarcs < 5) {
+                $labelformat = "DDMM";
+            }
+            if ($maxarcs <= 1) {
+                $labelformat = "DDMMSS";
+            }
+
+            $labelformat = ($this->request->gridspace) ? "DD" : $labelformat;
+            $maxinterval = ($this->request->gridspace) ? $this->request->gridspace : $maxarcs;
+            $maxsubdivide = 2;
+
+            ms_newGridObj($layer);
+            $layer->grid->set("labelformat", $labelformat);
+            $layer->grid->set("maxarcs", $maxarcs);
+            $layer->grid->set("maxinterval", $maxinterval);
+            $layer->grid->set("maxsubdivide", $maxsubdivide);
+        }
+    }
+
+    /**
+     * Create the legend file
+     *
+     * @return void
+     */
+    public function addLegend()
+    {
+        if ($this->_legend_required) {
+            $keysize = 20;
+            $keyspacing = 5;
+            $size = 10;
+            if ($this->_isResize() && $this->request->download_factor > 1) {
+                $keysize = $this->request->download_factor*15;
+                $keyspacing = $this->request->download_factor*3;
+                $size = $this->request->download_factor*8;
+            }
+            $this->map_obj->legend->set("keysizex", $keysize);
+            $this->map_obj->legend->set("keysizey", $keysize);
+            $this->map_obj->legend->set("keyspacingx", $keyspacing);
+            $this->map_obj->legend->set("keyspacingy", $keyspacing);
+            $this->map_obj->legend->set("postlabelcache", 1);
+            $this->map_obj->legend->label->set("font", "arial");
+            $this->map_obj->legend->label->set("encoding", "UTF-8");
+            $this->map_obj->legend->label->set("position", 1);
+            $this->map_obj->legend->label->set("size", $size);
+            $this->map_obj->legend->label->color->setRGB(0, 0, 0);
+
+            //svg format cannot do legends in MapServer
+            if ($this->request->download && $this->request->options['legend'] && $this->request->output != 'svg') {
+                $this->map_obj->legend->set("status", MS_EMBED);
+                $this->map_obj->legend->set("position", MS_UR);
+                $this->map_obj->drawLegend();
+            }
+            if (!$this->request->download) {
+                $this->map_obj->legend->set("status", MS_DEFAULT);
+                $this->legend = $this->map_obj->drawLegend();
+                $this->legend_url = $this->legend->saveWebImage();
+            }
+        }
+    }
+
+    /**
+     * Create a scalebar image
+     *
+     * @return void
+     */
+    public function addScalebar()
+    {
+        $height = 8;
+        $width = 200;
+        $size = 8;
+        if ($this->_isResize() && $this->request->download_factor > 1) {
+            $height = $this->request->download_factor*4;
+            $width = $this->request->download_factor*100;
+            $size = $this->request->download_factor*5;
+        }
+        $this->map_obj->scalebar->set("style", 0);
+        $this->map_obj->scalebar->set("intervals", 3);
+        $this->map_obj->scalebar->set("height", $height);
+        $this->map_obj->scalebar->set("width", $width);
+        $this->map_obj->scalebar->color->setRGB(30, 30, 30);
+        $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
+        $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
+        $this->map_obj->scalebar->label->set("font", "arial");
+        $this->map_obj->scalebar->label->set("encoding", "UTF-8");
+        $this->map_obj->scalebar->label->set("size", $size);
+        $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
+
+        //svg format cannot do scalebar in MapServer
+        if ($this->request->download && $this->request->options['scalebar'] && $this->request->output != 'svg') {
+            $this->map_obj->scalebar->set("status", MS_EMBED);
+            $this->map_obj->scalebar->set("position", MS_LR);
+            $this->map_obj->drawScalebar();
+        }
+        if (!$this->request->download) {
+            $this->map_obj->scalebar->set("status", MS_DEFAULT);
+            $this->scale = $this->map_obj->drawScalebar();
+            $this->scalebar_url = $this->scale->saveWebImage();
+        }
+    }
+
+    /**
+     * Get all the coordinates that fall outside Earth's geographic extent in dd
+     *
+     * @return string
+     */
+    public function getBadPoints()
+    {
+        return implode('<br />', $this->bad_points);
+    }
+
+    /**
+     * Get all the coordinates that fall outside Earth's geographic extent in dd
+     *
+     * @return string
+     */
+    public function getBadDrawings()
+    {
+        return implode('<br />', $this->bad_drawings);
+    }
+
+    /**
+     * Default attributes for the request object
+     *
+     * @return obj
+     */
+    private function _defaultAttributes()
+    {
+      $attr = new \stdClass();
+      $attr->coords           = [];
+      $attr->regions          = [];
+      $attr->wkt              = [];
+      $attr->output           = 'png';
+      $attr->width            = 900;
+      $attr->height           = $attr->width/2;
+      $attr->projection       = 'epsg:4326';
+      $attr->projection_map   = 'epsg:4326';
+      $attr->origin           = false;
+      $attr->bbox_map         = '-180,-90,180,90';
+      $attr->bbox_rubberband  = [];
+      $attr->pan              = false;
+      $attr->layers           = [];
+      $attr->graticules       = false;
+      $attr->watermark        = false;
+      $attr->gridspace        = false;
+      $attr->gridlabel        = 1;
+      $attr->download         = false;
+      $attr->crop             = false;
+      $attr->options          = []; //scalebar, legend, border, linethickness
+      $attr->border_thickness = 1.25;
+      $attr->rotation         = 0;
+      $attr->zoom_in          = false;
+      $attr->zoom_out         = false;
+      $attr->download_factor  = 1;
+      $attr->file_name        = time();
+
+      return $attr;
     }
 
     /**
@@ -695,287 +1151,6 @@ abstract class Mappr
     }
 
     /**
-     * Get all the shapes
-     *
-     * @return object
-     */
-    public function getShapes()
-    {
-        return $this->shapes;
-    }
-
-    /**
-     * Add all coordinates to the map
-     *
-     * @return void
-     */
-    public function addCoordinates()
-    {
-        $this->bad_points = [];
-        if (isset($this->request->coords) && $this->request->coords) {
-            //do this in reverse order because the legend will otherwise be presented in reverse order
-            $count = count($this->request->coords)-1;
-            for ($j=$count; $j>=0; $j--) {
-                $title = "";
-                $size = 8;
-                $shape = "circle";
-                $shadow = false;
-                $color = [];
-                $offset = 2;
-
-                if ($this->request->coords[$j]['title']) {
-                    $title = $this->request->coords[$j]['title'];
-                }
-                if ($this->request->coords[$j]['size']) {
-                    $size = $this->request->coords[$j]['size'];
-                }
-                if ($this->_isResize() && $this->request->download_factor > 1) {
-                    $size = $this->request->download_factor*$size;
-                    $offset = $this->request->download_factor;
-                }
-                if (isset($this->request->coords[$j]['shape'])) {
-                    $shape = $this->request->coords[$j]['shape'];
-                }
-                if (array_key_exists('shadow', $this->request->coords[$j])) {
-                    $shadow = true;
-                }
-                if ($this->request->coords[$j]['color']) {
-                    $color = explode(" ", $this->request->coords[$j]['color']);
-                    if (count($color) != 3) {
-                        $color = [];
-                    }
-                }
-
-                $data = trim($this->request->coords[$j]['data']);
-
-                if ($data) {
-                    $this->_legend_required = true;
-                    $layer = ms_newLayerObj($this->map_obj);
-                    $layer->set("name", "layer_".$j);
-                    $layer->set("status", MS_ON);
-                    $layer->set("type", MS_LAYER_POINT);
-                    $layer->set("tolerance", 5);
-                    $layer->set("toleranceunits", 6);
-                    $layer->setProjection(self::getProjection($this->default_projection));
-
-                    $class = ms_newClassObj($layer);
-                    if ($title != "") {
-                        $class->set("name", trim(stripslashes($title)));
-                    }
-
-                    if ($shadow) {
-                      $bstyle = ms_newStyleObj($class);
-                      $bstyle->set("symbolname", $shape);
-                      $bstyle->set("size", $size);
-                      $bstyle->set("offsetx", $offset);
-                      $bstyle->set("offsety", $offset);
-                      $bstyle->color->setRGB(180,180,180);
-                    }
-
-                    $style = ms_newStyleObj($class);
-                    $style->set("symbolname", $shape);
-                    $style->set("size", $size);
-
-                    if (!empty($color)) {
-                        if (substr($shape, 0, 4) == 'open') {
-                            $style->color->setRGB($color[0], $color[1], $color[2]);
-                        } else {
-                            $style->color->setRGB($color[0], $color[1], $color[2]);
-                            $style->outlinecolor->setRGB(85, 85, 85);
-                        }
-                    } else {
-                        $style->outlinecolor->setRGB(0, 0, 0);
-                    }
-
-                    $style->set("width", $this->_determineWidth());
-
-                    $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
-                    $new_line = ms_newLineObj();
-
-                    $rows = explode("\n", Utility::removeEmptyLines($data));  //split the lines that have data
-                    $points = []; //create an array to hold unique locations
-
-                    foreach ($rows as $row) {
-                        $coord_array = Utility::makeCoordinates($row);
-                        $coord = new \stdClass();
-                        $coord->x = ($coord_array[1]) ? Utility::cleanCoord($coord_array[1]) : null;
-                        $coord->y = ($coord_array[0]) ? Utility::cleanCoord($coord_array[0]) : null;
-                        //only add point when data are good & have a title
-                        if (Utility::onEarth($coord) && !empty($title)) {
-                            if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
-                                $new_point = ms_newPointObj();
-                                $new_point->setXY($coord->x, $coord->y);
-                                $new_line->add($new_point);
-                                $points[$coord->x.$coord->y] = [];
-                            }
-                        } else {
-                            $this->bad_points[] = stripslashes($this->request->coords[$j]['title'] . ' : ' . $row);
-                        }
-                        unset($coord);
-                    }
-
-                    unset($points);
-                    $new_shape->add($new_line);
-                    $layer->addFeature($new_shape);
-                }
-            }
-        }
-    }
-
-    /**
-     * Add WKT layers to the map
-     *
-     * @return void
-     */
-    public function addWKT()
-    {
-        $this->bad_drawings = [];
-        if (isset($this->request->wkt) && $this->request->wkt) {
-            $count = count($this->request->wkt)-1;
-            for ($j=$count; $j>=0; $j--) {
-                $color = [];
-                $title = ($this->request->wkt[$j]['title']) ? $this->request->wkt[$j]['title'] : "";
-                if ($this->request->wkt[$j]['color']) {
-                    $color = explode(" ", $this->request->wkt[$j]['color']);
-                    if (count($color) != 3) {
-                        $color = [];
-                    }
-                }
-
-                $data = trim($this->request->wkt[$j]['data']);
-
-                if ($data) {
-                    $this->_legend_required = true;
-                    $rows = explode("\n", Utility::removeEmptyLines($data));
-                    foreach ($rows as $key => $row) {
-                        if (strpos($row, "POINT") !== false) {
-                            $type = MS_LAYER_POINT;
-                        } else if (strpos($row, "LINE") !== false) {
-                            $type = MS_LAYER_LINE;
-                        } else {
-                            $type = MS_LAYER_POLYGON;
-                        }
-                        $layer = ms_newLayerObj($this->map_obj);
-                        $layer->set("name", "wkt_layer_".$j.$key);
-                        $layer->set("status", MS_ON);
-                        $layer->set("type", $type);
-                        $layer->set("template", "template.html");
-                        $layer->setProjection(self::getProjection($this->default_projection));
-
-                        $class = ms_newClassObj($layer);
-                        $class->set("name", trim(stripslashes($title)));
-                        $style = ms_newStyleObj($class);
-                        if ($type == MS_LAYER_POINT) {
-                            $style->set("symbolname", 'circle');
-                            $style->set("size", 8);
-                        }
-                        if (!empty($color)) {
-                            $style->color->setRGB($color[0], $color[1], $color[2]);
-                        }
-                        $style->set("opacity", 75);
-
-                        try {
-                            $shape = ms_shapeObjFromWkt($row);
-                            $layer->addFeature($shape);
-                        } catch(\Exception $e) {
-                            $this->bad_drawings[] = $title;
-                        }
-
-                    }
-                }
-
-            }
-        }
-    }
-
-    /**
-     * Add shaded regions to the map
-     *
-     * @return void
-     */
-    public function addRegions()
-    {
-        if (isset($this->request->regions) && $this->request->regions) {
-            $count = count($this->request->regions)-1;
-            for ($j=$count; $j>=0; $j--) {
-                //clear out previous loop's selection
-                $color = [];
-                $title = ($this->request->regions[$j]['title']) ? $this->request->regions[$j]['title'] : "";
-                if ($this->request->regions[$j]['color']) {
-                    $color = explode(" ", $this->request->regions[$j]['color']);
-                    if (count($color) != 3) {
-                        $color = [];
-                    }
-                }
-
-                $data = trim($this->request->regions[$j]['data']);
-
-                if ($data) {
-                    $this->_legend_required = true;
-                    $baselayer = true;
-                    //grab the textarea for regions & split
-                    $rows = explode("\n", Utility::removeEmptyLines($data));
-                    $qry = [];
-                    foreach ($rows as $row) {
-                        $regions = preg_split("/[,;]+/", $row); //split by a comma, semicolon
-                        foreach ($regions as $region) {
-                            if ($region) {
-                                $pos = strpos($region, '[');
-                                if ($pos !== false) {
-                                    $baselayer = false;
-                                    $split = explode("[", str_replace("]", "", trim(strtoupper($region))));
-                                    $states = preg_split("/[\s|]+/", $split[1]);
-                                    $statekey = [];
-                                    foreach ($states as $state) {
-                                        $statekey[] = "'[code_hasc]' ~* '\.".$state."$'";
-                                    }
-                                    $qry['stateprovince'][] = "'[adm0_a3]' = '".trim($split[0])."' && (".implode(" || ", $statekey).")";
-                                    $qry['country'][] = "'[iso_a3]' = '".trim($split[0])."'";
-                                } else {
-                                    $region = addslashes(trim($region));
-                                    $qry['stateprovince'][] = "'[name]' ~* '".$region."$'";
-                                    $qry['country'][] = "'[NAME]' ~* '".$region."$' || '[NAME_LONG]' ~* '".$region."$' || '[GEOUNIT]' ~* '".$region."$' || '[FORMAL_EN]' ~* '".$region."$'";
-                                }
-                            }
-                        }
-                    }
-
-                    $layer = ms_newLayerObj($this->map_obj);
-                    $layer->set("name", "query_layer_".$j);
-
-                    if ($baselayer) {
-                        $layer->set("data", $this->shapes['countries']['path']);
-                        $layer->set("type", MS_LAYER_POLYGON);
-                    } else {
-                        $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);
-                        $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
-                    }
-
-                    $layer->set("template", "template.html");
-                    $layer->setProjection(self::getProjection($this->default_projection));
-
-                    $query = ($baselayer) ? $qry['country'] : $qry['stateprovince'];
-
-                    $layer->setFilter("(".implode(" || ", $query).")");
-
-                    $class = ms_newClassObj($layer);
-                    $class->set("name", trim(stripslashes($title)));
-
-                    $style = ms_newStyleObj($class);
-                    if (!empty($color)) {
-                        $style->color->setRGB($color[0], $color[1], $color[2]);
-                    }
-                    $style->outlinecolor->setRGB(30, 30, 30);
-                    $style->set("opacity", 75);
-                    $style->set("width", $this->_determineWidth());
-                    $layer->set("status", MS_ON);
-                }
-
-            }
-        }
-    }
-
-    /**
      * Add all selected layers to the map
      *
      * @return void
@@ -1145,121 +1320,6 @@ abstract class Mappr
     }
 
     /**
-     * Add graticules (or grid lines) to map
-     *
-     * @return void
-     */
-    public function addGraticules()
-    {
-        if (isset($this->request->graticules) && $this->request->graticules) {
-            $layer = ms_newLayerObj($this->map_obj);
-            $layer->set("name", 'grid');
-            $layer->set("type", MS_LAYER_LINE);
-            $layer->set("status", MS_ON);
-            $layer->setProjection(self::getProjection($this->default_projection));
-
-            $class = ms_newClassObj($layer);
-
-            if ($this->request->gridlabel != 0) {
-                $label = new \labelObj();
-                $label->set("font", "arial");
-                $label->set("encoding", "UTF-8");
-                $label->set("size", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*9 : 10);
-                $label->set("position", MS_CC);
-                $label->color->setRGB(30, 30, 30);
-                $class->addLabel($label);
-            }
-
-            $style = ms_newStyleObj($class);
-            $style->color->setRGB(200, 200, 200);
-
-            $minx = $this->map_obj->extent->minx;
-            $maxx = $this->map_obj->extent->maxx;
-
-            //project the extent back to default such that we can work with proper tick marks
-            if ($this->request->projection != $this->default_projection && $this->request->projection == $this->request->projection_map) {
-                $origProjObj = ms_newProjectionObj(self::getProjection($this->request->projection));
-                $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
-
-                $poPoint1 = ms_newPointObj();
-                $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
-
-                $poPoint2 = ms_newPointObj();
-                $poPoint2->setXY($this->map_obj->extent->maxx, $this->map_obj->extent->maxy);
-
-                $poPoint1->project($origProjObj, $newProjObj);
-                $poPoint2->project($origProjObj, $newProjObj);
-
-                $minx = $poPoint1->x;
-                $maxx = $poPoint2->x;
-            }
-
-            $maxarcs = abs($maxx-$minx)/24;
-
-            if ($maxarcs >= 5) {
-                $labelformat = "DD";
-            }
-            if ($maxarcs < 5) {
-                $labelformat = "DDMM";
-            }
-            if ($maxarcs <= 1) {
-                $labelformat = "DDMMSS";
-            }
-
-            $labelformat = ($this->request->gridspace) ? "DD" : $labelformat;
-            $maxinterval = ($this->request->gridspace) ? $this->request->gridspace : $maxarcs;
-            $maxsubdivide = 2;
-
-            ms_newGridObj($layer);
-            $layer->grid->set("labelformat", $labelformat);
-            $layer->grid->set("maxarcs", $maxarcs);
-            $layer->grid->set("maxinterval", $maxinterval);
-            $layer->grid->set("maxsubdivide", $maxsubdivide);
-        }
-    }
-
-    /**
-     * Create the legend file
-     *
-     * @return void
-     */
-    public function addLegend()
-    {
-        if ($this->_legend_required) {
-            $keysize = 20;
-            $keyspacing = 5;
-            $size = 10;
-            if ($this->_isResize() && $this->request->download_factor > 1) {
-                $keysize = $this->request->download_factor*15;
-                $keyspacing = $this->request->download_factor*3;
-                $size = $this->request->download_factor*8;
-            }
-            $this->map_obj->legend->set("keysizex", $keysize);
-            $this->map_obj->legend->set("keysizey", $keysize);
-            $this->map_obj->legend->set("keyspacingx", $keyspacing);
-            $this->map_obj->legend->set("keyspacingy", $keyspacing);
-            $this->map_obj->legend->set("postlabelcache", 1);
-            $this->map_obj->legend->label->set("font", "arial");
-            $this->map_obj->legend->label->set("encoding", "UTF-8");
-            $this->map_obj->legend->label->set("position", 1);
-            $this->map_obj->legend->label->set("size", $size);
-            $this->map_obj->legend->label->color->setRGB(0, 0, 0);
-
-            //svg format cannot do legends in MapServer
-            if ($this->request->download && $this->request->options['legend'] && $this->request->output != 'svg') {
-                $this->map_obj->legend->set("status", MS_EMBED);
-                $this->map_obj->legend->set("position", MS_UR);
-                $this->map_obj->drawLegend();
-            }
-            if (!$this->request->download) {
-                $this->map_obj->legend->set("status", MS_DEFAULT);
-                $this->legend = $this->map_obj->drawLegend();
-                $this->legend_url = $this->legend->saveWebImage();
-            }
-        }
-    }
-
-    /**
      * Discover if the output ought to be resized
      *
      * @return bool
@@ -1272,66 +1332,6 @@ abstract class Mappr
             return true;
         }
         return false;
-    }
-
-    /**
-     * Create a scalebar image
-     *
-     * @return void
-     */
-    public function addScalebar()
-    {
-        $height = 8;
-        $width = 200;
-        $size = 8;
-        if ($this->_isResize() && $this->request->download_factor > 1) {
-            $height = $this->request->download_factor*4;
-            $width = $this->request->download_factor*100;
-            $size = $this->request->download_factor*5;
-        }
-        $this->map_obj->scalebar->set("style", 0);
-        $this->map_obj->scalebar->set("intervals", 3);
-        $this->map_obj->scalebar->set("height", $height);
-        $this->map_obj->scalebar->set("width", $width);
-        $this->map_obj->scalebar->color->setRGB(30, 30, 30);
-        $this->map_obj->scalebar->outlinecolor->setRGB(0, 0, 0);
-        $this->map_obj->scalebar->set("units", 4); // 1 feet, 2 miles, 3 meter, 4 km
-        $this->map_obj->scalebar->label->set("font", "arial");
-        $this->map_obj->scalebar->label->set("encoding", "UTF-8");
-        $this->map_obj->scalebar->label->set("size", $size);
-        $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
-
-        //svg format cannot do scalebar in MapServer
-        if ($this->request->download && $this->request->options['scalebar'] && $this->request->output != 'svg') {
-            $this->map_obj->scalebar->set("status", MS_EMBED);
-            $this->map_obj->scalebar->set("position", MS_LR);
-            $this->map_obj->drawScalebar();
-        }
-        if (!$this->request->download) {
-            $this->map_obj->scalebar->set("status", MS_DEFAULT);
-            $this->scale = $this->map_obj->drawScalebar();
-            $this->scalebar_url = $this->scale->saveWebImage();
-        }
-    }
-
-    /**
-     * Get all the coordinates that fall outside Earth's geographic extent in dd
-     *
-     * @return string
-     */
-    public function getBadPoints()
-    {
-        return implode('<br />', $this->bad_points);
-    }
-
-    /**
-     * Get all the coordinates that fall outside Earth's geographic extent in dd
-     *
-     * @return string
-     */
-    public function getBadDrawings()
-    {
-        return implode('<br />', $this->bad_drawings);
     }
 
     /**

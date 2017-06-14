@@ -166,6 +166,28 @@ class MapprWms extends Mappr
     }
 
     /**
+     * Implement createOutput method
+     *
+     * @return void
+     */
+    public function createOutput()
+    {
+        ms_ioinstallstdouttobuffer();
+        $this->map_obj->owsDispatch($this->_req);
+        $contenttype = ms_iostripstdoutbuffercontenttype();
+        $req = strtolower($this->request->params['REQUEST']);
+        if ($req == 'getcapabilities') {
+            Header::setHeader("xml");
+            echo ms_iogetstdoutbufferstring();
+        } else if ($req == 'getmap' || $req == 'getlegendgraphic') {
+            Header::setHeader();
+            header('Content-type: ' . $contenttype);
+            ms_iogetstdoutbufferbytes();
+        }
+        ms_ioresethandlers();
+    }
+
+    /**
      * Make the request
      *
      * @return object $this
@@ -195,28 +217,6 @@ class MapprWms extends Mappr
 
 
         return $this;
-    }
-
-    /**
-     * Implement createOutput method
-     *
-     * @return void
-     */
-    public function createOutput()
-    {
-        ms_ioinstallstdouttobuffer();
-        $this->map_obj->owsDispatch($this->_req);
-        $contenttype = ms_iostripstdoutbuffercontenttype();
-        $req = strtolower($this->request->params['REQUEST']);
-        if ($req == 'getcapabilities') {
-            Header::setHeader("xml");
-            echo ms_iogetstdoutbufferstring();
-        } else if ($req == 'getmap' || $req == 'getlegendgraphic') {
-            Header::setHeader();
-            header('Content-type: ' . $contenttype);
-            ms_iogetstdoutbufferbytes();
-        }
-        ms_ioresethandlers();
     }
 
 }
