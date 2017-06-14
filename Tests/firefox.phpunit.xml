@@ -23,7 +23,7 @@
       <directory>./</directory>
       <exclude>
         <file>SimpleMapprTestBootstrap.php</file>
-        <file>SimpleMapprMixin.php</file>
+        <file>SimpleMapprTestMixin.php</file>
         <file>SimpleMapprTestCase.php</file>
       </exclude>
     </whitelist>
