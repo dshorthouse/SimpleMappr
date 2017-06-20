@@ -272,7 +272,11 @@ class MapprApi extends Mappr
         if ($this->request->wkt && is_array($this->request->wkt)) {
             foreach($this->request->wkt as $j => $wkt) {
                 $color = [120,120,120];
+                $border = false;
                 $title = "";
+                if (array_key_exists('border', $this->request->wkt[$j])) {
+                    $border = true;
+                }
                 if(array_key_exists('color', $this->request->wkt[$j])) {
                     $color = explode(",", $this->request->wkt[$j]['color']);
                     if (count($color) != 3) {
@@ -309,6 +313,9 @@ class MapprApi extends Mappr
                             if ($type == MS_LAYER_POINT) {
                                 $style->set("symbolname", 'circle');
                                 $style->set("size", 8);
+                            }
+                            if ($type == MS_LAYER_POLYGON && $border) {
+                                $style->outlinecolor->setRGB(0, 0, 0);
                             }
                             $style->color->setRGB($color[0], $color[1], $color[2]);
                             $style->set("opacity", 75);

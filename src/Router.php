@@ -68,7 +68,7 @@ class Router
 
         //set the default timezone
         date_default_timezone_set("America/Toronto");
-        
+
         $this->_setRoutes();
     }
 
@@ -286,7 +286,7 @@ class Router
                 return json_encode($this->_klass("User")->destroy($id));
             });
         });
-        
+
         $router->group(['before' => 'check_role_user'], function ($router) {
             $router->get('/usermap', function () {
                 Header::setHeader('html');

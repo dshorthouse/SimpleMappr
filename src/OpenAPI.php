@@ -191,6 +191,13 @@ class OpenAPI
           'type' => 'string'
         ],
         [
+          'name' => 'wkt[x][border]',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'description' => 'border for well-known text shape x; only applies to POLYGON or MULTIPOLYGON',
+          'required' => false,
+          'type' => 'boolean'
+        ],
+        [
           'name' => 'wkt[x][color]',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'color for well-known text shape x, e.g. 80,80,80',

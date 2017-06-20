@@ -827,6 +827,14 @@ msgid "March 22, 2017"
 msgstr "22 mars, 2017"
 
 #: .tabs/about.php:11
+msgid "June 20, 2017"
+msgstr "20 juin, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added border option for drawings."
+msgstr "Améliorations: Ajouté l'option pour encadrer les dessins."
+
+#: .tabs/about.php:11
 msgid "Improvements: Automated selection of markers for text file uploads."
 msgstr "Améliorations: Automatisé la sélection des formes de points de données pour des fichers texte."
 

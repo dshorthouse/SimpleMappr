@@ -404,7 +404,11 @@ abstract class Mappr
             $count = count($this->request->wkt)-1;
             for ($j=$count; $j>=0; $j--) {
                 $color = [];
+                $border = false;
                 $title = ($this->request->wkt[$j]['title']) ? $this->request->wkt[$j]['title'] : "";
+                if (array_key_exists('border', $this->request->wkt[$j])) {
+                    $border = true;
+                }
                 if ($this->request->wkt[$j]['color']) {
                     $color = explode(" ", $this->request->wkt[$j]['color']);
                     if (count($color) != 3) {
@@ -438,6 +442,10 @@ abstract class Mappr
                         if ($type == MS_LAYER_POINT) {
                             $style->set("symbolname", 'circle');
                             $style->set("size", 8);
+                        }
+                        if ($type == MS_LAYER_POLYGON && $border) {
+                            $style->outlinecolor->setRGB(0, 0, 0);
+                            $style->set("width", $this->_determineWidth());
                         }
                         if (!empty($color)) {
                             $style->color->setRGB($color[0], $color[1], $color[2]);
