@@ -438,6 +438,8 @@ class Router
     /**
      * Load twig templating engine
      *
+     * @param boolean Indicate if page elements are to be included.
+     *
      * @return object
      */
     private function _twig($include_page_elements = false)

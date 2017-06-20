@@ -78,6 +78,11 @@ class CitationFeed extends Citation
         return $this;
     }
 
+    /**
+     * Add items to the channel
+     *
+     * @return object $this
+     */
     public function addItems()
     {
         $week_ago = time() - (7 * 24 * 60 * 60);
@@ -102,6 +107,11 @@ class CitationFeed extends Citation
         return $this;
     }
 
+    /**
+     * Return the feed
+     *
+     * @return object $_feed
+     */
     public function getFeed()
     {
         return $this->_feed;

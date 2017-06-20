@@ -49,6 +49,11 @@ namespace SimpleMappr;
  */
 class OpenAPI
 {
+    /**
+     * Return the swagger data as an array
+     *
+     * @return array $swagger
+     */
     public static function swaggerData()
     {
       $url_parts = Utility::parsedURL();
@@ -139,6 +144,8 @@ class OpenAPI
 
     /**
      * Get the API parameters and their definitions
+     *
+     * @param string Indicate the request method.
      *
      * @return array of API parameters
      */

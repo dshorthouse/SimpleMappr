@@ -137,6 +137,8 @@ class Kml
     /**
      * Generate the kml file.
      *
+     * @param boolean $file_download Indicate if the file will be downloaded.
+     *
      * @return void
      */
     public function createOutput($file_download = false)
