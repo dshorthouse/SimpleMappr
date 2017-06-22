@@ -48,7 +48,7 @@ class SimpleMapprTestBootstrap
         $this->requireFiles();
         $this->flushCaches();
         ob_start();
-        new \SimpleMappr\Header;
+        new \SimpleMappr\Assets;
     }
 
     /**
@@ -125,7 +125,7 @@ class SimpleMapprTestBootstrap
      */
     private function flushCaches()
     {
-        \SimpleMappr\Header::flushCache(false);
+        \SimpleMappr\Assets::flushCache(false);
         $this->clearTmpFiles();
     }
 }

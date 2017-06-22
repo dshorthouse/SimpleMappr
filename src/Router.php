@@ -178,7 +178,7 @@ class Router
         });
 
         $router->get('/flush_cache', function () {
-            Header::flushCache();
+            Assets::flushCache();
         }, ['before' => 'check_role_administrator']);
 
         $router->get('/help', function () {
@@ -465,7 +465,7 @@ class Router
         $twig->addGlobal('roles', User::$roles);
 
         if($include_page_elements) {
-            $header = new Header;
+            $header = new Assets;
             $twig->addGlobal('stylesheet', $header->getCSSHeader());
             $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());
         }
