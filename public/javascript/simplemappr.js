@@ -2412,10 +2412,8 @@ var SimpleMappr = (function($, window, document) {
     mapCircleSlider: function() {
       var i = 0, output = "";
 
-      for(i = 0; i < 360; i += 1) {
-        if(i % 5 === 0) {
-          output += '<li data-rotate="' + i + '"></li>';
-        }
+      for(i = 0; i < 360; i += 5) {
+        output += '<li data-rotate="' + i + '"></li>';
       }
       return output;
     },
