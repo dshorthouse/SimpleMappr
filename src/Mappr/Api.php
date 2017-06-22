@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use League\Csv\Reader;
 use geoPHP;
@@ -50,7 +50,7 @@ use geoPHP;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprApi extends Mappr
+class Api extends Mappr
 {
     /**
      * @var array $_coord_cols Coordinates for each column of data

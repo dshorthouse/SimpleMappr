@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use \PhpOffice\PhpPresentation\Autoloader;
 use \PhpOffice\PhpPresentation\PhpPresentation;
@@ -54,7 +54,7 @@ use \PhpOffice\PhpPresentation\Style\Alignment;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprPptx extends Mappr
+class Pptx extends Mappr
 {
     /**
      * @var int $_slidepadding Padding around edges of slide

@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use \Symfony\Component\Yaml\Yaml;
 

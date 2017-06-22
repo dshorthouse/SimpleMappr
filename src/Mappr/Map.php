@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use geoPHP;
 use GeoJSON;
@@ -50,7 +50,7 @@ use GeoJSON;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprMap extends Mappr
+class Map extends Mappr
 {
     /**
      * @var int $_id Database identifer for a map

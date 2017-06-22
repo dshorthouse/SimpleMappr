@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Controller;
 
 use \Suin\RSSWriter\Feed;
 use \Suin\RSSWriter\Channel;

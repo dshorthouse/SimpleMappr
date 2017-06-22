@@ -34,7 +34,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Constants;
 
 /**
  * Accepted projections for SimpleMappr

@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 /**
  * Application class for SimpleMappr
@@ -47,7 +47,7 @@ namespace SimpleMappr;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprApplication extends Mappr
+class Application extends Mappr
 {
 
     /**

@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use \ForceUTF8\Encoding;
 
@@ -49,7 +49,7 @@ use \ForceUTF8\Encoding;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprQuery extends Mappr
+class Query extends Mappr
 {
     /**
      * @var array $data Regions on shapefile that match a query

@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use \PhpOffice\PhpWord\Autoloader;
 use \PhpOffice\PhpWord\PhpWord;
@@ -51,7 +51,7 @@ use \PhpOffice\PhpWord\IOFactory;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprDocx extends Mappr
+class Docx extends Mappr
 {
 
     /**

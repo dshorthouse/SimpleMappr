@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Controller;
 
 /**
  * OpenAPI handler for SimpleMappr
@@ -47,14 +47,71 @@ namespace SimpleMappr;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class OpenAPI
+class OpenAPI implements RestMethods
 {
+    /**
+     * Implemented index method
+     *
+     * @param object $params null
+     *
+     * @return array
+     */
+    public function index($params = null)
+    {
+
+        return $this->_swaggerData();
+    }
+
+    /**
+     * Implemented show method.
+     *
+     * @param int $id identifier for the place.
+     *
+     * @return void
+     */
+    public function show($id)
+    {
+    }
+
+    /**
+     * Implemented create method
+     *
+     * @param array $content The content to create
+     *
+     * @return void
+     */
+    public function create($content)
+    {
+    }
+
+    /**
+     * Implemented update method
+     *
+     * @param int $id The User identifier
+     *
+     * @return void
+     */
+    public function update($id)
+    {
+    }
+
+    /**
+     * Implemented destroy method.
+     *
+     * @param int $id identifier for the place.
+     *
+     * @return void
+     */
+    public function destroy($id)
+    {
+    }
+
     /**
      * Return the swagger data as an array
      *
      * @return array $swagger
      */
-    public static function swaggerData()
+    private function _swaggerData()
     {
       $url_parts = Utility::parsedURL();
       $url_whole = implode("://", $url_parts);
@@ -87,7 +144,7 @@ class OpenAPI
                 'image/svg+xml',
                 'application/json'
               ],
-              'parameters' => self::apiParameters("GET"),
+              'parameters' => $this->_apiParameters("GET"),
               'responses' => [
                 200 => [
                   'description' => 'success',
@@ -108,7 +165,7 @@ class OpenAPI
               'produces' => [
                 'application/json',
               ],
-              'parameters' => self::apiParameters("POST"),
+              'parameters' => $this->_apiParameters("POST"),
               'responses' => [
                 200 => [
                   'description' => 'success',
@@ -149,7 +206,7 @@ class OpenAPI
      *
      * @return array of API parameters
      */
-    public static function apiParameters($request_method = "GET")
+    private function _apiParameters($request_method = "GET")
     {
       array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
         $projections[] = $key . " (" . $val['name'] . ")";

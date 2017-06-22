@@ -243,7 +243,7 @@ class Router
 
         $router->get('/swagger.json', function () {
           Header::setHeader("json");
-          return json_encode(OpenAPI::swaggerData());
+          return json_encode($this->_klass("OpenAPI")->index());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {

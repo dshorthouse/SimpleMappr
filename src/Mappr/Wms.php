@@ -35,7 +35,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Mappr;
 
 use XMLReader;
 
@@ -49,7 +49,7 @@ use XMLReader;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class MapprWms extends Mappr
+class Wms extends Mappr
 {
     /**
      * @var object $_req Request object for WFS and WMS
