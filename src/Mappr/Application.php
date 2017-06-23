@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr\Mappr;
 
+use SimpleMappr\Request;
+
 /**
  * Application class for SimpleMappr
  *

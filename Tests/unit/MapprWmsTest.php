@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprWms;
+use SimpleMappr\Mappr\Wms;
 
 class MapprWmsTest extends TestCase
 {
@@ -38,7 +38,7 @@ class MapprWmsTest extends TestCase
 
     private function makeWMS()
     {
-        $mappr_wms = new MapprWms(['lakes', 'stateprovinces']);
+        $mappr_wms = new Wms(['lakes', 'stateprovinces']);
         return $mappr_wms;
     }
 

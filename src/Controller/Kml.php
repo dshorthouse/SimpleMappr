@@ -35,9 +35,11 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *
  */
-namespace SimpleMappr;
+namespace SimpleMappr\Controller;
 
 use XMLWriter;
+
+use SimpleMappr\Utility;
 
 /**
  * KML handler for SimpleMappr

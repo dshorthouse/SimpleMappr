@@ -41,6 +41,10 @@ use \PhpOffice\PhpWord\Autoloader;
 use \PhpOffice\PhpWord\PhpWord;
 use \PhpOffice\PhpWord\IOFactory;
 
+use SimpleMappr\Header;
+use SimpleMappr\Request;
+use SimpleMappr\Utility;
+
 /**
  * DOCX handler for SimpleMappr
  *

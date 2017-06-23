@@ -39,6 +39,8 @@ namespace SimpleMappr\Mappr;
 
 use \ForceUTF8\Encoding;
 
+use SimpleMappr\Utility;
+
 /**
  * Query handler for SimpleMappr
  *

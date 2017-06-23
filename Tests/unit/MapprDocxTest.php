@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprDocx;
+use SimpleMappr\Mappr\Docx;
 
 class MapprDocxTest extends TestCase
 {
@@ -26,7 +26,7 @@ class MapprDocxTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
-        $this->mappr_docx = new MapprDocx;
+        $this->mappr_docx = new Docx;
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for static methods and set-up of MapprApi class
+ * Unit tests for static methods and set-up of Api class
  *
  * PHP Version >= 5.6
  *
@@ -12,9 +12,9 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprApi;
+use SimpleMappr\Mappr\Api;
 
-class MapprApiTest extends TestCase
+class ApiTest extends TestCase
 {
     use SimpleMapprTestMixin;
 
@@ -41,7 +41,7 @@ class MapprApiTest extends TestCase
     public function test_api_ping()
     {
         $this->setRequest(['ping' => true]);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $output = $mappr_api->execute()->createOutput();
         $decoded = json_decode($output, true);
         $this->assertArrayHasKey("status", $decoded);
@@ -53,7 +53,7 @@ class MapprApiTest extends TestCase
     public function test_apioutput_post()
     {
         $this->setRequestMethod('POST');
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $output = $mappr_api->execute()->createOutput();
         $decoded = json_decode($output, true);
         $this->assertArrayHasKey("imageURL", $decoded);
@@ -67,7 +67,7 @@ class MapprApiTest extends TestCase
     public function test_apioutput_get()
     {
         $this->setRequest([]);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -89,7 +89,7 @@ class MapprApiTest extends TestCase
             'graticules' => true
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -108,7 +108,7 @@ class MapprApiTest extends TestCase
             'points' => []
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -127,7 +127,7 @@ class MapprApiTest extends TestCase
             'points' => ["45, -120\n52, -100"]
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -147,7 +147,7 @@ class MapprApiTest extends TestCase
             'layers' => 'stateprovnames'
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -168,7 +168,7 @@ class MapprApiTest extends TestCase
             ]
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -187,7 +187,7 @@ class MapprApiTest extends TestCase
             'layers' => 'ecoregions'
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -209,7 +209,7 @@ class MapprApiTest extends TestCase
             ]
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         echo $mappr_api->createOutput();
@@ -236,7 +236,7 @@ class MapprApiTest extends TestCase
         ];
 
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
 
         ob_start();
@@ -261,7 +261,7 @@ class MapprApiTest extends TestCase
             ]
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         $level = ob_get_level();
@@ -287,7 +287,7 @@ class MapprApiTest extends TestCase
             ]
         ];
         $this->setRequest($req);
-        $mappr_api = new MapprApi;
+        $mappr_api = new Api;
         $mappr_api->execute();
         ob_start();
         $level = ob_get_level();

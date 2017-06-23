@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprApplication;
+use SimpleMappr\Mappr\Application;
 use SimpleMappr\Utility;
 
 class MapprApplicationTest extends TestCase
@@ -27,7 +27,7 @@ class MapprApplicationTest extends TestCase
      */
     protected function setUp()
     {
-        $mappr = new MapprApplication;
+        $mappr = new Application;
         $this->mappr = $mappr->execute();
         $this->output = $this->mappr->createOutput();
     }

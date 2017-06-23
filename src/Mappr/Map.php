@@ -40,6 +40,11 @@ namespace SimpleMappr\Mappr;
 use geoPHP;
 use GeoJSON;
 
+use SimpleMappr\Database;
+use SimpleMappr\Utility;
+use SimpleMappr\Constants\AcceptedOutputs;
+use SimpleMappr\Controller\Kml;
+
 /**
  * Map handler for SimpleMappr
  *

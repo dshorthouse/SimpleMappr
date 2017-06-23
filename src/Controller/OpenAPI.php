@@ -37,6 +37,12 @@
  */
 namespace SimpleMappr\Controller;
 
+use SimpleMappr\Utility;
+use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedOutputs;
+use SimpleMappr\Constants\AcceptedProjections;
+use SimpleMappr\Mappr\Mappr;
+
 /**
  * OpenAPI handler for SimpleMappr
  *
@@ -47,7 +53,7 @@ namespace SimpleMappr\Controller;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class OpenAPI implements RestMethods
+class OpenApi implements RestMethods
 {
     /**
      * Implemented index method

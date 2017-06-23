@@ -40,6 +40,12 @@ namespace SimpleMappr\Mappr;
 use League\Csv\Reader;
 use geoPHP;
 
+use SimpleMappr\Header;
+use SimpleMappr\Utility;
+use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedOutputs;
+use SimpleMappr\Constants\AcceptedProjections;
+
 /**
  * API handler for SimpleMappr
  *

@@ -39,6 +39,8 @@ namespace SimpleMappr;
 
 use CssMin;
 
+use SimpleMappr\Controller\User;
+
 /**
  * Header handler for SimpleMappr
  *

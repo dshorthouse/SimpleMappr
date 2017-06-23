@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr\Controller;
 
+use SimpleMappr\Database;
+
 /**
  * Citation model for SimpleMappr
  *

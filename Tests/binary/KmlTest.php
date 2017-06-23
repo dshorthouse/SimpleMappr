@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Kml;
+use SimpleMappr\Controller\Kml;
 
 class KmlTest extends TestCase
 {

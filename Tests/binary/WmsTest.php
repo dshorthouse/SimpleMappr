@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprWms;
+use SimpleMappr\Mappr\Wms;
 
 class WmsTest extends TestCase
 {
@@ -40,7 +40,7 @@ class WmsTest extends TestCase
      */
     public function test_wms_getcapabilities()
     {
-        $wms = new MapprWms(['lakes']);
+        $wms = new Wms(['lakes']);
         $wms->makeService()->execute();
         ob_start();
         echo $wms->createOutput();

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for static methods and set-up of MapprMap class
+ * Unit tests for static methods and set-up of Map class
  *
  * PHP Version >= 5.6
  *
@@ -11,9 +11,9 @@
  *
  */
 
-use SimpleMappr\MapprMap;
+use SimpleMappr\Mappr\Map;
 
-class MapprMapTest extends SimpleMapprTestCase
+class MapTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 
@@ -50,7 +50,7 @@ class MapprMapTest extends SimpleMapprTestCase
      */
     public function test_map_png()
     {
-        $mappr_map = new MapprMap(1, "png");
+        $mappr_map = new Map(1, "png");
         $file = ROOT."/public/tmp/map_png.png";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
@@ -61,7 +61,7 @@ class MapprMapTest extends SimpleMapprTestCase
      */
     public function test_map_json()
     {
-        $mappr_map = new MapprMap(1, "json");
+        $mappr_map = new Map(1, "json");
         $output = $mappr_map->execute()->createOutput();
         $test_file = file_get_contents(ROOT.'/Tests/files/map_json.json');
         $this->assertEquals($output, $test_file);
@@ -72,8 +72,8 @@ class MapprMapTest extends SimpleMapprTestCase
      */
     public function test_map_polygon_json()
     {
-        $mappr_map = new MapprMap(3, "json");
-        //get outputbuffer level because geoPHP::load in MapprMap creates an unwanted stream
+        $mappr_map = new Map(3, "json");
+        //get outputbuffer level because geoPHP::load in Map creates an unwanted stream
         $level = ob_get_level();
         $output = $mappr_map->execute()->createOutput();
         if (ob_get_level() > $level) { ob_end_clean(); }
@@ -86,7 +86,7 @@ class MapprMapTest extends SimpleMapprTestCase
      */
     public function test_map_jpg()
     {
-        $mappr_map = new MapprMap(1, "jpg");
+        $mappr_map = new Map(1, "jpg");
         $file = ROOT."/public/tmp/map_jpg.jpg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
@@ -97,7 +97,7 @@ class MapprMapTest extends SimpleMapprTestCase
      */
     public function test_map_kml()
     {
-        $mappr_map = new MapprMap(1, "kml");
+        $mappr_map = new Map(1, "kml");
         $output = $mappr_map->execute()->createOutput();
         $test_file = file_get_contents(ROOT.'/Tests/files/map_kml.kml');
         $this->assertEquals($output, $test_file);
@@ -110,7 +110,7 @@ class MapprMapTest extends SimpleMapprTestCase
 /*
     public function test_map_svg()
     {
-        $mappr_map = new MapprMap(1, "svg");
+        $mappr_map = new Map(1, "svg");
         $file = ROOT."/public/tmp/map_svg.svg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
@@ -124,7 +124,7 @@ class MapprMapTest extends SimpleMapprTestCase
     {
         $req = ['legend' => 'true'];
         $this->setRequest($req);
-        $mappr_map = new MapprMap(1, "png");
+        $mappr_map = new Map(1, "png");
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
@@ -138,7 +138,7 @@ class MapprMapTest extends SimpleMapprTestCase
     {
         $req = ['legend' => 'false'];
         $this->setRequest($req);
-        $mappr_map = new MapprMap(1, "png");
+        $mappr_map = new Map(1, "png");
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);

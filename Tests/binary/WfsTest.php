@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprWfs;
+use SimpleMappr\Mappr\Wfs;
 
 class WfsTest extends TestCase
 {
@@ -40,7 +40,7 @@ class WfsTest extends TestCase
      */
     public function test_wfs_getcapabilities()
     {
-        $wfs = new MapprWfs(['lakes']);
+        $wfs = new Wfs(['lakes']);
         $wfs->makeService()->execute();
         ob_start();
         echo $wfs->createOutput();

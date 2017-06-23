@@ -39,6 +39,10 @@ namespace SimpleMappr\Mappr;
 
 use XMLReader;
 
+use SimpleMappr\Constants\AcceptedProjections;
+use SimpleMappr\Header;
+use SimpleMappr\Utility;
+
 /**
  * Web Map Service (WMS) for SimpleMappr
  *

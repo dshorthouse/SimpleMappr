@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprQuery;
+use SimpleMappr\Mappr\Query;
 
 class MapprQueryTest extends TestCase
 {
@@ -45,7 +45,7 @@ class MapprQueryTest extends TestCase
           'bbox_query' => '176,83,176,83'
         ];
         $this->setRequest($req);
-        $mappr_query = new MapprQuery;
+        $mappr_query = new Query;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertEquals('Canada', $output[0]);
@@ -60,7 +60,7 @@ class MapprQueryTest extends TestCase
             'bbox_query' => '786,272,900,358'
         ];
         $this->setRequest($req);
-        $mappr_query = new MapprQuery;
+        $mappr_query = new Query;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertTrue(in_array("Australia",$output));
@@ -77,7 +77,7 @@ class MapprQueryTest extends TestCase
             'qlayer' => 'stateprovinces_polygon'
         ];
         $this->setRequest($req);
-        $mappr_query = new MapprQuery;
+        $mappr_query = new Query;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
         $this->assertEquals('CAN[SK]', $output[0]);

@@ -39,6 +39,11 @@ namespace SimpleMappr\Mappr;
 
 use \Symfony\Component\Yaml\Yaml;
 
+use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedOutputs;
+use SimpleMappr\Constants\AcceptedProjections;
+use SimpleMappr\Utility;
+
 /**
  * Main Mappr class for SimpleMappr
  *

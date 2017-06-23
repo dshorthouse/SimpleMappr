@@ -12,9 +12,9 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\OpenAPI;
+use SimpleMappr\Controller\OpenApi;
 
-class OpenAPITest extends TestCase
+class OpenApiTest extends TestCase
 {
     use SimpleMapprTestMixin;
 
@@ -25,8 +25,9 @@ class OpenAPITest extends TestCase
      */
     protected function setUp()
     {
-        $this->swagger = OpenAPI::swaggerData();
-        $this->parameters = OpenAPI::apiParameters();
+        $open_api = new OpenApi;
+        $this->swagger = $open_api->index();
+        $this->parameters = $this->swagger["paths"]["/api"]["get"]["parameters"];
     }
 
     /**

@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprPptx;
+use SimpleMappr\Mappr\Pptx;
 
 class MapprPptxTest extends TestCase
 {
@@ -26,7 +26,7 @@ class MapprPptxTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
-        $this->mappr_pptx = new MapprPptx;
+        $this->mappr_pptx = new Pptx;
     }
 
     /**

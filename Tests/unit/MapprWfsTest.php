@@ -12,7 +12,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\MapprWfs;
+use SimpleMappr\Mappr\Wfs;
 
 class MapprWfsTest extends TestCase
 {
@@ -38,7 +38,7 @@ class MapprWfsTest extends TestCase
 
     private function makeWFS()
     {
-        $mappr_wfs = new MapprWfs(['lakes', 'stateprovinces']);
+        $mappr_wfs = new Wfs(['lakes', 'stateprovinces']);
         return $mappr_wfs;
     }
 

@@ -45,6 +45,12 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_Extensions_Extension_I18n;
 
+use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedProjections;
+use SimpleMappr\Controller\Citation;
+use SimpleMappr\Controller\User;
+use SimpleMappr\Mappr\Mappr;
+
 /**
  * Router for SimpleMappr
  *
@@ -114,7 +120,7 @@ class Router
         $router->get('/apidoc', function () {
             Header::setHeader('html');
             Session::selectLocale();
-            $config = ['swagger' => OpenAPI::swaggerData()];
+            $config = ['swagger' => $this->_klass("Controller\OpenApi")->index()];
             return $this->_twig()->render("apidoc.html", $config);
         });
 
@@ -125,20 +131,20 @@ class Router
 
         $router->post('/application', function () {
             //headers are set in MapprApplication class
-            $klass = $this->_klass("MapprApplication");
+            $klass = $this->_klass("Mappr\Application");
             return $klass->execute()->createOutput();
         });
 
         $router->post('/application.json', function () {
             Header::setHeader('json');
-            $klass = $this->_klass("MapprApplication");
+            $klass = $this->_klass("Mappr\Application");
             $output = $klass->execute()->createOutput();
             return json_encode($output);
         });
 
         $router->get('/citation.rss', function () {
             Header::setHeader('xml');
-            $klass = $this->_klass("CitationFeed");
+            $klass = $this->_klass("Controller\CitationFeed");
             $feed = $klass->makeChannel()->addItems()->getFeed();
             return $feed;
         });
@@ -146,17 +152,17 @@ class Router
         $router->group(['before' => 'check_role_administrator'], function ($router) {
             $router->get('/citation.json', function () {
                 Header::setHeader("json");
-                $klass = $this->_klass("Citation");
+                $klass = $this->_klass("Controller\Citation");
                 return json_encode($klass->index(null));
             })
             ->post('/citation', function () {
                 Header::setHeader("json");
-                $klass = $this->_klass("Citation");
+                $klass = $this->_klass("Controller\Citation");
                 return json_encode($klass->create((object)$_POST['citation']));
             })
             ->delete('/citation/{id:i}', function ($id) {
                 Header::setHeader("json");
-                $klass = $this->_klass("Citation");
+                $klass = $this->_klass("Controller\Citation");
                 return json_encode($klass->destroy($id));
             });
         });
@@ -164,7 +170,7 @@ class Router
         $router->post('/docx', function () {
             //headers are set in MapprDocx class
             Session::selectLocale();
-            $klass = $this->_klass("MapprDocx");
+            $klass = $this->_klass("Mappr\Docx");
             return $klass->execute()->createOutput();
         });
 
@@ -190,7 +196,7 @@ class Router
 
         $router->post('/kml', function () {
             //headers set in Kml class
-            $kml = $this->_klass("Kml");
+            $kml = $this->_klass("Controller\Kml");
             return $kml->getRequest()->createOutput(true);
         });
 
@@ -200,13 +206,13 @@ class Router
 
         $router->get('/map/{id:i}', function ($id) {
             Header::setHeader('png');
-            $klass = $this->_klass("MapprMap", $id, 'png');
+            $klass = $this->_klass("Mappr\Map", $id, 'png');
             return $klass->execute()->createOutput();
         });
 
         $router->get('/map/{id:i}.{ext:[kml|svg|json|png|jpg]+}', function ($id, $ext) {
             Header::setHeader($ext);
-            $klass = $this->_klass("MapprMap", $id, $ext);
+            $klass = $this->_klass("Mappr\Map", $id, $ext);
             return $klass->execute()->createOutput();
         });
 
@@ -214,26 +220,26 @@ class Router
             Header::setHeader("html");
             Session::selectLocale();
             $config = [
-                'rows' => $this->_klass("Place")->index((object)$_GET)->results
+                'rows' => $this->_klass("Controller\Place")->index((object)$_GET)->results
             ];
             return $this->_twig()->render("fragments/fragment.places.html", $config);
         });
 
         $router->get('/places.json', function () {
             Header::setHeader("json");
-            return json_encode($this->_klass("Place")->index((object)$_GET)->results);
+            return json_encode($this->_klass("Controller\Place")->index((object)$_GET)->results);
         });
 
         $router->post('/pptx', function () {
             //headers set in MapprPptx class
             Session::selectLocale();
-            $klass = $this->_klass("MapprPptx");
+            $klass = $this->_klass("Mappr\Pptx");
             return $klass->execute()->createOutput();
         });
 
         $router->post('/query', function () {
             Header::setHeader("json");
-            $klass = $this->_klass("MapprQuery");
+            $klass = $this->_klass("Mappr\Query");
             return json_encode($klass->execute()->queryLayer()->data);
         });
 
@@ -243,14 +249,14 @@ class Router
 
         $router->get('/swagger.json', function () {
           Header::setHeader("json");
-          return json_encode($this->_klass("OpenAPI")->index());
+          return json_encode($this->_klass("Controller\OpenApi")->index());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {
             $router->get('/share', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Share")->index((object)$_GET);
+                $results = $this->_klass("Controller\Share")->index((object)$_GET);
                 $config = [
                     'rows' => $results->results,
                     'sort' => $results->sort,
@@ -260,11 +266,11 @@ class Router
             })
             ->post('/share', function () {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Share")->create((object)$_POST));
+                return json_encode($this->_klass("Controller\Share")->create((object)$_POST));
             })
             ->delete('/share/{id:i}', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Share")->destroy($id));
+                return json_encode($this->_klass("Controller\Share")->destroy($id));
             });
         });
 
@@ -272,7 +278,7 @@ class Router
             $router->get('/user', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("User")->index((object)$_GET);
+                $results = $this->_klass("Controller\User")->index((object)$_GET);
                 $config = [
                     'total' => User::count(),
                     'rows'  => $results->results,
@@ -283,7 +289,7 @@ class Router
             })
             ->delete('/user/{id:i}', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("User")->destroy($id));
+                return json_encode($this->_klass("Controller\User")->destroy($id));
             });
         });
 
@@ -291,7 +297,7 @@ class Router
             $router->get('/usermap', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Map")->index((object)$_GET);
+                $results = $this->_klass("Controller\Map")->index((object)$_GET);
                 $config = [
                     'rows' => $results->results,
                     'total' => $results->total,
@@ -305,27 +311,27 @@ class Router
             })
             ->get('/usermap/{id:i}.json', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Map")->show($id));
+                return json_encode($this->_klass("Controller\Map")->show($id));
             })
             ->post('/usermap', function () {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Map")->create($_POST));
+                return json_encode($this->_klass("Controller\Map")->create($_POST));
             })
             ->delete('/usermap/{id:i}', function ($id) {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Map")->destroy($id));
+                return json_encode($this->_klass("Controller\Map")->destroy($id));
             });
         });
 
         $router->any('/wfs', function () {
             Header::setHeader("xml");
-            $klass = $this->_klass("MapprWfs");
+            $klass = $this->_klass("Mappr\Wfs");
             return $klass->makeService()->execute()->createOutput();
         }, ['after' => 'logWFS']);
 
         $router->any('/wms', function () {
             //headers are set in MapprWms class
-            $klass = $this->_klass("MapprWms");
+            $klass = $this->_klass("Mappr\Wms");
             return $klass->makeService()->execute()->createOutput();
         }, ['after' => 'logWMS']);
 
