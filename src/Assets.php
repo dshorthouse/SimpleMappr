@@ -280,7 +280,7 @@ class Assets
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
         $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
-        if ($this->_isAdministrator()) {
+        if (User::isAdministrator()) {
             $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
         }
         $header .= "</script>" . "\n";
@@ -399,7 +399,7 @@ class Assets
                 }
             }
         }
-        if ($this->_isAdministrator()) {
+        if (User::isAdministrator()) {
             foreach ($this->admin_js as $key => $js_file) {
                 if (ENVIRONMENT == "development") {
                     $this->_addJs($key, str_replace(".min", "", $js_file));
@@ -442,7 +442,7 @@ class Assets
                 }
             }
         }
-        if ($this->_isAdministrator()) {
+        if (User::isAdministrator()) {
             foreach ($this->admin_css as $key => $css_file) {
                 $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
             }
@@ -473,22 +473,6 @@ class Assets
     private function _addCss($css)
     {
         $this->_css_header[] = $css;
-    }
-
-    /**
-     * Determine if session is an administrator account
-     *
-     * @return bool
-     */
-    private function _isAdministrator()
-    {
-        if (isset($_SESSION['simplemappr']) && isset($_SESSION['simplemappr']['hash'])) {
-            $user = User::getByHash($_SESSION['simplemappr']['hash']);
-            if (User::$roles[$user->role] == 'administrator') {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

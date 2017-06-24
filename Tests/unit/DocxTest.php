@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Unit tests for MapprPptx class
+ * Unit tests for MapprDocx class
  *
  * PHP Version 5.5
  *
@@ -12,13 +12,13 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Pptx;
+use SimpleMappr\Mappr\Docx;
 
-class MapprPptxTest extends TestCase
+class DocxTest extends TestCase
 {
     use SimpleMapprTestMixin;
 
-    protected $mappr_pptx;
+    protected $mappr_docx;
 
     /**
      * Parent setUp function executed before each test.
@@ -26,28 +26,30 @@ class MapprPptxTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
-        $this->mappr_pptx = new Pptx;
+        $this->mappr_docx = new Docx;
     }
 
     /**
      * Parent tearDown function executed after each test.
      */
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 
     /**
-     * Test that PPTX output has the correct MIME type.
+     * Test that DOCX output has the correct MIME type.
      */
-    public function test_pptx_mime() {
-        $this->mappr_pptx->execute();
+    public function test_docx_mime()
+    {
+        $this->mappr_docx->execute();
         ob_start();
-        $this->mappr_pptx->createOutput();
+        $this->mappr_docx->createOutput();
         $output = ob_get_clean();
         $finfo = new finfo(FILEINFO_MIME);
         $mime = $finfo->buffer($output);
-        $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
+        $this->assertEquals("application/zip; charset=binary", $mime);
     }
 
 }

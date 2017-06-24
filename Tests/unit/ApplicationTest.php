@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Application;
 use SimpleMappr\Utility;
 
-class MapprApplicationTest extends TestCase
+class ApplicationTest extends TestCase
 {
     use SimpleMapprTestMixin;
 

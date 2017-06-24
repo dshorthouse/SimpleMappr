@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Unit tests for WFS class
+ * Unit tests for MapprPptx class
  *
- * PHP Version >= 5.6
+ * PHP Version 5.5
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr
@@ -12,11 +12,13 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Wfs;
+use SimpleMappr\Mappr\Pptx;
 
-class WfsTest extends TestCase
+class PptxTest extends TestCase
 {
     use SimpleMapprTestMixin;
+
+    protected $mappr_pptx;
 
     /**
      * Parent setUp function executed before each test.
@@ -24,34 +26,28 @@ class WfsTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
+        $this->mappr_pptx = new Pptx;
     }
 
     /**
      * Parent tearDown function executed after each test.
      */
-    protected function tearDown()
-    {
+    protected function tearDown() {
         $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
 
     /**
-     * Test that GetCapabilities request is handled.
+     * Test that PPTX output has the correct MIME type.
      */
-    public function test_wfs_getcapabilities()
-    {
-        $wfs = new Wfs(['lakes']);
-        $wfs->makeService()->execute();
+    public function test_pptx_mime() {
+        $this->mappr_pptx->execute();
         ob_start();
-        echo $wfs->createOutput();
+        $this->mappr_pptx->createOutput();
         $output = ob_get_clean();
-        $xml = simplexml_load_string($output);
-        $layers = $xml->FeatureTypeList->FeatureType;
-        $titles = [];
-        foreach($layers as $layer) {
-            array_push($titles, $layer->Title);
-        }
-        $this->assertContains("lakes", $titles);
+        $finfo = new finfo(FILEINFO_MIME);
+        $mime = $finfo->buffer($output);
+        $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
     }
 
 }

@@ -14,7 +14,7 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Wfs;
 
-class MapprWfsTest extends TestCase
+class WfsTest extends TestCase
 {
     use SimpleMapprTestMixin;
 

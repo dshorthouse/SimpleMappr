@@ -14,7 +14,7 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Query;
 
-class MapprQueryTest extends TestCase
+class QueryTest extends TestCase
 {
     use SimpleMapprTestMixin;
 

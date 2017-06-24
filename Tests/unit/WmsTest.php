@@ -14,7 +14,7 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Wms;
 
-class MapprWmsTest extends TestCase
+class WmsTest extends TestCase
 {
     use SimpleMapprTestMixin;
 

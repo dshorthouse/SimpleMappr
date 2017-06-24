@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Unit tests for MapprDocx class
+ * Unit tests for WFS class
  *
- * PHP Version 5.5
+ * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
  * @link    http://github.com/dshorthouse/SimpleMappr
@@ -12,13 +12,11 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Docx;
+use SimpleMappr\Mappr\Wfs;
 
-class MapprDocxTest extends TestCase
+class WfsBinaryTest extends TestCase
 {
     use SimpleMapprTestMixin;
-
-    protected $mappr_docx;
 
     /**
      * Parent setUp function executed before each test.
@@ -26,7 +24,6 @@ class MapprDocxTest extends TestCase
     protected function setUp()
     {
         $this->setRequestMethod();
-        $this->mappr_docx = new Docx;
     }
 
     /**
@@ -39,17 +36,22 @@ class MapprDocxTest extends TestCase
     }
 
     /**
-     * Test that DOCX output has the correct MIME type.
+     * Test that GetCapabilities request is handled.
      */
-    public function test_docx_mime()
+    public function test_wfs_getcapabilities()
     {
-        $this->mappr_docx->execute();
+        $wfs = new Wfs(['lakes']);
+        $wfs->makeService()->execute();
         ob_start();
-        $this->mappr_docx->createOutput();
+        echo $wfs->createOutput();
         $output = ob_get_clean();
-        $finfo = new finfo(FILEINFO_MIME);
-        $mime = $finfo->buffer($output);
-        $this->assertEquals("application/zip; charset=binary", $mime);
+        $xml = simplexml_load_string($output);
+        $layers = $xml->FeatureTypeList->FeatureType;
+        $titles = [];
+        foreach($layers as $layer) {
+            array_push($titles, $layer->Title);
+        }
+        $this->assertContains("lakes", $titles);
     }
 
 }

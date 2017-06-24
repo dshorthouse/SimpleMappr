@@ -13,7 +13,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ApplicationTest extends TestCase
+class ApplicationControllerTest extends TestCase
 {
     use SimpleMapprTestMixin;
 

@@ -150,6 +150,22 @@ class User implements RestMethods
     }
 
     /**
+     * Determine if session is an administrator account
+     *
+     * @return bool
+     */
+    public static function isAdministrator()
+    {
+        if (isset($_SESSION['simplemappr']) && isset($_SESSION['simplemappr']['hash'])) {
+            $user = self::getByHash($_SESSION['simplemappr']['hash']);
+            if (self::$roles[$user->role] == 'administrator') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * The constructor
      */
     public function __construct()
