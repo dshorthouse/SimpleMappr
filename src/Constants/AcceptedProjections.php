@@ -81,6 +81,9 @@ trait AcceptedProjections
             'proj' => 'proj=laea,lat_0=-90,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'],
         'epsg:54030' => [
             'name' => 'World Robinson',
-            'proj' => 'proj=robin,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs']
+            'proj' => 'proj=robin,lon_0=0,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs'],
+        'epsg:3395' => [
+            'name' => 'World Mercator',
+            'proj' => 'proj=merc,lon_0=0,k=1,x_0=0,y_0=0,ellps=WGS84,datum=WGS84,units=m,over,no_defs']
       ];
 }
