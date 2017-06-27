@@ -99,22 +99,6 @@ class User implements RestMethods
     } 
 
     /**
-     * Get a user by passing a hash
-     *
-     * @param string $hash A hashed string
-     *
-     * @return object $this
-     */
-    public static function getByHash($hash)
-    {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM users u WHERE u.hash=:hash";
-        $db->prepare($sql);
-        $db->bindParam(":hash", $hash, 'string');
-        return $db->fetchFirstObject();
-    }
-
-    /**
      * Check permissions, used in router
      *
      * @param string $role The role
@@ -133,7 +117,7 @@ class User implements RestMethods
             return false;
         }
 
-        $user = self::getByHash($_SESSION['simplemappr']['hash']);
+        $user = (new User)->show_by_hash($_SESSION['simplemappr']['hash'])->results;
         if ($role == 'user' && (self::$roles[$user->role] == 'user' || self::$roles[$user->role] == 'administrator')) {
             session_write_close();
             return true;
@@ -150,17 +134,14 @@ class User implements RestMethods
     }
 
     /**
-     * Determine if session is an administrator account
+     * Determine if account belongs to an administrator
      *
      * @return bool
      */
-    public static function isAdministrator()
+    public static function isAdministrator(User $user)
     {
-        if (isset($_SESSION['simplemappr']) && isset($_SESSION['simplemappr']['hash'])) {
-            $user = self::getByHash($_SESSION['simplemappr']['hash']);
-            if (self::$roles[$user->role] == 'administrator') {
-                return true;
-            }
+        if (self::$roles[$user->results->role] == 'administrator') {
+            return true;
         }
         return false;
     }
@@ -182,8 +163,8 @@ class User implements RestMethods
      */
     public function index($params)
     {
-        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
+        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
+        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
         $order = "u.access {$this->dir}";
 
         if (!empty($this->sort)) {
@@ -232,25 +213,62 @@ class User implements RestMethods
     }
 
     /**
+     * show_by_hash
+     *
+     * @param string $hash The User hash
+     *
+     * @return object $this
+     */
+    public function show_by_hash($hash)
+    {
+        $sql = "SELECT * FROM users u WHERE u.hash=:hash";
+        $this->_db->prepare($sql);
+        $this->_db->bindParam(":hash", $hash, 'string');
+        $this->results = $this->_db->fetchFirstObject();
+        return $this;
+    }
+
+    /**
+     * show_by_identifier
+     *
+     * @param string $identifier The User identifier
+     *
+     * @return object $this
+     */
+    public function show_by_identifier($identifier)
+    {
+        $sql = "SELECT * FROM users u WHERE u.identifier=:identifier";
+        $this->_db->prepare($sql);
+        $this->_db->bindParam(":identifier", $identifier, 'string');
+        $this->results = $this->_db->fetchFirstObject();
+        return $this;
+    }
+
+    /**
      * Implemented create method
      *
      * @param array $content The content to create
      *
-     * @return void
+     * @return array $content
      */
     public function create($content)
     {
+        $content["uid"] = $this->_db->queryInsert('users', $content);
+        return (object)$content;
     }
 
     /**
      * Implemented update method
      *
-     * @param int $id The User identifier
+     * @param array $content The array of content
+     * @param string $where The where clause
      *
-     * @return void
+     * @return object
      */
-    public function update($id)
+    public function update($content, $where)
     {
+        $this->results = $this->_db->queryUpdate('users', $content, $where);
+        return $this;
     }
 
     /**

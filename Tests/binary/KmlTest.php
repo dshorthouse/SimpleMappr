@@ -45,27 +45,28 @@ class KmlTest extends TestCase
      */
     public function test_kml()
     {
-        $coords = [
-            [
-                'title' => 'Sample Data',
-                'data' => "55, -115\n65, -110",
-                'shape' => 'star',
-                'size' => 14,
-                'color' => '255 32 3'
-            ],
-            [
-                'title' => 'Sample Data2',
-                'data' => "35, -120\n70, -80",
-                'shape' => 'circle',
-                'size' => 14,
-                'color' => '255 32 3'
+        $content = [
+            "file_name" => "My_Map",
+            "coords" => [
+                [
+                    'title' => 'Sample Data',
+                    'data' => "55, -115\n65, -110",
+                    'shape' => 'star',
+                    'size' => 14,
+                    'color' => '255 32 3'
+                ],
+                [
+                    'title' => 'Sample Data2',
+                    'data' => "35, -120\n70, -80",
+                    'shape' => 'circle',
+                    'size' => 14,
+                    'color' => '255 32 3'
+                ]
             ]
         ];
-        $kml = new Kml;
-        $kml->getRequest("My Map", $coords);
-        $output = $kml->createOutput();
+        $kml = (new Kml)->create($content);
         $test_file = file_get_contents(ROOT.'/Tests/files/kml.kml');
-        $this->assertEquals($output, $test_file);
+        $this->assertEquals($kml, $test_file);
     }
 
 }

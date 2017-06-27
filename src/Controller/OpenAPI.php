@@ -93,11 +93,12 @@ class OpenApi implements RestMethods
     /**
      * Implemented update method
      *
-     * @param int $id The User identifier
+     * @param string $content The array of content
+     * @param string $where The where clause
      *
      * @return void
      */
-    public function update($id)
+    public function update($content, $where)
     {
     }
 

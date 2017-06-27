@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
  <Document>
-  <name>SimpleMappr: 1</name>
+  <name>SimpleMappr: Sample_Map_Administrator</name>
   <Style id="pushpin0">
    <IconStyle id="simplemapprstyle0">
     <scale>1.0</scale>

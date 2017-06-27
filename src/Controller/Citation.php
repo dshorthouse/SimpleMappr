@@ -101,17 +101,17 @@ class Citation implements RestMethods
     /**
      * Implemented create method
      *
-     * @param object $params The parameters send from router
+     * @param array $content The array sent from router
      *
      * @return array
      */
-    public function create($params)
+    public function create($content)
     {
-        $year = property_exists($params, 'year') ? (int)$params->year : null;
-        $reference = property_exists($params, 'reference') ? $params->reference : null;
-        $author = property_exists($params, 'first_author_surname') ? $params->first_author_surname : null;
-        $doi = property_exists($params, 'doi') ? $params->doi : null;
-        $link = property_exists($params, 'link') ? $params->link : null;
+        $year = array_key_exists('year', $content) ? (int)$content["year"] : null;
+        $reference = array_key_exists('reference', $content) ? $content["reference"] : null;
+        $author = array_key_exists('first_author_surname', $content) ? $content["first_author_surname"] : null;
+        $doi = array_key_exists('doi', $content) ? $content["doi"] : null;
+        $link = array_key_exists('link', $content) ? $content["link"] : null;
 
         if (empty($year) || empty($reference) || empty($author)) {
             $this->_response('error');
@@ -135,11 +135,12 @@ class Citation implements RestMethods
     /**
      * Implemented update method
      *
-     * @param int $param the citation identifier
+     * @param array $content The array of content
+     * @param string $where The where clause
      *
      * @return void
      */
-    public function update($param)
+    public function update($content, $where)
     {
     }
 

@@ -70,20 +70,21 @@ interface RestMethods
     /**
      * The create REST method
      *
-     * @param object $params Any parameters
+     * @param array $content Any parameters
      *
      * @return void
      */
-    public function create($params);
+    public function create($content);
 
     /**
      * The update REST method
      *
-     * @param int $id The integer
+     * @param array $content Any parameters
+     * @param string $where The where clause
      *
      * @return void
      */
-    public function update($id);
+    public function update($content, $where);
 
     /**
      * The destroy REST method

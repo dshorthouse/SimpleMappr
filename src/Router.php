@@ -158,7 +158,7 @@ class Router
             ->post('/citation', function () {
                 Header::setHeader("json");
                 $klass = $this->_klass("Controller\Citation");
-                return json_encode($klass->create((object)$_POST['citation']));
+                return json_encode($klass->create($_POST['citation']));
             })
             ->delete('/citation/{id:i}', function ($id) {
                 Header::setHeader("json");
@@ -195,9 +195,11 @@ class Router
         });
 
         $router->post('/kml', function () {
-            //headers set in Kml class
-            $kml = $this->_klass("Controller\Kml");
-            return $kml->getRequest()->createOutput(true);
+            $clean_filename = Utility::cleanFilename(Utility::loadParam('file_name', time()));
+            $download_token = Utility::loadParam('download_token', md5(time()));
+            setcookie("fileDownloadToken", $download_token, time()+3600, "/");
+            Header::setHeader("kml", $clean_filename . ".kml");
+            return $this->_klass("Controller\Kml")->create($_POST);
         });
 
         $router->get('/logout', function () {
@@ -220,14 +222,14 @@ class Router
             Header::setHeader("html");
             Session::selectLocale();
             $config = [
-                'rows' => $this->_klass("Controller\Place")->index((object)$_GET)->results
+                'rows' => $this->_klass("Controller\Place")->index($_GET)->results
             ];
             return $this->_twig()->render("fragments/fragment.places.html", $config);
         });
 
         $router->get('/places.json', function () {
             Header::setHeader("json");
-            return json_encode($this->_klass("Controller\Place")->index((object)$_GET)->results);
+            return json_encode($this->_klass("Controller\Place")->index($_GET)->results);
         });
 
         $router->post('/pptx', function () {
@@ -256,7 +258,7 @@ class Router
             $router->get('/share', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Controller\Share")->index((object)$_GET);
+                $results = $this->_klass("Controller\Share")->index($_GET);
                 $config = [
                     'rows' => $results->results,
                     'sort' => $results->sort,
@@ -266,7 +268,7 @@ class Router
             })
             ->post('/share', function () {
                 Header::setHeader('json');
-                return json_encode($this->_klass("Controller\Share")->create((object)$_POST));
+                return json_encode($this->_klass("Controller\Share")->create($_POST));
             })
             ->delete('/share/{id:i}', function ($id) {
                 Header::setHeader('json');
@@ -278,7 +280,7 @@ class Router
             $router->get('/user', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Controller\User")->index((object)$_GET);
+                $results = $this->_klass("Controller\User")->index($_GET);
                 $config = [
                     'total' => User::count(),
                     'rows'  => $results->results,
@@ -297,7 +299,7 @@ class Router
             $router->get('/usermap', function () {
                 Header::setHeader('html');
                 Session::selectLocale();
-                $results = $this->_klass("Controller\Map")->index((object)$_GET);
+                $results = $this->_klass("Controller\Map")->index($_GET);
                 $config = [
                     'rows' => $results->results,
                     'total' => $results->total,
@@ -462,7 +464,7 @@ class Router
 
         $session = [];
         if(isset($_SESSION['simplemappr'])) {
-            $session = (array)User::getByHash($_SESSION['simplemappr']['hash']);
+            $session = (array)(new User)->show_by_hash($_SESSION['simplemappr']['hash'])->results;
         }
         $twig->addGlobal('session', $session);
         $twig->addGlobal('locale', $locale);

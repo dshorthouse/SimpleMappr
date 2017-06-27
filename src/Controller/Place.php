@@ -78,17 +78,17 @@ class Place implements RestMethods
     /**
      * Implemented index method.
      *
-     * @param object $params The parameters from the router
+     * @param array $content The parameters from the router
      *
      * @return object $this
      */
-    public function index($params)
+    public function index($content)
     {
-        if (property_exists($params, 'filter') && $params->filter != "") {
+        if (array_key_exists('filter', $content) && $content["filter"] != "") {
             $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
-            $this->_db->bindParam(':filter', '%'.$params->filter.'%', 'string');
-        } else if (property_exists($params, 'term') || $this->id) {
-            $term = (property_exists($params, 'term')) ? $params->term : $this->id;
+            $this->_db->bindParam(':filter', '%'.$content["filter"].'%', 'string');
+        } else if (array_key_exists('term', $content) || $this->id) {
+            $term = (array_key_exists('term', $content)) ? $content["term"] : $this->id;
             $this->_db->prepare(
                 "SELECT DISTINCT
                     sp.country as label, sp.country as value
@@ -124,22 +124,23 @@ class Place implements RestMethods
     /**
      * Implemented create method.
      *
-     * @param object $params The parameters
+     * @param array $content The parameters
      *
      * @return void
      */
-    public function create($params)
+    public function create($content)
     {
     }
 
     /**
      * Implemented update method.
      *
-     * @param int $id The integer
+     * @param array $content The array of content
+     * @param string $where The where string
      *
      * @return void
      */
-    public function update($id)
+    public function update($content, $where)
     {
     }
 

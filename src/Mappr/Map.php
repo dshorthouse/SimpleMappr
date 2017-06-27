@@ -92,7 +92,7 @@ class Map extends Mappr
             exit();
         }
         $db = Database::getInstance();
-        $sql = "SELECT map FROM maps WHERE mid=:mid";
+        $sql = "SELECT title, map FROM maps WHERE mid=:mid";
         $db->prepare($sql);
         $db->bindParam(":mid", $this->_id, 'integer');
         $record = $db->fetchFirstObject($sql);
@@ -100,6 +100,8 @@ class Map extends Mappr
             $this->_setNotFound();
             exit();
         }
+
+        $this->title = $record->title;
 
         $result = json_decode($record->map, true);
 
@@ -294,9 +296,7 @@ class Map extends Mappr
             break;
 
         case 'kml':
-            $kml = new Kml;
-            $output = $kml->getRequest($this->_id, $this->coords)->createOutput();
-            return $output;
+            return (new Kml)->create(["file_name" => $this->title, "coords" => $this->coords]);
             break;
 
         default:

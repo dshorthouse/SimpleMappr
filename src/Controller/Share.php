@@ -69,7 +69,7 @@ class Share implements RestMethods
     /**
      * @var int $_role Role for user defined in $roles
      */
-    private $_role;
+    private $_user;
 
     /**
      * @var object $_db Database connection object
@@ -77,32 +77,25 @@ class Share implements RestMethods
     private $_db;
 
     /**
-     * @var object $_uid User identifier
-     */
-    private $_uid;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $user = User::getByHash($_SESSION['simplemappr']['hash']);
-        $this->_uid = (int)$user->uid;
-        $this->_role = $user->role;
+        $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
         $this->_db = Database::getInstance();
     }
 
     /**
      * Implemented index method
      *
-     * @param object $params Parameters object from router
+     * @param array $params Parameters object from router
      *
      * @return object $this The class instance
      */
     public function index($params)
     {
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
-        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
+        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
+        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
 
         $order = "m.created {$this->dir}";
         if (!empty($this->sort)) {
@@ -147,13 +140,13 @@ class Share implements RestMethods
     /**
      * Implemented create method
      *
-     * @param object $params The parameters from the router.
+     * @param array $content The parameters from the router.
      *
      * @return array status
      */
-    public function create($params)
+    public function create($content)
     {
-        $mid = (property_exists($params, 'mid')) ? $params->mid : null;
+        $mid = (array_key_exists('mid', $content)) ? $content["mid"] : null;
 
         if (empty($mid)) {
             return ["status" => "error"];
@@ -171,11 +164,12 @@ class Share implements RestMethods
     /**
      * Implemented update method
      *
-     * @param int $id An identifer
+     * @param array $content An array of content
+     * @param string $where The where string
      *
      * @return void
      */
-    public function update($id)
+    public function update($content, $where)
     {
     }
 
@@ -188,7 +182,7 @@ class Share implements RestMethods
      */
     public function destroy($id)
     {
-        if (User::$roles[$this->_role] == 'administrator') {
+        if (User::isAdministrator($this->_user)) {
             $sql = "DELETE 
                     FROM
                         shares
@@ -206,7 +200,7 @@ class Share implements RestMethods
                         s.sid = :sid AND m.uid = :uid";
             $this->_db->prepare($sql);
             $this->_db->bindParam(":sid", $id, 'integer');
-            $this->_db->bindParam(":uid", $this->_uid, 'integer');
+            $this->_db->bindParam(":uid", $this->_user->results->uid, 'integer');
         }
         $this->_db->execute();
         return ["status" => "ok"];

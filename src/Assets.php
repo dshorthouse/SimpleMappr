@@ -138,6 +138,10 @@ class Assets
         'public/stylesheets/raw/trumbowyg.css'
     ];
 
+    private $_active_session;
+
+    private $_user;
+
     /**
      * Flush the caches
      *
@@ -223,13 +227,14 @@ class Assets
         }
     }
 
-
     /**
      * The constructor
      */
     public function __construct()
     {
-        $this->_makeHash()
+        $this->_active_session = (isset($_SESSION['simplemappr'])) ? true : false;
+        $this->_getUser()
+            ->_makeHash()
             ->_addRemoteJs()
             ->_addUncombinedJs()
             ->_addCombinedJs()
@@ -270,7 +275,7 @@ class Assets
     {
         $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
         $header .= "<script>";
-        $session = (isset($_SESSION['simplemappr'])) ? "\"true\"" : "\"false\"";
+        $session = ($this->_active_session) ? "\"true\"" : "\"false\"";
         $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
         $header .= "head.js(";
         $headjs = [];
@@ -280,8 +285,10 @@ class Assets
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
         $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
-        if (User::isAdministrator()) {
-            $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
+        if ($this->_active_session) {
+            if (User::isAdministrator($this->_user)) {
+                $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
+            }
         }
         $header .= "</script>" . "\n";
         return $header;
@@ -295,7 +302,7 @@ class Assets
     public function getJSVars()
     {
         $foot = $this->_getAnalytics();
-        if (!isset($_SESSION['simplemappr'])) {
+        if (!$this->_active_session) {
             $foot .= $this->_getJanrain();
         }
         return $foot;
@@ -319,6 +326,15 @@ class Assets
             }
         }
         return $results;
+    }
+
+    private function _getUser()
+    {
+        if ($this->_active_session) {
+            $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
+        }
+        return $this;
+        
     }
 
     /**
@@ -356,7 +372,7 @@ class Assets
     private function _addUncombinedJs()
     {
         foreach ($this->local_js_uncombined as $key => $js_file) {
-            if ($key == "janrain" && isset($_SESSION['simplemappr'])) {
+            if ($key == "janrain" && $this->_active_session) {
                 continue;
             }
             $this->_addJs($key, $js_file);
@@ -399,15 +415,18 @@ class Assets
                 }
             }
         }
-        if (User::isAdministrator()) {
-            foreach ($this->admin_js as $key => $js_file) {
-                if (ENVIRONMENT == "development") {
-                    $this->_addJs($key, str_replace(".min", "", $js_file));
-                } else {
-                    $this->_addJs($key, $js_file);
+        if ($this->_active_session) {
+            if (User::isAdministrator($this->_user)) {
+                foreach ($this->admin_js as $key => $js_file) {
+                    if (ENVIRONMENT == "development") {
+                        $this->_addJs($key, str_replace(".min", "", $js_file));
+                    } else {
+                        $this->_addJs($key, $js_file);
+                    }
                 }
             }
         }
+
         return $this;
     }
 
@@ -442,11 +461,14 @@ class Assets
                 }
             }
         }
-        if (User::isAdministrator()) {
-            foreach ($this->admin_css as $key => $css_file) {
-                $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
+        if ($this->_active_session) {
+            if (User::isAdministrator($this->_user)) {
+                foreach ($this->admin_css as $key => $css_file) {
+                    $this->_addCss('<link type="text/css" href="/' . $css_file . '" rel="stylesheet" media="screen,print" />');
+                }
             }
         }
+
         return $this;
     }
 
@@ -529,5 +551,4 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     {
         return isset($_GET["locale"]) ? $_GET["locale"] : "en_US";
     }
-
 }

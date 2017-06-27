@@ -38,6 +38,7 @@
 namespace SimpleMappr\Controller;
 
 use SimpleMappr\Database;
+use SimpleMappr\Controller\User;
 
 /**
  * Map model for SimpleMappr
@@ -94,7 +95,7 @@ class Map implements RestMethods
     /**
      * @var int $_role Role for user defined in $roles
      */
-    private $_role;
+    private $_user;
 
     /**
      * @var object $_db Database connection object
@@ -102,41 +103,34 @@ class Map implements RestMethods
     private $_db;
 
     /**
-     * @var object $_uid User identifier
-     */
-    private $_uid;
-
-    /**
      * Class constructor
      */
     public function __construct()
     {
-        $user = User::getByHash($_SESSION['simplemappr']['hash']);
-        $this->_uid = (int)$user->uid;
-        $this->_role = $user->role;
+        $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
         $this->_db = Database::getInstance();
     }
 
     /**
      * Implemented index method
      *
-     * @param object $params The parameters from the router
+     * @param array $params The parameters from the router
      *
      * @return object $this
      */
     public function index($params)
     {
-        $this->dir = (property_exists($params, 'dir') && in_array(strtolower($params->dir), ["asc", "desc"])) ? $params->dir : "desc";
-        $this->sort = (property_exists($params, 'sort')) ? $params->sort : "";
-        $this->search = (property_exists($params, 'search')) ? $params->search : "";
-        $this->filter_uid = (property_exists($params, 'uid')) ? (int)$params->uid : null;
+        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
+        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
+        $this->search = (array_key_exists('search', $params)) ? $params['search'] : "";
+        $this->filter_uid = (array_key_exists('uid', $params)) ? (int)$params['uid'] : null;
         $this->filter_username = "";
 
         $username = "u.username, ";
         $where['user'] = " WHERE m.uid = :uid";
         $limit = "";
 
-        if (User::$roles[$this->_role] == 'administrator') {
+        if (User::isAdministrator($this->_user)) {
             if ($this->filter_uid) {
                 $where['user'] = " WHERE m.uid = :uid_q";
             } else {
@@ -155,9 +149,11 @@ class Map implements RestMethods
                 {$where['user']}";
 
         $this->_db->prepare($sql);
-        if (User::$roles[$this->_role] !== 'administrator') {
-          $this->_db->bindParam(":uid", $this->_uid);
+
+        if (!User::isAdministrator($this->_user)) {
+          $this->_db->bindParam(":uid", $this->_user->results->uid);
         }
+
         if ($this->filter_uid) {
           $this->_db->bindParam(":uid_q", $this->filter_uid);
           $this->filter_username = $this->_db->fetchFirstObject()->username;
@@ -168,12 +164,12 @@ class Map implements RestMethods
 
         $b = "";
         if (!empty($this->search)) {
-            if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
+            if (User::isAdministrator($this->_user) && !$this->filter_uid) {
                 $b = " WHERE ";
                 unset($where['user']);
             }
             $where['where'] = $b."LOWER(m.title) LIKE :search";
-            if (User::$roles[$this->_role] == 'administrator' && !$this->filter_uid) {
+            if (User::isAdministrator($this->_user) && !$this->filter_uid) {
                 $where['where'] .= " OR LOWER(u.username) LIKE :search";
             }
         }
@@ -201,8 +197,8 @@ class Map implements RestMethods
                 ORDER BY " . $order . $limit;
 
         $this->_db->prepare($sql);
-        if (User::$roles[$this->_role] !== 'administrator') {
-            $this->_db->bindParam(":uid", $this->_uid, 'integer');
+        if (!User::isAdministrator($this->_user)) {
+            $this->_db->bindParam(":uid", $this->_user->results->uid, 'integer');
         } else {
             if ($this->filter_uid) {
                 $this->_db->bindParam(":uid_q", $this->filter_uid, 'integer');
@@ -248,16 +244,16 @@ class Map implements RestMethods
     /**
      * Implemented create method
      *
-     * @param array $params The parameters from the router
+     * @param array $content The parameters from the router
      *
      * @return array $output
      */
-    public function create($params)
+    public function create($content)
     {
         $data = [
-            'uid' => $this->_uid,
-            'title' => $params['save']['title'],
-            'map' => json_encode($params),
+            'uid' => $this->_user->results->uid,
+            'title' => $content['save']['title'],
+            'map' => json_encode($content),
             'created' => time(),
             'updated' => time()
         ];
@@ -270,7 +266,7 @@ class Map implements RestMethods
                 WHERE
                     uid = :uid AND title = :title";
         $this->_db->prepare($sql);
-        $this->_db->bindParam(":uid", $this->_uid, 'integer');
+        $this->_db->bindParam(":uid", $this->_user->results->uid, 'integer');
         $this->_db->bindParam(":title", $data['title'], 'string');
         $record = $this->_db->fetchFirstObject($sql);
 
@@ -291,11 +287,12 @@ class Map implements RestMethods
     /**
      * Implemented update method
      *
-     * @param int $id The identifer
+     * @param array $content Any parameters
+     * @param string $where The where clause
      *
      * @return void
      */
-    public function update($id)
+    public function update($content, $where)
     {
     }
 
@@ -313,14 +310,14 @@ class Map implements RestMethods
                     maps
                 WHERE 
                     mid = :mid";
-        if (User::$roles[$this->_role] == 'administrator') {
+        if (User::isAdministrator($this->_user)) {
             $this->_db->prepare($sql);
             $this->_db->bindParam(":mid", $id, 'integer');
         } else {
             $sql .= " AND uid = :uid";
             $this->_db->prepare($sql);
             $this->_db->bindParam(":mid", $id, 'integer');
-            $this->_db->bindParam(":uid", $this->_uid, 'integer');
+            $this->_db->bindParam(":uid", $this->_user->results->uid, 'integer');
         }
         $this->_db->execute();
         return ["status" => "ok"];

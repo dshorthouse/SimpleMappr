@@ -39,6 +39,7 @@ namespace SimpleMappr\Controller;
 
 use XMLWriter;
 
+use SimpleMappr\Header;
 use SimpleMappr\Utility;
 
 /**
@@ -51,7 +52,7 @@ use SimpleMappr\Utility;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-class Kml
+class Kml implements RestMethods
 {
     /**
      * @var array $pushpins Array of default pushpins
@@ -95,45 +96,62 @@ class Kml
     public $file_name;
 
     /**
-     * @var string $download_token Download token used in session cookie
+     * Implemented index method
+     *
+     * @param object $params null
+     *
+     * @return array
      */
-    public $download_token;
-
-    /**
-     * The constructor
-     */
-    public function __construct()
+    public function index($params = null)
     {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     /**
-     * The destructor
+     * Implemented create method
+     *
+     * @param array $content The content to create
+     *
+     * @return void
      */
-    public function __destruct()
+    public function create($content)
     {
-        if (session_status() != PHP_SESSION_NONE) {
-            session_write_close();
-        }
+        $this->file_name = (array_key_exists("file_name", $content)) ? Utility::cleanFilename($content["file_name"]) : time();
+        $this->coords = $content["coords"];
+        return $this->_createContent();
     }
 
     /**
-     * Get the request parameter coords.
+     * Implemented show method.
      *
-     * @param string $file_name A name for a file to be downloaded.
-     * @param array  $coords    An array of geographic coordinates.
+     * @param int $id identifier for the place.
      *
-     * @return object $this
+     * @return void
      */
-    public function getRequest($file_name = "", $coords = [])
+    public function show($id)
     {
-        $this->coords         = ($coords) ? $coords : Utility::loadParam('coords', []);
-        $this->file_name      = ($file_name) ? $file_name : Utility::loadParam('file_name', time());
-        $this->download_token = Utility::loadParam('download_token', md5(time()));
-        setcookie("fileDownloadToken", $this->download_token, time()+3600, "/");
-        return $this;
+    }
+
+    /**
+     * Implemented update method
+     *
+     * @param string $content The array of content
+     * @param string $where The where clause
+     *
+     * @return void
+     */
+    public function update($content, $where)
+    {
+    }
+
+    /**
+     * Implemented destroy method.
+     *
+     * @param int $id identifier for the place.
+     *
+     * @return void
+     */
+    public function destroy($id)
+    {
     }
 
     /**
@@ -143,19 +161,13 @@ class Kml
      *
      * @return void
      */
-    public function createOutput($file_download = false)
+    private function _createContent()
     {
-        $clean_filename = Utility::cleanFilename($this->file_name);
+        $this->_setMetadata("name", "SimpleMappr: " . $this->file_name);
 
-        $this->setMetadata("name", "SimpleMappr: " . $clean_filename);
-
-        $this->addCoordinates();
+        $this->_addCoordinates();
 
         $this->_kml = new XMLWriter();
-
-        if ($file_download) {
-            Header::setHeader("kml", $clean_filename . ".kml");
-        }
         $this->_kml->openMemory();
 
         $this->_kml->startDocument('1.0', 'UTF-8');
@@ -168,7 +180,7 @@ class Kml
         $this->_kml->writeElement('name', $this->getMetadata('name'));
 
         //Style elements
-        $count = count($this->_getAllPlacemarks())-1;
+        $count = count($this->getAllPlacemarks())-1;
         for ($i=0; $i<=$count; $i++) {
             $this->_kml->startElement('Style');
             $this->_kml->writeAttribute('id', 'pushpin'.$i);
@@ -182,18 +194,18 @@ class Kml
             $this->_kml->endElement(); //end Style
         }
 
-        foreach ($this->_getAllPlacemarks() as $key => $placemarks) {
+        foreach ($this->getAllPlacemarks() as $key => $placemarks) {
             $this->_kml->startElement('Folder');
             $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
-            $this->_kml->writeElement('name', $this->_getPlacemark($key, 0, 'name'));
+            $this->_kml->writeElement('name', $this->getPlacemark($key, 0, 'name'));
             foreach ($placemarks as $id => $placemark) {
                 $this->_kml->startElement('Placemark');
                 $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
-                $this->_kml->writeElement('name', $this->_getPlacemark($key, $id, 'name'));
-                $this->_kml->writeElement('description', $this->_getPlacemark($key, $id, 'coordinate'));
+                $this->_kml->writeElement('name', $this->getPlacemark($key, $id, 'name'));
+                $this->_kml->writeElement('description', $this->getPlacemark($key, $id, 'coordinate'));
                 $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
                 $this->_kml->startElement('Point');
-                $this->_kml->writeElement('coordinates', $this->_getPlacemark($key, $id, 'coordinate') . ',0');
+                $this->_kml->writeElement('coordinates', $this->getPlacemark($key, $id, 'coordinate') . ',0');
                 $this->_kml->endElement(); //end Point
                 $this->_kml->endElement(); //end Placemark
             }
@@ -205,19 +217,6 @@ class Kml
         $this->_kml->endDocument();
 
         return $this->_kml->outputMemory();
-    }
-
-    /**
-     * Set basic metadata for kml.
-     *
-     * @param string $name  The metadata key.
-     * @param string $value The metadata value.
-     *
-     * @return void
-     */
-    public function setMetadata($name, $value)
-    {
-        $this->_metadata[$name] = $value;
     }
 
     /**
@@ -233,6 +232,43 @@ class Kml
     }
 
     /**
+     * Get a placemark.
+     *
+     * @param int    $key  An index for a group of placemarks.
+     * @param int    $mark An index for the placemark.
+     * @param string $name The name of the placemark.
+     *
+     * @return string The placemark.
+     */
+    public function getPlacemark($key, $mark, $name)
+    {
+        return $this->_placemark[$key][$mark][$name];
+    }
+
+    /**
+     * Helper function to get all placemarks
+     *
+     * @return Array
+     */
+    public function getAllPlacemarks()
+    {
+        return $this->_placemark;
+    }
+
+    /**
+     * Set basic metadata for kml.
+     *
+     * @param string $name  The metadata key.
+     * @param string $value The metadata value.
+     *
+     * @return void
+     */
+    private function _setMetadata($name, $value)
+    {
+        $this->_metadata[$name] = $value;
+    }
+
+    /**
      * Set a placemark in kml.
      *
      * @param int    $key   An index for a group placemarks.
@@ -242,7 +278,7 @@ class Kml
      *
      * @return void
      */
-    public function setPlacemark($key, $mark, $name, $value)
+    private function _setPlacemark($key, $mark, $name, $value)
     {
         $this->_placemark[$key][$mark][$name] = $value;
     }
@@ -252,7 +288,7 @@ class Kml
      *
      * @return void
      */
-    public function addCoordinates()
+    private function _addCoordinates()
     {
         $count = count($this->coords)-1;
         for ($j=0; $j<=$count; $j++) {
@@ -269,37 +305,13 @@ class Kml
                     $coord->x = ($coord_array[1]) ? Utility::cleanCoord($coord_array[1]) : null;
                     $coord->y = ($coord_array[0]) ? Utility::cleanCoord($coord_array[0]) : null;
                     if (Utility::onEarth($coord) && $title != "") {  //only add point when data are good & a title
-                        $this->setPlacemark($j, $point_key, "name", $title);
-                        $this->setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
+                        $this->_setPlacemark($j, $point_key, "name", $title);
+                        $this->_setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Get a placemark.
-     *
-     * @param int    $key  An index for a group of placemarks.
-     * @param int    $mark An index for the placemark.
-     * @param string $name The name of the placemark.
-     *
-     * @return string The placemark.
-     */
-    private function _getPlacemark($key, $mark, $name)
-    {
-        return $this->_placemark[$key][$mark][$name];
-    }
-
-    /**
-     * Helper function to get all placemarks
-     *
-     * @return Array
-     */
-    private function _getAllPlacemarks()
-    {
-        return $this->_placemark;
     }
 
 }

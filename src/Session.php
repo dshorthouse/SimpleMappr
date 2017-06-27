@@ -37,6 +37,8 @@
  */
 namespace SimpleMappr;
 
+use SimpleMappr\Controller\User;
+
 /**
  * Session handler for SimpleMappr
  *
@@ -163,9 +165,7 @@ class Session
         }
 
         self::writeSession($cookie);
-
-        $db = Database::getInstance();
-        $db->queryUpdate('users', ['access' => time()], 'hash='.$_SESSION["simplemappr"]["hash"]);
+        (new User)->update(['access' => time()], 'hash='.$_SESSION["simplemappr"]["hash"]);
     }
 
     /**
@@ -345,31 +345,14 @@ class Session
                 'email'       => $email
             ];
 
-            $db = Database::getInstance();
-
-            $sql = "SELECT
-                        u.uid,
-                        u.hash,
-                        u.identifier,
-                        u.email,
-                        u.username,
-                        u.displayname,
-                        u.role
-                    FROM 
-                        users u 
-                    WHERE  
-                        u.identifier = :identifier";
-
-            $db->prepare($sql);
-            $db->bindParam(":identifier", $identifier);
-            $result = $db->fetchFirstObject();
+            $result = (new User)->show_by_identifier($identifier)->results;
 
             $user['hash'] = (!$result) ? password_hash($identifier, PASSWORD_DEFAULT) : $result->hash;
-            $user['uid'] = (!$result) ? $db->queryInsert('users', $user) : $result->uid;
+            $user['uid'] = (!$result) ? (new User)->create($user)->uid : $result->uid;
             $user['locale'] = $this->_locale;
-            $user['role'] = (property_exists($result, 'role')) ? $result->role : 1;
+            $user['role'] = ($result && property_exists($result, 'role')) ? $result->role : 1;
 
-            $db->queryUpdate('users', ['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
+            (new User)->update(['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
 
             unset($user['uid'],$user['role']);
 
