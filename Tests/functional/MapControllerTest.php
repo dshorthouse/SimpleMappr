@@ -18,7 +18,6 @@ class MapControllerTest extends SimpleMapprTestCase
      */
     public function testIndexMaps()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > table > tbody > tr'));
@@ -30,7 +29,6 @@ class MapControllerTest extends SimpleMapprTestCase
      */
     public function testIndexAdminMaps()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('All Maps'));
@@ -44,7 +42,6 @@ class MapControllerTest extends SimpleMapprTestCase
      */
     public function testCreateMap()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $title = 'My New Map User ' . time();
@@ -67,7 +64,6 @@ class MapControllerTest extends SimpleMapprTestCase
      */
     public function testDeleteMap()
     {
-        parent::setUpPage();
         $user = parent::setSession();
 
         $title = 'Another Sample Map User';
@@ -100,8 +96,8 @@ class MapControllerTest extends SimpleMapprTestCase
      */
     public function testLoadMap()
     {
-        parent::setUpPage();
         parent::setSession();
+
         $map_title = "Sample Map User";
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');

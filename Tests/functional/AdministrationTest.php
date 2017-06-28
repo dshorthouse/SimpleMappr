@@ -19,7 +19,6 @@ class Administration extends SimpleMapprTestCase
      */
     public function testUserCountTable()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
@@ -34,7 +33,6 @@ class Administration extends SimpleMapprTestCase
      */
     public function testUserCountHeader()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Users'));
@@ -48,7 +46,6 @@ class Administration extends SimpleMapprTestCase
      */
     public function testFlushCache()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $orig_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');

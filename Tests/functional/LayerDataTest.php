@@ -33,7 +33,6 @@ class LayerDataTest extends SimpleMapprTestCase
      */
     public function testClearRegionLayer()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Regions'));
         $link->click();
 
@@ -56,7 +55,6 @@ class LayerDataTest extends SimpleMapprTestCase
      */
     public function testNewClearRegionLayer()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Regions'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a region']"))->click();

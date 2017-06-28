@@ -18,7 +18,6 @@ class ShareTest extends SimpleMapprTestCase
      */
     public function testDefaultSharesList()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'));
@@ -31,7 +30,6 @@ class ShareTest extends SimpleMapprTestCase
      */
     public function testShareCount()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'));
@@ -45,7 +43,6 @@ class ShareTest extends SimpleMapprTestCase
      */
     public function testCreateShare()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
@@ -62,7 +59,6 @@ class ShareTest extends SimpleMapprTestCase
      */
     public function testRemoveShare()
     {
-        parent::setUpPage();
         parent::setSession();
 
         $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();

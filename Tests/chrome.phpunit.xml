@@ -8,11 +8,11 @@
     <const name="BROWSER" value="chrome"/>
   </php>
   <testsuites>
-    <testsuite name="Unit">
-      <directory>./unit</directory>
-    </testsuite>
     <testsuite name="Functional">
       <directory>./functional</directory>
+    </testsuite>
+    <testsuite name="Unit">
+      <directory>./unit</directory>
     </testsuite>
     <testsuite name="Binary">
       <directory>./binary</directory>

@@ -18,7 +18,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testPageTitle()
     {
-        parent::setUpPage();
         $title = $this->webDriver->getTitle();
         $this->assertEquals('SimpleMappr', $title);
     }
@@ -28,8 +27,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testLanguageEnglish()
     {
-        parent::setUpPage();
-
         $lang = $this->webDriver->findElement(WebDriverBy::xpath("//html"))->getAttribute('lang');
         $this->assertEquals('en', $lang);
     }
@@ -49,8 +46,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testDescription()
     {
-        parent::setUpPage();
-
         $description = $this->webDriver->findElement(WebDriverBy::xpath("//meta[@name='description']"))->getAttribute('content');
         $this->assertContains("Create free point maps for publications and presentations", $description);
     }
@@ -60,8 +55,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testKeywords()
     {
-        parent::setUpPage();
-
         $keywords = $this->webDriver->findElement(WebDriverBy::xpath("//meta[@name='keywords']"))->getAttribute('content');
         $this->assertContains("publication,presentation,map,georeference", $keywords);
     }
@@ -71,8 +64,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testAuthor()
     {
-        parent::setUpPage();
-
         $this->assertContains("David P. Shorthouse", $this->metaElementContent("//meta[@name='author']"));
     }
 
@@ -81,8 +72,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testOpenGraph()
     {
-        parent::setUpPage();
-
         $og_title = $this->metaElementContent("//meta[@property='og:title']");
         $og_description = $this->metaElementContent("//meta[@property='og:description']");
         $og_locale = $this->metaElementContent("//meta[@property='og:locale']");
@@ -103,8 +92,6 @@ class PageHeaderTest extends SimpleMapprTestCase
      */
     public function testTwitterCard()
     {
-        parent::setUpPage();
-
         $twitter_card = $this->metaElementContent("//meta[@name='twitter:card']");
         $twitter_site = $this->metaElementContent("//meta[@name='twitter:site']");
         $twitter_creator = $this->metaElementContent("//meta[@name='twitter:creator']");

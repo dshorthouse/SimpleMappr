@@ -19,7 +19,6 @@ class FileUploadTest extends SimpleMapprTestCase
      */
     public function testUploadBadFile()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 
@@ -38,7 +37,6 @@ class FileUploadTest extends SimpleMapprTestCase
      */
     public function testUploadLargeFile()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 
@@ -57,7 +55,6 @@ class FileUploadTest extends SimpleMapprTestCase
      */
     public function testUploadTextFile()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 
@@ -93,7 +90,6 @@ class FileUploadTest extends SimpleMapprTestCase
      */
     public function testUploadCSVFile()
     {
-        parent::setUpPage();
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Point Data'));
         $link->click();
 

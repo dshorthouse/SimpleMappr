@@ -33,8 +33,6 @@ class DrawingsTest extends SimpleMapprTestCase
      */
     public function testClearDrawingLayer()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Drawings'));
         $link->click();
 
@@ -57,8 +55,6 @@ class DrawingsTest extends SimpleMapprTestCase
      */
     public function testNewClearDrawingLayer()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Drawings'));
         $link->click();
         $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add a drawing']"))->click();

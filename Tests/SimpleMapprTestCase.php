@@ -13,13 +13,14 @@
 
 use \PHPUnit\Framework\TestCase;
 use \SimpleMappr\Database;
-use \SimpleMappr\Header;
+use \SimpleMappr\Assets;
 use \SimpleMappr\Session;
 
 abstract class SimpleMapprTestCase extends TestCase
 {
 
     protected static $db;
+    protected static $webDriverSession;
     protected $webDriver;
     protected $url;
 
@@ -28,8 +29,8 @@ abstract class SimpleMapprTestCase extends TestCase
      */
     public static function setUpBeforeClass()
     {
-
         self::$db = Database::getInstance();
+        self::setUpWebDriver();
         self::dropTables();
 
         $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
@@ -498,6 +499,7 @@ abstract class SimpleMapprTestCase extends TestCase
     {
         self::dropTables();
         self::$db = null;
+        self::destroyWebDriver();
         session_write_close();
     }
 
@@ -511,6 +513,30 @@ abstract class SimpleMapprTestCase extends TestCase
         self::$db->exec("DROP TABLE IF EXISTS citations");
         self::$db->exec("DROP TABLE IF EXISTS shares");
         self::$db->exec("DROP TABLE IF EXISTS stateprovinces");
+    }
+
+    public static function setUpWebDriver()
+    {
+        $host = 'http://localhost:4444/wd/hub';
+        $browser = BROWSER;
+        $capabilities = DesiredCapabilities::$browser();
+        $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
+        $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
+        $capabilities->setCapability(WebDriverCapabilityType::WEB_STORAGE_ENABLED, true);
+        $webDriver = RemoteWebDriver::create($host, $capabilities, 60000, 60000);
+        $webDriver->manage()->deleteAllCookies();
+        $webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
+        new Assets;
+        $webDriver->get(MAPPR_URL);
+        //$this->waitOnSpinner();
+        self::$webDriverSession = $webDriver->getSessionID();
+    }
+
+    public static function destroyWebDriver()
+    {
+        foreach(RemoteWebDriver::getAllSessions() as $session) {
+            RemoteWebDriver::createBySessionID($session["id"])->quit();
+        }
     }
 
     /**
@@ -581,15 +607,8 @@ abstract class SimpleMapprTestCase extends TestCase
      */
     protected function setUp()
     {
-        $host = 'http://localhost:4444/wd/hub';
-        $browser = BROWSER;
-        $capabilities = DesiredCapabilities::$browser();
-        $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
-        $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
-        $capabilities->setCapability(WebDriverCapabilityType::WEB_STORAGE_ENABLED, true);
-        $this->webDriver = RemoteWebDriver::create($host, $capabilities, 60000, 60000);
-        $this->webDriver->manage()->deleteAllCookies();
-        $this->webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
+        $this->webDriver = RemoteWebDriver::createBySessionID(self::$webDriverSession);
+        $this->webDriver->navigate()->refresh();
     }
 
     /**
@@ -597,21 +616,13 @@ abstract class SimpleMapprTestCase extends TestCase
      */
     protected function tearDown()
     {
-        if(method_exists($this->webDriver, 'quit')) {
-            $this->destroySession();
-            $this->webDriver->quit();
+        if ($this->webDriver) {
+            $this->webDriver->manage()->deleteAllCookies();
+            if (session_id() !== "") {
+                session_unset();
+                session_destroy();
+            }
         }
-        unset($this->webDriver);
-    }
-
-    /**
-     * Get a URL
-     */
-    public function setUpPage()
-    {
-        new Header;
-        $this->webDriver->get(MAPPR_URL);
-        $this->waitOnSpinner();
     }
 
     /**
@@ -679,20 +690,5 @@ abstract class SimpleMapprTestCase extends TestCase
 
         return $user;
     }
-
-    /**
-     * Destroy user session
-     *
-     * @return void
-     */
-    public function destroySession()
-    {
-        $this->webDriver->manage()->deleteAllCookies();
-        if (session_id() !== "") {
-            session_unset();
-            session_destroy();
-        }
-    }
-
 
 }

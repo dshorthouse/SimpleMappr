@@ -18,7 +18,6 @@ class CitationTest extends SimpleMapprTestCase
      */
     public function testCitationsIndex()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $ch = curl_init(MAPPR_URL . "/citation.json");
@@ -40,7 +39,6 @@ class CitationTest extends SimpleMapprTestCase
      */
     public function testAddCitation()
     {
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $citation = 'Shorthouse, David P. 2003. Another citation';
@@ -69,7 +67,6 @@ class CitationTest extends SimpleMapprTestCase
             'created' => time()
         ]);
 
-        parent::setUpPage();
         parent::setSession('administrator');
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));

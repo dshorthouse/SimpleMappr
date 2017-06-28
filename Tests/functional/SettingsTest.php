@@ -18,8 +18,6 @@ class SettingsTest extends SimpleMapprTestCase
      */
     public function testLayerSelection()
     {
-        parent::setUpPage();
-
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('stateprovinces'))->click();
@@ -34,8 +32,6 @@ class SettingsTest extends SimpleMapprTestCase
      */
     public function testLabelSelection()
     {
-        parent::setUpPage();
-
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('stateprovnames'))->click();
@@ -50,8 +46,6 @@ class SettingsTest extends SimpleMapprTestCase
      */
     public function testGraticules()
     {
-        parent::setUpPage();
-
         $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
         $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->webDriver->findElement(WebDriverBy::id('grid'))->click();

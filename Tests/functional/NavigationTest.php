@@ -20,8 +20,6 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testTagline()
     {
-        parent::setUpPage();
-
         $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
         $this->assertEquals('create free point maps for publications and presentations', $tagline->getText());
     }
@@ -31,13 +29,13 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testTaglineFrench()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Français'));
         $link->click();
         parent::waitOnAjax();
         $tagline = $this->webDriver->findElement(WebDriverBy::id('site-tagline'));
         $this->assertEquals('créez gratuitement des cartes de répartition pour publications et présentations', $tagline->getText());
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('English'));
+        $link->click();
     }
 
     /**
@@ -45,8 +43,6 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testSignInPage()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Sign In'));
         $link->click();
         parent::waitOnAjax();
@@ -59,8 +55,6 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testAPIPage()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('API'));
         $link->click();
         parent::waitOnAjax();
@@ -73,8 +67,6 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testAboutPage()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('About'));
         $link->click();
         parent::waitOnAjax();
@@ -87,8 +79,6 @@ class NavigationTest extends SimpleMapprTestCase
      */
     public function testHelpPage()
     {
-        parent::setUpPage();
-
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Help'));
         $link->click();
         parent::waitOnAjax();
