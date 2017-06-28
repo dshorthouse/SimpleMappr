@@ -831,6 +831,14 @@ msgid "June 20, 2017"
 msgstr "20 juin, 2017"
 
 #: .tabs/about.php:11
+msgid "June 28, 2017"
+msgstr "28 juin, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added World Mercator projection. Requested by Russ Charrif."
+msgstr "Améliorations: Ajouté World Mercator comme nouvelle projection. Demandé par Russ Charrif."
+
+#: .tabs/about.php:11
 msgid "Improvements: Added border option for drawings."
 msgstr "Améliorations: Ajouté l'option pour encadrer les dessins."
 
