@@ -39,6 +39,7 @@ class PageHeaderTest extends SimpleMapprTestCase
         $this->webDriver->get(MAPPR_URL . "/?locale=fr_FR");
         $lang = $this->webDriver->findElement(WebDriverBy::xpath("//html"))->getAttribute('lang');
         $this->assertEquals('fr', $lang);
+        $this->webDriver->get(MAPPR_URL . "/?locale=en_US");
     }
 
     /**
