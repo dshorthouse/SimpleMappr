@@ -38,21 +38,45 @@
 trait SimpleMapprTestMixin
 {
 
+    /*
+     * Set the request method
+     *
+     * @param string $type Default is "GET"
+     *
+     * @return void
+     */
     public function setRequestMethod($type = 'GET')
     {
         $_SERVER['REQUEST_METHOD'] = $type;
     }
 
+    /*
+     * Clear the request method
+     *
+     * @return void
+     */
     public function clearRequestMethod()
     {
         unset($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST']);
     }
 
+    /*
+     * Set the request
+     *
+     * @param array $array The request array
+     *
+     * @return void
+     */
     public function setRequest($array)
     {
         $_REQUEST = $array;
     }
 
+    /*
+     * Clear temporary files from the public/tmp directory
+     *
+     * @return void
+     */
     public function clearTmpFiles()
     {
         $dirItr = new \RecursiveDirectoryIterator(dirname(__DIR__) . '/public/tmp');
@@ -63,47 +87,41 @@ trait SimpleMapprTestMixin
         }
     }
 
-    public function httpPost($url, $params)
+    /*
+     * Get an HTTP response from a POST request
+     *
+     * @param string $url The URL to send
+     * @param array $params An associative array of parameters, default empty array
+     * @param string $type The type of request to send, default = "GET"
+     *
+     * @return array ["body" => body, "code" => responseCode, "mime" => responseMIMEType]
+     */
+    public function httpRequest($url, $params = [], $type = "GET")
     {
-        $postData = '';
+        $data = '';
         foreach($params as $k => $v) {
-            $postData .= $k . '='.$v.'&'; 
+            $data .= $k . '='.$v.'&'; 
         }
-        rtrim($postData, '&');
+        rtrim($data, '&');
 
         $ch = curl_init();
 
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($ch,CURLOPT_HEADER, false); 
-        curl_setopt($ch, CURLOPT_POST, count($postData));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
 
-        $output = curl_exec($ch);
+        if ($type == "GET") {
+            curl_setopt($ch, CURLOPT_URL, $url . "?" . $data);
+        } else {
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, count($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+
+        $body = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $mime = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         curl_close($ch);
 
-        return $output;
-    }
-
-    public function getHTTPResponseCode($url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // The PHP doc indicates that CURLOPT_CONNECTTIMEOUT_MS constant is added in cURL 7.16.2
-        // available since PHP 5.2.3.
-        if (!defined(CURLOPT_CONNECTTIMEOUT_MS)) {
-            define('CURLOPT_CONNECTTIMEOUT_MS', 156);  // default value for CURLOPT_CONNECTTIMEOUT_MS
-        }
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 500);
-        $code = null;
-        try {
-            curl_exec($ch);
-            $info = curl_getinfo($ch);
-            $code = $info['http_code'];
-        } catch (Exception $e) {
-        }
-        curl_close($ch);
-        return $code;
+        return ["body" => $body, "code" => $code, "mime" => $mime];
     }
 }

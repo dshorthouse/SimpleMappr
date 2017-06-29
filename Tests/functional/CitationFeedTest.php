@@ -13,6 +13,7 @@
  */
 class CitationFeedTest extends SimpleMapprTestCase
 {
+    use SimpleMapprTestMixin;
 
     protected $type;
     protected $rss;
@@ -22,14 +23,9 @@ class CitationFeedTest extends SimpleMapprTestCase
      */
     protected function setUp()
     {
-        $ch = curl_init(MAPPR_URL . "/citation.rss");
-
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $this->rss = simplexml_load_string(curl_exec($ch));
-        $this->type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        curl_close($ch);
+        $response = $this->httpRequest(MAPPR_URL . "/citation.rss");
+        $this->rss = simplexml_load_string($response["body"]);
+        $this->type = $response["mime"];
     }
 
     /**

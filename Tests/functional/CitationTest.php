@@ -13,6 +13,8 @@
  */
 class CitationTest extends SimpleMapprTestCase
 {
+    use SimpleMapprTestMixin;
+
     /**
      * Test response from index is JSON with one record.
      */
@@ -20,17 +22,9 @@ class CitationTest extends SimpleMapprTestCase
     {
         parent::setSession('administrator');
 
-        $ch = curl_init(MAPPR_URL . "/citation.json");
-
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = json_decode(curl_exec($ch));
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        curl_close($ch);
-
-        $this->assertEquals('application/json; charset=UTF-8', $type);
+        $response = $this->httpRequest(MAPPR_URL . "/citation.json");
+        $result = json_decode($response["body"]);
+        $this->assertEquals('application/json; charset=UTF-8', $response["mime"]);
         $this->assertCount(1, $result->citations);
     }
 

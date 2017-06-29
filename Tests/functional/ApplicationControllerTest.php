@@ -33,16 +33,29 @@ class ApplicationControllerTest extends TestCase
     }
 
     /**
-     * Test that POST requests are accepted.
+     * Test that POST requests to /application.json are accepted.
      */
-    public function test_postRequest()
+    public function test_postRequestJSON()
     {
-        $fields = [];
-        $response = $this->httpPost(MAPPR_URL . "/application.json", $fields);
-        $body = json_decode($response, true);
+        $response = $this->httpRequest(MAPPR_URL . "/application.json", [], "POST");
+        $this->assertEquals("application/json; charset=UTF-8", $response["mime"]);
+        $body = json_decode($response["body"], true);
         $this->assertContains(MAPPR_MAPS_URL, $body["mapOutputImage"]);
         $image = file_get_contents($body["mapOutputImage"]);
         $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
+    }
+
+    /**
+     * Test that POST requests to /application are accepted.
+     */
+    public function test_postRequestHTML()
+    {
+        $params = ["layers[countries]" => "on", "download" => true];
+        $response = $this->httpRequest(MAPPR_URL . "/application", $params, "POST");
+        $file = ROOT.'/public/tmp/apioutput_get.png';
+        file_put_contents($file, $response["body"]);
+        $this->assertEquals("image/png", $response["mime"]);
+        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
 
     /**
