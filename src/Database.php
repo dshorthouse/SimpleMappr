@@ -53,7 +53,7 @@ use Symfony\Component\Yaml\Yaml;
 class Database
 {
     /** @var object $_instance Database instance of self for static retrieval */
-    public static $_instance;
+    private static $_instance;
 
     /** @var object $_link Database connection */
     private $_link;
