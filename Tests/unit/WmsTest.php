@@ -61,7 +61,6 @@ class WmsTest extends TestCase
      */
     public function test_GetMap()
     {
-        
         $req = [
             'REQUEST' => 'GetMap',
             'LAYERS' => 'lakes',
@@ -104,5 +103,4 @@ class WmsTest extends TestCase
         $this->assertEquals($mappr_wms->request->params['VERSION'], '1.1.1');
         $this->assertEquals($mappr_wms->request->params['FORMAT'], 'image/png');
     }
-
 }

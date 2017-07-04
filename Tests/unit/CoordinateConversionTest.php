@@ -339,5 +339,4 @@ class CoordinateConversionTest extends TestCase
         $this->assertEquals($dd[0], 49.129774);
         $this->assertEquals($dd[1], 46.677716);
     }
-
 }

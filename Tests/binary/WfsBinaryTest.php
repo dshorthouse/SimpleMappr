@@ -48,10 +48,9 @@ class WfsBinaryTest extends TestCase
         $xml = simplexml_load_string($output);
         $layers = $xml->FeatureTypeList->FeatureType;
         $titles = [];
-        foreach($layers as $layer) {
+        foreach ($layers as $layer) {
             array_push($titles, $layer->Title);
         }
         $this->assertContains("lakes", $titles);
     }
-
 }

@@ -96,5 +96,4 @@ class WfsTest extends TestCase
         $ns = $xml->getNamespaces(true);
         $this->assertEquals(10, count($xml->children($ns['gml'])->featureMember));
     }
-
 }

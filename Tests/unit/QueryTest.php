@@ -63,8 +63,8 @@ class QueryTest extends TestCase
         $mappr_query = new Query;
         $mappr_query->execute()->queryLayer();
         $output = $mappr_query->data;
-        $this->assertTrue(in_array("Australia",$output));
-        $this->assertTrue(in_array("New Zealand",$output));
+        $this->assertTrue(in_array("Australia", $output));
+        $this->assertTrue(in_array("New Zealand", $output));
     }
 
     /**
@@ -82,5 +82,4 @@ class QueryTest extends TestCase
         $output = $mappr_query->data;
         $this->assertEquals('CAN[SK]', $output[0]);
     }
-
 }

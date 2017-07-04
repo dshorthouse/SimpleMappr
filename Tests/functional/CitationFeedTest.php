@@ -51,5 +51,4 @@ class CitationFeedTest extends SimpleMapprTestCase
     {
         $this->assertEquals(1, count($this->rss->channel->item));
     }
-
 }

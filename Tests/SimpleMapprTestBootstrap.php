@@ -71,8 +71,8 @@ class SimpleMapprTestBootstrap
      */
     private function switchXdebug($dir = 'disable')
     {
-        if (function_exists('xdebug_'.$dir)) { 
-            call_user_func('xdebug_'.$dir); 
+        if (function_exists('xdebug_'.$dir)) {
+            call_user_func('xdebug_'.$dir);
         }
     }
 
@@ -103,7 +103,6 @@ class SimpleMapprTestBootstrap
                 rename($conf['prod'] . ".old", $conf['prod']);
             }
         }
-
     }
 
     /**

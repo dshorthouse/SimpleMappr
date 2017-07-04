@@ -74,5 +74,4 @@ class CitationTest extends SimpleMapprTestCase
         $this->assertEquals($result[0]->cnt, count($citations_list));
         parent::$db->exec("DELETE FROM citations WHERE id = ".$citation_id."");
     }
-
 }

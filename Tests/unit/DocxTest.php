@@ -51,5 +51,4 @@ class DocxTest extends TestCase
         $mime = $finfo->buffer($output);
         $this->assertEquals("application/zip; charset=binary", $mime);
     }
-
 }

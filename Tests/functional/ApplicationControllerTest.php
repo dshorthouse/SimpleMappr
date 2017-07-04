@@ -42,7 +42,7 @@ class ApplicationControllerTest extends TestCase
         $body = json_decode($response["body"], true);
         $this->assertContains(MAPPR_MAPS_URL, $body["mapOutputImage"]);
         $image = file_get_contents($body["mapOutputImage"]);
-        $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a",substr($image,0,8));
+        $this->assertEquals("\x89PNG\x0d\x0a\x1a\x0a", substr($image, 0, 8));
     }
 
     /**
@@ -65,7 +65,7 @@ class ApplicationControllerTest extends TestCase
     {
         $expected = "/*\n 2013 David P. Shorthouse";
         $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
-        $this->assertEquals($expected, substr($response,0,28));
+        $this->assertEquals($expected, substr($response, 0, 28));
     }
 
     /**

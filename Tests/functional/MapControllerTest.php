@@ -76,8 +76,8 @@ class MapControllerTest extends SimpleMapprTestCase
         $this->webDriver->navigate()->refresh();
         parent::waitOnAjax();
         $delete_links = $this->webDriver->findElements(WebDriverBy::cssSelector("#usermaps > .grid-usermaps > tbody > tr > .actions > .map-delete"));
-        foreach($delete_links as $delete_link) {
-            if($delete_link->getAttribute('data-id') == $mid) {
+        foreach ($delete_links as $delete_link) {
+            if ($delete_link->getAttribute('data-id') == $mid) {
                 $delete_link->click();
                 break;
             }

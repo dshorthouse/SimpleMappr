@@ -95,5 +95,4 @@ class NavigationTest extends SimpleMapprTestCase
         $content = $this->webDriver->findElement(WebDriverBy::id('error-message'));
         $this->assertContains('The page you requested was not found', $content->getText());
     }
-
 }

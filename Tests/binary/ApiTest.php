@@ -267,7 +267,9 @@ class ApiTest extends TestCase
         $level = ob_get_level();
         echo $mappr_api->createOutput();
         $output = ob_get_clean();
-        if (ob_get_level() > $level) { ob_end_clean(); }
+        if (ob_get_level() > $level) {
+            ob_end_clean();
+        }
         $file = ROOT.'/public/tmp/apioutput_wkt.png';
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
@@ -293,7 +295,9 @@ class ApiTest extends TestCase
         $level = ob_get_level();
         echo $mappr_api->createOutput();
         $output = ob_get_clean();
-        if (ob_get_level() > $level) { ob_end_clean(); }
+        if (ob_get_level() > $level) {
+            ob_end_clean();
+        }
         $file = ROOT.'/public/tmp/apioutput_wkt_border.png';
         file_put_contents($file, $output);
         $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt_border.png'));

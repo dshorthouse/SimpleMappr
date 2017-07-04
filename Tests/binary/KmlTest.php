@@ -68,5 +68,4 @@ class KmlTest extends TestCase
         $test_file = file_get_contents(ROOT.'/Tests/files/kml.kml');
         $this->assertEquals($kml, $test_file);
     }
-
 }

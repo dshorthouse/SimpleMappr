@@ -41,7 +41,9 @@ class MapTest extends SimpleMapprTestCase
         ob_start();
         $mappr->createOutput();
         $output = ob_get_clean();
-        if (ob_get_level() > $level) { ob_end_clean(); }
+        if (ob_get_level() > $level) {
+            ob_end_clean();
+        }
         return $output;
     }
 
@@ -76,7 +78,9 @@ class MapTest extends SimpleMapprTestCase
         //get outputbuffer level because geoPHP::load in Map creates an unwanted stream
         $level = ob_get_level();
         $output = $mappr_map->execute()->createOutput();
-        if (ob_get_level() > $level) { ob_end_clean(); }
+        if (ob_get_level() > $level) {
+            ob_end_clean();
+        }
         $test_file = file_get_contents(ROOT.'/Tests/files/map_json_polygon.json');
         $this->assertEquals($output, $test_file);
     }

@@ -55,5 +55,4 @@ class Administration extends SimpleMapprTestCase
         $new_css = $this->webDriver->findElement(WebDriverBy::xpath("//link[@type='text/css']"))->getAttribute('href');
         $this->assertNotEquals($orig_css, $new_css);
     }
-
 }

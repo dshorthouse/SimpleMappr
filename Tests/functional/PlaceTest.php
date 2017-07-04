@@ -68,5 +68,4 @@ class PlaceTest extends SimpleMapprTestCase
         $this->assertEquals('application/json; charset=UTF-8', $type);
         $this->assertEquals("Canada", $result[0]->value);
     }
-
 }

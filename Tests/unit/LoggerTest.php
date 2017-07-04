@@ -72,5 +72,4 @@ class LoggerTest extends TestCase
         $this->logger->write("This is some more content");
         $this->assertStringStartsWith("This is some more content", implode("", $this->logger->tail()));
     }
-
 }

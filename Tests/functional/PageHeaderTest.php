@@ -112,5 +112,4 @@ class PageHeaderTest extends SimpleMapprTestCase
     {
         return $this->webDriver->findElement(WebDriverBy::xpath($xpath))->getAttribute('content');
     }
-
 }

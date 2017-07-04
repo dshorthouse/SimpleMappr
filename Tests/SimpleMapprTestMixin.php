@@ -99,8 +99,8 @@ trait SimpleMapprTestMixin
     public function httpRequest($url, $params = [], $type = "GET")
     {
         $data = '';
-        foreach($params as $k => $v) {
-            $data .= $k . '='.$v.'&'; 
+        foreach ($params as $k => $v) {
+            $data .= $k . '='.$v.'&';
         }
         rtrim($data, '&');
 

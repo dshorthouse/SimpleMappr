@@ -32,7 +32,8 @@ class PptxTest extends TestCase
     /**
      * Parent tearDown function executed after each test.
      */
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->clearRequestMethod();
         $this->clearTmpFiles();
     }
@@ -40,7 +41,8 @@ class PptxTest extends TestCase
     /**
      * Test that PPTX output has the correct MIME type.
      */
-    public function test_pptx_mime() {
+    public function test_pptx_mime()
+    {
         $this->mappr_pptx->execute();
         ob_start();
         $this->mappr_pptx->createOutput();
@@ -49,5 +51,4 @@ class PptxTest extends TestCase
         $mime = $finfo->buffer($output);
         $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
     }
-
 }

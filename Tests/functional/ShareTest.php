@@ -79,5 +79,4 @@ class ShareTest extends SimpleMapprTestCase
         $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'))->click();
         return $this->webDriver->findElement(WebDriverBy::id('sharedmaps'))->getText();
     }
-
 }

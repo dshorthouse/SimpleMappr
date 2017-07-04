@@ -389,5 +389,4 @@ class ApplicationTest extends TestCase
     {
         $this->assertEquals($this->output["bad_drawings"], "");
     }
-
 }

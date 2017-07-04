@@ -18,7 +18,6 @@ use \SimpleMappr\Session;
 
 abstract class SimpleMapprTestCase extends TestCase
 {
-
     protected static $db;
     protected static $webDriverSession;
     protected $webDriver;
@@ -122,9 +121,9 @@ abstract class SimpleMapprTestCase extends TestCase
         ]);
 
         $map_data1 = [
-          'coords' => 
+          'coords' =>
             [
-            0 => 
+            0 =>
             [
               'title' => 'Sample Data',
               'data' => '55, -115',
@@ -132,7 +131,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'size' => '14',
               'color' => '255 32 3',
             ],
-            1 => 
+            1 =>
             [
               'title' => '',
               'data' => '',
@@ -140,7 +139,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'size' => '10',
               'color' => '0 0 0',
             ],
-            2 => 
+            2 =>
             [
               'title' => '',
               'data' => '',
@@ -149,28 +148,28 @@ abstract class SimpleMapprTestCase extends TestCase
               'color' => '0 0 0',
             ],
           ],
-          'regions' => 
+          'regions' =>
           [
-            0 => 
+            0 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
-            1 => 
+            1 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
-            2 => 
+            2 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
           ],
-          'layers' => 
+          'layers' =>
           [
             'countries' => 'on',
             'stateprovinces' => 'on',
@@ -179,7 +178,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'projection' => 'epsg:4326',
           'origin' => '',
           'filter-mymap' => '',
-          'citation' => 
+          'citation' =>
           [
             'reference' => '',
             'first_author_surname' => '',
@@ -200,7 +199,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'zoom_out' => '',
           'crop' => '',
           'rotation' => '0',
-          'save' => 
+          'save' =>
           [
             'title' => 'Sample Map Administrator',
           ],
@@ -210,7 +209,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'height' => '',
           'download_filetype' => 'svg',
           'grid_space' => '',
-          'options' => 
+          'options' =>
           [
             'border' => '',
             'legend' => '',
@@ -226,9 +225,9 @@ abstract class SimpleMapprTestCase extends TestCase
         ];
 
         $map_data2 = [
-          'coords' => 
+          'coords' =>
           [
-            0 => 
+            0 =>
             [
               'title' => 'More Sample Data',
               'data' => '45, -115',
@@ -236,7 +235,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'size' => '14',
               'color' => '255 32 3',
             ],
-            1 => 
+            1 =>
             [
               'title' => '',
               'data' => '',
@@ -244,7 +243,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'size' => '10',
               'color' => '0 0 0',
             ],
-            2 => 
+            2 =>
             [
               'title' => '',
               'data' => '',
@@ -253,28 +252,28 @@ abstract class SimpleMapprTestCase extends TestCase
               'color' => '0 0 0',
             ],
           ],
-          'regions' => 
+          'regions' =>
           [
-            0 => 
+            0 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
-            1 => 
+            1 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
-            2 => 
+            2 =>
             [
               'title' => '',
               'data' => '',
               'color' => '150 150 150',
             ],
           ],
-          'layers' => 
+          'layers' =>
           [
             'countries' => 'on',
             'stateprovinces' => 'on',
@@ -283,7 +282,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'projection' => 'epsg:4326',
           'origin' => '',
           'filter-mymap' => '',
-          'citation' => 
+          'citation' =>
           [
             'reference' => '',
             'first_author_surname' => '',
@@ -304,7 +303,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'zoom_out' => '',
           'crop' => '',
           'rotation' => '0',
-          'save' => 
+          'save' =>
           [
             'title' => 'Sample Map User',
           ],
@@ -314,7 +313,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'height' => '',
           'download_filetype' => 'svg',
           'grid_space' => '',
-          'options' => 
+          'options' =>
           [
             'border' => '',
             'legend' => '',
@@ -331,7 +330,7 @@ abstract class SimpleMapprTestCase extends TestCase
 
         $map_data3 = [
           'coords' => [
-              0 => 
+              0 =>
               [
                 'title' => '',
                 'data' => '',
@@ -339,7 +338,7 @@ abstract class SimpleMapprTestCase extends TestCase
                 'size' => '10',
                 'color' => '0 0 0',
               ],
-              1 => 
+              1 =>
               [
                 'title' => '',
                 'data' => '',
@@ -347,7 +346,7 @@ abstract class SimpleMapprTestCase extends TestCase
                 'size' => '10',
                 'color' => '0 0 0',
               ],
-              2 => 
+              2 =>
               [
                 'title' => '',
                 'data' => '',
@@ -357,19 +356,19 @@ abstract class SimpleMapprTestCase extends TestCase
               ],
           ],
           'regions' => [
-              0 => 
+              0 =>
               [
                 'title' => '',
                 'data' => '',
                 'color' => '150 150 150',
               ],
-              1 => 
+              1 =>
               [
                 'title' => '',
                 'data' => '',
                 'color' => '150 150 150',
               ],
-              2 => 
+              2 =>
               [
                 'title' => '',
                 'data' => '',
@@ -377,26 +376,26 @@ abstract class SimpleMapprTestCase extends TestCase
               ],
           ],
           'wkt' => [
-              0 => 
+              0 =>
               [
                 'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))',
                 'color' => '255 0 0',
                 'title' => 'My Polygon'
               ],
-              1 => 
+              1 =>
               [
                 'data' => '',
                 'title' => '',
                 'color' => '150 150 150'
               ],
-              2 => 
+              2 =>
               [
                 'data' => '',
                 'title' => '',
                 'color' => '150 150 150'
               ]
           ],
-          'layers' => 
+          'layers' =>
           [
             'countries' => 'on',
             'stateprovinces' => 'on',
@@ -419,7 +418,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'zoom_out' => '',
           'crop' => '',
           'rotation' => '0',
-          'save' => 
+          'save' =>
           [
             'title' => 'Second Sample Map User',
           ],
@@ -429,7 +428,7 @@ abstract class SimpleMapprTestCase extends TestCase
           'height' => '',
           'download_filetype' => 'svg',
           'grid_space' => '',
-          'options' => 
+          'options' =>
           [
             'border' => '',
             'legend' => '',
@@ -488,8 +487,8 @@ abstract class SimpleMapprTestCase extends TestCase
           'stateprovince_code' => 'AB'
         ]);
 
-          session_cache_limiter('nocache');
-          session_start();
+        session_cache_limiter('nocache');
+        session_start();
     }
 
     /**
@@ -534,7 +533,7 @@ abstract class SimpleMapprTestCase extends TestCase
 
     public static function destroyWebDriver()
     {
-        foreach(RemoteWebDriver::getAllSessions() as $session) {
+        foreach (RemoteWebDriver::getAllSessions() as $session) {
             RemoteWebDriver::createBySessionID($session["id"])->quit();
         }
     }
@@ -630,7 +629,7 @@ abstract class SimpleMapprTestCase extends TestCase
      */
     public function waitOnAjax($timeout = 20, $interval = 1000)
     {
-        $this->webDriver->wait($timeout, $interval)->until(function() {
+        $this->webDriver->wait($timeout, $interval)->until(function () {
             $condition = 'return ($.active == 0);';
             return $this->webDriver->executeScript($condition);
         });
@@ -653,7 +652,7 @@ abstract class SimpleMapprTestCase extends TestCase
      */
     public function waitOnMap($timeout = 20, $interval = 1000)
     {
-        $this->webDriver->wait($timeout, $interval)->until(function() {
+        $this->webDriver->wait($timeout, $interval)->until(function () {
             $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
             return (strpos($src, MAPPR_MAPS_URL) !== false) ? true : false;
         });
@@ -690,5 +689,4 @@ abstract class SimpleMapprTestCase extends TestCase
 
         return $user;
     }
-
 }

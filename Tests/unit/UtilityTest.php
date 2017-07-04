@@ -96,5 +96,4 @@ class UtilityTest extends TestCase
         $cleaned = Utility::removeEmptyLines($text);
         $this->assertEquals("Here \n is \n some \n stuff", $cleaned);
     }
-    
 }
