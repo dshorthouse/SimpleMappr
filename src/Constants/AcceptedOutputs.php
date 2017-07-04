@@ -102,6 +102,6 @@ trait AcceptedOutputs
      */
     public static function outputList()
     {
-      return array_keys(self::$outputs);
+        return array_keys(self::$outputs);
     }
 }

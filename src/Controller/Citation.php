@@ -182,5 +182,4 @@ class Citation implements RestMethods
             return ["status" => "ok", "citations" => $this->_citations];
         }
     }
-
 }

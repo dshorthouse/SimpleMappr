@@ -71,7 +71,7 @@ class Application extends Mappr
     */
     public function createOutput()
     {
-        switch($this->request->output) {
+        switch ($this->request->output) {
         case 'tif':
             error_reporting(0);
             $this->image_url = $this->image->saveWebImage();
@@ -85,7 +85,7 @@ class Application extends Mappr
             break;
 
         case 'png':
-            if($this->request->download) {
+            if ($this->request->download) {
                 error_reporting(0);
                 $this->image_url = $this->image->saveWebImage();
                 $image_filename = basename($this->image_url);
@@ -96,7 +96,7 @@ class Application extends Mappr
                 flush();
                 readfile($this->tmp_path.$image_filename);
             } else {
-              return $this->_defaultOutput();
+                return $this->_defaultOutput();
             }
             break;
 
@@ -109,7 +109,6 @@ class Application extends Mappr
         default:
             $this->_defaultOutput();
         }
-
     }
 
     /**
@@ -119,16 +118,16 @@ class Application extends Mappr
     */
     private function _defaultOutput()
     {
-      $this->image_url = $this->image->saveWebImage();
+        $this->image_url = $this->image->saveWebImage();
 
-      $bbox = [
+        $bbox = [
           sprintf('%.10f', $this->map_obj->extent->minx + $this->ox_pad),
           sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
           sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
           sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
       ];
 
-      $output = [
+        $output = [
           'mapOutputImage'      => $this->image_url,
           'size'                => $this->image_size,
           'rendered_bbox'       => implode(",", $bbox),
@@ -140,7 +139,6 @@ class Application extends Mappr
           'bad_drawings'        => $this->getBadDrawings()
       ];
 
-      return $output;
+        return $output;
     }
-
 }

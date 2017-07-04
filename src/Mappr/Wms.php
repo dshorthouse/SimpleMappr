@@ -57,7 +57,7 @@ class Wms extends Mappr
 {
     /**
      * @var object $_req Request object for WFS and WMS
-     */ 
+     */
     private $_req = "";
 
     /**
@@ -79,13 +79,13 @@ class Wms extends Mappr
     {
         $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
-            foreach($layers as $layer) {
+            foreach ($layers as $layer) {
                 if (in_array($layer, array_keys($shapes))) {
                     $this->_wms_layers[$layer] = 'on';
                 }
             }
         } else {
-            foreach($shapes as $key => $shape) {
+            foreach ($shapes as $key => $shape) {
                 $this->_wms_layers[$key] = 'on';
             }
         }
@@ -183,7 +183,7 @@ class Wms extends Mappr
         if ($req == 'getcapabilities') {
             Header::setHeader("xml");
             echo ms_iogetstdoutbufferstring();
-        } else if ($req == 'getmap' || $req == 'getlegendgraphic') {
+        } elseif ($req == 'getmap' || $req == 'getlegendgraphic') {
             Header::setHeader();
             header('Content-type: ' . $contenttype);
             ms_iogetstdoutbufferbytes();
@@ -219,8 +219,6 @@ class Wms extends Mappr
             $this->_req->setParameter("LAYERS", $this->params['LAYER']);
         }
 
-
         return $this;
     }
-
 }

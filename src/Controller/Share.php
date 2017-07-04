@@ -156,9 +156,8 @@ class Share implements RestMethods
                 'created' => time(),
             ];
             $this->_db->queryInsert('shares', $data);
-            return ["status" => "ok"];            
+            return ["status" => "ok"];
         }
-
     }
 
     /**
@@ -205,5 +204,4 @@ class Share implements RestMethods
         $this->_db->execute();
         return ["status" => "ok"];
     }
-
 }

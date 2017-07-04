@@ -61,14 +61,14 @@ abstract class Mappr
      *
      * @return void
      */
-    abstract function getRequest();
+    abstract public function getRequest();
 
     /**
      * Create output, required for all extended classes
      *
      * @return void
      */
-    abstract function createOutput();
+    abstract public function createOutput();
 
     /**
      * @var string $shapefile_config Path to the shapefile config
@@ -82,7 +82,7 @@ abstract class Mappr
 
     /**
      * @var string $tmp_path File system temp path to store files produced
-     */ 
+     */
     protected $tmp_path = ROOT.'/public/tmp/';
 
     /**
@@ -210,9 +210,9 @@ abstract class Mappr
         $property = substr($name, 4);
         if ($property_prefix == 'set_') {
             $this->{$property} = $arguments[0];
-        } else if ($property_prefix == 'add_') { // add to an array property
+        } elseif ($property_prefix == 'add_') { // add to an array property
             array_push($this->{$property}, $arguments[0]);
-        } else if ($property_prefix == 'get_') { //get a property
+        } elseif ($property_prefix == 'get_') { //get a property
             return $this->{$property};
         }
         return $this;
@@ -339,12 +339,12 @@ abstract class Mappr
                     }
 
                     if ($shadow) {
-                      $bstyle = ms_newStyleObj($class);
-                      $bstyle->set("symbolname", $shape);
-                      $bstyle->set("size", $size);
-                      $bstyle->set("offsetx", $offset);
-                      $bstyle->set("offsety", $offset);
-                      $bstyle->color->setRGB(180,180,180);
+                        $bstyle = ms_newStyleObj($class);
+                        $bstyle->set("symbolname", $shape);
+                        $bstyle->set("size", $size);
+                        $bstyle->set("offsetx", $offset);
+                        $bstyle->set("offsety", $offset);
+                        $bstyle->color->setRGB(180, 180, 180);
                     }
 
                     $style = ms_newStyleObj($class);
@@ -429,7 +429,7 @@ abstract class Mappr
                     foreach ($rows as $key => $row) {
                         if (strpos($row, "POINT") !== false) {
                             $type = MS_LAYER_POINT;
-                        } else if (strpos($row, "LINE") !== false) {
+                        } elseif (strpos($row, "LINE") !== false) {
                             $type = MS_LAYER_LINE;
                         } else {
                             $type = MS_LAYER_POLYGON;
@@ -460,13 +460,11 @@ abstract class Mappr
                         try {
                             $shape = ms_shapeObjFromWkt($row);
                             $layer->addFeature($shape);
-                        } catch(\Exception $e) {
+                        } catch (\Exception $e) {
                             $this->bad_drawings[] = $title;
                         }
-
                     }
                 }
-
             }
         }
     }
@@ -553,7 +551,6 @@ abstract class Mappr
                     $style->set("width", $this->_determineWidth());
                     $layer->set("status", MS_ON);
                 }
-
             }
         }
     }
@@ -740,35 +737,35 @@ abstract class Mappr
      */
     private function _defaultAttributes()
     {
-      $attr = new \stdClass();
-      $attr->coords           = [];
-      $attr->regions          = [];
-      $attr->wkt              = [];
-      $attr->output           = 'png';
-      $attr->width            = 900;
-      $attr->height           = $attr->width/2;
-      $attr->projection       = 'epsg:4326';
-      $attr->projection_map   = 'epsg:4326';
-      $attr->origin           = false;
-      $attr->bbox_map         = '-180,-90,180,90';
-      $attr->bbox_rubberband  = [];
-      $attr->pan              = false;
-      $attr->layers           = [];
-      $attr->graticules       = false;
-      $attr->watermark        = false;
-      $attr->gridspace        = false;
-      $attr->gridlabel        = 1;
-      $attr->download         = false;
-      $attr->crop             = false;
-      $attr->options          = []; //scalebar, legend, border, linethickness
+        $attr = new \stdClass();
+        $attr->coords           = [];
+        $attr->regions          = [];
+        $attr->wkt              = [];
+        $attr->output           = 'png';
+        $attr->width            = 900;
+        $attr->height           = $attr->width/2;
+        $attr->projection       = 'epsg:4326';
+        $attr->projection_map   = 'epsg:4326';
+        $attr->origin           = false;
+        $attr->bbox_map         = '-180,-90,180,90';
+        $attr->bbox_rubberband  = [];
+        $attr->pan              = false;
+        $attr->layers           = [];
+        $attr->graticules       = false;
+        $attr->watermark        = false;
+        $attr->gridspace        = false;
+        $attr->gridlabel        = 1;
+        $attr->download         = false;
+        $attr->crop             = false;
+        $attr->options          = []; //scalebar, legend, border, linethickness
       $attr->border_thickness = 1.25;
-      $attr->rotation         = 0;
-      $attr->zoom_in          = false;
-      $attr->zoom_out         = false;
-      $attr->download_factor  = 1;
-      $attr->file_name        = time();
+        $attr->rotation         = 0;
+        $attr->zoom_in          = false;
+        $attr->zoom_out         = false;
+        $attr->download_factor  = 1;
+        $attr->file_name        = time();
 
-      return $attr;
+        return $attr;
     }
 
     /**
@@ -778,20 +775,20 @@ abstract class Mappr
      */
     private function _loadOutputFormats()
     {
-      foreach(AcceptedOutputs::$outputs as $output) {
-          $format = new \outputFormatObj($output["driver"], $output["name"]);
-          foreach($output as $key => $value) {
-              if ($key != "formatoptions") {
-                  $format->set($key, $value);
-              } else {
-                  foreach($value as $options) {
-                      $option = explode("=", $options);
-                      $format->setOption($option[0], $option[1]);
-                  }
-              }
-          }
-          $this->map_obj->appendOutputFormat($format);
-      }
+        foreach (AcceptedOutputs::$outputs as $output) {
+            $format = new \outputFormatObj($output["driver"], $output["name"]);
+            foreach ($output as $key => $value) {
+                if ($key != "formatoptions") {
+                    $format->set($key, $value);
+                } else {
+                    foreach ($value as $options) {
+                        $option = explode("=", $options);
+                        $format->setOption($option[0], $option[1]);
+                    }
+                }
+            }
+            $this->map_obj->appendOutputFormat($format);
+        }
     }
 
     /**
@@ -826,10 +823,10 @@ abstract class Mappr
     {
         $config = array_merge($config['layers'], $config['labels']);
         $pattern = '/%%(.+)%%(.+)?/';
-        foreach($config as $shape => $values) {
-            foreach($values as $key => $value) {
-                $config[$shape][$key] = preg_replace_callback($pattern, function($matches) {
-                    if(isset($matches[2])) {
+        foreach ($config as $shape => $values) {
+            foreach ($values as $key => $value) {
+                $config[$shape][$key] = preg_replace_callback($pattern, function ($matches) {
+                    if (isset($matches[2])) {
                         return constant($matches[1]) . $matches[2];
                     } else {
                         return constant($matches[1]);
@@ -847,11 +844,13 @@ abstract class Mappr
      */
     private function _loadSymbols()
     {
-        foreach(AcceptedMarkerShapes::$shapes as $type => $style) {
+        foreach (AcceptedMarkerShapes::$shapes as $type => $style) {
             $fill = MS_FALSE;
-            if ($type == 'closed') { $fill = MS_TRUE; }
-            foreach($style as $name => $settings) {
-                $type = (strpos($name, 'circle') !== FALSE) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
+            if ($type == 'closed') {
+                $fill = MS_TRUE;
+            }
+            foreach ($style as $name => $settings) {
+                $type = (strpos($name, 'circle') !== false) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
                 $vertices = AcceptedMarkerShapes::vertices($settings['style']);
                 $this->_createSymbol($name, $type, $fill, $vertices);
             }
@@ -863,7 +862,7 @@ abstract class Mappr
      *
      * @param string $name      The name of the symbol
      * @param string $type      The type of the symbol
-     * @param string $fill      MS_TRUE or MS_FALSE 
+     * @param string $fill      MS_TRUE or MS_FALSE
      * @param array $vertices   The vertices
      *
      * @return void
@@ -913,7 +912,7 @@ abstract class Mappr
     private function _setUnits()
     {
         $units = MS_METERS;
-        if (isset($this->request->projection) && 
+        if (isset($this->request->projection) &&
             $this->request->projection == $this->default_projection) {
             $units = MS_DD;
         }
@@ -939,9 +938,9 @@ abstract class Mappr
     {
         $this->map_obj->selectOutputFormat('png');
         if (isset($this->request->output) && $this->request->output) {
-          $output = ($this->request->output == 'pptx' || $this->request->output == 'docx') ? 'pnga' : $this->request->output;
-          $output = (in_array($output, AcceptedOutputs::outputList())) ? $output : 'png';
-          $this->map_obj->selectOutputFormat($output);
+            $output = ($this->request->output == 'pptx' || $this->request->output == 'docx') ? 'pnga' : $this->request->output;
+            $output = (in_array($output, AcceptedOutputs::outputList())) ? $output : 'png';
+            $this->map_obj->selectOutputFormat($output);
         }
     }
 
@@ -952,18 +951,18 @@ abstract class Mappr
      */
     private function _addLegendScalebar()
     {
-        if ($this->request->download && 
+        if ($this->request->download &&
             array_key_exists('legend', $this->request->options) &&
             $this->request->options['legend']) {
-                $this->addLegend();
-        } else if (!$this->request->download) {
+            $this->addLegend();
+        } elseif (!$this->request->download) {
             $this->addLegend();
         }
-        if ($this->request->download && 
-            array_key_exists('scalebar', $this->request->options) && 
+        if ($this->request->download &&
+            array_key_exists('scalebar', $this->request->options) &&
             $this->request->options['scalebar']) {
-                $this->addScalebar();
-        } else if (!$this->request->download) {
+            $this->addScalebar();
+        } elseif (!$this->request->download) {
             $this->addScalebar();
         }
     }
@@ -1030,7 +1029,7 @@ abstract class Mappr
      * Set the map size
      *
      * @return void
-     */ 
+     */
     private function _setMapSize()
     {
         $this->map_obj->setSize($this->image_size[0], $this->image_size[1]);
@@ -1134,7 +1133,6 @@ abstract class Mappr
     private function _setCrop()
     {
         if (isset($this->request->crop) && $this->request->crop && $this->request->bbox_rubberband && $this->_isResize()) {
-
             $bbox_rubberband = explode(',', $this->request->bbox_rubberband);
 
             //lower-left coordinate
@@ -1176,8 +1174,8 @@ abstract class Mappr
         unset($this->request->layers['grid']);
 
         foreach ($this->request->layers as $key => $row) {
-            if(isset($this->request->output) && 
-            $this->request->output == 'svg' && 
+            if (isset($this->request->output) &&
+            $this->request->output == 'svg' &&
             $this->shapes[$key]['type'] == MS_LAYER_RASTER) {
                 unset($this->request->layers[$key]);
             } else {
@@ -1190,7 +1188,6 @@ abstract class Mappr
 
         foreach ($this->request->layers as $name => $status) {
             if (array_key_exists($name, $this->shapes)) {
-
                 $layer = ms_newLayerObj($this->map_obj);
                 $layer->set("name", $name);
                 $layer->setMetaData("wfs_title", $name);
@@ -1210,63 +1207,62 @@ abstract class Mappr
                 $layer->set("template", "template.html");
                 $layer->set("dump", true);
 
-                if(isset($this->shapes[$name]['opacity'])) {
+                if (isset($this->shapes[$name]['opacity'])) {
                     $layer->set("opacity", (int)$this->shapes[$name]['opacity']);
                 }
 
-                if(isset($this->shapes[$name]['class'])) {
+                if (isset($this->shapes[$name]['class'])) {
                     $classitem = $this->shapes[$name]['class']['item'];
                     $layer->set("classitem", $classitem);
                     $this->_setSLDClasses($layer, $this->shapes[$name]['class']['sld'], $classitem);
                     $this->_legend_required = true;
                 }
 
-                if(isset($this->shapes[$name]['tolerance'])) {
+                if (isset($this->shapes[$name]['tolerance'])) {
                     $layer->set("tolerance", (int)$this->shapes[$name]['tolerance']);
                 }
 
-                if(isset($this->shapes[$name]['tolerance_units'])) {
+                if (isset($this->shapes[$name]['tolerance_units'])) {
                     $layer->set("toleranceunits", $this->shapes[$name]['tolerance_units']);
                 }
 
-                if(isset($this->shapes[$name]['label'])) {
+                if (isset($this->shapes[$name]['label'])) {
                     $layer->set("labelitem", $this->shapes[$name]['label']['item']);
                 }
 
                 $class = ms_newClassObj($layer);
                 $style = ms_newStyleObj($class);
 
-                if(isset($this->shapes[$name]['legend'])) {
+                if (isset($this->shapes[$name]['legend'])) {
                     $class->set("name", $this->shapes[$name]['legend']);
                     $this->_legend_required = true;
                 }
 
-                if(isset($this->shapes[$name]['outline_color'])) {
-                    $color = explode(",",$this->shapes[$name]['outline_color']);
+                if (isset($this->shapes[$name]['outline_color'])) {
+                    $color = explode(",", $this->shapes[$name]['outline_color']);
                     $style->outlinecolor->setRGB($color[0], $color[1], $color[2]);
                 }
 
-                if(isset($this->shapes[$name]['color'])) {
-                    $color = explode(",",$this->shapes[$name]['color']);
+                if (isset($this->shapes[$name]['color'])) {
+                    $color = explode(",", $this->shapes[$name]['color']);
                     $style->color->setRGB($color[0], $color[1], $color[2]);
                 }
 
-                if(isset($this->shapes[$name]['dynamic_width'])) {
+                if (isset($this->shapes[$name]['dynamic_width'])) {
                     $style->set("width", $this->_determineWidth());
                 }
 
-                if(isset($this->shapes[$name]['label'])) {
+                if (isset($this->shapes[$name]['label'])) {
                     $class->addLabel($this->_createLabel((int)$this->shapes[$name]['label']['size'], $this->shapes[$name]['label']['position'], $this->shapes[$name]['encoding']));
                 }
 
-                if(isset($this->shapes[$name]['symbol'])) {
+                if (isset($this->shapes[$name]['symbol'])) {
                     $style->set("symbolname", $this->shapes[$name]['symbol']['shape']);
                     $size = $this->shapes[$name]['symbol']['size'];
                     $style->set("size", ($this->_isResize() && $this->request->download_factor > 1) ? $this->request->download_factor*($size+1) : $size);
-                    $color = explode(",",$this->shapes[$name]['symbol']['color']);
+                    $color = explode(",", $this->shapes[$name]['symbol']['color']);
                     $style->color->setRGB($color[0], $color[1], $color[2]);
                 }
-
             }
         }
     }
@@ -1339,8 +1335,8 @@ abstract class Mappr
      */
     private function _isResize()
     {
-        if ($this->request->download || 
-            $this->request->output == 'pptx' || 
+        if ($this->request->download ||
+            $this->request->output == 'pptx' ||
             $this->request->output == 'docx') {
             return true;
         }
@@ -1422,8 +1418,8 @@ abstract class Mappr
     private function _setOrigin($output_projection)
     {
         $lambert_projections = ['esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112'];
-        if (in_array($this->request->projection, $lambert_projections) && 
-            $this->request->origin && 
+        if (in_array($this->request->projection, $lambert_projections) &&
+            $this->request->origin &&
             $this->request->origin >= -180 &&
             $this->request->origin <= 180) {
             AcceptedProjections::$projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->request->origin.',', self::getProjection($output_projection));
@@ -1477,7 +1473,7 @@ abstract class Mappr
         $width = 1.25;
         if (isset($this->request->border_thickness)) {
             $width = $this->request->border_thickness;
-            if ($this->_isResize() 
+            if ($this->_isResize()
                 && $this->request->download_factor > 1
                 && array_key_exists('scalelinethickness', $this->request->options)
                 && $this->request->options['scalelinethickness']
@@ -1487,5 +1483,4 @@ abstract class Mappr
         }
         return $width;
     }
-
 }

@@ -87,11 +87,21 @@ class Router
     {
         $router = new RouteCollector();
 
-        $router->filter('logAPI', function () { $this->_log("API"); });
-        $router->filter('logWMS', function () { $this->_log("WMS"); });
-        $router->filter('logWFS', function () { $this->_log("WFS"); });
-        $router->filter('check_role_user', function () { User::checkPermission('user'); });
-        $router->filter('check_role_administrator', function () { User::checkPermission('administrator'); });
+        $router->filter('logAPI', function () {
+            $this->_log("API");
+        });
+        $router->filter('logWMS', function () {
+            $this->_log("WMS");
+        });
+        $router->filter('logWFS', function () {
+            $this->_log("WFS");
+        });
+        $router->filter('check_role_user', function () {
+            User::checkPermission('user');
+        });
+        $router->filter('check_role_administrator', function () {
+            User::checkPermission('administrator');
+        });
 
         $router->get('/', function () {
             return $this->_main();
@@ -250,8 +260,8 @@ class Router
         });
 
         $router->get('/swagger.json', function () {
-          Header::setHeader("json");
-          return json_encode($this->_klass("Controller\OpenApi")->index());
+            Header::setHeader("json");
+            return json_encode($this->_klass("Controller\OpenApi")->index());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {
@@ -342,10 +352,9 @@ class Router
             $parsed_url = parse_url(str_replace(":", "%3A", $_SERVER['REQUEST_URI']), PHP_URL_PATH);
             $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $parsed_url);
             echo $response;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             echo $this->_renderError(404);
         }
-
     }
 
     /**
@@ -393,8 +402,8 @@ class Router
             $capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{4}\:){7}[a-z0-9]{4})(?:.*?)(?<url>\/[api|wms|wfs].*)$/';
 
             foreach ($logs as $key => $log) {
-                $logs[$key] = preg_replace_callback($capture, function($matches) {
-                    if(isset($matches["ip"]) && isset($matches["url"])) {
+                $logs[$key] = preg_replace_callback($capture, function ($matches) {
+                    if (isset($matches["ip"]) && isset($matches["url"])) {
                         $url = (strlen($matches["url"]) < 100) ? $matches["url"] : substr($matches["url"], 0, 100) . "...";
                         $string  = "<a href=\"https://who.is/whois-ip/ip-address/${matches['ip']}\" target=\"_blank\">${matches['ip']}</a>";
                         $string .= " - ";
@@ -463,7 +472,7 @@ class Router
         $qlocale = "?locale={$locale}";
 
         $session = [];
-        if(isset($_SESSION['simplemappr'])) {
+        if (isset($_SESSION['simplemappr'])) {
             $session = (array)(new User)->show_by_hash($_SESSION['simplemappr']['hash'])->results;
         }
         $twig->addGlobal('session', $session);
@@ -472,7 +481,7 @@ class Router
         $twig->addGlobal('language', Session::$accepted_locales[$locale]['canonical']);
         $twig->addGlobal('roles', User::$roles);
 
-        if($include_page_elements) {
+        if ($include_page_elements) {
             $header = new Assets;
             $twig->addGlobal('stylesheet', $header->getCSSHeader());
             $twig->addGlobal('footer', $header->getJSVars() . $header->getJSFooter());

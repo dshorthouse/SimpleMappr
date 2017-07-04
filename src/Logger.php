@@ -92,7 +92,7 @@ class Logger
         $line_count = 0;
 
         $fp = fopen($this->_filename, 'r');
-        if (!$fp) { 
+        if (!$fp) {
             return [];
         }
 
@@ -122,5 +122,4 @@ class Logger
         fclose($fp);
         return array_slice(explode("\n", rtrim($input)), -$n);
     }
-
 }

@@ -96,7 +96,7 @@ class User implements RestMethods
         $db->prepare($sql);
         $count = $db->fetchFirstObject();
         return $count->num;
-    } 
+    }
 
     /**
      * Check permissions, used in router
@@ -121,12 +121,10 @@ class User implements RestMethods
         if ($role == 'user' && (self::$roles[$user->role] == 'user' || self::$roles[$user->role] == 'administrator')) {
             session_write_close();
             return true;
-        }
-        elseif ($role == 'administrator' && self::$roles[$user->role] == 'administrator') {
+        } elseif ($role == 'administrator' && self::$roles[$user->role] == 'administrator') {
             session_write_close();
             return true;
-        }
-        else {
+        } else {
             session_write_close();
             header('Location: /');
             return false;
@@ -294,5 +292,4 @@ class User implements RestMethods
 
         return ["status" => "ok"];
     }
-
 }

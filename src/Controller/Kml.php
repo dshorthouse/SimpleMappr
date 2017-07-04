@@ -313,5 +313,4 @@ class Kml implements RestMethods
             }
         }
     }
-
 }

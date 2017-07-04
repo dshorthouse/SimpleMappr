@@ -170,7 +170,8 @@ class Api extends Mappr
         }
         $attr->height           = (float)Utility::loadParam('height', $height);
         if ($attr->width == 0 || $attr->height == 0) {
-            $attr->width = 900; $attr->height = 450;
+            $attr->width = 900;
+            $attr->height = 450;
         }
 
         if (!in_array($attr->output, AcceptedOutputs::outputList())) {
@@ -184,7 +185,7 @@ class Api extends Mappr
      * Override addCoordinates method
      *
      * @return void
-     */ 
+     */
     public function addCoordinates()
     {
         if ($this->request->url || $this->request->points) {
@@ -203,10 +204,10 @@ class Api extends Mappr
             $mlayer = ms_newLayerObj($this->map_obj);
             $title = "";
             if (is_string($col)) {
-              $title = $col;
-              $col = array_search($col, $this->legend);
+                $title = $col;
+                $col = array_search($col, $this->legend);
             } else {
-              $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
+                $title = (is_array($this->request->legend) && isset($this->request->legend[$col])) ? $this->request->legend[$col] : "";
             }
             $mlayer->set("name", trim(stripslashes($title)));
             $mlayer->set("status", MS_ON);
@@ -260,7 +261,7 @@ class Api extends Mappr
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);
                 } else {
-                    $this->_bad_points[] = ($title) ? join(":",[$title,join(",",$coord)]) : join(",",$coord);
+                    $this->_bad_points[] = ($title) ? join(":", [$title,join(",", $coord)]) : join(",", $coord);
                 }
             }
             $mcoord_shape->add($mcoord_line);
@@ -276,14 +277,14 @@ class Api extends Mappr
     public function addWKT()
     {
         if ($this->request->wkt && is_array($this->request->wkt)) {
-            foreach($this->request->wkt as $j => $wkt) {
+            foreach ($this->request->wkt as $j => $wkt) {
                 $color = [120,120,120];
                 $border = false;
                 $title = "";
                 if (array_key_exists('border', $this->request->wkt[$j])) {
                     $border = true;
                 }
-                if(array_key_exists('color', $this->request->wkt[$j])) {
+                if (array_key_exists('color', $this->request->wkt[$j])) {
                     $color = explode(",", $this->request->wkt[$j]['color']);
                     if (count($color) != 3) {
                         $color = [120,120,120];
@@ -301,7 +302,7 @@ class Api extends Mappr
                         foreach ($rows as $key => $row) {
                             if (strpos($row, "POINT") !== false) {
                                 $type = MS_LAYER_POINT;
-                            } else if (strpos($row, "LINE") !== false) {
+                            } elseif (strpos($row, "LINE") !== false) {
                                 $type = MS_LAYER_LINE;
                             } else {
                                 $type = MS_LAYER_POLYGON;
@@ -329,8 +330,8 @@ class Api extends Mappr
                             try {
                                 $shape = ms_shapeObjFromWkt($row);
                                 $layer->addFeature($shape);
-                            } catch(\Exception $e) {
-                                $this->_bad_drawings[] = ($title) ? join(":",[$title, $row]) : $row;
+                            } catch (\Exception $e) {
+                                $this->_bad_drawings[] = ($title) ? join(":", [$title, $row]) : $row;
                             }
                         }
                     }
@@ -511,12 +512,12 @@ class Api extends Mappr
             if ($this->request->method == 'GET') {
                 Header::setHeader($this->request->output);
                 if ($this->request->output == 'tif') {
-                  error_reporting(0);
-                  $this->image_url = $this->image->saveWebImage();
-                  $image_filename = basename($this->image_url);
-                  readfile($this->tmp_path.$image_filename);
+                    error_reporting(0);
+                    $this->image_url = $this->image->saveWebImage();
+                    $image_filename = basename($this->image_url);
+                    readfile($this->tmp_path.$image_filename);
                 } else {
-                  $this->image->saveImage("");
+                    $this->image->saveImage("");
                 }
             } else {
                 $url = $this->image->saveWebImage();
@@ -632,7 +633,7 @@ class Api extends Mappr
                 $this->request->url = array_pop($headers['Location']);
             }
             $this->request->url_content = @file_get_contents($this->request->url);
-            if(strlen($this->request->url_content) > 0) {
+            if (strlen($this->request->url_content) > 0) {
                 preg_match_all('/[<>{}\[\]]/', $this->request->url_content, $match);
                 if (count($match[0]) >= 4) {
                     $this->_parseGeo();
@@ -651,22 +652,22 @@ class Api extends Mappr
     private function _parseFile()
     {
         $csv = Reader::createFromString($this->request->url_content);
-        $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"],1);
+        $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"], 1);
         $has_single_column = (count($csv->fetchOne()) == 1) ? true : false;
 
-        if($delimiters_list["\t"] > 0 || $has_single_column) {
+        if ($delimiters_list["\t"] > 0 || $has_single_column) {
             $csv->setDelimiter("\t");
             $this->legend = $csv->fetchOne();
             $results = $csv->setOffset(1)->fetchAssoc($this->legend);
         } else {
-            $results = $csv->fetch(function($row) {
+            $results = $csv->fetch(function ($row) {
                 $key = (string)$row[0];
                 array_shift($row);
                 return [$key => join(",", $row)];
             });
         }
-        foreach($results as $row) {
-            foreach($row as $key => $value) {
+        foreach ($results as $row) {
+            foreach ($row as $key => $value) {
                 $this->_coord_cols[$key][] = Utility::makeCoordinates($value);
             }
         }
@@ -695,5 +696,4 @@ class Api extends Mappr
             }
         }
     }
-
 }

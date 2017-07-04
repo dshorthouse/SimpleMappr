@@ -87,7 +87,7 @@ class Place implements RestMethods
         if (array_key_exists('filter', $content) && $content["filter"] != "") {
             $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
             $this->_db->bindParam(':filter', '%'.$content["filter"].'%', 'string');
-        } else if (array_key_exists('term', $content) || $this->id) {
+        } elseif (array_key_exists('term', $content) || $this->id) {
             $term = (array_key_exists('term', $content)) ? $content["term"] : $this->id;
             $this->_db->prepare(
                 "SELECT DISTINCT
@@ -154,5 +154,4 @@ class Place implements RestMethods
     public function destroy($id)
     {
     }
-
 }

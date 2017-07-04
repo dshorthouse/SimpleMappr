@@ -159,5 +159,4 @@ class Pptx extends Mappr
         Header::setHeader("pptx", $clean_filename . ".pptx");
         $objWriter->save('php://output');
     }
-
 }

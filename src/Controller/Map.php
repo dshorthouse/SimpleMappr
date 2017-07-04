@@ -151,12 +151,12 @@ class Map implements RestMethods
         $this->_db->prepare($sql);
 
         if (!User::isAdministrator($this->_user)) {
-          $this->_db->bindParam(":uid", $this->_user->results->uid);
+            $this->_db->bindParam(":uid", $this->_user->results->uid);
         }
 
         if ($this->filter_uid) {
-          $this->_db->bindParam(":uid_q", $this->filter_uid);
-          $this->filter_username = $this->_db->fetchFirstObject()->username;
+            $this->_db->bindParam(":uid_q", $this->filter_uid);
+            $this->filter_username = $this->_db->fetchFirstObject()->username;
         }
         $this->total = $this->_db->fetchFirstObject()->total;
 
@@ -322,5 +322,4 @@ class Map implements RestMethods
         $this->_db->execute();
         return ["status" => "ok"];
     }
-
 }

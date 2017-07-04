@@ -158,5 +158,4 @@ class Query extends Mappr
     public function createOutput()
     {
     }
-
 }

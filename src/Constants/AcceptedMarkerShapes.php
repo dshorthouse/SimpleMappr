@@ -82,7 +82,7 @@ trait AcceptedMarkerShapes
      */
     public static function shapes()
     {
-      return array_merge(array_keys(self::$shapes['general']), array_keys(self::$shapes['closed']), array_keys(self::$shapes['open']));
+        return array_merge(array_keys(self::$shapes['general']), array_keys(self::$shapes['closed']), array_keys(self::$shapes['open']));
     }
 
     /**

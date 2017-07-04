@@ -114,7 +114,7 @@ class Assets
      */
     public $admin_js = [
         'wysiwyg' => 'public/javascript/trumbowyg.min.js',
-        'admin'   => 'public/javascript/simplemappr.admin.min.js' 
+        'admin'   => 'public/javascript/simplemappr.admin.min.js'
     ];
 
     /**
@@ -334,7 +334,6 @@ class Assets
             $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
         }
         return $this;
-        
     }
 
     /**

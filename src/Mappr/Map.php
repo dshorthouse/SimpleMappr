@@ -136,7 +136,8 @@ class Map extends Mappr
         $this->width            = (float)Utility::loadParam('width', 900);
         $this->height           = (float)Utility::loadParam('height', (isset($_GET['width']) && !isset($_GET['height'])) ? $this->width/2 : 450);
         if ($this->width == 0 || $this->height == 0) {
-            $this->width = 900; $this->height = 450;
+            $this->width = 900;
+            $this->height = 450;
         }
 
         $this->options['legend'] = true;
@@ -273,7 +274,7 @@ class Map extends Mappr
      */
     public function createOutput()
     {
-        switch($this->_extension) {
+        switch ($this->_extension) {
         case 'jpg':
         case 'png':
         case 'svg':
@@ -385,9 +386,9 @@ class Map extends Mappr
                     $rows = explode("\n", Utility::removeEmptyLines($whole));
 
                     foreach ($rows as $row) {
-                        $shape = geoPHP::load($row,'wkt');
+                        $shape = geoPHP::load($row, 'wkt');
                         $geojson = new GeoJSON();
-                        $geometry = $geojson->write($shape, TRUE);
+                        $geometry = $geojson->write($shape, true);
                         $output[] = [
                             'type' => 'Feature',
                             'geometry' => $geometry,
@@ -399,5 +400,4 @@ class Map extends Mappr
         }
         return $output;
     }
-
 }

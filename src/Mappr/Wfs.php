@@ -56,7 +56,7 @@ class Wfs extends Mappr
 {
     /**
      * @var object $_req Request object for WFS and WMS
-     */ 
+     */
     private $_req = "";
 
     /**
@@ -78,14 +78,14 @@ class Wfs extends Mappr
     {
         $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
-            foreach($layers as $layer) {
+            foreach ($layers as $layer) {
                 if (in_array($layer, array_keys($shapes)) && $shapes[$layer]['type'] !== MS_LAYER_RASTER) {
                     $this->_wfs_layers[$layer] = 'on';
                 }
             }
         } else {
-            foreach($shapes as $key => $shape) {
-                if($shape['type'] !== MS_LAYER_RASTER) {
+            foreach ($shapes as $key => $shape) {
+                if ($shape['type'] !== MS_LAYER_RASTER) {
                     $this->_wfs_layers[$key] = 'on';
                 }
             }
@@ -117,7 +117,7 @@ class Wfs extends Mappr
             while ($xml->read()) {
                 if ($xml->name == 'wfs:Query') {
                     $this->params['REQUEST'] = 'GetFeature';
-                    $this->params['TYPENAME'] = str_replace("feature:", "",    $xml->getAttribute('typeName'));
+                    $this->params['TYPENAME'] = str_replace("feature:", "", $xml->getAttribute('typeName'));
                 }
                 if ($xml->name == 'ogc:Filter') {
                     $filter = $xml->readOuterXML();
@@ -207,5 +207,4 @@ class Wfs extends Mappr
 
         return $this;
     }
-
 }

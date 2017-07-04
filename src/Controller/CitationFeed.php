@@ -90,7 +90,7 @@ class CitationFeed extends Citation
         usort($entries['citations'], function ($a, $b) {
             return $b->year > $a->year;
         });
-        foreach($entries['citations'] as $citation) {
+        foreach ($entries['citations'] as $citation) {
             $url = ($citation->doi) ? "https://doi.org/{$citation->doi}" : $citation->link;
             if ($url && $citation->created >= $week_ago) {
                 $item = new Item();
@@ -116,5 +116,4 @@ class CitationFeed extends Citation
     {
         return $this->_feed;
     }
-
 }

@@ -119,5 +119,4 @@ class Docx extends Mappr
         Header::setHeader("docx", $clean_filename . ".docx");
         $objWriter->save('php://output');
     }
-
 }

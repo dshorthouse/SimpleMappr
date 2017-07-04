@@ -72,7 +72,7 @@ class Header
         if ($filesize) {
             header("Content-Length: {$filesize}");
         }
-        switch($mime) {
+        switch ($mime) {
         case "":
             break;
 

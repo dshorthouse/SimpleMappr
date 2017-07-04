@@ -95,8 +95,12 @@ class Utility
         if (get_magic_quotes_gpc() != 1) {
             $value = self::addSlashesExtended($value);
         }
-        if ($value == "false") { $value = false; }
-        if ($value == "true") { $value = true; }
+        if ($value == "false") {
+            $value = false;
+        }
+        if ($value == "true") {
+            $value = true;
+        }
         return $value;
     }
 
@@ -275,13 +279,13 @@ class Utility
      */
     public static function onEarth($coord)
     {
-        if ($coord->x 
-            && $coord->y 
-            && is_numeric($coord->x) 
-            && is_numeric($coord->y) 
-            && $coord->y <= 90 
-            && $coord->y >= -90 
-            && $coord->x <= 180 
+        if ($coord->x
+            && $coord->y
+            && is_numeric($coord->x)
+            && is_numeric($coord->y)
+            && $coord->y <= 90
+            && $coord->y >= -90
+            && $coord->x <= 180
             && $coord->x >= -180
         ) {
             return true;

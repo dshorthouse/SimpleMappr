@@ -210,14 +210,14 @@ class Session
             putenv('LC_ALL='.self::$accepted_locales[$_REQUEST["locale"]]['code']);
             setlocale(LC_MESSAGES, self::$accepted_locales[$_REQUEST["locale"]]['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
-            bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+            bind_textdomain_codeset(self::$domain, 'UTF-8');
             textdomain(self::$domain);
             return self::$accepted_locales[$_REQUEST["locale"]];
         } else {
             putenv('LC_ALL='.self::$accepted_locales['en_US']['code']);
             setlocale(LC_MESSAGES, self::$accepted_locales['en_US']['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
-            bind_textdomain_codeset(self::$domain, 'UTF-8'); 
+            bind_textdomain_codeset(self::$domain, 'UTF-8');
             textdomain(self::$domain);
             return self::$accepted_locales['en_US'];
         }
@@ -330,7 +330,6 @@ class Session
     private function _makeSession()
     {
         if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
-
             $profile = $this->_auth_info['profile'];
 
             $identifier  = $profile['identifier'];
@@ -354,15 +353,13 @@ class Session
 
             (new User)->update(['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
 
-            unset($user['uid'],$user['role']);
+            unset($user['uid'], $user['role']);
 
             self::writeSession($user);
             self::redirect(MAPPR_URL . self::makeLocaleParam($user['locale']));
-
         } else {
             echo 'An error occured: ' . $this->_auth_info['err']['msg'];
             exit();
         }
     }
-
 }

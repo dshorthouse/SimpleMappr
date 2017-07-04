@@ -64,7 +64,6 @@ class OpenApi implements RestMethods
      */
     public function index($params = null)
     {
-
         return $this->_swaggerData();
     }
 
@@ -120,9 +119,9 @@ class OpenApi implements RestMethods
      */
     private function _swaggerData()
     {
-      $url_parts = Utility::parsedURL();
-      $url_whole = implode("://", $url_parts);
-      $swagger = [
+        $url_parts = Utility::parsedURL();
+        $url_whole = implode("://", $url_parts);
+        $swagger = [
         'swagger' => '2.0',
         'info' => [
           'title' => 'SimpleMappr API',
@@ -203,7 +202,7 @@ class OpenApi implements RestMethods
           ]
         ]
       ];
-      return $swagger;
+        return $swagger;
     }
 
     /**
@@ -215,10 +214,10 @@ class OpenApi implements RestMethods
      */
     private function _apiParameters($request_method = "GET")
     {
-      array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
-        $projections[] = $key . " (" . $val['name'] . ")";
-      });
-      $params = [
+        array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
+            $projections[] = $key . " (" . $val['name'] . ")";
+        });
+        $params = [
         [
           'name' => 'ping',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
@@ -402,7 +401,7 @@ class OpenApi implements RestMethods
         [
           'name' => 'layers',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'comma-separated cultural or physical layers; one or more of: ' . implode(", ",array_keys(Mappr::getShapefileConfig())),
+          'description' => 'comma-separated cultural or physical layers; one or more of: ' . implode(", ", array_keys(Mappr::getShapefileConfig())),
           'required' => false,
           'type' => 'array',
           'items' => [
@@ -495,15 +494,14 @@ class OpenApi implements RestMethods
           'type' => 'boolean'
         ],
       ];
-      if ($request_method == "GET") {
-        foreach($params as $param => $value) {
-          if($value['name'] == 'file') {
-            unset($params[$param]);
-            break;
-          }
+        if ($request_method == "GET") {
+            foreach ($params as $param => $value) {
+                if ($value['name'] == 'file') {
+                    unset($params[$param]);
+                    break;
+                }
+            }
         }
-      }
-      return array_values($params);
+        return array_values($params);
     }
-
 }
