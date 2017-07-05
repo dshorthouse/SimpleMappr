@@ -294,7 +294,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
         buttons       : [
           {
             "text"  : $('#button-titles').find('span.delete').text(),
-            "class" : "negative",
+            "class" : "negative ui-button-text-only",
             "click" : function() {
               sm.showSpinner();
               $.ajax({
@@ -311,7 +311,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
           },
           {
             "text"  : $('#button-titles').find('span.cancel').text(),
-            "class" : "ui-button-cancel",
+            "class" : "ui-button-cancel ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -329,13 +329,13 @@ var SimpleMapprAdmin = (function($, window, sm) {
         width         : '500',
         dialogClass   : 'ui-dialog-title-mapper-message-delete',
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : $('#button-titles').find('span.delete').text(),
-            "class" : "negative",
+            "class" : "negative ui-button-text-only",
             "click" : function() {
               sm.showSpinner();
               $.ajax({
@@ -351,7 +351,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
           },
           {
             "text"  : $('#button-titles').find('span.cancel').text(),
-            "class" : "ui-button-cancel",
+            "class" : "ui-button-cancel ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }

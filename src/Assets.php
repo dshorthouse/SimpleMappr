@@ -82,8 +82,8 @@ class Assets
      * @var array $local_js_uncombined js files that remain uncombined
      */
     public $local_js_uncombined = [
-        'jquery'      => 'public/javascript/jquery-1.12.3.min.js',
-        'jquery_ui'   => 'public/javascript/jquery-ui-1.9.2.custom.min.js',
+        'jquery'      => 'public/javascript/jquery-3.2.1.min.js',
+        'jquery_ui'   => 'public/javascript/jquery-ui-1.12.1.custom.min.js',
         'janrain'     => 'public/javascript/janrain.engage.min.js'
      ];
 
@@ -121,7 +121,7 @@ class Assets
      * @var array $remote_js Array of remote js files to be swapped in production
      */
     public $remote_js = [
-        'jquery'    => '//code.jquery.com/jquery-1.12.3.min.js'
+        'jquery'    => '//code.jquery.com/jquery-3.2.1.min.js'
     ];
 
     /**

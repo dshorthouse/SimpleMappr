@@ -305,7 +305,7 @@ var SimpleMappr = (function($, window, document) {
 
     tabSelector: function(tab) {
       var state = {};
-      $("#tabs").tabs('select',tab);
+      $("#tabs").tabs('enable',tab);
       state.tabs = tab;
       $.bbq.pushState(state);
     },
@@ -1069,7 +1069,7 @@ var SimpleMappr = (function($, window, document) {
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][color]"]').val(fillColor);
                 self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val(regions);
-                if(i > 0) { self.vars.fieldSetsRegions.accordion("activate", i); }
+                if(i > 0) { self.vars.fieldSetsRegions.accordion({active: i}); }
                 return false;
               }
             });
@@ -1143,7 +1143,7 @@ var SimpleMappr = (function($, window, document) {
       if(button.attr("data-type") === data_type) {
 
         if(counter < self.settings.maxTextareaCount) {
-          button.parent().prev().accordion("activate", false);
+          button.parent().prev().accordion({active: false});
           clone = button.parent().prev().children("div:last").clone();
           num = parseInt(clone.find("h3 a").text().split(" ")[1],10);
           counter = self.textareaCounter(data_type, 'increase');
@@ -1269,7 +1269,7 @@ var SimpleMappr = (function($, window, document) {
         e.preventDefault();
         self.addAccordionPanel(data_type);
         fieldsets = $(this).parent().prev().children().length;
-        $(this).parent().prev().accordion("activate", fieldsets-1);
+        $(this).parent().prev().accordion({active: fieldsets-1});
         return false;
       });
     },
@@ -1787,13 +1787,13 @@ var SimpleMappr = (function($, window, document) {
                         dialogClass   : 'ui-dialog-title-mapEmbed',
                         autoOpen      : true,
                         modal         : true,
-                        closeOnEscape : false,
+                        closeOnEscape : true,
                         draggable     : true,
                         resizable     : false,
                         buttons       : [
                           {
                             "text"  : "OK",
-                            "class" : "positive",
+                            "class" : "positive ui-button-text-only",
                             "click" : function() {
                               $(this).dialog("destroy");
                             }
@@ -1813,13 +1813,13 @@ var SimpleMappr = (function($, window, document) {
         width         : '500',
         dialogClass   : 'ui-dialog-title-mapper-message-delete',
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : $('#button-titles').find('span.delete').text(),
-            "class" : "negative",
+            "class" : "negative ui-button-text-only",
             "click" : function() {
               $.ajax({
                 type    : 'DELETE',
@@ -1834,7 +1834,7 @@ var SimpleMappr = (function($, window, document) {
           },
           {
             "text"  : $('#button-titles').find('span.cancel').text(),
-            "class" : "ui-button-cancel",
+            "class" : "ui-button-cancel ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -1863,13 +1863,13 @@ var SimpleMappr = (function($, window, document) {
         width         : '365',
         dialogClass   : 'ui-dialog-title-mapSave',
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : $('#button-titles').find('span.save').text(),
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               if($.trim(map_title.val()) === '') { missingTitle = true; }
               if(missingTitle) {
@@ -1910,7 +1910,7 @@ var SimpleMappr = (function($, window, document) {
         },
         {
           "text"  : $('#button-titles').find('span.cancel').text(),
-          "class" : "ui-button-cancel",
+          "class" : "ui-button-cancel ui-button-text-only",
           "click" : function() {
             $(this).dialog("destroy");
           }
@@ -1926,20 +1926,20 @@ var SimpleMappr = (function($, window, document) {
         width         : '620',
         dialogClass   : 'ui-dialog-title-mapExport',
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : $('#button-titles').find('span.download').text(),
-            "class" : "positive",
-            "click" : function() {
+            "class" : "positive ui-button-text-only",
+            "click"   : function() {
               self.generateDownload();
             }
           },
           {
             "text"  : $('#button-titles').find('span.cancel').text(),
-            "class" : "ui-button-cancel",
+            "class" : "ui-button-cancel ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2034,13 +2034,13 @@ var SimpleMappr = (function($, window, document) {
         width         : '400',
         dialogClass   : 'ui-dialog-title-mapper-message',
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2185,13 +2185,13 @@ var SimpleMappr = (function($, window, document) {
         dialogClass   : 'ui-dialog-title-badRecordsViewer',
         position      : [200, 200],
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons: [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2298,13 +2298,13 @@ var SimpleMappr = (function($, window, document) {
         dialogClass   : 'ui-dialog-title-mapper-message-help',
         autoOpen      : true,
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2323,13 +2323,13 @@ var SimpleMappr = (function($, window, document) {
         dialogClass   : 'ui-dialog-title-mapper-message-codes',
         autoOpen      : true,
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons       : [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               messageCodes.find('table').remove();
               $(this).dialog("destroy");
@@ -2501,7 +2501,7 @@ var SimpleMappr = (function($, window, document) {
             $('#map-points').find('button.addmore').prop("disabled", false);
             self.clearZone($('#clearLayers').parent().prev().prev().children());
             loaded = self.loadCoordinates(self.parseFile(reader.result));
-            self.vars.fieldSetsPoints.accordion("activate", 0);
+            self.vars.fieldSetsPoints.accordion({active: 0});
             if (loaded) {
               self.destroyRedo();
               self.showMap();
@@ -2523,13 +2523,13 @@ var SimpleMappr = (function($, window, document) {
         dialogClass   : 'ui-dialog-title-badFile',
         position      : [200, 200],
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons: [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2546,13 +2546,13 @@ var SimpleMappr = (function($, window, document) {
         dialogClass   : 'ui-dialog-title-tooMuchData',
         position      : [200, 200],
         modal         : true,
-        closeOnEscape : false,
+        closeOnEscape : true,
         draggable     : true,
         resizable     : false,
         buttons: [
           {
             "text"  : "OK",
-            "class" : "positive",
+            "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
             }
@@ -2641,7 +2641,7 @@ var SimpleMappr = (function($, window, document) {
 
     bindAccordions: function() {
       $.each([this.vars.fieldSetsPoints, this.vars.fieldSetsRegions, this.vars.fieldSetsWKT], function() {
-        $(this).accordion({header : 'h3', collapsible : true, autoHeight : false});
+        $(this).accordion({header : 'h3', collapsible : true, heightStyle : "content"});
       });
     },
 

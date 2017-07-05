@@ -129,7 +129,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapImage{position:relative;}
 #mapOutput{height:450px;}
 #mapOutputImage{background-color:#fff;}
-#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:99;top:5px;left:5px;}
+#mapControls{position:absolute;width:60px;height:60px;background-color:transparent;z-index:4;top:5px;left:5px;}
 #mapControls .controls{position:absolute;}
 #mapControls .sprites{width:16px;height:16px;}
 #mapControls .up{top:10px;left:22px;background-position:-160px -324px;}
@@ -150,7 +150,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #wheel-overlay{background-image:url("data:image/png;base64,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");}
 #mapScale{text-align:right;}
 #mapTools{position:absolute;top:0px;left:920px;right:0px;min-height:410px;}
-#mapToolsCollapse{position:absolute;top:0;width:16px;z-index:10;padding:5px;}
+#mapToolsCollapse{position:absolute;top:0;width:16px;z-index:4;padding:5px;}
 #mapToolsCollapse a{display:block;background-color:transparent;background-repeat:no-repeat;width:16px;height:16px;}
 .mapTools-default{right:-21px;}
 .mapTools-collapsed{right:0px;}
@@ -308,7 +308,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .ui-widget-shadow{margin:-8px 0 0 -8px;padding:8px;background-color:rgba(170,170,170,0.3);}
 .ui-selectable-helper{position:absolute;z-index:100;border:1px dotted black;}
 .ui-accordion{width:100%;}
-.ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;border:1px solid #aaa;background-color:#e9e9e9;}
+.ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;margin-bottom:0px;border:1px solid #aaa;background-color:#e9e9e9;}
 .ui-accordion .ui-accordion-header.ui-state-hover{background-color:#dadada;}
 .ui-accordion .ui-accordion-li-fix{display:inline;}
 .ui-accordion .ui-accordion-header-active{border-bottom:0 !important;}
@@ -317,15 +317,13 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 .ui-accordion .ui-accordion-header .ui-icon{position:absolute;left:.5em;top:50%;margin-top:-4px;}
 .ui-accordion .ui-accordion-content{padding:1em 2.2em;border-top:0;margin-top:-2px;position:relative;top:1px;margin-bottom:2px;overflow:auto;display:none;}
 .ui-accordion .ui-accordion-content-active{display:block;}
-.ui-button{display:inline-block;position:relative;padding:0;margin-right:.1em;text-decoration:none !important;cursor:pointer;text-align:center;overflow:visible;}
-.ui-button-cancel{border:1px solid transparent !important;background:none !important;}
-.ui-button-cancel span{text-decoration:underline;}
+.ui-button{display:inline-block;position:relative;padding:0;margin-right:.1em;text-decoration:none !important;cursor:pointer;text-align:center;overflow:visible;line-height:1.4;}
+.ui-button-cancel{border:1px solid transparent !important;background:none !important;text-decoration:underline !important;}
 .ui-button-icon-only{width:2.2em;}
 button.ui-button-icon-only{width:2.4em;}
 .ui-button-icons-only{width:3.4em;}
 button.ui-button-icons-only{width:3.7em;}
-.ui-button .ui-button-text{display:block;line-height:1.4;}
-.ui-button-text-only .ui-button-text{padding:.4em 1em;}
+.ui-button-text-only{padding:.4em 1em;}
 .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text{padding:.4em;text-indent:-9999999px;}
 .ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text{padding:.4em 1em .4em 2.1em;}
 .ui-button-text-icon-secondary .ui-button-text, .ui-button-text-icons .ui-button-text{padding:.4em 2.1em .4em 1em;}
@@ -338,7 +336,7 @@ input.ui-button{padding:.4em 1em;}
 .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary{right:.5em;}
 .ui-buttonset{margin-right:7px;}
 .ui-buttonset .ui-button{margin-left:0;margin-right:-.3em;}
-.ui-dialog{position:absolute;padding:.2em;width:300px;overflow:hidden;}
+.ui-dialog{position:absolute;padding:.2em;width:300px;overflow:hidden;z-index:5;}
 .ui-dialog .ui-dialog-titlebar{padding:0.4em;position:relative;}
 .ui-dialog .ui-dialog-title{float:left;margin:0px;}
 .ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em;background:none;overflow:auto;}
