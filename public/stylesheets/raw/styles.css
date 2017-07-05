@@ -69,7 +69,7 @@ button.negative:active{background-color:#782c21 !important;}
 .submitForm:before{background-position:-260px -304px;}
 .clear:before{background-position:-260px -264px;}
 .addmore:before{background-position:-240px -304px;}
-.removemore{display:none;position:absolute;right:6px;top:6px;z-index:10;background-color:#fff;}
+.removemore{display:none;position:absolute;right:6px;top:6px;z-index:4;background-color:#fff;}
 .removemore:before{background-position:-260px -264px;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#ccc !important;border:1px solid #eee;cursor:not-allowed;}
 .fieldSets{margin-top:10px !important}
@@ -336,7 +336,7 @@ input.ui-button{padding:.4em 1em;}
 .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary{right:.5em;}
 .ui-buttonset{margin-right:7px;}
 .ui-buttonset .ui-button{margin-left:0;margin-right:-.3em;}
-.ui-dialog{position:absolute;padding:.2em;width:300px;overflow:hidden;z-index:5;}
+.ui-dialog{position:absolute;padding:.2em;width:300px;overflow:hidden;z-index:10;}
 .ui-dialog .ui-dialog-titlebar{padding:0.4em;position:relative;}
 .ui-dialog .ui-dialog-title{float:left;margin:0px;}
 .ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em;background:none;overflow:auto;}

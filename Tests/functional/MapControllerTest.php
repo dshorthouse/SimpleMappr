@@ -49,7 +49,7 @@ class MapControllerTest extends SimpleMapprTestCase
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsSave'))[0];
         $link->click();
         $this->webDriver->findElement(WebDriverBy::id('m-mapSaveTitle'))->sendKeys($title);
-        $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Save']"))->click();
+        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Save']"))->click();
         parent::waitOnAjax();
         $this->webDriver->findElement(WebDriverBy::linkText('My Maps'))->click();
         $saved_map_title = $this->webDriver->findElements(WebDriverBy::className('map-load'))[0];
@@ -84,7 +84,7 @@ class MapControllerTest extends SimpleMapprTestCase
         }
         $delete_text = $this->webDriver->findElement(WebDriverBy::id('mapper-message-delete'))->getText();
         $this->assertContains($title, $delete_text);
-        $this->webDriver->findElement(WebDriverBy::xpath("//button/span[text()='Delete']"))->click();
+        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Delete']"))->click();
         parent::waitOnAjax();
         $map_list = $this->webDriver->findElements(WebDriverBy::cssSelector('#usermaps > .grid-usermaps > tbody > tr'));
         $this->assertEquals(count($map_list), 2);

@@ -53,7 +53,7 @@ class PointDataTest extends SimpleMapprTestCase
         $this->assertEquals($this->size->getAttribute('value'), '16');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsPoints']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
@@ -81,7 +81,7 @@ class PointDataTest extends SimpleMapprTestCase
         $this->assertEquals($this->size->getAttribute('value'), '16');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsPoints-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsPoints']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');

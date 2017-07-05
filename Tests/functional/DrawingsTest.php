@@ -42,8 +42,7 @@ class DrawingsTest extends SimpleMapprTestCase
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
-
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsWKT-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
@@ -67,7 +66,7 @@ class DrawingsTest extends SimpleMapprTestCase
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
 
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsWKT-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');

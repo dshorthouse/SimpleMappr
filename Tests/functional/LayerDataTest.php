@@ -43,7 +43,7 @@ class LayerDataTest extends SimpleMapprTestCase
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsRegions-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsRegions']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
@@ -67,7 +67,7 @@ class LayerDataTest extends SimpleMapprTestCase
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
 
-        $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='ui-accordion-fieldSetsRegions-panel-".$layer_id."']/button[text()='Clear']"))->click();
+        $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsRegions']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
