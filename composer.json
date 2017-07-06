@@ -39,6 +39,8 @@
     "require-dev": {
       "phpunit/phpunit"               : "5.7.*",
       "facebook/webdriver"            : "dev-master",
-      "satooshi/php-coveralls"        : "~1.0"
+      "satooshi/php-coveralls"        : "~1.0",
+      "jakub-onderka/php-parallel-lint" : "~0.9",
+      "jakub-onderka/php-console-highlighter" : "~0.3"
     }
 }
