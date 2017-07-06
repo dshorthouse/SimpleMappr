@@ -80,7 +80,7 @@ class Citation implements RestMethods
             FROM 
                 citations c 
             ORDER BY 
-                c.reference ASC, c.year DESC";
+                c.first_author_surname ASC, c.year DESC";
 
         $this->_db->prepare($sql);
         $this->_citations = $this->_db->fetchAllObject();

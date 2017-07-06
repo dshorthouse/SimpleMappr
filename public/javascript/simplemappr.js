@@ -2544,7 +2544,6 @@ var SimpleMappr = (function($, window, document) {
         height        : '200',
         width         : '500',
         dialogClass   : 'ui-dialog-title-tooMuchData',
-        position      : [200, 200],
         modal         : true,
         closeOnEscape : true,
         draggable     : true,
