@@ -179,6 +179,8 @@ class Router
                 $klass = $this->_klass("Controller\Citation");
                 $put = array();
                 parse_str(file_get_contents('php://input'), $put);
+                print_r($put);
+                exit;
                 return json_encode($klass->update($put['citation'], "id=".$id));
             })
             ->delete('/citation/{id:i}', function ($id) {

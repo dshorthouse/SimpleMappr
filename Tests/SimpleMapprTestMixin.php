@@ -108,13 +108,23 @@ trait SimpleMapprTestMixin
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_URL, $url);
 
-        if ($type == "GET") {
-            curl_setopt($ch, CURLOPT_URL, $url . "?" . $data);
-        } else {
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, count($data));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        switch($type) {
+            case "GET":
+                curl_setopt($ch, CURLOPT_URL, $url . "?" . $data);
+                break;
+            case "POST":
+                curl_setopt($ch, CURLOPT_POST, count($data));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                break;
+            case "PUT":
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                break;
+            case "DELETE":
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                break;
         }
 
         $body = curl_exec($ch);

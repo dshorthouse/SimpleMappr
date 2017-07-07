@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class CitationFeedTest extends SimpleMapprTestCase
+class CitationFeedControllerTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 

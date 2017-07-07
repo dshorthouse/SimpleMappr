@@ -14,7 +14,6 @@
 use \PHPUnit\Framework\TestCase;
 use \SimpleMappr\Database;
 use \SimpleMappr\Assets;
-use \SimpleMappr\Session;
 
 abstract class SimpleMapprTestCase extends TestCase
 {
@@ -527,7 +526,6 @@ abstract class SimpleMapprTestCase extends TestCase
         $webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
         new Assets;
         $webDriver->get(MAPPR_URL);
-        //$this->waitOnSpinner();
         self::$webDriverSession = $webDriver->getSessionID();
     }
 
@@ -617,6 +615,7 @@ abstract class SimpleMapprTestCase extends TestCase
     {
         if ($this->webDriver) {
             $this->webDriver->manage()->deleteAllCookies();
+            unset($_SESSION["simplemappr"]);
             if (session_id() !== "") {
                 session_unset();
                 session_destroy();

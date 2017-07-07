@@ -11,7 +11,7 @@
  * @license Copyright (C) 2013 David P. Shorthouse
  *
  */
-class CitationTest extends SimpleMapprTestCase
+class CitationControllerTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 
@@ -26,6 +26,16 @@ class CitationTest extends SimpleMapprTestCase
         $result = json_decode($response["body"]);
         $this->assertEquals('application/json; charset=UTF-8', $response["mime"]);
         $this->assertCount(1, $result->citations);
+    }
+
+    public function testShowCitation()
+    {
+        parent::setSession('administrator');
+        
+        $response = $this->httpRequest(MAPPR_URL . "/citation/1.json");
+        $result = json_decode($response["body"]);
+        $this->assertEquals('application/json; charset=UTF-8', $response["mime"]);
+        $this->assertEquals(1, $result->id);
     }
 
     /**
@@ -45,28 +55,6 @@ class CitationTest extends SimpleMapprTestCase
         parent::waitOnAjax();
         $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
         $this->assertContains($citation, $citation_list);
-        parent::$db->exec("DELETE FROM citations WHERE reference = '".$citation."'");
-    }
-
-    /**
-     * Test update of a citation.
-     */
-    public function testUpdateCitation()
-    {
-        parent::setSession('administrator');
-
-        $citation = 'Shorthouse, David P. 2017. Another citation';
-        $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
-        $link->click();
-        $this->webDriver->findElement(WebDriverBy::id('citation-reference'))->sendKeys($citation);
-        $this->webDriver->findElement(WebDriverBy::id('citation-surname'))->sendKeys('Shorthouse');
-        $this->webDriver->findElement(WebDriverBy::id('citation-year'))->sendKeys('2003');
-        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add citation']"))->click();
-        parent::waitOnAjax();
-        /*
-        $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
-        $this->assertContains($citation, $citation_list);
-        */
         parent::$db->exec("DELETE FROM citations WHERE reference = '".$citation."'");
     }
 
