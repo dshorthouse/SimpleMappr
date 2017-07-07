@@ -96,6 +96,17 @@ class Citation implements RestMethods
      */
     public function show($id)
     {
+        $sql = "
+            SELECT
+                id, year, reference, doi, link, first_author_surname
+            FROM 
+                citations
+            WHERE
+                id = :id";
+
+        $this->_db->prepare($sql);
+        $this->_db->bindParam(":id", $id, 'integer');
+        return $this->_db->fetchFirstObject();
     }
 
     /**
@@ -142,6 +153,9 @@ class Citation implements RestMethods
      */
     public function update($content, $where)
     {
+        $this->_db->queryUpdate('citations', $content, $where);
+        $this->_citations = "";
+        return $this->_response();
     }
 
     /**

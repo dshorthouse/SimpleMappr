@@ -46,6 +46,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
       this.bindTools();
       this.loadCitationList();
       this.bindCreateCitation();
+      this.bindUpdateCitation();
       this.loadAPILogs();
       sm.tabSelector(6);
     },
@@ -203,9 +204,10 @@ var SimpleMapprAdmin = (function($, window, sm) {
             $.each(data.citations, function() {
               doi = (this.doi) ? ' <a href="https://doi.org/' + this.doi + '">https://doi.org/' + this.doi + '</a>.' : "";
               link = (this.link) ? ' (<a href="' + this.link + '">link</a>)' : "";
-              citations += '<p class="citation">' + this.reference + link + doi + '<a class="sprites-before citation-delete" data-id="' + this.id + '" href="#">Delete</a></p>';
+              citations += '<p class="citation">' + this.reference + link + doi + ' <a class="sprites-before citation-update" data-id="' + this.id + '" href="#">Update</a> <a class="sprites-before citation-delete" data-id="' + this.id + '" href="#">Delete</a></p>';
             });
             self.citations_list.html(citations);
+            self.bindUpdateCitations();
             self.bindDeleteCitations();
             sm.hideSpinner();
           }
@@ -235,6 +237,29 @@ var SimpleMapprAdmin = (function($, window, sm) {
           sm.hideSpinner();
         }
       });
+    },
+
+    bindUpdateCitations: function() {
+      var self = this;
+
+      this.citations_list.on('click', 'a.citation-update', function(e) {
+        e.preventDefault();
+        $.ajax({
+          type : 'GET',
+          url: sm.settings.baseUrl + '/citation/' + $(this).attr("data-id") + '.json',
+          dataType: 'json',
+          success: function(data) {
+            $.each(data, function(key, value) {
+              if(key === "reference") {
+                $('#citation-reference').trumbowyg('html', value);
+              }
+              $('#map-admin').find('[name="citation['+key+']"]').val(value);
+            });
+            $.scrollTo($('#map-admin-citation-title'), { duration:1000 });
+          }
+        });
+      });
+      
     },
 
     bindDeleteCitations: function() {
@@ -276,6 +301,39 @@ var SimpleMapprAdmin = (function($, window, sm) {
           });
         }
       });
+    },
+
+    bindUpdateCitation: function() {
+      var self = this;
+
+      $('#map-admin').on('click', 'button.update', function(e) {
+        e.preventDefault();
+        if($('#citation-reference').val() !== "" && $('#citation-surname').val() !== "" && $('#citation-year').val() !== "" && $('#citation-id').val() !== "") {
+          sm.showSpinner();
+          $.ajax({
+            type        : 'PUT',
+            url         : sm.settings.baseUrl + '/citation/' + $('#citation-id').val(),
+            data        : $("form").serialize(),
+            dataType    : 'json',
+            success     : function(data) {
+              if(data.status === "ok") {
+                $('#map-admin').find(".citation").val("");
+                $('#citation-reference').trumbowyg('empty');
+                $.each(["reference", "surname", "year"], function() {
+                  $('#citation-'+this).removeClass('ui-state-error');
+                });
+                self.loadCitationList();
+                sm.hideSpinner();
+              }
+            }
+          });
+        } else {
+          $.each(["reference", "surname", "year"], function() {
+            $('#citation-'+this).addClass('ui-state-error');
+          });
+        }
+      });
+      
     },
 
     deleteUserConfirmation: function(obj) {

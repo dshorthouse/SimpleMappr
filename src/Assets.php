@@ -113,8 +113,9 @@ class Assets
      * @var array $admin_js Array of all js files to be added in admin tab
      */
     public $admin_js = [
-        'wysiwyg' => 'public/javascript/trumbowyg.min.js',
-        'admin'   => 'public/javascript/simplemappr.admin.min.js'
+        'wysiwyg'  => 'public/javascript/trumbowyg.min.js',
+        'scrollTo' => 'public/javascript/jquery.scrollTo.min.js',
+        'admin'    => 'public/javascript/simplemappr.admin.min.js'
     ];
 
     /**

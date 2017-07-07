@@ -165,10 +165,21 @@ class Router
                 $klass = $this->_klass("Controller\Citation");
                 return json_encode($klass->index(null));
             })
+            ->get('/citation/{id:i}.json', function ($id) {
+                Header::setHeader('json');
+                return json_encode($this->_klass("Controller\Citation")->show($id));
+            })
             ->post('/citation', function () {
                 Header::setHeader("json");
                 $klass = $this->_klass("Controller\Citation");
                 return json_encode($klass->create($_POST['citation']));
+            })
+            ->put('/citation/{id:i}', function ($id) {
+                Header::setHeader("json");
+                $klass = $this->_klass("Controller\Citation");
+                $put = array();
+                parse_str(file_get_contents('php://input'), $put);
+                return json_encode($klass->update($put['citation'], "id=".$id));
             })
             ->delete('/citation/{id:i}', function ($id) {
                 Header::setHeader("json");

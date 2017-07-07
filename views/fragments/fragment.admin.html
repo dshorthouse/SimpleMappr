@@ -12,7 +12,7 @@
     <p id="admin-api-list"></p>
 
     <div class="header">
-    <h2>{% trans "Citations" %}</h2>
+    <h2 id="map-admin-citation-title">{% trans "Citations" %}</h2>
     </div>
 
     <p>
@@ -43,5 +43,10 @@
 
     <p>
     <button class="sprites-before addmore positive">{% trans "Add citation" %}</button>
+    <button class="sprites-before update positive">{% trans "Update citation" %}</button>
+
+    <input type="hidden" id="citation-id" class="citation" name="citation[id]" />
+    </p>
+
     <div id="admin-citations-list"></div>
 </div>

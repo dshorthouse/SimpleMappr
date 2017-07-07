@@ -268,6 +268,7 @@ class Database
             $this->bindParam(":{$where_parts[0]}", trim($where_parts[1]));
         }
         $this->execute();
+        return $this->rowCount();
     }
 
     /**

@@ -71,6 +71,7 @@ button.negative:active{background-color:#782c21 !important;}
 .addmore:before{background-position:-240px -304px;}
 .removemore{display:none;position:absolute;right:6px;top:6px;z-index:4;background-color:#fff;}
 .removemore:before{background-position:-260px -264px;}
+.update:before{background-position:-200px -284px;}
 button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !important;background-color:#ccc !important;border:1px solid #eee;cursor:not-allowed;}
 .fieldSets{margin-top:10px !important}
 .addFieldset{margin-left:20px;margin-top:20px;}
@@ -210,7 +211,8 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #map-admin p.citation{text-indent:-2em;padding-left:2em;font-size:0.75em;}
 #admin-api-list {font-size:11px;}
 #map-admin a.citation-delete:before{background-position:-260px -284px;margin-top:0.2em;}
-#map-admin a.citation-delete:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
+#map-admin a.citation-update:before{background-position:-200px -284px;margin-top:0.2em;}
+#map-admin a.citation-delete:after, #map-admin a.citation-update:after{display:inline;content:"";clear:both;height:0;visibility:hidden;}
 #map-about h3{font-size:0.8em;}
 .filter-countries{margin-left:1em;}
 .countrycodes{background:none repeat scroll 0 0 #e6e6e6;border:1px solid gray;border-collapse:collapse;width:100%;color:#555;}

@@ -49,6 +49,28 @@ class CitationTest extends SimpleMapprTestCase
     }
 
     /**
+     * Test update of a citation.
+     */
+    public function testUpdateCitation()
+    {
+        parent::setSession('administrator');
+
+        $citation = 'Shorthouse, David P. 2017. Another citation';
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
+        $link->click();
+        $this->webDriver->findElement(WebDriverBy::id('citation-reference'))->sendKeys($citation);
+        $this->webDriver->findElement(WebDriverBy::id('citation-surname'))->sendKeys('Shorthouse');
+        $this->webDriver->findElement(WebDriverBy::id('citation-year'))->sendKeys('2003');
+        $this->webDriver->findElement(WebDriverBy::xpath("//button[text()='Add citation']"))->click();
+        parent::waitOnAjax();
+        /*
+        $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
+        $this->assertContains($citation, $citation_list);
+        */
+        parent::$db->exec("DELETE FROM citations WHERE reference = '".$citation."'");
+    }
+
+    /**
      * Test deletion of a citation.
      */
     public function testDeleteCitation()
