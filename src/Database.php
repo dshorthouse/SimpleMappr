@@ -237,7 +237,7 @@ class Database
      * @param array  $data  An array of data to be updated.
      * @param string $where A where statement.
      *
-     * @return void
+     * @return int number of records affected
      */
     public function queryUpdate($table, $data, $where)
     {
@@ -266,6 +266,27 @@ class Database
         if (count($where_parts) == 2) {
             $this->bindParam(":{$where_parts[0]}", trim($where_parts[1]));
         }
+        $this->execute();
+        return $this->rowCount();
+    }
+
+    /**
+     * Destroy an existing record
+     *
+     * @param string $table The table name.
+     * @param integer $id The id of the record.
+     *
+     * @return int number of records affected
+     */
+    public function queryDelete($table, $id)
+    {
+        if (!$where) {
+            return;
+        }
+
+        $sql = "DELETE FROM {$table} WHERE id=:id";
+        $this->prepare($sql);
+        $this->bindParam(":id", $id, 'integer');
         $this->execute();
         return $this->rowCount();
     }

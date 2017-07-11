@@ -167,16 +167,7 @@ class Citation implements RestMethods
      */
     public function destroy($id)
     {
-        $sql = "
-           DELETE 
-            c 
-           FROM 
-            citations c 
-           WHERE 
-            c.id=:id";
-        $this->_db->prepare($sql);
-        $this->_db->bindParam(":id", $id, "integer");
-        $this->_db->execute();
+        $this->_db->queryDelete('citations', $id);
         $this->_citations = "";
         return $this->_response();
     }

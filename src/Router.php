@@ -123,7 +123,7 @@ class Router
 
         $router->any('/api', function () {
             //headers are set in MapprApi class
-            $klass = $this->_klass("MapprApi");
+            $klass = $this->_klass("Mappr\Api");
             return $klass->execute()->createOutput();
         }, ['after' => 'logAPI']);
 
