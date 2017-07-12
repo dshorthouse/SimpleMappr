@@ -12,22 +12,15 @@
  */
 class PlaceTest extends SimpleMapprTestCase
 {
+    use SimpleMapprTestMixin;
+
     /**
      * Test response to index of places URL.
      */
     public function test_PlaceIndex()
     {
-        $ch = curl_init(MAPPR_URL . "/places");
-
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        curl_close($ch);
-
-        $this->assertEquals('text/html; charset=UTF-8', $type);
+        $response = $this->httpRequest(MAPPR_URL . "/places");
+        $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         $this->assertEquals('<table class="countrycodes">
 <thead>
 <tr>
@@ -47,7 +40,7 @@ class PlaceTest extends SimpleMapprTestCase
 <td>CAN[AB]</td>
 </tr>
 </tbody>
-</table>', $result);
+</table>', $response['body']);
     }
 
     /**
@@ -55,17 +48,9 @@ class PlaceTest extends SimpleMapprTestCase
      */
     public function test_PlaceSearch()
     {
-        $ch = curl_init(MAPPR_URL . "/places.json/?term=Canada");
-
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = json_decode(curl_exec($ch));
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-        curl_close($ch);
-
-        $this->assertEquals('application/json; charset=UTF-8', $type);
+        $response = $this->httpRequest(MAPPR_URL . "/places.json", ["term" => "Canada"]);
+        $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
+        $result = json_decode($response["body"]);
         $this->assertEquals("Canada", $result[0]->value);
     }
 }
