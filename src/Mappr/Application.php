@@ -96,7 +96,8 @@ class Application extends Mappr
                 flush();
                 readfile($this->tmp_path.$image_filename);
             } else {
-                return $this->_defaultOutput();
+                Header::setHeader('json');
+                return json_encode($this->_defaultOutput());
             }
             break;
 
@@ -107,7 +108,8 @@ class Application extends Mappr
             break;
 
         default:
-            $this->_defaultOutput();
+            Header::setHeader('json');
+            return json_encode($this->_defaultOutput());
         }
     }
 
