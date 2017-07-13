@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class ShareTest extends SimpleMapprTestCase
+class ShareTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test content of share list

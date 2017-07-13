@@ -11,7 +11,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class PlaceTest extends SimpleMapprTestCase
+class PlaceTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 

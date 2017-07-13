@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class DrawingsTest extends SimpleMapprTestCase
+class DrawingsTest extends SimpleMapprFunctionalTestCase
 {
     protected $title;
     protected $data;

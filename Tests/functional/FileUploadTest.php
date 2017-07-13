@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class FileUploadTest extends SimpleMapprTestCase
+class FileUploadTest extends SimpleMapprFunctionalTestCase
 {
 
     /**

@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class ToolbarTest extends SimpleMapprTestCase
+class ToolbarTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test that refreshing the map makes a new image.

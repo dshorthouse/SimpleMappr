@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class PointDataTest extends SimpleMapprTestCase
+class PointDataTest extends SimpleMapprFunctionalTestCase
 {
     protected $title;
     protected $data;

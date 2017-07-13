@@ -16,7 +16,7 @@
 use PHPUnit\Framework\TestCase;
 use \SimpleMappr\Utility;
 
-class RouterTest extends TestCase
+class RouterTest extends SimpleMapprTestCase
 {
         use SimpleMapprTestMixin;
 

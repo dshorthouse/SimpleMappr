@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class NavigationTest extends SimpleMapprTestCase
+class NavigationTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 

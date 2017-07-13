@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class PageHeaderTest extends SimpleMapprTestCase
+class PageHeaderTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * test page title.

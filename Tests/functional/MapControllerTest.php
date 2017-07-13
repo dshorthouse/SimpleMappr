@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class MapControllerTest extends SimpleMapprTestCase
+class MapControllerTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test view own maps.

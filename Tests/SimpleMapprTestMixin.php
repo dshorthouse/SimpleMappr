@@ -134,4 +134,67 @@ trait SimpleMapprTestMixin
 
         return ["body" => $body, "code" => $code, "mime" => $mime];
     }
+
+    /**
+     * Check if two files are identical.
+     *
+     * @param string $fn1 First file directory.
+     * @param string $fn2 Second file directory.
+     * @return bool
+     */
+    public function filesIdentical($fn1, $fn2)
+    {
+        if (filetype($fn1) !== filetype($fn2)) {
+            return false;
+        }
+        if (filesize($fn1) !== filesize($fn2)) {
+            return false;
+        }
+        if (!$fp1 = fopen($fn1, 'rb')) {
+            fclose($fp1);
+            return false;
+        }
+
+        if (!$fp2 = fopen($fn2, 'rb')) {
+            fclose($fp2);
+            return false;
+        }
+
+        $same = true;
+        while (!feof($fp1) and !feof($fp2)) {
+            if (fread($fp1, 4096) !== fread($fp2, 4096)) {
+                $same = false;
+                break;
+            }
+        }
+
+        if (feof($fp1) !== feof($fp2)) {
+            $same = false;
+        }
+
+        fclose($fp1);
+        fclose($fp2);
+
+        return $same;
+    }
+
+    /**
+     * Check if two images are very similar.
+     *
+     * @param string $fn1 First image directory.
+     * @param string $fn2 Second image directory.
+     * @return bool
+     */
+    public function imagesSimilar($fn1, $fn2)
+    {
+        $similar = false;
+
+        $image1 = new \Imagick($fn1);
+        $image2 = new \Imagick($fn2);
+        $result = $image1->compareImages($image2, \Imagick::METRIC_MEANSQUAREERROR);
+        if ($result[1] < 0.01) {
+            $similar = true;
+        }
+        return $similar;
+    }
 }

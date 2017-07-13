@@ -11,7 +11,6 @@ env:
     - HOST=www.simplemappr.test
     - IMGHOST=img.simplemappr.test
     - DBNAME=simplemappr_testing
-    - BROWSER=chrome
 
 addons:
   hosts:
@@ -96,7 +95,6 @@ install:
 before_script:
   # Create files
   - sudo touch log/logger.log
-  - sudo cp config/conf.test.php config/conf.php
 
   # Directory permissions
   - sh -e .travis/scripts/permissions.sh
@@ -121,7 +119,7 @@ before_script:
   - sh -e .travis/scripts/selenium-test.sh
 
 script:
-  - php vendor/bin/phpunit -c Tests/$BROWSER.phpunit.xml --stderr
+  - php vendor/bin/phpunit -c Tests/phpunit.xml --stderr
 
 after_failure:
   - sudo cat /var/log/apache2/error.log

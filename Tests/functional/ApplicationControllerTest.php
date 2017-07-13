@@ -56,7 +56,7 @@ class ApplicationControllerTest extends TestCase
         $file = ROOT.'/public/tmp/apioutput_get.png';
         file_put_contents($file, $response["body"]);
         $this->assertEquals("image/png", $response["mime"]);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
 
     /**
@@ -64,9 +64,9 @@ class ApplicationControllerTest extends TestCase
      */
     public function test_jsAccessible()
     {
-        $expected = "/*\n 2013 David P. Shorthouse";
+        $expected = "/*\n 2010-2017 David P. Shorthouse";
         $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
-        $this->assertEquals($expected, substr($response, 0, 28));
+        $this->assertEquals($expected, substr($response, 0, 33));
     }
 
     /**

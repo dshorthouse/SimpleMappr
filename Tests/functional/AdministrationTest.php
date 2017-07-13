@@ -13,7 +13,7 @@
  *
  */
 
-class Administration extends SimpleMapprTestCase
+class Administration extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test count of users in Users table.

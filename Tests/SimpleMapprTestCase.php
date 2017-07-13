@@ -14,14 +14,10 @@
 
 use \PHPUnit\Framework\TestCase;
 use \SimpleMappr\Database;
-use \SimpleMappr\Assets;
 
 abstract class SimpleMapprTestCase extends TestCase
 {
     protected static $db;
-    protected static $webDriverSession;
-    protected $webDriver;
-    protected $url;
 
     public static function stubbedUser($type) {
         if($type == "administrator") {
@@ -60,15 +56,404 @@ abstract class SimpleMapprTestCase extends TestCase
         ];
     }
 
-    /**
-     * Execute once before all tests
-     */
+    public static function stubbedStateProvince()
+    {
+        return [
+          'country' => 'Canada',
+          'country_iso' => 'CAN',
+          'stateprovince' => 'Alberta',
+          'stateprovince_code' => 'AB'
+        ];
+    }
+
+    public static function stubbedMapData($map = 1)
+    {
+        if ($map == 1) {
+            return [
+              'coords' =>
+                [
+                0 =>
+                [
+                  'title' => 'Sample Data',
+                  'data' => '55, -115',
+                  'shape' => 'star',
+                  'size' => '14',
+                  'color' => '255 32 3',
+                ],
+                1 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'shape' => 'circle',
+                  'size' => '10',
+                  'color' => '0 0 0',
+                ],
+                2 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'shape' => 'circle',
+                  'size' => '10',
+                  'color' => '0 0 0',
+                ],
+              ],
+              'regions' =>
+              [
+                0 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+                1 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+                2 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+              ],
+              'layers' =>
+              [
+                'countries' => 'on',
+                'stateprovinces' => 'on',
+              ],
+              'gridspace' => '',
+              'projection' => 'epsg:4326',
+              'origin' => '',
+              'filter-mymap' => '',
+              'citation' =>
+              [
+                'reference' => '',
+                'first_author_surname' => '',
+                'year' => '',
+                'doi' => '',
+                'link' => '',
+              ],
+              'download-filetype' => 'svg',
+              'download-factor' => '1',
+              'download' => '',
+              'output' => 'png',
+              'download_token' => '1398911053520',
+              'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'projection_map' => 'epsg:4326',
+              'bbox_rubberband' => '',
+              'bbox_query' => '',
+              'pan' => '',
+              'zoom_out' => '',
+              'crop' => '',
+              'rotation' => '0',
+              'save' =>
+              [
+                'title' => 'Sample Map Administrator',
+              ],
+              'file_name' => '',
+              'download_factor' => '1',
+              'width' => '',
+              'height' => '',
+              'download_filetype' => 'svg',
+              'grid_space' => '',
+              'options' =>
+              [
+                'border' => '',
+                'legend' => '',
+                'scalebar' => '',
+                'scalelinethickness' => '',
+              ],
+              'border_thickness' => '',
+              'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'rendered_rotation' => '0',
+              'rendered_projection' => 'epsg:4326',
+              'bad_points' => '',
+              'bad_drawings' => ''
+            ];
+        }
+        else if ($map == 2) {
+            return [
+              'coords' =>
+              [
+                0 =>
+                [
+                  'title' => 'More Sample Data',
+                  'data' => '45, -115',
+                  'shape' => 'circle',
+                  'size' => '14',
+                  'color' => '255 32 3',
+                ],
+                1 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'shape' => 'circle',
+                  'size' => '10',
+                  'color' => '0 0 0',
+                ],
+                2 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'shape' => 'circle',
+                  'size' => '10',
+                  'color' => '0 0 0',
+                ],
+              ],
+              'regions' =>
+              [
+                0 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+                1 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+                2 =>
+                [
+                  'title' => '',
+                  'data' => '',
+                  'color' => '150 150 150',
+                ],
+              ],
+              'layers' =>
+              [
+                'countries' => 'on',
+                'stateprovinces' => 'on',
+              ],
+              'gridspace' => '',
+              'projection' => 'epsg:4326',
+              'origin' => '',
+              'filter-mymap' => '',
+              'citation' =>
+              [
+                'reference' => '',
+                'first_author_surname' => '',
+                'year' => '',
+                'doi' => '',
+                'link' => '',
+              ],
+              'download-filetype' => 'svg',
+              'download-factor' => '1',
+              'download' => '',
+              'output' => 'png',
+              'download_token' => '1398911053520',
+              'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'projection_map' => 'epsg:4326',
+              'bbox_rubberband' => '',
+              'bbox_query' => '',
+              'pan' => '',
+              'zoom_out' => '',
+              'crop' => '',
+              'rotation' => '0',
+              'save' =>
+              [
+                'title' => 'Sample Map User',
+              ],
+              'file_name' => '',
+              'download_factor' => '1',
+              'width' => '',
+              'height' => '',
+              'download_filetype' => 'svg',
+              'grid_space' => '',
+              'options' =>
+              [
+                'border' => '',
+                'legend' => '',
+                'scalebar' => '',
+                'scalelinethickness' => '',
+              ],
+              'border_thickness' => '',
+              'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'rendered_rotation' => '0',
+              'rendered_projection' => 'epsg:4326',
+              'bad_points' => '',
+              'bad_drawings' => ''
+            ];
+        }
+        else {
+            return [
+              'coords' => [
+                  0 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'shape' => 'circle',
+                    'size' => '10',
+                    'color' => '0 0 0',
+                  ],
+                  1 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'shape' => 'circle',
+                    'size' => '10',
+                    'color' => '0 0 0',
+                  ],
+                  2 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'shape' => 'circle',
+                    'size' => '10',
+                    'color' => '0 0 0',
+                  ],
+              ],
+              'regions' => [
+                  0 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'color' => '150 150 150',
+                  ],
+                  1 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'color' => '150 150 150',
+                  ],
+                  2 =>
+                  [
+                    'title' => '',
+                    'data' => '',
+                    'color' => '150 150 150',
+                  ],
+              ],
+              'wkt' => [
+                  0 =>
+                  [
+                    'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))',
+                    'color' => '255 0 0',
+                    'title' => 'My Polygon'
+                  ],
+                  1 =>
+                  [
+                    'data' => '',
+                    'title' => '',
+                    'color' => '150 150 150'
+                  ],
+                  2 =>
+                  [
+                    'data' => '',
+                    'title' => '',
+                    'color' => '150 150 150'
+                  ]
+              ],
+              'layers' =>
+              [
+                'countries' => 'on',
+                'stateprovinces' => 'on',
+              ],
+              'gridspace' => '',
+              'projection' => 'epsg:4326',
+              'origin' => '',
+              'filter-mymap' => '',
+              'citation' => [],
+              'download-filetype' => 'svg',
+              'download-factor' => '1',
+              'download' => '',
+              'output' => 'png',
+              'download_token' => '1398911053520',
+              'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'projection_map' => 'epsg:4326',
+              'bbox_rubberband' => '',
+              'bbox_query' => '',
+              'pan' => '',
+              'zoom_out' => '',
+              'crop' => '',
+              'rotation' => '0',
+              'save' =>
+              [
+                'title' => 'Second Sample Map User',
+              ],
+              'file_name' => '',
+              'download_factor' => '1',
+              'width' => '',
+              'height' => '',
+              'download_filetype' => 'svg',
+              'grid_space' => '',
+              'options' =>
+              [
+                'border' => '',
+                'legend' => '',
+                'scalebar' => '',
+                'scalelinethickness' => '',
+              ],
+              'border_thickness' => '',
+              'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
+              'rendered_rotation' => '0',
+              'rendered_projection' => 'epsg:4326',
+              'bad_points' => '',
+              'bad_drawings' => ''
+            ];
+        }
+    }
+
     public static function setUpBeforeClass()
     {
+        self::swapIndexFiles();
         self::$db = Database::getInstance();
-        self::setUpWebDriver();
         self::dropTables();
+        self::createTables();
 
+        $user1 = self::$db->queryInsert('users', self::stubbedUser('administrator'));
+        $user2 = self::$db->queryInsert('users', self::stubbedUser('user'));
+
+        $map1 = self::$db->queryInsert('maps', [
+          'mid' => 1,
+          'uid' => $user1,
+          'title' => 'Sample Map Administrator',
+          'map' => json_encode(self::stubbedMapData(1)),
+          'created' => time()-(7 * 24 * 60 * 60)
+        ]);
+
+        self::$db->queryInsert('maps', [
+          'mid' => 2,
+          'uid' => $user2,
+          'title' => 'Sample Map User',
+          'map' => json_encode(self::stubbedMapData(2)),
+          'created' => time()
+        ]);
+
+        self::$db->queryInsert('maps', [
+          'mid' => 3,
+          'uid' => $user2,
+          'title' => 'Second Sample Map User',
+          'map' => json_encode(self::stubbedMapData(3)),
+          'created' => time()
+        ]);
+
+        self::$db->queryInsert('shares', [
+            'mid' => $map1,
+            'created' => time()
+        ]);
+
+        self::$db->queryInsert('citations', self::stubbedCitation());
+        self::$db->queryInsert('stateprovinces', self::stubbedStateProvince());
+    }
+
+    /**
+     * Execute once after all tests.
+     */
+    public static function tearDownAfterClass()
+    {
+        self::dropTables();
+        self::$db = null;
+        self::swapIndexFiles('down');
+    }
+
+    /**
+     * Create all tables.
+     */
+    public static function createTables()
+    {
         $maps_table = 'CREATE TABLE IF NOT EXISTS `maps` (
           `mid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
           `uid` int(11) NOT NULL,
@@ -136,384 +521,6 @@ abstract class SimpleMapprTestCase extends TestCase
         self::$db->exec($citations_table);
         self::$db->exec($stateprovinces_table);
         self::$db->exec($shares_table);
-
-        $user1 = self::$db->queryInsert('users', self::stubbedUser('administrator'));
-        $user2 = self::$db->queryInsert('users', self::stubbedUser('user'));
-
-        $map_data1 = [
-          'coords' =>
-            [
-            0 =>
-            [
-              'title' => 'Sample Data',
-              'data' => '55, -115',
-              'shape' => 'star',
-              'size' => '14',
-              'color' => '255 32 3',
-            ],
-            1 =>
-            [
-              'title' => '',
-              'data' => '',
-              'shape' => 'circle',
-              'size' => '10',
-              'color' => '0 0 0',
-            ],
-            2 =>
-            [
-              'title' => '',
-              'data' => '',
-              'shape' => 'circle',
-              'size' => '10',
-              'color' => '0 0 0',
-            ],
-          ],
-          'regions' =>
-          [
-            0 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-            1 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-            2 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-          ],
-          'layers' =>
-          [
-            'countries' => 'on',
-            'stateprovinces' => 'on',
-          ],
-          'gridspace' => '',
-          'projection' => 'epsg:4326',
-          'origin' => '',
-          'filter-mymap' => '',
-          'citation' =>
-          [
-            'reference' => '',
-            'first_author_surname' => '',
-            'year' => '',
-            'doi' => '',
-            'link' => '',
-          ],
-          'download-filetype' => 'svg',
-          'download-factor' => '1',
-          'download' => '',
-          'output' => 'png',
-          'download_token' => '1398911053520',
-          'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'projection_map' => 'epsg:4326',
-          'bbox_rubberband' => '',
-          'bbox_query' => '',
-          'pan' => '',
-          'zoom_out' => '',
-          'crop' => '',
-          'rotation' => '0',
-          'save' =>
-          [
-            'title' => 'Sample Map Administrator',
-          ],
-          'file_name' => '',
-          'download_factor' => '1',
-          'width' => '',
-          'height' => '',
-          'download_filetype' => 'svg',
-          'grid_space' => '',
-          'options' =>
-          [
-            'border' => '',
-            'legend' => '',
-            'scalebar' => '',
-            'scalelinethickness' => '',
-          ],
-          'border_thickness' => '',
-          'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'rendered_rotation' => '0',
-          'rendered_projection' => 'epsg:4326',
-          'bad_points' => '',
-          'bad_drawings' => ''
-        ];
-
-        $map_data2 = [
-          'coords' =>
-          [
-            0 =>
-            [
-              'title' => 'More Sample Data',
-              'data' => '45, -115',
-              'shape' => 'circle',
-              'size' => '14',
-              'color' => '255 32 3',
-            ],
-            1 =>
-            [
-              'title' => '',
-              'data' => '',
-              'shape' => 'circle',
-              'size' => '10',
-              'color' => '0 0 0',
-            ],
-            2 =>
-            [
-              'title' => '',
-              'data' => '',
-              'shape' => 'circle',
-              'size' => '10',
-              'color' => '0 0 0',
-            ],
-          ],
-          'regions' =>
-          [
-            0 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-            1 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-            2 =>
-            [
-              'title' => '',
-              'data' => '',
-              'color' => '150 150 150',
-            ],
-          ],
-          'layers' =>
-          [
-            'countries' => 'on',
-            'stateprovinces' => 'on',
-          ],
-          'gridspace' => '',
-          'projection' => 'epsg:4326',
-          'origin' => '',
-          'filter-mymap' => '',
-          'citation' =>
-          [
-            'reference' => '',
-            'first_author_surname' => '',
-            'year' => '',
-            'doi' => '',
-            'link' => '',
-          ],
-          'download-filetype' => 'svg',
-          'download-factor' => '1',
-          'download' => '',
-          'output' => 'png',
-          'download_token' => '1398911053520',
-          'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'projection_map' => 'epsg:4326',
-          'bbox_rubberband' => '',
-          'bbox_query' => '',
-          'pan' => '',
-          'zoom_out' => '',
-          'crop' => '',
-          'rotation' => '0',
-          'save' =>
-          [
-            'title' => 'Sample Map User',
-          ],
-          'file_name' => '',
-          'download_factor' => '1',
-          'width' => '',
-          'height' => '',
-          'download_filetype' => 'svg',
-          'grid_space' => '',
-          'options' =>
-          [
-            'border' => '',
-            'legend' => '',
-            'scalebar' => '',
-            'scalelinethickness' => '',
-          ],
-          'border_thickness' => '',
-          'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'rendered_rotation' => '0',
-          'rendered_projection' => 'epsg:4326',
-          'bad_points' => '',
-          'bad_drawings' => ''
-        ];
-
-        $map_data3 = [
-          'coords' => [
-              0 =>
-              [
-                'title' => '',
-                'data' => '',
-                'shape' => 'circle',
-                'size' => '10',
-                'color' => '0 0 0',
-              ],
-              1 =>
-              [
-                'title' => '',
-                'data' => '',
-                'shape' => 'circle',
-                'size' => '10',
-                'color' => '0 0 0',
-              ],
-              2 =>
-              [
-                'title' => '',
-                'data' => '',
-                'shape' => 'circle',
-                'size' => '10',
-                'color' => '0 0 0',
-              ],
-          ],
-          'regions' => [
-              0 =>
-              [
-                'title' => '',
-                'data' => '',
-                'color' => '150 150 150',
-              ],
-              1 =>
-              [
-                'title' => '',
-                'data' => '',
-                'color' => '150 150 150',
-              ],
-              2 =>
-              [
-                'title' => '',
-                'data' => '',
-                'color' => '150 150 150',
-              ],
-          ],
-          'wkt' => [
-              0 =>
-              [
-                'data' => 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))',
-                'color' => '255 0 0',
-                'title' => 'My Polygon'
-              ],
-              1 =>
-              [
-                'data' => '',
-                'title' => '',
-                'color' => '150 150 150'
-              ],
-              2 =>
-              [
-                'data' => '',
-                'title' => '',
-                'color' => '150 150 150'
-              ]
-          ],
-          'layers' =>
-          [
-            'countries' => 'on',
-            'stateprovinces' => 'on',
-          ],
-          'gridspace' => '',
-          'projection' => 'epsg:4326',
-          'origin' => '',
-          'filter-mymap' => '',
-          'citation' => [],
-          'download-filetype' => 'svg',
-          'download-factor' => '1',
-          'download' => '',
-          'output' => 'png',
-          'download_token' => '1398911053520',
-          'bbox_map' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'projection_map' => 'epsg:4326',
-          'bbox_rubberband' => '',
-          'bbox_query' => '',
-          'pan' => '',
-          'zoom_out' => '',
-          'crop' => '',
-          'rotation' => '0',
-          'save' =>
-          [
-            'title' => 'Second Sample Map User',
-          ],
-          'file_name' => '',
-          'download_factor' => '1',
-          'width' => '',
-          'height' => '',
-          'download_filetype' => 'svg',
-          'grid_space' => '',
-          'options' =>
-          [
-            'border' => '',
-            'legend' => '',
-            'scalebar' => '',
-            'scalelinethickness' => '',
-          ],
-          'border_thickness' => '',
-          'rendered_bbox' => '-161.8472160357,18.5000000000,-72.1478841870,63.5000000000',
-          'rendered_rotation' => '0',
-          'rendered_projection' => 'epsg:4326',
-          'bad_points' => '',
-          'bad_drawings' => ''
-        ];
-
-        $map1 = self::$db->queryInsert('maps', [
-          'mid' => 1,
-          'uid' => $user1,
-          'title' => 'Sample Map Administrator',
-          'map' => json_encode($map_data1),
-          'created' => time()-(7 * 24 * 60 * 60)
-        ]);
-
-        self::$db->queryInsert('maps', [
-          'mid' => 2,
-          'uid' => $user2,
-          'title' => 'Sample Map User',
-          'map' => json_encode($map_data2),
-          'created' => time()
-        ]);
-
-        self::$db->queryInsert('maps', [
-          'mid' => 3,
-          'uid' => $user2,
-          'title' => 'Second Sample Map User',
-          'map' => json_encode($map_data3),
-          'created' => time()
-        ]);
-
-        self::$db->queryInsert('shares', [
-            'mid' => $map1,
-            'created' => time()
-        ]);
-
-        self::$db->queryInsert('citations', self::stubbedCitation());
-
-        self::$db->queryInsert('stateprovinces', [
-          'country' => 'Canada',
-          'country_iso' => 'CAN',
-          'stateprovince' => 'Alberta',
-          'stateprovince_code' => 'AB'
-        ]);
-
-        session_cache_limiter('nocache');
-        session_start();
-    }
-
-    /**
-     * Execute once after all tests.
-     */
-    public static function tearDownAfterClass()
-    {
-        self::dropTables();
-        self::$db = null;
-        self::destroyWebDriver();
-        session_write_close();
     }
 
     /**
@@ -528,179 +535,24 @@ abstract class SimpleMapprTestCase extends TestCase
         self::$db->exec("DROP TABLE IF EXISTS stateprovinces");
     }
 
-    public static function setUpWebDriver()
+    public static function swapIndexFiles($type = 'up')
     {
-        $host = 'http://localhost:4444/wd/hub';
-        $browser = BROWSER;
-        $capabilities = DesiredCapabilities::$browser();
-        $capabilities->setCapability(WebDriverCapabilityType::JAVASCRIPT_ENABLED, true);
-        $capabilities->setCapability(WebDriverCapabilityType::HANDLES_ALERTS, true);
-        $capabilities->setCapability(WebDriverCapabilityType::WEB_STORAGE_ENABLED, true);
-        $webDriver = RemoteWebDriver::create($host, $capabilities, 60000, 60000);
-        $webDriver->manage()->deleteAllCookies();
-        $webDriver->manage()->window()->setSize(new WebDriverDimension(1280, 1024));
-        new Assets;
-        $webDriver->get(MAPPR_URL);
-        self::$webDriverSession = $webDriver->getSessionID();
+        $path_to_file = ROOT . "/index.php";
+        $file_contents = file_get_contents($path_to_file);
+        if ($type == "up") {
+            $file_contents = str_replace("conf.php","conf.test.php",$file_contents);
+        } else {
+            $file_contents = str_replace("conf.test.php","conf.php",$file_contents);
+        }
+        file_put_contents($path_to_file,$file_contents);
     }
 
-    public static function destroyWebDriver()
-    {
-        foreach (RemoteWebDriver::getAllSessions() as $session) {
-            RemoteWebDriver::createBySessionID($session["id"])->quit();
-        }
-    }
-
-    /**
-     * Check if two files are identical.
-     *
-     * @param string $fn1 First file directory.
-     * @param string $fn2 Second file directory.
-     * @return bool
-     */
-    public static function filesIdentical($fn1, $fn2)
-    {
-        if (filetype($fn1) !== filetype($fn2)) {
-            return false;
-        }
-        if (filesize($fn1) !== filesize($fn2)) {
-            return false;
-        }
-        if (!$fp1 = fopen($fn1, 'rb')) {
-            fclose($fp1);
-            return false;
-        }
-
-        if (!$fp2 = fopen($fn2, 'rb')) {
-            fclose($fp2);
-            return false;
-        }
-
-        $same = true;
-        while (!feof($fp1) and !feof($fp2)) {
-            if (fread($fp1, 4096) !== fread($fp2, 4096)) {
-                $same = false;
-                break;
-            }
-        }
-
-        if (feof($fp1) !== feof($fp2)) {
-            $same = false;
-        }
-
-        fclose($fp1);
-        fclose($fp2);
-
-        return $same;
-    }
-
-    /**
-     * Check if two images are very similar.
-     *
-     * @param string $fn1 First image directory.
-     * @param string $fn2 Second image directory.
-     * @return bool
-     */
-    public static function imagesSimilar($fn1, $fn2)
-    {
-        $similar = false;
-
-        $image1 = new \Imagick($fn1);
-        $image2 = new \Imagick($fn2);
-        $result = $image1->compareImages($image2, \Imagick::METRIC_MEANSQUAREERROR);
-        if ($result[1] < 0.01) {
-            $similar = true;
-        }
-        return $similar;
-    }
-
-    /**
-     * Parent setUp function executed before each test.
-     */
-    protected function setUp()
-    {
-        $this->webDriver = RemoteWebDriver::createBySessionID(self::$webDriverSession);
-        $this->webDriver->navigate()->refresh();
-    }
-
-    /**
-     * Parent tearDown function executed after each test.
-     */
-    protected function tearDown()
-    {
-        if ($this->webDriver) {
-            $this->webDriver->manage()->deleteAllCookies();
-            unset($_SESSION["simplemappr"]);
-            if (session_id() !== "") {
-                session_unset();
-                session_destroy();
-            }
-        }
-    }
-
-    /**
-     * Wait on jQuery ajax then fall back to a sleep.
-     */
-    public function waitOnAjax($timeout = 20, $interval = 1000)
-    {
-        $this->webDriver->wait($timeout, $interval)->until(function () {
-            $condition = 'return ($.active == 0);';
-            return $this->webDriver->executeScript($condition);
-        });
-    }
-
-    /**
-     * Wait on spinner then fall back to a sleep.
-     */
-    public function waitOnSpinner($timeout = 20, $interval = 1000)
-    {
-        $this->webDriver->wait($timeout, $interval)->until(
-            WebDriverExpectedCondition::invisibilityOfElementLocated(
-                WebDriverBy::id('map-loader')
-            )
-        );
-    }
-
-    /**
-     * Wait on spinner then fall back to a sleep.
-     */
-    public function waitOnMap($timeout = 20, $interval = 1000)
-    {
-        $this->webDriver->wait($timeout, $interval)->until(function () {
-            $src = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
-            return (strpos($src, MAPPR_MAPS_URL) !== false) ? true : false;
-        });
-    }
-
-    /**
-     * Set a user session, add a cookie, then refresh the page
-     *
-     * @param string $username User name (values are "user" or "administrator").
-     * @param string $locale Set the locale for the user.
-     * @return void
-     */
-    public function setSession($username = "user", $locale = 'en_US')
+    public static function getUser($username)
     {
         $db = Database::getInstance();
         $sql = "SELECT * from users u WHERE u.username=:username";
         $db->prepare($sql);
         $db->bindParam(":username", $username, 'string');
-        $user = $db->fetchFirstArray();
-        $user['locale'] = $locale;
-
-        $clone = array_merge([], $user);
-        unset($clone['uid'], $clone['role']);
-
-        $cookie = [
-            "name" => "simplemappr",
-            "value" => urlencode(json_encode($clone)),
-            "path" => "/"
-        ];
-        $this->webDriver->manage()->addCookie($cookie);
-        $_SESSION["simplemappr"] = $clone;
-        $this->webDriver->navigate()->refresh();
-        $this->waitOnAjax();
-
-        return $user;
+        return $db->fetchFirstArray();
     }
 }

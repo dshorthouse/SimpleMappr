@@ -14,7 +14,7 @@
 
 use SimpleMappr\Mappr\Map;
 
-class MapTest extends SimpleMapprTestCase
+class MapTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 
@@ -56,7 +56,7 @@ class MapTest extends SimpleMapprTestCase
         $mappr_map = new Map(1, "png");
         $file = ROOT."/public/tmp/map_png.png";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 
     /**
@@ -94,7 +94,7 @@ class MapTest extends SimpleMapprTestCase
         $mappr_map = new Map(1, "jpg");
         $file = ROOT."/public/tmp/map_jpg.jpg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_jpg.jpg'));
     }
 
     /**
@@ -118,7 +118,7 @@ class MapTest extends SimpleMapprTestCase
         $mappr_map = new Map(1, "svg");
         $file = ROOT."/public/tmp/map_svg.svg";
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
-        $this->assertTrue(SimpleMapprTest::imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
     }
 */
 
@@ -133,7 +133,7 @@ class MapTest extends SimpleMapprTestCase
         $file = ROOT.'/public/tmp/map_png_legend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_png_legend.png'));
     }
 
     /**
@@ -147,6 +147,6 @@ class MapTest extends SimpleMapprTestCase
         $file = ROOT.'/public/tmp/map_png_nolegend.png';
         file_put_contents($file, $this->getOutputBuffer($mappr_map));
         $this->setRequest([]);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_png.png'));
     }
 }

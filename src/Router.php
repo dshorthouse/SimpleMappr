@@ -359,7 +359,7 @@ class Router
         }, ['after' => 'logWFS']);
 
         $router->any('/wms', function () {
-            //headers are set in MapprWms class
+            //headers are set in Mappr\Wms class
             $klass = $this->_klass("Mappr\Wms");
             return $klass->makeService()->execute()->createOutput();
         }, ['after' => 'logWMS']);

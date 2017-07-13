@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class SettingsTest extends SimpleMapprTestCase
+class SettingsTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test that selecting the State/Provinces layer makes a new image.

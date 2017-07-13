@@ -45,7 +45,6 @@ class SimpleMapprTestBootstrap
     private function loader()
     {
         $this->switchXdebug();
-        $this->switchConf();
         $this->requireFiles();
         $this->flushCaches();
         ob_start();
@@ -59,7 +58,6 @@ class SimpleMapprTestBootstrap
      */
     private function unloader()
     {
-        $this->switchConf('restore');
         $this->flushCaches();
         $this->switchXdebug('enable');
     }
@@ -78,43 +76,15 @@ class SimpleMapprTestBootstrap
     }
 
     /**
-     * Switch configuration files
-     *
-     * @param bool $restore Flag to toggle swap and replacement of config files
-     * @return void
-     */
-    private function switchConf($restore = false)
-    {
-        $config_dir = $this->root_dir . '/config/';
-
-        $conf = [
-            'prod' => $config_dir . 'conf.php',
-            'test' => $config_dir . 'conf.test.php'
-        ];
-
-        if (!$restore) {
-            if (!file_exists($conf['prod'] . ".old")) {
-                if (file_exists($conf['prod'])) {
-                    copy($conf['prod'], $conf['prod'] . ".old");
-                }
-                copy($conf['test'], $conf['prod']);
-            }
-        } else {
-            if (file_exists($conf['prod'] . ".old")) {
-                rename($conf['prod'] . ".old", $conf['prod']);
-            }
-        }
-    }
-
-    /**
      * Require all files necessary to execute tests
      *
      * @return void
      */
     private function requireFiles()
     {
-        require_once $this->root_dir . '/config/conf.php';
+        require_once $this->root_dir . '/config/conf.test.php';
         require_once $this->root_dir . '/Tests/SimpleMapprTestCase.php';
+        require_once $this->root_dir . '/Tests/SimpleMapprFunctionalTestCase.php';
         require_once $this->root_dir . '/vendor/autoload.php';
     }
 

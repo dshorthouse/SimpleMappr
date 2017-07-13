@@ -75,7 +75,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_get.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
 
     /**
@@ -97,7 +97,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_get_params.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_get_params.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_get_params.png'));
     }
 
     /**
@@ -116,7 +116,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_no_coords.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
     }
 
     /**
@@ -135,7 +135,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_coords.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_coords.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_coords.png'));
     }
 
     /**
@@ -155,7 +155,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT."/public/tmp/apioutput_encoding.png";
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
     }
 
     /**
@@ -176,7 +176,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_places.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_places.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_places.png'));
     }
 
     /**
@@ -195,7 +195,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
     }
 
     /**
@@ -217,7 +217,7 @@ class ApiTest extends TestCase
         $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_tif.tif';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_tif.tif'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_tif.tif'));
     }
 
     /**
@@ -246,7 +246,7 @@ class ApiTest extends TestCase
         $file = ROOT.'/public/tmp/apioutput_svg.svg';
         file_put_contents($file, $output);
 
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
 
     /**
@@ -273,7 +273,7 @@ class ApiTest extends TestCase
         }
         $file = ROOT.'/public/tmp/apioutput_wkt.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
     }
 
     /**
@@ -301,6 +301,6 @@ class ApiTest extends TestCase
         }
         $file = ROOT.'/public/tmp/apioutput_wkt_border.png';
         file_put_contents($file, $output);
-        $this->assertTrue(SimpleMapprTestCase::imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt_border.png'));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt_border.png'));
     }
 }

@@ -12,7 +12,7 @@
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
-class CitationFeedControllerTest extends SimpleMapprTestCase
+class CitationFeedControllerTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 
