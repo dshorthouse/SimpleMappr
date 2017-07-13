@@ -5,9 +5,10 @@
  *
  * PHP Version >= 5.6
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
- * @link    http://github.com/dshorthouse/SimpleMappr
- * @license Copyright (C) 2013 David P. Shorthouse
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
 class PlaceTest extends SimpleMapprTestCase

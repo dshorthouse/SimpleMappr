@@ -6,37 +6,15 @@
  *
  * PHP Version >= 5.6
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
- * @link    http://github.com/dshorthouse/SimpleMappr
- * @license Copyright (C) 2013 David P. Shorthouse
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
 class CitationControllerTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
-
-    /**
-     * Test response from index is JSON with one record.
-     */
-    public function testCitationsIndex()
-    {
-        parent::setSession('administrator');
-
-        $response = $this->httpRequest(MAPPR_URL . "/citation.json");
-        $result = json_decode($response["body"]);
-        $this->assertEquals('application/json; charset=UTF-8', $response["mime"]);
-        $this->assertCount(1, $result->citations);
-    }
-
-    public function testShowCitation()
-    {
-        parent::setSession('administrator');
-        
-        $response = $this->httpRequest(MAPPR_URL . "/citation/1.json");
-        $result = json_decode($response["body"]);
-        $this->assertEquals('application/json; charset=UTF-8', $response["mime"]);
-        $this->assertEquals(1, $result->id);
-    }
 
     /**
      * Test addition of a citation.
@@ -56,6 +34,27 @@ class CitationControllerTest extends SimpleMapprTestCase
         $citation_list = $this->webDriver->findElement(WebDriverBy::id('admin-citations-list'))->getText();
         $this->assertContains($citation, $citation_list);
         parent::$db->exec("DELETE FROM citations WHERE reference = '".$citation."'");
+    }
+
+    /**
+     * Test response from index is JSON for single citation.
+     */
+    public function testEditCitation()
+    {
+        parent::setSession('administrator');
+
+        $link = $this->webDriver->findElement(WebDriverBy::linkText('Administration'));
+        $link->click();
+        $edit_link = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation > .citation-update'))[0];
+        $edit_link->click();
+        $surname = $this->webDriver->findElement(WebDriverBy::id('citation-surname'))->getAttribute('value');
+        $year = $this->webDriver->findElement(WebDriverBy::id('citation-year'))->getAttribute('value');
+        $doi = $this->webDriver->findElement(WebDriverBy::id('citation-doi'))->getAttribute('value');
+        $reference = $this->webDriver->findElement(WebDriverBy::id('citation-reference'))->getAttribute('value');
+        $this->assertEquals(parent::stubbedCitation()["first_author_surname"], $surname);
+        $this->assertEquals(parent::stubbedCitation()["year"], $year);
+        $this->assertEquals(parent::stubbedCitation()["doi"], $doi);
+        $this->assertEquals(parent::stubbedCitation()["reference"], $reference);
     }
 
     /**

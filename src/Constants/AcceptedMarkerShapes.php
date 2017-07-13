@@ -6,7 +6,7 @@
  * PHP Version >= 5.6
  *
  * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2013 David P. Shorthouse
+ * @copyright 2010-2017 David P. Shorthouse
  * @link    http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  *
@@ -42,7 +42,7 @@ namespace SimpleMappr\Constants;
  * @category  Trait
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2016 David P. Shorthouse
+ * @copyright 2010-2017 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */

@@ -5,9 +5,10 @@
  *
  * PHP Version >= 5.6
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
- * @link    http://github.com/dshorthouse/SimpleMappr
- * @license Copyright (C) 2013 David P. Shorthouse
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  */
 
@@ -46,6 +47,17 @@ abstract class SimpleMapprTestCase extends TestCase
             ];
         }
         return $user;
+    }
+
+    public static function stubbedCitation()
+    {
+        return [
+          'year' => 2010,
+          'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
+          'doi' => '10.XXXX/XXXXXX',
+          'first_author_surname' => 'Shorthouse',
+          'created' => time()
+        ];
     }
 
     /**
@@ -480,13 +492,7 @@ abstract class SimpleMapprTestCase extends TestCase
             'created' => time()
         ]);
 
-        self::$db->queryInsert('citations', [
-          'year' => 2010,
-          'reference' => 'Shorthouse, David P. 2010. SimpleMappr, an online tool to produce publication-quality point maps. [Retrieved from http://www.simplemappr.net. Accessed 02 December, 2013].',
-          'doi' => '10.XXXX/XXXXXX',
-          'first_author_surname' => 'Shorthouse',
-          'created' => time()
-        ]);
+        self::$db->queryInsert('citations', self::stubbedCitation());
 
         self::$db->queryInsert('stateprovinces', [
           'country' => 'Canada',
