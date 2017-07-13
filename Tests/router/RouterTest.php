@@ -26,6 +26,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testMain_GET()
         {
             $response = $this->httpRequest(MAPPR_URL);
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -35,6 +36,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testAbout_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/about");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -44,6 +46,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testApi_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/api");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('image/png', $response['mime']);
         }
 
@@ -53,6 +56,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testApi_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/api", [], "POST");
+            $this->assertEquals(303, $response['code']);
             $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
         }
 
@@ -62,6 +66,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testApidoc_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/apidoc");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -71,6 +76,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testApplication_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/application", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -80,6 +86,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testApplicationJson_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/application.json", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
         }
 
@@ -107,6 +114,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testCitationRss_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/citation.rss");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
 
@@ -116,6 +124,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testDocx_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/docx", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/vnd.openxmlformats-officedocument.wordprocessingml.document', $response['mime']);
         }
 
@@ -125,6 +134,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testFeedback_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/feedback");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -134,6 +144,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testHelp_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/help");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
         }
 
@@ -143,6 +154,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testKml_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/kml", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/vnd.google-earth.kml+xml kml; charset=UTF-8', $response['mime']);
         }
 
@@ -152,6 +164,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testPptx_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/pptx", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/vnd.openxmlformats-officedocument.presentationml.presentation', $response['mime']);
         }
 
@@ -161,6 +174,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testQuery_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/query", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
         }
 
@@ -170,6 +184,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testSwagger_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/swagger.json");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
         }
 
@@ -197,6 +212,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testWfs_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/wfs");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
 
@@ -206,6 +222,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testWfs_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/wfs", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
 
@@ -215,6 +232,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testWms_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/wms");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
 
@@ -224,6 +242,7 @@ class RouterTest extends SimpleMapprTestCase
         public function testWms_POST()
         {
             $response = $this->httpRequest(MAPPR_URL . "/wms", [], "POST");
+            $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
 }
