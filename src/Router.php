@@ -97,10 +97,16 @@ class Router
             $this->_log("WFS");
         });
         $router->filter('check_role_user', function () {
-            User::checkPermission('user');
+            if(!User::checkPermission('user')) {
+                echo $this->_renderError(403);
+                return false;
+            };
         });
         $router->filter('check_role_administrator', function () {
-            User::checkPermission('administrator');
+            if(!User::checkPermission('administrator')) {
+                echo $this->_renderError(403);
+                return false;
+            };
         });
 
         $router->get('/', function () {
@@ -179,8 +185,6 @@ class Router
                 $klass = $this->_klass("Controller\Citation");
                 $put = array();
                 parse_str(file_get_contents('php://input'), $put);
-                print_r($put);
-                exit;
                 return json_encode($klass->update($put['citation'], "id=".$id));
             })
             ->delete('/citation/{id:i}', function ($id) {
@@ -512,6 +516,7 @@ class Router
      */
     private function _renderError($code = 404)
     {
+        Header::setHeader('html');
         http_response_code($code);
         $title = " - ";
         switch ($code) {
@@ -532,6 +537,7 @@ class Router
             'og_url' => MAPPR_URL,
             'google_analytics' => GOOGLE_ANALYTICS
         ];
+
         return $this->_twig(true)->render("{$code}.html", $config);
     }
 }

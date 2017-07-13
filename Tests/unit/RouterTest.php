@@ -13,10 +13,20 @@
  */
 
 use PHPUnit\Framework\TestCase;
+use \SimpleMappr\Utility;
 
 class RouterTest extends TestCase
 {
         use SimpleMapprTestMixin;
+
+        /**
+         * Test GET /
+         */
+        public function testMain_GET()
+        {
+            $response = $this->httpRequest(MAPPR_URL);
+            $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
+        }
 
         /**
          * Test GET /about
@@ -73,6 +83,24 @@ class RouterTest extends TestCase
         }
 
         /**
+         * Test POST /citation
+         */
+        public function testCitation_POST()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/citation", [], "POST");
+            $this->assertEquals(403, $response['code']);
+        }
+
+        /**
+         * Test GET /citation.json
+         */
+        public function testCitationJson_GET()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/citation.json");
+            $this->assertEquals(403, $response['code']);
+        }
+
+        /**
          * Test GET /citation.rss
          */
         public function testCitationRss_GET()
@@ -109,6 +137,15 @@ class RouterTest extends TestCase
         }
 
         /**
+         * Test POST /kml
+         */
+        public function testKml_POST()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/kml", [], "POST");
+            $this->assertEquals('application/vnd.google-earth.kml+xml kml; charset=UTF-8', $response['mime']);
+        }
+
+        /**
          * Test POST /pptx
          */
         public function testPptx_GET()
@@ -133,6 +170,24 @@ class RouterTest extends TestCase
         {
             $response = $this->httpRequest(MAPPR_URL . "/swagger.json");
             $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
+        }
+
+        /**
+         * Test POST /usermap
+         */
+        public function testUsermap_POST()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/usermap", [], "POST");
+            $this->assertEquals(403, $response['code']);
+        }
+
+        /**
+         * Test DELETE /usermap
+         */
+        public function testUsermap_DELETE()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/usermap/1", [], "DELETE");
+            $this->assertEquals(403, $response['code']);
         }
 
         /**

@@ -113,7 +113,6 @@ class User implements RestMethods
 
         if (!isset($_SESSION['simplemappr'])) {
             session_write_close();
-            header('Location: /');
             return false;
         }
 
@@ -126,7 +125,6 @@ class User implements RestMethods
             return true;
         } else {
             session_write_close();
-            header('Location: /');
             return false;
         }
     }

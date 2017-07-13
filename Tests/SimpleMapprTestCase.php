@@ -22,6 +22,32 @@ abstract class SimpleMapprTestCase extends TestCase
     protected $webDriver;
     protected $url;
 
+    public static function stubbedUser($type) {
+        if($type == "administrator") {
+            $user = [
+                'uid' => 1,
+                'hash' => password_hash('administrator', PASSWORD_DEFAULT),
+                'identifier' => 'administrator',
+                'username' => 'administrator',
+                'displayname' => 'John Smith',
+                'email' => 'nowhere@example.com',
+                'role' => 2
+            ];
+        }
+        else if($type == "user") {
+            $user = [
+                'uid' => 2,
+                'hash' => password_hash('user', PASSWORD_DEFAULT),
+                'identifier' => 'user',
+                'username' => 'user',
+                'displayname' => 'Jack Johnson',
+                'email' => 'nowhere@example.com',
+                'role' => 1
+            ];
+        }
+        return $user;
+    }
+
     /**
      * Execute once before all tests
      */
@@ -99,25 +125,8 @@ abstract class SimpleMapprTestCase extends TestCase
         self::$db->exec($stateprovinces_table);
         self::$db->exec($shares_table);
 
-        $user1 = self::$db->queryInsert('users', [
-          'uid' => 1,
-          'hash' => password_hash('administrator', PASSWORD_DEFAULT),
-          'identifier' => 'administrator',
-          'username' => 'administrator',
-          'displayname' => 'John Smith',
-          'email' => 'nowhere@example.com',
-          'role' => 2
-        ]);
-
-        $user2 = self::$db->queryInsert('users', [
-          'uid' => 2,
-          'hash' => password_hash('user', PASSWORD_DEFAULT),
-          'identifier' => 'user',
-          'username' => 'user',
-          'displayname' => 'Jack Johnson',
-          'email' => 'nowhere@example.com',
-          'role' => 1
-        ]);
+        $user1 = self::$db->queryInsert('users', self::stubbedUser('administrator'));
+        $user2 = self::$db->queryInsert('users', self::stubbedUser('user'));
 
         $map_data1 = [
           'coords' =>
