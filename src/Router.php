@@ -451,7 +451,7 @@ class Router
         } else {
             Session::updateActivity();
             $shapes_file = file_get_contents(Mappr::$shapefile_config);
-            $shapes = Yaml::parse($shapes_file);
+            $shapes = Yaml::parse($shapes_file)['environments'][ENVIRONMENT];
             unset($shapes['layers']['base'], $shapes['layers']['stateprovinces_polygon']);
 
             $config = [

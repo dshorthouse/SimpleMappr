@@ -180,25 +180,6 @@ class ApiTest extends TestCase
     }
 
     /**
-     * Test API response to ensure that ecoregions get shaded.
-     */
-    public function test_apioutput_ecoregions()
-    {
-        $req = [
-            'layers' => 'ecoregions'
-        ];
-        $this->setRequest($req);
-        $mappr_api = new Api;
-        $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
-        $file = ROOT.'/public/tmp/apioutput_ecoregions.png';
-        file_put_contents($file, $output);
-        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_ecoregions.png'));
-    }
-
-    /**
      * Test API response to ensure that a tif can be produced.
      */
     public function test_apioutput_tif()

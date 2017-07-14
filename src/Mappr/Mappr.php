@@ -821,6 +821,7 @@ abstract class Mappr
      */
     private static function _tokenize_shapefile_config($config)
     {
+        $config = $config['environments'][ENVIRONMENT];
         $config = array_merge($config['layers'], $config['labels']);
         $pattern = '/%%(.+)%%(.+)?/';
         foreach ($config as $shape => $values) {
