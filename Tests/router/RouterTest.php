@@ -242,9 +242,9 @@ class RouterTest extends SimpleMapprTestCase
         public function testWms_GET()
         {
             $response = $this->httpRequest(MAPPR_URL . "/wms");
+            echo $response["body"];
             $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
-            echo $response["body"];
         }
 
         /**
