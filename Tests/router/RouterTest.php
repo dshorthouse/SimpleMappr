@@ -221,17 +221,8 @@ class RouterTest extends SimpleMapprTestCase
          */
         public function testWfs_GET()
         {
-            $response = $this->httpRequest(MAPPR_URL . "/wfs");
-            $this->assertEquals(200, $response['code']);
-            $this->assertEquals('application/xml', $response['mime']);
-        }
-
-        /**
-         * Test POST /wfs
-         */
-        public function testWfs_POST()
-        {
-            $response = $this->httpRequest(MAPPR_URL . "/wfs", [], "POST");
+            $params = ["SERVICE" => "WFS", "REQUEST" => "DescribeFeatureType", "VERSION" => "1.0.0", "TYPENAME" => "base"];
+            $response = $this->httpRequest(MAPPR_URL . "/wfs", $params, "GET");
             $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
         }
@@ -241,19 +232,9 @@ class RouterTest extends SimpleMapprTestCase
          */
         public function testWms_GET()
         {
-            $response = $this->httpRequest(MAPPR_URL . "/wms");
-            echo $response["body"];
+            $params = ["SERVICE" => "WMS", "REQUEST" => "GetMap", "LAYERS" => "base"];
+            $response = $this->httpRequest(MAPPR_URL . "/wms", $params, "GET");
             $this->assertEquals(200, $response['code']);
-            $this->assertEquals('application/xml', $response['mime']);
-        }
-
-        /**
-         * Test POST /wms
-         */
-        public function testWms_POST()
-        {
-            $response = $this->httpRequest(MAPPR_URL . "/wms", [], "POST");
-            $this->assertEquals(200, $response['code']);
-            $this->assertEquals('application/xml', $response['mime']);
+            $this->assertEquals('image/png', $response['mime']);
         }
 }
