@@ -30,7 +30,7 @@ class ApplicationTest extends TestCase
     {
         $mappr = new Application;
         $this->mappr = $mappr->execute();
-        $this->output = $this->mappr->createOutput();
+        $this->output = json_decode($this->mappr->createOutput(), true);
     }
 
     /**

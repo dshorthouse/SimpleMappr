@@ -77,9 +77,19 @@ class RouterTest extends SimpleMapprTestCase
         {
             $response = $this->httpRequest(MAPPR_URL . "/application", [], "POST");
             $this->assertEquals(200, $response['code']);
-            $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
+            $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
         }
 
+        /**
+         * Test POST /appplication with params
+         */
+        public function testApplication_POST2()
+        {
+            $response = $this->httpRequest(MAPPR_URL . "/application", ["download" => true, "output" => "png"], "POST");
+            $this->assertEquals(200, $response['code']);
+            $this->assertEquals('image/png', $response['mime']);
+        }
+        
         /**
          * Test POST /appplication.json
          */

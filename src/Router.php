@@ -152,10 +152,9 @@ class Router
         });
 
         $router->post('/application.json', function () {
-            Header::setHeader('json');
+            //headers are set in MapprApplication class
             $klass = $this->_klass("Mappr\Application");
-            $output = $klass->execute()->createOutput();
-            return json_encode($output);
+            return $klass->execute()->createOutput();
         });
 
         $router->get('/citation.rss', function () {

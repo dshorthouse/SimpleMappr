@@ -14,7 +14,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ApplicationControllerTest extends TestCase
+class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 
