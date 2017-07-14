@@ -199,4 +199,27 @@ trait SimpleMapprTestMixin
         }
         return $similar;
     }
+
+    /**
+     * Produce clean output buffer from a Mappr object.
+     *
+     * @param object $mapp A Mappr object
+     * @param bool $with_level Check the output buffer level
+     * @return output buffer
+     */
+    public function ob_cleanOutput($mappr, $with_level = false)
+    {
+        ob_start();
+        if ($with_level) {
+            $level = ob_get_level();
+        }
+        echo $mappr->createOutput();
+        $output = ob_get_clean();
+        if ($with_level) {
+            if (ob_get_level() > $level) {
+                ob_end_clean();
+            }
+        }
+        return $output;
+    }
 }

@@ -50,9 +50,7 @@ class WfsTest extends TestCase
     {
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
-        ob_start();
-        echo $mappr_wfs->createOutput();
-        $xml = simplexml_load_string(ob_get_clean());
+        $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
         $this->assertEquals(3, count($xml->FeatureTypeList->FeatureType));
     }
@@ -70,9 +68,7 @@ class WfsTest extends TestCase
         $this->setRequest($req);
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
-        ob_start();
-        echo $mappr_wfs->createOutput();
-        $xml = simplexml_load_string(ob_get_clean());
+        $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $ns = $xml->getNamespaces(true);
         $this->assertEquals(10, count($xml->children($ns['gml'])->featureMember));
     }
@@ -91,9 +87,7 @@ class WfsTest extends TestCase
         $this->setRequest($req);
         $mappr_wfs = $this->makeWFS();
         $mappr_wfs->makeService()->execute();
-        ob_start();
-        echo $mappr_wfs->createOutput();
-        $xml = simplexml_load_string(ob_get_clean());
+        $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $ns = $xml->getNamespaces(true);
         $this->assertEquals(10, count($xml->children($ns['gml'])->featureMember));
     }

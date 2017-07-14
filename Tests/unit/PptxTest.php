@@ -45,11 +45,8 @@ class PptxTest extends TestCase
     public function test_pptx_mime()
     {
         $this->mappr_pptx->execute();
-        ob_start();
-        $this->mappr_pptx->createOutput();
-        $output = ob_get_clean();
         $finfo = new finfo(FILEINFO_MIME);
-        $mime = $finfo->buffer($output);
+        $mime = $finfo->buffer($this->ob_cleanOutput($this->mappr_pptx));
         $this->assertEquals("application/vnd.openxmlformats-officedocument.presentationml.presentation; charset=binary", $mime);
     }
 }

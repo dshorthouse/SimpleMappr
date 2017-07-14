@@ -43,10 +43,7 @@ class WmsBinaryTest extends TestCase
     {
         $wms = new Wms(['lakes']);
         $wms->makeService()->execute();
-        ob_start();
-        echo $wms->createOutput();
-        $output = ob_get_clean();
-        $xml = simplexml_load_string($output);
+        $xml = simplexml_load_string($this->ob_cleanOutput($wms));
         $layers = $xml->Capability->Layer->Layer;
         $titles = [];
         foreach ($layers as $layer) {

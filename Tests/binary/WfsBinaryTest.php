@@ -43,10 +43,7 @@ class WfsBinaryTest extends TestCase
     {
         $wfs = new Wfs(['lakes']);
         $wfs->makeService()->execute();
-        ob_start();
-        echo $wfs->createOutput();
-        $output = ob_get_clean();
-        $xml = simplexml_load_string($output);
+        $xml = simplexml_load_string($this->ob_cleanOutput($wfs));
         $layers = $xml->FeatureTypeList->FeatureType;
         $titles = [];
         foreach ($layers as $layer) {

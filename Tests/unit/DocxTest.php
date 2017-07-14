@@ -45,11 +45,8 @@ class DocxTest extends TestCase
     public function test_docx_mime()
     {
         $this->mappr_docx->execute();
-        ob_start();
-        $this->mappr_docx->createOutput();
-        $output = ob_get_clean();
         $finfo = new finfo(FILEINFO_MIME);
-        $mime = $finfo->buffer($output);
+        $mime = $finfo->buffer($this->ob_cleanOutput($this->mappr_docx));
         $this->assertEquals("application/zip; charset=binary", $mime);
     }
 }

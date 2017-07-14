@@ -70,11 +70,8 @@ class ApiTest extends TestCase
         $this->setRequest([]);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_get.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_get.png'));
     }
 
@@ -92,11 +89,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_get_params.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_get_params.png'));
     }
 
@@ -111,11 +105,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_no_coords.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_no_coords.png'));
     }
 
@@ -130,11 +121,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_coords.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_coords.png'));
     }
 
@@ -150,11 +138,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT."/public/tmp/apioutput_encoding.png";
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_encoding.png'));
     }
 
@@ -171,11 +156,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_places.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_places.png'));
     }
 
@@ -193,11 +175,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_tif.tif';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_tif.tif'));
     }
 
@@ -220,12 +199,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-
-        ob_start();
-        $mappr_api->createOutput();
-        $output = ob_get_clean();
         $file = ROOT.'/public/tmp/apioutput_svg.svg';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api));
 
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_svg.svg'));
     }
@@ -245,15 +220,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        $level = ob_get_level();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
-        if (ob_get_level() > $level) {
-            ob_end_clean();
-        }
         $file = ROOT.'/public/tmp/apioutput_wkt.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api, true));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt.png'));
     }
 
@@ -273,15 +241,8 @@ class ApiTest extends TestCase
         $this->setRequest($req);
         $mappr_api = new Api;
         $mappr_api->execute();
-        ob_start();
-        $level = ob_get_level();
-        echo $mappr_api->createOutput();
-        $output = ob_get_clean();
-        if (ob_get_level() > $level) {
-            ob_end_clean();
-        }
         $file = ROOT.'/public/tmp/apioutput_wkt_border.png';
-        file_put_contents($file, $output);
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api, true));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt_border.png'));
     }
 }
