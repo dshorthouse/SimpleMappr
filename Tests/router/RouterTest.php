@@ -244,6 +244,7 @@ class RouterTest extends SimpleMapprTestCase
             $response = $this->httpRequest(MAPPR_URL . "/wms");
             $this->assertEquals(200, $response['code']);
             $this->assertEquals('application/xml', $response['mime']);
+            echo $response["body"];
         }
 
         /**
