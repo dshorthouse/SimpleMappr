@@ -112,7 +112,7 @@ trait SimpleMapprTestMixin
         curl_setopt($ch, CURLOPT_TIMEOUT, 400);
         curl_setopt($ch, CURLOPT_URL, $url);
 
-        switch($type) {
+        switch ($type) {
             case "GET":
                 curl_setopt($ch, CURLOPT_URL, $url . "?" . $data);
                 break;

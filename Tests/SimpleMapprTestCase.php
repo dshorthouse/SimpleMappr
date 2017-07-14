@@ -19,8 +19,9 @@ abstract class SimpleMapprTestCase extends TestCase
 {
     protected static $db;
 
-    public static function stubbedUser($type) {
-        if($type == "administrator") {
+    public static function stubbedUser($type)
+    {
+        if ($type == "administrator") {
             $user = [
                 'uid' => 1,
                 'hash' => password_hash('administrator', PASSWORD_DEFAULT),
@@ -30,8 +31,7 @@ abstract class SimpleMapprTestCase extends TestCase
                 'email' => 'nowhere@example.com',
                 'role' => 2
             ];
-        }
-        else if($type == "user") {
+        } elseif ($type == "user") {
             $user = [
                 'uid' => 2,
                 'hash' => password_hash('user', PASSWORD_DEFAULT),
@@ -172,8 +172,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'bad_points' => '',
               'bad_drawings' => ''
             ];
-        }
-        else if ($map == 2) {
+        } elseif ($map == 2) {
             return [
               'coords' =>
               [
@@ -277,8 +276,7 @@ abstract class SimpleMapprTestCase extends TestCase
               'bad_points' => '',
               'bad_drawings' => ''
             ];
-        }
-        else {
+        } else {
             return [
               'coords' => [
                   0 =>
@@ -540,11 +538,11 @@ abstract class SimpleMapprTestCase extends TestCase
         $path_to_file = ROOT . "/index.php";
         $file_contents = file_get_contents($path_to_file);
         if ($type == "up") {
-            $file_contents = str_replace("conf.php","conf.test.php",$file_contents);
+            $file_contents = str_replace("conf.php", "conf.test.php", $file_contents);
         } else {
-            $file_contents = str_replace("conf.test.php","conf.php",$file_contents);
+            $file_contents = str_replace("conf.test.php", "conf.php", $file_contents);
         }
-        file_put_contents($path_to_file,$file_contents);
+        file_put_contents($path_to_file, $file_contents);
     }
 
     public static function getUser($username)

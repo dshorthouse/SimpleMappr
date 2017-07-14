@@ -97,13 +97,13 @@ class Router
             $this->_log("WFS");
         });
         $router->filter('check_role_user', function () {
-            if(!User::checkPermission('user')) {
+            if (!User::checkPermission('user')) {
                 echo $this->_renderError(403);
                 return false;
             };
         });
         $router->filter('check_role_administrator', function () {
-            if(!User::checkPermission('administrator')) {
+            if (!User::checkPermission('administrator')) {
                 echo $this->_renderError(403);
                 return false;
             };
@@ -146,13 +146,13 @@ class Router
         }, ['before' => 'checkPermission']);
 
         $router->post('/application', function () {
-            //headers are set in MapprApplication class
+            //headers are set in Mappr\Application class
             $klass = $this->_klass("Mappr\Application");
             return $klass->execute()->createOutput();
         });
 
         $router->post('/application.json', function () {
-            //headers are set in MapprApplication class
+            //headers are set in Mappr\Application class
             $klass = $this->_klass("Mappr\Application");
             return $klass->execute()->createOutput();
         });
@@ -194,7 +194,7 @@ class Router
         });
 
         $router->post('/docx', function () {
-            //headers are set in MapprDocx class
+            //headers are set in Mappr\Docx class
             Session::selectLocale();
             $klass = $this->_klass("Mappr\Docx");
             return $klass->execute()->createOutput();
@@ -259,7 +259,7 @@ class Router
         });
 
         $router->post('/pptx', function () {
-            //headers set in MapprPptx class
+            //headers set in Mappr\Pptx class
             Session::selectLocale();
             $klass = $this->_klass("Mappr\Pptx");
             return $klass->execute()->createOutput();

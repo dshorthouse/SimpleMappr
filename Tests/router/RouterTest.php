@@ -18,7 +18,7 @@ use \SimpleMappr\Utility;
 
 class RouterTest extends SimpleMapprTestCase
 {
-        use SimpleMapprTestMixin;
+    use SimpleMapprTestMixin;
 
         /**
          * Test GET /
