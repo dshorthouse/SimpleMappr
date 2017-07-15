@@ -1,26 +1,62 @@
 <?php
 
 /**
- * Unit tests for static methods and set-up of Api class
+ * SimpleMappr - create point maps for publications and presentations
  *
  * PHP Version >= 5.6
  *
+ * @category  Class
+ * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2010-2017 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
+ * MIT LICENSE
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  */
 
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Api;
 
+/**
+ * Test Binary outputs from the SimpleMappr API
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class ApiTest extends TestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -29,6 +65,8 @@ class ApiTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -38,8 +76,10 @@ class ApiTest extends TestCase
 
     /**
      * Test that a ping request is produced.
+     *
+     * @return void
      */
-    public function test_api_ping()
+    public function testApiPing()
     {
         $this->setRequest(['ping' => true]);
         $mappr_api = new Api;
@@ -50,8 +90,10 @@ class ApiTest extends TestCase
 
     /**
      * Test that a simple POST request is handled.
+     *
+     * @return void
      */
-    public function test_apioutput_post()
+    public function testApiOutputPost()
     {
         $this->setRequestMethod('POST');
         $mappr_api = new Api;
@@ -64,8 +106,10 @@ class ApiTest extends TestCase
 
     /**
      * Test that a simple GET request is handled.
+     *
+     * @return void
      */
-    public function test_apioutput_get()
+    public function testApiOutputGet()
     {
         $this->setRequest([]);
         $mappr_api = new Api;
@@ -77,8 +121,10 @@ class ApiTest extends TestCase
 
     /**
      * Test that a few API request parameters are handled.
+     *
+     * @return void
      */
-    public function test_apioutput_get_params()
+    public function testApiOutputGetParams()
     {
         $req = [
             'bbox' => '-130,40,-60,50',
@@ -96,8 +142,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response in produced when coordinates are not supplied.
+     *
+     * @return void
      */
-    public function test_apioutput_no_coords()
+    public function testApiOutputNoCoords()
     {
         $req = [
             'points' => []
@@ -112,8 +160,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response when coordinates are supplied.
+     *
+     * @return void
      */
-    public function test_apioutput_coords()
+    public function testApiOutputCoords()
     {
         $req = [
             'points' => ["45, -120\n52, -100"]
@@ -128,8 +178,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that "Québec" is properly encoded.
+     *
+     * @return void
      */
-    public function test_apioutput_encoding()
+    public function testApiOutputEncoding()
     {
         $req = [
             'bbox' => '-91.9348552339,38.8500000000,-47.2856347438,61.3500000000',
@@ -145,8 +197,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that regions get shaded.
+     *
+     * @return void
      */
-    public function test_apioutput_country()
+    public function testApiOutputCountry()
     {
         $req = [
             'shade' => [
@@ -163,8 +217,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that a tif can be produced.
+     *
+     * @return void
      */
-    public function test_apioutput_tif()
+    public function testApiOutputTif()
     {
         $req = [
             'output' => 'tif',
@@ -182,8 +238,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that svg can be produced.
+     *
+     * @return void
      */
-    public function test_apioutput_svg()
+    public function testApiOutputSvg()
     {
         $req = [
             'output' => 'svg',
@@ -207,8 +265,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that image can be produced using WKT parameter.
+     *
+     * @return void
      */
-    public function test_apioutput_wkt()
+    public function testApiOutputWkt()
     {
         $req = [
             'wkt' => [
@@ -227,8 +287,10 @@ class ApiTest extends TestCase
 
     /**
      * Test API response to ensure that image can be produced using WKT parameter.
+     *
+     * @return void
      */
-    public function test_apioutput_wkt_border()
+    public function testApiOutputWktBorder()
     {
         $req = [
             'wkt' => [
