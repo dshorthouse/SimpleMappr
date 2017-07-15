@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Docx;
 
+/**
+ * Test construction of a docx file for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class DocxTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class DocxTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -56,6 +68,8 @@ class DocxTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -65,8 +79,10 @@ class DocxTest extends TestCase
 
     /**
      * Test that DOCX output has the correct MIME type.
+     *
+     * @return void
      */
-    public function test_docx_mime()
+    public function testDocxMime()
     {
         $this->mappr_docx->execute();
         $finfo = new finfo(FILEINFO_MIME);

@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Wfs;
 
+/**
+ * Test Wfs class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class WfsTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class WfsTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -55,13 +67,20 @@ class WfsTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
         $this->clearRequestMethod();
     }
 
-    private function makeWFS()
+    /**
+     * Create the WFS resoponse object
+     *
+     * @return object
+     */
+    private function _makeWFS()
     {
         $mappr_wfs = new Wfs(['lakes', 'stateprovinces']);
         return $mappr_wfs;
@@ -69,10 +88,12 @@ class WfsTest extends TestCase
 
     /**
      * Test a GetCapabilities WFS response.
+     *
+     * @return void
      */
-    public function test_GetCapabilities()
+    public function testGetCapabilities()
     {
-        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs = $this->_makeWFS();
         $mappr_wfs->makeService()->execute();
         $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $this->assertEquals('SimpleMappr Web Feature Service', $xml->Service->Title);
@@ -81,8 +102,10 @@ class WfsTest extends TestCase
 
     /**
      * Test a GetFeature WFS response.
+     *
+     * @return void
      */
-    public function test_GetFeature1()
+    public function testGetFeature1()
     {
         $req = [
             'REQUEST' => 'GetFeature',
@@ -90,7 +113,7 @@ class WfsTest extends TestCase
             'MAXFEATURES' => '10'
         ];
         $this->setRequest($req);
-        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs = $this->_makeWFS();
         $mappr_wfs->makeService()->execute();
         $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $ns = $xml->getNamespaces(true);
@@ -99,8 +122,10 @@ class WfsTest extends TestCase
 
     /**
      * Test a GetFeature WFS response with optional SRSNAME parameter
+     *
+     * @return void
      */
-    public function test_GetFeature2()
+    public function testGetFeature2()
     {
         $req = [
             'REQUEST' => 'GetFeature',
@@ -109,7 +134,7 @@ class WfsTest extends TestCase
             'SRSNAME' => 'EPSG:4326'
         ];
         $this->setRequest($req);
-        $mappr_wfs = $this->makeWFS();
+        $mappr_wfs = $this->_makeWFS();
         $mappr_wfs->makeService()->execute();
         $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wfs));
         $ns = $xml->getNamespaces(true);

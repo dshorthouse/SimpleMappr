@@ -39,14 +39,26 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Utility;
 
+/**
+ * Test Utility class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class UtilityTest extends TestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Test that a hex color is properly converted to array of RGB.
+     *
+     * @return void
      */
-    public function test_hex()
+    public function testHex()
     {
         $color = "#FF1177";
         $converted = Utility::hex2Rgb($color);
@@ -55,8 +67,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that a filename is cleaned of unrecognized characters.
+     *
+     * @return void
      */
-    public function test_filename1()
+    public function testFilename1()
     {
         $filename = "My@ New()*? ë  [Filename]'";
         $cleaned = Utility::cleanFilename($filename, "jpg");
@@ -65,8 +79,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that a filename is cleaned of unrecognized characters.
+     *
+     * @return void
      */
-    public function test_filename2()
+    public function testFilename2()
     {
         $filename = "My Map";
         $cleaned = Utility::cleanFilename($filename, "jpg");
@@ -75,8 +91,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that a param is loaded.
+     *
+     * @return void
      */
-    public function test_loadParam()
+    public function testLoadParam()
     {
         $req = [
             'points' => '45,-120'
@@ -88,8 +106,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that a default value for a param is loaded.
+     *
+     * @return void
      */
-    public function test_loadParam_default()
+    public function testLoadParamDefault()
     {
         $req = [
             'stuff' => '45,-120'
@@ -101,8 +121,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that slashes are added to param value.
+     *
+     * @return void
      */
-    public function test_loadParam_slashes()
+    public function testLoadParamSlashes()
     {
         $req = [
             'stuff' => "here's Some \" Stuff on a \n new line"
@@ -114,8 +136,10 @@ class UtilityTest extends TestCase
 
     /**
      * Test that empty lines are removed from a value.
+     *
+     * @return void
      */
-    public function test_removeEmptyLines()
+    public function testRemoveEmptyLines()
     {
         $text = "Here \n is \n\n some \n\n\n stuff";
         $cleaned = Utility::removeEmptyLines($text);

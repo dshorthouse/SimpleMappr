@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Controller\OpenApi;
 
+/**
+ * Test OpenAPI class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class OpenApiTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class OpenApiTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -57,8 +69,10 @@ class OpenApiTest extends TestCase
 
     /**
      * Test that swagger key is produced in OpenAPI.
+     *
+     * @return void
      */
-    public function test_swagger()
+    public function testSwagger()
     {
         $this->assertArrayHasKey("swagger", $this->swagger);
         $this->assertEquals("2.0", $this->swagger["swagger"]);
@@ -66,8 +80,10 @@ class OpenApiTest extends TestCase
 
     /**
      * Test that info key is produced in OpenAPI.
+     *
+     * @return void
      */
-    public function test_info()
+    public function testInfo()
     {
         $this->assertArrayHasKey("info", $this->swagger);
         $this->assertEquals("SimpleMappr API", $this->swagger["info"]["title"]);
@@ -75,16 +91,20 @@ class OpenApiTest extends TestCase
 
     /**
      * Test that host key is produced in OpenAPI.
+     *
+     * @return void
      */
-    public function test_host()
+    public function testHost()
     {
         $this->assertArrayHasKey("host", $this->swagger);
     }
 
     /**
      * Test that schemes key is produced in OpenAPI.
+     *
+     * @return void
      */
-    public function test_schemes()
+    public function testSchemes()
     {
         $this->assertArrayHasKey("schemes", $this->swagger);
         $this->assertEquals(["http"], $this->swagger["schemes"]);
@@ -92,16 +112,20 @@ class OpenApiTest extends TestCase
 
     /**
      * Test number of parameters
+     *
+     * @return void
      */
-    public function test_number_parameters()
+    public function testNumberParameters()
     {
         $this->assertCount(27, $this->parameters);
     }
 
     /**
      * Test shape[x] enum contains correct count & one types
+     *
+     * @return void
      */
-    public function test_shapes()
+    public function testShapes()
     {
         $key = array_search("shape[x]", array_column($this->parameters, "name"));
         $this->assertCount(15, $this->parameters[$key]['enum']);
@@ -110,8 +134,10 @@ class OpenApiTest extends TestCase
 
     /**
      * Test projection enum contains correct count & one names
+     *
+     * @return void
      */
-    public function test_projections()
+    public function testProjections()
     {
         $key = array_search("projection", array_column($this->parameters, "name"));
         $this->assertCount(11, $this->parameters[$key]['enum']);
@@ -120,8 +146,10 @@ class OpenApiTest extends TestCase
 
     /**
      * Test output enum contains correct count & one names
+     *
+     * @return void
      */
-    public function test_outputs()
+    public function testOutputs()
     {
         $key = array_search("output", array_column($this->parameters, "name"));
         $this->assertCount(5, $this->parameters[$key]['enum']);

@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Wms;
 
+/**
+ * Test Wms class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class WmsTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class WmsTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -55,13 +67,20 @@ class WmsTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
         $this->clearRequestMethod();
     }
 
-    private function makeWMS()
+    /**
+     * Make the Wms object
+     *
+     * @return object
+     */
+    private function _makeWMS()
     {
         $mappr_wms = new Wms(['lakes', 'stateprovinces']);
         return $mappr_wms;
@@ -69,10 +88,12 @@ class WmsTest extends TestCase
 
     /**
      * Test a GetCapabilities WMS response.
+     *
+     * @return void
      */
-    public function test_GetCapabilities()
+    public function testGetCapabilities()
     {
-        $mappr_wms = $this->makeWMS();
+        $mappr_wms = $this->_makeWMS();
         $mappr_wms->makeService()->execute();
         $xml = simplexml_load_string($this->ob_cleanOutput($mappr_wms));
         $this->assertEquals('SimpleMappr Web Map Service', $xml->Service->Title);
@@ -81,8 +102,10 @@ class WmsTest extends TestCase
 
     /**
      * Test a GetMap WMS response.
+     *
+     * @return void
      */
-    public function test_GetMap()
+    public function testGetMap()
     {
         $req = [
             'REQUEST' => 'GetMap',
@@ -93,7 +116,7 @@ class WmsTest extends TestCase
             'HEIGHT' => 200
         ];
         $this->setRequest($req);
-        $mappr_wms = $this->makeWMS();
+        $mappr_wms = $this->_makeWMS();
         $mappr_wms->makeService()->execute();
         $image = imagecreatefromstring($this->ob_cleanOutput($mappr_wms));
         $this->assertEquals(imagesx($image), 400);
@@ -102,8 +125,10 @@ class WmsTest extends TestCase
 
     /**
      * Test that case is ignored for requests.
+     *
+     * @return void
      */
-    public function test_CaseInsensitiveRequest()
+    public function testCaseInsensitiveRequest()
     {
         $req = [
           'request' => 'GetMap',
@@ -114,7 +139,7 @@ class WmsTest extends TestCase
           'height' => 200
         ];
         $this->setRequest($req);
-        $mappr_wms = $this->makeWMS();
+        $mappr_wms = $this->_makeWMS();
         $this->assertEquals($mappr_wms->request->params['REQUEST'], $_REQUEST['request']);
         $this->assertEquals($mappr_wms->request->params['LAYERS'], $_REQUEST['layers']);
         $this->assertEquals($mappr_wms->request->params['BBOX'], $_REQUEST['bbox']);

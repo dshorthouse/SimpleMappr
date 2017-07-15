@@ -40,6 +40,16 @@ use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Application;
 use SimpleMappr\Utility;
 
+/**
+ * Test the Application Class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class ApplicationTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -49,6 +59,8 @@ class ApplicationTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -59,6 +71,8 @@ class ApplicationTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -68,8 +82,10 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that empty lines are removed.
+     *
+     * @return void
      */
-    public function test_removeEmptyLines()
+    public function testRemoveEmptyLines()
     {
         $data = "\n\n45.0\t-120.0\n\n\n\n\n55.0\t-110.0\n\n\n60.0 -100.0\n\n\n";
         $removed_lines = Utility::removeEmptyLines($data);
@@ -78,8 +94,10 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that slashes are added.
+     *
+     * @return void
      */
-    public function test_addSlashesExtended()
+    public function testAddSlashesExtended()
     {
         $data = [['title' => 'my "title"']];
         $add_slashes = Utility::addSlashesExtended($data);
@@ -88,8 +106,10 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that a file name is cleaned of cruft.
+     *
+     * @return void
      */
-    public function test_clean_filename()
+    public function testCleanFilename()
     {
         $name = "My %!  <>  .  Map";
         $clean = Utility::cleanFilename($name);
@@ -98,32 +118,40 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that the mappr object returns the declared font file path.
+     *
+     * @return void
      */
-    public function test_font_file()
+    public function testFontFile()
     {
         $this->assertEquals($this->mappr->get_font_file(), ROOT."/mapserver/fonts/fonts.list");
     }
 
     /**
      * Test that the mappr object returns the declared tmp path.
+     *
+     * @return void
      */
-    public function test_tmp_path()
+    public function testTmpPath()
     {
         $this->assertEquals($this->mappr->get_tmp_path(), ROOT."/public/tmp/");
     }
 
     /**
      * Test that the mappr object returns the declared tmp url.
+     *
+     * @return void
      */
-    public function test_tmp_url()
+    public function testTmpUrl()
     {
         $this->assertEquals($this->mappr->get_tmp_url(), MAPPR_MAPS_URL);
     }
 
     /**
      * Test that the default max extent is the entire world.
+     *
+     * @return void
      */
-    public function test_max_extent()
+    public function testMaxExtent()
     {
         $diff = array_diff($this->mappr->get_max_extent(), [-180, -90, 180, 90]);
         $this->assertEmpty($diff);
@@ -131,96 +159,120 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that the default projection is EPSG:4326.
+     *
+     * @return void
      */
-    public function test_default_projection()
+    public function testDefaultProjection()
     {
         $this->assertEquals($this->mappr->get_default_projection(), "epsg:4326");
     }
 
     /**
      * Test that the default set of coords is an empty array.
+     *
+     * @return void
      */
-    public function test_default_coords()
+    public function testDefaultCoords()
     {
         $this->assertEmpty($this->mappr->request->coords);
     }
 
     /**
      * Test that the default set of regions is an empty array.
+     *
+     * @return void
      */
-    public function test_default_regions()
+    public function testDefaultRegions()
     {
         $this->assertEmpty($this->mappr->request->regions);
     }
 
     /**
      * Test that the default set of wkt is an empty array.
+     *
+     * @return void
      */
-    public function test_default_wkt()
+    public function testDefaultWkt()
     {
         $this->assertEmpty($this->mappr->request->wkt);
     }
 
     /**
      * Test that the default output format is png.
+     *
+     * @return void
      */
-    public function test_default_output()
+    public function testDefaultOutput()
     {
         $this->assertEquals($this->mappr->request->output, "png");
     }
 
     /**
      * Test that the default width is 900px.
+     *
+     * @return void
      */
-    public function test_default_width()
+    public function testDefaultWidth()
     {
         $this->assertEquals($this->mappr->request->width, 900);
     }
 
     /**
      * Test that default height is 450px.
+     *
+     * @return void
      */
-    public function test_default_height()
+    public function testDefaultHeight()
     {
         $this->assertEquals($this->mappr->request->height, 450);
     }
 
     /**
      * Test that default map projection is EPSG:4326.
+     *
+     * @return void
      */
-    public function test_default_projection_map()
+    public function testDefaultProjectionMap()
     {
         $this->assertEquals($this->mappr->request->projection_map, "epsg:4326");
     }
 
     /**
      * Test that the default longitude of natural origin is 0.
+     *
+     * @return void
      */
-    public function test_default_origin()
+    public function testDefaultOrigin()
     {
         $this->assertEquals($this->mappr->request->origin, 0);
     }
 
     /**
      * Test that the default rubberband is an empty array.
+     *
+     * @return void
      */
-    public function test_default_bbox_rubberband()
+    public function testDefaultBboxRubberband()
     {
         $this->assertEmpty($this->mappr->request->bbox_rubberband);
     }
 
     /**
      * Test that default pan is blank.
+     *
+     * @return void
      */
-    public function test_default_pan()
+    public function testDefaultPan()
     {
         $this->assertEquals($this->mappr->request->pan, "");
     }
 
     /**
      * Test that only the base layer is initially rendered.
+     *
+     * @return void
      */
-    public function test_default_layers()
+    public function testDefaultLayers()
     {
         $layers = $this->mappr->request->layers;
         $this->assertEmpty(array_diff($layers, ['base' => 'on']));
@@ -228,96 +280,120 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that the default graticule selection is blank.
+     *
+     * @return void
      */
-    public function test_default_graticules()
+    public function testDefaultGraticules()
     {
         $this->assertEquals($this->mappr->request->graticules, "");
     }
 
     /**
      * Test that the default watermark selection is blank.
+     *
+     * @return void
      */
-    public function test_default_watermark()
+    public function testDefaultWatermark()
     {
         $this->assertEquals($this->mappr->request->watermark, "");
     }
 
     /**
      * Test that the default graticule grid is blank.
+     *
+     * @return void
      */
-    public function test_default_gridspace()
+    public function testDefaultGridspace()
     {
         $this->assertEquals($this->mappr->request->gridspace, "");
     }
 
     /**
      * Test that the default graticule label is 1.
+     *
+     * @return void
      */
-    public function test_default_gridlabel()
+    public function testDefaultGridlabel()
     {
         $this->assertEquals($this->mappr->request->gridlabel, 1);
     }
 
     /**
      * Test that the default download selection is blank.
+     *
+     * @return void
      */
-    public function test_default_download()
+    public function testDefaultDownload()
     {
         $this->assertEquals($this->mappr->request->download, "");
     }
 
     /**
      * Test that the default crop is blank.
+     *
+     * @return void
      */
-    public function test_default_crop()
+    public function testDefaultCrop()
     {
         $this->assertEquals($this->mappr->request->crop, "");
     }
 
     /**
      * Test that the default options is an empty array.
+     *
+     * @return void
      */
-    public function test_default_options()
+    public function testDefaultOptions()
     {
         $this->assertEmpty($this->mappr->request->options);
     }
 
     /**
      * Test that the default border thickness is 1.25.
+     *
+     * @return void
      */
-    public function test_default_border_thickness()
+    public function testDefaultBorderThickness()
     {
         $this->assertEquals($this->mappr->request->border_thickness, 1.25);
     }
 
     /**
      * Test that the default rotation is 0.
+     *
+     * @return void
      */
-    public function test_default_rotation()
+    public function testDefaultRotation()
     {
         $this->assertEquals($this->mappr->request->rotation, 0);
     }
 
     /**
      * Test that the default zoom is blank.
+     *
+     * @return void
      */
-    public function test_default_zoom_out()
+    public function testDefaultZoomOut()
     {
         $this->assertEquals($this->mappr->request->zoom_out, "");
     }
 
     /**
      * Test that the default image URL ends with .png.
+     *
+     * @return void
      */
-    public function test_default_image_url()
+    public function testDefaultImageUrl()
     {
         $this->assertStringEndsWith(".png", $this->mappr->image_url);
     }
 
     /**
      * Test that the default application output contains all necessary keys.
+     *
+     * @return void
      */
-    public function test_mapserver_output_contains_all_keys()
+    public function testMapServerOutputContainsAllKeys()
     {
         $this->assertArrayHasKey("mapOutputImage", $this->output);
         $this->assertArrayHasKey("size", $this->output);
@@ -332,24 +408,30 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that the scalebar URL is populated in the application response.
+     *
+     * @return void
      */
-    public function test_scalebar_url_exists()
+    public function testScalebarUrlExists()
     {
         $this->assertNotEmpty($this->output["scalebar_url"]);
     }
 
     /**
      * Test that the default legend URL is empty.
+     *
+     * @return void
      */
-    public function test_legend_url_empty()
+    public function testLegendUrlEmpty()
     {
         $this->assertEmpty($this->output["legend_url"]);
     }
 
     /**
      * Test that a file exists based on the application response.
+     *
+     * @return void
      */
-    public function test_file_exists()
+    public function testFileExists()
     {
         $img = $this->mappr->get_tmp_path() . basename($this->output["mapOutputImage"]);
         $this->assertFileExists($img);
@@ -357,19 +439,23 @@ class ApplicationTest extends TestCase
 
     /**
      * Test file is accessible from web server
+     *
+     * @return void
      */
-     public function test_file_accessible()
-     {
-         $this->assertContains(MAPPR_MAPS_URL, $this->output["mapOutputImage"]);
-         $image = file_get_contents($this->output["mapOutputImage"]);
-         $finfo = new \finfo(FILEINFO_MIME_TYPE);
-         $this->assertEquals("image/png", $finfo->buffer($image));
-     }
+    public function testFileAccessible()
+    {
+        $this->assertContains(MAPPR_MAPS_URL, $this->output["mapOutputImage"]);
+        $image = file_get_contents($this->output["mapOutputImage"]);
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $this->assertEquals("image/png", $finfo->buffer($image));
+    }
 
     /**
      * Test that the indicated size in the application response is 900X450.
+     *
+     * @return void
      */
-    public function test_mapserver_default_size()
+    public function testMapServerDefaulSsize()
     {
         $diff = array_diff($this->output["size"], [900, 450]);
         $this->assertEmpty($diff);
@@ -377,40 +463,50 @@ class ApplicationTest extends TestCase
 
     /**
      * Test that the application response shows a bbox for the entire world.
+     *
+     * @return void
      */
-    public function test_mapserver_default_rendered_bbox()
+    public function testMapServerDefaultRenderedBbox()
     {
         $this->assertEquals($this->output["rendered_bbox"], "-180.0000000000,-90.0000000000,180.0000000000,90.0000000000");
     }
 
     /**
      * Test that the rendered rotation as indicated is 0.
+     *
+     * @return void
      */
-    public function test_mapserver_default_rendered_rotation()
+    public function testMapServerDefaultRenderedRotation()
     {
         $this->assertEquals($this->output["rendered_rotation"], 0);
     }
 
     /**
      * Test that the rendered projection as indicated is EPSG:4326.
+     *
+     * @return void
      */
-    public function test_mapserver_rendered_projection()
+    public function testMapServerRenderedProjection()
     {
         $this->assertEquals($this->output["rendered_projection"], "epsg:4326");
     }
 
     /**
      * Test that the default array of bad points is blank.
+     *
+     * @return void
      */
-    public function test_mapserver_default_bad_points()
+    public function testMapServerDefaultBadPoints()
     {
         $this->assertEquals($this->output["bad_points"], "");
     }
 
     /**
      * Test that the default array of bad points is blank.
+     *
+     * @return void
      */
-    public function test_mapserver_default_bad_drawings()
+    public function testMapServerDefaultBadDrawings()
     {
         $this->assertEquals($this->output["bad_drawings"], "");
     }

@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Query;
 
+/**
+ * Test Query class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class QueryTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class QueryTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -55,6 +67,8 @@ class QueryTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -63,6 +77,8 @@ class QueryTest extends TestCase
 
     /**
      * Test return of country name with query.
+     *
+     * @return void
      */
     public function testCountry()
     {
@@ -78,6 +94,8 @@ class QueryTest extends TestCase
 
     /**
      * Test that many country names are returned with a large extent.
+     *
+     * @return void
      */
     public function testManyCountries()
     {
@@ -94,6 +112,8 @@ class QueryTest extends TestCase
 
     /**
      * Test that a StateProvince code in returned when qlayer is provided.
+     *
+     * @return void
      */
     public function testStateProvince()
     {

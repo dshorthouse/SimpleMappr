@@ -39,12 +39,24 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Utility;
 
+/**
+ * Test coordinate conversion for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class CoordinateConversionTest extends TestCase
 {
     /**
      * Test that coordinates are cleaned of extraneous materials.
+     *
+     * @return void
      */
-    public function test_clean_coord()
+    public function testCleanCoord()
     {
         $coord = "-45d.4dt5;0dds";
         $clean = Utility::cleanCoord($coord);
@@ -53,8 +65,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that off Earth coordinates are detected.
+     *
+     * @return void
      */
-    public function test_check_on_earth_invalid()
+    public function testCheckOnEarthInvalid()
     {
         $coord = new stdClass();
         $coord->x = -133;
@@ -65,8 +79,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that an on Earth coordinate is detected.
+     *
+     * @return void
      */
-    public function test_check_on_earth_valid()
+    public function testCheckOnEarthValid()
     {
         $coord = new stdClass();
         $coord->x = -120;
@@ -77,8 +93,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a partial coordinate is not converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_0()
+    public function testMakeCoordinates0()
     {
         $coord = "52° 32' 25\" N,";
         $dd = Utility::makeCoordinates($coord);
@@ -88,8 +106,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a partial coordinate is not converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_1()
+    public function testMakeCoordinates1()
     {
         $coord = "-120";
         $dd = Utility::makeCoordinates($coord);
@@ -99,8 +119,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a partial coordinate with a comma is not converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_2()
+    public function testMakeCoordinates2()
     {
         $coord = "-120,";
         $dd = Utility::makeCoordinates($coord);
@@ -110,8 +132,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that well-formed coordinate in DMS with comma is converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_3()
+    public function testMakeCoordinates3()
     {
         $coord = "52° 32' 25\" N, 89° 40' 31\" W";
         $dd = Utility::makeCoordinates($coord);
@@ -121,8 +145,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a well-formed coordinate in DMS with semicolon is converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_4()
+    public function testMakeCoordinates4()
     {
         $coord = "52° 32' 25\" N; 89° 40' 31\" W";
         $dd = Utility::makeCoordinates($coord);
@@ -132,8 +158,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a well-formed coordinate in DD with tab is parsed.
+     *
+     * @return void
      */
-    public function test_make_coordinates_5()
+    public function testMakeCoordinates5()
     {
         $coord = "52.5\t-89.0";
         $dd = Utility::makeCoordinates($coord);
@@ -143,8 +171,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a well-formed coordinate in DD with tab is parsed.
+     *
+     * @return void
      */
-    public function test_make_coordinates_6()
+    public function testMakeCoordinates6()
     {
         $coord = "-7.483333, - 36.283333";
         $dd = Utility::makeCoordinates($coord);
@@ -154,8 +184,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a well-formed coordinate in DD with tab is parsed.
+     *
+     * @return void
      */
-    public function test_make_coordinates_7()
+    public function testMakeCoordinates7()
     {
         $coord = " - 7.483333, - 36.283333";
         $dd = Utility::makeCoordinates($coord);
@@ -165,8 +197,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that flipped coordinate in DMS with comma is converted.
+     *
+     * @return void
      */
-    public function test_make_coordinates_8()
+    public function testMakeCoordinates8()
     {
         $coord = "89° 40' 31\" W, 52° 32' 25\" N";
         $dd = Utility::makeCoordinates($coord);
@@ -175,8 +209,10 @@ class CoordinateConversionTest extends TestCase
     }
     /**
      * Test that a single coordinate in DMS with 'd' is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_1()
+    public function testDmsToDeg1()
     {
         $dms = "45d53'25\"W";
         $dd = Utility::dmsToDeg($dms);
@@ -185,8 +221,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS with degree symbol is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_2()
+    public function testDmsToDeg2()
     {
         $dms = "45° 53' 25\" W";
         $dd = Utility::dmsToDeg($dms);
@@ -195,8 +233,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS with odd degree symbol is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_3()
+    public function testDmsToDeg3()
     {
         $dms = "45º 53' 25\" W";
         $dd = Utility::dmsToDeg($dms);
@@ -205,8 +245,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS in East is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_4()
+    public function testDmsToDeg4()
     {
         $dms = "45d53'25\"E";
         $dd = Utility::dmsToDeg($dms);
@@ -215,8 +257,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS is North is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_5()
+    public function testDmsToDeg5()
     {
         $dms = "45º 53′ 25″ N";
         $dd = Utility::dmsToDeg($dms);
@@ -225,8 +269,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS in North with 'd' is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_6()
+    public function testDmsToDeg6()
     {
         $dms = "45d 53m 25 N";
         $dd = Utility::dmsToDeg($dms);
@@ -235,8 +281,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS in South with 'd' is converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_7()
+    public function testDmsToDeg7()
     {
         $dms = "45d53'25\"S";
         $dd = Utility::dmsToDeg($dms);
@@ -245,8 +293,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS with minutes > 60 is not converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_8()
+    public function testDmsToDeg8()
     {
         $dms = "45º 70′ 25″ N";
         $dd = Utility::dmsToDeg($dms);
@@ -255,8 +305,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a single coordinate in DMS with seconds > 60 is not converted.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_9()
+    public function testDmsToDeg9()
     {
         $dms = "45º 40′ 85″ N";
         $dd = Utility::dmsToDeg($dms);
@@ -265,8 +317,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that two single quotes are used in DMS to indicate secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_10()
+    public function testDmsToDeg10()
     {
         $dms = "03º23'45''S";
         $deg = 3;
@@ -280,8 +334,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that ddmmss with s in coord string is recognized as secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_11()
+    public function testDmsToDeg11()
     {
         $dms = "44d53m23sN";
         $deg = 44;
@@ -295,8 +351,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that ddmmss with s in coord string is recognized as secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_12()
+    public function testDmsToDeg12()
     {
         $dms = "44d53m23sS";
         $deg = 44;
@@ -310,8 +368,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that ddmmss with s in coord string is recognized as secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_13()
+    public function testDmsToDeg13()
     {
         $dms = "44d53m23sW";
         $deg = 44;
@@ -325,8 +385,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that ddmmss with s in coord string is recognized as secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_14()
+    public function testDmsToDeg14()
     {
         $dms = "44d53m23sE";
         $deg = 44;
@@ -340,8 +402,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that ddmmss with s in coord string is recognized as secs.
+     *
+     * @return void
      */
-    public function test_dms_to_deg_15()
+    public function testDmsToDeg15()
     {
         $dms = "44d 53m 23s W";
         $deg = 44;
@@ -355,8 +419,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test that a dirty coordinate in DD is parsed.
+     *
+     * @return void
      */
-    public function test_dirty_deg()
+    public function testDirtyDeg()
     {
         $coord = "52.5g\t-89.0r";
         $dd = Utility::makeCoordinates($coord);
@@ -366,8 +432,10 @@ class CoordinateConversionTest extends TestCase
 
     /**
      * Test DD with deg symbols.
+     *
+     * @return void
      */
-    public function test_dd_symbols()
+    public function testDdSymbols()
     {
         $coord = " 49.129774°  46.677716°";
         $dd = Utility::makeCoordinates($coord);

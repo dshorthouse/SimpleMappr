@@ -39,6 +39,16 @@
 use PHPUnit\Framework\TestCase;
 use SimpleMappr\Mappr\Pptx;
 
+/**
+ * Test Pptx class for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class PptxTest extends TestCase
 {
     use SimpleMapprTestMixin;
@@ -47,6 +57,8 @@ class PptxTest extends TestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -56,6 +68,8 @@ class PptxTest extends TestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -65,8 +79,10 @@ class PptxTest extends TestCase
 
     /**
      * Test that PPTX output has the correct MIME type.
+     *
+     * @return void
      */
-    public function test_pptx_mime()
+    public function testPptxMime()
     {
         $this->mappr_pptx->execute();
         $finfo = new finfo(FILEINFO_MIME);
