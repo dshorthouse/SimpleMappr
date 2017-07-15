@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -79,8 +79,8 @@ interface RestMethods
     /**
      * The update REST method
      *
-     * @param array $content Any parameters
-     * @param string $where The where clause
+     * @param array  $content Any parameters
+     * @param string $where   The where clause
      *
      * @return void
      */

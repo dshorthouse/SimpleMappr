@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -52,27 +52,37 @@ use SimpleMappr\Database;
 class Share implements RestMethods
 {
     /**
-     * @var string $sort Database column upon which to sort
+     * Database column upon which to sort
+     *
+     * @var string $sort
      */
     public $sort;
 
     /**
-     * @var string $dir Direction to sort: asc or desc
+     * Direction to sort: asc or desc
+     *
+     * @var string $dir
      */
     public $dir;
 
     /**
-     * @var object $results Database query results
+     * Database query results
+     *
+     * @var object $results
      */
     public $results;
 
     /**
-     * @var int $_role Role for user defined in $roles
+     * Role for user defined in $roles
+     *
+     * @var int $_role
      */
     private $_user;
 
     /**
-     * @var object $_db Database connection object
+     * Database connection object
+     *
+     * @var object $_db
      */
     private $_db;
 
@@ -94,7 +104,10 @@ class Share implements RestMethods
      */
     public function index($params)
     {
-        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
+        $this->dir = "desc";
+        if (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) {
+            $this->dir = $params['dir'];
+        }
         $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
 
         $order = "m.created {$this->dir}";
@@ -163,8 +176,8 @@ class Share implements RestMethods
     /**
      * Implemented update method
      *
-     * @param array $content An array of content
-     * @param string $where The where string
+     * @param array  $content An array of content
+     * @param string $where   The where string
      *
      * @return void
      */

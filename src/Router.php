@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr;
 
@@ -87,27 +87,37 @@ class Router
     {
         $router = new RouteCollector();
 
-        $router->filter('logAPI', function () {
-            $this->_log("API");
-        });
-        $router->filter('logWMS', function () {
-            $this->_log("WMS");
-        });
-        $router->filter('logWFS', function () {
-            $this->_log("WFS");
-        });
-        $router->filter('check_role_user', function () {
-            if (!User::checkPermission('user')) {
-                echo $this->_renderError(403);
-                return false;
-            };
-        });
-        $router->filter('check_role_administrator', function () {
-            if (!User::checkPermission('administrator')) {
-                echo $this->_renderError(403);
-                return false;
-            };
-        });
+        $router->filter(
+            'logAPI', function () {
+                $this->_log("API");
+            }
+        );
+        $router->filter(
+            'logWMS', function () {
+                $this->_log("WMS");
+            }
+        );
+        $router->filter(
+            'logWFS', function () {
+                $this->_log("WFS");
+            }
+        );
+        $router->filter(
+            'check_role_user', function () {
+                if (!User::checkPermission('user')) {
+                    echo $this->_renderError(403);
+                    return false;
+                };
+            }
+        );
+        $router->filter(
+            'check_role_administrator', function () {
+                if (!User::checkPermission('administrator')) {
+                    echo $this->_renderError(403);
+                    return false;
+                };
+            }
+        );
 
         $router->get('/', function () {
             return $this->_main();
@@ -377,7 +387,7 @@ class Router
      * Instantiates a new class and passes parameters.
      *
      * @param string $klass  The class name.
-     * @param array $params Splat array.
+     * @param array  ...$params Splat array.
      *
      * @return object $klass  The instance of class.
      */
@@ -471,7 +481,7 @@ class Router
     /**
      * Load twig templating engine
      *
-     * @param boolean Indicate if page elements are to be included.
+     * @param boolean $include_page_elements Indicate if page elements are to be included.
      *
      * @return object
      */
@@ -519,17 +529,17 @@ class Router
         http_response_code($code);
         $title = " - ";
         switch ($code) {
-            case 400:
-                $title .= "Bad Request";
-                break;
-            case 403:
-                $title .= "Forbidden";
-                break;
-            case 404:
-                $title .= "Not Found";
-                break;
-            default:
-                $title .= "Error";
+        case 400:
+            $title .= "Bad Request";
+            break;
+        case 403:
+            $title .= "Forbidden";
+            break;
+        case 404:
+            $title .= "Not Found";
+            break;
+        default:
+            $title .= "Error";
         }
         $config = [
             'title' => $title,

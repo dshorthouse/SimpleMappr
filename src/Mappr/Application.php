@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -55,20 +55,20 @@ class Application extends Mappr
 {
 
     /**
-    * Implement getRequest method
-    *
-    * @return obj
-    */
+     * Implement getRequest method
+     *
+     * @return obj
+     */
     public function getRequest()
     {
         return Request::getRequest();
     }
 
     /**
-    * Implement createOutput method
-    *
-    * @return void
-    */
+     * Implement createOutput method
+     *
+     * @return void
+     */
     public function createOutput()
     {
         switch ($this->request->output) {
@@ -114,10 +114,10 @@ class Application extends Mappr
     }
 
     /**
-    * Produce an array for the default output
-    *
-    * @return array
-    */
+     * Produce an array for the default output
+     *
+     * @return array
+     */
     private function _defaultOutput()
     {
         $this->image_url = $this->image->saveWebImage();
@@ -127,7 +127,7 @@ class Application extends Mappr
           sprintf('%.10f', $this->map_obj->extent->miny + $this->oy_pad),
           sprintf('%.10f', $this->map_obj->extent->maxx - $this->ox_pad),
           sprintf('%.10f', $this->map_obj->extent->maxy - $this->oy_pad)
-      ];
+        ];
 
         $output = [
           'mapOutputImage'      => $this->image_url,
@@ -139,7 +139,7 @@ class Application extends Mappr
           'scalebar_url'        => $this->scalebar_url,
           'bad_points'          => $this->getBadPoints(),
           'bad_drawings'        => $this->getBadDrawings()
-      ];
+        ];
 
         return $output;
     }

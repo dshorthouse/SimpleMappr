@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr;
 
@@ -52,13 +52,25 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Database
 {
-    /** @var object $_instance Database instance of self for static retrieval */
+    /** 
+     * Database instance of self for static retrieval
+     *
+     * @var object $_instance
+     */
     private static $_instance;
 
-    /** @var object $_link Database connection */
+    /**
+     * Database connection
+     *
+     * @var object $_link
+     */
     private $_link;
 
-    /** @var object $_handle Handle for prepared statements */
+    /**
+     * Handle for prepared statements
+     *
+     * @var object $_handle
+     */
     private $_handle;
 
     /**
@@ -218,9 +230,13 @@ class Database
         $columns = array_keys($data);
         $sql .= "(" . implode(",", $columns) . ")";
         $sql .= " VALUES ";
-        $sql .= "(" . implode(",", array_map(function ($value) {
-            return ":{$value}";
-        }, $columns)) . ")";
+        $sql .= "(" . implode(
+            ",", array_map(
+                function ($value) {
+                    return ":{$value}";
+                }, $columns
+            )
+        ) . ")";
 
         $this->prepare($sql);
         foreach ($data as $key => $value) {
@@ -273,8 +289,8 @@ class Database
     /**
      * Destroy an existing record
      *
-     * @param string $table The table name.
-     * @param integer $id The id of the record.
+     * @param string  $table The table name.
+     * @param integer $id    The id of the record.
      *
      * @return int number of records affected
      */

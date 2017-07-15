@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -54,7 +54,9 @@ use SimpleMappr\Utility;
 class Query extends Mappr
 {
     /**
-     * @var array $data Regions on shapefile that match a query
+     * Regions on shapefile that match a query
+     *
+     * @var array $data
      */
     public $data = [];
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -55,17 +55,23 @@ use SimpleMappr\Utility;
 class Wfs extends Mappr
 {
     /**
-     * @var object $_req Request object for WFS and WMS
+     * Request object for WFS and WMS
+     *
+     * @var object $_req
      */
     private $_req = "";
 
     /**
-     * @var array $_filter_columns Columns to filter on
+     * Columns to filter on
+     *
+     * @var array $_filter_columns
      */
     private $_filter_columns = [];
 
     /**
-     * @var array $_wfs_layers Layers to include in WFS request
+     * Layers to include in WFS request
+     *
+     * @var array $_wfs_layers
      */
     private $_wfs_layers = [];
 
@@ -79,7 +85,9 @@ class Wfs extends Mappr
         $shapes = parent::getShapefileConfig();
         if (!empty($layers)) {
             foreach ($layers as $layer) {
-                if (in_array($layer, array_keys($shapes)) && $shapes[$layer]['type'] !== MS_LAYER_RASTER) {
+                if (in_array($layer, array_keys($shapes))
+                    && $shapes[$layer]['type'] !== MS_LAYER_RASTER
+                ) {
                     $this->_wfs_layers[$layer] = 'on';
                 }
             }
@@ -194,7 +202,10 @@ class Wfs extends Mappr
         $this->_req->setParameter("REQUEST", $this->request->params['REQUEST']);
         $this->_req->setParameter("BBOX", $this->request->params['BBOX']);
         $this->_req->setParameter("TYPENAME", $this->request->params['TYPENAME']);
-        $max_features = ($this->request->params['MAXFEATURES'] > 1000) ? 1000 : $this->request->params['MAXFEATURES'];
+        $max_features = $this->request->params['MAXFEATURES'];
+        if ($this->request->params['MAXFEATURES'] > 1000) {
+            $max_features = 1000;
+        }
         $this->_req->setParameter("MAXFEATURES", $max_features);
         $this->_req->setParameter("SRSNAME", $this->request->params['SRSNAME']);
 

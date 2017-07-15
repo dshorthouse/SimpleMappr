@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -93,7 +93,7 @@ class OpenApi implements RestMethods
      * Implemented update method
      *
      * @param string $content The array of content
-     * @param string $where The where clause
+     * @param string $where   The where clause
      *
      * @return void
      */
@@ -201,22 +201,24 @@ class OpenApi implements RestMethods
             ]
           ]
         ]
-      ];
+        ];
         return $swagger;
     }
 
     /**
      * Get the API parameters and their definitions
      *
-     * @param string Indicate the request method.
+     * @param string $request_method Indicate the request method.
      *
      * @return array of API parameters
      */
     private function _apiParameters($request_method = "GET")
     {
-        array_walk(AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
-            $projections[] = $key . " (" . $val['name'] . ")";
-        });
+        array_walk(
+            AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
+                $projections[] = $key . " (" . $val['name'] . ")";
+            }
+        );
         $params = [
         [
           'name' => 'ping',
@@ -492,8 +494,8 @@ class OpenApi implements RestMethods
           'description' => 'if watermark=false is included, the SimpleMappr .',
           'required' => false,
           'type' => 'boolean'
-        ],
-      ];
+        ]
+        ];
         if ($request_method == "GET") {
             foreach ($params as $param => $value) {
                 if ($value['name'] == 'file') {

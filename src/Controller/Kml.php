@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -55,7 +55,9 @@ use SimpleMappr\Utility;
 class Kml implements RestMethods
 {
     /**
-     * @var array $pushpins Array of default pushpins
+     * Array of default pushpins
+     *
+     * @var array $pushpins
      */
     public static $pushpins = [
         'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
@@ -71,27 +73,37 @@ class Kml implements RestMethods
     ];
 
     /**
-     * @var object $_kml XMLWriter object
+     * XMLWriter object
+     *
+     * @var object $_kml
      */
     private $_kml;
 
     /**
-     * @var array $_metadata Metadata array
+     * Metadata array
+     *
+     * @var array $_metadata
      */
     private $_metadata = [];
 
     /**
-     * @var array $_placemark Placemarkers for KML
+     * Placemarkers for KML
+     *
+     * @var array $_placemark
      */
     private $_placemark = [];
 
     /**
-     * @var array $coords Coordinates to build a placemark
+     * Coordinates to build a placemark
+     *
+     * @var array $coords
      */
     public $coords;
 
     /**
-     * @var string $file_name User-defined filename
+     * User-defined filename
+     *
+     * @var string $file_name
      */
     public $file_name;
 
@@ -135,7 +147,7 @@ class Kml implements RestMethods
      * Implemented update method
      *
      * @param string $content The array of content
-     * @param string $where The where clause
+     * @param string $where   The where clause
      *
      * @return void
      */
@@ -156,8 +168,6 @@ class Kml implements RestMethods
 
     /**
      * Generate the kml file.
-     *
-     * @param boolean $file_download Indicate if the file will be downloaded.
      *
      * @return void
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -51,10 +51,18 @@ use SimpleMappr\Database;
  */
 class Citation implements RestMethods
 {
-    /** @var object $_db A database connection object */
+    /**
+     * A database connection object
+     *
+     * @var object $_db
+     */
     private $_db;
 
-    /** @var object $_citations Citations object produced from queries */
+    /**
+     * Citations object produced from queries
+     *
+     * @var object $_citations
+     */
     private $_citations;
 
     /**
@@ -146,8 +154,8 @@ class Citation implements RestMethods
     /**
      * Implemented update method
      *
-     * @param array $content The array of content
-     * @param string $where The where clause
+     * @param array  $content The array of content
+     * @param string $where   The where clause
      *
      * @return void
      */

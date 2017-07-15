@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -58,12 +58,16 @@ use SimpleMappr\Controller\Kml;
 class Map extends Mappr
 {
     /**
-     * @var int $_id Database identifer for a map
+     * Database identifer for a map
+     *
+     * @var int $_id
      */
     private $_id;
 
     /**
-     * @var string $_extension File extension for the output
+     * File extension for the output
+     *
+     * @var string $_extension
      */
     private $_extension;
 

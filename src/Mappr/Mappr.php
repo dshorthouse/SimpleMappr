@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -71,92 +71,128 @@ abstract class Mappr
     abstract public function createOutput();
 
     /**
-     * @var string $shapefile_config Path to the shapefile config
+     * Path to the shapefile config
+     *
+     * @var string $shapefile_config
      */
     public static $shapefile_config = ROOT.'/config/shapefiles.yml';
 
     /**
-     * @var string $font_file Path to the font file
+     * Path to the font file
+     *
+     * @var string $font_file
      */
     protected $font_file = ROOT.'/mapserver/fonts/fonts.list';
 
     /**
-     * @var string $tmp_path File system temp path to store files produced
+     * File system temp path to store files produced
+     *
+     * @var string $tmp_path
      */
     protected $tmp_path = ROOT.'/public/tmp/';
 
     /**
-     * @var string $tmp_url URL temp path to retrieve files produced
+     * URL temp path to retrieve files produced
+     *
+     * @var string $tmp_url
      */
     protected $tmp_url = MAPPR_MAPS_URL;
 
     /**
-     * @var object $map_obj The base map object
+     * The base map object
+     *
+     * @var object $map_obj
      */
     protected $map_obj;
 
     /**
-     * @var array $max_extent Default extent when map first loaded
+     * Default extent when map first loaded
+     *
+     * @var array $max_extent
      */
     protected $max_extent = [-180,-90,180,90];
 
     /**
-     * @var string $default_projection Default projection when map first loaded
+     * Default projection when map first loaded
+     *
+     * @var string $default_projection
      */
     protected $default_projection = 'epsg:4326';
 
     /**
-     * @var object $image Image object produced from MapScript
+     * Image object produced from MapScript
+     *
+     * @var object $image
      */
     protected $image;
 
     /**
-     * @var object $scale Scale object for scalebar produced from MapScript
+     * Scale object for scalebar produced from MapScript
+     *
+     * @var object $scale
      */
     protected $scale;
 
     /**
-     * @var object $legend Legend object produced from MapScript
+     * Legend object produced from MapScript
+     *
+     * @var object $legend
      */
     protected $legend;
 
     /**
-     * @var array $shapes Shapes and their mapfile configurations
+     * Shapes and their mapfile configurations
+     *
+     * @var array $shapes
      */
     protected $shapes = [];
 
     /**
-     * @var int $ox_pad Post-draw padding for longitude extent used as a correction factor on front-end
+     * Post-draw padding for longitude extent used as a correction factor on front-end
+     *
+     * @var int $ox_pad
      */
     protected $ox_pad = 0;
 
     /**
-     * @var int $oy_pad Post-draw padding for latitude extent used as a correction factor on front-end
+     * Post-draw padding for latitude extent used as a correction factor on front-end
+     *
+     * @var int $oy_pad
      */
     protected $oy_pad = 0;
 
     /**
-     * @var string $legend_url URL for legend image if produced
+     * URL for legend image if produced
+     *
+     * @var string $legend_url
      */
     protected $legend_url;
 
     /**
-     * @var string $scalebar_url URL for scalebar image if produced
+     * URL for scalebar image if produced
+     *
+     * @var string $scalebar_url
      */
     protected $scalebar_url;
 
     /**
-     * @var array $bad_points Holding bin for coordinates outside extent of Earth
+     * Holding bin for coordinates outside extent of Earth
+     *
+     * @var array $bad_points
      */
     protected $bad_points = [];
 
     /**
-     * @var array $bad_drawings Holding bin for WKT that fail to render
+     * Holding bin for WKT that fail to render
+     *
+     * @var array $bad_drawings
      */
     protected $bad_drawings = [];
 
     /**
-     * @var bool $_legend_required Placeholder for presence of anything that might need a legend
+     * Placeholder for presence of anything that might need a legend
+     *
+     * @var bool $_legend_required
      */
     private $_legend_required = false;
 
@@ -183,7 +219,7 @@ abstract class Mappr
     public static function getShapefileConfig()
     {
         $config_file = file_get_contents(self::$shapefile_config);
-        return self::_tokenize_shapefile_config(Yaml::parse($config_file));
+        return self::_tokenizeShapefileConfig(Yaml::parse($config_file));
     }
 
     /**
@@ -758,7 +794,7 @@ abstract class Mappr
         $attr->download         = false;
         $attr->crop             = false;
         $attr->options          = []; //scalebar, legend, border, linethickness
-      $attr->border_thickness = 1.25;
+        $attr->border_thickness = 1.25;
         $attr->rotation         = 0;
         $attr->zoom_in          = false;
         $attr->zoom_out         = false;
@@ -815,24 +851,26 @@ abstract class Mappr
     /**
      * Tokenize shapefile.yml config
      *
-     * @param array $config
+     * @param array $config Array of configuration elements
      *
      * @return array of config
      */
-    private static function _tokenize_shapefile_config($config)
+    private static function _tokenizeShapefileConfig($config)
     {
         $config = $config['environments'][ENVIRONMENT];
         $config = array_merge($config['layers'], $config['labels']);
         $pattern = '/%%(.+)%%(.+)?/';
         foreach ($config as $shape => $values) {
             foreach ($values as $key => $value) {
-                $config[$shape][$key] = preg_replace_callback($pattern, function ($matches) {
-                    if (isset($matches[2])) {
-                        return constant($matches[1]) . $matches[2];
-                    } else {
-                        return constant($matches[1]);
-                    }
-                }, $value);
+                $config[$shape][$key] = preg_replace_callback(
+                    $pattern, function ($matches) {
+                        if (isset($matches[2])) {
+                            return constant($matches[1]) . $matches[2];
+                        } else {
+                            return constant($matches[1]);
+                        }
+                    }, $value
+                );
             }
         }
         return $config;
@@ -861,10 +899,10 @@ abstract class Mappr
     /**
      * Create a symbol
      *
-     * @param string $name      The name of the symbol
-     * @param string $type      The type of the symbol
-     * @param string $fill      MS_TRUE or MS_FALSE
-     * @param array $vertices   The vertices
+     * @param string $name     The name of the symbol
+     * @param string $type     The type of the symbol
+     * @param string $fill     MS_TRUE or MS_FALSE
+     * @param array  $vertices The vertices
      *
      * @return void
      */
@@ -913,9 +951,10 @@ abstract class Mappr
     private function _setUnits()
     {
         $units = MS_METERS;
-        if (isset($this->request->projection) &&
-            $this->request->projection == $this->default_projection) {
-            $units = MS_DD;
+        if (isset($this->request->projection) 
+            && $this->request->projection == $this->default_projection
+        ) {
+                $units = MS_DD;
         }
         $this->map_obj->set("units", $units);
     }
@@ -952,16 +991,18 @@ abstract class Mappr
      */
     private function _addLegendScalebar()
     {
-        if ($this->request->download &&
-            array_key_exists('legend', $this->request->options) &&
-            $this->request->options['legend']) {
+        if ($this->request->download
+            && array_key_exists('legend', $this->request->options)
+            && $this->request->options['legend']
+        ) {
             $this->addLegend();
         } elseif (!$this->request->download) {
             $this->addLegend();
         }
-        if ($this->request->download &&
-            array_key_exists('scalebar', $this->request->options) &&
-            $this->request->options['scalebar']) {
+        if ($this->request->download
+            && array_key_exists('scalebar', $this->request->options)
+            && $this->request->options['scalebar']
+        ) {
             $this->addScalebar();
         } elseif (!$this->request->download) {
             $this->addScalebar();
@@ -1175,9 +1216,10 @@ abstract class Mappr
         unset($this->request->layers['grid']);
 
         foreach ($this->request->layers as $key => $row) {
-            if (isset($this->request->output) &&
-            $this->request->output == 'svg' &&
-            $this->shapes[$key]['type'] == MS_LAYER_RASTER) {
+            if (isset($this->request->output)
+                && $this->request->output == 'svg'
+                && $this->shapes[$key]['type'] == MS_LAYER_RASTER
+            ) {
                 unset($this->request->layers[$key]);
             } else {
                 $sort[$key] = (isset($this->shapes[$key])) ? $this->shapes[$key]['sort'] : $row;
@@ -1336,9 +1378,10 @@ abstract class Mappr
      */
     private function _isResize()
     {
-        if ($this->request->download ||
-            $this->request->output == 'pptx' ||
-            $this->request->output == 'docx') {
+        if ($this->request->download
+            || $this->request->output == 'pptx'
+            || $this->request->output == 'docx'
+        ) {
             return true;
         }
         return false;
@@ -1351,7 +1394,10 @@ abstract class Mappr
      */
     private function _addBorder()
     {
-        if ($this->_isResize() && array_key_exists('border', $this->request->options) && ($this->request->options['border'] == 1 || $this->request->options['border'] == 'true')) {
+        if ($this->_isResize()
+            && array_key_exists('border', $this->request->options)
+            && ($this->request->options['border'] == 1 || $this->request->options['border'] == 'true')
+        ) {
             $outline_layer = ms_newLayerObj($this->map_obj);
             $outline_layer->set("name", "outline");
             $outline_layer->set("type", MS_LAYER_POLYGON);
@@ -1419,10 +1465,11 @@ abstract class Mappr
     private function _setOrigin($output_projection)
     {
         $lambert_projections = ['esri:102009', 'esri:102015', 'esri:102014', 'esri:102102', 'esri:102024', 'epsg:3112'];
-        if (in_array($this->request->projection, $lambert_projections) &&
-            $this->request->origin &&
-            $this->request->origin >= -180 &&
-            $this->request->origin <= 180) {
+        if (in_array($this->request->projection, $lambert_projections)
+            && $this->request->origin
+            && $this->request->origin >= -180
+            && $this->request->origin <= 180
+        ) {
             AcceptedProjections::$projections[$output_projection]['proj'] = preg_replace('/lon_0=(.*?),/', 'lon_0='.$this->request->origin.',', self::getProjection($output_projection));
         }
     }
@@ -1430,9 +1477,9 @@ abstract class Mappr
     /**
      * Build ecoregion layer classes from SLD file
      *
-     * @param obj $layer The MapScript layer object.
-     * @param string $sld The full path to an SLD file
-     * @param string $item The term filtered on in the SLD
+     * @param obj    $layer The MapScript layer object.
+     * @param string $sld   The full path to an SLD file
+     * @param string $item  The term filtered on in the SLD
      *
      * @return void
      */

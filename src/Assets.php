@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr;
 
@@ -54,32 +54,44 @@ use SimpleMappr\Controller\User;
 class Assets
 {
     /**
-     * @var array $_js_header Empty array to hold all js files for header
+     * Empty array to hold all js files for header
+     *
+     * @var array $_js_header
      */
     private $_js_header = [];
 
     /**
-     * @var array $_css_header Empty array to hold css files for header
+     * Empty array to hold css files for header
+     *
+     * @var array $_css_header
      */
     private $_css_header = [];
 
     /**
-     * @var string $_hash Truncated MD5 hash for compiled css and js files
+     * Truncated MD5 hash for compiled css and js files
+     *
+     * @var string $_hash
      */
     private $_hash = "";
 
     /**
-     * @var string $_css_cache_path Directory to put combined and minified css files
+     * Directory to put combined and minified css files
+     *
+     * @var string $_css_cache_path
      */
     private static $_css_cache_path = "/public/stylesheets/cache/";
 
     /**
-     * @var string $_js_cache_path Directory to put combined and minified js files
+     * Directory to put combined and minified js files
+     *
+     * @var string $_js_cache_path
      */
     private static $_js_cache_path = "/public/javascript/cache/";
 
     /**
-     * @var array $local_js_uncombined js files that remain uncombined
+     * Javascript files that remain uncombined
+     *
+     * @var array $local_js_uncombined
      */
     public $local_js_uncombined = [
         'jquery'      => 'public/javascript/jquery-3.2.1.min.js',
@@ -88,7 +100,9 @@ class Assets
      ];
 
     /**
-     * @var array $local_js_combined All js files to be combined
+     * All js files to be combined
+     *
+     * @var array $local_js_combined
      */
     public $local_js_combined = [
         'color'       => 'public/javascript/jquery.colorpicker.min.js',
@@ -110,7 +124,9 @@ class Assets
     ];
 
     /**
-     * @var array $admin_js Array of all js files to be added in admin tab
+     * Array of all js files to be added in admin tab
+     *
+     * @var array $admin_js
      */
     public $admin_js = [
         'wysiwyg'  => 'public/javascript/trumbowyg.min.js',
@@ -119,28 +135,44 @@ class Assets
     ];
 
     /**
-     * @var array $remote_js Array of remote js files to be swapped in production
+     * Array of remote js files to be swapped in production
+     *
+     * @var array $remote_js
      */
     public $remote_js = [
         'jquery'    => '//code.jquery.com/jquery-3.2.1.min.js'
     ];
 
     /**
-     * @var array $local_css Array of all css files to be minified
+     * Array of all css files to be minified
+     *
+     * @var array $local_css
      */
     public $local_css = [
         'public/stylesheets/raw/styles.css'
     ];
 
     /**
-     * @var array $local_css Array of all css files to be minified
+     * Array of all css files to be minified
+     *
+     * @var array $local_css
      */
     public $admin_css = [
         'public/stylesheets/raw/trumbowyg.css'
     ];
 
+    /**
+     * Active session
+     *
+     * @var boolean $_active_session
+     */
     private $_active_session;
 
+    /**
+     * Active session
+     *
+     * @var object $_user
+     */
     private $_user;
 
     /**
@@ -329,6 +361,11 @@ class Assets
         return $results;
     }
 
+    /**
+     * Get the user object from an active session
+     *
+     * @return object $this
+     */
     private function _getUser()
     {
         if ($this->_active_session) {

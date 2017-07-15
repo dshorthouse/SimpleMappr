@@ -1,14 +1,16 @@
 <?php
 
 /**
- * AcceptedProjections trait
+ * SimpleMappr - create point maps for publications and presentations
  *
- * PHP Version >= 5.5
+ * PHP Version >= 5.6
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2010-2017 David P. Shorthouse
- * @link    http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -32,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Constants;
 
@@ -49,7 +50,9 @@ namespace SimpleMappr\Constants;
 trait AcceptedProjections
 {
     /**
-     * @var array $projections Acceptable projections in PROJ format, with over switch
+     * Acceptable projections in PROJ format, with over switch
+     *
+     * @var array $projections
      */
     public static $projections = [
         'epsg:4326'   => [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -53,52 +53,72 @@ use SimpleMappr\Controller\User;
 class Map implements RestMethods
 {
     /**
-     * @var int $total Total number of records
+     * Total number of records
+     *
+     * @var int $total
      */
     public $total;
 
     /**
-     * @var string $filter_username Filter results by username
+     * Filter results by username
+     *
+     * @var string $filter_username
      */
     public $filter_username;
 
     /**
-     * @var int $filter_uid Filter results by user identifier
+     * Filter results by user identifier
+     *
+     * @var int $filter_uid
      */
     public $filter_uid;
 
     /**
-     * @var string $sort Database column upon which to sort
+     * Database column upon which to sort
+     *
+     * @var string $sort
      */
     public $sort;
 
     /**
-     * @var string $dir Direction to sort: asc or desc
+     * Direction to sort: asc or desc
+     *
+     * @var string $dir
      */
     public $dir;
 
     /**
-     * @var object $results Database query results
+     * Database query results
+     *
+     * @var object $results
      */
     public $results;
 
     /**
-     * @var string $search Search string
+     * Search string
+     *
+     * @var string $search
      */
     public $search;
 
     /**
-     * @var int $row_count Database query row count
+     * Database query row count
+     *
+     * @var int $row_count
      */
     public $row_count;
 
     /**
-     * @var int $_role Role for user defined in $roles
+     * Role for user defined in $roles
+     *
+     * @var int $_role
      */
     private $_user;
 
     /**
-     * @var object $_db Database connection object
+     * Database connection object
+     *
+     * @var object $_db
      */
     private $_db;
 
@@ -287,8 +307,8 @@ class Map implements RestMethods
     /**
      * Implemented update method
      *
-     * @param array $content Any parameters
-     * @param string $where The where clause
+     * @param array  $content Any parameters
+     * @param string $where   The where clause
      *
      * @return void
      */

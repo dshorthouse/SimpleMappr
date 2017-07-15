@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr;
 
@@ -50,7 +50,9 @@ namespace SimpleMappr;
 class Logger
 {
     /**
-     * @var string $_filename Filename for logging
+     * Filename for logging
+     *
+     * @var string $_filename
      */
     private $_filename;
 

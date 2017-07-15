@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -61,15 +61,17 @@ use SimpleMappr\Utility;
 class Pptx extends Mappr
 {
     /**
-     * @var int $_slidepadding Padding around edges of slide
+     * Padding around edges of slide
+     *
+     * @var int $_slidepadding
      */
     private $_slidepadding = 25;
 
     /**
-    * Implement getRequest method
-    *
-    * @return obj
-    */
+     * Implement getRequest method
+     *
+     * @return obj
+     */
     public function getRequest()
     {
         return Request::getRequest();

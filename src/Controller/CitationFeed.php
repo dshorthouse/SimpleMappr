@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -53,14 +53,24 @@ use \Suin\RSSWriter\Item;
  */
 class CitationFeed extends Citation
 {
-    /** @var object $_feed An RSS feed Object */
+    /**
+     * An RSS feed Object
+     *
+     * @var object $_feed
+     */
     private $_feed;
 
-    /** @var object $_channel An RSS channel Object */
+    /**
+     * An RSS channel Object
+     *
+     * @var object $_channel
+     */
     private $_channel;
 
     /**
      * Make the Channel
+     *
+     * @return object $this
      */
     public function makeChannel()
     {
@@ -87,9 +97,11 @@ class CitationFeed extends Citation
     {
         $week_ago = time() - (7 * 24 * 60 * 60);
         $entries = $this->index();
-        usort($entries['citations'], function ($a, $b) {
-            return $b->year > $a->year;
-        });
+        usort(
+            $entries['citations'], function ($a, $b) {
+                return $b->year > $a->year;
+            }
+        );
         foreach ($entries['citations'] as $citation) {
             $url = ($citation->doi) ? "https://doi.org/{$citation->doi}" : $citation->link;
             if ($url && $citation->created >= $week_ago) {

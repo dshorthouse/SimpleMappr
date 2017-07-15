@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -52,32 +52,44 @@ use SimpleMappr\Database;
 class User implements RestMethods
 {
     /**
-     * @var string $sort Database column upon which to sort
+     * Database column upon which to sort
+     *
+     * @var string $sort
      */
     public $sort;
 
     /**
-     * @var string $dir Direction to sort: asc or desc
+     * Direction to sort: asc or desc
+     *
+     * @var string $dir
      */
     public $dir;
 
     /**
-     * @var object $results Database query results
+     * Database query results
+     *
+     * @var object $results
      */
     public $results;
 
     /**
-     * @var string $_hash Hash stored in cookie
+     * Hash stored in cookie
+     *
+     * @var string $_hash
      */
     private $_hash;
 
     /**
-     * @var object $_db Database connection object
+     * Database connection object
+     *
+     * @var object $_db
      */
     private $_db;
 
     /**
-     * @var array $roles Defined roles to assigned to a user
+     * Defined roles to assigned to a user
+     *
+     * @var array $roles
      */
     public static $roles = [
         1 => 'user',
@@ -131,6 +143,8 @@ class User implements RestMethods
 
     /**
      * Determine if account belongs to an administrator
+     *
+     * @param object $user User object
      *
      * @return bool
      */
@@ -209,7 +223,7 @@ class User implements RestMethods
     }
 
     /**
-     * show_by_hash
+     * Show a user by their hash
      *
      * @param string $hash The User hash
      *
@@ -225,7 +239,7 @@ class User implements RestMethods
     }
 
     /**
-     * show_by_identifier
+     * Show a user by their identifier
      *
      * @param string $identifier The User identifier
      *
@@ -256,8 +270,8 @@ class User implements RestMethods
     /**
      * Implemented update method
      *
-     * @param array $content The array of content
-     * @param string $where The where clause
+     * @param array  $content The array of content
+     * @param string $where   The where clause
      *
      * @return object
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -59,17 +59,23 @@ use SimpleMappr\Constants\AcceptedProjections;
 class Api extends Mappr
 {
     /**
-     * @var array $_coord_cols Coordinates for each column of data
+     * Coordinates for each column of data
+     *
+     * @var array $_coord_cols
      */
     private $_coord_cols = [];
 
     /**
-     * @var array $_bad_points Coordinates that are not on Earth
+     * Coordinates that are not on Earth
+     *
+     * @var array $_bad_points
      */
     private $_bad_points = [];
 
     /**
-     * @var array $_bad_drawings WKT that do not render
+     * WKT that do not render
+     *
+     * @var array $_bad_drawings
      */
     private $_bad_drawings = [];
 
@@ -660,11 +666,13 @@ class Api extends Mappr
             $this->legend = $csv->fetchOne();
             $results = $csv->setOffset(1)->fetchAssoc($this->legend);
         } else {
-            $results = $csv->fetch(function ($row) {
-                $key = (string)$row[0];
-                array_shift($row);
-                return [$key => join(",", $row)];
-            });
+            $results = $csv->fetch(
+                function ($row) {
+                    $key = (string)$row[0];
+                    array_shift($row);
+                    return [$key => join(",", $row)];
+                }
+            );
         }
         foreach ($results as $row) {
             foreach ($row as $key => $value) {

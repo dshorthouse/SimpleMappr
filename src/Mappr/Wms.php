@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Mappr;
 
@@ -56,17 +56,23 @@ use SimpleMappr\Utility;
 class Wms extends Mappr
 {
     /**
-     * @var object $_req Request object for WFS and WMS
+     * Request object for WFS and WMS
+     *
+     * @var object $_req
      */
     private $_req = "";
 
     /**
-     * @var array $_filter_columns Columns to filter on
+     * Columns to filter on
+     *
+     * @var array $_filter_columns
      */
     private $_filter_columns = [];
 
     /**
-     * @var array $_wms_layers Layers to include in WMS request
+     * Layers to include in WMS request
+     *
+     * @var array $_wms_layers
      */
     private $_wms_layers = [];
 

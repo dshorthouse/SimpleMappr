@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Controller;
 
@@ -52,19 +52,25 @@ use SimpleMappr\Database;
 class Place implements RestMethods
 {
     /**
-     * @var object $results Query result object
+     * Query result object
+     *
+     * @var object $results
      */
     public $results;
 
     /**
-     * @var int $id Identifier for database query
+     * Identifier for database query
+     *
+     * @var int $id
      */
     public $id;
 
     /**
-     * @var object $_db Database connection instance
+     * Database connection instance
+     *
+     * @var object $db
      */
-    protected $_db;
+    private $_db;
 
     /**
      * Constructor
@@ -113,7 +119,7 @@ class Place implements RestMethods
      *
      * @param int $id identifier for places.
      *
-     * @return obj result   A single resultset
+     * @return object result A single resultset
      */
     public function show($id)
     {
@@ -135,8 +141,8 @@ class Place implements RestMethods
     /**
      * Implemented update method.
      *
-     * @param array $content The array of content
-     * @param string $where The where string
+     * @param array  $content The array of content
+     * @param string $where   The where string
      *
      * @return void
      */

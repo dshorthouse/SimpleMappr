@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SimpleMappr - create point maps for publications and presentations
  *
@@ -33,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr;
 
@@ -52,7 +52,9 @@ use SimpleMappr\Controller\User;
 class Session
 {
     /**
-     * @var array $accepted_locales Accepted locales for i18n
+     * Accepted locales for i18n
+     *
+     * @var array $accepted_locales
      */
     public static $accepted_locales = [
         'en_US' => [
@@ -70,27 +72,37 @@ class Session
         ];
 
     /**
-     * @var string $domain i18n domain
+     * Internationalized (i18n) domain
+     *
+     * @var string $domain
      */
     public static $domain = "messages";
 
     /**
-     * @var string $_token RPXNOW public token
+     * RPXNOW public token
+     *
+     * @var string $_token
      */
     private $_token;
 
     /**
-     * @var string $_locale PHP regionalized locale
+     * PHP regionalized locale
+     *
+     * @var string $_locale
      */
     private $_locale;
 
     /**
-     * @var string $_locale_code PHP regionalized locale with encoding
+     * PHP regionalized locale with encoding
+     *
+     * @var string $_locale_code
      */
     private $_locale_code;
 
     /**
-     * @var array $_auth_info RPXNOW authentication response
+     * RPXNOW authentication response
+     *
+     * @var array $_auth_info
      */
     private $_auth_info = [];
 
@@ -123,7 +135,10 @@ class Session
     public static function destroy()
     {
         self::setSession();
-        $locale = isset($_SESSION['simplemappr']) ? $_SESSION['simplemappr']['locale'] : null;
+        $locale = null;
+        if (isset($_SESSION['simplemappr'])) {
+            $locale = $_SESSION['simplemappr']['locale'];
+        }
         session_unset();
         session_destroy();
         setcookie("simplemappr", "", time() - 3600, "/", Utility::parsedURL()['host']);
@@ -143,7 +158,10 @@ class Session
             exit();
         }
 
-        $cookie = isset($_COOKIE["simplemappr"]) ? (array)json_decode(stripslashes($_COOKIE["simplemappr"])) : ["locale" => "en_US"];
+        $cookie = ["locale" => "en_US"];
+        if (isset($_COOKIE["simplemappr"])) {
+            $cookie = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
+        }
 
         if (!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
             self::redirect(MAPPR_URL . self::makeLocaleParam($cookie["locale"]));
@@ -273,7 +291,10 @@ class Session
     private function _getLocale()
     {
         $this->_locale = Utility::loadParam('locale', 'en_US');
-        $this->_locale_code = (array_key_exists($this->_locale, self::$accepted_locales)) ? self::$accepted_locales[$this->_locale]['code'] : 'en_US.UTF-8';
+        $this->_locale_code = 'en_US.UTF-8';
+        if (array_key_exists($this->_locale, self::$accepted_locales)) {
+            $this->_locale_code = self::$accepted_locales[$this->_locale]['code'];
+        }
         return $this;
     }
 
@@ -299,7 +320,11 @@ class Session
      */
     private function _makeCall()
     {
-        $post_data = ['token' => $this->_token, 'apiKey' => RPX_KEY, 'format' => 'json'];
+        $post_data = [
+            'token' => $this->_token,
+            'apiKey' => RPX_KEY,
+            'format' => 'json'
+        ];
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

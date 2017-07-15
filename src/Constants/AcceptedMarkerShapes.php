@@ -1,14 +1,16 @@
 <?php
 
 /**
- * AcceptedMarkerShapes trait
+ * SimpleMappr - create point maps for publications and presentations
  *
  * PHP Version >= 5.6
  *
- * @author  David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
  * @copyright 2010-2017 David P. Shorthouse
- * @link    http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
  *
  * MIT LICENSE
  *
@@ -32,7 +34,6 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 namespace SimpleMappr\Constants;
 
@@ -49,7 +50,9 @@ namespace SimpleMappr\Constants;
 trait AcceptedMarkerShapes
 {
     /**
-     * @var array $shapes Accepted marker shapes
+     * Accepted marker shapes
+     *
+     * @var array $shapes
      */
     public static $shapes = [
         'general' => [
@@ -63,7 +66,9 @@ trait AcceptedMarkerShapes
             'square' => ['style' => 'square', 'name' => 'square (s)'],
             'triangle' => ['style' => 'triangle', 'name' => 'triangle (s)'],
             'hexagon' => ['style' => 'hexagon', 'name' => 'hexagon (s)'],
-            'inversetriangle' => ['style' => 'inversetriangle', 'name' => 'inverse triangle (s)']
+            'inversetriangle' => [
+                'style' => 'inversetriangle', 'name' => 'inverse triangle (s)'
+                ]
         ],
         'open' => [
             'opencircle' => ['style' => 'circle', 'name' => 'circle (o)'],
@@ -71,7 +76,9 @@ trait AcceptedMarkerShapes
             'opensquare' => ['style' => 'square', 'name' => 'square (o)'],
             'opentriangle' => ['style' => 'triangle', 'name' => 'triangle (o)'],
             'openhexagon' => ['style' => 'hexagon', 'name' => 'hexagon (o)'],
-            'inverseopentriangle' => ['style' => 'inversetriangle', 'name' => 'inverse triangle (o)']
+            'inverseopentriangle' => [
+                'style' => 'inversetriangle', 'name' => 'inverse triangle (o)'
+                ]
         ]
     ];
 
@@ -82,13 +89,17 @@ trait AcceptedMarkerShapes
      */
     public static function shapes()
     {
-        return array_merge(array_keys(self::$shapes['general']), array_keys(self::$shapes['closed']), array_keys(self::$shapes['open']));
+        return array_merge(
+            array_keys(self::$shapes['general']),
+            array_keys(self::$shapes['closed']),
+            array_keys(self::$shapes['open'])
+        );
     }
 
     /**
      * Return vertices for a shape
      *
-     * @param string $type   A shape, eg 'plus', 'cross'
+     * @param string $type A shape, eg 'plus', 'cross'
      *
      * @return array Vertices for the shape
      */
@@ -96,103 +107,103 @@ trait AcceptedMarkerShapes
     {
         $vertices = [];
         switch ($type) {
-            case 'plus':
-                $vertices = [
-                    0.5, 0,
-                    0.5, 1,
-                    -99, -99,
-                    0, 0.5,
-                    1, 0.5
-                ];
-                break;
+        case 'plus':
+            $vertices = [
+            0.5, 0,
+            0.5, 1,
+            -99, -99,
+            0, 0.5,
+            1, 0.5
+            ];
+            break;
 
-            case 'cross':
-                $vertices = [
-                    0, 0,
-                    1, 1,
-                    -99, -99,
-                    0, 1,
-                    1, 0
-                ];
-                break;
+        case 'cross':
+            $vertices = [
+            0, 0,
+            1, 1,
+            -99, -99,
+            0, 1,
+            1, 0
+            ];
+            break;
 
-            case 'asterisk':
-                $vertices = [
-                    0, 0,
-                    1, 1,
-                    -99, -99,
-                    0, 1,
-                    1, 0,
-                    -99, -99,
-                    0.5, 0,
-                    0.5, 1,
-                    -99, -99,
-                    0, 0.5,
-                    1, 0.5
-                ];
-                break;
+        case 'asterisk':
+            $vertices = [
+            0, 0,
+            1, 1,
+            -99, -99,
+            0, 1,
+            1, 0,
+            -99, -99,
+            0.5, 0,
+            0.5, 1,
+            -99, -99,
+            0, 0.5,
+            1, 0.5
+            ];
+            break;
 
-            case 'circle':
-                $vertices = [
-                    1, 1
-                ];
-                break;
+        case 'circle':
+            $vertices = [
+            1, 1
+            ];
+            break;
 
-            case 'star':
-                $vertices = [
-                    0, 0.375,
-                    0.35, 0.365,
-                    0.5, 0,
-                    0.65, 0.375,
-                    1, 0.375,
-                    0.75, 0.625,
-                    0.875, 1,
-                    0.5, 0.75,
-                    0.125, 1,
-                    0.25, 0.625,
-                    0, 0.375
-                ];
-                break;
+        case 'star':
+            $vertices = [
+            0, 0.375,
+            0.35, 0.365,
+            0.5, 0,
+            0.65, 0.375,
+            1, 0.375,
+            0.75, 0.625,
+            0.875, 1,
+            0.5, 0.75,
+            0.125, 1,
+            0.25, 0.625,
+            0, 0.375
+            ];
+            break;
 
-            case 'square':
-                $vertices = [
-                    0, 1,
-                    0, 0,
-                    1, 0,
-                    1, 1,
-                    0, 1
-                ];
-                break;
+        case 'square':
+            $vertices = [
+            0, 1,
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1
+            ];
+            break;
 
-            case 'triangle':
-                $vertices = [
-                    0, 1,
-                    0.5, 0,
-                    1, 1,
-                    0, 1
-                ];
-                break;
+        case 'triangle':
+            $vertices = [
+            0, 1,
+            0.5, 0,
+            1, 1,
+            0, 1
+            ];
+            break;
 
-            case 'inversetriangle':
-                $vertices = [
-                    0, 0,
-                    1, 0,
-                    0.5, 1,
-                    0, 0
-                ];
-                break;
+        case 'inversetriangle':
+            $vertices = [
+            0, 0,
+            1, 0,
+            0.5, 1,
+            0, 0
+            ];
+            break;
 
-            case 'hexagon':
-                $vertices = [
-                    0.23, 0,
-                    0, 0.5,
-                    0.23, 1,
-                    0.77, 1,
-                    1, 0.5,
-                    0.77, 0,
-                    0.23, 0
-                ];
-                break;
+        case 'hexagon':
+            $vertices = [
+            0.23, 0,
+            0, 0.5,
+            0.23, 1,
+            0.77, 1,
+            1, 0.5,
+            0.77, 0,
+            0.23, 0
+            ];
+            break;
         }
 
         return $vertices;
