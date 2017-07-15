@@ -140,6 +140,16 @@ class CoordinateConversionTest extends TestCase
     }
 
     /**
+     * Test that flipped coordinate in DMS with comma is converted.
+     */
+    public function test_make_coordinates_8()
+    {
+        $coord = "89° 40' 31\" W, 52° 32' 25\" N";
+        $dd = Utility::makeCoordinates($coord);
+        $this->assertEquals($dd[0], 52.540277777778);
+        $this->assertEquals($dd[1], -89.675277777778);
+    }
+    /**
      * Test that a single coordinate in DMS with 'd' is converted.
      */
     public function test_dms_to_deg_1()

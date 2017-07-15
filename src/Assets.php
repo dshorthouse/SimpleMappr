@@ -184,10 +184,12 @@ class Assets
      */
     public static function flushCache($output = true)
     {
-        foreach (glob(dirname(__DIR__) . self::$_css_cache_path . "*.{css}", GLOB_BRACE) as $file) {
+        $wildcard_css = dirname(__DIR__) . self::$_css_cache_path . "*.{css}";
+        $wildcard_js = dirname(__DIR__) . self::$_js_cache_path . "*.{js}";
+        foreach (glob($wildcard_css, GLOB_BRACE) as $file) {
             unlink($file);
         }
-        foreach (glob(dirname(__DIR__) . self::$_js_cache_path . "*.{js}", GLOB_BRACE) as $file) {
+        foreach (glob($wildcard_js, GLOB_BRACE) as $file) {
             unlink($file);
         }
 
@@ -306,7 +308,8 @@ class Assets
      */
     public function getJSFooter()
     {
-        $header  = "<script src=\"public/javascript/head.load.min.js\"></script>" . "\n";
+        $header  = "<script src=\"public/javascript/head.load.min.js\">";
+        $header .= "</script>" . "\n";
         $header .= "<script>";
         $session = ($this->_active_session) ? "\"true\"" : "\"false\"";
         $namespace = (ENVIRONMENT == "development") ? "simplemappr" : "compiled";
@@ -317,10 +320,20 @@ class Assets
         }
         $header .= join(",", $headjs);
         $header .= ");" . "\n";
-        $header .= "head.ready(\"".$namespace."\", function () { SimpleMappr.init({ baseUrl : \"".MAPPR_URL."\", active : ".$session.", maxTextareaCount : ".MAXNUMTEXTAREA." }); });" . "\n";
+        $header .= "head.ready(\"".$namespace."\", function () { ";
+        $header .= "SimpleMappr.init(";
+        $header .= "{ ";
+        $header .= "baseUrl : \"".MAPPR_URL."\", ";
+        $header .= "active : ".$session.", ";
+        $header .= "maxTextareaCount : ".MAXNUMTEXTAREA;
+        $header .= "}";
+        $header .= ");";
+        $header .= "});" . "\n";
         if ($this->_active_session) {
             if (User::isAdministrator($this->_user)) {
-                $header .= "head.ready(\"admin\", function () { SimpleMapprAdmin.init(); });";
+                $header .= "head.ready(\"admin\", function () {";
+                $header .= "SimpleMapprAdmin.init();";
+                $header .= "});";
             }
         }
         $header .= "</script>" . "\n";
@@ -369,7 +382,7 @@ class Assets
     private function _getUser()
     {
         if ($this->_active_session) {
-            $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
+            $this->_user = (new User)->showByHash($_SESSION['simplemappr']['hash']);
         }
         return $this;
     }
@@ -418,7 +431,7 @@ class Assets
     }
 
     /**
-     * Add existing, minified javascript to header or create if does not already exist
+     * Add existing, minified javascript to header or create it
      *
      * @return object $this
      */

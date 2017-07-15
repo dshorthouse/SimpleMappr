@@ -127,7 +127,10 @@ class Kml implements RestMethods
      */
     public function create($content)
     {
-        $this->file_name = (array_key_exists("file_name", $content)) ? Utility::cleanFilename($content["file_name"]) : time();
+        $this->file_name = time();
+        if (array_key_exists("file_name", $content)) {
+            $this->file_name = Utility::cleanFilename($content["file_name"]);
+        }
         $this->coords = $content["coords"];
         return $this->_createContent();
     }
@@ -209,13 +212,16 @@ class Kml implements RestMethods
             $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
             $this->_kml->writeElement('name', $this->getPlacemark($key, 0, 'name'));
             foreach ($placemarks as $id => $placemark) {
+                $name = $this->getPlacemark($key, $id, 'name');
+                $description = $this->getPlacemark($key, $id, 'coordinate');
+                $coordinates = $this->getPlacemark($key, $id, 'coordinate') . ',0';
                 $this->_kml->startElement('Placemark');
                 $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
-                $this->_kml->writeElement('name', $this->getPlacemark($key, $id, 'name'));
-                $this->_kml->writeElement('description', $this->getPlacemark($key, $id, 'coordinate'));
+                $this->_kml->writeElement('name', $name);
+                $this->_kml->writeElement('description', $description);
                 $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
                 $this->_kml->startElement('Point');
-                $this->_kml->writeElement('coordinates', $this->getPlacemark($key, $id, 'coordinate') . ',0');
+                $this->_kml->writeElement('coordinates', $coordinates);
                 $this->_kml->endElement(); //end Point
                 $this->_kml->endElement(); //end Placemark
             }
@@ -302,19 +308,28 @@ class Kml implements RestMethods
     {
         $count = count($this->coords)-1;
         for ($j=0; $j<=$count; $j++) {
-            $title = $this->coords[$j]['title'] ? $this->coords[$j]['title'] : "";
+            $title = "";
+            if ($this->coords[$j]['title']) {
+                $title = $this->coords[$j]['title'];
+            }
 
             if (trim($this->coords[$j]['data'])) {
-                $whole = trim($this->coords[$j]['data']);  //grab the whole textarea
-                $row = explode("\n", Utility::removeEmptyLines($whole));  //split the lines that have data
+                $whole = trim($this->coords[$j]['data']);
+                $row = explode("\n", Utility::removeEmptyLines($whole));
 
                 $point_key = 0;
                 foreach ($row as $loc) {
                     $coord_array = Utility::makeCoordinates($loc);
                     $coord = new \stdClass();
-                    $coord->x = ($coord_array[1]) ? Utility::cleanCoord($coord_array[1]) : null;
-                    $coord->y = ($coord_array[0]) ? Utility::cleanCoord($coord_array[0]) : null;
-                    if (Utility::onEarth($coord) && $title != "") {  //only add point when data are good & a title
+                    $coord->x = null;
+                    $coord->y = null;
+                    if ($coord_array[1]) {
+                        $coord->x = Utility::cleanCoord($coord_array[1]);
+                    }
+                    if ($coord_array[0]) {
+                        $coord->y = Utility::cleanCoord($coord_array[0]);
+                    }
+                    if (Utility::onEarth($coord) && $title != "") {
                         $this->_setPlacemark($j, $point_key, "name", $title);
                         $this->_setPlacemark($j, $point_key, "coordinate", $coord->x . "," . $coord->y);
                         $point_key++;

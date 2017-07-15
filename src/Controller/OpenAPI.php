@@ -215,7 +215,8 @@ class OpenApi implements RestMethods
     private function _apiParameters($request_method = "GET")
     {
         array_walk(
-            AcceptedProjections::$projections, function ($val, $key) use (&$projections) {
+            AcceptedProjections::$projections, 
+            function ($val, $key) use (&$projections) {
                 $projections[] = $key . " (" . $val['name'] . ")";
             }
         );
@@ -491,7 +492,7 @@ class OpenApi implements RestMethods
         [
           'name' => 'watermark',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'if watermark=false is included, the SimpleMappr .',
+          'description' => 'if watermark=false is included, the SimpleMappr watermark if not included.',
           'required' => false,
           'type' => 'boolean'
         ]

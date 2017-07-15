@@ -126,13 +126,32 @@ class Citation implements RestMethods
      */
     public function create($content)
     {
-        $year = array_key_exists('year', $content) ? (int)$content["year"] : null;
-        $reference = array_key_exists('reference', $content) ? $content["reference"] : null;
-        $author = array_key_exists('first_author_surname', $content) ? $content["first_author_surname"] : null;
-        $doi = array_key_exists('doi', $content) ? $content["doi"] : null;
-        $link = array_key_exists('link', $content) ? $content["link"] : null;
+        $year = null;
+        $reference = null;
+        $author = null;
+        $doi = null;
+        $link = null;
 
-        if (empty($year) || empty($reference) || empty($author)) {
+        if (array_key_exists('year', $content)) {
+            $year = (int)$content["year"];
+        }
+        if (array_key_exists('reference', $content)) {
+            $reference = $content["reference"];
+        }
+        if (array_key_exists('first_author_surname', $content)) {
+            $author = $content["first_author_surname"];
+        }
+        if (array_key_exists('doi', $content)) {
+            $doi = $content["doi"];
+        }
+        if (array_key_exists('link', $content)) {
+            $link = $content["link"];
+        }
+
+        if (empty($year)
+            || empty($reference)
+            || empty($author)
+        ) {
             $this->_response('error');
             exit();
         }

@@ -78,8 +78,10 @@ class Database
      */
     private function __construct()
     {
-        $creds = $this->_credentials(Yaml::parse(file_get_contents(ROOT . '/config/phinx.yml')));
-        $this->_link = new PDO($creds['conn'], $creds['user'], $creds['pass'], [PDO::ATTR_PERSISTENT => true]);
+        $db_array = Yaml::parse(file_get_contents(ROOT . '/config/phinx.yml'));
+        $config = [PDO::ATTR_PERSISTENT => true];
+        $cred = $this->_credentials($db_array);
+        $this->_link = new PDO($cred['conn'], $cred['user'], $cred['pass'], $config);
         $this->_link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
@@ -320,9 +322,12 @@ class Database
         $host = $config['environments'][ENVIRONMENT]['host'];
         $db = $config['environments'][ENVIRONMENT]['name'];
         $charset = $config['environments'][ENVIRONMENT]['charset'];
+        $conn  = $adapter . ':host=' . $host . ';';
+        $conn .= 'dbname=' . $db . ';';
+        $conn .= 'charset=' . $charset;
 
         return [
-            'conn' => $adapter . ':host=' . $host . ';dbname=' . $db . ';charset=' . $charset,
+            'conn' => $conn,
             'user' =>  $config['environments'][ENVIRONMENT]['user'],
             'pass' => $config['environments'][ENVIRONMENT]['pass']
         ];

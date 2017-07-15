@@ -74,16 +74,19 @@ class CitationFeed extends Citation
      */
     public function makeChannel()
     {
+        $description = "Channel of recent publications that have used SimpleMappr";
+        $rssURL = MAPPR_URL . "/citation.rss";
+
         $this->_feed = new Feed();
         $this->_channel = new Channel();
         $this->_channel
             ->title('SimpleMappr Recent Citations')
-            ->description('Channel of recent publications that have used SimpleMappr')
+            ->description($description)
             ->url(MAPPR_URL)
             ->language('en-US')
             ->pubDate(time())
             ->ttl(60)
-            ->pubsubhubbub(MAPPR_URL . "/citation.rss", "https://pubsubhubbub.appspot.com/")
+            ->pubsubhubbub($rssURL, "https://pubsubhubbub.appspot.com/")
             ->appendTo($this->_feed);
         return $this;
     }
@@ -103,7 +106,10 @@ class CitationFeed extends Citation
             }
         );
         foreach ($entries['citations'] as $citation) {
-            $url = ($citation->doi) ? "https://doi.org/{$citation->doi}" : $citation->link;
+            $url = $citation->link;
+            if ($citation->doi) {
+                $url = "https://doi.org/{$citation->doi}";
+            }
             if ($url && $citation->created >= $week_ago) {
                 $item = new Item();
                 $item

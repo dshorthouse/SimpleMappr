@@ -499,7 +499,7 @@ class Router
 
         $session = [];
         if (isset($_SESSION['simplemappr'])) {
-            $session = (array)(new User)->show_by_hash($_SESSION['simplemappr']['hash'])->results;
+            $session = (array)(new User)->showByHash($_SESSION['simplemappr']['hash'])->results;
         }
         $twig->addGlobal('session', $session);
         $twig->addGlobal('locale', $locale);

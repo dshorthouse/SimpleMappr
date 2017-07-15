@@ -211,11 +211,13 @@ class Utility
     {
         $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms'\"]/i", "/-\s+(?=\d)/"], [" ", "", "-"], $point);
         if (preg_match("/[NSEWO]/", $loc) != 0) {
-            $coord = preg_split("/[,;]/", $loc); //split by comma or semicolon
+            $coord = preg_split("/[,;]/", $loc);
             if (count($coord) != 2 || empty($coord[1])) {
                 return [null, null];
             }
-            $coord = (preg_match("/[EWO]/", $coord[1]) != 0) ? $coord : array_reverse($coord);
+            if (preg_match("/[EWO]/", $coord[0]) == 1) {
+                $coord = array_reverse($coord);
+            }
             return [self::dmsToDeg(trim($coord[0])),self::dmsToDeg(trim($coord[1]))];
         } else {
             $coord = preg_split("/[\s,;]+/", trim(preg_replace("/[^0-9-\s,;.]/", "", $loc)));
@@ -271,7 +273,7 @@ class Utility
     }
 
     /**
-     * Check a DD coordinate object and return true if it fits on globe, false if not
+     * Check a DD coordinate object and return true if it fits on globe
      *
      * @param obj $coord (x,y) coordinates
      *

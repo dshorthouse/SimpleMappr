@@ -127,7 +127,7 @@ class Map implements RestMethods
      */
     public function __construct()
     {
-        $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
+        $this->_user = (new User)->showByHash($_SESSION['simplemappr']['hash']);
         $this->_db = Database::getInstance();
     }
 

@@ -91,7 +91,7 @@ class Share implements RestMethods
      */
     public function __construct()
     {
-        $this->_user = (new User)->show_by_hash($_SESSION['simplemappr']['hash']);
+        $this->_user = (new User)->showByHash($_SESSION['simplemappr']['hash']);
         $this->_db = Database::getInstance();
     }
 
@@ -105,10 +105,16 @@ class Share implements RestMethods
     public function index($params)
     {
         $this->dir = "desc";
-        if (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) {
+        $this->sort = "";
+
+        if (array_key_exists('dir', $params) 
+            && in_array(strtolower($params['dir']), ["asc", "desc"])
+        ) {
             $this->dir = $params['dir'];
         }
-        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
+        if (array_key_exists('sort', $params)) {
+            $this->sort =  $params['sort'];
+        }
 
         $order = "m.created {$this->dir}";
         if (!empty($this->sort)) {

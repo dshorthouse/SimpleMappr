@@ -91,10 +91,14 @@ class Place implements RestMethods
     public function index($content)
     {
         if (array_key_exists('filter', $content) && $content["filter"] != "") {
-            $this->_db->prepare("SELECT * FROM stateprovinces WHERE country LIKE :filter");
+            $sql = "SELECT * FROM stateprovinces WHERE country LIKE :filter";
+            $this->_db->prepare($sql);
             $this->_db->bindParam(':filter', '%'.$content["filter"].'%', 'string');
         } elseif (array_key_exists('term', $content) || $this->id) {
-            $term = (array_key_exists('term', $content)) ? $content["term"] : $this->id;
+            $term = $this->id;
+            if (array_key_exists('term', $content)) {
+                $term = $content["term"];
+            }
             $this->_db->prepare(
                 "SELECT DISTINCT
                     sp.country as label, sp.country as value
@@ -108,7 +112,8 @@ class Place implements RestMethods
             );
             $this->_db->bindParam(':term', $term.'%', 'string');
         } else {
-            $this->_db->prepare("SELECT * FROM stateprovinces ORDER BY country, stateprovince");
+            $sql = "SELECT * FROM stateprovinces ORDER BY country, stateprovince";
+            $this->_db->prepare($sql);
         }
         $this->results = $this->_db->fetchAllObject();
         return $this;

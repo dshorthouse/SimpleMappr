@@ -128,11 +128,16 @@ class User implements RestMethods
             return false;
         }
 
-        $user = (new User)->show_by_hash($_SESSION['simplemappr']['hash'])->results;
-        if ($role == 'user' && (self::$roles[$user->role] == 'user' || self::$roles[$user->role] == 'administrator')) {
+        $user = (new User)->showByHash($_SESSION['simplemappr']['hash'])->results;
+        if ($role == 'user'
+            && (self::$roles[$user->role] == 'user'
+            || self::$roles[$user->role] == 'administrator')
+        ) {
             session_write_close();
             return true;
-        } elseif ($role == 'administrator' && self::$roles[$user->role] == 'administrator') {
+        } elseif ($role == 'administrator'
+            && self::$roles[$user->role] == 'administrator'
+        ) {
             session_write_close();
             return true;
         } else {
@@ -173,13 +178,25 @@ class User implements RestMethods
      */
     public function index($params)
     {
-        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
-        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
+        $this->sort = "";
+        $this->dir = "desc";
+
+        if (array_key_exists('sort', $params)) {
+            $this->sort = $params['sort'];
+        }
+        if (array_key_exists('dir', $params) 
+            && in_array(strtolower($params['dir']), ["asc", "desc"])
+        ) {
+            $this->dir = $params['dir'];
+        }
         $order = "u.access {$this->dir}";
 
         if (!empty($this->sort)) {
             $order = "";
-            if ($this->sort == "num" || $this->sort == "access" || $this->sort == "username") {
+            if ($this->sort == "num" 
+                || $this->sort == "access" 
+                || $this->sort == "username"
+            ) {
                 if ($this->sort == "accessed") {
                     $order = "m.";
                 }
@@ -229,7 +246,7 @@ class User implements RestMethods
      *
      * @return object $this
      */
-    public function show_by_hash($hash)
+    public function showByHash($hash)
     {
         $sql = "SELECT * FROM users u WHERE u.hash=:hash";
         $this->_db->prepare($sql);
@@ -245,7 +262,7 @@ class User implements RestMethods
      *
      * @return object $this
      */
-    public function show_by_identifier($identifier)
+    public function showByIdentifier($identifier)
     {
         $sql = "SELECT * FROM users u WHERE u.identifier=:identifier";
         $this->_db->prepare($sql);

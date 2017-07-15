@@ -76,7 +76,7 @@ class Request
         $attr->gridlabel        = (int)Utility::loadParam('gridlabel', 1);
         $attr->download         = Utility::loadParam('download', false);
         $attr->crop             = Utility::loadParam('crop', false);
-        $attr->options          = Utility::loadParam('options', []); //scalebar, legend, border, linethickness
+        $attr->options          = Utility::loadParam('options', []);
         $attr->border_thickness = (float)Utility::loadParam('border_thickness', 1.25);
         $attr->rotation         = (int)Utility::loadParam('rotation', 0);
         $attr->zoom_in          = Utility::loadParam('zoom_in', false);

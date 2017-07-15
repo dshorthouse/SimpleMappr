@@ -141,7 +141,8 @@ class Session
         }
         session_unset();
         session_destroy();
-        setcookie("simplemappr", "", time() - 3600, "/", Utility::parsedURL()['host']);
+        $host = Utility::parsedURL()['host'];
+        setcookie("simplemappr", "", time() - 3600, "/", $host);
         self::redirect(MAPPR_URL . self::makeLocaleParam($locale));
     }
 
@@ -152,7 +153,9 @@ class Session
      */
     public static function updateActivity()
     {
-        if (isset($_REQUEST["locale"]) && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
+        if (isset($_REQUEST["locale"]) 
+            && !array_key_exists($_REQUEST["locale"], self::$accepted_locales)
+        ) {
             http_response_code(404);
             readfile($_SERVER["DOCUMENT_ROOT"].'/error/404.html');
             exit();
@@ -163,15 +166,23 @@ class Session
             $cookie = (array)json_decode(stripslashes($_COOKIE["simplemappr"]));
         }
 
-        if (!isset($_REQUEST["locale"]) && $cookie["locale"] != "en_US") {
+        if (!isset($_REQUEST["locale"]) 
+            && $cookie["locale"] != "en_US"
+        ) {
             self::redirect(MAPPR_URL . self::makeLocaleParam($cookie["locale"]));
-        } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] == "en_US") {
+        } elseif (isset($_REQUEST["locale"]) 
+            && $_REQUEST["locale"] == "en_US"
+        ) {
             if (isset($_COOKIE["simplemappr"])) {
                 $cookie["locale"] = "en_US";
-                setcookie("simplemappr", json_encode($cookie, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utility::parsedURL()['host']);
+                $cookie = json_encode($cookie, JSON_UNESCAPED_UNICODE);
+                $host = Utility::parsedURL()['host'];
+                setcookie("simplemappr", $cookie, COOKIE_TIMEOUT, "/", $host);
             }
             self::redirect(MAPPR_URL);
-        } elseif (isset($_REQUEST["locale"]) && $_REQUEST["locale"] != "en_US") {
+        } elseif (isset($_REQUEST["locale"]) 
+            && $_REQUEST["locale"] != "en_US"
+        ) {
             $cookie["locale"] = $_REQUEST["locale"];
         } else {
         }
@@ -183,7 +194,8 @@ class Session
         }
 
         self::writeSession($cookie);
-        (new User)->update(['access' => time()], 'hash='.$_SESSION["simplemappr"]["hash"]);
+        $where = 'hash='.$_SESSION["simplemappr"]["hash"];
+        (new User)->update(['access' => time()], $where);
     }
 
     /**
@@ -220,25 +232,28 @@ class Session
     /**
      * Select the locale
      *
-     * @return string The locale
+     * @return array The locale
      */
     public static function selectLocale()
     {
-        if (isset($_REQUEST["locale"]) && array_key_exists($_REQUEST["locale"], self::$accepted_locales)) {
-            putenv('LC_ALL='.self::$accepted_locales[$_REQUEST["locale"]]['code']);
-            setlocale(LC_MESSAGES, self::$accepted_locales[$_REQUEST["locale"]]['code']);
+        $locale = self::$accepted_locales['en_US'];
+        if (isset($_REQUEST["locale"]) 
+            && array_key_exists($_REQUEST["locale"], self::$accepted_locales)
+        ) {
+            $locale = self::$accepted_locales[$_REQUEST["locale"]];
+            putenv('LC_ALL='.$locale['code']);
+            setlocale(LC_MESSAGES, $locale['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
             bind_textdomain_codeset(self::$domain, 'UTF-8');
             textdomain(self::$domain);
-            return self::$accepted_locales[$_REQUEST["locale"]];
         } else {
-            putenv('LC_ALL='.self::$accepted_locales['en_US']['code']);
-            setlocale(LC_MESSAGES, self::$accepted_locales['en_US']['code']);
+            putenv('LC_ALL='.$locale['code']);
+            setlocale(LC_MESSAGES, $locale['code']);
             bindtextdomain(self::$domain, $_SERVER["DOCUMENT_ROOT"]."/i18n");
             bind_textdomain_codeset(self::$domain, 'UTF-8');
             textdomain(self::$domain);
-            return self::$accepted_locales['en_US'];
         }
+        return $locale;
     }
 
     /**
@@ -253,7 +268,9 @@ class Session
         self::setSession();
         $_SESSION["simplemappr"] = $data;
         self::closeSession();
-        setcookie("simplemappr", json_encode($data, JSON_UNESCAPED_UNICODE), COOKIE_TIMEOUT, "/", Utility::parsedURL()['host']);
+        $cookie = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $host = Utility::parsedURL()['host'];
+        setcookie("simplemappr", $cookie, COOKIE_TIMEOUT, "/", $host);
     }
 
     /**
@@ -354,13 +371,23 @@ class Session
      */
     private function _makeSession()
     {
-        if (isset($this->_auth_info['stat']) && $this->_auth_info['stat'] == 'ok') {
+        if (isset($this->_auth_info['stat']) 
+            && $this->_auth_info['stat'] == 'ok'
+        ) {
+            $email = "";
+            $displayname = "";
             $profile = $this->_auth_info['profile'];
-
-            $identifier  = $profile['identifier'];
-            $email       = (isset($profile['email'])) ? Utility::checkPlain($profile['email']) : "";
-            $username    = (isset($profile['preferredUsername'])) ? Utility::checkPlain($profile['preferredUsername']) : $email;
-            $displayname = (isset($profile['displayName'])) ? Utility::checkPlain($profile['displayName']) : "";
+            $identifier = $profile['identifier'];
+            if (isset($profile['email'])) {
+                $email = Utility::checkPlain($profile['email']);
+            }
+            $username = $email;
+            if (isset($profile['preferredUsername'])) {
+                $username = Utility::checkPlain($profile['preferredUsername']);
+            }
+            if (isset($profile['displayName'])) {
+                $displayname = Utility::checkPlain($profile['displayName']);
+            }
 
             $user = [
                 'identifier'  => $identifier,
@@ -369,14 +396,29 @@ class Session
                 'email'       => $email
             ];
 
-            $result = (new User)->show_by_identifier($identifier)->results;
+            $result = (new User)->showByIdentifier($identifier)->results;
 
-            $user['hash'] = (!$result) ? password_hash($identifier, PASSWORD_DEFAULT) : $result->hash;
-            $user['uid'] = (!$result) ? (new User)->create($user)->uid : $result->uid;
+            if (!$result) {
+                $user['hash'] = password_hash($identifier, PASSWORD_DEFAULT);
+                $user['uid'] = (new User)->create($user)->uid;
+            } else {
+                $user['hash'] = $result->hash;
+                $user['uid'] = $result->uid;
+            }
+
             $user['locale'] = $this->_locale;
-            $user['role'] = ($result && property_exists($result, 'role')) ? $result->role : 1;
+            $user['role'] = 1;
 
-            (new User)->update(['email' => $email, 'displayname' => $displayname, 'access' => time()], "uid=".$user['uid']);
+            if ($result && property_exists($result, 'role')) {
+                $user['role'] = $result->role;
+            }
+
+            $user_data = [
+                'email' => $email,
+                'displayname' => $displayname,
+                'access' => time()
+            ];
+            (new User)->update($user_data, "uid=".$user['uid']);
 
             unset($user['uid'], $user['role']);
 
