@@ -59,27 +59,30 @@ class PlaceTest extends SimpleMapprTestCase
     {
         $response = $this->httpRequest(MAPPR_URL . "/places");
         $this->assertEquals('text/html; charset=UTF-8', $response['mime']);
+        $html = <<<EOD
+<table class="countrycodes">
+<thead>
+<tr>
+<td class="title">Country<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td>
+<td class="code">ISO</td>
+<td class="title">State/Province</td>
+<td class="code">Code</td>
+<td class="example">Example</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Canada</td>
+<td>CAN</td>
+<td>Alberta</td>
+<td>AB</td>
+<td>CAN[AB]</td>
+</tr>
+</tbody>
+</table>
+EOD;
         $this->assertEquals(
-            '<table class="countrycodes">
-            <thead>
-            <tr>
-            <td class="title">Country<input class="filter-countries" type="text" size="25" maxlength="35" value="" name="filter" /></td>
-            <td class="code">ISO</td>
-            <td class="title">State/Province</td>
-            <td class="code">Code</td>
-            <td class="example">Example</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="odd">
-            <td>Canada</td>
-            <td>CAN</td>
-            <td>Alberta</td>
-            <td>AB</td>
-            <td>CAN[AB]</td>
-            </tr>
-            </tbody>
-            </table>', $response['body']
+            $html, $response['body']
         );
     }
 
