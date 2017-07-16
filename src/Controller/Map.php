@@ -140,11 +140,26 @@ class Map implements RestMethods
      */
     public function index($params)
     {
-        $this->dir = (array_key_exists('dir', $params) && in_array(strtolower($params['dir']), ["asc", "desc"])) ? $params['dir'] : "desc";
-        $this->sort = (array_key_exists('sort', $params)) ? $params['sort'] : "";
-        $this->search = (array_key_exists('search', $params)) ? $params['search'] : "";
-        $this->filter_uid = (array_key_exists('uid', $params)) ? (int)$params['uid'] : null;
+        $this->dir = "desc";
+        $this->sort = "";
+        $this->search = "";
+        $this->filter_uid = null;
         $this->filter_username = "";
+
+        if (array_key_exists('dir', $params)
+            && in_array(strtolower($params['dir'], ["asc", "desc"]))
+        ) {
+            $this->dir = ) ? $params['dir']
+        }
+        if (array_key_exists('sort', $params)) {
+            $this->sort = $params['sort'];
+        }
+        if (array_key_exists('search', $params)) {
+            $this->search = $params['search'];
+        }
+        if (array_key_exists('uid', $params)) {
+            $this->filter_uid = (int)$params['uid'];
+        }
 
         $username = "u.username, ";
         $where['user'] = " WHERE m.uid = :uid";
@@ -194,7 +209,10 @@ class Map implements RestMethods
             }
         }
         if (!empty($this->sort)) {
-            if ($this->sort == "title" || $this->sort == "created" || $this->sort == "updated") {
+            if ($this->sort == "title"
+                || $this->sort == "created"
+                || $this->sort == "updated"
+            ) {
                 $order = "m.".$this->sort . " {$this->dir}";
             }
         }
