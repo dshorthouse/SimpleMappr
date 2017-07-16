@@ -36,12 +36,24 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Citation controller for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class CitationControllerTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Test addition of a citation.
+     *
+     * @return void
      */
     public function testAddCitation()
     {
@@ -62,6 +74,8 @@ class CitationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test response from index is JSON for single citation.
+     *
+     * @return void
      */
     public function testEditCitation()
     {
@@ -83,16 +97,20 @@ class CitationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test deletion of a citation.
+     *
+     * @return void
      */
     public function testDeleteCitation()
     {
-        $citation_id = parent::$db->queryInsert("citations", [
-            'year' => 2015,
-            'reference' => 'Aaarnoldson, Peter. 2015. Here be a new citation. [Retrieved from http://www.simplemappr.net. Accessed 01 January, 2015].',
-            'doi' => '10.XXXX/XXXXXX',
-            'first_author_surname' => 'Aaarnoldson',
-            'created' => time()
-        ]);
+        $citation_id = parent::$db->queryInsert(
+            "citations", [
+                'year' => 2015,
+                'reference' => 'Aaarnoldson, Peter. 2015. Here be a new citation. [Retrieved from http://www.simplemappr.net. Accessed 01 January, 2015].',
+                'doi' => '10.XXXX/XXXXXX',
+                'first_author_surname' => 'Aaarnoldson',
+                'created' => time()
+            ]
+        );
 
         parent::setSession('administrator');
 

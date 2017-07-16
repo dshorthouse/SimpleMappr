@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test sharing maps for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class ToolbarTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test that refreshing the map makes a new image.
+     *
+     * @return void
      */
     public function testRefresh()
     {
@@ -55,6 +67,8 @@ class ToolbarTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that rebuilding the map makes a new image at full extent.
+     *
+     * @return void
      */
     public function testRebuild()
     {
@@ -70,6 +84,8 @@ class ToolbarTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that zooming out from the toolbar makes a new image.
+     *
+     * @return void
      */
     public function testZoomOut()
     {
@@ -85,6 +101,8 @@ class ToolbarTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that a message is shown to user when a title is missing for a layer.
+     *
+     * @return void
      */
     public function testMissingTitle()
     {

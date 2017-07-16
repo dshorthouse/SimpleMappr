@@ -38,12 +38,24 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
+/**
+ * Test Application controller for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
+class ApplicationControllerTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -51,6 +63,8 @@ class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -59,8 +73,10 @@ class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that POST requests to /application.json are accepted.
+     *
+     * @return void
      */
-    public function test_postRequestJSON()
+    public function testPostRequestJSON()
     {
         $response = $this->httpRequest(MAPPR_URL . "/application.json", [], "POST");
         $this->assertEquals("application/json; charset=UTF-8", $response["mime"]);
@@ -72,8 +88,10 @@ class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that POST requests to /application are accepted.
+     *
+     * @return void
      */
-    public function test_postRequestHTML()
+    public function testPostRequestHTML()
     {
         $params = ["layers[countries]" => "on", "download" => true];
         $response = $this->httpRequest(MAPPR_URL . "/application", $params, "POST");
@@ -85,8 +103,10 @@ class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that js files are served from /public/javascript/.
+     *
+     * @return void
      */
-    public function test_jsAccessible()
+    public function testJsAccessible()
     {
         $expected = "/*\n 2010-2017 David P. Shorthouse";
         $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
@@ -95,8 +115,10 @@ class ApplicationControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that 404 is served when route is not found.
+     *
+     * @return void
      */
-    public function test_404()
+    public function test404()
     {
         $headers = get_headers(MAPPR_URL . "/doesnotexist");
         $this->assertEquals(404, substr($headers[0], 9, 3));

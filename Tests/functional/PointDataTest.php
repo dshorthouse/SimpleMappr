@@ -36,6 +36,16 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Point layer for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class PointDataTest extends SimpleMapprFunctionalTestCase
 {
     protected $title;
@@ -44,7 +54,14 @@ class PointDataTest extends SimpleMapprFunctionalTestCase
     protected $size;
     protected $color;
 
-    private function setLayerContent($id)
+    /**
+     * Set the form data content for coords
+     *
+     * @param integer $id The index of the coords form elements
+     *
+     * @return void
+     */
+    private function _setLayerContent($id)
     {
         $this->title = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][title]'));
         $this->data = $this->webDriver->findElement(WebDriverBy::name('coords['.$id.'][data]'));
@@ -63,6 +80,8 @@ class PointDataTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer.
+     *
+     * @return void
      */
     public function testClearPointLayer()
     {
@@ -70,7 +89,7 @@ class PointDataTest extends SimpleMapprFunctionalTestCase
         $link->click();
 
         $layer_id = 0;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), '45, -120');
@@ -89,6 +108,8 @@ class PointDataTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer from a newly added layer.
+     *
+     * @return void
      */
     public function testNewClearPointLayer()
     {
@@ -98,7 +119,7 @@ class PointDataTest extends SimpleMapprFunctionalTestCase
         sleep(2);
 
         $layer_id = 3;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), '45, -120');

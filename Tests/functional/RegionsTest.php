@@ -36,13 +36,30 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class LayerDataTest extends SimpleMapprFunctionalTestCase
+/**
+ * Test Regions layer for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
+class RegionsTest extends SimpleMapprFunctionalTestCase
 {
     protected $title;
     protected $data;
     protected $color;
 
-    private function setLayerContent($id)
+    /**
+     * Set the form content based on integer of elements
+     *
+     * @param integer $id Identifier of form element
+     *
+     * @return void
+     */
+    private function _setLayerContent($id)
     {
         $this->title = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][title]'));
         $this->data = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][data]'));
@@ -55,6 +72,8 @@ class LayerDataTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer.
+     *
+     * @return void
      */
     public function testClearRegionLayer()
     {
@@ -62,7 +81,7 @@ class LayerDataTest extends SimpleMapprFunctionalTestCase
         $link->click();
 
         $layer_id = 0;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');
@@ -77,6 +96,8 @@ class LayerDataTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer from a newly added layer.
+     *
+     * @return void
      */
     public function testNewClearRegionLayer()
     {
@@ -86,7 +107,7 @@ class LayerDataTest extends SimpleMapprFunctionalTestCase
         sleep(1);
 
         $layer_id = 3;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');

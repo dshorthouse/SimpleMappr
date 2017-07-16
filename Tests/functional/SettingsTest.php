@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test settings selections for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class SettingsTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test that selecting the State/Provinces layer makes a new image.
+     *
+     * @return void
      */
     public function testLayerSelection()
     {
@@ -54,6 +66,8 @@ class SettingsTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that selecting the State/Provinces label makes a new image.
+     *
+     * @return void
      */
     public function testLabelSelection()
     {
@@ -68,6 +82,8 @@ class SettingsTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that selecting graticules makes a new image.
+     *
+     * @return void
      */
     public function testGraticules()
     {

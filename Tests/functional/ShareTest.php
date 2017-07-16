@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test sharing maps for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class ShareTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test content of share list
+     *
+     * @return void
      */
     public function testDefaultSharesList()
     {
@@ -47,11 +59,13 @@ class ShareTest extends SimpleMapprFunctionalTestCase
 
         $link = $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'));
         $link->click();
-        $this->assertContains("Sample Map Administrator", $this->shareContent());
+        $this->assertContains("Sample Map Administrator", $this->_shareContent());
     }
 
     /**
      * Test share count
+     *
+     * @return void
      */
     public function testShareCount()
     {
@@ -65,6 +79,8 @@ class ShareTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test creation of share
+     *
+     * @return void
      */
     public function testCreateShare()
     {
@@ -76,11 +92,13 @@ class ShareTest extends SimpleMapprFunctionalTestCase
         $link->click();
         parent::waitOnAjax();
         $this->assertEquals("Unshare", $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"))->getText());
-        $this->assertContains("Sample Map User", $this->shareContent());
+        $this->assertContains("Sample Map User", $this->_shareContent());
     }
 
     /**
      * Test removal of a share
+     *
+     * @return void
      */
     public function testRemoveShare()
     {
@@ -93,13 +111,15 @@ class ShareTest extends SimpleMapprFunctionalTestCase
         parent::waitOnAjax();
 
         $this->assertEquals("Share", $this->webDriver->findElement(WebDriverBy::xpath("//div[@id='usermaps']/table/tbody/tr[1]/td[4]/a[1]"))->getText());
-        $this->assertNotContains("Sample User Map", $this->shareContent());
+        $this->assertNotContains("Sample User Map", $this->_shareContent());
     }
 
     /**
      * Get the content of the default share message when none exists
+     *
+     * @return void
      */
-    private function shareContent()
+    private function _shareContent()
     {
         $this->webDriver->findElement(WebDriverBy::linkText('Shared Maps'))->click();
         return $this->webDriver->findElement(WebDriverBy::id('sharedmaps'))->getText();

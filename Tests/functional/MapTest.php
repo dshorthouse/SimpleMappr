@@ -38,12 +38,24 @@
 
 use SimpleMappr\Mappr\Map;
 
-class MapTest extends SimpleMapprFunctionalTestCase
+/**
+ * Test Map Controller for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
+class MapTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -52,6 +64,8 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Parent tearDown function executed after each test.
+     *
+     * @return void
      */
     protected function tearDown()
     {
@@ -61,8 +75,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output is png.
+     *
+     * @return void
      */
-    public function test_map_png()
+    public function testMapPng()
     {
         $mappr_map = new Map(1, "png");
         $mappr_map->execute();
@@ -73,8 +89,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output is GeoJSON.
+     *
+     * @return void
      */
-    public function test_map_json()
+    public function testMapJson()
     {
         $mappr_map = new Map(1, "json");
         $output = $mappr_map->execute()->createOutput();
@@ -84,8 +102,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output is GeoJSON with polygon.
+     *
+     * @return void
      */
-    public function test_map_polygon_json()
+    public function testMapPolygonJson()
     {
         $mappr_map = new Map(3, "json");
         $mappr_map->execute();
@@ -95,8 +115,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output is JPG.
+     *
+     * @return void
      */
-    public function test_map_jpg()
+    public function testMapJpg()
     {
         $mappr_map = new Map(1, "jpg");
         $mappr_map->execute();
@@ -107,8 +129,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output is KML.
+     *
+     * @return void
      */
-    public function test_map_kml()
+    public function testMapKml()
     {
         $mappr_map = new Map(1, "kml");
         $output = $mappr_map->execute()->createOutput();
@@ -119,9 +143,11 @@ class MapTest extends SimpleMapprFunctionalTestCase
     /**
      * Test that the output is SVG.
      * NOTE: svg/Imagick tests fail on Travis because they cause a core dump with large SVG files
+     *
+     * @return void
      */
-/*
-    public function test_map_svg()
+    /*
+    public function testMapSvg()
     {
         $mappr_map = new Map(1, "svg");
         $mappr_map->execute();
@@ -129,12 +155,14 @@ class MapTest extends SimpleMapprFunctionalTestCase
         file_put_contents($file, $this->ob_cleanOutput($mappr_map, true));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/map_svg.svg'));
     }
-*/
+    */
 
     /**
      * Test that the output has a legend.
+     *
+     * @return void
      */
-    public function test_map_legend()
+    public function testMapLegend()
     {
         $req = ['legend' => 'true'];
         $this->setRequest($req);
@@ -148,8 +176,10 @@ class MapTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test that the output does not have a legend.
+     *
+     * @return void
      */
-    public function test_map_nolegend()
+    public function testMapNolegend()
     {
         $req = ['legend' => 'false'];
         $this->setRequest($req);

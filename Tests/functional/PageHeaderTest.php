@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Page headers for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class PageHeaderTest extends SimpleMapprFunctionalTestCase
 {
     /**
-     * test page title.
+     * Test page title.
+     *
+     * @return void
      */
     public function testPageTitle()
     {
@@ -49,6 +61,8 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test default language attribute to HTML tag.
+     *
+     * @return void
      */
     public function testLanguageEnglish()
     {
@@ -58,6 +72,8 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test lang=fr attribute for HTML tag.
+     *
+     * @return void
      */
     public function testLanguageFrancais()
     {
@@ -69,6 +85,8 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test meta description.
+     *
+     * @return void
      */
     public function testDescription()
     {
@@ -78,6 +96,8 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test meta keywords.
+     *
+     * @return void
      */
     public function testKeywords()
     {
@@ -87,23 +107,27 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test meta author.
+     *
+     * @return void
      */
     public function testAuthor()
     {
-        $this->assertContains("David P. Shorthouse", $this->metaElementContent("//meta[@name='author']"));
+        $this->assertContains("David P. Shorthouse", $this->_metaElementContent("//meta[@name='author']"));
     }
 
     /**
      * Test OpenGraph content.
+     *
+     * @return void
      */
     public function testOpenGraph()
     {
-        $og_title = $this->metaElementContent("//meta[@property='og:title']");
-        $og_description = $this->metaElementContent("//meta[@property='og:description']");
-        $og_locale = $this->metaElementContent("//meta[@property='og:locale']");
-        $og_type = $this->metaElementContent("//meta[@property='og:type']");
-        $og_url = $this->metaElementContent("//meta[@property='og:url']");
-        $og_image = $this->metaElementContent("//meta[@property='og:image']");
+        $og_title = $this->_metaElementContent("//meta[@property='og:title']");
+        $og_description = $this->_metaElementContent("//meta[@property='og:description']");
+        $og_locale = $this->_metaElementContent("//meta[@property='og:locale']");
+        $og_type = $this->_metaElementContent("//meta[@property='og:type']");
+        $og_url = $this->_metaElementContent("//meta[@property='og:url']");
+        $og_image = $this->_metaElementContent("//meta[@property='og:image']");
 
         $this->assertContains("SimpleMappr", $og_title);
         $this->assertContains("Create free point maps for publications and presentations", $og_description);
@@ -115,12 +139,14 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test Twitter card
+     *
+     * @return void
      */
     public function testTwitterCard()
     {
-        $twitter_card = $this->metaElementContent("//meta[@name='twitter:card']");
-        $twitter_site = $this->metaElementContent("//meta[@name='twitter:site']");
-        $twitter_creator = $this->metaElementContent("//meta[@name='twitter:creator']");
+        $twitter_card = $this->_metaElementContent("//meta[@name='twitter:card']");
+        $twitter_site = $this->_metaElementContent("//meta[@name='twitter:site']");
+        $twitter_creator = $this->_metaElementContent("//meta[@name='twitter:creator']");
 
         $this->assertContains("summary", $twitter_card);
         $this->assertContains("@SimpleMappr", $twitter_site);
@@ -131,9 +157,10 @@ class PageHeaderTest extends SimpleMapprFunctionalTestCase
      * Obtain content of an XPATH element.
      *
      * @param string $xpath The XPATH of interest.
+     *
      * @return string The content.
      */
-    private function metaElementContent($xpath)
+    private function _metaElementContent($xpath)
     {
         return $this->webDriver->findElement(WebDriverBy::xpath($xpath))->getAttribute('content');
     }

@@ -36,7 +36,17 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class CitationFeedControllerTest extends SimpleMapprFunctionalTestCase
+/**
+ * Test Citation feed controller for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
+class CitationFeedControllerTest extends SimpleMapprTestCase
 {
     use SimpleMapprTestMixin;
 
@@ -45,6 +55,8 @@ class CitationFeedControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Parent setUp function executed before each test.
+     *
+     * @return void
      */
     protected function setUp()
     {
@@ -55,6 +67,8 @@ class CitationFeedControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test response from RSS feed is xml.
+     *
+     * @return void
      */
     public function testCitationsFeedType()
     {
@@ -63,14 +77,19 @@ class CitationFeedControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test response from RSS feed has the correct title.
+     *
+     * @return void
      */
     public function testCitationsFeedTitle()
     {
-        $this->assertEquals('SimpleMappr Recent Citations', $this->rss->channel->title);
+        $title = $this->rss->channel->title;
+        $this->assertEquals('SimpleMappr Recent Citations', $title);
     }
 
     /**
      * Test response from RSS feed has one item.
+     *
+     * @return void
      */
     public function testCitationsFeedItemCount()
     {

@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test roles and permissions for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class Administration extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test count of users in Users table.
+     *
+     * @return void
      */
     public function testUserCountTable()
     {
@@ -54,6 +66,8 @@ class Administration extends SimpleMapprFunctionalTestCase
 
     /**
      * Test count of users in Users header.
+     *
+     * @return void
      */
     public function testUserCountHeader()
     {
@@ -67,6 +81,8 @@ class Administration extends SimpleMapprFunctionalTestCase
 
     /**
      * Test flushing of caches.
+     *
+     * @return void
      */
     public function testFlushCache()
     {

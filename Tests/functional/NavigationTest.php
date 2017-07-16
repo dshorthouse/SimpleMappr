@@ -36,12 +36,24 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Navigation for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class NavigationTest extends SimpleMapprFunctionalTestCase
 {
     use SimpleMapprTestMixin;
 
     /**
      * Test presence of tag line.
+     *
+     * @return void
      */
     public function testTagline()
     {
@@ -51,6 +63,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test translated tag line.
+     *
+     * @return void
      */
     public function testTaglineFrench()
     {
@@ -65,6 +79,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test presence of Sign In page.
+     *
+     * @return void
      */
     public function testSignInPage()
     {
@@ -77,6 +93,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test presence of API page.
+     *
+     * @return void
      */
     public function testAPIPage()
     {
@@ -89,6 +107,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test presence of About page.
+     *
+     * @return void
      */
     public function testAboutPage()
     {
@@ -101,6 +121,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test presence of Help page.
+     *
+     * @return void
      */
     public function testHelpPage()
     {
@@ -113,6 +135,8 @@ class NavigationTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test 404 page
+     *
+     * @return void
      */
     public function test404Page()
     {

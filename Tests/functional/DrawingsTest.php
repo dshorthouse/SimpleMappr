@@ -36,13 +36,30 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Drawing WKT for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class DrawingsTest extends SimpleMapprFunctionalTestCase
 {
     protected $title;
     protected $data;
     protected $color;
 
-    private function setLayerContent($id)
+    /**
+     * Set the form content based on integer
+     *
+     * @param integer $id The identifier
+     *
+     * @return void
+     */
+    private function _setLayerContent($id)
     {
         $this->title = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][title]'));
         $this->data = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][data]'));
@@ -55,6 +72,8 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer.
+     *
+     * @return void
      */
     public function testClearDrawingLayer()
     {
@@ -62,7 +81,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $link->click();
 
         $layer_id = 0;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
@@ -76,6 +95,8 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test clear a point data layer from a newly added layer.
+     *
+     * @return void
      */
     public function testNewClearDrawingLayer()
     {
@@ -85,7 +106,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         sleep(3);
 
         $layer_id = 3;
-        $this->setLayerContent($layer_id);
+        $this->_setLayerContent($layer_id);
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');

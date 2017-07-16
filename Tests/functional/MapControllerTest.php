@@ -36,10 +36,22 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test Map Controller for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class MapControllerTest extends SimpleMapprFunctionalTestCase
 {
     /**
      * Test view own maps.
+     *
+     * @return void
      */
     public function testIndexMaps()
     {
@@ -51,6 +63,8 @@ class MapControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test view admin maps.
+     *
+     * @return void
      */
     public function testIndexAdminMaps()
     {
@@ -64,6 +78,8 @@ class MapControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test saving a map.
+     *
+     * @return void
      */
     public function testCreateMap()
     {
@@ -86,18 +102,22 @@ class MapControllerTest extends SimpleMapprFunctionalTestCase
     
     /**
      * Test deleting a map.
+     *
+     * @return void
      */
     public function testDeleteMap()
     {
         $user = parent::setSession();
 
         $title = 'Another Sample Map User';
-        $mid = parent::$db->queryInsert("maps", [
-            'uid' => $user['uid'],
-            'title' => $title,
-            'map' => json_encode(['save' => ['title' => $title]]),
-            'created' => time()
-        ]);
+        $mid = parent::$db->queryInsert(
+            "maps", [
+                'uid' => $user['uid'],
+                'title' => $title,
+                'map' => json_encode(['save' => ['title' => $title]]),
+                'created' => time()
+            ]
+        );
         $this->webDriver->navigate()->refresh();
         parent::waitOnAjax();
         $delete_links = $this->webDriver->findElements(WebDriverBy::cssSelector("#usermaps > .grid-usermaps > tbody > tr > .actions > .map-delete"));
@@ -118,6 +138,8 @@ class MapControllerTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test load user map.
+     *
+     * @return void
      */
     public function testLoadMap()
     {

@@ -36,11 +36,23 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Test File upload for SimpleMappr
+ *
+ * @category  Class
+ * @package   SimpleMappr
+ * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
+ * @copyright 2010-2017 David P. Shorthouse
+ * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
+ * @link      http://github.com/dshorthouse/SimpleMappr
+ */
 class FileUploadTest extends SimpleMapprFunctionalTestCase
 {
 
     /**
      * Test upload an unrecognized file.
+     *
+     * @return void
      */
     public function testUploadBadFile()
     {
@@ -59,6 +71,8 @@ class FileUploadTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test upload an unrecognized file.
+     *
+     * @return void
      */
     public function testUploadLargeFile()
     {
@@ -77,6 +91,8 @@ class FileUploadTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test upload a text file.
+     *
+     * @return void
      */
     public function testUploadTextFile()
     {
@@ -112,6 +128,8 @@ class FileUploadTest extends SimpleMapprFunctionalTestCase
 
     /**
      * Test upload a csv file.
+     *
+     * @return void
      */
     public function testUploadCSVFile()
     {
