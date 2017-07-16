@@ -149,7 +149,7 @@ class Map implements RestMethods
         if (array_key_exists('dir', $params)
             && in_array(strtolower($params['dir'], ["asc", "desc"]))
         ) {
-            $this->dir = ) ? $params['dir']
+            $this->dir = $params['dir'];
         }
         if (array_key_exists('sort', $params)) {
             $this->sort = $params['sort'];
