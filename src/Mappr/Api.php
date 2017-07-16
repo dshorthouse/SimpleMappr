@@ -39,7 +39,6 @@ namespace SimpleMappr\Mappr;
 
 use League\Csv\Reader;
 use geoPHP;
-
 use SimpleMappr\Header;
 use SimpleMappr\Utility;
 use SimpleMappr\Constants\AcceptedMarkerShapes;

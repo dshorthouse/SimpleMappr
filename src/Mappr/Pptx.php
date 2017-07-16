@@ -43,7 +43,6 @@ use \PhpOffice\PhpPresentation\IOFactory;
 use \PhpOffice\PhpPresentation\Slide\Layout;
 use \PhpOffice\PhpPresentation\Style\Color;
 use \PhpOffice\PhpPresentation\Style\Alignment;
-
 use SimpleMappr\Header;
 use SimpleMappr\Request;
 use SimpleMappr\Utility;

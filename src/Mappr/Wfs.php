@@ -38,7 +38,6 @@
 namespace SimpleMappr\Mappr;
 
 use XMLReader;
-
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Utility;
 

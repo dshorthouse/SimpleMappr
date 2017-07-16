@@ -1,7 +1,9 @@
 <?php
 
+// define the environment as 'development', 'production', 'testing'
 defined("ENVIRONMENT") || define("ENVIRONMENT", "testing");
 
+// root directory
 defined("ROOT") || define("ROOT", dirname(__DIR__));
 
 // Upload directory for API calls, without trailing slash

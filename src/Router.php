@@ -44,7 +44,6 @@ use \Symfony\Component\Yaml\Yaml;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_Extensions_Extension_I18n;
-
 use SimpleMappr\Constants\AcceptedMarkerShapes;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Controller\Citation;

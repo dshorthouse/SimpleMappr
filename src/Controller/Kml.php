@@ -38,7 +38,6 @@
 namespace SimpleMappr\Controller;
 
 use XMLWriter;
-
 use SimpleMappr\Header;
 use SimpleMappr\Utility;
 
