@@ -147,7 +147,7 @@ class Map implements RestMethods
         $this->filter_username = "";
 
         if (array_key_exists('dir', $params)
-            && in_array(strtolower($params['dir'], ["asc", "desc"]))
+            && in_array(strtolower($params['dir']), ["asc", "desc"])
         ) {
             $this->dir = $params['dir'];
         }
