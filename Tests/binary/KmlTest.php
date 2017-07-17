@@ -58,9 +58,7 @@ class KmlTest extends TestCase
      */
     protected function tearDown()
     {
-        if (session_status() != PHP_SESSION_NONE) {
-            session_destroy();
-        }
+        $this->destroySession();
         $this->clearRequestMethod();
         $this->clearTmpFiles();
     }

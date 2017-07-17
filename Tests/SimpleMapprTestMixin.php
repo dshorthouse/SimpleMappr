@@ -72,6 +72,18 @@ trait SimpleMapprTestMixin
         $_REQUEST = $array;
     }
 
+    /**
+     * Destroy an active session
+     *
+     * @return void
+     */
+    public function destroySession()
+    {
+        if (session_status() != PHP_SESSION_NONE) {
+            session_destroy();
+        }
+    }
+
     /*
      * Clear temporary files from the public/tmp directory
      *
