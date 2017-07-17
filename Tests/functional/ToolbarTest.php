@@ -49,6 +49,23 @@
 class ToolbarTest extends SimpleMapprFunctionalTestCase
 {
     /**
+     * Test that clicking new icon makes a new image.
+     *
+     * @return void
+     */
+    public function testNew()
+    {
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
+        $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsNew'))[0];
+        $link->click();
+        parent::waitOnMap();
+        $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $this->assertNotEquals($default_img, $new_img);
+        $this->assertContains(MAPPR_MAPS_URL, $new_img);
+    }
+
+    /**
      * Test that refreshing the map makes a new image.
      *
      * @return void
@@ -94,6 +111,26 @@ class ToolbarTest extends SimpleMapprFunctionalTestCase
         $link = $this->webDriver->findElements(WebDriverBy::className('toolsZoomOut'))[0];
         $link->click();
         parent::waitOnMap();
+        $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $this->assertNotEquals($default_img, $new_img);
+        $this->assertContains(MAPPR_MAPS_URL, $new_img);
+    }
+
+    /**
+     * Test that Undo makes a new image.
+     *
+     * @return void
+     */
+    public function testUndo()
+    {
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsZoomOut'))[0];
+        $link->click();
+        parent::waitOnMap();
+        $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $link = $this->webDriver->findElements(WebDriverBy::className('toolsUndo'))[0];
+        $link->click();
+        parent::waitOnSpinner();
         $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);

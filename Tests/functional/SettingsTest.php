@@ -95,4 +95,21 @@ class SettingsTest extends SimpleMapprFunctionalTestCase
         $this->assertNotEquals($default_img, $new_img);
         $this->assertContains(MAPPR_MAPS_URL, $new_img);
     }
+
+    /**
+     * Test that selecting projection makes a new image.
+     *
+     * @return void
+     */
+    public function testProjection()
+    {
+        $this->webDriver->findElement(WebDriverBy::linkText('Preview'))->click();
+        $default_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $select = new WebDriverSelect($this->webDriver->findElement(WebDriverBy::id('projection')));
+        $select->selectByValue('esri:102009');
+        parent::waitOnMap();
+        $new_img = $this->webDriver->findElement(WebDriverBy::id('mapOutputImage'))->getAttribute('src');
+        $this->assertNotEquals($default_img, $new_img);
+        $this->assertContains(MAPPR_MAPS_URL, $new_img);
+    }
 }
