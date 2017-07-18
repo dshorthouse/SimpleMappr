@@ -1143,7 +1143,7 @@ var SimpleMappr = (function($, window, document) {
       if(button.attr("data-type") === data_type) {
 
         if(counter < self.settings.maxTextareaCount) {
-          button.parent().prev().accordion({active: false});
+          button.parent().prev().accordion({active: false, heightStyle : "content"});
           clone = button.parent().prev().children("div:last").clone();
           num = parseInt(clone.find("h3 a").text().split(" ")[1],10);
           counter = self.textareaCounter(data_type, 'increase');
@@ -1204,7 +1204,8 @@ var SimpleMappr = (function($, window, document) {
             header      : 'h3',
             collapsible : true,
             autoHeight  : false,
-            active      : false
+            active      : false,
+            heightStyle : "content"
           });
 
           if(data_type === 'regions') { self.bindAutocomplete(); }

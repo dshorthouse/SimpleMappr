@@ -154,7 +154,7 @@ class RouterTest extends SimpleMapprTestCase
     }
 
     /**
-     * Test POST /citation
+     * Test POST /citation when not authenticated
      *
      * @return void
      */
