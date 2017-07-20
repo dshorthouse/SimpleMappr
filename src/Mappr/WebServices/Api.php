@@ -35,7 +35,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\WebServices;
 
 use League\Csv\Reader;
 use geoPHP;
@@ -44,6 +44,7 @@ use SimpleMappr\Utility;
 use SimpleMappr\Constants\AcceptedMarkerShapes;
 use SimpleMappr\Constants\AcceptedOutputs;
 use SimpleMappr\Constants\AcceptedProjections;
+use SimpleMappr\Mappr\Mappr;
 
 /**
  * API handler for SimpleMappr

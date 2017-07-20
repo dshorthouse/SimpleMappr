@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Pptx;
+use SimpleMappr\Mappr\Formats\Pptx;
 
 /**
  * Test Pptx class for SimpleMappr

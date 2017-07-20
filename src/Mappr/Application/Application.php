@@ -35,11 +35,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\Application;
 
 use SimpleMappr\Request;
 use SimpleMappr\Utility;
 use SimpleMappr\Header;
+use SimpleMappr\Mappr\Mappr;
 
 /**
  * Application class for SimpleMappr

@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Wms;
+use SimpleMappr\Mappr\WebServices\Wms;
 
 class WmsBinaryTest extends TestCase
 {

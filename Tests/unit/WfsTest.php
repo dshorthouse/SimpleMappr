@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Wfs;
+use SimpleMappr\Mappr\WebServices\Wfs;
 
 /**
  * Test Wfs class for SimpleMappr

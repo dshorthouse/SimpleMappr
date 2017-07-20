@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Application;
+use SimpleMappr\Mappr\Application\Application;
 use SimpleMappr\Utility;
 
 /**

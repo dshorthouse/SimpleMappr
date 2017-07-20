@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Docx;
+use SimpleMappr\Mappr\Formats\Docx;
 
 /**
  * Test construction of a docx file for SimpleMappr

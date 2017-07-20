@@ -35,12 +35,13 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\WebServices;
 
 use XMLReader;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Header;
 use SimpleMappr\Utility;
+use SimpleMappr\Mappr\Mappr;
 
 /**
  * Web Map Service (WMS) for SimpleMappr

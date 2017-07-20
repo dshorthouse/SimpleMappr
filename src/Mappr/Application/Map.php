@@ -35,7 +35,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\Application;
 
 use geoPHP;
 use GeoJSON;
@@ -43,6 +43,7 @@ use SimpleMappr\Database;
 use SimpleMappr\Utility;
 use SimpleMappr\Constants\AcceptedOutputs;
 use SimpleMappr\Controller\Kml;
+use SimpleMappr\Mappr\Mappr;
 
 /**
  * Map handler for SimpleMappr

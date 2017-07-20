@@ -35,7 +35,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\Formats;
 
 use \PhpOffice\PhpPresentation\Autoloader;
 use \PhpOffice\PhpPresentation\PhpPresentation;
@@ -43,6 +43,7 @@ use \PhpOffice\PhpPresentation\IOFactory;
 use \PhpOffice\PhpPresentation\Slide\Layout;
 use \PhpOffice\PhpPresentation\Style\Color;
 use \PhpOffice\PhpPresentation\Style\Alignment;
+use SimpleMappr\Mappr\Mappr;
 use SimpleMappr\Header;
 use SimpleMappr\Request;
 use SimpleMappr\Utility;

@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Api;
+use SimpleMappr\Mappr\WebServices\Api;
 
 /**
  * Test Binary outputs from the SimpleMappr API

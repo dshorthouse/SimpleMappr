@@ -36,7 +36,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-use SimpleMappr\Mappr\Map;
+use SimpleMappr\Mappr\Application\Map;
 
 /**
  * Test Map Controller for SimpleMappr

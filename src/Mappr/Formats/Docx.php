@@ -35,11 +35,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\Formats;
 
 use \PhpOffice\PhpWord\Autoloader;
 use \PhpOffice\PhpWord\PhpWord;
 use \PhpOffice\PhpWord\IOFactory;
+use SimpleMappr\Mappr\Mappr;
 use SimpleMappr\Header;
 use SimpleMappr\Request;
 use SimpleMappr\Utility;

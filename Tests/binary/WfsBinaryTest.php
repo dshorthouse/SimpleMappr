@@ -37,7 +37,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use SimpleMappr\Mappr\Wfs;
+use SimpleMappr\Mappr\WebServices\Wfs;
 
 class WfsBinaryTest extends TestCase
 {

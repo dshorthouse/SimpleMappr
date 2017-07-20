@@ -35,10 +35,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SimpleMappr\Mappr;
+namespace SimpleMappr\Mappr\Application;
 
 use \ForceUTF8\Encoding;
 use SimpleMappr\Utility;
+use SimpleMappr\Mappr\Mappr;
 
 /**
  * Query handler for SimpleMappr
