@@ -520,6 +520,7 @@ abstract class Mappr
                 //clear out previous loop's selection
                 $color = [];
                 $title = "";
+                $hatched = false;
                 if ($this->request->regions[$j]['title']) {
                     $title = $this->request->regions[$j]['title'];
                 }
@@ -528,6 +529,9 @@ abstract class Mappr
                     if (count($color) != 3) {
                         $color = [];
                     }
+                }
+                if (array_key_exists('hatch', $this->request->regions[$j])) {
+                    $hatched = true;
                 }
 
                 $data = trim($this->request->regions[$j]['data']);
@@ -588,8 +592,17 @@ abstract class Mappr
                         $style->color->setRGB($color[0], $color[1], $color[2]);
                     }
                     $style->outlinecolor->setRGB(30, 30, 30);
-                    $style->set("opacity", 75);
+                    $style->set("opacity", 40);
                     $style->set("width", $this->_determineWidth());
+
+                    if ($hatched) {
+                        $style = ms_newStyleObj($class);
+                        $style->set("symbolname", "hatch");
+                        $style->set("angle", 45);
+                        $style->set("size", 5);
+                        $style->color->setRGB($color[0]-100, $color[1]-100, $color[2]-100);
+                    }
+
                     $layer->set("status", MS_ON);
                 }
             }
@@ -902,13 +915,26 @@ abstract class Mappr
      */
     private function _loadSymbols()
     {
+        /*
+        TEST HATCH
+        */
+        $nId = ms_newSymbolObj($this->map_obj, "hatch");
+        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol->set("type", MS_SYMBOL_HATCH);
+        $symbol->set("filled", FALSE);
+        $symbol->set("inmapfile", MS_TRUE);
+        /* end custom hatch */
+
         foreach (AcceptedMarkerShapes::$shapes as $type => $style) {
             $fill = MS_FALSE;
             if ($type == 'closed') {
                 $fill = MS_TRUE;
             }
             foreach ($style as $name => $settings) {
-                $type = (strpos($name, 'circle') !== false) ? MS_SYMBOL_ELLIPSE : MS_SYMBOL_VECTOR;
+                $type = MS_SYMBOL_VECTOR;
+                if (strpos($name, 'circle') !== false) {
+                    $type = MS_SYMBOL_ELLIPSE;
+                }
                 $vertices = AcceptedMarkerShapes::vertices($settings['style']);
                 $this->_createSymbol($name, $type, $fill, $vertices);
             }

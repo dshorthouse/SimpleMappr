@@ -855,6 +855,7 @@ var SimpleMappr = (function($, window, document) {
           color_picker = zone.find('input.colorPicker'),
           shadow_check = zone.find('input.m-mapShadow'),
           border_check = zone.find('input.m-mapBorder');
+          hatch_check = zone.find('input.m-mapHatch');
 
       $.each(['input.m-mapTitle', 'textarea'], function(key, value) {
         self.unusedVariables(key);
@@ -864,6 +865,7 @@ var SimpleMappr = (function($, window, document) {
       if(size_picker.length > 0) { size_picker[0].selectedIndex = 3; }
       if(shadow_check.length > 0) { shadow_check.prop('checked', false); }
       if(border_check.length > 0) { border_check.prop('checked', false); }
+      if(hatch_check.length > 0) { hatch_check.prop('checked', false); }
       $.each(zone, function() {
         if($(this).hasClass("fieldset-points")) {
           color_picker.val('0 0 0');
@@ -1181,6 +1183,7 @@ var SimpleMappr = (function($, window, document) {
           });
           clone.find("input.m-mapShadow").attr("name", data_type + "["+num.toString()+"][shadow]").prop("checked", false);
           clone.find("input.m-mapBorder").attr("name", data_type + "["+num.toString()+"][border]").prop("checked", false);
+          clone.find("input.m-mapHatch").attr("name", data_type + "["+num.toString()+"][hatch]").prop("checked", false);
 
           children = button.parent().prev().append(clone).children("div");
 
@@ -1233,6 +1236,8 @@ var SimpleMappr = (function($, window, document) {
         $(this).find("select.m-mapSize").attr("name", name_prefix + "[size]");
         $(this).find("input.colorPicker").attr("name", name_prefix + "[color]");
         $(this).find("input.m-mapShadow").attr("name", name_prefix + "[shadow]");
+        $(this).find("input.m-mapBorder").attr("name", name_prefix + "[border]");
+        $(this).find("input.m-mapHatch").attr("name", name_prefix + "[hatch]");
       });
       clone.remove();
       button.prop("disabled", false);
