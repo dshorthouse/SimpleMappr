@@ -468,6 +468,14 @@ msgid "include border"
 msgstr "inclus un cadre"
 
 #: .index.php:218
+msgid "Border"
+msgstr "bordure"
+
+#: .index.php:218
+msgid "Hatch"
+msgstr "hachure"
+
+#: .index.php:218
 msgid "make line thickness proportional to image scale"
 msgstr "faire épaisseur des lignes proportionnelle à l'échelle de l'image"
 

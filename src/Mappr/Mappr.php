@@ -915,15 +915,12 @@ abstract class Mappr
      */
     private function _loadSymbols()
     {
-        /*
-        TEST HATCH
-        */
+        // Add hatch symbol
         $nId = ms_newSymbolObj($this->map_obj, "hatch");
         $symbol = $this->map_obj->getSymbolObjectById($nId);
         $symbol->set("type", MS_SYMBOL_HATCH);
         $symbol->set("filled", FALSE);
         $symbol->set("inmapfile", MS_TRUE);
-        /* end custom hatch */
 
         foreach (AcceptedMarkerShapes::$shapes as $type => $style) {
             $fill = MS_FALSE;
