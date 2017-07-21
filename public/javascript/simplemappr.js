@@ -2194,6 +2194,7 @@ var SimpleMappr = (function($, window, document) {
             "class" : "positive ui-button-text-only",
             "click" : function() {
               $(this).dialog("destroy");
+              $('#badRecords').hide();
             }
           }
         ]
@@ -2203,6 +2204,7 @@ var SimpleMappr = (function($, window, document) {
         e.preventDefault();
         self.addBadRecordsViewer();
         $('#badRecordsViewer').dialog("open");
+        $('#badRecords').show();
       });
     },
 

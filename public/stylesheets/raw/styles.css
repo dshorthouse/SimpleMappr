@@ -143,7 +143,7 @@ button[disabled], button[disabled]:hover, button[disabled]:active{color:#666 !im
 #mapControls .thumb{cursor:pointer;width:12px;height:12px;position:absolute;cursor:pointer;}
 #mapControls .dot{display:none;}
 #mapControls span{display: none;}
-#badRecordsWarning{display:none;font-size:0.5em;font-weight:bold;position:absolute;top:0px;right:5%;color:#ff0000;height:27px;line-height:27px;text-transform:uppercase;z-index:100;background-color:rgba(255,255,255,0.9);}
+#badRecordsWarning{display:none;font-size:0.5em;font-weight:bold;position:absolute;top:0px;right:5%;color:#ff0000;height:27px;line-height:27px;text-transform:uppercase;z-index:10;background-color:rgba(255,255,255,0.9);}
 #badRecordsWarning a.toolsBadRecords{text-decoration:none;color:#ff0000;}
 #badRecordsWarning a.toolsBadRecords:before{background-position:-240px -264px;}
 #badRecords{font-size:0.75em;}
