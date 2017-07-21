@@ -472,7 +472,7 @@ msgid "Border"
 msgstr "bordure"
 
 #: .index.php:218
-msgid "Hatch"
+msgid "Hatched"
 msgstr "hachure"
 
 #: .index.php:218
