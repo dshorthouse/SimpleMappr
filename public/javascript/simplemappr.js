@@ -1729,7 +1729,8 @@ var SimpleMappr = (function($, window, document) {
           wkt_title = "",
           wkt_data  = "",
           wkt_color = "",
-          wkt_border = false;
+          wkt_border = false,
+          wkt_hatch = false;
 
       $.each(wkt, function(i) {
         if(i > 2) { self.addAccordionPanel('wkt'); }
@@ -1740,11 +1741,15 @@ var SimpleMappr = (function($, window, document) {
         if (wkt[i].hasOwnProperty("border")) {
           wkt_border = true;
         }
+        if (wkt[i].hasOwnProperty("hatch")) {
+          wkt_hatch = true;
+        }
 
         self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][title]"]').val(wkt_title);
         self.vars.fieldSetsWKT.find('textarea[name="wkt['+i.toString()+'][data]"]').val(wkt_data);
         self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][color]"]').val(wkt_color);
         self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][border]"]').prop("checked", wkt_border);
+        self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][hatch]"]').prop("checked", wkt_hatch);
       });
     },
 

@@ -445,12 +445,16 @@ abstract class Mappr
             for ($j=$count; $j>=0; $j--) {
                 $color = [];
                 $border = false;
+                $hatched = false;
                 $title = "";
                 if ($this->request->wkt[$j]['title']) {
                     $title = $this->request->wkt[$j]['title'];
                 }
                 if (array_key_exists('border', $this->request->wkt[$j])) {
                     $border = true;
+                }
+                if (array_key_exists('hatch', $this->request->wkt[$j])) {
+                    $hatched = true;
                 }
                 if ($this->request->wkt[$j]['color']) {
                     $color = explode(" ", $this->request->wkt[$j]['color']);
@@ -494,6 +498,14 @@ abstract class Mappr
                             $style->color->setRGB($color[0], $color[1], $color[2]);
                         }
                         $style->set("opacity", 75);
+
+                        if ($hatched && !empty($color)) {
+                            $style = ms_newStyleObj($class);
+                            $style->set("symbolname", "hatch");
+                            $style->set("angle", 45);
+                            $style->set("size", 5);
+                            $style->color->setRGB($color[0]-100, $color[1]-100, $color[2]-100);
+                        }
 
                         try {
                             $shape = ms_shapeObjFromWkt($row);

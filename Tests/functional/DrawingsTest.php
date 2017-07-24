@@ -52,6 +52,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
     protected $data;
     protected $color;
     protected $border;
+    protected $hatch;
 
     /**
      * Set the form content based on integer
@@ -66,11 +67,13 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->data = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][data]'));
         $this->color = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][color]'));
         $this->border = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][border]'));
+        $this->hatch = $this->webDriver->findElement(WebDriverBy::name('wkt['.$id.'][hatch]'));
 
         $this->title->sendKeys('My Layer');
         $this->data->sendKeys('POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->color->clear()->sendKeys('150 150 150');
         $this->border->click();
+        $this->hatch->click();
     }
 
     /**
@@ -90,6 +93,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertTrue($this->border->isSelected());
+        $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();
 
@@ -97,6 +101,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->data->getAttribute('value'), '');
         $this->assertEquals($this->color->getAttribute('value'), '');
         $this->assertFalse($this->border->isSelected());
+        $this->assertFalse($this->hatch->isSelected());
     }
 
     /**
@@ -118,6 +123,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertTrue($this->border->isSelected());
+        $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();
 
@@ -125,5 +131,6 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->data->getAttribute('value'), '');
         $this->assertEquals($this->color->getAttribute('value'), '');
         $this->assertFalse($this->border->isSelected());
+        $this->assertFalse($this->hatch->isSelected());
     }
 }
