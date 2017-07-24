@@ -51,6 +51,7 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
     protected $title;
     protected $data;
     protected $color;
+    protected $hatch;
 
     /**
      * Set the form content based on integer of elements
@@ -64,10 +65,12 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
         $this->title = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][title]'));
         $this->data = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][data]'));
         $this->color = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][color]'));
+        $this->hatch = $this->webDriver->findElement(WebDriverBy::name('regions['.$id.'][hatch]'));
         
         $this->title->sendKeys('My Layer');
         $this->data->sendKeys('Canada');
         $this->color->clear()->sendKeys('120 120 120');
+        $this->hatch->click();
     }
 
     /**
@@ -86,12 +89,14 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
+        $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsRegions']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
         $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertFalse($this->hatch->isSelected());
     }
 
     /**
@@ -112,11 +117,13 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'Canada');
         $this->assertEquals($this->color->getAttribute('value'), '120 120 120');
+        $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsRegions']//button[text()='Clear']"))[$layer_id]->click();
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
         $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertFalse($this->hatch->isSelected());
     }
 }
