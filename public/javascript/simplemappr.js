@@ -854,7 +854,7 @@ var SimpleMappr = (function($, window, document) {
           size_picker = zone.find('select.m-mapSize'),
           color_picker = zone.find('input.colorPicker'),
           shadow_check = zone.find('input.m-mapShadow'),
-          border_check = zone.find('input.m-mapBorder');
+          border_check = zone.find('input.m-mapBorder'),
           hatch_check = zone.find('input.m-mapHatch');
 
       $.each(['input.m-mapTitle', 'textarea'], function(key, value) {
@@ -1070,6 +1070,7 @@ var SimpleMappr = (function($, window, document) {
               if(self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val() === "" || self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val() === "") {
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][color]"]').val(fillColor);
+                self.vars.fieldSetsRegions.find('input[name="regions['+i+'][hatch]"]').prop("checked", false);
                 self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val(regions);
                 if(i > 0) { self.vars.fieldSetsRegions.accordion({active: i}); }
                 return false;
@@ -1727,7 +1728,8 @@ var SimpleMappr = (function($, window, document) {
           wkt       = data.map.wkt || [],
           wkt_title = "",
           wkt_data  = "",
-          wkt_color = "";
+          wkt_color = "",
+          wkt_border = false;
 
       $.each(wkt, function(i) {
         if(i > 2) { self.addAccordionPanel('wkt'); }
@@ -1735,10 +1737,14 @@ var SimpleMappr = (function($, window, document) {
         wkt_title = wkt[i].title || "";
         wkt_data  = wkt[i].data  || "";
         wkt_color = wkt[i].color || "";
+        if (wkt[i].hasOwnProperty("border")) {
+          wkt_border = true;
+        }
 
         self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][title]"]').val(wkt_title);
         self.vars.fieldSetsWKT.find('textarea[name="wkt['+i.toString()+'][data]"]').val(wkt_data);
         self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][color]"]').val(wkt_color);
+        self.vars.fieldSetsWKT.find('input[name="wkt['+i.toString()+'][border]"]').prop("checked", wkt_border);
       });
     },
 
@@ -1747,7 +1753,8 @@ var SimpleMappr = (function($, window, document) {
           regions      = data.map.regions || [],
           region_title = "",
           region_data  = "",
-          region_color = "";
+          region_color = "",
+          region_hatch = false;
 
       $.each(regions, function(i) {
         if(i > 2) { self.addAccordionPanel('regions'); }
@@ -1755,10 +1762,14 @@ var SimpleMappr = (function($, window, document) {
         region_title = regions[i].title || "";
         region_data  = regions[i].data  || "";
         region_color = regions[i].color || "";
+        if (regions[i].hasOwnProperty("hatch")) {
+          region_hatch = true;
+        }
 
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][title]"]').val(region_title);
         self.vars.fieldSetsRegions.find('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][color]"]').val(region_color);
+        self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][hatch]"]').prop("checked", region_hatch);
       });
     },
 

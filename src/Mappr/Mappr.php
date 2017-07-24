@@ -595,7 +595,7 @@ abstract class Mappr
                     $style->set("opacity", 40);
                     $style->set("width", $this->_determineWidth());
 
-                    if ($hatched) {
+                    if ($hatched && !empty($color)) {
                         $style = ms_newStyleObj($class);
                         $style->set("symbolname", "hatch");
                         $style->set("angle", 45);
