@@ -71,7 +71,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
         $this->title->sendKeys('My Layer');
         $this->data->sendKeys('POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
-        $this->color->clear()->sendKeys('150 150 150');
+        $this->color->clear()->sendKeys('10 10 10');
         $this->border->click();
         $this->hatch->click();
     }
@@ -91,7 +91,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
-        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
+        $this->assertEquals($this->color->getAttribute('value'), '10 10 10');
         $this->assertTrue($this->border->isSelected());
         $this->assertTrue($this->hatch->isSelected());
 
@@ -99,7 +99,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertFalse($this->border->isSelected());
         $this->assertFalse($this->hatch->isSelected());
     }
@@ -121,7 +121,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
-        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
+        $this->assertEquals($this->color->getAttribute('value'), '10 10 10');
         $this->assertTrue($this->border->isSelected());
         $this->assertTrue($this->hatch->isSelected());
 
@@ -129,7 +129,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertFalse($this->border->isSelected());
         $this->assertFalse($this->hatch->isSelected());
     }

@@ -870,7 +870,7 @@ var SimpleMappr = (function($, window, document) {
         if($(this).hasClass("fieldset-points")) {
           color_picker.val('0 0 0');
         } else {
-          color_picker.val('');
+          color_picker.val('150 150 150');
         }
       });
     },

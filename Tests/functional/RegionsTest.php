@@ -95,7 +95,7 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertFalse($this->hatch->isSelected());
     }
 
@@ -123,7 +123,7 @@ class RegionsTest extends SimpleMapprFunctionalTestCase
 
         $this->assertEquals($this->title->getAttribute('value'), '');
         $this->assertEquals($this->data->getAttribute('value'), '');
-        $this->assertEquals($this->color->getAttribute('value'), '');
+        $this->assertEquals($this->color->getAttribute('value'), '150 150 150');
         $this->assertFalse($this->hatch->isSelected());
     }
 }
