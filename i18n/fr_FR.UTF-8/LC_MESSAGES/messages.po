@@ -851,8 +851,8 @@ msgid "Improvements: Added World Mercator projection. Requested by Russ Charrif.
 msgstr "Améliorations: Ajouté World Mercator comme nouvelle projection. Demandé par Russ Charrif."
 
 #: .tabs/about.php:11
-msgid "Improvements: Added hatch fill option for Regions."
-msgstr "Améliorations: Ajouté option pour remplir les régions avec une hachure."
+msgid "Improvements: Added hatch fill option for Regions and Drawings."
+msgstr "Améliorations: Ajouté option pour remplir les régions et dessins avec une hachure."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added border option for drawings."
