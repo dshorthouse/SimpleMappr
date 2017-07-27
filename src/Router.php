@@ -137,7 +137,7 @@ class Router
         });
 
         $router->any('/api', function () {
-            //headers are set in MapprApi class
+            //headers are set in Mappr\WebServices\Api class
             $klass = $this->_klass("Mappr\WebServices\Api");
             return $klass->execute()->createOutput();
         }, ['after' => 'logAPI']);

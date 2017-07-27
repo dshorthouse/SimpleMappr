@@ -716,7 +716,6 @@ var SimpleMappr = (function($, window, document) {
         self.hardResetShowMap(e);
       }).on('click', '#gridlabel', function(e) {
         if(!graticules.prop('checked')) { graticules.prop('checked', true); }
-        if($(this).prop('checked')) { $(this).val('false'); }
         self.hardResetShowMap(e);
       });
 
@@ -1658,7 +1657,7 @@ var SimpleMappr = (function($, window, document) {
         $('#gridspace').prop('checked', true);
       }
 
-      if(data.map.gridlabel !== undefined && data.map.gridlabel) {
+      if(data.map.hide_gridlabel !== undefined && data.map.hide_gridlabel) {
         $('#gridlabel').prop('checked', true);
       } else {
         $('#gridlabel').prop('checked', false);

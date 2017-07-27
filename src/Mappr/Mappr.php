@@ -637,8 +637,10 @@ abstract class Mappr
 
             $class = ms_newClassObj($layer);
 
-            if ($this->request->gridlabel != 0) {
-                $label = new \labelObj();
+            $label = new \labelObj();
+            if (isset($this->request->hide_gridlabel) && $this->request->hide_gridlabel) {
+                $label->color->setRGB(255, 255, 255, 0);
+            } else {
                 $label->set("font", "arial");
                 $label->set("encoding", "UTF-8");
                 $size = 10;
@@ -648,8 +650,8 @@ abstract class Mappr
                 $label->set("size", $size);
                 $label->set("position", MS_CC);
                 $label->color->setRGB(30, 30, 30);
-                $class->addLabel($label);
             }
+            $class->addLabel($label);
 
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200, 200, 200);
@@ -834,7 +836,7 @@ abstract class Mappr
         $attr->graticules       = false;
         $attr->watermark        = false;
         $attr->gridspace        = false;
-        $attr->gridlabel        = 1;
+        $attr->gridlabel        = true;
         $attr->download         = false;
         $attr->crop             = false;
         $attr->options          = []; //scalebar, legend, border, linethickness

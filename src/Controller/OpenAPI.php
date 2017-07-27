@@ -448,6 +448,13 @@ class OpenApi implements RestMethods
           'maximum' => 50
         ],
         [
+        'name' => 'hide_gridlabel',
+        'in' => ($request_method == "GET") ? 'query' : 'formData',
+        'description' => 'if hide_gridlabel=true is included, the graticule labels are not shown.',
+        'required' => false,
+        'type' => 'boolean'
+        ],
+        [
           'name' => 'width',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
           'description' => 'integer-based output width in pixels',

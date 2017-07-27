@@ -73,7 +73,7 @@ class Request
         $attr->graticules       = (array_key_exists('grid', $attr->layers)) ? true : false;
         $attr->watermark        = Utility::loadParam('watermark', false);
         $attr->gridspace        = Utility::loadParam('gridspace', false);
-        $attr->gridlabel        = (int)Utility::loadParam('gridlabel', 1);
+        $attr->hide_gridlabel   = Utility::loadParam('hide_gridlabel', false);
         $attr->download         = Utility::loadParam('download', false);
         $attr->crop             = Utility::loadParam('crop', false);
         $attr->options          = Utility::loadParam('options', []);

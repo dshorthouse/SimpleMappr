@@ -145,7 +145,7 @@ class Map extends Mappr
         }
 
         $this->options['legend'] = true;
-        if (Utility::loadParam('legend', false) == "false") {
+        if (!Utility::loadParam('legend', true)) {
             $this->options['legend'] = false;
         }
 
@@ -183,16 +183,22 @@ class Map extends Mappr
             $layer->setProjection(parent::getProjection($this->default_projection));
 
             $class = ms_newClassObj($layer);
+
             $label = new \labelObj();
-            $label->set("encoding", "UTF-8");
-            $label->set("font", "arial");
-            $label->set("size", 10);
-            $label->set("position", MS_UC);
-            $label->color->setRGB(30, 30, 30);
+            if (isset($this->hide_gridlabel)) {
+                $label->color->setRGB(255, 255, 255, 0);
+            } else {
+                $label->set("encoding", "UTF-8");
+                $label->set("font", "arial");
+                $label->set("size", 10);
+                $label->set("position", MS_UC);
+                $label->color->setRGB(30, 30, 30);
+            }
             $class->addLabel($label);
+
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200, 200, 200);
-
+            
             $minx = $this->map_obj->extent->minx;
             $maxx = $this->map_obj->extent->maxx;
 

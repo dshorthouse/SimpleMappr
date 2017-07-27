@@ -156,7 +156,7 @@ class Api extends Mappr
         $attr->layers           = $layers;
         $attr->graticules       = Utility::loadParam('graticules', false);
         $attr->gridspace        = Utility::loadParam('spacing', false);
-        $attr->gridlabel        = Utility::loadParam('gridlabel', "true");
+        $attr->hide_gridlabel   = Utility::loadParam('hide_gridlabel', false);
 
         if (Utility::loadParam('border', false)) {
             $attr->options['border'] = true;
@@ -416,15 +416,17 @@ class Api extends Mappr
 
             $class = ms_newClassObj($layer);
 
-            if ($this->request->gridlabel == "true") {
-                $label = new \labelObj();
+            $label = new \labelObj();
+            if ($this->request->hide_gridlabel) {
+                $label->color->setRGB(255, 255, 255, 0);
+            } else {
                 $label->set("encoding", "UTF-8");
                 $label->set("font", "arial");
                 $label->set("size", 10);
                 $label->set("position", MS_UC);
                 $label->color->setRGB(30, 30, 30);
-                $class->addLabel($label);
             }
+            $class->addLabel($label);
 
             $style = ms_newStyleObj($class);
             $style->color->setRGB(200, 200, 200);
