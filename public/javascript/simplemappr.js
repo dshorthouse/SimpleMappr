@@ -1477,7 +1477,7 @@ var SimpleMappr = (function($, window, document) {
       };
 
       $.each(data, function(key, value) {
-        if(key.indexOf("coords") !== -1) {
+        if(key.indexOf("coords[") !== -1) {
           item = key.match(/\[[A-Za-z0-9]*?\]/g);
           if(item){
             if(inputs.map.coords[parseInt(item[0].clean(),10)] === undefined) { inputs.map.coords[parseInt(item[0].clean(),10)] = {}; }
@@ -1485,7 +1485,7 @@ var SimpleMappr = (function($, window, document) {
             delete inputs.map["coords" + item[0] + item[1]];
           }
         }
-        if(key.indexOf("regions") !== -1) {
+        if(key.indexOf("regions[") !== -1) {
           item = key.match(/\[[A-Za-z0-9]*?\]/g);
           if(item) {
             if(inputs.map.regions[parseInt(item[0].clean(),10)] === undefined) { inputs.map.regions[parseInt(item[0].clean(),10)] = {}; }
@@ -1493,7 +1493,7 @@ var SimpleMappr = (function($, window, document) {
             delete inputs.map["regions" + item[0] + item[1]];
           }
         }
-        if(key.indexOf("wkt") !== -1) {
+        if(key.indexOf("wkt[") !== -1) {
           item = key.match(/\[[A-Za-z0-9]*?\]/g);
           if(item) {
             if(inputs.map.wkt[parseInt(item[0].clean(),10)] === undefined) { inputs.map.wkt[parseInt(item[0].clean(),10)] = {}; }
@@ -1501,14 +1501,14 @@ var SimpleMappr = (function($, window, document) {
             delete inputs.map["wkt" + item[0] + item[1]];
           }
         }
-        if(key.indexOf("layers") !== -1) {
+        if(key.indexOf("layers[") !== -1) {
           item = key.match(/\[[A-Za-z0-9]*?\]/g);
           if(item) {
             inputs.map.layers[item[0].clean()] = value;
             delete inputs.map["layers" + item[0]];
           }
         }
-        if(key.indexOf("options") !== -1) {
+        if(key.indexOf("options[") !== -1) {
           item = key.match(/\[[A-Za-z0-9]*?\]/g);
           if(item) {
             inputs.map.options[item[0].clean()] = value;
