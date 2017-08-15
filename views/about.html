@@ -21,6 +21,7 @@
 <div id="recent-updates">
 <div class="header"><h2>{% trans "Recent Updates" %}</h2></div>
 <dl>
+<dt class="update">{% trans "August 15, 2017" %}</dt><dd>{% trans "Improvements: Added US counties from the US Census Bureau. Requested by Frank Krell." %}</dd>
 <dt class="update">{% trans "July 23, 2017" %}</dt><dd>{% trans "Improvements: Added hatch fill option for Regions and Drawings." %}</dd>
 <dt class="update">{% trans "June 28, 2017" %}</dt><dd>{% trans "Improvements: Added World Mercator projection. Requested by Russ Charrif." %}</dd>
 <dt class="update">{% trans "June 20, 2017" %}</dt><dd>{% trans "Improvements: Added border option for drawings." %}</dd>
@@ -51,7 +52,8 @@
 {% set urls_conservation = '<a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx" target="_blank">Conservation International</a>' %}
 {% set urls_wwf = '<a href="http://www.worldwildlife.org/pages/conservation-science-data-and-tools">World Wildlife Fund</a>' %}
 {% set urls_nasa = '<a href="http://visibleearth.nasa.gov/view.php?id=57752">NASA</a>' %}
-<p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }} and ecoregions from the {{ urls_wwf }}. Blue Marble from {{ urls_nasa }}.{% endtrans %}</p>
+{% set urls_us_census = '<a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html">US Census Bureau</a>' %}
+<p>{% trans %}Underlying ArcView shapefiles were obtained from Natural Earth, {{ urls_naturalearth }} and the mapping software used is MapServer, {{ urls_mapserver }} via PHP MapScript. Biodiversity Hotspot data were obtained from {{ urls_conservation }} and ecoregions from the {{ urls_wwf }}. Blue Marble from {{ urls_nasa }} and US Counties from the {{ urls_us_census }}.{% endtrans %}</p>
 
 <div class="header"><h2>{% trans "History" %}</h2></div>
 <p>{% trans "The first version of this application was developed by David P. Shorthouse to help participants in two Planetary Biodiversity Inventory (National Science Foundation) projects create publication-quality maps. Funding for that work was coordinated by Dr. Norman Platnick, American Museum of Natural History." %}</p>

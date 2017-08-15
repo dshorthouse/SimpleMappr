@@ -283,6 +283,9 @@ msgstr "Couches"
 msgid "State/Provinces"
 msgstr "États/Provinces"
 
+msgid "US Counties"
+msgstr "comtés des É.-U."
+
 #: .index.php:130
 #: .tabs/help.php:74
 msgid "lakes (outline)"
@@ -727,8 +730,8 @@ msgstr "Le code pour SimpleMappr peut être obtenu à %urls_github%."
 
 #: .tabs/about.php:40
 #, php-format
-msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and ecoregions from the %urls_wwf%. Blue Marble from %urls_nasa%."
-msgstr "Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_wwf%. Blue Marble à partir de NASA."
+msgid "Underlying ArcView shapefiles were obtained from Natural Earth, %urls_naturalearth% and the mapping software used is MapServer, %urls_mapserver% via PHP MapScript. Biodiversity Hotspot data were obtained from %urls_conservation% and ecoregions from the %urls_wwf%. Blue Marble from %urls_nasa%  and US Counties from the %urls_us_census%."
+msgstr "Données pour les hotspot de biodiversité on été obtenu à partir de %urls_conservation% et ceux pour les écoregions à partir du %urls_wwf%. Blue Marble à partir de NASA et les comtés des É.-U. à partir du Bureau des recensements."
 
 #: .tabs/about.php:7
 msgid "Create free point maps suitable for reproduction on print media by copying and pasting geographic coordinates in layers, choosing pushpin styles, then downloading the result."
@@ -845,6 +848,14 @@ msgstr "28 juin, 2017"
 #: .tabs/about.php:11
 msgid "July 23, 2017"
 msgstr "23 juillet, 2017"
+
+#: .tabs/about.php:11
+msgid "August 15, 2017"
+msgstr "15 août, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added US counties from the US Census Bureau. Requested by Frank Krell."
+msgstr "Améliorations: Ajouté les comtés des É.-U. par le Bureau des recensements. Demandé par Frank Krell."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added World Mercator projection. Requested by Russ Charrif."
