@@ -87,22 +87,26 @@ class Router
         $router = new RouteCollector();
 
         $router->filter(
-            'logAPI', function () {
+            'logAPI',
+            function () {
                 $this->_log("API");
             }
         );
         $router->filter(
-            'logWMS', function () {
+            'logWMS',
+            function () {
                 $this->_log("WMS");
             }
         );
         $router->filter(
-            'logWFS', function () {
+            'logWFS',
+            function () {
                 $this->_log("WFS");
             }
         );
         $router->filter(
-            'check_role_user', function () {
+            'check_role_user',
+            function () {
                 if (!User::checkPermission('user')) {
                     echo $this->_renderError(403);
                     return false;
@@ -110,7 +114,8 @@ class Router
             }
         );
         $router->filter(
-            'check_role_administrator', function () {
+            'check_role_administrator',
+            function () {
                 if (!User::checkPermission('administrator')) {
                     echo $this->_renderError(403);
                     return false;

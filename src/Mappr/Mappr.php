@@ -226,9 +226,18 @@ abstract class Mappr
      */
     public function __construct()
     {
-        $this->map_obj = ms_newMapObjFromString("MAP END");
-        $this->request = (object)array_merge((array)$this->_defaultAttributes(), (array)$this->getRequest());
-        $this->image_size = [$this->request->width, $this->request->height];
+        try {
+            if (!extension_loaded('MapScript')) {
+              throw new \Exception("PHP MapScript extension is not loaded"); 
+            }
+            $this->map_obj = ms_newMapObjFromString("MAP END");
+            $this->request = (object)array_merge((array)$this->_defaultAttributes(), (array)$this->getRequest());
+            $this->image_size = [$this->request->width, $this->request->height];
+        }
+        catch (\Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
     }
 
     /**
