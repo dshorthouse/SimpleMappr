@@ -159,7 +159,7 @@ var SimpleMapprAdmin = (function($, window, sm) {
               xhr.setRequestHeader('Accept', 'text/x-bibliography; style=american-journal-of-botany');
             },
             success: function(data) {
-              matches = data.match(/^(.*)(?:available at:)/i);
+              matches = data.replace(/[\s+\n]/g,' ').trim().match(/^(.*)(?:available at:)/i);
               $("#citation-reference").val(matches[1].trim());
               $(".trumbowyg-editor").text(matches[1].trim());
             },
