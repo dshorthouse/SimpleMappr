@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+ <Document>
+  <name>SimpleMappr: My_Map</name>
+  <Style id="pushpin0">
+   <IconStyle id="simplemapprstyle0">
+    <scale>1.0</scale>
+    <Icon>
+     <href>http://maps.google.com/mapfiles/kml/paddle/A.png</href>
+    </Icon>
+   </IconStyle>
+  </Style>
+  <Style id="pushpin1">
+   <IconStyle id="simplemapprstyle1">
+    <scale>1.0</scale>
+    <Icon>
+     <href>http://maps.google.com/mapfiles/kml/paddle/B.png</href>
+    </Icon>
+   </IconStyle>
+  </Style>
+  <Style id="MoreSampleData">
+   <PolyStyle>
+    <color>7f0000ff</color>
+   </PolyStyle>
+  </Style>
+  <Folder id="simplemapprfolder-0">
+   <name>Sample Data</name>
+   <Placemark id="simplemapprpin-point-00">
+    <name>Sample Data</name>
+    <description>-115,55</description>
+    <styleUrl>#pushpin0</styleUrl>
+    <Point>
+     <coordinates>-115,55,0</coordinates>
+    </Point>
+   </Placemark>
+   <Placemark id="simplemapprpin-point-01">
+    <name>Sample Data</name>
+    <description>-110,65</description>
+    <styleUrl>#pushpin0</styleUrl>
+    <Point>
+     <coordinates>-110,65,0</coordinates>
+    </Point>
+   </Placemark>
+  </Folder>
+  <Folder id="simplemapprfolder-1">
+   <name>Sample Data2</name>
+   <Placemark id="simplemapprpin-point-10">
+    <name>Sample Data2</name>
+    <description>-120,35</description>
+    <styleUrl>#pushpin1</styleUrl>
+    <Point>
+     <coordinates>-120,35,0</coordinates>
+    </Point>
+   </Placemark>
+   <Placemark id="simplemapprpin-point-11">
+    <name>Sample Data2</name>
+    <description>-80,70</description>
+    <styleUrl>#pushpin1</styleUrl>
+    <Point>
+     <coordinates>-80,70,0</coordinates>
+    </Point>
+   </Placemark>
+  </Folder>
+  <Placemark id="simplemapprpin-wkt-MoreSampleData">
+   <name>MoreSampleData</name>
+   <styleUrl>#MoreSampleData</styleUrl>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-102.919921875,56.022948079627 -103.18359375,56.022948079627 -103.53515625,55.875310835697 -103.974609375,55.67758441109 -104.4140625,55.379110448011 -104.765625,55.128649068489 -104.94140625,54.826007999095 -105.1171875,54.418929968658 -105.205078125,53.956085530988 -105.205078125,53.488045536056 -105.205078125,52.961875059076 -104.94140625,52.643063436659 -104.501953125,52.321910885948 -104.0625,52.106505190756 -103.53515625,52.052490476001 -102.919921875,51.944264879029 -101.77734375,51.944264879029 -100.8984375,51.944264879029 -100.37109375,51.944264879029 -99.755859375,51.944264879029 -99.31640625,51.944264879029 -98.96484375,51.890053935217 -98.701171875,51.835777520452 -98.4375,51.781435604431 -98.0859375,51.672555148397 -97.646484375,51.563412328676 -97.119140625,51.508742458803 -96.50390625,51.45400691006 -95.888671875,51.45400691006 -95.185546875,51.618016548774 -94.482421875,51.944264879029 -93.69140625,52.643063436659 -93.427734375,53.067626642387 -93.251953125,53.383328367572 -93.251953125,53.80065082633 -93.251953125,54.110942942724 -93.251953125,54.367758524068 -93.427734375,54.572061655659 -93.515625,54.775345859364 -93.69140625,54.927141864546 -93.8671875,55.078367232015 -93.955078125,55.229023057406 -94.21875,55.379110448011 -94.39453125,55.528630522572 -94.658203125,55.627995954267 -94.921875,55.727110085046 -95.09765625,55.825973254619 -95.361328125,55.875310835697 -95.537109375,55.92458580483 -95.712890625,55.92458580483 -96.064453125,55.92458580483 -96.328125,55.92458580483 -96.591796875,55.92458580483 -96.85546875,55.92458580483 -97.119140625,55.825973254619 -97.294921875,55.825973254619 -97.470703125,55.727110085046 -97.646484375,55.67758441109 -97.91015625,55.67758441109 -98.173828125,55.627995954267 -98.26171875,55.627995954267 -98.4375,55.627995954267 -98.525390625,55.67758441109 -98.61328125,55.67758441109 -98.876953125,55.875310835697 -99.052734375,56.072035471801 -99.228515625,56.218923189167 -99.31640625,56.316536722113 -99.4921875,56.413901376007 -99.580078125,56.46249048389 -99.580078125,56.46249048389 -99.580078125,56.46249048389 -99.66796875,56.46249048389 -99.66796875,56.46249048389 -102.919921875,56.022948079627</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+ </Document>
+</kml>
