@@ -307,7 +307,7 @@ class Map extends Mappr
             break;
 
         case 'kml':
-            return (new Kml)->create(["file_name" => $this->title, "coords" => $this->coords]);
+            return (new Kml)->create(["file_name" => $this->title, "coords" => $this->coords, "wkt" => $this->wkt]);
             break;
 
         default:

@@ -38,6 +38,7 @@
 namespace SimpleMappr\Controller;
 
 use XMLWriter;
+use geoPHP;
 use SimpleMappr\Header;
 use SimpleMappr\Utility;
 
@@ -59,16 +60,32 @@ class Kml implements RestMethods
      * @var array $pushpins
      */
     public static $pushpins = [
-        'http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png',
-        'http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png',
-        'http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png',
-        'http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png',
-        'http://maps.google.com/mapfiles/kml/pushpin/wht-pushpin.png',
-        'http://maps.google.com/mapfiles/kml/paddle/red-stars.png',
-        'http://maps.google.com/mapfiles/kml/paddle/wht-blank.png',
-        'http://maps.google.com/mapfiles/ms/micons/pink-pushpin.png',
-        'http://maps.google.com/mapfiles/ms/micons/purple-pushpin.png',
-        'http://maps.google.com/mapfiles/ms/micons/ltblu-pushpin.png'
+        'http://maps.google.com/mapfiles/kml/paddle/A.png',
+        'http://maps.google.com/mapfiles/kml/paddle/B.png',
+        'http://maps.google.com/mapfiles/kml/paddle/C.png',
+        'http://maps.google.com/mapfiles/kml/paddle/D.png',
+        'http://maps.google.com/mapfiles/kml/paddle/E.png',
+        'http://maps.google.com/mapfiles/kml/paddle/F.png',
+        'http://maps.google.com/mapfiles/kml/paddle/G.png',
+        'http://maps.google.com/mapfiles/kml/paddle/H.png',
+        'http://maps.google.com/mapfiles/kml/paddle/I.png',
+        'http://maps.google.com/mapfiles/kml/paddle/J.png',
+        'http://maps.google.com/mapfiles/kml/paddle/K.png',
+        'http://maps.google.com/mapfiles/kml/paddle/L.png',
+        'http://maps.google.com/mapfiles/kml/paddle/M.png',
+        'http://maps.google.com/mapfiles/kml/paddle/N.png',
+        'http://maps.google.com/mapfiles/kml/paddle/O.png',
+        'http://maps.google.com/mapfiles/kml/paddle/P.png',
+        'http://maps.google.com/mapfiles/kml/paddle/Q.png',
+        'http://maps.google.com/mapfiles/kml/paddle/R.png',
+        'http://maps.google.com/mapfiles/kml/paddle/S.png',
+        'http://maps.google.com/mapfiles/kml/paddle/T.png',
+        'http://maps.google.com/mapfiles/kml/paddle/U.png',
+        'http://maps.google.com/mapfiles/kml/paddle/V.png',
+        'http://maps.google.com/mapfiles/kml/paddle/W.png',
+        'http://maps.google.com/mapfiles/kml/paddle/X.png',
+        'http://maps.google.com/mapfiles/kml/paddle/Y.png',
+        'http://maps.google.com/mapfiles/kml/paddle/Z.png'
     ];
 
     /**
@@ -92,12 +109,21 @@ class Kml implements RestMethods
      */
     private $_placemark = [];
 
+    private $_polygon_kml = [];
+
     /**
      * Coordinates to build a placemark
      *
      * @var array $coords
      */
     public $coords;
+
+    /**
+     * WKT to build a polygon
+     *
+     * @var array $wkt
+     */
+    public $wkt;
 
     /**
      * User-defined filename
@@ -127,10 +153,17 @@ class Kml implements RestMethods
     public function create($content)
     {
         $this->file_name = time();
+        $this->coords = [];
+        $this->wkt = [];
         if (array_key_exists("file_name", $content)) {
             $this->file_name = Utility::cleanFilename($content["file_name"]);
         }
-        $this->coords = $content["coords"];
+        if (array_key_exists("coords", $content)) {
+            $this->coords = $content["coords"];
+        }
+        if (array_key_exists("wkt", $content)) {
+            $this->wkt = $content["wkt"];
+        }
         return $this->_createContent();
     }
 
@@ -178,6 +211,7 @@ class Kml implements RestMethods
         $this->_setMetadata("name", "SimpleMappr: " . $this->file_name);
 
         $this->_addCoordinates();
+        $this->_addWKT();
 
         $this->_kml = new XMLWriter();
         $this->_kml->openMemory();
@@ -200,22 +234,38 @@ class Kml implements RestMethods
             $this->_kml->writeAttribute('id', 'simplemapprstyle'.$i);
             $this->_kml->writeElement('scale', '1.0');
             $this->_kml->startElement('Icon');
-            $this->_kml->writeElement('href', self::$pushpins[$i]);
+            if ($i < count(self::$pushpins)-1) {
+                $pushpin = self::$pushpins[$i];
+            } else {
+                $pushpin = self::$pushpins[count(self::$pushpins)-1];
+            }
+            $this->_kml->writeElement('href', $pushpin);
             $this->_kml->endElement(); //end Icon
             $this->_kml->endElement(); //end IconStyle
             $this->_kml->endElement(); //end Style
         }
 
+        foreach($this->_polygon_kml as $data) {
+            $this->_kml->startElement('Style');
+            $this->_kml->writeAttribute('id', $data[0]);
+            $this->_kml->startElement('PolyStyle');
+            $colors = explode(" ", $data[1]);
+            $kml_color = "7f" . ltrim(Utility::rgb2hex($colors[2], $colors[1], $colors[0]), "#");
+            $this->_kml->writeElement('color', $kml_color);
+            $this->_kml->endElement(); //end PolyStyle
+            $this->_kml->endElement(); //end Style
+        }
+
         foreach ($this->getAllPlacemarks() as $key => $placemarks) {
             $this->_kml->startElement('Folder');
-            $this->_kml->writeAttribute('id', 'simplemapprfolder'.$key);
+            $this->_kml->writeAttribute('id', "simplemapprfolder-{$key}");
             $this->_kml->writeElement('name', $this->getPlacemark($key, 0, 'name'));
             foreach ($placemarks as $id => $placemark) {
                 $name = $this->getPlacemark($key, $id, 'name');
                 $description = $this->getPlacemark($key, $id, 'coordinate');
                 $coordinates = $this->getPlacemark($key, $id, 'coordinate') . ',0';
                 $this->_kml->startElement('Placemark');
-                $this->_kml->writeAttribute('id', 'simplemapprpin'.$key.$id);
+                $this->_kml->writeAttribute('id', "simplemapprpin-point-{$key}{$id}");
                 $this->_kml->writeElement('name', $name);
                 $this->_kml->writeElement('description', $description);
                 $this->_kml->writeElement('styleUrl', '#pushpin'.$key);
@@ -225,6 +275,15 @@ class Kml implements RestMethods
                 $this->_kml->endElement(); //end Placemark
             }
             $this->_kml->endElement();
+        }
+        
+        foreach($this->_polygon_kml as $data) {
+            $this->_kml->startElement('Placemark');
+            $this->_kml->writeAttribute('id', "simplemapprpin-wkt-{$data[0]}");
+            $this->_kml->writeElement('name', $data[0]);
+            $this->_kml->writeElement('styleUrl', "#{$data[0]}");
+            $this->_kml->writeRaw($data[2]);
+            $this->_kml->endElement(); //end Placemark
         }
 
         $this->_kml->endElement(); //end Document
@@ -262,6 +321,8 @@ class Kml implements RestMethods
 
     /**
      * Helper function to get all placemarks
+     *
+     * @param string $type The type of placemark.
      *
      * @return Array
      */
@@ -334,6 +395,29 @@ class Kml implements RestMethods
                         $point_key++;
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Helper function to add WKT to polygons
+     *
+     * @return void
+     */
+    private function _addWKT()
+    {
+        $count = count($this->wkt)-1;
+        for ($j=0; $j<=$count; $j++) {
+            $title = "";
+            if ($this->wkt[$j]['title']) {
+                $title = preg_replace('/\s+/', '', $this->wkt[$j]['title']);
+            }
+
+            if (trim($this->wkt[$j]['data'])) {
+                $data = trim($this->wkt[$j]['data']);
+                $color = trim($this->wkt[$j]['color']);
+                $geom = geoPHP::load($data,'wkt');
+                $this->_polygon_kml[] = [$title, $color, $geom->out('kml')];
             }
         }
     }
