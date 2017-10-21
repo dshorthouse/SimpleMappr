@@ -854,6 +854,14 @@ msgid "August 15, 2017"
 msgstr "15 août, 2017"
 
 #: .tabs/about.php:11
+msgid "October 21, 2017"
+msgstr "21 octobre, 2017"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added Drawing layers to KML outputs."
+msgstr "Améliorations: Ajouté les couches dessins dans les téléchargements KML."
+
+#: .tabs/about.php:11
 msgid "Improvements: Added US counties from the US Census Bureau. Requested by Frank Krell."
 msgstr "Améliorations: Ajouté les comtés des É.-U. par le Bureau des recensements. Demandé par Frank Krell."
 
