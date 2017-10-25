@@ -420,31 +420,24 @@ class Router
     }
 
     /**
-     * Instantiate the Logger class and execute its tail method
+     * Instantiate the Logger class and execute its tail & parse methods
      *
      * @return string
      */
     private function _tailLog()
     {
+        $string = "";
         $logger = new Logger(ROOT."/log/logger.log");
-        $logs = $logger->tail(20);
-        if ($logs) {
-            $capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{4}\:){7}[a-z0-9]{4})(?:.*?)(?<url>\/[api|wms|wfs].*)$/';
-
-            foreach ($logs as $key => $log) {
-                $logs[$key] = preg_replace_callback($capture, function ($matches) {
-                    if (isset($matches["ip"]) && isset($matches["url"])) {
-                        $url = (strlen($matches["url"]) < 100) ? $matches["url"] : substr($matches["url"], 0, 100) . "...";
-                        $string  = "<a href=\"https://who.is/whois-ip/ip-address/${matches['ip']}\" target=\"_blank\">${matches['ip']}</a>";
-                        $string .= " - ";
-                        $string .= "<a href=\"${matches['url']}\" target=\"_blank\">${url}</a>";
-                        return $string;
-                    }
-                    return;
-                }, $log);
+        $entries = $logger->tail(20)->parse()->entries;
+        foreach ($entries as $entry) {
+            if (isset($entry["ip"]) && isset($entry["url"])) {
+                $url = (strlen($entry["url"]) < 100) ? $entry["url"] : substr($entry["url"], 0, 100) . "...";
+                $string .= "<a href=\"https://who.is/whois-ip/ip-address/${entry['ip']}\" target=\"_blank\">${entry['ip']}</a>";
+                $string .= " - ";
+                $string .= "<a href=\"${entry['url']}\" target=\"_blank\">${url}</a><br>";
             }
         }
-        return ($logs) ? implode("<br>", $logs) : "No log data";
+        return (strlen($string) > 0) ? $string : "No log entries";
     }
 
     /**

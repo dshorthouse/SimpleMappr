@@ -49,12 +49,27 @@ namespace SimpleMappr;
  */
 class Logger
 {
+
+    /**
+     * Log entries
+     *
+     * @var array $log_entries
+     */
+    public $entries = [];
+
     /**
      * Filename for logging
      *
      * @var string $_filename
      */
     private $_filename;
+
+    /**
+     * Capture regex for IP addresses and request URL
+     *
+     * @var string $_capture
+     */
+    private $_capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{3,4}\:){7}[a-z0-9]{3,4})(?:.*?)(?<url>\/[api|wms|wfs].*)$/';
 
     /**
      * Constructor
@@ -95,14 +110,14 @@ class Logger
 
         $fp = fopen($this->_filename, 'r');
         if (!$fp) {
-            return [];
+            return $this;
         }
 
         fseek($fp, 0, SEEK_END);
         $pos = ftell($fp);
 
         if (!$pos) {
-            return [];
+            return $this;
         }
 
         while ($line_count < $n + 1) {
@@ -122,6 +137,16 @@ class Logger
         }
 
         fclose($fp);
-        return array_slice(explode("\n", rtrim($input)), -$n);
+        $this->entries = array_slice(explode("\n", rtrim($input)), -$n);
+        return $this;
+    }
+
+    public function parse()
+    {
+        foreach ($this->entries as $key => $log) {
+            preg_match($this->_capture, $log, $matches);
+            $this->entries[$key] = $matches;
+        }
+        return $this;
     }
 }

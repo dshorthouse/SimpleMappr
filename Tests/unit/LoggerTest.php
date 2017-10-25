@@ -117,7 +117,70 @@ class LoggerTest extends TestCase
     public function testRead()
     {
         $this->logger->write("This is some more content");
-        $log_data = implode("", $this->logger->tail());
+        $log_data = implode("", $this->logger->tail()->entries);
         $this->assertStringStartsWith("This is some more content", $log_data);
+    }
+
+    /**
+     * Test entries is an empty array.
+     *
+     * @return void
+     */
+    public function testBlank()
+    {
+        $entries = $this->logger->tail()->parse()->entries;
+        $this->assertEmpty($entries);
+    }
+
+    /**
+     * Test parsing the log file for IPv4 addresses.
+     *
+     * @return void
+     */
+    public function testIPv4()
+    {
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - /api/?projection=epsg:4396";
+        $this->logger->write($data);
+        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $this->assertEquals("200.62.146.210", $ip);
+    }
+
+    /**
+     * Test parsing the log file for IPv6 addresses.
+     *
+     * @return void
+     */
+    public function testIPv6a()
+    {
+        $data = "2017-10-23 12:56:59 - 2607:ea00:107:802:4841:852c:1245:6f47 - API - /api/?projection=epsg:54030";
+        $this->logger->write($data);
+        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $this->assertEquals("2607:ea00:107:802:4841:852c:1245:6f47", $ip);
+    }
+
+    /**
+     * Test parsing the log file for IPv6 addresses.
+     *
+     * @return void
+     */
+    public function testIPv6b()
+    {
+        $data = "2017-10-23 12:56:59 - 2607:ea00:107a:802a:4841:852c:1245:6f47 - API - /api/?projection=epsg:54030";
+        $this->logger->write($data);
+        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $this->assertEquals("2607:ea00:107a:802a:4841:852c:1245:6f47", $ip);
+    }
+
+    /**
+     * Test parsing the log file for URL.
+     *
+     * @return void
+     */
+    public function testURL()
+    {
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - /api/?projection=epsg:4396";
+        $this->logger->write($data);
+        $url = $this->logger->tail()->parse()->entries[0]["url"];
+        $this->assertEquals("/api/?projection=epsg:4396", $url);
     }
 }
