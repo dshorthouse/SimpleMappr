@@ -663,6 +663,7 @@ class Api extends Mappr
         $delimiters_list = $csv->fetchDelimitersOccurrence([",", "\t"], 1);
         $has_single_column = (count($csv->fetchOne()) == 1) ? true : false;
 
+
         if ($delimiters_list["\t"] > 0 || $has_single_column) {
             $csv->setDelimiter("\t");
             $this->legend = $csv->fetchOne();
@@ -676,6 +677,7 @@ class Api extends Mappr
                 }
             );
         }
+
         foreach ($results as $row) {
             foreach ($row as $key => $value) {
                 $this->_coord_cols[$key][] = Utility::makeCoordinates($value);

@@ -58,18 +58,18 @@ class Logger
     public $entries = [];
 
     /**
+     * Sample regex for IP addresses and request URL
+     *
+     * @var string $capture
+     */
+    public static $capture = '/^(?<time>[0-9]{4}-(?:[0-9]{1,2}-?){2}\s(?:[0-9]{1,2}:?){3})(?:\s-\s)(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{3,4}\:){7}[a-z0-9]{3,4})(?:\s\-\s)(?<type>[a-zA-Z]{3})(?:\s-\s)(?<method>[a-zA-Z]{3,4})(?:\s\-\s)(?<url>\/[api|wms|wfs].*)$/';
+    
+    /**
      * Filename for logging
      *
      * @var string $_filename
      */
     private $_filename;
-
-    /**
-     * Capture regex for IP addresses and request URL
-     *
-     * @var string $_capture
-     */
-    private $_capture = '/(?<ip>(?:\d{1,3}\.){3}\d{1,3}|(?:[a-z0-9]{3,4}\:){7}[a-z0-9]{3,4})(?:.*?)(?<url>\/[api|wms|wfs].*)$/';
 
     /**
      * Constructor
@@ -100,7 +100,7 @@ class Logger
      *
      * @param integer $n An integer.
      *
-     * @return array lines.
+     * @return object $this.
      */
     public function tail($n = 10)
     {
@@ -141,10 +141,17 @@ class Logger
         return $this;
     }
 
-    public function parse()
+    /**
+     * Parse each entry of the log by passing a regex
+     *
+     * @param string $capture An regex.
+     *
+     * @return object $this.
+     */
+    public function parse($capture = '/^(.*)$/')
     {
         foreach ($this->entries as $key => $log) {
-            preg_match($this->_capture, $log, $matches);
+            preg_match($capture, $log, $matches);
             $this->entries[$key] = $matches;
         }
         return $this;

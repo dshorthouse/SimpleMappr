@@ -55,6 +55,7 @@ class LoggerTest extends TestCase
 
     protected $file;
     protected $logger;
+    protected $capture;
 
     /**
      * Parent setUp function executed before each test
@@ -139,9 +140,9 @@ class LoggerTest extends TestCase
      */
     public function testIPv4()
     {
-        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - /api/?projection=epsg:4396";
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - POST - /api/?projection=epsg:4396";
         $this->logger->write($data);
-        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $ip = $this->logger->tail()->parse(Logger::$capture)->entries[0]["ip"];
         $this->assertEquals("200.62.146.210", $ip);
     }
 
@@ -152,9 +153,9 @@ class LoggerTest extends TestCase
      */
     public function testIPv6a()
     {
-        $data = "2017-10-23 12:56:59 - 2607:ea00:107:802:4841:852c:1245:6f47 - API - /api/?projection=epsg:54030";
+        $data = "2017-10-23 12:56:59 - 2607:ea00:107:802:4841:852c:1245:6f47 - API - POST - /api/?projection=epsg:54030";
         $this->logger->write($data);
-        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $ip = $this->logger->tail()->parse(Logger::$capture)->entries[0]["ip"];
         $this->assertEquals("2607:ea00:107:802:4841:852c:1245:6f47", $ip);
     }
 
@@ -165,9 +166,9 @@ class LoggerTest extends TestCase
      */
     public function testIPv6b()
     {
-        $data = "2017-10-23 12:56:59 - 2607:ea00:107a:802a:4841:852c:1245:6f47 - API - /api/?projection=epsg:54030";
+        $data = "2017-10-23 12:56:59 - 2607:ea00:107a:802a:4841:852c:1245:6f47 - API - POST - /api/?projection=epsg:54030";
         $this->logger->write($data);
-        $ip = $this->logger->tail()->parse()->entries[0]["ip"];
+        $ip = $this->logger->tail()->parse(Logger::$capture)->entries[0]["ip"];
         $this->assertEquals("2607:ea00:107a:802a:4841:852c:1245:6f47", $ip);
     }
 
@@ -178,9 +179,48 @@ class LoggerTest extends TestCase
      */
     public function testURL()
     {
-        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - /api/?projection=epsg:4396";
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - POST - /api/?projection=epsg:4396";
         $this->logger->write($data);
-        $url = $this->logger->tail()->parse()->entries[0]["url"];
+        $url = $this->logger->tail()->parse(Logger::$capture)->entries[0]["url"];
         $this->assertEquals("/api/?projection=epsg:4396", $url);
+    }
+
+    /**
+     * Test parsing the log file for the time.
+     *
+     * @return void
+     */
+    public function testTime()
+    {
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - POST - /api/?projection=epsg:4396";
+        $this->logger->write($data);
+        $time = $this->logger->tail()->parse(Logger::$capture)->entries[0]["time"];
+        $this->assertEquals("2017-10-23 12:56:59", $time);
+    }
+
+    /**
+     * Test parsing the log file for the type of API request.
+     *
+     * @return void
+     */
+    public function testType()
+    {
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - POST - /api/?projection=epsg:4396";
+        $this->logger->write($data);
+        $type = $this->logger->tail()->parse(Logger::$capture)->entries[0]["type"];
+        $this->assertEquals("API", $type);
+    }
+
+    /**
+     * Test parsing the log file for the request method.
+     *
+     * @return void
+     */
+    public function testMethod()
+    {
+        $data  = "2017-10-23 12:56:59 - 200.62.146.210 - API - POST - /api/?projection=epsg:4396";
+        $this->logger->write($data);
+        $method = $this->logger->tail()->parse(Logger::$capture)->entries[0]["method"];
+        $this->assertEquals("POST", $method);
     }
 }

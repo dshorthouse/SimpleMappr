@@ -307,4 +307,60 @@ class ApiTest extends TestCase
         file_put_contents($file, $this->ob_cleanOutput($mappr_api, true));
         $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_wkt_border.png'));
     }
+
+    /**
+     * Test API response to ensure that image can be produced using txt file as URL parameter.
+     *
+     * @return void
+     */
+    public function testApiOutputURLFromTXT()
+    {
+        $req = [
+            'bbox' => '-140,25,-90,75',
+            'url' => MAPPR_URL . "/public/files/demo.txt",
+            'color' => [
+                0 => '255,0,0'
+            ],
+            'shape' => [
+                0 => 'star'
+            ],
+            'size' => [
+                0 => 16
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new Api;
+        $mappr_api->execute();
+        $file = ROOT.'/public/tmp/apioutput_txt.png';
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api, true));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_txt.png'));
+    }
+
+    /**
+     * Test API response to ensure that image can be produced using csv file as URL parameter.
+     *
+     * @return void
+     */
+    public function testApiOutputURLFromCSV()
+    {
+        $req = [
+            'bbox' => '-140,25,-90,75',
+            'url' => MAPPR_URL . "/public/files/demo2.csv",
+            'color' => [
+                0 => '255,0,0'
+            ],
+            'shape' => [
+                0 => 'star'
+            ],
+            'size' => [
+                0 => 16
+            ]
+        ];
+        $this->setRequest($req);
+        $mappr_api = new Api;
+        $mappr_api->execute();
+        $file = ROOT.'/public/tmp/apioutput_csv.png';
+        file_put_contents($file, $this->ob_cleanOutput($mappr_api, true));
+        $this->assertTrue($this->imagesSimilar($file, ROOT.'/Tests/files/apioutput_csv.png'));
+    }
 }

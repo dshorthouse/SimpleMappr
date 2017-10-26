@@ -415,7 +415,7 @@ class Router
         if (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") {
             $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
         }
-        $message = implode(" - ", [date('Y-m-d H:i:s'), $ip, $type, $_SERVER["REQUEST_URI"]]);
+        $message = implode(" - ", [date('Y-m-d H:i:s'), $ip, $type, $_SERVER['REQUEST_METHOD'], $_SERVER["REQUEST_URI"]]);
         $logger->write($message);
     }
 
@@ -428,13 +428,18 @@ class Router
     {
         $string = "";
         $logger = new Logger(ROOT."/log/logger.log");
-        $entries = $logger->tail(20)->parse()->entries;
+        $entries = $logger->tail(20)->parse(Logger::$capture)->entries;
         foreach ($entries as $entry) {
-            if (isset($entry["ip"]) && isset($entry["url"])) {
+            if (isset($entry["time"]) && isset($entry["ip"]) && isset($entry["url"]) && isset($entry["method"])) {
                 $url = (strlen($entry["url"]) < 100) ? $entry["url"] : substr($entry["url"], 0, 100) . "...";
+                $string .= $entry["time"];
+                $string .= " - ";
                 $string .= "<a href=\"https://who.is/whois-ip/ip-address/${entry['ip']}\" target=\"_blank\">${entry['ip']}</a>";
                 $string .= " - ";
-                $string .= "<a href=\"${entry['url']}\" target=\"_blank\">${url}</a><br>";
+                $string .= $entry["method"];
+                $string .= " - ";
+                $string .= "<a href=\"${entry['url']}\" target=\"_blank\">${url}</a>";
+                $string .= "<br>\n";
             }
         }
         return (strlen($string) > 0) ? $string : "No log entries";
