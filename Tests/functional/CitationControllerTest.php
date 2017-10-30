@@ -85,6 +85,7 @@ class CitationControllerTest extends SimpleMapprFunctionalTestCase
         $link->click();
         $edit_link = $this->webDriver->findElements(WebDriverBy::cssSelector('#admin-citations-list > .citation > .citation-update'))[0];
         $edit_link->click();
+        parent::waitOnAjax();
         $surname = $this->webDriver->findElement(WebDriverBy::id('citation-surname'))->getAttribute('value');
         $year = $this->webDriver->findElement(WebDriverBy::id('citation-year'))->getAttribute('value');
         $doi = $this->webDriver->findElement(WebDriverBy::id('citation-doi'))->getAttribute('value');
