@@ -47,7 +47,7 @@ namespace SimpleMappr\Constants;
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
-trait AcceptedMarkerShapes
+trait AcceptedMarkers
 {
     /**
      * Accepted marker shapes
@@ -94,6 +94,16 @@ trait AcceptedMarkerShapes
             array_keys(self::$shapes['closed']),
             array_keys(self::$shapes['open'])
         );
+    }
+
+    /**
+     * Return range of marker sizes
+     *
+     * @return array of marker sizes.
+     */
+    public static function sizes()
+    {
+        return range(6, 16, 2);
     }
 
     /**

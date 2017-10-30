@@ -38,7 +38,7 @@
 namespace SimpleMappr\Controller;
 
 use SimpleMappr\Utility;
-use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedOutputs;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Mappr\Mappr;
@@ -290,20 +290,20 @@ class OpenApi implements RestMethods
         [
           'name' => 'shape[x]',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'shape of marker for column x, accepted values are one of: ' . implode(", ", AcceptedMarkerShapes::shapes()),
+          'description' => 'shape of marker for column x, accepted values are one of: ' . implode(", ", AcceptedMarkers::shapes()),
           'required' => false,
           'type' => 'string',
-          'enum' => AcceptedMarkerShapes::shapes()
+          'enum' => AcceptedMarkers::shapes()
         ],
         [
           'name' => 'size[x]',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'integer-based point size of marker in column x',
+          'description' => 'integer-based point size of marker in column x, accepted values are one of: ' . implode(", ", AcceptedMarkers::sizes()),
           'required' => false,
           'type' => 'integer',
           'format' => 'int32',
-          'minimum' => 1,
-          'maximum' => 14
+          'minimum' => min(AcceptedMarkers::sizes()),
+          'maximum' => max(AcceptedMarkers::sizes())
         ],
         [
           'name' => 'color[x]',

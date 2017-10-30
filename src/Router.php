@@ -44,7 +44,7 @@ use \Symfony\Component\Yaml\Yaml;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Twig_Extensions_Extension_I18n;
-use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Controller\Citation;
 use SimpleMappr\Controller\User;
@@ -472,7 +472,8 @@ class Router
                 'layers' => array_combine(array_keys($shapes['layers']), array_column($shapes['layers'], 'name')),
                 'labels' => array_combine(array_keys($shapes['labels']), array_column($shapes['labels'], 'name')),
                 'projections' => AcceptedProjections::$projections,
-                'marker_shapes' => AcceptedMarkerShapes::$shapes,
+                'marker_sizes' => AcceptedMarkers::sizes(),
+                'marker_shapes' => AcceptedMarkers::$shapes,
                 'locales' => Session::$accepted_locales,
                 'num_textarea' => MAXNUMTEXTAREA
             ];

@@ -38,7 +38,7 @@
 namespace SimpleMappr\Mappr;
 
 use \Symfony\Component\Yaml\Yaml;
-use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedOutputs;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Utility;
@@ -945,7 +945,7 @@ abstract class Mappr
         $symbol->set("filled", FALSE);
         $symbol->set("inmapfile", MS_TRUE);
 
-        foreach (AcceptedMarkerShapes::$shapes as $type => $style) {
+        foreach (AcceptedMarkers::$shapes as $type => $style) {
             $fill = MS_FALSE;
             if ($type == 'closed') {
                 $fill = MS_TRUE;
@@ -955,7 +955,7 @@ abstract class Mappr
                 if (strpos($name, 'circle') !== false) {
                     $type = MS_SYMBOL_ELLIPSE;
                 }
-                $vertices = AcceptedMarkerShapes::vertices($settings['style']);
+                $vertices = AcceptedMarkers::vertices($settings['style']);
                 $this->_createSymbol($name, $type, $fill, $vertices);
             }
         }

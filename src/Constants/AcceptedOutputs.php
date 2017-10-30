@@ -95,7 +95,7 @@ trait AcceptedOutputs
         "mimetype" => "image/svg+xml",
         "extension" => "svg",
         "formatoptions" => ["COMPRESSED_OUTPUT=FALSE", "FULL_RESOLUTION=TRUE"]
-      ],
+      ]
     ];
 
     /**

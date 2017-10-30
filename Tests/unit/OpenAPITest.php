@@ -133,6 +133,18 @@ class OpenApiTest extends TestCase
     }
 
     /**
+     * Test size[x] contains correct min and max
+     *
+     * @return void
+     */
+    public function testSizes()
+    {
+        $key = array_search("size[x]", array_column($this->parameters, "name"));
+        $this->assertEquals(6, $this->parameters[$key]['minimum']);
+        $this->assertEquals(16, $this->parameters[$key]['maximum']);
+    }
+
+    /**
      * Test projection enum contains correct count & one names
      *
      * @return void

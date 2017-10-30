@@ -41,7 +41,7 @@ use League\Csv\Reader;
 use geoPHP;
 use SimpleMappr\Header;
 use SimpleMappr\Utility;
-use SimpleMappr\Constants\AcceptedMarkerShapes;
+use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedOutputs;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Mappr\Mappr;
@@ -227,11 +227,15 @@ class Api extends Mappr
 
             $style = ms_newStyleObj($class);
             $symbol = 'circle';
-            if (array_key_exists($col, $this->request->shape) && in_array($this->request->shape[$col], AcceptedMarkerShapes::shapes())) {
+            if (array_key_exists($col, $this->request->shape) && in_array($this->request->shape[$col], AcceptedMarkers::shapes())) {
                 $symbol = $this->request->shape[$col];
             }
             $style->set("symbolname", $symbol);
-            $style->set("size", (array_key_exists($col, $this->request->size)) ? $this->request->size[$col] : 8);
+            $size = 10;
+            if (array_key_exists($col, $this->request->size) && in_array($this->request->size[$col], AcceptedMarkers::sizes())) {
+                $size = $this->request->size[$col];
+            }
+            $style->set("size", $size);
 
             if (array_key_exists($col, $this->request->color)) {
                 $color = explode(",", $this->request->color[$col]);
