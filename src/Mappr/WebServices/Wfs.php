@@ -196,7 +196,7 @@ class Wfs extends Mappr
      */
     private function _makeRequest()
     {
-        $this->_req = ms_newOwsRequestObj();
+        $this->_req = new \OWSRequestObj();
         $this->_req->setParameter("SERVICE", "WFS");
         $this->_req->setParameter("VERSION", $this->request->params['VERSION']);
         $this->_req->setParameter("REQUEST", $this->request->params['REQUEST']);

@@ -81,14 +81,14 @@ Homebrew on Mac OSX
 5. Execute from command line:
 
           $ mkdir build; cd build; cmake .. \
-            -DCMAKE_PREFIX_PATH="/usr/local/opt/libiconv;/usr/local/opt/php56;/usr/local/opt/phpunit;/usr/local/opt/geos;/usr/local/opt/pkg-config;/usr/local/opt/libxml2;/usr/local/opt/zlib;/usr/local/opt/fontconfig;/usr/local/opt/cairo;/usr/local/opt/fribidi;/usr/local/opt/proj;/usr/local/opt/giflib;/usr/local/opt/freetype;/usr/local/opt/libsvg;/usr/local/opt/libsvg-cairo;/usr/local/opt/gdal2;/usr/local/opt/libpng;/usr/local/opt/libjpeg;/usr/local/opt/harfbuzz" \
+            -DCMAKE_PREFIX_PATH="/usr/local/opt/libiconv;/usr/local/opt/php56;/usr/local/opt/phpunit;/usr/local/opt/geos;/usr/local/opt/pkg-config;/usr/local/opt/libxml2;/usr/local/opt/zlib;/usr/local/opt/fontconfig;/usr/local/opt/cairo;/usr/local/opt/fribidi;/usr/local/opt/proj;/usr/local/opt/giflib;/usr/local/opt/freetype;/usr/local/opt/libsvg;/usr/local/opt/libsvg-cairo;/usr/local/opt/gdal2;/usr/local/opt/libpng;/usr/local/opt/libjpeg;/usr/local/opt/harfbuzz;/usr/local/opt/exempi" \
             -DWITH_KML=1 \
             -DWITH_PHP=1 \
+            -DWITH_EXEMPI=1 \
             -DWITH_SVGCAIRO=1 \
             -DWITH_FCGI=0 \
             -DWITH_RSVG=0 \
             -DWITH_POSTGIS=0 \
-            -DWITH_EXEMPI=0 \
             -DFRIBIDI_INCLUDE_DIR="/usr/local/include/glib-2.0;/usr/local/lib/glib-2.0/include;/usr/local/include/fribidi" \
             -DPHP5_INCLUDE_PATH="/usr/local/include/php"
 

@@ -106,6 +106,9 @@ class Map extends Mappr
         }
 
         $this->title = $record->title;
+        $this->coords = [];
+        $this->regions = [];
+        $this->wkt = [];
 
         $result = json_decode($record->map, true);
 
@@ -176,13 +179,13 @@ class Map extends Mappr
     public function addGraticules()
     {
         if ($this->graticules) {
-            $layer = ms_newLayerObj($this->map_obj);
+            $layer = new \layerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
             $layer->setProjection(parent::getProjection($this->default_projection));
 
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
 
             $label = new \labelObj();
             if (isset($this->hide_gridlabel)) {
@@ -196,7 +199,7 @@ class Map extends Mappr
             }
             $class->addLabel($label);
 
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $style->color->setRGB(200, 200, 200);
             
             $minx = $this->map_obj->extent->minx;

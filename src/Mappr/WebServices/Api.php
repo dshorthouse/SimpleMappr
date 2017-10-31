@@ -207,7 +207,7 @@ class Api extends Mappr
         }
 
         foreach ($this->_coord_cols as $col => $coords) {
-            $mlayer = ms_newLayerObj($this->map_obj);
+            $mlayer = new \layerObj($this->map_obj);
             $title = "";
             if (is_string($col)) {
                 $title = $col;
@@ -222,10 +222,10 @@ class Api extends Mappr
             $mlayer->set("toleranceunits", 6);
             $mlayer->setProjection(parent::getProjection($this->default_projection));
 
-            $class = ms_newClassObj($mlayer);
+            $class = new \classObj($mlayer);
             $class->set("name", $title);
 
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $symbol = 'circle';
             if (array_key_exists($col, $this->request->shape) && in_array($this->request->shape[$col], AcceptedMarkers::shapes())) {
                 $symbol = $this->request->shape[$col];
@@ -257,8 +257,8 @@ class Api extends Mappr
                 );
             }
 
-            $mcoord_shape = ms_newShapeObj(MS_SHAPE_POINT);
-            $mcoord_line = ms_newLineObj();
+            $mcoord_shape = new \shapeObj(MS_SHAPE_POINT);
+            $mcoord_line = new \lineObj();
 
             //add all the points
             foreach ($coords as $coord) {
@@ -267,7 +267,7 @@ class Api extends Mappr
                 $_coord->y = array_key_exists(0, $coord) ? Utility::cleanCoord($coord[0]) : null;
                 //only add point when data are good
                 if (Utility::onEarth($_coord)) {
-                    $mcoord_point = ms_newPointObj();
+                    $mcoord_point = new \pointObj();
                     $mcoord_point->setXY($_coord->x, $_coord->y);
                     $mcoord_line->add($mcoord_point);
                 } else {
@@ -317,16 +317,16 @@ class Api extends Mappr
                             } else {
                                 $type = MS_LAYER_POLYGON;
                             }
-                            $layer = ms_newLayerObj($this->map_obj);
+                            $layer = new \layerObj($this->map_obj);
                             $layer->set("name", "wkt_layer_".$j.$key);
                             $layer->set("status", MS_ON);
                             $layer->set("type", $type);
                             $layer->set("template", "template.html");
                             $layer->setProjection(self::getProjection($this->default_projection));
 
-                            $class = ms_newClassObj($layer);
+                            $class = new \classObj($layer);
                             $class->set("name", trim(stripslashes($title)));
-                            $style = ms_newStyleObj($class);
+                            $style = new \styleObj($class);
                             if ($type == MS_LAYER_POINT) {
                                 $style->set("symbolname", 'circle');
                                 $style->set("size", 8);
@@ -358,7 +358,7 @@ class Api extends Mappr
     public function addRegions()
     {
         if ($this->request->regions['data']) {
-            $layer = ms_newLayerObj($this->map_obj);
+            $layer = new \layerObj($this->map_obj);
             $layer->set("name", "stateprovinces_polygon");
             $layer->set("data", $this->shapes['stateprovinces_polygon']['path']);
             $layer->set("type", $this->shapes['stateprovinces_polygon']['type']);
@@ -389,10 +389,10 @@ class Api extends Mappr
             }
 
             $layer->setFilter("(".implode(" || ", $qry).")");
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
             $class->set("name", trim(stripslashes($this->request->regions['title'])));
 
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $color = explode(" ", "0 0 0");
             if ($this->request->regions['color']) {
                 $color = explode(" ", $this->request->regions['color']);
@@ -412,13 +412,13 @@ class Api extends Mappr
     public function addGraticules()
     {
         if ($this->request->graticules) {
-            $layer = ms_newLayerObj($this->map_obj);
+            $layer = new \layerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
             $layer->setProjection(parent::getProjection($this->default_projection));
 
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
 
             $label = new \labelObj();
             if ($this->request->hide_gridlabel) {
@@ -432,7 +432,7 @@ class Api extends Mappr
             }
             $class->addLabel($label);
 
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $style->color->setRGB(200, 200, 200);
 
             $minx = $this->map_obj->extent->minx;
@@ -580,7 +580,7 @@ class Api extends Mappr
         $midpoint = $this->_getMidpoint($this->_coord_cols);
         $x = $this->map_obj->width*(($midpoint[0] + 180)/360);
         $y = $this->map_obj->height*((90 - $midpoint[1])/180);
-        $zoom_point = ms_newPointObj();
+        $zoom_point = new \pointObj();
         $zoom_point->setXY($x, $y);
         $this->map_obj->zoompoint($this->request->zoom*2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
     }

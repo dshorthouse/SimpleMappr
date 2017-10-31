@@ -112,14 +112,14 @@ class Query extends Mappr
         $ur_point->y = $bbox_query[1];
         $ur_coord = $this->pix2Geo($ur_point);
 
-        $layer = ms_newLayerObj($this->map_obj);
+        $layer = new \layerObj($this->map_obj);
         $layer->set("name", "stateprovinces_polygon_query");
         $layer->set("data", $this->shapes[$this->request->queryLayer]['path']);
         $layer->set("type", $this->shapes[$this->request->queryLayer]['type']);
         $layer->set("template", "template.html");
         $layer->setProjection(parent::getProjection($this->default_projection));
 
-        $rect = ms_newRectObj();
+        $rect = new \rectObj();
         $rect->setExtent($ll_coord->x, $ll_coord->y, $ur_coord->x, $ur_coord->y);
 
         $return = @$layer->queryByRect($rect); //suppress error in event extent is invalid

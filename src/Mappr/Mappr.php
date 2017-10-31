@@ -369,7 +369,7 @@ abstract class Mappr
 
                 if ($data) {
                     $this->_legend_required = true;
-                    $layer = ms_newLayerObj($this->map_obj);
+                    $layer = new \layerObj($this->map_obj);
                     $layer->set("name", "layer_".$j);
                     $layer->set("status", MS_ON);
                     $layer->set("type", MS_LAYER_POINT);
@@ -377,13 +377,13 @@ abstract class Mappr
                     $layer->set("toleranceunits", 6);
                     $layer->setProjection(self::getProjection($this->default_projection));
 
-                    $class = ms_newClassObj($layer);
+                    $class = new \classObj($layer);
                     if ($title != "") {
                         $class->set("name", trim(stripslashes($title)));
                     }
 
                     if ($shadow) {
-                        $bstyle = ms_newStyleObj($class);
+                        $bstyle = new \styleObj($class);
                         $bstyle->set("symbolname", $shape);
                         $bstyle->set("size", $size);
                         $bstyle->set("offsetx", $offset);
@@ -391,7 +391,7 @@ abstract class Mappr
                         $bstyle->color->setRGB(180, 180, 180);
                     }
 
-                    $style = ms_newStyleObj($class);
+                    $style = new \styleObj($class);
                     $style->set("symbolname", $shape);
                     $style->set("size", $size);
 
@@ -408,8 +408,8 @@ abstract class Mappr
 
                     $style->set("width", $this->_determineWidth());
 
-                    $new_shape = ms_newShapeObj(MS_SHAPE_POINT);
-                    $new_line = ms_newLineObj();
+                    $new_shape = new \shapeObj(MS_SHAPE_POINT);
+                    $new_line = new \lineObj();
 
                     $rows = explode("\n", Utility::removeEmptyLines($data));
                     $points = [];
@@ -422,7 +422,7 @@ abstract class Mappr
                         //only add point when data are good & have a title
                         if (Utility::onEarth($coord) && !empty($title)) {
                             if (!array_key_exists($coord->x.$coord->y, $points)) { //unique locations
-                                $new_point = ms_newPointObj();
+                                $new_point = new \pointObj();
                                 $new_point->setXY($coord->x, $coord->y);
                                 $new_line->add($new_point);
                                 $points[$coord->x.$coord->y] = [];
@@ -485,16 +485,16 @@ abstract class Mappr
                         } else {
                             $type = MS_LAYER_POLYGON;
                         }
-                        $layer = ms_newLayerObj($this->map_obj);
+                        $layer = new \layerObj($this->map_obj);
                         $layer->set("name", "wkt_layer_".$j.$key);
                         $layer->set("status", MS_ON);
                         $layer->set("type", $type);
                         $layer->set("template", "template.html");
                         $layer->setProjection(self::getProjection($this->default_projection));
 
-                        $class = ms_newClassObj($layer);
+                        $class = new \classObj($layer);
                         $class->set("name", trim(stripslashes($title)));
-                        $style = ms_newStyleObj($class);
+                        $style = new \styleObj($class);
                         if ($type == MS_LAYER_POINT) {
                             $style->set("symbolname", 'circle');
                             $style->set("size", 8);
@@ -509,7 +509,7 @@ abstract class Mappr
                         $style->set("opacity", 75);
 
                         if ($hatched && !empty($color)) {
-                            $style = ms_newStyleObj($class);
+                            $style = new \styleObj($class);
                             $style->set("symbolname", "hatch");
                             $style->set("angle", 45);
                             $style->set("size", 5);
@@ -587,7 +587,7 @@ abstract class Mappr
                         }
                     }
 
-                    $layer = ms_newLayerObj($this->map_obj);
+                    $layer = new \layerObj($this->map_obj);
                     $layer->set("name", "query_layer_".$j);
 
                     if ($baselayer) {
@@ -605,10 +605,10 @@ abstract class Mappr
 
                     $layer->setFilter("(".implode(" || ", $query).")");
 
-                    $class = ms_newClassObj($layer);
+                    $class = new \classObj($layer);
                     $class->set("name", trim(stripslashes($title)));
 
-                    $style = ms_newStyleObj($class);
+                    $style = new \styleObj($class);
                     if (!empty($color)) {
                         $style->color->setRGB($color[0], $color[1], $color[2]);
                     }
@@ -617,7 +617,7 @@ abstract class Mappr
                     $style->set("width", $this->_determineWidth());
 
                     if ($hatched && !empty($color)) {
-                        $style = ms_newStyleObj($class);
+                        $style = new \styleObj($class);
                         $style->set("symbolname", "hatch");
                         $style->set("angle", 45);
                         $style->set("size", 5);
@@ -638,13 +638,13 @@ abstract class Mappr
     public function addGraticules()
     {
         if (isset($this->request->graticules) && $this->request->graticules) {
-            $layer = ms_newLayerObj($this->map_obj);
+            $layer = new \layerObj($this->map_obj);
             $layer->set("name", 'grid');
             $layer->set("type", MS_LAYER_LINE);
             $layer->set("status", MS_ON);
             $layer->setProjection(self::getProjection($this->default_projection));
 
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
 
             $label = new \labelObj();
             if (isset($this->request->hide_gridlabel) && $this->request->hide_gridlabel) {
@@ -662,7 +662,7 @@ abstract class Mappr
             }
             $class->addLabel($label);
 
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $style->color->setRGB(200, 200, 200);
 
             $minx = $this->map_obj->extent->minx;
@@ -672,13 +672,13 @@ abstract class Mappr
             if ($this->request->projection != $this->default_projection
                 && $this->request->projection == $this->request->projection_map
             ) {
-                $origProjObj = ms_newProjectionObj(self::getProjection($this->request->projection));
-                $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
+                $origProjObj = new \projectionObj(self::getProjection($this->request->projection));
+                $newProjObj = new \projectionObj(self::getProjection($this->default_projection));
 
-                $poPoint1 = ms_newPointObj();
+                $poPoint1 = new \pointObj();
                 $poPoint1->setXY($this->map_obj->extent->minx, $this->map_obj->extent->miny);
 
-                $poPoint2 = ms_newPointObj();
+                $poPoint2 = new \pointObj();
                 $poPoint2->setXY($this->map_obj->extent->maxx, $this->map_obj->extent->maxy);
 
                 $poPoint1->project($origProjObj, $newProjObj);
@@ -939,8 +939,7 @@ abstract class Mappr
     private function _loadSymbols()
     {
         // Add hatch symbol
-        $nId = ms_newSymbolObj($this->map_obj, "hatch");
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol = new \symbolObj($this->map_obj, "hatch");
         $symbol->set("type", MS_SYMBOL_HATCH);
         $symbol->set("filled", FALSE);
         $symbol->set("inmapfile", MS_TRUE);
@@ -973,8 +972,7 @@ abstract class Mappr
      */
     private function _createSymbol($name, $type, $fill, $vertices)
     {
-        $nId = ms_newSymbolObj($this->map_obj, $name);
-        $symbol = $this->map_obj->getSymbolObjectById($nId);
+        $symbol = new \symbolObj($this->map_obj, $name);
         $symbol->set("type", $type);
         $symbol->set("filled", $fill);
         $symbol->set("inmapfile", MS_TRUE);
@@ -1090,13 +1088,13 @@ abstract class Mappr
         if (isset($this->request->projection) 
             && $this->request->projection != $this->request->projection_map
         ) {
-            $origProjObj = ms_newProjectionObj(self::getProjection($this->request->projection_map));
-            $newProjObj = ms_newProjectionObj(self::getProjection($this->default_projection));
+            $origProjObj = new \projectionObj(self::getProjection($this->request->projection_map));
+            $newProjObj = new \projectionObj(self::getProjection($this->default_projection));
 
-            $poPoint1 = ms_newPointObj();
+            $poPoint1 = new \pointObj();
             $poPoint1->setXY($ext[0], $ext[1]);
 
-            $poPoint2 = ms_newPointObj();
+            $poPoint2 = new \pointObj();
             $poPoint2->setXY($ext[2], $ext[3]);
 
             $poPoint1->project($origProjObj, $newProjObj);
@@ -1166,11 +1164,11 @@ abstract class Mappr
         if (isset($this->request->bbox_rubberband) && $this->request->bbox_rubberband && !$this->_isResize()) {
             $bbox_rubberband = explode(',', $this->request->bbox_rubberband);
             if ($bbox_rubberband[0] == $bbox_rubberband[2] || $bbox_rubberband[1] == $bbox_rubberband[3]) {
-                $zoom_point = ms_newPointObj();
+                $zoom_point = new \pointObj();
                 $zoom_point->setXY($bbox_rubberband[0], $bbox_rubberband[1]);
                 $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
             } else {
-                $zoom_rect = ms_newRectObj();
+                $zoom_rect = new \rectObj();
                 $zoom_rect->setExtent($bbox_rubberband[0], $bbox_rubberband[3], $bbox_rubberband[2], $bbox_rubberband[1]);
                 $this->map_obj->zoomrectangle($zoom_rect, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
             }
@@ -1178,14 +1176,14 @@ abstract class Mappr
 
         //Auto Zoom in
         if (isset($this->request->zoom_in) && $this->request->zoom_in) {
-            $zoom_point = ms_newPointObj();
+            $zoom_point = new \pointObj();
             $zoom_point->setXY($this->map_obj->width/2, $this->map_obj->height/2);
             $this->map_obj->zoompoint(2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
         }
 
         //Zoom out
         if (isset($this->request->zoom_out) && $this->request->zoom_out) {
-            $zoom_point = ms_newPointObj();
+            $zoom_point = new \pointObj();
             $zoom_point->setXY($this->map_obj->width/2, $this->map_obj->height/2);
             $this->map_obj->zoompoint(-2, $zoom_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
         }
@@ -1221,7 +1219,7 @@ abstract class Mappr
                 break;
             }
 
-            $new_point = ms_newPointObj();
+            $new_point = new \pointObj();
             $new_point->setXY($this->map_obj->width/2*$x_offset, $this->map_obj->height/2*$y_offset);
             $this->map_obj->zoompoint(1, $new_point, $this->map_obj->width, $this->map_obj->height, $this->map_obj->extent);
         }
@@ -1312,7 +1310,7 @@ abstract class Mappr
 
         foreach ($this->request->layers as $name => $status) {
             if (array_key_exists($name, $this->shapes)) {
-                $layer = ms_newLayerObj($this->map_obj);
+                $layer = new \layerObj($this->map_obj);
                 $layer->set("name", $name);
                 $layer->setMetaData("wfs_title", $name);
                 $layer->setMetaData("wfs_typename", $name);
@@ -1354,8 +1352,8 @@ abstract class Mappr
                     $layer->set("labelitem", $this->shapes[$name]['label']['item']);
                 }
 
-                $class = ms_newClassObj($layer);
-                $style = ms_newStyleObj($class);
+                $class = new \classObj($layer);
+                $style = new \styleObj($class);
 
                 if (isset($this->shapes[$name]['legend'])) {
                     $class->set("name", $this->shapes[$name]['legend']);
@@ -1425,14 +1423,14 @@ abstract class Mappr
     private function _addWatermark()
     {
         if (isset($this->request->watermark) && $this->request->watermark) {
-            $layer = ms_newLayerObj($this->map_obj);
+            $layer = new \layerObj($this->map_obj);
             $layer->set("name", 'watermark');
             $layer->set("type", MS_LAYER_POINT);
             $layer->set("status", MS_ON);
             $layer->set("transform", MS_FALSE);
             $layer->set("sizeunits", MS_PIXELS);
 
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
             $class->settext(MAPPR_URL);
 
             $label = new \labelObj();
@@ -1443,10 +1441,10 @@ abstract class Mappr
             $label->color->setRGB(10, 10, 10);
             $class->addLabel($label);
 
-            $shape = ms_newShapeObj(MS_SHAPE_POINT);
-            $line = ms_newLineObj();
+            $shape = new \shapeObj(MS_SHAPE_POINT);
+            $line = new \lineObj();
 
-            $point = ms_newPointObj();
+            $point = new \pointObj();
             $point->setXY(2, $this->map_obj->height-2);
 
             $line->add($point);
@@ -1482,7 +1480,7 @@ abstract class Mappr
             && array_key_exists('border', $this->request->options)
             && ($this->request->options['border'] == 1 || $this->request->options['border'] == 'true')
         ) {
-            $outline_layer = ms_newLayerObj($this->map_obj);
+            $outline_layer = new \layerObj($this->map_obj);
             $outline_layer->set("name", "outline");
             $outline_layer->set("type", MS_LAYER_POLYGON);
             $outline_layer->set("status", MS_ON);
@@ -1490,16 +1488,16 @@ abstract class Mappr
             $outline_layer->set("sizeunits", MS_PIXELS);
 
             // Add new class to new layer
-            $outline_class = ms_newClassObj($outline_layer);
+            $outline_class = new \classObj($outline_layer);
 
             // Add new style to new class
-            $outline_style = ms_newStyleObj($outline_class);
+            $outline_style = new \styleObj($outline_class);
             $outline_style->outlinecolor->setRGB(0, 0, 0);
             $outline_style->set("width", 3);
 
-            $polygon = ms_newShapeObj(MS_SHAPE_POLYGON);
+            $polygon = new \shapeObj(MS_SHAPE_POLYGON);
 
-            $polyLine = ms_newLineObj();
+            $polyLine = new \lineObj();
             $polyLine->addXY(0, 0);
             $polyLine->addXY($this->map_obj->width, 0);
             $polyLine->addXY($this->map_obj->width, $this->map_obj->height);
@@ -1584,9 +1582,9 @@ abstract class Mappr
 
         //version 1.0.0 of SLD
         foreach ($xml->xpath('//sld:Rule') as $rule) {
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
             $class->setExpression("([".$item."] = ".(string)$rule->xpath('.//ogc:Literal')[0].")");
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $color = Utility::hex2Rgb((string)$rule->xpath('.//sld:CssParameter[@name="fill"]')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
@@ -1594,9 +1592,9 @@ abstract class Mappr
 
         //version 1.1.0 of SLD
         foreach ($xml->xpath('//se:Rule') as $rule) {
-            $class = ms_newClassObj($layer);
+            $class = new \classObj($layer);
             $class->setExpression("([".$item."] = ".(string)$rule->xpath('.//se:Name')[0].")");
-            $style = ms_newStyleObj($class);
+            $style = new \styleObj($class);
             $color = Utility::hex2Rgb((string)$rule->xpath('.//se:SvgParameter')[0]);
             $style->color->setRGB($color[0], $color[1], $color[2]);
             $style->outlinecolor->setRGB(30, 30, 30);
