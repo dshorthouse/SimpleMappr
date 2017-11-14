@@ -117,7 +117,7 @@ class OpenApiTest extends TestCase
      */
     public function testNumberParameters()
     {
-        $this->assertCount(28, $this->parameters);
+        $this->assertCount(29, $this->parameters);
     }
 
     /**

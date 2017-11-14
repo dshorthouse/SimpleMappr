@@ -112,21 +112,24 @@ class Api extends Mappr
         }
 
         $points = Utility::loadParam('points', []);
-        $attr->points = ((array)$points === $points) ? $points : [$points];
+        $attr->points           = ((array)$points === $points) ? $points : [$points];
 
         $wkt = Utility::loadParam('wkt', []);
-        $attr->wkt = ((array)$wkt === $wkt) ? $wkt : [$wkt];
+        $attr->wkt              = ((array)$wkt === $wkt) ? $wkt : [$wkt];
 
-        $attr->legend           = Utility::loadParam('legend', []);
+        $attr->legend = Utility::loadParam('legend', []);
 
         $shape = Utility::loadParam('shape', []);
-        $attr->shape = ((array)$shape === $shape) ? $shape : [$shape];
+        $attr->shape            = ((array)$shape === $shape) ? $shape : [$shape];
 
         $size = Utility::loadParam('size', []);
-        $attr->size = ((array)$size === $size) ? $size : [$size];
+        $attr->size             = ((array)$size === $size) ? $size : [$size];
 
         $color = Utility::loadParam('color', []);
-        $attr->color = ((array)$color === $color) ? $color : [$color];
+        $attr->color            = ((array)$color === $color) ? $color : [$color];
+
+        $shadow = Utility::loadParam('shadow', []);
+        $attr->shadow           = ((array)$shadow === $shadow) ? $shadow : [$shadow];
 
         $attr->outlinecolor     = Utility::loadParam('outlinecolor', null);
         $attr->border_thickness = (float)Utility::loadParam('thickness', 1.25);
@@ -176,12 +179,12 @@ class Api extends Mappr
         }
         $attr->height           = (float)Utility::loadParam('height', $height);
         if ($attr->width == 0 || $attr->height == 0) {
-            $attr->width = 900;
-            $attr->height = 450;
+            $attr->width        = 900;
+            $attr->height       = 450;
         }
 
         if (!in_array($attr->output, AcceptedOutputs::outputList())) {
-            $attr->output = 'png';
+            $attr->output       = 'png';
         }
 
         return $attr;
@@ -194,6 +197,7 @@ class Api extends Mappr
      */
     public function addCoordinates()
     {
+
         if ($this->request->url || $this->request->points) {
             if ($this->request->url) {
                 $this->_parseUrl();
@@ -207,8 +211,12 @@ class Api extends Mappr
         }
 
         foreach ($this->_coord_cols as $col => $coords) {
+            $title  = "";
+            $symbol = "circle";
+            $size   = 10;
+            $offset = 2;
+
             $mlayer = new \layerObj($this->map_obj);
-            $title = "";
             if (is_string($col)) {
                 $title = $col;
                 $col = array_search($col, $this->legend);
@@ -225,16 +233,25 @@ class Api extends Mappr
             $class = new \classObj($mlayer);
             $class->set("name", $title);
 
-            $style = new \styleObj($class);
-            $symbol = 'circle';
             if (array_key_exists($col, $this->request->shape) && in_array($this->request->shape[$col], AcceptedMarkers::shapes())) {
                 $symbol = $this->request->shape[$col];
             }
-            $style->set("symbolname", $symbol);
-            $size = 10;
+
             if (array_key_exists($col, $this->request->size) && in_array($this->request->size[$col], AcceptedMarkers::sizes())) {
                 $size = $this->request->size[$col];
             }
+
+            if ($this->request->shadow && array_key_exists($col, $this->request->shadow)) {
+                $bstyle = new \styleObj($class);
+                $bstyle->set("symbolname", $symbol);
+                $bstyle->set("size", $size);
+                $bstyle->set("offsetx", $offset);
+                $bstyle->set("offsety", $offset);
+                $bstyle->color->setRGB(180, 180, 180);
+            }
+
+            $style = new \styleObj($class);
+            $style->set("symbolname", $symbol);
             $style->set("size", $size);
 
             if (array_key_exists($col, $this->request->color)) {

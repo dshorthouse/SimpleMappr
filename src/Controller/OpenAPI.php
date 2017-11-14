@@ -55,6 +55,11 @@ use SimpleMappr\Mappr\Mappr;
  */
 class OpenApi implements RestMethods
 {
+
+    private $_url_parts = [];
+
+    private $_url_whole = "";
+
     /**
      * Implemented index method
      *
@@ -64,6 +69,9 @@ class OpenApi implements RestMethods
      */
     public function index($params = null)
     {
+        $this->_url_parts = Utility::parsedURL();
+        $this->_url_whole = implode("://", $this->_url_parts);
+
         return $this->_swaggerData();
     }
 
@@ -119,13 +127,11 @@ class OpenApi implements RestMethods
      */
     private function _swaggerData()
     {
-        $url_parts = Utility::parsedURL();
-        $url_whole = implode("://", $url_parts);
         $swagger = [
         'swagger' => '2.0',
         'info' => [
           'title' => 'SimpleMappr API',
-          'description' => 'Create free point maps for publications and presentations. Find out more at ['.$url_whole.']('.$url_whole.').',
+          'description' => 'Create free point maps for publications and presentations. Find out more at ['.$this->_url_whole.']('.$this->_url_whole.').',
           'version' => '1.0.0',
           'contact' => [
             'name' => 'David P. Shorthouse',
@@ -136,8 +142,8 @@ class OpenApi implements RestMethods
             'url' => 'http://creativecommons.org/publicdomain/zero/1.0/'
           ]
         ],
-        'host' => $url_parts["host"],
-        'schemes' => [$url_parts["scheme"]],
+        'host' => $this->_url_parts["host"],
+        'schemes' => [$this->_url_parts["scheme"]],
         'paths' => [
           '/api' => [
             'get' => [
@@ -231,7 +237,7 @@ class OpenApi implements RestMethods
         [
           'name' => 'url',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points. It may also be a URL-encoded GeoRSS, GeoJSON, or KML feed.',
+          'description' => "a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points as latitude,longitude. It may also be a URL-encoded GeoRSS, GeoJSON, or KML feed. Examples: {$this->_url_whole}/public/files/demo.txt, {$this->_url_whole}/public/files/demo2.csv",
           'required' => false,
           'type' => 'string'
         ],
@@ -321,6 +327,13 @@ class OpenApi implements RestMethods
             'maximum' => 255
           ],
           'collectionFormat' => 'csv'
+        ],
+        [
+          'name' => 'shadow[x]',
+          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'description' => 'grey shadow on marker in column x with 2px offset to the right and bottom',
+          'required' => false,
+          'type' => 'boolean'
         ],
         [
           'name' => 'outlinecolor',
