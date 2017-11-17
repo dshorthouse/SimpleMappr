@@ -18,7 +18,7 @@ See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https:/
 1. PHP5.6+ [with cli, PDO, PDO-MySQL, GD]
 2. Apache2.2.24+ [with rewrite]
 3. MySQL 5.5.27+
-4. [MapServer 7.0.5](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
+4. [MapServer 7.0.7](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
 5. [Composer](https://getcomposer.org/)
 
 Configuration Instructions
@@ -76,7 +76,7 @@ Homebrew on Mac OSX
           phpunit \
           composer
 
-3. Download [MapServer](http://mapserver.org/download.html) 7.0.6 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.6.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.6.tar.gz)
+3. Download [MapServer](http://mapserver.org/download.html) 7.0.7 tarball, [http://download.osgeo.org/mapserver/mapserver-7.0.7.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.0.7.tar.gz)
 4. Extract and cd into folder
 5. Execute from command line:
 
@@ -89,7 +89,7 @@ Homebrew on Mac OSX
             -DWITH_FCGI=0 \
             -DWITH_RSVG=0 \
             -DWITH_POSTGIS=0 \
-            -DFRIBIDI_INCLUDE_DIR="/usr/local/include/glib-2.0;/usr/local/lib/glib-2.0/include;/usr/local/include/fribidi" \
+            -DFRIBIDI_INCLUDE_DIR="/usr/local/include/glib-2.0;/usr/local/lib/glib-2.0/include;/usr/local/include" \
             -DPHP5_INCLUDE_PATH="/usr/local/include/php"
 
           $ make && make install
