@@ -1329,16 +1329,12 @@ var SimpleMappr = (function($, window, document) {
               })
               .on('click', 'a.map-share', function(e) {
                 e.preventDefault();
-                self.shareMap(this, 'create');
-                self.loadMapList(data);
-                self.loadShareList();
+                self.shareMap(this, 'create', data);
                 self.trackEvent('map', 'share');
               })
               .on('click', 'a.map-unshare', function(e) {
                 e.preventDefault();
-                self.shareMap(this, 'destroy');
-                self.loadMapList(data);
-                self.loadShareList();
+                self.shareMap(this, 'destroy', data);
                 self.trackEvent('map', 'unshare');
               })
               .on('click', 'a.map-delete', function(e) {
@@ -1408,7 +1404,7 @@ var SimpleMappr = (function($, window, document) {
       });
     },
 
-    shareMap: function(obj, type) {
+    shareMap: function(obj, type, data) {
       var self = this,
           mid = $(obj).attr("data-id");
 
@@ -1420,6 +1416,8 @@ var SimpleMappr = (function($, window, document) {
           data     : { "mid" : mid },
           dataType : "json",
           success  : function() {
+            self.loadMapList(data);
+            self.loadShareList();
             self.hideSpinner();
           }
         });
@@ -1430,6 +1428,8 @@ var SimpleMappr = (function($, window, document) {
           url      : self.settings.baseUrl + "/share/" + mid,
           dataType : "json",
           success  : function() {
+            self.loadMapList(data);
+            self.loadShareList();
             self.hideSpinner();
           }
         });

@@ -858,6 +858,14 @@ msgid "October 21, 2017"
 msgstr "21 octobre, 2017"
 
 #: .tabs/about.php:11
+msgid "December 8, 2017"
+msgstr "8 décembre, 2017"
+
+#: .tabs/about.php:11
+msgid "Bug fixes: Rapidly sharing and unsharing a map may result in what appears to be double entries. Reported by François Génier."
+msgstr "Correction: Le partage et le non-partage rapides d'une carte peuvent entraîner ce qui semble être des doubles entrées. Rapporté par François Génier."
+
+#: .tabs/about.php:11
 msgid "Improvements: Added Drawing layers to KML outputs."
 msgstr "Améliorations: Ajouté les couches dessins dans les téléchargements KML."
 
@@ -887,7 +895,7 @@ msgstr "Améliorations: Ajouté World Robinson comme nouvelle projection."
 
 #: .tabs/about.php:11
 msgid "Bug fixes: Coordinates in the form DDdMMmSSs were incorrectly transformed to DD. Reported by Lorenzo Gallo."
-msgstr "Correction: Coordonnées dans la forme DDdMMmSSs n'ont pas été transformés correctements en DD. Rapporté by Lorenzo Gallo."
+msgstr "Correction: Coordonnées dans la forme DDdMMmSSs n'ont pas été transformés correctements en DD. Rapporté par Lorenzo Gallo."
 
 #: .tabs/about.php:11
 msgid "Bug fixes: Remote files incompletely parsed via the API. Reported by Larry Gall."
