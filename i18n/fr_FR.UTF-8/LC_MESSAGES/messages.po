@@ -862,8 +862,8 @@ msgid "December 8, 2017"
 msgstr "8 décembre, 2017"
 
 #: .tabs/about.php:11
-msgid "Bug fixes: Rapidly sharing and unsharing a map may result in what appears to be double entries. Reported by François Génier."
-msgstr "Correction: Le partage et le non-partage rapides d'une carte peuvent entraîner ce qui semble être des doubles entrées. Rapporté par François Génier."
+msgid "Bug fixes: Rapidly sharing and unsharing a map resulted in double entries. Reported by François Génier."
+msgstr "Correction: Le partage et le non-partage rapides d'une carte entraînait des doubles entrées. Rapporté par François Génier."
 
 #: .tabs/about.php:11
 msgid "Improvements: Added Drawing layers to KML outputs."
