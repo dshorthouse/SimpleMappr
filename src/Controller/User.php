@@ -216,7 +216,7 @@ class User implements RestMethods
                 GROUP BY
                     u.uid
                 HAVING count(m.mid) > 0
-                ORDER BY " . $order;
+                ORDER BY {$order} LIMIT 100";
 
         $this->_db->prepare($sql);
         $this->results = $this->_db->fetchAllObject();

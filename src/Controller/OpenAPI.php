@@ -417,7 +417,7 @@ class OpenApi implements RestMethods
         [
           'name' => 'layers',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'comma-separated cultural or physical layers; one or more of: ' . implode(", ", array_keys(Mappr::getShapefileConfig())),
+          'description' => 'comma-separated cultural or physical layers; one or more of ' . implode(", ", array_keys(Mappr::getShapefileConfig())),
           'required' => false,
           'type' => 'array',
           'items' => [
@@ -490,7 +490,7 @@ class OpenApi implements RestMethods
         [
           'name' => 'output',
           'in' => ($request_method == "GET") ? 'query' : 'formData',
-          'description' => 'file format of the image or vector produced',
+          'description' => 'file format of the image or vector produced. Accepted values are ' . implode(", ", AcceptedOutputs::outputList()),
           'required' => false,
           'type' => 'string',
           'enum' => AcceptedOutputs::outputList()
