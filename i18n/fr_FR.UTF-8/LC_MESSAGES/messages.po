@@ -862,6 +862,14 @@ msgid "December 8, 2017"
 msgstr "8 décembre, 2017"
 
 #: .tabs/about.php:11
+msgid "January 15, 2018"
+msgstr "15 janvier, 2018"
+
+#: .tabs/about.php:11
+msgid "Improvements: Add checkbox to toggle region borders. Requested by Carlos Vermeersch Santana."
+msgstr "Améliorations: Ajouté une case à cocher pour les bordure autour des régions. Demandé par Carlos Vermeersch Santana."
+
+#: .tabs'/about.php:11
 msgid "Bug fixes: Rapidly sharing and unsharing a map resulted in double entries. Reported by François Génier."
 msgstr "Correction: Le partage et le non-partage rapides d'une carte entraînait des doubles entrées. Rapporté par François Génier."
 
