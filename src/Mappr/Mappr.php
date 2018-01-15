@@ -616,10 +616,10 @@ abstract class Mappr
                         $style->color->setRGB($color[0], $color[1], $color[2]);
                     }
                     if ($border) {
-                        $style->outlinecolor->setRGB(30, 30, 30);
+                        $style->outlinecolor->setRGB(0, 0, 0);
                         $style->set("width", $this->_determineWidth());
                     }
-                    $style->set("opacity", 40);
+                    $style->set("opacity", 75);
 
                     if ($hatched && !empty($color)) {
                         $style = new \styleObj($class);
