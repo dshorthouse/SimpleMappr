@@ -540,8 +540,9 @@ abstract class Mappr
             for ($j=$count; $j>=0; $j--) {
                 //clear out previous loop's selection
                 $color = [];
-                $title = "";
+                $border = false;
                 $hatched = false;
+                $title = "";
                 if ($this->request->regions[$j]['title']) {
                     $title = $this->request->regions[$j]['title'];
                 }
@@ -554,7 +555,9 @@ abstract class Mappr
                 if (array_key_exists('hatch', $this->request->regions[$j])) {
                     $hatched = true;
                 }
-
+                if (array_key_exists('border', $this->request->regions[$j])) {
+                    $border = true;
+                }
                 $data = trim($this->request->regions[$j]['data']);
 
                 if ($data) {
@@ -612,9 +615,11 @@ abstract class Mappr
                     if (!empty($color)) {
                         $style->color->setRGB($color[0], $color[1], $color[2]);
                     }
-                    $style->outlinecolor->setRGB(30, 30, 30);
+                    if ($border) {
+                        $style->outlinecolor->setRGB(30, 30, 30);
+                        $style->set("width", $this->_determineWidth());
+                    }
                     $style->set("opacity", 40);
-                    $style->set("width", $this->_determineWidth());
 
                     if ($hatched && !empty($color)) {
                         $style = new \styleObj($class);

@@ -1070,6 +1070,7 @@ var SimpleMappr = (function($, window, document) {
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][title]"]').val("Selected Region " + (i+1).toString());
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][color]"]').val(fillColor);
                 self.vars.fieldSetsRegions.find('input[name="regions['+i+'][hatch]"]').prop("checked", false);
+                self.vars.fieldSetsRegions.find('input[name="regions['+i+'][border]"]').prop("checked", false);
                 self.vars.fieldSetsRegions.find('textarea[name="regions['+i+'][data]"]').val(regions);
                 if(i > 0) { self.vars.fieldSetsRegions.accordion({active: i}); }
                 return false;
@@ -1758,6 +1759,7 @@ var SimpleMappr = (function($, window, document) {
           region_title = "",
           region_data  = "",
           region_color = "",
+          region_border = false,
           region_hatch = false;
 
       $.each(regions, function(i) {
@@ -1773,6 +1775,7 @@ var SimpleMappr = (function($, window, document) {
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][title]"]').val(region_title);
         self.vars.fieldSetsRegions.find('textarea[name="regions['+i.toString()+'][data]"]').val(region_data);
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][color]"]').val(region_color);
+        self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][border]"]').prop("checked", region_border);
         self.vars.fieldSetsRegions.find('input[name="regions['+i.toString()+'][hatch]"]').prop("checked", region_hatch);
       });
     },

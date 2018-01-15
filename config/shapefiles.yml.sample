@@ -19,7 +19,7 @@ environments:
                 dynamic_width: true
             stateprovinces:
                 name: State/Provinces
-                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
+                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines
                 type: %%MS_LAYER_LINE%%
                 encoding: CP1252
                 sort: 6
@@ -273,7 +273,7 @@ environments:
                 dynamic_width: true
             stateprovinces:
                 name: State/Provinces
-                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
+                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines
                 type: %%MS_LAYER_LINE%%
                 encoding: CP1252
                 sort: 6
@@ -527,7 +527,7 @@ environments:
                 dynamic_width: true
             stateprovinces:
                 name: State/Provinces
-                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines_shp
+                path: %%ROOT%%/mapserver/maps/10m_cultural/10m_cultural/ne_10m_admin_1_states_provinces_lines
                 type: %%MS_LAYER_LINE%%
                 encoding: CP1252
                 sort: 6
