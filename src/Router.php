@@ -218,7 +218,8 @@ class Router
             $locale = Session::selectLocale();
             $config = [
                 'locale' => $locale,
-                'tweet' => ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter'
+                'tweet' => ($locale['canonical'] == 'en') ? 'Tweet' : 'Tweeter',
+                'url' => MAPPR_URL
             ];
             return $this->_twig()->render("feedback.html", $config);
         });
