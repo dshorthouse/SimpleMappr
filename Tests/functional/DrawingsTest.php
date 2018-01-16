@@ -122,7 +122,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '10 10 10');
-        $this->assertTrue($this->border->isSelected());
+        $this->assertFalse($this->border->isSelected());
         $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();
