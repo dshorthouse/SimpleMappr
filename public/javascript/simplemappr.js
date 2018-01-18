@@ -2479,7 +2479,11 @@ var SimpleMappr = (function($, window, document) {
             cache : true,
             beforeLoad: function(e, ui) {
               self.unusedVariables(e);
-              if(!$(ui.tab).data("cache.tabs")) { self.showSpinner(); }
+              if(!$(ui.tab).data("cache.tabs")) { 
+                self.showSpinner();
+              } else {
+                return false;
+              }
             },
             load  : function(e, ui){
               self.unusedVariables(e);
