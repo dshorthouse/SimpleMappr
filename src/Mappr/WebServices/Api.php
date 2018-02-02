@@ -654,6 +654,7 @@ class Api extends Mappr
     private function _parseUrl()
     {
         if (strstr($this->request->url, MAPPR_UPLOAD_DIRECTORY)) {
+            $this->request->url_content = @file_get_contents($this->request->url);
             $this->_parseFile();
             unlink($this->request->url);
         } else {
