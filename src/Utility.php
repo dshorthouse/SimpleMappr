@@ -95,10 +95,10 @@ class Utility
         if (get_magic_quotes_gpc() != 1) {
             $value = self::addSlashesExtended($value);
         }
-        if (strtolower($value) == "false") {
+        if (is_string($value) && strtolower($value) == "false") {
             $value = false;
         }
-        if (strtolower($value) == "true") {
+        if (is_string($value) && strtolower($value) == "true") {
             $value = true;
         }
         return $value;
