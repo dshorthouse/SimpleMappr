@@ -8,7 +8,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
@@ -56,7 +56,7 @@ use SimpleMappr\Mappr\Mappr;
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
@@ -493,7 +493,7 @@ class Router
     {
         $loader = new Twig_Loader_Filesystem(ROOT. "/views");
         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
-        $reload = (ENVIRONMENT == "development") ? true : false;
+        $reload = (ENVIRONMENT == "development" || ENVIRONMENT == "testing") ? true : false;
         $twig = new Twig_Environment($loader, ['cache' => $cache, 'auto_reload' => $reload]);
         $twig->addExtension(new Twig_Extensions_Extension_I18n());
         $twig->addGlobal('environment', ENVIRONMENT);

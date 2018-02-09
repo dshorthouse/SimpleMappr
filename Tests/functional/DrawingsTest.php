@@ -8,7 +8,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
@@ -42,7 +42,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
@@ -72,7 +72,6 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->title->sendKeys('My Layer');
         $this->data->sendKeys('POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->color->clear()->sendKeys('10 10 10');
-        $this->border->click();
         $this->hatch->click();
     }
 
@@ -122,7 +121,7 @@ class DrawingsTest extends SimpleMapprFunctionalTestCase
         $this->assertEquals($this->title->getAttribute('value'), 'My Layer');
         $this->assertEquals($this->data->getAttribute('value'), 'POLYGON((-70 63,-70 48,-106 48,-106 63,-70 63))');
         $this->assertEquals($this->color->getAttribute('value'), '10 10 10');
-        $this->assertFalse($this->border->isSelected());
+        $this->assertTrue($this->border->isSelected());
         $this->assertTrue($this->hatch->isSelected());
 
         $this->webDriver->findElements(WebDriverBy::xpath("//div[@id='fieldSetsWKT']//button[text()='Clear']"))[$layer_id]->click();

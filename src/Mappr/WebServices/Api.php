@@ -8,7 +8,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
@@ -52,7 +52,7 @@ use SimpleMappr\Mappr\Mappr;
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
@@ -144,6 +144,7 @@ class Api extends Mappr
         $attr->output           = Utility::loadParam('output', 'png');
         $attr->projection       = Utility::loadParam('projection', 'epsg:4326');
         $attr->projection_map   = 'epsg:4326';
+        $attr->rotation         = Utility::loadParam('rotation', 0);
         $attr->origin           = (int)Utility::loadParam('origin', false);
         $attr->bbox_map         = Utility::loadParam('bbox', '-180,-90,180,90');
         $attr->zoom             = (int)Utility::loadParam('zoom', false);

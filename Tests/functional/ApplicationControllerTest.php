@@ -8,7 +8,7 @@
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  *
@@ -44,7 +44,7 @@ use PHPUnit\Framework\TestCase;
  * @category  Class
  * @package   SimpleMappr
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  * @link      http://github.com/dshorthouse/SimpleMappr
  */
@@ -108,7 +108,7 @@ class ApplicationControllerTest extends SimpleMapprTestCase
      */
     public function testJsAccessible()
     {
-        $expected = "/*\n 2010-2017 David P. Shorthouse";
+        $expected = "/*\n 2010-2018 David P. Shorthouse";
         $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
         $this->assertEquals($expected, substr($response, 0, 33));
     }

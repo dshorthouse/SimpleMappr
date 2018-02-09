@@ -3,7 +3,7 @@
  * jQuery SimpleMappr Admin
  *
  * @author    David P. Shorthouse <davidpshorthouse@gmail.com>
- * @copyright 2010-2017 David P. Shorthouse
+ * @copyright 2010-2018 David P. Shorthouse
  * @link      http://github.com/dshorthouse/SimpleMappr
  * @license   MIT, https://github.com/dshorthouse/SimpleMappr/blob/master/LICENSE
  *
