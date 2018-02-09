@@ -1,7 +1,7 @@
 #!/bin/sh
 
-wget "http://selenium-release.storage.googleapis.com/3.8/selenium-server-standalone-3.8.1.jar"
-sudo mv selenium-server-standalone-3.8.1.jar /usr/local/bin/selenium.jar
+wget "http://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar"
+sudo mv selenium-server-standalone-3.9.1.jar /usr/local/bin/selenium.jar
 
 wget "https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip"
 sudo unzip chromedriver_linux64.zip
