@@ -13,7 +13,7 @@
     <p>{% trans "A simple, restful API may be used with Internet accessible, tab-separated text files, a collection of coordinates, or by sending files with additional parameters outlined below. A Web Feature Service (WFS) and a Web Map Service (WMS) are also available for vector- and raster-based layers, respectively." %}</p>
   </div>
   <h3>RESTful API</h3>
-  {% set url = [swagger.schemes.0, swagger.host]|join('://') %}
+  {% set url = openapi.servers.0.url %}
   {% set api_file = url ~ "/public/files/demo.txt" %}
   <p><em>e.g.</em> <span class="long-url">{{ url }}/api/<br>
     ?url={{ api_file|url_encode }}<br>
@@ -54,8 +54,8 @@
   </div>
 
   <dl>
-    {% for params in swagger.paths["/api"].post.parameters -%}
-    <dt>{{ params.name }}</dt>
+    {% for name, params in openapi.paths["/api"].post.requestBody.content["multipart/form-data"].schema.properties -%}
+    <dt>{{ name }}</dt>
     <dd>{{ params.description }}<span class="api-format">Type: {{ params.type }}</span>
     </dd>
     {% endfor -%}
@@ -63,7 +63,7 @@
 
   <h3>OpenAPI Specification</h3>
   {% set oai_url = '<a href="https://www.openapis.org/">https://www.openapis.org/</a>' %}
-  <p>{% trans %}SimpleMappr exposes its API via the Open API Initiative (OAI), {{ oai_url }} based on the OpenAPI Specification, formerly known as Swagger. The definition can be found at <a href="{{ url }}/swagger.json">{{ url }}/swagger.json</a>.{% endtrans %}</p>
+  <p>{% trans %}SimpleMappr exposes its API as a compliant OpenAPI v3.0.0 Specification, described by the OpenAPI Initiative (OAI), {{ oai_url }}. The definition document can be found at <a href="{{ url }}/openapi.json">{{ url }}/openapi.json</a>.{% endtrans %}</p>
 
   <h3>Web Feature Service (WFS)</h3>
 

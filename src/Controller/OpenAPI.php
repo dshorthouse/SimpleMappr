@@ -128,7 +128,7 @@ class OpenApi implements RestMethods
     private function _swaggerData()
     {
         $swagger = [
-        'swagger' => '2.0',
+        'openapi' => '3.0.0',
         'info' => [
           'title' => 'SimpleMappr API',
           'description' => 'Create free point maps for publications and presentations. Find out more at ['.$this->_url_whole.']('.$this->_url_whole.').',
@@ -142,28 +142,28 @@ class OpenApi implements RestMethods
             'url' => 'http://creativecommons.org/publicdomain/zero/1.0/'
           ]
         ],
-        'host' => $this->_url_parts["host"],
-        'schemes' => [$this->_url_parts["scheme"]],
+        'servers' => [
+            ['url' => $this->_url_whole]
+        ],
         'paths' => [
           '/api' => [
             'get' => [
               'summary' => 'GET to /api',
               'description' => 'GET to /api to produce an image',
-              'produces' => [
-                'image/png',
-                'image/jpeg',
-                'image/tiff',
-                'image/svg+xml',
-                'application/json'
-              ],
               'parameters' => $this->_apiParameters("GET"),
               'responses' => [
                 200 => [
                   'description' => 'success',
-                  'examples' => [
-                    'application/json' => [
-                      'status' => 'ok',
-                    ]
+                  'content' => [
+                      'application/json' => [
+                          'examples' => [
+                              'response' => [
+                                  'value' => [
+                                      'status' => 'ok'
+                                  ]
+                              ]
+                          ]
+                      ]
                   ]
                 ]
               ]
@@ -171,38 +171,55 @@ class OpenApi implements RestMethods
             'post' => [
               'summary' => 'POST to /api',
               'description' => 'POST to /api to produce a JSON response containing URL to image',
-              'consumes' => [
-                'multipart/form-data'
-              ],
-              'produces' => [
-                'application/json',
-              ],
-              'parameters' => $this->_apiParameters("POST"),
               'responses' => [
                 200 => [
                   'description' => 'success',
-                  'examples' => [
-                    'application/json' => [
-                      'status' => 'ok',
-                    ]
+                  'content' => [
+                      'application/json' => [
+                          'examples' => [
+                              'response' => [
+                                  'value' => [
+                                      'status' => 'ok'
+                                  ]
+                              ]
+                          ]
+                      ]
                   ]
                 ],
                 303 => [
                   'description' => 'redirect to image URL',
                   'headers' => [
                     'Location' => [
-                      'type' => 'string'
+                        'schema' => [
+                            'type' => 'string'
+                        ]
                     ]
                   ],
-                  'examples' => [
-                    'application/json' => [
-                      'imageURL' => MAPPR_MAPS_URL . '/50778960_464f_0.png',
-                      'expiry' => '2016-11-14T11:42:46-05:00',
-                      'bad_points' => [],
-                      'bad_drawings' => []
-                    ]
+                  'content' => [
+                      'application/json' => [
+                          'examples' => [
+                              'response' => [
+                                  'value' => [
+                                      'imageURL' => MAPPR_MAPS_URL . '/50778960_464f_0.png',
+                                      'expiry' => '2016-11-14T11:42:46-05:00',
+                                      'bad_points' => [],
+                                      'bad_drawings' => []
+                                   ]
+                              ]
+                          ]
+                      ]
                   ]
                 ]
+              ],
+              'requestBody' => [
+                  'content' => [
+                      'multipart/form-data' => [
+                          'schema' => [
+                              'type' => 'object',
+                              'properties' => $this->_apiParameters("POST"),
+                          ]
+                      ]
+                  ]
               ]
             ]
           ]
@@ -229,292 +246,353 @@ class OpenApi implements RestMethods
         $params = [
         [
           'name' => 'ping',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'if ping=true is included, a JSON response will be produced in place of an image.',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'url',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => "a URL-encoded, remote tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated points as latitude,longitude. It may also be a URL-encoded GeoRSS, GeoJSON, or KML feed. Examples: {$this->_url_whole}/public/files/demo.txt, {$this->_url_whole}/public/files/demo2.csv",
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'file',
-          'in' => 'formData',
+          'in' => 'query',
           'description' => 'tab-separated text file the columns within which are treated as groups of points; the first row used for an optional legend; rows are comma- or space-separated. Send via POST with enctype "multipart/form-data". The initial response will be JSON with an imageURL element and an expiry element, which indicates when the file will likely be deleted from the server.',
           'required' => false,
-          'type' => 'file'
+          'schema' => [
+              'type' => 'string',
+              'format' => 'binary'
+          ]
         ],
         [
           'name' => 'points[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'single or multiple markers written as latitude,longitude in decimal degrees, DDMMSS, or DD mm.mm. Multiple markers are separated by line-breaks, \n and these are best used in a POST request. If a POST request is used, the initial response will be JSON as above.',
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'wkt[x][data]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'data for array of well-known text shape x expressed as POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, or MULTIPOLYGON',
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'wkt[x][title]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'title for well-known text shape x',
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'wkt[x][border]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'border for well-known text shape x; only applies to POLYGON or MULTIPOLYGON',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'wkt[x][color]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'color for well-known text shape x, e.g. 80,80,80',
           'required' => false,
-          'type' => 'array',
-          'default' => [80,80,80],
-          'minItems' => 3,
-          'maxItems' => 3,
-          'items' => [
-            'type' => 'integer',
-            'format' => 'int32',
-            'minimum' => 0,
-            'maximum' => 255
-          ],
-          'collectionFormat' => 'csv'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+                'format' => 'int32',
+                'minimum' => 0,
+                'maximum' => 255,
+              ],
+              'minItems' => 3,
+              'maxItems' => 3,
+              'default' => [80,80,80]
+          ]
         ],
         [
           'name' => 'shape[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'shape of marker for column x, accepted values are one of: ' . implode(", ", AcceptedMarkers::shapes()),
           'required' => false,
-          'type' => 'string',
-          'enum' => AcceptedMarkers::shapes()
+          'schema' => [
+              'type' => 'string',
+              'enum' => AcceptedMarkers::shapes()
+          ],
         ],
         [
           'name' => 'size[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'integer-based point size of marker in column x, accepted values are one of: ' . implode(", ", AcceptedMarkers::sizes()),
           'required' => false,
-          'type' => 'integer',
-          'format' => 'int32',
-          'minimum' => min(AcceptedMarkers::sizes()),
-          'maximum' => max(AcceptedMarkers::sizes())
+          'schema' => [
+              'type' => 'integer',
+              'format' => 'int32',
+              'minimum' => min(AcceptedMarkers::sizes()),
+              'maximum' => max(AcceptedMarkers::sizes())
+          ]
         ],
         [
           'name' => 'color[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated RGB colors for marker in column x, e.g. 0,0,0',
           'required' => false,
-          'type' => 'array',
-          'default' => [0,0,0],
-          'minItems' => 3,
-          'maxItems' => 3,
-          'items' => [
-            'type' => 'integer',
-            'format' => 'int32',
-            'minimum' => 0,
-            'maximum' => 255
-          ],
-          'collectionFormat' => 'csv'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+                'format' => 'int32',
+                'minimum' => 0,
+                'maximum' => 255
+              ],
+              'default' => [0,0,0],
+              'minItems' => 3,
+              'maxItems' => 3
+          ]
         ],
         [
           'name' => 'shadow[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'grey shadow on marker in column x with 2px offset to the right and bottom',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'outlinecolor',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated RGB colors for halo around all solid markers, e.g. 120,120,120',
           'required' => false,
-          'type' => 'array',
-          'default' => [120,120,120],
-          'minItems' => 3,
-          'maxItems' => 3,
-          'items' => [
-            'type' => 'integer',
-            'format' => 'int32',
-            'minimum' => 0,
-            'maximum' => 255
-          ],
-          'collectionFormat' => 'csv'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+                'format' => 'int32',
+                'minimum' => 0,
+                'maximum' => 255
+              ],
+              'default' => [120,120,120],
+              'minItems' => 3,
+              'maxItems' => 3
+          ]
         ],
         [
           'name' => 'zoom',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'integer from 1 to 10, centered on the geographic midpoint of all coordinates',
           'required' => false,
-          'type' => 'integer',
-          'format' => 'int32',
-          'minimum' => 1,
-          'maximum' => 10
+          'schema' => [
+              'type' => 'integer',
+              'format' => 'int32',
+              'minimum' => 1,
+              'maximum' => 10
+          ]
         ],
         [
           'name' => 'bbox',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated bounding box in decimal degrees expressed as minx,miny,maxx,maxy',
           'required' => false,
-          'type' => 'array',
-          'default' => [-180,-90,180,90],
-          'minItems' => 4,
-          'maxItems' => 4,
-          'items' => [
-            'type' => 'integer',
-            'format' => 'int32',
-            'minimum' => -180,
-            'maximum' => 180
-          ],
-          'collectionFormat' => 'csv'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+                'format' => 'int32',
+                'minimum' => -180,
+                'maximum' => 180
+              ],
+              'default' => [-180,-90,180,90],
+              'minItems' => 4,
+              'maxItems' => 4
+          ]
         ],
         [
           'name' => 'shade[places]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated State, Province or Country names or the three-letter ISO country code with pipe-separated States or Provinces flanked by brackets',
           'required' => false,
-          'type' => 'array',
-          'items' => [
-            'type' => 'string'
-          ],
-          'collectionFormat' => 'csv'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'string'
+              ],
+          ]
         ],
         [
           'name' => 'shade[title]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'the title for the shaded places',
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'shade[color]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated RGB fill colors for shaded places, e.g. 80,80,80',
           'required' => false,
-          'type' => 'array',
-          'default' => [80,80,80],
-          'minItems' => 3,
-          'maxItems' => 3,
-          'items' => [
-            'type' => 'integer',
-            'format' => 'int32',
-            'minimum' => 0,
-            'maximum' => 255
-          ],
-          'collectionFormat' => 'csv',
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+                'format' => 'int32',
+                'minimum' => 0,
+                'maximum' => 255
+              ],
+              'default' => [80,80,80],
+              'minItems' => 3,
+              'maxItems' => 3
+          ]
         ],
         [
           'name' => 'layers',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'comma-separated cultural or physical layers; one or more of ' . implode(", ", array_keys(Mappr::getShapefileConfig())),
           'required' => false,
-          'type' => 'array',
-          'items' => [
-            'type' => 'string'
+          'style' => 'form',
+          'schema' => [
+              'type' => 'array',
+              'items' => [
+                'type' => 'string'
+              ],
           ],
-          'collectionFormat' => 'csv',
         ],
         [
           'name' => 'projection',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'the output projection in either EPSG or ESRI references, accepted values are one of ' . implode(", ", $projections),
           'required' => false,
-          'type' => 'string',
-          'enum' => array_keys(AcceptedProjections::$projections)
+          'schema' => [
+              'type' => 'string',
+              'enum' => array_keys(AcceptedProjections::$projections)
+          ]
         ],
         [
           'name' => 'origin',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'longitude of natural origin used in Lambert projections',
           'required' => false,
-          'type' => 'number',
-          'format' => 'float',
-          'minimum' => -180,
-          'maximum' => 180
+          'schema' => [
+              'type' => 'number',
+              'format' => 'float',
+              'minimum' => -180,
+              'maximum' => 180
+          ]
         ],
         [
           'name' => 'graticules',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'display the graticules',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'spacing',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'display the graticules with defined spacing in degrees',
           'required' => false,
-          'type' => 'integer',
-          'format' => 'int32',
-          'minimum' => 1,
-          'maximum' => 50
+          'schema' => [
+              'type' => 'integer',
+              'format' => 'int32',
+              'minimum' => 1,
+              'maximum' => 50
+          ]
         ],
         [
-        'name' => 'hide_gridlabel',
-        'in' => ($request_method == "GET") ? 'query' : 'formData',
-        'description' => 'if hide_gridlabel=true is included, the graticule labels are not shown.',
-        'required' => false,
-        'type' => 'boolean'
+          'name' => 'hide_gridlabel',
+          'in' => 'query',
+          'description' => 'if hide_gridlabel=true is included, the graticule labels are not shown.',
+          'required' => false,
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'width',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'integer-based output width in pixels',
           'required' => false,
-          'type' => 'integer',
-          'format' => 'int32',
-          'minimum' => 600,
-          'maximum' => 4500
+          'schema' => [
+              'type' => 'integer',
+              'format' => 'int32',
+              'minimum' => 600,
+              'maximum' => 4500
+          ]
         ],
         [
           'name' => 'height',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'integer-based output height in pixels; if height is not provided, it will be half the width',
           'required' => false,
-          'type' => 'integer',
-          'format' => 'int32',
-          'minimum' => 300,
-          'maximum' => 4500
+          'schema' => [
+              'type' => 'integer',
+              'format' => 'int32',
+              'minimum' => 300,
+              'maximum' => 4500
+          ]
         ],
         [
           'name' => 'output',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'file format of the image or vector produced. Accepted values are ' . implode(", ", AcceptedOutputs::outputList()),
           'required' => false,
-          'type' => 'string',
-          'enum' => AcceptedOutputs::outputList()
+          'schema' => [
+              'type' => 'string',
+              'enum' => AcceptedOutputs::outputList()
+          ],
         ],
         [
           'name' => 'scalebar',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'embed a scalebar in the lower right of the image',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ],
         [
           'name' => 'legend[x]',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'URL-encode a title for an item in a legend, embedded in the upper right of the image. If you have a url or file parameter, use legend=true instead',
           'required' => false,
-          'type' => 'string'
+          'schema' => [
+              'type' => 'string'
+          ]
         ],
         [
           'name' => 'watermark',
-          'in' => ($request_method == "GET") ? 'query' : 'formData',
+          'in' => 'query',
           'description' => 'if watermark=false is included, the SimpleMappr watermark if not included.',
           'required' => false,
-          'type' => 'boolean'
+          'schema' => [
+              'type' => 'boolean'
+          ]
         ]
         ];
         if ($request_method == "GET") {
@@ -524,7 +602,19 @@ class OpenApi implements RestMethods
                     break;
                 }
             }
+            return array_values($params);
         }
-        return array_values($params);
+        if ($request_method == "POST") {
+            $output = [];
+            foreach ($params as $param) {
+                unset($param['in'], $param['required']);
+                $output[$param['name']] = [];
+                $output[$param['name']]['description'] = $param['description'];
+                foreach ($param['schema'] as $key => $item) {
+                    $output[$param['name']][$key] = $item;
+                };
+            }
+            return $output;
+        }
     }
 }

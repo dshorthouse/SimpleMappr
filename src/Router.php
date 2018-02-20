@@ -150,7 +150,7 @@ class Router
         $router->get('/apidoc', function () {
             Header::setHeader('html');
             Session::selectLocale();
-            $config = ['swagger' => $this->_klass("Controller\OpenApi")->index()];
+            $config = ['openapi' => $this->_klass("Controller\OpenApi")->index()];
             return $this->_twig()->render("apidoc.html", $config);
         });
 
@@ -259,6 +259,11 @@ class Router
             return $klass->execute()->createOutput();
         });
 
+        $router->get('/openapi.json', function () {
+            Header::setHeader("json");
+            return json_encode($this->_klass("Controller\OpenApi")->index());
+        });
+
         $router->get('/places', function () {
             Header::setHeader("html");
             Session::selectLocale();
@@ -288,11 +293,6 @@ class Router
 
         $router->post('/session', function () {
             $this->_klass("Session", true);
-        });
-
-        $router->get('/swagger.json', function () {
-            Header::setHeader("json");
-            return json_encode($this->_klass("Controller\OpenApi")->index());
         });
 
         $router->group(['before' => 'check_role_user'], function ($router) {

@@ -264,9 +264,9 @@ class RouterTest extends SimpleMapprTestCase
      *
      * @return void
      */
-    public function testSwaggerGET()
+    public function testOpenAPIGET()
     {
-        $response = $this->httpRequest(MAPPR_URL . "/swagger.json");
+        $response = $this->httpRequest(MAPPR_URL . "/openapi.json");
         $this->assertEquals(200, $response['code']);
         $this->assertEquals('application/json; charset=UTF-8', $response['mime']);
     }
