@@ -54,6 +54,7 @@ class OpenApiTest extends TestCase
     use SimpleMapprTestMixin;
 
     protected $openapi;
+    protected $parameters;
 
     /**
      * Parent setUp function executed before each test.
@@ -100,13 +101,23 @@ class OpenApiTest extends TestCase
     }
 
     /**
-     * Test number of parameters
+     * Test number of GET parameters
      *
      * @return void
      */
-    public function testNumberParameters()
+    public function testNumberGETParameters()
     {
         $this->assertCount(29, $this->parameters);
+    }
+
+    /**
+     * Test number of POST properties
+     *
+     * @return void
+     */
+    public function testNumberPOSTProperties()
+    {   $properties = $this->openapi["paths"]["/api"]["post"]["requestBody"]["content"]["multipart/form-data"]["schema"]["properties"];
+        $this->assertCount(30, $properties);
     }
 
     /**
