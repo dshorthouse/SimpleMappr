@@ -108,7 +108,7 @@ class ApplicationControllerTest extends SimpleMapprTestCase
      */
     public function testJsAccessible()
     {
-        $expected = "/*\n 2010-2018 David P. Shorthouse";
+        $expected = "/**\n * SimpleMappr - create point";
         $response = file_get_contents(MAPPR_URL . "/public/javascript/simplemappr.min.js");
         $this->assertEquals($expected, substr($response, 0, 33));
     }
