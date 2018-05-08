@@ -228,13 +228,12 @@ abstract class Mappr
     {
         try {
             if (!extension_loaded('MapScript')) {
-              throw new \Exception("PHP MapScript extension is not loaded"); 
+                throw new \Exception("PHP MapScript extension is not loaded");
             }
             $this->map_obj = ms_newMapObjFromString("MAP END");
             $this->request = (object)array_merge((array)$this->_defaultAttributes(), (array)$this->getRequest());
             $this->image_size = [$this->request->width, $this->request->height];
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
             exit;
         }
@@ -728,7 +727,7 @@ abstract class Mappr
             $keysize = 20;
             $keyspacing = 5;
             $size = 10;
-            if ($this->_isResize() 
+            if ($this->_isResize()
                 && $this->request->download_factor > 1
             ) {
                 $keysize = $this->request->download_factor*15;
@@ -747,8 +746,8 @@ abstract class Mappr
             $this->map_obj->legend->label->color->setRGB(0, 0, 0);
 
             //svg format cannot do legends in MapServer
-            if ($this->request->download 
-                && $this->request->options['legend'] 
+            if ($this->request->download
+                && $this->request->options['legend']
                 && $this->request->output != 'svg'
             ) {
                 $this->map_obj->legend->set("status", MS_EMBED);
@@ -791,8 +790,8 @@ abstract class Mappr
         $this->map_obj->scalebar->label->color->setRGB(0, 0, 0);
 
         //svg format cannot do scalebar in MapServer
-        if ($this->request->download 
-            && $this->request->options['scalebar'] 
+        if ($this->request->download
+            && $this->request->options['scalebar']
             && $this->request->output != 'svg'
         ) {
             $this->map_obj->scalebar->set("status", MS_EMBED);
@@ -923,13 +922,15 @@ abstract class Mappr
         foreach ($config as $shape => $values) {
             foreach ($values as $key => $value) {
                 $config[$shape][$key] = preg_replace_callback(
-                    $pattern, function ($matches) {
+                    $pattern,
+                    function ($matches) {
                         if (isset($matches[2])) {
                             return constant($matches[1]) . $matches[2];
                         } else {
                             return constant($matches[1]);
                         }
-                    }, $value
+                    },
+                    $value
                 );
             }
         }
@@ -946,7 +947,7 @@ abstract class Mappr
         // Add hatch symbol
         $symbol = new \symbolObj($this->map_obj, "hatch");
         $symbol->set("type", MS_SYMBOL_HATCH);
-        $symbol->set("filled", FALSE);
+        $symbol->set("filled", false);
         $symbol->set("inmapfile", MS_TRUE);
 
         foreach (AcceptedMarkers::$shapes as $type => $style) {
@@ -1047,7 +1048,7 @@ abstract class Mappr
         $this->map_obj->selectOutputFormat('png');
         if (isset($this->request->output) && $this->request->output) {
             $output = $this->request->output;
-            if ($this->request->output == 'pptx' 
+            if ($this->request->output == 'pptx'
                 || $this->request->output == 'docx'
                 || !in_array($output, AcceptedOutputs::outputList())
             ) {
@@ -1090,7 +1091,7 @@ abstract class Mappr
     private function _setMapExtent()
     {
         $ext = explode(',', $this->request->bbox_map);
-        if (isset($this->request->projection) 
+        if (isset($this->request->projection)
             && $this->request->projection != $this->request->projection_map
         ) {
             $origProjObj = new \projectionObj(self::getProjection($this->request->projection_map));
@@ -1252,9 +1253,9 @@ abstract class Mappr
      */
     private function _setCrop()
     {
-        if (isset($this->request->crop) 
-            && $this->request->crop 
-            && $this->request->bbox_rubberband 
+        if (isset($this->request->crop)
+            && $this->request->crop
+            && $this->request->bbox_rubberband
             && $this->_isResize()
         ) {
             $bbox_rubberband = explode(',', $this->request->bbox_rubberband);

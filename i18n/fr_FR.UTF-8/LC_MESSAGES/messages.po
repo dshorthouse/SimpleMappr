@@ -298,8 +298,18 @@ msgstr "lacs (plein)"
 
 #: .index.php:131
 #: .tabs/help.php:77
+msgid "lakes (blue)"
+msgstr "lacs (bleu)"
+
+#: .index.php:131
+#: .tabs/help.php:77
 msgid "oceans (greyscale)"
 msgstr "océans (plein)"
+
+#: .index.php:131
+#: .tabs/help.php:77
+msgid "oceans (blue)"
+msgstr "océans (bleu)"
 
 #: .index.php:132
 #: .index.php:141
@@ -868,6 +878,14 @@ msgstr "15 janvier, 2018"
 #: .tabs/about.php:11
 msgid "February 20, 2018"
 msgstr "20 février, 2018"
+
+#: .tabs/about.php:11
+msgid "May 8, 2018"
+msgstr "8 mai, 2018"
+
+#: .tabs/about.php:11
+msgid "Improvements: Added option to make oceans and lakes blue."
+msgstr "Améliorations: Ajouté l'option pour rendre les oceans et les lacs bleus."
 
 #: .tabs/about.php:11
 msgid "Improvements: Update OpenAPI document to version 3."
