@@ -455,6 +455,7 @@ class Router
     {
         if (!isset($_SERVER['HTTP_HOST'])) {
             echo $this->_renderError(400);
+            exit();
         }
 
         $host = explode(".", $_SERVER['HTTP_HOST']);
