@@ -35,6 +35,7 @@ addons:
       - libgdal1-dev
       - libgdal-dev
       - libproj-dev
+      - libprotobuf-dev
       - libxml2-dev
       - libgeos-dev
       - libcairo2-dev
@@ -44,7 +45,6 @@ addons:
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
-      - protobuf
       - unzip
       - xvfb
       - cmake
