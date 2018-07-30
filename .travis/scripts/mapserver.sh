@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mapserver="mapserver-7.0.7"
+mapserver="mapserver-7.2.0"
 
 echo "---> Starting $(tput bold ; tput setaf 2)Starting $mapserver installation$(tput sgr0)"
 
