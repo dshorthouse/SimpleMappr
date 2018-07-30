@@ -44,6 +44,7 @@ addons:
       - locales
       - oracle-java8-installer
       - oracle-java8-set-default
+      - protobuf
       - unzip
       - xvfb
       - cmake
