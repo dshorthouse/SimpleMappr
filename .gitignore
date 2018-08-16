@@ -43,3 +43,5 @@ Thumbs.db
 # Composer files #
 ##################
 vendor/*
+
+.php_cs.cache
