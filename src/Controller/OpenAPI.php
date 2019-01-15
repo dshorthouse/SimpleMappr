@@ -71,7 +71,6 @@ class OpenApi implements RestMethods
     {
         $this->_url_parts = Utility::parsedURL();
         $this->_url_whole = implode("://", $this->_url_parts);
-
         return $this->_swaggerData();
     }
 

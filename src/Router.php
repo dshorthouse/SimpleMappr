@@ -47,6 +47,7 @@ use Twig_Extensions_Extension_I18n;
 use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Controller\Citation;
+use SimpleMappr\Controller\OpenAPI;
 use SimpleMappr\Controller\User;
 use SimpleMappr\Mappr\Mappr;
 
@@ -413,7 +414,7 @@ class Router
     {
         $logger = new Logger(ROOT."/log/logger.log");
         $ip = $_SERVER["REMOTE_ADDR"];
-        if (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production") {
+        if (defined("CLOUDFLARE_KEY") && ENVIRONMENT == "production" && array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
             $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
         }
         $message = implode(" - ", [date('Y-m-d H:i:s'), $ip, $type, $_SERVER['REQUEST_METHOD'], $_SERVER["REQUEST_URI"]]);
