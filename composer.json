@@ -2,7 +2,7 @@
     "name"        : "SimpleMappr",
     "description" : "A point map web application for quality publications and presentations.",
     "keywords"    : ["publication", "presentation", "map", "georeference"],
-    "homepage"    : "http://www.simplemappr.net",
+    "homepage"    : "https://www.simplemappr.net",
     "time"        : "2014-04-27",
     "license"     : "MIT",
     "authors": [
