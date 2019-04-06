@@ -268,7 +268,7 @@ class Utility
         $dms = stripslashes($dms);
         $neg = (preg_match('/[SWO]/', $dms) == 0) ? 1 : -1;
         $dms = preg_replace('/(^\s?-)|(\s?[NSEWO]\s?)/', "", $dms);
-        $pattern = "/(\\d*\\.?\\d+)(?:[°ºd: ]+)(\\d*\\.?\\d+)*(?:['m′: ])*(\\d*\\.?\\d+)*[\"s″ ]?/";
+        $pattern = "/(\\d*\\.?\\d+)(?:[°ºd: ]+)(\\d*\\.?\\d+)*(?:['m′‘‛: ])*(\\d*\\.?\\d+)*[\"s″“‟ ]?/";
         $parts = preg_split($pattern, $dms, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
         if (!$parts) {
             return;
