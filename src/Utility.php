@@ -236,7 +236,7 @@ class Utility
      */
     public static function makeCoordinates($point)
     {
-        $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms'\"]/i", "/-\s+(?=\d)/"], [" ", "", "-"], $point);
+        $loc = preg_replace(["/[\p{Z}\s]/u", "/[^\d\s,;.\-NSEWO°ºdms′‘‛'\"″“‟]/i", "/-\s+(?=\d)/"], [" ", "", "-"], $point);
         if (preg_match("/[NSEWO]/", $loc) != 0) {
             $coord = preg_split("/[,;]/", $loc);
             if (count($coord) != 2 || empty($coord[1])) {
