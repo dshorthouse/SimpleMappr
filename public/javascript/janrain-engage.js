@@ -34,7 +34,7 @@ if (typeof janrain.settings.appUrl === 'undefined')janrain.settings.appUrl = "ht
 janrain.settings.permissions = [];
 if (typeof janrain.settings.providers === 'undefined')janrain.settings.providers = [
 	'googleplus',
-	'linkedin',
+	'linkedin-oauth2',
 	'twitter',
 	'flickr',
 	'facebook',
