@@ -654,8 +654,9 @@ class Api extends Mappr
      */
     private function _parseUrl()
     {
+        $arrContextOptions = array("ssl" => array("verify_peer" => false, "verify_peer_name" => false)); 
         if (strstr($this->request->url, MAPPR_UPLOAD_DIRECTORY)) {
-            $this->request->url_content = @file_get_contents($this->request->url);
+            $this->request->url_content = @file_get_contents($this->request->url, false, stream_context_create($arrContextOptions));
             $this->_parseFile();
             unlink($this->request->url);
         } else {
@@ -663,7 +664,7 @@ class Api extends Mappr
             if (array_key_exists('Location', $headers)) {
                 $this->request->url = array_pop($headers['Location']);
             }
-            $this->request->url_content = @file_get_contents($this->request->url);
+            $this->request->url_content = @file_get_contents($this->request->url, false, stream_context_create($arrContextOptions));
             if (strlen($this->request->url_content) > 0) {
                 preg_match_all('/[<>{}\[\]]/', $this->request->url_content, $match);
                 if (count($match[0]) >= 4) {
