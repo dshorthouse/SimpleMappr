@@ -1,3 +1,5 @@
+:warning: **To be decommisioned and archived September 1, 2026.**
+
 SimpleMappr Installation and Configuration
 ==========================================
 
@@ -6,7 +8,6 @@ SimpleMappr, [http://www.simplemappr.net](http://www.simplemappr.net) is a web-b
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
 
-[![Build Status](https://secure.travis-ci.org/dshorthouse/SimpleMappr.png?branch=master)](http://travis-ci.org/dshorthouse/SimpleMappr)
 [![Coverage Status](https://coveralls.io/repos/dshorthouse/SimpleMappr/badge.svg?branch=master&service=github)](https://coveralls.io/github/dshorthouse/SimpleMappr?branch=master)
 [![DOI](https://zenodo.org/badge/1777885.svg)](https://zenodo.org/badge/latestdoi/1777885)
 [![Join the chat at https://gitter.im/dshorthouse/SimpleMappr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dshorthouse/SimpleMappr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
