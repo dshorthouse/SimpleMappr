@@ -79,34 +79,6 @@ class Session
     public static $domain = "messages";
 
     /**
-     * RPXNOW public token
-     *
-     * @var string $_token
-     */
-    private $_token;
-
-    /**
-     * PHP regionalized locale
-     *
-     * @var string $_locale
-     */
-    private $_locale;
-
-    /**
-     * PHP regionalized locale with encoding
-     *
-     * @var string $_locale_code
-     */
-    private $_locale_code;
-
-    /**
-     * RPXNOW authentication response
-     *
-     * @var array $_auth_info
-     */
-    private $_auth_info = [];
-
-    /**
      * Create a user's session
      *
      * @return void
@@ -274,159 +246,18 @@ class Session
     }
 
     /**
-     * Constructor
+     * Constructor — destroys the active session when invoked.
      *
-     * @param bool $new_session Create a new session or destroy one
+     * The legacy Janrain/RPX OAuth flow that previously lived in this class
+     * was removed when Janrain shut down. A replacement OAuth provider needs
+     * to be wired up before sign-in works again.
+     *
+     * @param bool $new_session If true, no-op (auth provider not configured).
      */
     public function __construct($new_session)
     {
-        if ($new_session) {
-            $this->_execute();
-        } else {
+        if (!$new_session) {
             self::destroy();
-        }
-    }
-
-    /**
-     * Executor method
-     *
-     * @return void
-     */
-    private function _execute()
-    {
-        $this->_getLocale()
-            ->_getToken()
-            ->_makeCall()
-            ->_makeSession();
-    }
-
-    /**
-     * Get the locale
-     *
-     * @return object $this
-     */
-    private function _getLocale()
-    {
-        $this->_locale = Utility::loadParam('locale', 'en_US');
-        $this->_locale_code = 'en_US.UTF-8';
-        if (array_key_exists($this->_locale, self::$accepted_locales)) {
-            $this->_locale_code = self::$accepted_locales[$this->_locale]['code'];
-        }
-        return $this;
-    }
-
-    /**
-     * The the token from the URL & if missing, redirect to homepage
-     *
-     * @return object $this
-     */
-    private function _getToken()
-    {
-        $this->_token = Utility::loadParam('token', null);
-        if ($this->_token) {
-            return $this;
-        } else {
-            self::redirect(MAPPR_URL);
-        }
-    }
-
-    /**
-     * Execute POST to Janrain (formerly RPXNOW) to obtain OpenID account information
-     *
-     * @return object $this
-     */
-    private function _makeCall()
-    {
-        $post_data = [
-            'token' => $this->_token,
-            'apiKey' => RPX_KEY,
-            'format' => 'json'
-        ];
-
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_URL, 'https://rpxnow.com/api/v2/auth_info');
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_FAILONERROR, true);
-        $raw_json = curl_exec($curl);
-
-        if ($raw_json == false) {
-            echo "\nCurl error: " . curl_error($curl);
-            echo "\nHTTP code: " . curl_errno($curl);
-        }
-        curl_close($curl);
-
-        $this->_auth_info = json_decode($raw_json, true);
-
-        return $this;
-    }
-
-    /**
-     * Create a session and set a cookie
-     *
-     * @return void
-     */
-    private function _makeSession()
-    {
-        if (isset($this->_auth_info['stat']) 
-            && $this->_auth_info['stat'] == 'ok'
-        ) {
-            $email = "";
-            $displayname = "";
-            $profile = $this->_auth_info['profile'];
-            $identifier = $profile['identifier'];
-            if (isset($profile['email'])) {
-                $email = Utility::checkPlain($profile['email']);
-            }
-            $username = $email;
-            if (isset($profile['preferredUsername'])) {
-                $username = Utility::checkPlain($profile['preferredUsername']);
-            }
-            if (isset($profile['displayName'])) {
-                $displayname = Utility::checkPlain($profile['displayName']);
-            }
-
-            $user = [
-                'identifier'  => $identifier,
-                'username'    => $username,
-                'displayname' => $displayname,
-                'email'       => $email
-            ];
-
-            $result = (new User)->showByIdentifier($identifier)->results;
-
-            if (!$result) {
-                $user['hash'] = password_hash($identifier, PASSWORD_DEFAULT);
-                $user['uid'] = (new User)->create($user)->uid;
-            } else {
-                $user['hash'] = $result->hash;
-                $user['uid'] = $result->uid;
-            }
-
-            $user['locale'] = $this->_locale;
-            $user['role'] = 1;
-
-            if ($result && property_exists($result, 'role')) {
-                $user['role'] = $result->role;
-            }
-
-            $user_data = [
-                'email' => $email,
-                'displayname' => $displayname,
-                'access' => time()
-            ];
-            (new User)->update($user_data, "uid=".$user['uid']);
-
-            unset($user['uid'], $user['role']);
-
-            self::writeSession($user);
-            self::redirect(MAPPR_URL . self::makeLocaleParam($user['locale']));
-        } else {
-            echo 'An error occured: ' . $this->_auth_info['err']['msg'];
-            exit();
         }
     }
 }

@@ -24,9 +24,6 @@ defined("MAXNUMTEXTAREA") || define("MAXNUMTEXTAREA", 15);
 // Google Analytics UA-XXXXXX-XX key
 defined("GOOGLE_ANALYTICS") || define("GOOGLE_ANALYTICS", "");
 
-// Private RPX_KEY for OpenID client login that can be obtained at https://rpxnow.com/
-defined("RPX_KEY") || define("RPX_KEY", "");
-
 // Cloudflare
 defined("CLOUDFLARE_KEY") || define("CLOUDFLARE_KEY", "");
 

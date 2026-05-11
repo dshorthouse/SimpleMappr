@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-  colors="true"
-  bootstrap="SimpleMapprTestBootstrap.php" >
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="SimpleMapprTestBootstrap.php"
+         colors="true"
+         beStrictAboutOutputDuringTests="true"
+         failOnWarning="true"
+         failOnRisky="true">
   <php>
     <server name="HTTP_HOST" value="www.simplemappr.test"/>
     <server name="REMOTE_ADDR" value="000.000.000"/>
@@ -22,15 +26,12 @@
       <directory>./functional</directory>
     </testsuite>
   </testsuites>
-  <filter>
-    <whitelist>
-      <directory>./</directory>
-      <exclude>
-        <file>SimpleMapprTestBootstrap.php</file>
-        <file>SimpleMapprTestMixin.php</file>
-        <file>SimpleMapprTestCase.php</file>
-        <file>SimpleMapprFunctionalTestCase.php</file>
-      </exclude>
-    </whitelist>
-  </filter>
+  <coverage>
+    <include>
+      <directory suffix=".php">../src</directory>
+    </include>
+    <report>
+      <clover outputFile="build/logs/clover.xml"/>
+    </report>
+  </coverage>
 </phpunit>

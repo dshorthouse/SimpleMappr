@@ -41,9 +41,10 @@ use \Phroute\Phroute\Autoloader;
 use \Phroute\Phroute\RouteCollector;
 use \Phroute\Phroute\Dispatcher;
 use \Symfony\Component\Yaml\Yaml;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Twig_Extensions_Extension_I18n;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment as TwigEnvironment;
+use Twig\Extra\Intl\IntlExtension;
+use SimpleMappr\Twig\I18nExtension;
 use SimpleMappr\Constants\AcceptedMarkers;
 use SimpleMappr\Constants\AcceptedProjections;
 use SimpleMappr\Controller\Citation;
@@ -292,10 +293,6 @@ class Router
             return json_encode($klass->execute()->queryLayer()->data);
         });
 
-        $router->post('/session', function () {
-            $this->_klass("Session", true);
-        });
-
         $router->group(['before' => 'check_role_user'], function ($router) {
             $router->get('/share', function () {
                 Header::setHeader('html');
@@ -436,11 +433,11 @@ class Router
                 $url = (strlen($entry["url"]) < 100) ? $entry["url"] : substr($entry["url"], 0, 100) . "...";
                 $string .= $entry["time"];
                 $string .= " - ";
-                $string .= "<a href=\"https://who.is/whois-ip/ip-address/${entry['ip']}\" target=\"_blank\">${entry['ip']}</a>";
+                $string .= "<a href=\"https://who.is/whois-ip/ip-address/{$entry['ip']}\" target=\"_blank\">{$entry['ip']}</a>";
                 $string .= " - ";
                 $string .= $entry["method"];
                 $string .= " - ";
-                $string .= "<a href=\"${entry['url']}\" target=\"_blank\">${url}</a>";
+                $string .= "<a href=\"{$entry['url']}\" target=\"_blank\">{$url}</a>";
                 $string .= "<br>\n";
             }
         }
@@ -493,11 +490,12 @@ class Router
      */
     private function _twig($include_page_elements = false)
     {
-        $loader = new Twig_Loader_Filesystem(ROOT. "/views");
+        $loader = new FilesystemLoader(ROOT. "/views");
         $cache = (ENVIRONMENT == "development") ? false : ROOT . "/public/tmp";
         $reload = (ENVIRONMENT == "development" || ENVIRONMENT == "testing") ? true : false;
-        $twig = new Twig_Environment($loader, ['cache' => $cache, 'auto_reload' => $reload]);
-        $twig->addExtension(new Twig_Extensions_Extension_I18n());
+        $twig = new TwigEnvironment($loader, ['cache' => $cache, 'auto_reload' => $reload]);
+        $twig->addExtension(new I18nExtension());
+        $twig->addExtension(new IntlExtension());
         $twig->addGlobal('environment', ENVIRONMENT);
 
         $locale = Utility::loadParam("locale", "en_US");

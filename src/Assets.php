@@ -94,8 +94,7 @@ class Assets
      */
     public $local_js_uncombined = [
         'jquery'      => 'public/javascript/jquery-3.2.1.min.js',
-        'jquery_ui'   => 'public/javascript/jquery-ui-1.12.1.custom.min.js',
-        'janrain'     => 'public/javascript/janrain.engage.min.js'
+        'jquery_ui'   => 'public/javascript/jquery-ui-1.12.1.custom.min.js'
      ];
 
     /**
@@ -346,11 +345,7 @@ class Assets
      */
     public function getJSVars()
     {
-        $foot = $this->_getAnalytics();
-        if (!$this->_active_session) {
-            $foot .= $this->_getJanrain();
-        }
-        return $foot;
+        return $this->_getAnalytics();
     }
 
     /**
@@ -421,9 +416,6 @@ class Assets
     private function _addUncombinedJs()
     {
         foreach ($this->local_js_uncombined as $key => $js_file) {
-            if ($key == "janrain" && $this->_active_session) {
-                continue;
-            }
             $this->_addJs($key, $js_file);
         }
         return $this;
@@ -547,30 +539,6 @@ class Assets
     }
 
     /**
-     * Create Janrain inline javascript
-     *
-     * @return string An HTML script tag snippet
-     */
-    private function _getJanrain()
-    {
-        $locale = $this->_getLocale();
-        $locale_q = isset($_GET["locale"]) ? "?locale=" . $locale : "";
-        $janrain  = "<script>" . "\n";
-        $janrain .= "(function(w,d) {
-if (typeof w.janrain !== 'object') { w.janrain = {}; }
-w.janrain.settings = {};
-w.janrain.settings.language = '" . Session::$accepted_locales[$locale]['canonical'] . "';
-w.janrain.settings.tokenUrl = '" . MAPPR_URL . "/session/" . $locale_q . "';
-function isJanrainReady() { janrain.ready = true; };
-if (d.addEventListener) { d.addEventListener(\"DOMContentLoaded\", isJanrainReady, false); }
-else if (w.attachEvent) { w.attachEvent('onload', isJanrainReady); }
-else if (w.onLoad) { w.onload = isJanrainReady; }
-})(window,document);" . "\n";
-        $janrain .= "</script>" . "\n";
-        return $janrain;
-    }
-
-    /**
      * Create Google Analytics inline javascript
      *
      * @return string An HTML script tag snippet
@@ -591,13 +559,4 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         return $analytics;
     }
 
-    /**
-     * Return the locale
-     *
-     * @return string The locale string
-     */
-    private function _getLocale()
-    {
-        return isset($_GET["locale"]) ? $_GET["locale"] : "en_US";
-    }
 }

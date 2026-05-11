@@ -6,21 +6,18 @@ SimpleMappr, [http://www.simplemappr.net](http://www.simplemappr.net) is a web-b
     Developer: David P. Shorthouse
     Email: davidpshorthouse@gmail.com
 
-[![Build Status](https://secure.travis-ci.org/dshorthouse/SimpleMappr.png?branch=master)](http://travis-ci.org/dshorthouse/SimpleMappr)
-[![Coverage Status](https://coveralls.io/repos/dshorthouse/SimpleMappr/badge.svg?branch=master&service=github)](https://coveralls.io/github/dshorthouse/SimpleMappr?branch=master)
 [![DOI](https://zenodo.org/badge/1777885.svg)](https://zenodo.org/badge/latestdoi/1777885)
-[![Join the chat at https://gitter.im/dshorthouse/SimpleMappr](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dshorthouse/SimpleMappr?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Server Requirements
 --------------------------
 
-See how the [travis.yml](.travis.yml) file is configured for [Travis-CI](https://travis-ci.org/)'s continuous integration of automated unit and functional testing.
+CI runs on GitHub Actions; see [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
-1. PHP5.6+ [with cli, PDO, PDO-MySQL, GD]
-2. Apache2.2.24+ [with rewrite]
-3. MySQL 5.5.27+
-4. [MapServer 7.2.0](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo]
-5. [Composer](https://getcomposer.org/)
+1. PHP 8.1+ [with cli, PDO, PDO-MySQL, GD, cURL, mbstring]
+2. Apache 2.4+ [with rewrite] (or any equivalent web server)
+3. MySQL 5.7+ / MariaDB 10.3+
+4. [MapServer 7.x](http://www.mapserver.org/) [with PROJ, GDAL, GEOS, Cairo, PHP MapScript]
+5. [Composer](https://getcomposer.org/) 2.x
 
 Configuration Instructions
 --------------------------
@@ -31,7 +28,7 @@ Configuration Instructions
   - [config/phinx.yml.sample](config/phinx.yml.sample) => config/phinx.yml
   - [config/shapefiles.yml.sample](config/shapefiles.yml.sample) => config/shapefiles.yml
 3. Adjust [config/conf.test.php](config/conf.test.php) used during execution of tests
-4. If you wish to use Janrain's OpenID authentication system, sign-up at [http://rpxnow.com](http://rpxnow.com) and replace the RPX_KEY in config/conf.php
+4. **Authentication is not configured.** The original Janrain/RPXNOW OAuth broker shut down in 2020; the legacy hooks were removed during modernization. To restore sign-in, integrate an OAuth provider (e.g. via `league/oauth2-client`) and call `Session::writeSession()` with the resulting user record. See `src/Session.php` for the contract.
 5. The jQuery-based front-end assumes clean URLs and operates in a RESTful fashion. Configure mod_rewrite as follows:
 
 ### Apache Rewrite Configuration
@@ -55,51 +52,26 @@ Configuration Instructions
       </Directory>
     </VirtualHost>
 
-Homebrew on Mac OSX
+Homebrew on macOS
 -------------------
-1. Install PHP5.6. See [https://github.com/homebrew/homebrew-php](https://github.com/homebrew/homebrew-php)
-2. Execute from command line:
+1. Install a current PHP 8.x via `brew install php` (or `shivammathur/php` for pinned versions).
+2. Install system libraries:
 
         $ brew install \
           autoconf \
           freetype \
           jpeg \
           libpng \
-          gd --with-freetype --with-png --with-jpeg --with-tiff \
           gdal \
           geos \
           gettext \
           icu4c \
           proj \
           cairo \
-          libsvg-cairo \
           fribidi \
-          phpunit \
           composer
 
-3. Download [MapServer](http://mapserver.org/download.html) 7.2.0 tarball, [http://download.osgeo.org/mapserver/mapserver-7.2.0.tar.gz](http://download.osgeo.org/mapserver/mapserver-7.2.0.tar.gz)
-4. Extract and cd into folder
-5. Execute from command line:
-
-          $ mkdir build; cd build; cmake .. \
-            -DCMAKE_PREFIX_PATH="/usr/local/opt/libiconv;/usr/local/opt/php56;/usr/local/opt/phpunit;/usr/local/opt/geos;/usr/local/opt/pkg-config;/usr/local/opt/libxml2;/usr/local/opt/zlib;/usr/local/opt/fontconfig;/usr/local/opt/cairo;/usr/local/opt/fribidi;/usr/local/opt/proj;/usr/local/opt/giflib;/usr/local/opt/freetype;/usr/local/opt/libsvg;/usr/local/opt/libsvg-cairo;/usr/local/opt/gdal2;/usr/local/opt/libpng;/usr/local/opt/libjpeg;/usr/local/opt/harfbuzz;/usr/local/opt/exempi" \
-            -DWITH_KML=1 \
-            -DWITH_PHP=1 \
-            -DWITH_EXEMPI=1 \
-            -DWITH_SVGCAIRO=1 \
-            -DWITH_FCGI=0 \
-            -DWITH_RSVG=0 \
-            -DWITH_POSTGIS=0 \
-            -DFRIBIDI_INCLUDE_DIR="/usr/local/include/glib-2.0;/usr/local/lib/glib-2.0/include;/usr/local/include" \
-            -DPHP5_INCLUDE_PATH="/usr/local/include/php"
-
-          $ make && make install
-
-6. Verify that mapserv is working
-
-          $ mapserv -v
-
-7. Add extension=php_mapscript.so to php.ini (if not already there) and restart web server
+3. Build [MapServer](http://mapserver.org/download.html) 7.x with the PHP MapScript option enabled. Refer to upstream build instructions — MapServer 8.x dropped the bundled PHP MapScript extension, so 7.6.x is the recommended target for now. Add `extension=php_mapscript.so` to `php.ini` and restart your web server.
 
 Unix-based Server
 ------------------
@@ -138,14 +110,9 @@ Create MySQL databases simplemappr, simplemappr\_development and simplemappr\_te
 Tests
 -----
 
-PHPUnit is used for unit tests and [Selenium](http://selenium-release.storage.googleapis.com/index.html?path=3.9/) and Facebook's [php-webdriver](https://github.com/facebook/php-webdriver) are used for integration tests. [Composer](https://getcomposer.org/) is used to include dependencies. The Firefox Gecko driver can be downloaded [here](https://github.com/mozilla/geckodriver/releases).
+PHPUnit 9.x runs the unit suite. Browser-driven functional tests use [php-webdriver/webdriver](https://github.com/php-webdriver/php-webdriver) against a Selenium-compatible endpoint (e.g. Selenium 4 standalone, or a managed grid).
 
-    $ java -Dwebdriver.gecko.driver=/usr/local/bin/geckodriver -jar /usr/local/bin/selenium-server-standalone-3.9.1.jar
-    $ BROWSER=firefox ./vendor/bin/phpunit -c Tests/phpunit.xml --stderr
-
-If you wish to use Chrome instead of FireFox, the Selenium Chromedriver can be found at [http://chromedriver.storage.googleapis.com/index.html](http://chromedriver.storage.googleapis.com/index.html):
-
-    $ java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone-3.9.1.jar
+    $ docker run -d -p 4444:4444 selenium/standalone-chrome:latest
     $ BROWSER=chrome ./vendor/bin/phpunit -c Tests/phpunit.xml --stderr
 
 Tests are split into suites entitled, "Unit", "Functional", "Binary", "Router"
@@ -162,7 +129,7 @@ JavaScript files are minified using Google's [Closure Compiler](https://develope
 Copyright
 ---------
 
-    Copyright (c) 2010-2018 David P. Shorthouse
+    Copyright (c) 2010-2026 David P. Shorthouse
 
     Released under MIT License
 
